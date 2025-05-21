@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FiMessageCircle, FiX, FiSend, FiPlusCircle, FiChevronRight, FiTrash2 } from 'react-icons/fi';
+import { FiMessageCircle, FiX, FiSend, FiPlusCircle, FiChevronRight, FiTrash2, FiLayout } from 'react-icons/fi';
 import { ChartTemplate } from '../types/visualization';
 import styles from './Sidebar.module.css';
 
@@ -18,6 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
+  const [dashboardCount, setDashboardCount] = useState(0);
   const [chatMessages, setChatMessages] = useState<Array<{text: string, isUser: boolean}>>([
     { text: "Welcome! I can help visualize your data. What would you like to know?", isUser: false },
   ]);
@@ -34,16 +35,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   const handleSendMessage = () => {
     if (chatInput.trim() === '') return;
     
-    // Add user message
-    setChatMessages([...chatMessages, { text: chatInput, isUser: true }]);
-    
-    // Simulate AI response (in a real app, this would call your LLM API)
-    setTimeout(() => {
-      setChatMessages(prev => [...prev, { 
-        text: "I'll help you visualize that. Would you like to see some options?", 
-        isUser: false 
-      }]);
-    }, 800);
+    // Redirect to visualization-design page
+    window.location.href = '/dashboard-design/';
     
     setChatInput('');
   };
@@ -66,6 +59,30 @@ const Sidebar: React.FC<SidebarProps> = ({
       chatMessagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [chatMessages]);
+  
+  // Load dashboard count from localStorage
+  useEffect(() => {
+    const loadDashboardCount = () => {
+      const count = localStorage.getItem('dashboardCount');
+      setDashboardCount(count ? parseInt(count) : 0);
+    };
+    
+    loadDashboardCount();
+    
+    // Set up event listener for storage changes
+    const handleStorageChange = () => {
+      loadDashboardCount();
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    // Also listen for a custom event that we'll dispatch when creating a dashboard
+    window.addEventListener('dashboardsUpdated', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('dashboardsUpdated', handleStorageChange);
+    };
+  }, []);
   
   return (
     <div className="flex">
@@ -109,11 +126,17 @@ const Sidebar: React.FC<SidebarProps> = ({
           )}
         </div>
         
-        {/* Chat toggle button - fixed at bottom of sidebar */}
-        <div className="p-3 border-t border-slate-200">
+        {/* Dashboard counter and Chat toggle button - fixed at bottom of sidebar */}
+        <div className="p-3 border-t border-slate-200 space-y-3">
+          <div className="flex items-center justify-between px-1">
+            <div className="flex items-center text-slate-500 text-sm">
+              <FiLayout size={16} className="mr-1.5" />
+              <span>Selected Elements: <span className="text-slate-700 font-medium">{selectedElements.length}</span></span>
+            </div>
+          </div>
+          
           <button 
             onClick={() => {
-              console.log("Current state:", isChatOpen);
               setIsChatOpen(!isChatOpen);
             }}
             className="w-full py-2 px-3 flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-md transition-colors"

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import VisualizationCard from './VisualizationCard';
 import { Visualization } from '../types/visualization';
@@ -51,8 +51,29 @@ const Canvas: React.FC<CanvasProps> = ({ visualizations, onVisualizationMove }) 
     // You could trigger a save action to your backend or state management
   }, []);
 
+  const [dashboardCount, setDashboardCount] = useState(0);
+  
+  // Load dashboard count from localStorage
+  useEffect(() => {
+    const count = localStorage.getItem('dashboardCount');
+    setDashboardCount(count ? parseInt(count) : 0);
+    
+    // Event listener for when dashboard count changes
+    const handleDashboardUpdate = (event: Event) => {
+      const count = localStorage.getItem('dashboardCount');
+      setDashboardCount(count ? parseInt(count) : 0);
+    };
+    
+    window.addEventListener('dashboardsUpdated', handleDashboardUpdate);
+    
+    return () => {
+      window.removeEventListener('dashboardsUpdated', handleDashboardUpdate);
+    };
+  }, []);
+  
   return (
     <div className="w-full h-full overflow-hidden bg-slate-50 rounded-lg">
+      
       <TransformWrapper
         initialScale={1}
         minScale={0.01} // 1%
@@ -66,6 +87,21 @@ const Canvas: React.FC<CanvasProps> = ({ visualizations, onVisualizationMove }) 
         {({ zoomIn, zoomOut, resetTransform, setTransform }) => (
           <React.Fragment>
             <div className="absolute bottom-4 right-4 flex items-center gap-2 z-10 bg-white p-2 rounded-lg shadow-lg">
+              {/* Dashboard counter - enhanced styling */}
+              <div className="flex items-center px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-md shadow-sm">
+                <div className="mr-2 bg-blue-500 text-white p-1 rounded-md">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                  </svg>
+                </div>
+                <div>
+                  <span className="text-xs font-medium text-slate-500">Dashboards</span>
+                  <span className="ml-2 text-sm font-bold text-blue-700">{dashboardCount}</span>
+                </div>
+              </div>
               <button 
                 onClick={() => {
                   // Update zoom level first, then apply zoom out

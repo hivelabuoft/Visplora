@@ -1,0 +1,119 @@
+/* TopNavbar Styles */
+
+/* Header container */
+.header {
+  height: 56px;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: white;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Left section */
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.appLogo {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.divider {
+  height: 24px;
+  width: 1px;
+  background-color: #e2e8f0;
+  margin: 0 4px;
+}
+
+.projectNameInput {
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  padding: 4px 8px;
+  max-width: 200px;
+  border-radius: 4px;
+}
+
+.projectNameInput:focus {
+  outline: none;
+  ring: 1px #3b82f6;
+}
+
+/* Right section */
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.saveButton {
+  font-size: 0.875rem;
+  color: #475569;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.saveButton:hover {
+  background-color: #f8fafc;
+}
+
+/* User menu */
+.userMenuTrigger {
+  height: 32px;
+  width: 32px;
+  border-radius: 9999px;
+  background-color: #dbeafe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+}
+
+.userMenuTrigger:hover {
+  background-color: #bfdbfe;
+}
+
+.userIcon {
+  color: #2563eb;
+}
+
+.dropdownContent {
+  min-width: 160px;
+  background-color: white;
+  border-radius: 6px;
+  padding: 4px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  z-index: 50;
+}
+
+.dropdownLabel {
+  padding: 6px 8px;
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.dropdownItem {
+  padding: 6px 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: 4px;
+  outline: none;
+}
+
+.dropdownItem:hover, 
+.dropdownItem:focus {
+  background-color: #f8fafc;
+}

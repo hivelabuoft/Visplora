@@ -1,6 +1,8 @@
 import React from 'react';
 import { FiSave, FiShare2, FiSettings, FiHelpCircle, FiUser } from 'react-icons/fi';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { useRouter } from 'next/navigation';
+import styles from './TopNavbar.module.css';
 
 interface TopNavbarProps {
   projectName: string;
@@ -8,31 +10,80 @@ interface TopNavbarProps {
 }
 
 const TopNavbar: React.FC<TopNavbarProps> = ({ projectName, onProjectNameChange }) => {
+  const router = useRouter();
+
+  const navigateToDashboard = (dashboardId: number) => {
+    router.push(`/dashboard${dashboardId}`);
+  };
+
   return (
-    <header className="h-14 border-b border-slate-200 bg-white px-4 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="text-xl font-semibold text-blue-600">VISplora</div>
-        <div className="h-6 w-[1px] bg-slate-200"></div>
+    <header className={styles.header}>
+      <div className={styles.leftSection}>
+        <div className={styles.appLogo}>VISplora</div>
+        <div className={styles.divider}></div>
         <input
           type="text"
           value={projectName}
           onChange={(e) => onProjectNameChange(e.target.value)}
-          className="text-sm font-medium border-none focus:outline-none focus:ring-1 focus:ring-blue-500 rounded px-2 py-1 max-w-[200px]"
+          className={styles.projectNameInput}
         />
       </div>
 
-      <div className="flex items-center gap-3">
-        <button className="text-sm text-slate-600 font-medium hover:bg-slate-50 px-3 py-1.5 rounded-md flex items-center gap-1.5">
+      <div className={styles.rightSection}>
+        <button className={styles.saveButton}>
           <FiSave size={16} />
           <span>Save</span>
         </button>
 
-        <div className="h-6 w-[1px] bg-slate-200 mx-1"></div>
+        <div className={styles.divider}></div>
 
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
+            <button type="button" className={styles.userMenuTrigger}>
+              <FiUser size={16} className={styles.userIcon} />
+            </button>
+          </DropdownMenu.Trigger>
 
-        <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-          <FiUser size={16} className="text-blue-600" />
-        </div>
+          <DropdownMenu.Portal>
+            <DropdownMenu.Content
+              className={styles.dropdownContent}
+              sideOffset={5}
+              align="end"
+            >
+              <DropdownMenu.Label className={styles.dropdownLabel}>
+                Choose a dashboard to start
+              </DropdownMenu.Label>
+
+              <DropdownMenu.Item
+                className={styles.dropdownItem}
+                onSelect={() => navigateToDashboard(1)}
+              >
+                Dashboard 1
+              </DropdownMenu.Item>
+
+              <DropdownMenu.Item
+                className={styles.dropdownItem}
+                onSelect={() => navigateToDashboard(2)}
+              >
+                Dashboard 2
+              </DropdownMenu.Item>
+
+              <DropdownMenu.Item
+                className={styles.dropdownItem}
+                onSelect={() => navigateToDashboard(3)}
+              >
+                Dashboard 3
+              </DropdownMenu.Item>
+
+              <DropdownMenu.Item
+                className={styles.dropdownItem}
+                onSelect={() => navigateToDashboard(4)}
+              >
+                Dashboard 4
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Root>
       </div>
     </header>
   );
