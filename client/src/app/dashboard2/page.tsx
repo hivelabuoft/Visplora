@@ -1,0 +1,262 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { 
+  Card, 
+  CardContent, 
+  CardHeader, 
+  CardTitle 
+} from '@/components/ui/card';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from '@/components/ui/select';
+import { HRData, FilterCriteria } from '../types/interfaces';
+import { DataLoader } from './dataLoader';
+import { HRAnalytics } from './analytics';
+import { 
+  DepartmentWidget, 
+  JobRoleWidget, 
+  GenderWidget, 
+  AgeGroupWidget, 
+  EducationWidget, 
+  SurveyScoreWidget, 
+  RecentAttritionWidget, 
+  AttritionTrendWidget 
+} from './widgets';
+
+export default function HRAttritionDashboard() {
+  const [data, setData] = useState<HRData[]>([]);
+  const [filteredData, setFilteredData] = useState<HRData[]>([]);
+  const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
+  const [showOnlyAttrition, setShowOnlyAttrition] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Load CSV data
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const parsed = await DataLoader.loadEmployeeData();
+        if (DataLoader.validateData(parsed)) {
+          setData(parsed);
+          setFilteredData(parsed);
+        } else {
+          console.error('Invalid data structure');
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error loading data:', error);
+        setLoading(false);
+      }
+    };
+    
+    loadData();
+  }, []);
+
+  // Filter data based on selected criteria
+  useEffect(() => {
+    const criteria: FilterCriteria = {
+      department: selectedDepartment,
+      showOnlyAttrition
+    };
+    const filtered = HRAnalytics.filterEmployeeData(data, criteria);
+    setFilteredData(filtered);
+  }, [data, selectedDepartment, showOnlyAttrition]);
+
+  // Get unique departments and KPIs
+  const departments = HRAnalytics.getUniqueDepartments(data);
+  const kpis = HRAnalytics.calculateKPIMetrics(data);
+
+  if (loading) {
+    return (
+      <div className="p-6 flex items-center justify-center min-h-screen">
+        <div className="text-lg">Loading HR Attrition Dashboard...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#f5f4f2] p-6">
+      {/* Header */}
+      <div className="mb-8">
+        <div className="flex justify-between items-start mb-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800 tracking-wide">
+              HR ATTRITION DASHBOARD
+            </h1>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">SHOW ONLY ATTRITION</span>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showOnlyAttrition}
+                  onChange={(e) => setShowOnlyAttrition(e.target.checked)}
+                  className="sr-only"
+                />
+                <div className={`w-11 h-6 rounded-full transition-colors ${
+                  showOnlyAttrition ? 'bg-orange-400' : 'bg-gray-300'
+                }`}>
+                  <div className={`dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${
+                    showOnlyAttrition ? 'translate-x-5' : ''
+                  }`} />
+                </div>
+              </label>
+            </div>
+            <div className="text-right">
+              <div className="text-xl font-bold">EVEREST GROUP</div>
+              <div className="flex gap-2 text-sm">
+                <span className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-black rounded-full"></div>
+                  RETENTION
+                </span>
+                <span className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+                  ATTRITION
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-12 gap-6">
+        {/* Left Column - Overview & Department */}
+        <div className="col-span-5 space-y-6">
+          {/* Overview Cards */}
+          <Card className="bg-white border-none shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-700">OVERVIEW</CardTitle>
+              <div className="text-sm text-gray-500">(27 May, 2021 to 8 May, 2022)</div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="flex items-center justify-center mb-2">
+                    <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                      <span className="text-sm">📊</span>
+                    </div>
+                  </div>
+                  <div className="text-2xl font-bold text-gray-800">{kpis.attritionRate}%</div>
+                  <div className="text-xs text-gray-500 uppercase">Attrition Rate</div>
+                </div>
+                <div className="text-center">
+                  <div className="flex items-center justify-center mb-2">
+                    <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                      <span className="text-sm">👥</span>
+                    </div>
+                  </div>
+                  <div className="text-2xl font-bold text-gray-800">{kpis.totalAttrition}</div>
+                  <div className="text-xs text-gray-500 uppercase">Total Attrition</div>
+                </div>
+                <div className="text-center">
+                  <div className="flex items-center justify-center mb-2">
+                    <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                      <span className="text-sm">👤</span>
+                    </div>
+                  </div>
+                  <div className="text-2xl font-bold text-gray-800">{kpis.currentEmployees}</div>
+                  <div className="text-xs text-gray-500 uppercase">Current Employees</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Department Analysis */}
+          <Card className="bg-white border-none shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-700">DEPARTMENT</CardTitle>
+            </CardHeader>            <CardContent>
+              <DepartmentWidget data={filteredData} />
+            </CardContent>
+          </Card>
+
+          {/* Job Role Analysis */}
+          <Card className="bg-white border-none shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-700">JOB ROLE</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <JobRoleWidget data={filteredData} />
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Middle Column - Demographics */}
+        <div className="col-span-4 space-y-6">
+          {/* Filter */}
+          <div className="flex justify-end">
+            <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="Filter by Department" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Departments</SelectItem>
+                {departments.map(dept => (<SelectItem key={dept} value={dept}>{dept}</SelectItem>))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <Card className="bg-white border-none shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-700">DEMOGRAPHICS</CardTitle>
+              <div className="text-sm text-gray-500">Click data point(s) to filter dashboard</div>
+            </CardHeader>
+            <CardContent className="space-y-6">              {/* Gender Distribution */}
+              <div>
+                <h4 className="font-semibold text-gray-600 mb-3">GENDER</h4>
+                <GenderWidget data={filteredData} />
+              </div>
+
+              {/* Age Group Distribution */}
+              <div>
+                <h4 className="font-semibold text-gray-600 mb-3">AGE GROUP</h4>
+                <AgeGroupWidget data={filteredData} />
+              </div>
+
+              {/* Education Distribution */}
+              <div>
+                <h4 className="font-semibold text-gray-600 mb-3">EDUCATION</h4>
+                <EducationWidget data={filteredData} />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Right Column - Survey Score & Recent Attrition */}
+        <div className="col-span-3 space-y-6">
+          <Card className="bg-white border-none shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-700">SURVEY SCORE</CardTitle>
+            </CardHeader>            <CardContent>
+              <SurveyScoreWidget data={filteredData} />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border-none shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-700">RECENT ATTRITION</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RecentAttritionWidget data={filteredData} />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Bottom Row - Attrition Trend */}
+      <div className="mt-6">
+        <Card className="bg-white border-none shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-lg font-semibold text-gray-700">ATTRITION TREND</CardTitle>
+          </CardHeader>          <CardContent>
+            <AttritionTrendWidget data={filteredData} />
+          </CardContent>
+        </Card>      </div>
+    </div>
+  );
+}
