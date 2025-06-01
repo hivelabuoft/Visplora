@@ -2,8 +2,8 @@ import React from 'react';
 import { VegaLite } from 'react-vega';
 import { HRData, AttritionEmployee } from '../types/interfaces';
 import { HRAnalytics } from './analytics';
-import { 
-  createDepartmentPieChart, 
+import {
+  createDepartmentRetentionChart,
   createGenderDonutChart, 
   createAgeGroupBarChart, 
   createAttritionTrendChart 
@@ -18,31 +18,60 @@ interface ChartWidgetProps {
 }
 
 export function DepartmentWidget({ data }: ChartWidgetProps) {
-  const chartData = HRAnalytics.processDepartmentData(data);
-  const spec = createDepartmentPieChart();
+  const departments = HRAnalytics.getUniqueDepartments(data);
   
-  return <VegaLite spec={{ ...spec, data: { values: chartData } }} />;
+  return (
+    <div className="grid grid-cols-1">
+      {departments.map((dept) => {
+        const chartData = HRAnalytics.processDepartmentRetentionData(data, dept);
+        const spec = createDepartmentRetentionChart();
+        const totalCount = chartData.reduce((sum, item) => sum + item.count, 0);
+
+        return (
+          <div key={dept} className="flex items-center">            
+            <div>
+              <VegaLite spec={{ ...spec, data: { values: chartData } }} actions={false} />
+            </div>
+            <div>
+              <h4 className="font-medium text-sm">{dept.replace("Research & Development", "R & D").replace("Human Resources", "HR")}</h4>
+              <div className="text-xs text-gray-600">Total: {totalCount}</div>
+              <div className="flex gap-4 mt-1">
+                {chartData.map((item) => (
+                  <div key={item.type} className="flex items-center gap-1">
+                    <div className={`w-2 h-2 rounded-full ${
+                      item.type === 'retention' ? 'bg-gray-800' : 'bg-yellow-500'
+                    }`}></div>
+                    <span className="text-xs">{item.count}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export function JobRoleWidget({ data }: ChartWidgetProps) {
   const roleData = HRAnalytics.processJobRoleData(data);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-8">
       {roleData.map((item) => (
         <div key={item.role} className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-6 h-6 bg-orange-400 rounded flex items-center justify-center text-white text-xs font-bold">
+          <div className="flex items-center gap-2 mr-2">
+            <div className="hover:bg-gray-200 w-6 h-6 rounded flex items-center justify-center text-xs font-semibold">
               {item.rank}
             </div>
-            <span className="text-sm">{item.role}</span>
+            <span className="hover:bg-gray-200 h-6 flex items-center px-2 rounded text-sm">{item.role}</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="bg-orange-400 text-white px-2 py-1 rounded text-xs">
+            <div className="bg-yellow-500 text-white px-2 py-1 rounded text-xs">
               {item.attrition}
             </div>
             <div className="bg-gray-700 text-white px-2 py-1 rounded text-xs">
-              {item.total}
+              {item.total - item.attrition}
             </div>
           </div>
         </div>
@@ -55,14 +84,14 @@ export function GenderWidget({ data }: ChartWidgetProps) {
   const chartData = HRAnalytics.processGenderData(data);
   const spec = createGenderDonutChart();
   
-  return <VegaLite spec={{ ...spec, data: { values: chartData } }} />;
+  return <VegaLite spec={{ ...spec, data: { values: chartData } }} actions={false} />;
 }
 
 export function AgeGroupWidget({ data }: ChartWidgetProps) {
   const chartData = HRAnalytics.processAgeGroupData(data);
   const spec = createAgeGroupBarChart();
   
-  return <VegaLite spec={{ ...spec, data: { values: chartData } }} />;
+  return <VegaLite spec={{ ...spec, data: { values: chartData } }} actions={false} />;
 }
 
 export function EducationWidget({ data }: ChartWidgetProps) {
@@ -76,7 +105,7 @@ export function EducationWidget({ data }: ChartWidgetProps) {
           <div className="flex items-center gap-2">
             <div className="w-16 h-4 bg-gray-200 rounded">
               <div 
-                className="h-full bg-orange-400 rounded"
+                className="h-full bg-yellow-500 rounded"
                 style={{ width: `${(item.count / Math.max(...educationData.map(d => d.count))) * 100}%` }}
               />
             </div>
@@ -100,9 +129,9 @@ export function SurveyScoreWidget({ data }: ChartWidgetProps) {
             {item.scoreCounts.map((sc) => (
               <div key={sc.score} className="text-center">
                 <div className={`w-8 h-6 flex items-center justify-center text-white text-xs ${
-                  sc.score === 1 ? 'bg-red-400' :
-                  sc.score === 2 ? 'bg-orange-400' :
-                  sc.score === 3 ? 'bg-yellow-400' : 'bg-green-400'
+                  sc.score === 1 ? 'bg-yellow-300' :
+                  sc.score === 2 ? 'bg-yellow-400' :
+                  sc.score === 3 ? 'bg-gray-600' : 'bg-gray-800'
                 }`}>
                   {sc.count}
                 </div>
@@ -122,7 +151,7 @@ export function RecentAttritionWidget({ data }: ChartWidgetProps) {
   return (
     <div className="space-y-4">
       {recentAttrition.map((emp) => (
-        <div key={emp.id} className="border-l-4 border-orange-400 pl-3">
+        <div key={emp.id} className="border-l-4 border-yellow-500 pl-3">
           <div className="font-semibold text-sm">{emp.id}</div>
           <div className="text-xs text-gray-600">{emp.role}</div>
           <div className="text-xs text-gray-500">{emp.department}</div>
@@ -160,9 +189,15 @@ export function AttritionTrendWidget({ data }: ChartWidgetProps) {
         <div className="flex items-center gap-4">
           <span className="text-lg">▼ 85.5% vs. previous month</span>
         </div>
-        <div className="text-sm text-gray-500">SELECT PERIOD: W M Q Y</div>
+        <div className="text-sm text-gray-500">SELECT PERIOD: 
+          <span className="ml-2">
+            <span className="px-2 py-1 bg-gray-200 rounded mx-1">W</span>
+            <span className="px-2 py-1 bg-gray-800 text-white rounded mx-1">M</span>
+            <span className="px-2 py-1 bg-gray-200 rounded mx-1">Q</span>
+            <span className="px-2 py-1 bg-gray-200 rounded mx-1">Y</span>
+          </span>        </div>
       </div>
-      <VegaLite spec={{ ...spec, data: { values: trendData } }} />
+      <VegaLite spec={{ ...spec, data: { values: trendData } }} actions={false} />
     </div>
   );
 }

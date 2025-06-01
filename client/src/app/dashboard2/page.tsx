@@ -1,32 +1,12 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { 
-  Card, 
-  CardContent, 
-  CardHeader, 
-  CardTitle 
-} from '@/components/ui/card';
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from '@/components/ui/select';
-import { HRData, FilterCriteria } from '../types/interfaces';
-import { DataLoader } from './dataLoader';
-import { HRAnalytics } from './analytics';
-import { 
-  DepartmentWidget, 
-  JobRoleWidget, 
-  GenderWidget, 
-  AgeGroupWidget, 
-  EducationWidget, 
-  SurveyScoreWidget, 
-  RecentAttritionWidget, 
-  AttritionTrendWidget 
-} from './widgets';
+import React, { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { HRData, FilterCriteria } from "../types/interfaces";
+import { DataLoader } from "./dataLoader";
+import { HRAnalytics } from "./analytics";
+import { DepartmentWidget, JobRoleWidget, GenderWidget, AgeGroupWidget, EducationWidget, SurveyScoreWidget, RecentAttritionWidget, AttritionTrendWidget } from "./widgets";
 
 export default function HRAttritionDashboard() {
   const [data, setData] = useState<HRData[]>([]);
@@ -52,7 +32,6 @@ export default function HRAttritionDashboard() {
         setLoading(false);
       }
     };
-    
     loadData();
   }, []);
 
@@ -84,9 +63,7 @@ export default function HRAttritionDashboard() {
       <div className="mb-8">
         <div className="flex justify-between items-start mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 tracking-wide">
-              HR ATTRITION DASHBOARD
-            </h1>
+            <h1 className="text-3xl font-bold text-gray-800 tracking-wide">HR ATTRITION DASHBOARD</h1>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
@@ -97,25 +74,21 @@ export default function HRAttritionDashboard() {
                   checked={showOnlyAttrition}
                   onChange={(e) => setShowOnlyAttrition(e.target.checked)}
                   className="sr-only"
-                />
-                <div className={`w-11 h-6 rounded-full transition-colors ${
-                  showOnlyAttrition ? 'bg-orange-400' : 'bg-gray-300'
-                }`}>
-                  <div className={`dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${
-                    showOnlyAttrition ? 'translate-x-5' : ''
-                  }`} />
+                />{" "}
+                <div className={`w-11 h-6 rounded-full transition-colors ${ showOnlyAttrition ? "bg-yellow-500" : "bg-gray-300"}`}>
+                  <div className={`dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${ showOnlyAttrition ? "translate-x-5" : "" }`}/>
                 </div>
               </label>
             </div>
+            
             <div className="text-right">
-              <div className="text-xl font-bold">EVEREST GROUP</div>
               <div className="flex gap-2 text-sm">
                 <span className="flex items-center gap-1">
                   <div className="w-2 h-2 bg-black rounded-full"></div>
                   RETENTION
-                </span>
+                </span>{" "}
                 <span className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                   ATTRITION
                 </span>
               </div>
@@ -130,8 +103,14 @@ export default function HRAttritionDashboard() {
           {/* Overview Cards */}
           <Card className="bg-white border-none shadow-sm">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-gray-700">OVERVIEW</CardTitle>
-              <div className="text-sm text-gray-500">(27 May, 2021 to 8 May, 2022)</div>
+              <div className="flex items-center justify-left gap-4">
+                <CardTitle className="text-lg font-bold text-gray-700">
+                  OVERVIEW
+                </CardTitle>
+                <div className="text-sm text-gray-500">
+                  (27 May, 2021 to 8 May, 2022)
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-3 gap-6">
@@ -141,7 +120,9 @@ export default function HRAttritionDashboard() {
                       <span className="text-sm">📊</span>
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-gray-800">{kpis.attritionRate}%</div>
+                  <div className="text-2xl font-bold text-gray-800">
+                    {kpis.attritionRate}%
+                  </div>
                   <div className="text-xs text-gray-500 uppercase">Attrition Rate</div>
                 </div>
                 <div className="text-center">
@@ -150,7 +131,9 @@ export default function HRAttritionDashboard() {
                       <span className="text-sm">👥</span>
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-gray-800">{kpis.totalAttrition}</div>
+                  <div className="text-2xl font-bold text-gray-800">
+                    {kpis.totalAttrition}
+                  </div>
                   <div className="text-xs text-gray-500 uppercase">Total Attrition</div>
                 </div>
                 <div className="text-center">
@@ -159,65 +142,61 @@ export default function HRAttritionDashboard() {
                       <span className="text-sm">👤</span>
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-gray-800">{kpis.currentEmployees}</div>
+                  <div className="text-2xl font-bold text-gray-800">
+                    {kpis.currentEmployees}
+                  </div>
                   <div className="text-xs text-gray-500 uppercase">Current Employees</div>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Department Analysis */}
-          <Card className="bg-white border-none shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold text-gray-700">DEPARTMENT</CardTitle>
-            </CardHeader>            <CardContent>
-              <DepartmentWidget data={filteredData} />
-            </CardContent>
-          </Card>
-
-          {/* Job Role Analysis */}
-          <Card className="bg-white border-none shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold text-gray-700">JOB ROLE</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <JobRoleWidget data={filteredData} />
-            </CardContent>
+          <Card className="flex-row gap-0 py-0">
+            {/* Department Analysis */}
+            <Card className="bg-0 border-none shadow-none gap-2">
+                <CardHeader>
+                    <CardTitle className="text-lg font-bold text-gray-700 font-mono">DEPARTMENT</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <DepartmentWidget data={filteredData} />
+                </CardContent>
+            </Card>
+            {/* Job Role Analysis */}
+            <Card className="bg-0 border-none shadow-none gap-2">
+                <CardHeader>
+                    <CardTitle className="text-lg font-bold text-gray-700 font-mono">JOB ROLE</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <JobRoleWidget data={filteredData} />
+                </CardContent>
+            </Card>
           </Card>
         </div>
 
+
         {/* Middle Column - Demographics */}
         <div className="col-span-4 space-y-6">
-          {/* Filter */}
-          <div className="flex justify-end">
-            <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Filter by Department" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Departments</SelectItem>
-                {departments.map(dept => (<SelectItem key={dept} value={dept}>{dept}</SelectItem>))}
-              </SelectContent>
-            </Select>
-          </div>
-
           <Card className="bg-white border-none shadow-sm">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-gray-700">DEMOGRAPHICS</CardTitle>
-              <div className="text-sm text-gray-500">Click data point(s) to filter dashboard</div>
+              <CardTitle className="text-lg font-bold text-gray-700">
+                DEMOGRAPHICS
+              </CardTitle>
+              <div className="text-sm text-gray-500">
+                Click data point(s) to filter dashboard
+              </div>
             </CardHeader>
-            <CardContent className="space-y-6">              {/* Gender Distribution */}
+            <CardContent className="space-y-6">
+              {" "}
+              {/* Gender Distribution */}
               <div>
                 <h4 className="font-semibold text-gray-600 mb-3">GENDER</h4>
                 <GenderWidget data={filteredData} />
               </div>
-
               {/* Age Group Distribution */}
               <div>
                 <h4 className="font-semibold text-gray-600 mb-3">AGE GROUP</h4>
                 <AgeGroupWidget data={filteredData} />
               </div>
-
               {/* Education Distribution */}
               <div>
                 <h4 className="font-semibold text-gray-600 mb-3">EDUCATION</h4>
@@ -231,15 +210,37 @@ export default function HRAttritionDashboard() {
         <div className="col-span-3 space-y-6">
           <Card className="bg-white border-none shadow-sm">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-gray-700">SURVEY SCORE</CardTitle>
-            </CardHeader>            <CardContent>
+              <CardTitle className="text-lg font-semibold text-gray-700">
+                SURVEY SCORE
+              </CardTitle>
+            </CardHeader>{" "}
+            <CardContent>
               <SurveyScoreWidget data={filteredData} />
             </CardContent>
-          </Card>
-
+          </Card>{" "}
           <Card className="bg-white border-none shadow-sm">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-gray-700">RECENT ATTRITION</CardTitle>
+              <CardTitle className="text-lg font-semibold text-gray-700">
+                RECENT ATTRITION
+              </CardTitle>
+              <div className="flex gap-2 mt-2">
+                <Select defaultValue="all">
+                  <SelectTrigger className="w-24">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">(All)</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select defaultValue="all">
+                  <SelectTrigger className="w-24">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">(All)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </CardHeader>
             <CardContent>
               <RecentAttritionWidget data={filteredData} />
@@ -252,11 +253,15 @@ export default function HRAttritionDashboard() {
       <div className="mt-6">
         <Card className="bg-white border-none shadow-sm">
           <CardHeader>
-            <CardTitle className="text-lg font-semibold text-gray-700">ATTRITION TREND</CardTitle>
-          </CardHeader>          <CardContent>
+            <CardTitle className="text-lg font-semibold text-gray-700">
+              ATTRITION TREND
+            </CardTitle>
+          </CardHeader>{" "}
+          <CardContent>
             <AttritionTrendWidget data={filteredData} />
           </CardContent>
-        </Card>      </div>
+        </Card>{" "}
+      </div>
     </div>
   );
 }

@@ -67,6 +67,7 @@ export interface ChartData {
 }
 
 export interface VegaLiteSpec {
+  $schema: string;
   width?: number;
   height?: number;
   data?: { values: any[] };

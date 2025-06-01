@@ -4,6 +4,78 @@ import { HRData, KPIMetrics, AttritionEmployee, FilterCriteria } from '../types/
  * Business logic and analytics functions for HR Dashboard
  */
 export class HRAnalytics {
+  // Field mapping utilities
+  static getEducationLabel(value: number): string {
+    const map = {
+      1: 'Below College',
+      2: 'College', 
+      3: 'Bachelor',
+      4: 'Master',
+      5: 'Doctor'
+    };
+    return map[value as keyof typeof map] || 'Unknown';
+  }
+
+  static getEnvironmentSatisfactionLabel(value: number): string {
+    const map = {
+      1: 'Low',
+      2: 'Medium',
+      3: 'High', 
+      4: 'Very High'
+    };
+    return map[value as keyof typeof map] || 'Unknown';
+  }
+
+  static getJobInvolvementLabel(value: number): string {
+    const map = {
+      1: 'Low',
+      2: 'Medium',
+      3: 'High',
+      4: 'Very High'
+    };
+    return map[value as keyof typeof map] || 'Unknown';
+  }
+
+  static getJobSatisfactionLabel(value: number): string {
+    const map = {
+      1: 'Low',
+      2: 'Medium', 
+      3: 'High',
+      4: 'Very High'
+    };
+    return map[value as keyof typeof map] || 'Unknown';
+  }
+
+  static getPerformanceRatingLabel(value: number): string {
+    const map = {
+      1: 'Low',
+      2: 'Good',
+      3: 'Excellent',
+      4: 'Outstanding'
+    };
+    return map[value as keyof typeof map] || 'Unknown';
+  }
+
+  static getRelationshipSatisfactionLabel(value: number): string {
+    const map = {
+      1: 'Low',
+      2: 'Medium',
+      3: 'High',
+      4: 'Very High'
+    };
+    return map[value as keyof typeof map] || 'Unknown';
+  }
+
+  static getWorkLifeBalanceLabel(value: number): string {
+    const map = {
+      1: 'Bad',
+      2: 'Good', 
+      3: 'Better',
+      4: 'Best'
+    };
+    return map[value as keyof typeof map] || 'Unknown';
+  }
+
   /**
    * Filter HR data based on department and attrition criteria
    */
@@ -65,6 +137,29 @@ export class HRAnalytics {
   }
 
   /**
+   * Process department data for individual retention/attrition charts
+   */
+  static processDepartmentRetentionData(data: HRData[], department: string) {
+    const deptData = data.filter(emp => emp.Department === department);
+    const total = deptData.length;
+    const attrition = deptData.filter(emp => emp.Attrition === 'Yes').length;
+    const retention = total - attrition;
+
+    return [
+      {
+        type: 'retention',
+        count: retention,
+        percentage: total > 0 ? `${Math.round((retention / total) * 100)}%` : '0%'
+      },
+      {
+        type: 'attrition', 
+        count: attrition,
+        percentage: total > 0 ? `${Math.round((attrition / total) * 100)}%` : '0%'
+      }
+    ].filter(item => item.count > 0);
+  }
+
+  /**
    * Process job role data for ranking visualization
    */
   static processJobRoleData(data: HRData[]) {
@@ -123,36 +218,28 @@ export class HRAnalytics {
       ageGroup: group,
       count: ageGroupData[group] || 0
     }));
-  }
-
-  /**
+  }  /**
    * Process education level data
    */
   static processEducationData(data: HRData[]) {
-    const educationMap = {
-      1: "High School",
-      2: "Associates Degree", 
-      3: "Bachelor's Degree",
-      4: "Master's Degree",
-      5: "Doctoral Degree"
-    };
-
     const educationData = data.reduce((acc, emp) => {
-      const education = educationMap[emp.Education as keyof typeof educationMap] || "Unknown";
+      const education = this.getEducationLabel(emp.Education);
       acc[education] = (acc[education] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
 
-    return Object.entries(educationData).map(([education, count]) => ({
-      education,
-      count
-    }));
+    // Sort by education level order
+    const orderedEducation = ['Below College', 'College', 'Bachelor', 'Master', 'Doctor'];    return orderedEducation
+      .filter(edu => educationData[edu] > 0)
+      .map(education => ({
+        education,
+        count: educationData[education]
+      }));
   }
 
   /**
    * Get recent attrition employees
-   */
-  static getRecentAttritionEmployees(data: HRData[], limit: number = 3): AttritionEmployee[] {
+   */  static getRecentAttritionEmployees(data: HRData[], limit: number = 3): AttritionEmployee[] {
     return data
       .filter(emp => emp.Attrition === 'Yes')
       .slice(0, limit)
