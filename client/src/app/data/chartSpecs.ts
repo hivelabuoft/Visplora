@@ -103,26 +103,33 @@ export const createAttritionTrendChart = (): VegaLiteSpec => ({
 export const createDistanceFromHomeChart = (): VegaLiteSpec => ({
   $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
   height: 250,
-  width: 350,
+  width: 400,
   padding: 0,
-  mark: { 
-    type: "area" as const, color: "#ef9f56", 
-    point: { size: 50, color: "#ef9f56"} 
-  },
+  mark: { type: "bar" as const },
   encoding: {
     x: { 
-      field: "distance", 
-      type: "quantitative" as const,
-      axis: { title: "Distance From Home (km)", labelAngle: -45 }
+      field: "interval", 
+      type: "ordinal" as const,
+      axis: { title: "Distance From Home (km)", labelAngle: -45 },
+      sort: { field: "interval", order: "ascending" }
     },
     y: { 
       field: "count",
       type: "quantitative" as const, 
       axis: { title: "Employee Count" } 
     },
+    color: { 
+      field: "type", 
+      type: "nominal" as const,
+      scale: { 
+        domain: ["retention", "attrition"],
+        range: ["#1b2a3a", "#ef9f56"]
+      },
+      legend: null
+    },
     tooltip: [
-      { field: "distance", type: "quantitative" as const, title: "Distance From Home" },
-      { field: "count", type: "quantitative" as const, title: "Employee Count" }
+      { field: "interval", type: "ordinal" as const, title: "Distance From Home (km)" },
+      { field: "count", type: "quantitative" as const, title: "Employee Count" },
     ]
   }
 });

@@ -286,17 +286,33 @@ export class HRAnalytics {
   static processDistanceFromHomeData(data: HRData[]) {
     const distanceFromHomeData = data.reduce((acc, emp) => {
       const distance = emp.DistanceFromHome;
-      acc[distance] = (acc[distance] || 0) + 1;
-      return acc;
-    }, {} as Record<number, number>);
+      // Determine 5km interval
+      const interval = Math.floor((distance) / 5) * 5 + 1;
+      const intervalKey = `${interval}-${interval + 4}km`;
 
-    // Convert to array of objects and sort by distance
-    return Object.entries(distanceFromHomeData)
-      .map(([distance, count]) => ({
-        distance: parseInt(distance, 10),
-        count
-      }))
-      .sort((a, b) => a.distance - b.distance);
+      if (!acc[intervalKey]) acc[intervalKey] = { total: 0, attrition: 0, retention: 0 };
+      acc[intervalKey].total++;
+      if (emp.Attrition === 'Yes') {
+        acc[intervalKey].attrition++;
+      } else {
+        acc[intervalKey].retention++;
+      }
+      return acc;
+    }, {} as Record<string, { total: number; attrition: number; retention: number }>);
+
+    // Convert to array of objects
+    const processedData = Object.entries(distanceFromHomeData)
+      .flatMap(([interval, counts]) => [
+        { interval, type: 'retention', count: counts.retention },
+        { interval, type: 'attrition', count: counts.attrition },
+      ]);
+
+    // Get unique intervals and sort them
+    const sortedIntervals = Object.keys(distanceFromHomeData).sort((a, b) => {
+      const getStart = (s: string) => parseInt(s.split('-')[0], 10);
+      return getStart(a) - getStart(b);
+    });
+    return { processedData, sortedIntervals };
   }
 
   /**

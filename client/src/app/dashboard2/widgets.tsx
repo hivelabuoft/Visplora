@@ -95,7 +95,7 @@ export function EducationWidget({ data }: ChartWidgetProps) {
   const educationData = HRAnalytics.processEducationData(data);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1">
       {educationData.map((item) => (
         <div key={item.education} className="flex items-center justify-between">
           <span className="text-sm">{item.education}</span>
@@ -201,10 +201,21 @@ export function AttritionTrendWidget({ data }: ChartWidgetProps) {
 }
 
 export function DistanceFromHomeWidget({ data }: { data: HRData[] }) {
-  const distanceFromHomeData = HRAnalytics.processDistanceFromHomeData(data);
+  const { processedData, sortedIntervals } = HRAnalytics.processDistanceFromHomeData(data);
   const spec = createDistanceFromHomeChart();
 
-  return (
-    <VegaLite spec={{ ...spec, data: { values: distanceFromHomeData } }} actions={false} />
-  );
+  // Update the chart spec with the sorted intervals for the x-axis sort order
+  const updatedSpec = {
+    ...spec,
+    encoding: {
+      ...spec.encoding,
+      x: {
+        ...spec.encoding.x,
+        sort: sortedIntervals, // Use the sorted intervals for explicit sort order
+      },
+    },
+    data: { values: processedData },
+  };
+
+  return <VegaLite spec={updatedSpec} actions={false} />;
 }
