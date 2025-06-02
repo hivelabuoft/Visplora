@@ -100,6 +100,33 @@ export const createAttritionTrendChart = (): VegaLiteSpec => ({
   }
 });
 
+export const createDistanceFromHomeChart = (): VegaLiteSpec => ({
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  height: 250,
+  width: 350,
+  padding: 0,
+  mark: { 
+    type: "area" as const, color: "#ef9f56", 
+    point: { size: 50, color: "#ef9f56"} 
+  },
+  encoding: {
+    x: { 
+      field: "distance", 
+      type: "quantitative" as const,
+      axis: { title: "Distance From Home (km)", labelAngle: -45 }
+    },
+    y: { 
+      field: "count",
+      type: "quantitative" as const, 
+      axis: { title: "Employee Count" } 
+    },
+    tooltip: [
+      { field: "distance", type: "quantitative" as const, title: "Distance From Home" },
+      { field: "count", type: "quantitative" as const, title: "Employee Count" }
+    ]
+  }
+});
+
 export const createEducationBarChart = (): VegaLiteSpec => ({
   $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
   width: 250,

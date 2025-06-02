@@ -6,7 +6,8 @@ import {
   createDepartmentRetentionChart,
   createGenderDonutChart, 
   createAgeGroupBarChart, 
-  createAttritionTrendChart 
+  createAttritionTrendChart,
+  createDistanceFromHomeChart
 } from '../data/chartSpecs';
 
 /**
@@ -61,18 +62,14 @@ export function JobRoleWidget({ data }: ChartWidgetProps) {
       {roleData.map((item) => (
         <div key={item.role} className="flex items-center justify-between">
           <div className="flex items-center gap-2 mr-2">
-            <div className="hover:bg-gray-200 w-6 h-6 rounded flex items-center justify-center text-xs font-semibold">
+            <div className="hover:bg-gray-200 w-9 h-9 rounded flex items-center justify-center text-xs font-semibold">
               {item.rank}
             </div>
-            <span className="hover:bg-gray-200 h-6 flex items-center px-2 rounded text-sm">{item.role}</span>
+            <div className="hover:bg-gray-200 h-9 flex items-center px-2 rounded text-sm">{item.role}</div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="bg-yellow-500 text-white px-2 py-1 rounded text-xs">
-              {item.attrition}
-            </div>
-            <div className="bg-gray-700 text-white px-2 py-1 rounded text-xs">
-              {item.total - item.attrition}
-            </div>
+            <div className="bg-yellow-500 text-white px-2 py-1 rounded text-xs">{item.attrition}</div>
+            <div className="bg-gray-800 text-white px-2 py-1 rounded text-xs">{item.total - item.attrition}</div>
           </div>
         </div>
       ))}
@@ -180,7 +177,7 @@ export function RecentAttritionWidget({ data }: ChartWidgetProps) {
 }
 
 export function AttritionTrendWidget({ data }: ChartWidgetProps) {
-  const trendData = HRAnalytics.generateAttritionTrendData();
+  const trendData = HRAnalytics.generateAttritionTrendData(data);
   const spec = createAttritionTrendChart();
 
   return (
@@ -195,9 +192,19 @@ export function AttritionTrendWidget({ data }: ChartWidgetProps) {
             <span className="px-2 py-1 bg-gray-800 text-white rounded mx-1">M</span>
             <span className="px-2 py-1 bg-gray-200 rounded mx-1">Q</span>
             <span className="px-2 py-1 bg-gray-200 rounded mx-1">Y</span>
-          </span>        </div>
+          </span>        
+        </div>
       </div>
       <VegaLite spec={{ ...spec, data: { values: trendData } }} actions={false} />
     </div>
+  );
+}
+
+export function DistanceFromHomeWidget({ data }: { data: HRData[] }) {
+  const distanceFromHomeData = HRAnalytics.processDistanceFromHomeData(data);
+  const spec = createDistanceFromHomeChart();
+
+  return (
+    <VegaLite spec={{ ...spec, data: { values: distanceFromHomeData } }} actions={false} />
   );
 }

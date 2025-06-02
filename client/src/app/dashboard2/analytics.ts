@@ -281,9 +281,28 @@ export class HRAnalytics {
   }
 
   /**
+   * Process distance from home data for visualization
+   */
+  static processDistanceFromHomeData(data: HRData[]) {
+    const distanceFromHomeData = data.reduce((acc, emp) => {
+      const distance = emp.DistanceFromHome;
+      acc[distance] = (acc[distance] || 0) + 1;
+      return acc;
+    }, {} as Record<number, number>);
+
+    // Convert to array of objects and sort by distance
+    return Object.entries(distanceFromHomeData)
+      .map(([distance, count]) => ({
+        distance: parseInt(distance, 10),
+        count
+      }))
+      .sort((a, b) => a.distance - b.distance);
+  }
+
+  /**
    * Generate simulated monthly attrition trend data
    */
-  static generateAttritionTrendData() {
+  static generateAttritionTrendData(data: HRData[]) {
     const monthlyData = [];
     for (let i = 0; i < 12; i++) {
       const month = new Date(2021, 4 + i, 1).toLocaleDateString('en', { month: 'short', year: 'numeric' });

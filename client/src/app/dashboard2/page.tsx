@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { HRData, FilterCriteria } from "../types/interfaces";
 import { DataLoader } from "./dataLoader";
 import { HRAnalytics } from "./analytics";
-import { DepartmentWidget, JobRoleWidget, GenderWidget, AgeGroupWidget, EducationWidget, SurveyScoreWidget, RecentAttritionWidget, AttritionTrendWidget } from "./widgets";
+import { DepartmentWidget, JobRoleWidget, GenderWidget, AgeGroupWidget, EducationWidget, SurveyScoreWidget, RecentAttritionWidget, DistanceFromHomeWidget } from "./widgets";
 
 export default function HRAttritionDashboard() {
   const [data, setData] = useState<HRData[]>([]);
@@ -99,17 +99,13 @@ export default function HRAttritionDashboard() {
 
       <div className="grid grid-cols-12 gap-6">
         {/* Left Column - Overview & Department */}
-        <div className="col-span-5 space-y-6">
+        <div className="col-span-12 lg:col-span-6 space-y-6">
           {/* Overview Cards */}
           <Card className="bg-white border-none shadow-sm">
             <CardHeader>
-              <div className="flex items-center justify-left gap-4">
-                <CardTitle className="text-lg font-bold text-gray-700">
-                  OVERVIEW
-                </CardTitle>
-                <div className="text-sm text-gray-500">
-                  (27 May, 2021 to 8 May, 2022)
-                </div>
+              <div className="flex items-center justify-start gap-4">
+                <CardTitle className="text-lg font-bold text-gray-700 font-mono">OVERVIEW</CardTitle>
+                <div className="text-sm text-gray-500">(27 May, 2021 to 8 May, 2022)</div>
               </div>
             </CardHeader>
             <CardContent>
@@ -151,117 +147,111 @@ export default function HRAttritionDashboard() {
             </CardContent>
           </Card>
 
-          <Card className="flex-row gap-0 py-0">
+          <Card className="flex-row justify-around lg:justify-between">
             {/* Department Analysis */}
-            <Card className="bg-0 border-none shadow-none gap-2">
+            <div className="bg-0 border-none shadow-none gap-2">
                 <CardHeader>
                     <CardTitle className="text-lg font-bold text-gray-700 font-mono">DEPARTMENT</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <DepartmentWidget data={filteredData} />
                 </CardContent>
-            </Card>
+            </div>
             {/* Job Role Analysis */}
-            <Card className="bg-0 border-none shadow-none gap-2">
+            <div className="bg-0 border-none shadow-none gap-2">
                 <CardHeader>
                     <CardTitle className="text-lg font-bold text-gray-700 font-mono">JOB ROLE</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <JobRoleWidget data={filteredData} />
                 </CardContent>
+            </div>
+          </Card>
+          {/* Bottom Row - Distance From Home */}
+          <div className="mt-6">
+            <Card className="bg-white border-none shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-lg font-bold font-mono text-gray-700 font-mono">DISTANCE FROM HOME</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <DistanceFromHomeWidget data={filteredData} />
+              </CardContent>
             </Card>
-          </Card>
+          </div>
         </div>
 
 
-        {/* Middle Column - Demographics */}
-        <div className="col-span-4 space-y-6">
-          <Card className="bg-white border-none shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg font-bold text-gray-700">
-                DEMOGRAPHICS
-              </CardTitle>
-              <div className="text-sm text-gray-500">
-                Click data point(s) to filter dashboard
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {" "}
-              {/* Gender Distribution */}
-              <div>
-                <h4 className="font-semibold text-gray-600 mb-3">GENDER</h4>
-                <GenderWidget data={filteredData} />
-              </div>
-              {/* Age Group Distribution */}
-              <div>
-                <h4 className="font-semibold text-gray-600 mb-3">AGE GROUP</h4>
-                <AgeGroupWidget data={filteredData} />
-              </div>
-              {/* Education Distribution */}
-              <div>
-                <h4 className="font-semibold text-gray-600 mb-3">EDUCATION</h4>
-                <EducationWidget data={filteredData} />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
 
-        {/* Right Column - Survey Score & Recent Attrition */}
-        <div className="col-span-3 space-y-6">
-          <Card className="bg-white border-none shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold text-gray-700">
-                SURVEY SCORE
-              </CardTitle>
-            </CardHeader>{" "}
-            <CardContent>
-              <SurveyScoreWidget data={filteredData} />
-            </CardContent>
-          </Card>{" "}
-          <Card className="bg-white border-none shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold text-gray-700">
-                RECENT ATTRITION
-              </CardTitle>
-              <div className="flex gap-2 mt-2">
-                <Select defaultValue="all">
-                  <SelectTrigger className="w-24">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">(All)</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select defaultValue="all">
-                  <SelectTrigger className="w-24">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">(All)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <RecentAttritionWidget data={filteredData} />
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+        {/* Right Side - Demographics, Survey Score & Recent Attrition */}
+          {/* Demographics */}
+          <div className="col-span-12 lg:col-span-6"> {/* Demographics takes 6 columns of the right side */}
+            <Card className="bg-white border-none shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-lg font-bold text-gray-700 font-mono">DEMOGRAPHICS</CardTitle>
+                <div className="text-sm text-gray-500">Click data point(s) to filter dashboard</div>
+              </CardHeader>
+              <CardContent className="space-y-">
+                {/* Gender Distribution */}
+                <div>
+                  <h4 className="font-semibold text-gray-600 mb-3">GENDER</h4>
+                  <GenderWidget data={filteredData} />
+                </div>
+                {/* Age Group Distribution */}
+                <div>
+                  <h4 className="font-semibold text-gray-600 mb-3">AGE GROUP</h4>
+                  <AgeGroupWidget data={filteredData} />
+                </div>
+                {/* Education Distribution */}
+                <div>
+                  <h4 className="font-semibold text-gray-600 mb-3">EDUCATION</h4>
+                  <EducationWidget data={filteredData} />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-      {/* Bottom Row - Attrition Trend */}
-      <div className="mt-6">
-        <Card className="bg-white border-none shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold text-gray-700">
-              ATTRITION TREND
-            </CardTitle>
-          </CardHeader>{" "}
-          <CardContent>
-            <AttritionTrendWidget data={filteredData} />
-          </CardContent>
-        </Card>{" "}
-      </div>
+          {/* Survey Score & Recent Attrition */}
+          <div className="col-span-12 md:col-span-6 space-y-6"> {/* Survey Score and Recent Attrition take the other 6 columns */}
+            <Card className="bg-white border-none shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold text-gray-700">
+                  SURVEY SCORE
+                </CardTitle>
+              </CardHeader>{" "}
+              <CardContent>
+                <SurveyScoreWidget data={filteredData} />
+              </CardContent>
+            </Card>{" "}
+            <Card className="bg-white border-none shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold text-gray-700">
+                  RECENT ATTRITION
+                </CardTitle>
+                <div className="flex gap-2 mt-2">
+                  <Select defaultValue="all">
+                    <SelectTrigger className="w-24">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">(All)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select defaultValue="all">
+                    <SelectTrigger className="w-24">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">(All)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <RecentAttritionWidget data={filteredData} />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
     </div>
   );
 }
