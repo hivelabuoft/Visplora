@@ -8,14 +8,15 @@ import {
   DepartmentWidgetProps,
   JobRoleWidgetProps,
   GenderWidgetProps,
-  ScrollableAttritionWidgetProps
+  EducationWidgetProps
 } from '../types/interfaces';
 import {
   createDepartmentRetentionChart,
   createAgeGroupBarChart, 
   createDistanceFromHomeChart,
   createGenderAttritionDonutChart,
-  createEducationBarChart
+  createEducationBarChart,
+  createEducationFieldBarChart
 } from '../data/chartSpecs';
 
 /**
@@ -159,9 +160,13 @@ export function AgeGroupWidget({ data }: ChartWidgetProps) {
   return <VegaLite spec={{ ...spec, data: { values: chartData } }} actions={false} />;
 }
 
-export function EducationWidget({ data }: ChartWidgetProps) {
-  const chartData = HRAnalytics.processEducationData(data);
-  const spec = createEducationBarChart();
+export function EducationWidget({ data, showEducationField = false }: EducationWidgetProps) {
+  const chartData = showEducationField 
+    ? HRAnalytics.processEducationFieldData(data)
+    : HRAnalytics.processEducationData(data);
+  const spec = showEducationField 
+    ? createEducationFieldBarChart()
+    : createEducationBarChart();
   
   return (
     <div>

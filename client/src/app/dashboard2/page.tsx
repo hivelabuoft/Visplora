@@ -14,6 +14,7 @@ export default function HRAttritionDashboard() {
   const [selectedJobRole, setSelectedJobRole] = useState<string>('all');
   const [selectedGender, setSelectedGender] = useState<string>('all');
   const [showOnlyAttrition, setShowOnlyAttrition] = useState(false);
+  const [showEducationField, setShowEducationField] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Helper function to check if any filters are active
@@ -239,9 +240,8 @@ export default function HRAttritionDashboard() {
                   </button>
                 )}
               </div>
-              <div className="text-sm text-gray-500">Click data point(s) to filter dashboard</div>
             </CardHeader>
-            <CardContent className="flex flex-row justify-center items-center text-center lg:text-start flex-wrap">
+            <CardContent className="flex flex-row justify-center sm:justify-between text-center lg:text-start flex-wrap">
               {/* Gender Distribution */}
               <div className="pr-4 xl:border-r-2 border-gray-300">
                 <h4 className="font-semibold text-gray-600 mb-3">GENDER</h4>
@@ -258,8 +258,24 @@ export default function HRAttritionDashboard() {
               </div>
               {/* Education Distribution */}
               <div className="pl-4">
-                <h4 className="font-semibold text-gray-600 mb-3">EDUCATION</h4>
-                <EducationWidget data={filteredData} />
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="font-semibold text-gray-600">EDUCATION</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-gray-500">Toggle Education</span>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={showEducationField}
+                        onChange={(e) => setShowEducationField(e.target.checked)}
+                        className="sr-only"
+                      />
+                      <div className={`w-8 h-4 rounded-full transition-colors ${showEducationField ? "bg-[#ef9f56]" : "bg-gray-300"}`}>
+                        <div className={`dot absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full transition-transform ${showEducationField ? "translate-x-4" : ""}`}/>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <EducationWidget data={filteredData} showEducationField={showEducationField} />
               </div>
             </CardContent>
           </Card>

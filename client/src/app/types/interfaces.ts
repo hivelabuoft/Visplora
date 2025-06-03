@@ -93,7 +93,6 @@ export interface GenderWidgetProps extends ChartWidgetProps {
   selectedGender?: string;
 }
 
-export interface ScrollableAttritionWidgetProps extends ChartWidgetProps {
-  selectedDepartment?: string;
-  selectedJobRole?: string;
+export interface EducationWidgetProps extends ChartWidgetProps {
+  showEducationField?: boolean;
 }

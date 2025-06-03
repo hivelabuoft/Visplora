@@ -121,7 +121,7 @@ export const createDistanceFromHomeChart = (): VegaLiteSpec => ({
 });
 
 export const createEducationBarChart = (): VegaLiteSpec => ({
-  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
   width: 200,
   height: 160,
   padding: 0,
@@ -149,6 +149,40 @@ export const createEducationBarChart = (): VegaLiteSpec => ({
     },
     tooltip: [
       { field: "education", type: "ordinal" as const, title: "Education Level" },
+      { field: "count", type: "quantitative" as const, title: "Employee Count" },
+    ]
+  }
+});
+
+export const createEducationFieldBarChart = (): VegaLiteSpec => ({
+  $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
+  width: 180,
+  height: 160,
+  padding: 0,
+  mark: "bar" as const,
+  encoding: {
+    y: { 
+      field: "field", 
+      type: "ordinal" as const, 
+      axis: { title: null },
+      sort: { field: "count", order: "descending" }
+    },
+    x: { 
+      field: "count", 
+      type: "quantitative" as const, 
+      axis: { title: null }
+    },
+    color: { 
+      field: "type", 
+      type: "nominal" as const,
+      scale: { 
+        domain: ["retention", "attrition"],
+        range: ["#1b2a3a", "#ef9f56"]
+      },
+      legend: null
+    },
+    tooltip: [
+      { field: "field", type: "ordinal" as const, title: "Education Field" },
       { field: "count", type: "quantitative" as const, title: "Employee Count" },
     ]
   }

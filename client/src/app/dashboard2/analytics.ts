@@ -190,6 +190,31 @@ export class HRAnalytics {
   }
 
   /**
+   * Process education field data
+   */
+  static processEducationFieldData(data: HRData[]) {
+    const educationFieldData = data.reduce((acc, emp) => {
+      const field = emp.EducationField;
+      if (!acc[field]) acc[field] = { total: 0, attrition: 0, retention: 0 };
+      acc[field].total++;
+      if (emp.Attrition === 'Yes') {
+        acc[field].attrition++;
+      } else {
+        acc[field].retention++;
+      }
+      return acc;
+    }, {} as Record<string, { total: number; attrition: number; retention: number }>);
+
+    // Sort by total count (descending)
+    return Object.entries(educationFieldData)
+      .sort((a, b) => b[1].total - a[1].total)
+      .flatMap(([field, counts]) => [
+        { field, type: 'retention', count: counts.retention },
+        { field, type: 'attrition', count: counts.attrition },
+      ]);
+  }
+
+  /**
    * Get recent attrition employees
    */  static getRecentAttritionEmployees(data: HRData[], limit: number = 3): AttritionEmployee[] {
     return data
