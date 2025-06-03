@@ -199,6 +199,29 @@ export class HRAnalytics {
   }
 
   /**
+   * Process gender data to show attrition vs retention
+   */
+  static processGenderAttritionData(data: HRData[], gender: string) {
+    const genderData = data.filter(emp => emp.Gender === gender);
+    const total = genderData.length;
+    const attrition = genderData.filter(emp => emp.Attrition === 'Yes').length;
+    const retention = total - attrition;
+
+    return [
+      {
+        type: 'retention',
+        count: retention,
+        percentage: total > 0 ? `${Math.round((retention / total) * 100)}%` : '0%'
+      },
+      {
+        type: 'attrition', 
+        count: attrition,
+        percentage: total > 0 ? `${Math.round((attrition / total) * 100)}%` : '0%'
+      }
+    ].filter(item => item.count > 0);
+  }
+
+  /**
    * Process age group distribution
    */
   static processAgeGroupData(data: HRData[]) {
@@ -210,31 +233,54 @@ export class HRAnalytics {
       else if (emp.Age <= 55) ageGroup = "45-55";
       else ageGroup = "> 55";
       
-      acc[ageGroup] = (acc[ageGroup] || 0) + 1;
+      if (!acc[ageGroup]) acc[ageGroup] = { total: 0, attrition: 0, retention: 0 };
+      acc[ageGroup].total++;
+      if (emp.Attrition === 'Yes') {
+        acc[ageGroup].attrition++;
+      } else {
+        acc[ageGroup].retention++;
+      }
       return acc;
-    }, {} as Record<string, number>);
+    }, {} as Record<string, { total: number; attrition: number; retention: number }>);
 
-    return ["< 25", "25-34", "35-44", "45-55", "> 55"].map(group => ({
-      ageGroup: group,
-      count: ageGroupData[group] || 0
-    }));
-  }  /**
+    // Process data for stacking
+    const processedData = ["< 25", "25-34", "35-44", "45-55", "> 55"]
+      .filter(group => ageGroupData[group] && ageGroupData[group].total > 0)
+      .flatMap(group => [
+        { ageGroup: group, type: 'retention', count: ageGroupData[group].retention },
+        { ageGroup: group, type: 'attrition', count: ageGroupData[group].attrition },
+      ]);
+
+    return processedData;
+  }
+
+  /**
    * Process education level data
    */
   static processEducationData(data: HRData[]) {
     const educationData = data.reduce((acc, emp) => {
       const education = this.getEducationLabel(emp.Education);
-      acc[education] = (acc[education] || 0) + 1;
+      if (!acc[education]) acc[education] = { total: 0, attrition: 0, retention: 0 };
+      acc[education].total++;
+      if (emp.Attrition === 'Yes') {
+        acc[education].attrition++;
+      } else {
+        acc[education].retention++;
+      }
       return acc;
-    }, {} as Record<string, number>);
+    }, {} as Record<string, { total: number; attrition: number; retention: number }>);
 
     // Sort by education level order
-    const orderedEducation = ['Below College', 'College', 'Bachelor', 'Master', 'Doctor'];    return orderedEducation
-      .filter(edu => educationData[edu] > 0)
-      .map(education => ({
-        education,
-        count: educationData[education]
-      }));
+    const orderedEducation = ['Below College', 'College', 'Bachelor', 'Master', 'Doctor'];
+    
+    const processedData = orderedEducation
+      .filter(edu => educationData[edu] && educationData[edu].total > 0)
+      .flatMap(education => [
+        { education, type: 'retention', count: educationData[education].retention },
+        { education, type: 'attrition', count: educationData[education].attrition },
+      ]);
+
+    return processedData;
   }
 
   /**
@@ -270,7 +316,8 @@ export class HRAnalytics {
       const scores = data.map(d => d[category.key as keyof HRData] as number);
       const scoreCounts = [1, 2, 3, 4].map(score => ({
         score,
-        count: scores.filter(s => s === score).length
+        attrition: data.filter(d => (d[category.key as keyof HRData] as number) === score && d.Attrition === 'Yes').length,
+        retention: data.filter(d => (d[category.key as keyof HRData] as number) === score && d.Attrition === 'No').length,
       }));
       
       return {

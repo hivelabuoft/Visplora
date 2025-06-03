@@ -4,10 +4,10 @@ import { HRData, AttritionEmployee } from '../types/interfaces';
 import { HRAnalytics } from './analytics';
 import {
   createDepartmentRetentionChart,
-  createGenderDonutChart, 
   createAgeGroupBarChart, 
-  createAttritionTrendChart,
-  createDistanceFromHomeChart
+  createDistanceFromHomeChart,
+  createGenderAttritionDonutChart,
+  createEducationBarChart
 } from '../data/chartSpecs';
 
 /**
@@ -40,7 +40,7 @@ export function DepartmentWidget({ data }: ChartWidgetProps) {
                 {chartData.map((item) => (
                   <div key={item.type} className="flex items-center gap-1">
                     <div className={`w-2 h-2 rounded-full ${
-                      item.type === 'retention' ? 'bg-gray-800' : 'bg-yellow-500'
+                      item.type === 'retention' ? 'bg-gray-800' : 'bg-[#ef9f56]'
                     }`}></div>
                     <span className="text-xs">{item.count}</span>
                   </div>
@@ -56,19 +56,19 @@ export function DepartmentWidget({ data }: ChartWidgetProps) {
 
 export function JobRoleWidget({ data }: ChartWidgetProps) {
   const roleData = HRAnalytics.processJobRoleData(data);
-
+  console.log('Role Data:', roleData);
   return (
-    <div className="space-y-8">
+    <div className="space-y-2">
       {roleData.map((item) => (
         <div key={item.role} className="flex items-center justify-between">
           <div className="flex items-center gap-2 mr-2">
             <div className="hover:bg-gray-200 w-9 h-9 rounded flex items-center justify-center text-xs font-semibold">
               {item.rank}
             </div>
-            <div className="hover:bg-gray-200 h-9 flex items-center px-2 rounded text-sm">{item.role}</div>
+            <div className="hover:bg-gray-200 w-full h-9 flex items-center px-2 rounded text-sm">{item.role}</div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="bg-yellow-500 text-white px-2 py-1 rounded text-xs">{item.attrition}</div>
+            <div className="bg-[#ef9f56] text-white px-2 py-1 rounded text-xs">{item.attrition}</div>
             <div className="bg-gray-800 text-white px-2 py-1 rounded text-xs">{item.total - item.attrition}</div>
           </div>
         </div>
@@ -78,10 +78,31 @@ export function JobRoleWidget({ data }: ChartWidgetProps) {
 }
 
 export function GenderWidget({ data }: ChartWidgetProps) {
-  const chartData = HRAnalytics.processGenderData(data);
-  const spec = createGenderDonutChart();
-  
-  return <VegaLite spec={{ ...spec, data: { values: chartData } }} actions={false} />;
+  const maleData = HRAnalytics.processGenderAttritionData(data, 'Male');
+  const femaleData = HRAnalytics.processGenderAttritionData(data, 'Female');
+  const spec = createGenderAttritionDonutChart();
+
+  return (
+    <div className="flex flex-col">
+      {/* Male Attrition/Retention */}
+      <div className="flex flex-row items-center">
+        <VegaLite spec={{ ...spec, data: { values: maleData } }} actions={false} />
+        <div className='hover:bg-gray-100 p-2 rounded'>
+          <div className="text-sm font-semibold">Male</div>
+          <div className="text-xs text-gray-600">Total: {maleData.reduce((sum, item) => sum + item.count, 0)}</div>
+        </div>
+      </div>
+
+      {/* Female Attrition/Retention */}
+      <div className="flex flex-row items-center">
+        <VegaLite spec={{ ...spec, data: { values: femaleData } }} actions={false} />
+        <div className='hover:bg-gray-100 p-2 rounded'>
+          <div className="text-sm font-semibold">Female</div>
+          <div className="text-xs text-gray-600">Total: {femaleData.reduce((sum, item) => sum + item.count, 0)}</div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export function AgeGroupWidget({ data }: ChartWidgetProps) {
@@ -92,24 +113,12 @@ export function AgeGroupWidget({ data }: ChartWidgetProps) {
 }
 
 export function EducationWidget({ data }: ChartWidgetProps) {
-  const educationData = HRAnalytics.processEducationData(data);
-
+  const chartData = HRAnalytics.processEducationData(data);
+  const spec = createEducationBarChart();
+  
   return (
-    <div className="space-y-1">
-      {educationData.map((item) => (
-        <div key={item.education} className="flex items-center justify-between">
-          <span className="text-sm">{item.education}</span>
-          <div className="flex items-center gap-2">
-            <div className="w-16 h-4 bg-gray-200 rounded">
-              <div 
-                className="h-full bg-yellow-500 rounded"
-                style={{ width: `${(item.count / Math.max(...educationData.map(d => d.count))) * 100}%` }}
-              />
-            </div>
-            <span className="text-sm font-medium w-8">{item.count}</span>
-          </div>
-        </div>
-      ))}
+    <div>
+      <VegaLite spec={{ ...spec, data: { values: chartData } }} actions={false} />
     </div>
   );
 }
@@ -119,20 +128,33 @@ export function SurveyScoreWidget({ data }: ChartWidgetProps) {
 
   return (
     <div className="space-y-4">
+      {/* Score Header */}
+      <div className="flex justify-between items-center">
+        <div className='text-xs ml-2'>Score {'>>'}</div>
+        <div className="flex text-center justify-center gap-1">
+          {[1, 2, 3, 4].map((score) => (
+            <div key={score} className="w-8 text-center text-xs">
+              {score}
+            </div>
+          ))}
+        </div>
+      </div>
       {surveyData.map((item) => (
-        <div key={item.category} className="text-center">
-          <div className="text-xs mb-2">{item.category}</div>
+        <div key={item.category} className="flex justify-center items-center">
+          <div className="text-sm mr-2 w-full h-12 px-2 rounded hover:bg-gray-200 flex items-center justify-start">
+            {item.category}
+          </div>
           <div className="flex justify-center gap-1">
             {item.scoreCounts.map((sc) => (
               <div key={sc.score} className="text-center">
-                <div className={`w-8 h-6 flex items-center justify-center text-white text-xs ${
-                  sc.score === 1 ? 'bg-yellow-300' :
-                  sc.score === 2 ? 'bg-yellow-400' :
-                  sc.score === 3 ? 'bg-gray-600' : 'bg-gray-800'
-                }`}>
-                  {sc.count}
+                {/* Retention Count */}
+                <div className="w-8 h-6 flex items-center justify-center text-white text-xs bg-gray-700 hover:bg-gray-600">
+                  {sc.retention}
                 </div>
-                <div className="text-xs mt-1">{sc.score}</div>
+                {/* Attrition Count */}
+                <div className="w-8 h-6 flex items-center justify-center text-white text-xs bg-[#ef9f56] hover:bg-[#e58f46]">
+                  {sc.attrition}
+                </div>
               </div>
             ))}
           </div>
@@ -148,11 +170,10 @@ export function RecentAttritionWidget({ data }: ChartWidgetProps) {
   return (
     <div className="space-y-4">
       {recentAttrition.map((emp) => (
-        <div key={emp.id} className="border-l-4 border-yellow-500 pl-3">
-          <div className="font-semibold text-sm">{emp.id}</div>
-          <div className="text-xs text-gray-600">{emp.role}</div>
+        <div key={emp.id} className="border-l-4 border-[#ef9f56] pl-3">
+          <div className="text-sm font-semibold text-gray-600">{emp.role}</div>
           <div className="text-xs text-gray-500">{emp.department}</div>
-          <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
+          <div className="mt-2 grid grid-cols-2 gap-1 text-xs">
             <div>
               <span className="text-gray-500">Avg. Satisfaction Score: </span>
               <span className="font-medium">{emp.satisfactionScore}</span>
@@ -172,30 +193,6 @@ export function RecentAttritionWidget({ data }: ChartWidgetProps) {
           </div>
         </div>
       ))}
-    </div>
-  );
-}
-
-export function AttritionTrendWidget({ data }: ChartWidgetProps) {
-  const trendData = HRAnalytics.generateAttritionTrendData(data);
-  const spec = createAttritionTrendChart();
-
-  return (
-    <div>
-      <div className="mb-4 flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <span className="text-lg">▼ 85.5% vs. previous month</span>
-        </div>
-        <div className="text-sm text-gray-500">SELECT PERIOD: 
-          <span className="ml-2">
-            <span className="px-2 py-1 bg-gray-200 rounded mx-1">W</span>
-            <span className="px-2 py-1 bg-gray-800 text-white rounded mx-1">M</span>
-            <span className="px-2 py-1 bg-gray-200 rounded mx-1">Q</span>
-            <span className="px-2 py-1 bg-gray-200 rounded mx-1">Y</span>
-          </span>        
-        </div>
-      </div>
-      <VegaLite spec={{ ...spec, data: { values: trendData } }} actions={false} />
     </div>
   );
 }
