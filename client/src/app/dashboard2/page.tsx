@@ -2,11 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { HRData, FilterCriteria } from "../types/interfaces";
 import { DataLoader } from "./dataLoader";
 import { HRAnalytics } from "./analytics";
-import { DepartmentWidget, JobRoleWidget, GenderWidget, AgeGroupWidget, EducationWidget, SurveyScoreWidget, RecentAttritionWidget, DistanceFromHomeWidget } from "./widgets";
+import { DepartmentWidget, JobRoleWidget, GenderWidget, AgeGroupWidget, EducationWidget, SurveyScoreWidget, ScrollableAttritionWidget, DistanceFromHomeWidget } from "./widgets";
 
 export default function HRAttritionDashboard() {
   const [data, setData] = useState<HRData[]>([]);
@@ -282,27 +281,9 @@ export default function HRAttritionDashboard() {
               <Card className="bg-white border-none shadow-sm h-full">
                 <CardHeader>
                   <CardTitle className="text-lg font-bold text-gray-700 font-mono">RECENT ATTRITIONS</CardTitle>
-                  <div className="flex gap-2 mt-2">
-                    <Select defaultValue="all">
-                      <SelectTrigger className="w-24">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">(All)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select defaultValue="all">
-                      <SelectTrigger className="w-24">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">(All)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
                 </CardHeader>
-                <CardContent>
-                  <RecentAttritionWidget data={filteredData} />
+                <CardContent className="h-full">
+                  <ScrollableAttritionWidget data={filteredData}/>
                 </CardContent>
               </Card>
             </div>

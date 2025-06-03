@@ -73,3 +73,27 @@ export interface VegaLiteSpec {
   encoding: any;
   [key: string]: any;
 }
+
+export interface ChartWidgetProps {
+  data: HRData[];
+}
+
+export interface DepartmentWidgetProps extends ChartWidgetProps {
+  onDepartmentClick?: (department: string) => void;
+  selectedDepartment?: string;
+}
+
+export interface JobRoleWidgetProps extends ChartWidgetProps {
+  onJobRoleClick?: (jobRole: string) => void;
+  selectedJobRole?: string;
+}
+
+export interface GenderWidgetProps extends ChartWidgetProps {
+  onGenderClick?: (gender: string) => void;
+  selectedGender?: string;
+}
+
+export interface ScrollableAttritionWidgetProps extends ChartWidgetProps {
+  selectedDepartment?: string;
+  selectedJobRole?: string;
+}

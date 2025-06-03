@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { VegaLite } from 'react-vega';
-import { HRData } from '../types/interfaces';
 import { HRAnalytics } from './analytics';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { 
+  HRData, 
+  ChartWidgetProps, 
+  DepartmentWidgetProps,
+  JobRoleWidgetProps,
+  GenderWidgetProps,
+  ScrollableAttritionWidgetProps
+} from '../types/interfaces';
 import {
   createDepartmentRetentionChart,
   createAgeGroupBarChart, 
@@ -13,26 +21,6 @@ import {
 /**
  * Reusable dashboard widgets for HR visualizations
  */
-
-interface ChartWidgetProps {
-  data: HRData[];
-}
-
-interface DepartmentWidgetProps extends ChartWidgetProps {
-  onDepartmentClick?: (department: string) => void;
-  selectedDepartment?: string;
-}
-
-interface JobRoleWidgetProps extends ChartWidgetProps {
-  onJobRoleClick?: (jobRole: string) => void;
-  selectedJobRole?: string;
-}
-
-interface GenderWidgetProps extends ChartWidgetProps {
-  onGenderClick?: (gender: string) => void;
-  selectedGender?: string;
-}
-
 export function DepartmentWidget({ data, onDepartmentClick, selectedDepartment }: DepartmentWidgetProps) {
   const departments = HRAnalytics.getUniqueDepartments(data);
   
@@ -223,35 +211,112 @@ export function SurveyScoreWidget({ data }: ChartWidgetProps) {
   );
 }
 
-export function RecentAttritionWidget({ data }: ChartWidgetProps) {
-  const recentAttrition = HRAnalytics.getRecentAttritionEmployees(data);
+export function ScrollableAttritionWidget({ data }: ChartWidgetProps) {
+  const [departmentFilter, setDepartmentFilter] = useState<string>('all');
+  const [jobRoleFilter, setJobRoleFilter] = useState<string>('all');
+
+  // Get all attrition employees
+  const allAttritionEmployees = data
+    .filter(emp => emp.Attrition === 'Yes')
+    .map((emp) => ({
+      id: `E_${emp.EmployeeNumber}`,
+      role: emp.JobRole,
+      department: emp.Department,
+      satisfactionScore: emp.JobSatisfaction.toFixed(1),
+      performanceRating: emp.PerformanceRating,
+      monthlyIncome: `$${emp.MonthlyIncome.toLocaleString()}`,
+      salaryHike: `${emp.PercentSalaryHike}%`,
+      gender: emp.Gender,
+      age: emp.Age
+    }));
+
+  // Apply filters
+  const filteredEmployees = allAttritionEmployees.filter(emp => {
+    if (departmentFilter !== 'all' && emp.department !== departmentFilter) return false;
+    if (jobRoleFilter !== 'all' && emp.role !== jobRoleFilter) return false;
+    return true;
+  });
+
+  // Get unique values for filter dropdowns
+  const uniqueDepartments = [...new Set(allAttritionEmployees.map(emp => emp.department))];
+  const uniqueJobRoles = [...new Set(allAttritionEmployees.map(emp => emp.role))];
 
   return (
-    <div className="space-y-4">
-      {recentAttrition.map((emp) => (
-        <div key={emp.id} className="border-l-4 border-[#ef9f56] pl-3">
-          <div className="text-sm font-semibold text-gray-600">{emp.role}</div>
-          <div className="text-xs text-gray-500">{emp.department}</div>
-          <div className="mt-2 grid grid-cols-2 gap-1 text-xs">
-            <div>
-              <span className="text-gray-500">Avg. Satisfaction Score: </span>
-              <span className="font-medium">{emp.satisfactionScore}</span>
+    <div className="h-full flex flex-col">
+      {/* Filter Controls */}
+      <div className="flex gap-2 mb-4">
+        <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
+          <SelectTrigger className="w-32">
+            <SelectValue placeholder="Department" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Departments</SelectItem>
+            {uniqueDepartments.map(dept => (
+              <SelectItem key={dept} value={dept}>
+                {dept === 'Research & Development' ? 'R&D' : dept}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select value={jobRoleFilter} onValueChange={setJobRoleFilter}>
+          <SelectTrigger className="w-32">
+            <SelectValue placeholder="Job Role" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Roles</SelectItem>
+            {uniqueJobRoles.map(role => (
+              <SelectItem key={role} value={role}>
+                {role.length > 15 ? `${role.substring(0, 12)}...` : role}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Scrollable Content */}
+      <div className="flex-1 overflow-y-auto pr-2 space-y-3 max-h-64">
+        {filteredEmployees.length > 0 ? (
+          filteredEmployees.map((emp) => (
+            <div key={emp.id} className="border-l-4 border-[#ef9f56] pl-3 bg-gray-50 p-2 rounded-r">
+              <div className="text-sm font-semibold text-gray-700">{emp.id}</div>
+              <div className="text-sm text-gray-600">Job Role: {emp.role}</div>
+              <div className="flex justify-start gap-4 items-start mb-2">
+                <div className="text-xs text-gray-500">
+                  Dept: {emp.department === 'Research & Development' ? 'R & D' : emp.department}
+                </div>
+                <div className="text-xs text-gray-500">Age: {emp.age} | {emp.gender}</div>
+              </div>
+              <div className="grid grid-cols-2 gap-1 text-xs">
+                <div>
+                  <span className="text-gray-500">Job Satisfaction: </span>
+                  <span className="font-medium">{emp.satisfactionScore}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Performance: </span>
+                  <span className="font-medium">{emp.performanceRating}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Monthly Income: </span>
+                  <span className="font-medium">{emp.monthlyIncome}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Salary Hike: </span>
+                  <span className="font-medium">{emp.salaryHike}</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <span className="text-gray-500">Performance Rating: </span>
-              <span className="font-medium">{emp.performanceRating}</span>
-            </div>
-            <div>
-              <span className="text-gray-500">Monthly Income: </span>
-              <span className="font-medium">{emp.monthlyIncome}</span>
-            </div>
-            <div>
-              <span className="text-gray-500">Salary Hike: </span>
-              <span className="font-medium">{emp.salaryHike}</span>
-            </div>
+          ))
+        ) : (
+          <div className="text-center text-gray-500 py-8">
+            No attrition employees found with current filters
           </div>
-        </div>
-      ))}
+        )}
+      </div>
+      
+      {/* Results counter */}
+      <div className="text-xs text-gray-500 mt-2 pt-2 border-t">
+        Showing {filteredEmployees.length} of {allAttritionEmployees.length} attrition employees
+      </div>
     </div>
   );
 }
