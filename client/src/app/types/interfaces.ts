@@ -59,11 +59,9 @@ export interface AttritionEmployee {
 
 export interface FilterCriteria {
   department: string;
+  jobRole: string;
+  gender: string;
   showOnlyAttrition: boolean;
-}
-
-export interface ChartData {
-  [key: string]: any;
 }
 
 export interface VegaLiteSpec {

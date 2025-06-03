@@ -1,6 +1,6 @@
 import React from 'react';
 import { VegaLite } from 'react-vega';
-import { HRData, AttritionEmployee } from '../types/interfaces';
+import { HRData } from '../types/interfaces';
 import { HRAnalytics } from './analytics';
 import {
   createDepartmentRetentionChart,
@@ -18,7 +18,22 @@ interface ChartWidgetProps {
   data: HRData[];
 }
 
-export function DepartmentWidget({ data }: ChartWidgetProps) {
+interface DepartmentWidgetProps extends ChartWidgetProps {
+  onDepartmentClick?: (department: string) => void;
+  selectedDepartment?: string;
+}
+
+interface JobRoleWidgetProps extends ChartWidgetProps {
+  onJobRoleClick?: (jobRole: string) => void;
+  selectedJobRole?: string;
+}
+
+interface GenderWidgetProps extends ChartWidgetProps {
+  onGenderClick?: (gender: string) => void;
+  selectedGender?: string;
+}
+
+export function DepartmentWidget({ data, onDepartmentClick, selectedDepartment }: DepartmentWidgetProps) {
   const departments = HRAnalytics.getUniqueDepartments(data);
   
   return (
@@ -33,7 +48,18 @@ export function DepartmentWidget({ data }: ChartWidgetProps) {
             <div>
               <VegaLite spec={{ ...spec, data: { values: chartData } }} actions={false} />
             </div>
-            <div>
+            <div 
+              className={`hover:bg-gray-100 p-2 rounded ml-2 cursor-pointer transition-colors 
+                ${selectedDepartment === dept ? 'bg-blue-100 border border-blue-300' : ''}`}
+              onClick={() => {
+                // Toggle selection: if same department is clicked, clear filter
+                if (selectedDepartment === dept) {
+                  onDepartmentClick?.('all');
+                } else {
+                  onDepartmentClick?.(dept);
+                }
+              }}
+            >
               <h4 className="font-medium text-sm">{dept.replace("Research & Development", "R & D").replace("Human Resources", "HR")}</h4>
               <div className="text-xs text-gray-600">Total: {totalCount}</div>
               <div className="flex gap-4 mt-1">
@@ -54,18 +80,29 @@ export function DepartmentWidget({ data }: ChartWidgetProps) {
   );
 }
 
-export function JobRoleWidget({ data }: ChartWidgetProps) {
+export function JobRoleWidget({ data, onJobRoleClick, selectedJobRole }: JobRoleWidgetProps) {
   const roleData = HRAnalytics.processJobRoleData(data);
   console.log('Role Data:', roleData);
   return (
     <div className="space-y-2">
       {roleData.map((item) => (
         <div key={item.role} className="flex items-center justify-between">
-          <div className="flex items-center gap-2 mr-2">
-            <div className="hover:bg-gray-200 w-9 h-9 rounded flex items-center justify-center text-xs font-semibold">
+          <div 
+            className={`flex items-center gap-2 mr-2 cursor-pointer transition-colors rounded p-1 ${
+              selectedJobRole === item.role ? 'bg-blue-100 border border-blue-300' : 'hover:bg-gray-100'
+            }`}
+            onClick={() => {
+              if (selectedJobRole === item.role) {
+                onJobRoleClick?.('all');
+              } else {
+                onJobRoleClick?.(item.role);
+              }
+            }}
+          >
+            <div className="w-9 h-9 rounded flex items-center justify-center text-xs font-semibold">
               {item.rank}
             </div>
-            <div className="hover:bg-gray-200 w-full h-9 flex items-center px-2 rounded text-sm">{item.role}</div>
+            <div className="w-full h-9 flex items-center px-2 rounded text-sm">{item.role}</div>
           </div>
           <div className="flex items-center gap-2">
             <div className="bg-[#ef9f56] text-white px-2 py-1 rounded text-xs">{item.attrition}</div>
@@ -77,7 +114,7 @@ export function JobRoleWidget({ data }: ChartWidgetProps) {
   );
 }
 
-export function GenderWidget({ data }: ChartWidgetProps) {
+export function GenderWidget({ data, onGenderClick, selectedGender }: GenderWidgetProps) {
   const maleData = HRAnalytics.processGenderAttritionData(data, 'Male');
   const femaleData = HRAnalytics.processGenderAttritionData(data, 'Female');
   const spec = createGenderAttritionDonutChart();
@@ -87,7 +124,18 @@ export function GenderWidget({ data }: ChartWidgetProps) {
       {/* Male Attrition/Retention */}
       <div className="flex flex-row items-center">
         <VegaLite spec={{ ...spec, data: { values: maleData } }} actions={false} />
-        <div className='hover:bg-gray-100 p-2 rounded'>
+        <div 
+          className={`p-2 rounded cursor-pointer transition-colors ${
+            selectedGender === 'Male' ? 'bg-blue-100 border border-blue-300' : 'hover:bg-gray-100'
+          }`}
+          onClick={() => {
+            if (selectedGender === 'Male') {
+              onGenderClick?.('all');
+            } else {
+              onGenderClick?.('Male');
+            }
+          }}
+        >
           <div className="text-sm font-semibold">Male</div>
           <div className="text-xs text-gray-600">Total: {maleData.reduce((sum, item) => sum + item.count, 0)}</div>
         </div>
@@ -96,7 +144,18 @@ export function GenderWidget({ data }: ChartWidgetProps) {
       {/* Female Attrition/Retention */}
       <div className="flex flex-row items-center">
         <VegaLite spec={{ ...spec, data: { values: femaleData } }} actions={false} />
-        <div className='hover:bg-gray-100 p-2 rounded'>
+        <div 
+          className={`p-2 rounded cursor-pointer transition-colors ${
+            selectedGender === 'Female' ? 'bg-blue-100 border border-blue-300' : 'hover:bg-gray-100'
+          }`}
+          onClick={() => {
+            if (selectedGender === 'Female') {
+              onGenderClick?.('all');
+            } else {
+              onGenderClick?.('Female');
+            }
+          }}
+        >
           <div className="text-sm font-semibold">Female</div>
           <div className="text-xs text-gray-600">Total: {femaleData.reduce((sum, item) => sum + item.count, 0)}</div>
         </div>

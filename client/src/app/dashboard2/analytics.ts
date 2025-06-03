@@ -1,4 +1,4 @@
-import { HRData, KPIMetrics, AttritionEmployee, FilterCriteria } from '../types/interfaces';
+import {AttritionEmployee, FilterCriteria, HRData, KPIMetrics} from '../types/interfaces';
 
 /**
  * Business logic and analytics functions for HR Dashboard
@@ -16,68 +16,8 @@ export class HRAnalytics {
     return map[value as keyof typeof map] || 'Unknown';
   }
 
-  static getEnvironmentSatisfactionLabel(value: number): string {
-    const map = {
-      1: 'Low',
-      2: 'Medium',
-      3: 'High', 
-      4: 'Very High'
-    };
-    return map[value as keyof typeof map] || 'Unknown';
-  }
-
-  static getJobInvolvementLabel(value: number): string {
-    const map = {
-      1: 'Low',
-      2: 'Medium',
-      3: 'High',
-      4: 'Very High'
-    };
-    return map[value as keyof typeof map] || 'Unknown';
-  }
-
-  static getJobSatisfactionLabel(value: number): string {
-    const map = {
-      1: 'Low',
-      2: 'Medium', 
-      3: 'High',
-      4: 'Very High'
-    };
-    return map[value as keyof typeof map] || 'Unknown';
-  }
-
-  static getPerformanceRatingLabel(value: number): string {
-    const map = {
-      1: 'Low',
-      2: 'Good',
-      3: 'Excellent',
-      4: 'Outstanding'
-    };
-    return map[value as keyof typeof map] || 'Unknown';
-  }
-
-  static getRelationshipSatisfactionLabel(value: number): string {
-    const map = {
-      1: 'Low',
-      2: 'Medium',
-      3: 'High',
-      4: 'Very High'
-    };
-    return map[value as keyof typeof map] || 'Unknown';
-  }
-
-  static getWorkLifeBalanceLabel(value: number): string {
-    const map = {
-      1: 'Bad',
-      2: 'Good', 
-      3: 'Better',
-      4: 'Best'
-    };
-    return map[value as keyof typeof map] || 'Unknown';
-  }
-
   /**
-   * Filter HR data based on department and attrition criteria
+   * Filter HR data based on department, job role, gender, and attrition criteria
    */
   static filterEmployeeData(
     data: HRData[], 
@@ -86,6 +26,12 @@ export class HRAnalytics {
     let filtered = data;
     if (criteria.department !== 'all') {
       filtered = filtered.filter(row => row.Department === criteria.department);
+    }
+    if (criteria.jobRole !== 'all') {
+      filtered = filtered.filter(row => row.JobRole === criteria.jobRole);
+    }
+    if (criteria.gender !== 'all') {
+      filtered = filtered.filter(row => row.Gender === criteria.gender);
     }
     if (criteria.showOnlyAttrition) {
       filtered = filtered.filter(row => row.Attrition === 'Yes');
@@ -114,26 +60,6 @@ export class HRAnalytics {
    */
   static getUniqueDepartments(data: HRData[]): string[] {
     return [...new Set(data.map(emp => emp.Department))].sort();
-  }
-
-  /**
-   * Process department data for visualization
-   */
-  static processDepartmentData(data: HRData[]) {
-    const departmentData = data.reduce((acc, emp) => {
-      const dept = emp.Department;
-      if (!acc[dept]) acc[dept] = { total: 0, attrition: 0 };
-      acc[dept].total++;
-      if (emp.Attrition === 'Yes') acc[dept].attrition++;
-      return acc;
-    }, {} as Record<string, { total: number; attrition: number }>);
-
-    return Object.entries(departmentData).map(([dept, stats]) => ({
-      department: dept.replace('Research & Development', 'R & D').replace('Human Resources', 'HR'),
-      total: stats.total,
-      attrition: stats.attrition,
-      retention: stats.total - stats.attrition
-    }));
   }
 
   /**
@@ -183,22 +109,6 @@ export class HRAnalytics {
   }
 
   /**
-   * Process gender distribution data
-   */
-  static processGenderData(data: HRData[]) {
-    const genderData = data.reduce((acc, emp) => {
-      acc[emp.Gender] = (acc[emp.Gender] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-
-    return Object.entries(genderData).map(([gender, count]) => ({
-      gender,
-      count,
-      percentage: ((count / data.length) * 100).toFixed(0) + '%'
-    }));
-  }
-
-  /**
    * Process gender data to show attrition vs retention
    */
   static processGenderAttritionData(data: HRData[], gender: string) {
@@ -244,14 +154,12 @@ export class HRAnalytics {
     }, {} as Record<string, { total: number; attrition: number; retention: number }>);
 
     // Process data for stacking
-    const processedData = ["< 25", "25-34", "35-44", "45-55", "> 55"]
-      .filter(group => ageGroupData[group] && ageGroupData[group].total > 0)
-      .flatMap(group => [
-        { ageGroup: group, type: 'retention', count: ageGroupData[group].retention },
-        { ageGroup: group, type: 'attrition', count: ageGroupData[group].attrition },
-      ]);
-
-    return processedData;
+    return ["< 25", "25-34", "35-44", "45-55", "> 55"]
+        .filter(group => ageGroupData[group] && ageGroupData[group].total > 0)
+        .flatMap(group => [
+          {ageGroup: group, type: 'retention', count: ageGroupData[group].retention},
+          {ageGroup: group, type: 'attrition', count: ageGroupData[group].attrition},
+        ]);
   }
 
   /**
@@ -272,15 +180,13 @@ export class HRAnalytics {
 
     // Sort by education level order
     const orderedEducation = ['Below College', 'College', 'Bachelor', 'Master', 'Doctor'];
-    
-    const processedData = orderedEducation
-      .filter(edu => educationData[edu] && educationData[edu].total > 0)
-      .flatMap(education => [
-        { education, type: 'retention', count: educationData[education].retention },
-        { education, type: 'attrition', count: educationData[education].attrition },
-      ]);
 
-    return processedData;
+    return orderedEducation
+        .filter(edu => educationData[edu] && educationData[edu].total > 0)
+        .flatMap(education => [
+          {education, type: 'retention', count: educationData[education].retention},
+          {education, type: 'attrition', count: educationData[education].attrition},
+        ]);
   }
 
   /**
@@ -313,7 +219,6 @@ export class HRAnalytics {
     ];
 
     return surveyCategories.map(category => {
-      const scores = data.map(d => d[category.key as keyof HRData] as number);
       const scoreCounts = [1, 2, 3, 4].map(score => ({
         score,
         attrition: data.filter(d => (d[category.key as keyof HRData] as number) === score && d.Attrition === 'Yes').length,
@@ -360,18 +265,5 @@ export class HRAnalytics {
       return getStart(a) - getStart(b);
     });
     return { processedData, sortedIntervals };
-  }
-
-  /**
-   * Generate simulated monthly attrition trend data
-   */
-  static generateAttritionTrendData(data: HRData[]) {
-    const monthlyData = [];
-    for (let i = 0; i < 12; i++) {
-      const month = new Date(2021, 4 + i, 1).toLocaleDateString('en', { month: 'short', year: 'numeric' });
-      const attritionCount = Math.floor(Math.random() * 60) + 10; // Simulate data
-      monthlyData.push({ month, attrition: attritionCount });
-    }
-    return monthlyData;
   }
 }

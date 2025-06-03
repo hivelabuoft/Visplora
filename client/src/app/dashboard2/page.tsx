@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter, CardAction } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { HRData, FilterCriteria } from "../types/interfaces";
 import { DataLoader } from "./dataLoader";
@@ -12,8 +12,22 @@ export default function HRAttritionDashboard() {
   const [data, setData] = useState<HRData[]>([]);
   const [filteredData, setFilteredData] = useState<HRData[]>([]);
   const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
+  const [selectedJobRole, setSelectedJobRole] = useState<string>('all');
+  const [selectedGender, setSelectedGender] = useState<string>('all');
   const [showOnlyAttrition, setShowOnlyAttrition] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  // Helper function to check if any filters are active
+  const hasActiveFilters = () => {
+    return selectedDepartment !== 'all' || selectedJobRole !== 'all' || selectedGender !== 'all';
+  };
+
+  // Function to clear all filters
+  const clearAllFilters = () => {
+    setSelectedDepartment('all');
+    setSelectedJobRole('all');
+    setSelectedGender('all');
+  };
 
   // Load CSV data
   useEffect(() => {
@@ -39,14 +53,15 @@ export default function HRAttritionDashboard() {
   useEffect(() => {
     const criteria: FilterCriteria = {
       department: selectedDepartment,
+      jobRole: selectedJobRole,
+      gender: selectedGender,
       showOnlyAttrition
     };
     const filtered = HRAnalytics.filterEmployeeData(data, criteria);
     setFilteredData(filtered);
-  }, [data, selectedDepartment, showOnlyAttrition]);
+  }, [data, selectedDepartment, selectedJobRole, selectedGender, showOnlyAttrition]);
 
   // Get unique departments and KPIs
-  const departments = HRAnalytics.getUniqueDepartments(data);
   const kpis = HRAnalytics.calculateKPIMetrics(data);
 
   if (loading) {
@@ -61,11 +76,20 @@ export default function HRAttritionDashboard() {
     <div className="min-h-5/6 bg-[#f5f4f2] m-6 rounded-xl p-6">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex justify-between items-start mb-4">
-          <div>
+        <div className="flex justify-between items-center mb-4 gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <h1 className="text-3xl font-bold text-gray-800 tracking-wide">HR ATTRITION DASHBOARD</h1>
+            {/* Clear All Filters Button */}
+            {hasActiveFilters() && (
+              <button
+                onClick={clearAllFilters}
+                className="text-sm bg-blue-100 text-blue-700 px-3 py-2 rounded-lg hover:bg-blue-200 transition-colors font-medium"
+              >
+                Clear All Filters
+              </button>
+            )}
           </div>
-          <div className="flex items-center gap-8">
+          <div className="flex flex-col sm:flex-row items-center gap-8">
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium">SHOW ONLY ATTRITION</span>
               <label className="relative inline-flex items-center cursor-pointer">
@@ -101,11 +125,10 @@ export default function HRAttritionDashboard() {
         {/* Left Column - Overview & Department */}
         <div className="col-span-12 lg:col-span-5 space-y-4 h-full">
           {/* Overview Cards */}
-          <Card className="bg-white border-none shadow-sm">
+          <Card className="bg-white border-none shadow-sm gap-2">
             <CardHeader>
               <div className="flex items-center justify-start gap-4">
                 <CardTitle className="text-lg font-bold text-gray-700 font-mono">OVERVIEW</CardTitle>
-                <div className="text-sm text-gray-500">(27 May, 2021 to 8 May, 2022)</div>
               </div>
             </CardHeader>
             <CardContent>
@@ -151,19 +174,43 @@ export default function HRAttritionDashboard() {
             {/* Department Analysis */}
             <div className="bg-0 border-none shadow-none gap-2">
                 <CardHeader>
-                    <CardTitle className="text-lg font-bold text-gray-700 font-mono">DEPARTMENT</CardTitle>
+                    <div className="flex justify-between">
+                      <CardTitle className="text-lg font-bold text-gray-700 font-mono">DEPARTMENT</CardTitle>
+                      {selectedDepartment !== 'all' && (
+                        <button
+                          onClick={() => setSelectedDepartment('all')}
+                          className="text-xs bg-blue-100 text-blue-700 ml-2 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                        >
+                          Clear Filter
+                        </button>
+                      )}
+                    </div>
                 </CardHeader>
                 <CardContent>
-                    <DepartmentWidget data={filteredData} />
+                    <DepartmentWidget data={filteredData} onDepartmentClick={setSelectedDepartment} selectedDepartment={selectedDepartment} />
                 </CardContent>
             </div>
             {/* Job Role Analysis */}
             <div className="bg-0 border-none shadow-none gap-2">
                 <CardHeader>
-                    <CardTitle className="text-lg font-bold text-gray-700 font-mono">JOB ROLE</CardTitle>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-lg font-bold text-gray-700 font-mono">JOB ROLE</CardTitle>
+                      {selectedJobRole !== 'all' && (
+                        <button
+                          onClick={() => setSelectedJobRole('all')}
+                          className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                        >
+                          Clear Filter
+                        </button>
+                      )}
+                    </div>
                 </CardHeader>
                 <CardContent>
-                    <JobRoleWidget data={filteredData} />
+                    <JobRoleWidget 
+                      data={filteredData} 
+                      onJobRoleClick={setSelectedJobRole}
+                      selectedJobRole={selectedJobRole}
+                    />
                 </CardContent>
             </div>
           </Card>
@@ -182,14 +229,28 @@ export default function HRAttritionDashboard() {
         <div className="col-span-12 lg:col-span-7 grid gap-4">
           <Card className="bg-white border-none shadow-sm">
             <CardHeader>
-              <CardTitle className="text-lg font-bold text-gray-700 font-mono">DEMOGRAPHICS</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg font-bold text-gray-700 font-mono">DEMOGRAPHICS</CardTitle>
+                {selectedGender !== 'all' && (
+                  <button
+                    onClick={() => setSelectedGender('all')}
+                    className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                  >
+                    Clear Filter
+                  </button>
+                )}
+              </div>
               <div className="text-sm text-gray-500">Click data point(s) to filter dashboard</div>
             </CardHeader>
             <CardContent className="flex flex-row justify-center items-center text-center lg:text-start flex-wrap">
               {/* Gender Distribution */}
               <div className="pr-4 xl:border-r-2 border-gray-300">
                 <h4 className="font-semibold text-gray-600 mb-3">GENDER</h4>
-                <GenderWidget data={filteredData} />
+                <GenderWidget 
+                  data={filteredData} 
+                  onGenderClick={setSelectedGender}
+                  selectedGender={selectedGender}
+                />
               </div>
               {/* Age Group Distribution */}
               <div className="px-4 xl:border-r-2 border-gray-300">
