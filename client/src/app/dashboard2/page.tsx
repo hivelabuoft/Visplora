@@ -175,7 +175,7 @@ export default function HRAttritionDashboard() {
             <div className="bg-0 border-none shadow-none gap-2">
                 <CardHeader>
                     <div className="flex justify-between">
-                      <CardTitle className="text-lg font-bold text-gray-700 font-mono">DEPARTMENT</CardTitle>
+                      <CardTitle className="text-lg font-bold text-gray-700 font-mono mb-2">DEPARTMENT</CardTitle>
                       {selectedDepartment !== 'all' && (
                         <button
                           onClick={() => setSelectedDepartment('all')}
@@ -259,7 +259,7 @@ export default function HRAttritionDashboard() {
               {/* Education Distribution */}
               <div className="pl-4">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-semibold text-gray-600">EDUCATION</h4>
+                  <h4 className="font-semibold text-gray-600">{!showEducationField ? "EDUCATION" : "EDUCATION FIELD"}</h4>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-500">Toggle Education</span>
                     <label className="relative inline-flex items-center cursor-pointer">

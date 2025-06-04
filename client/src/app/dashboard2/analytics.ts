@@ -265,7 +265,7 @@ export class HRAnalytics {
       const distance = emp.DistanceFromHome;
       // Determine 5km interval
       const interval = Math.floor((distance) / 5) * 5 + 1;
-      const intervalKey = `${interval}-${interval + 4}km`;
+      const intervalKey = `${interval}-${interval + 4}`;
 
       if (!acc[intervalKey]) acc[intervalKey] = { total: 0, attrition: 0, retention: 0 };
       acc[intervalKey].total++;
