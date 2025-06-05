@@ -1,19 +1,21 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FiPlus, FiLayout, FiCheck, FiExternalLink, FiChevronDown } from 'react-icons/fi';
+import { FiPlus, FiLayout, FiCheck, FiExternalLink, FiChevronDown, FiPlay } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
 
 interface DashboardControlsProps {
   dashboardTitle: string;
   dashboardType: string;
   onAddToCanvas?: () => void;
+  onPlaygroundMode?: () => void;
 }
 
 const DashboardControls: React.FC<DashboardControlsProps> = ({
   dashboardTitle,
   dashboardType,
-  onAddToCanvas
+  onAddToCanvas,
+  onPlaygroundMode
 }) => {
   const [isAdded, setIsAdded] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -62,7 +64,7 @@ const DashboardControls: React.FC<DashboardControlsProps> = ({
 
   return (
     <div 
-      className="fixed top-4 right-4 z-50 transition-transform duration-200"
+      className="fixed top-3 right-3 z-50 transition-transform duration-200"
     >
       <div className="bg-white w-48 rounded-lg shadow-lg border border-slate-200">
         {/* Header with collapse toggle */}
@@ -86,6 +88,14 @@ const DashboardControls: React.FC<DashboardControlsProps> = ({
           <div className="p-2 w-48">
             {/* Canvas Actions */}
             <div className="space-y-1">
+              <button
+                onClick={() => onPlaygroundMode && onPlaygroundMode()}
+                className="w-full flex items-center justify-center gap-1.5 px-2 py-1.5 rounded text-xs font-medium bg-purple-500 hover:bg-purple-600 text-white transition-colors"
+              >
+                <FiPlay size={14} />
+                Playground Mode
+              </button>
+              
               <button
                 onClick={handleAddToCanvas}
                 disabled={isAdded}

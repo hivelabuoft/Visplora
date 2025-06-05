@@ -22,6 +22,7 @@ import {
   SelectValue 
 } from '@/components/ui/select';
 import DashboardControls from '../components/DashboardControls';
+import DashboardPlayground from '../components/DashboardPlayground';
 
 // Sample data - in a real application, you would fetch this from an API
 const sampleData = {
@@ -224,6 +225,7 @@ const pieChartSpec = {
 
 export default function Dashboard1() {
   const [activeRegion, setActiveRegion] = useState<string>('all');
+  const [isPlaygroundMode, setIsPlaygroundMode] = useState(false);
   
   // Filter data based on selected region
   const filteredData = {
@@ -240,7 +242,7 @@ export default function Dashboard1() {
     categories: new Set(filteredData.values.map(d => d.category)).size
   };
 
-  return (
+  const dashboardContent = (
     <div className="p-6 space-y-6 bg-[#f8f9fa]">
       <div className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold">Performance Analytics Dashboard</h1>
@@ -377,9 +379,9 @@ export default function Dashboard1() {
         <p className="text-sm text-gray-600 mt-2">
           The visualizations are created using Vega-Lite, a high-level visualization grammar that enables rapid creation
           of interactive visualizations. In a production environment, these visualizations would be connected to live data
-          sources and could include additional interactivity features.        </p>
+          sources and could include additional interactivity features.
+        </p>
       </div>
-
       {/* Dashboard Controls for Canvas Integration */}
       <DashboardControls 
         dashboardTitle="Analytics Dashboard"
@@ -387,7 +389,25 @@ export default function Dashboard1() {
         onAddToCanvas={() => {
           console.log('Analytics Dashboard added to canvas');
         }}
+        onPlaygroundMode={() => setIsPlaygroundMode(true)}
       />
     </div>
+  );
+
+  return (
+    <>
+      {dashboardContent}
+        <DashboardPlayground
+        isActive={isPlaygroundMode}
+        onClose={() => setIsPlaygroundMode(false)}
+        dashboardTitle="Analytics Dashboard"
+        dashboardType="analytics"
+        onAddToCanvas={() => {
+          console.log('Dashboard added to canvas from playground');
+        }}
+      >
+        {dashboardContent}
+      </DashboardPlayground>
+    </>
   );
 }

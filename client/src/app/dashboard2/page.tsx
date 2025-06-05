@@ -7,6 +7,7 @@ import { DataLoader } from "./dataLoader";
 import { HRAnalytics } from "./analytics";
 import { DepartmentWidget, JobRoleWidget, GenderWidget, AgeGroupWidget, EducationWidget, SurveyScoreWidget, ScrollableAttritionWidget, DistanceFromHomeWidget } from "./widgets";
 import DashboardControls from "../components/DashboardControls";
+import DashboardPlayground from "../components/DashboardPlayground";
 
 export default function HRAttritionDashboard() {
   const [data, setData] = useState<HRData[]>([]);
@@ -17,6 +18,7 @@ export default function HRAttritionDashboard() {
   const [showOnlyAttrition, setShowOnlyAttrition] = useState(false);
   const [showEducationField, setShowEducationField] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isPlaygroundMode, setIsPlaygroundMode] = useState(false);
 
   // Helper function to check if any filters are active
   const hasActiveFilters = () => {
@@ -73,7 +75,7 @@ export default function HRAttritionDashboard() {
     );
   }
 
-  return (
+  const dashboardContent = (
     <div className="min-h-5/6 bg-[#f5f4f2] m-6 rounded-xl p-6">
       {/* Header */}
       <div className="mb-8">
@@ -315,7 +317,25 @@ export default function HRAttritionDashboard() {
         onAddToCanvas={() => {
           console.log('Dashboard added to canvas');
         }}
+        onPlaygroundMode={() => setIsPlaygroundMode(true)}
       />
     </div>
+  );
+
+  return (
+    <>
+      {dashboardContent}
+        <DashboardPlayground
+        isActive={isPlaygroundMode}
+        onClose={() => setIsPlaygroundMode(false)}
+        dashboardTitle="HR Attrition Dashboard"
+        dashboardType="hr-attrition"
+        onAddToCanvas={() => {
+          console.log('Dashboard added to canvas from playground');
+        }}
+      >
+        {dashboardContent}
+      </DashboardPlayground>
+    </>
   );
 }
