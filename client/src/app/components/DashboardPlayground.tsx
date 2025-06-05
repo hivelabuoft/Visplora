@@ -102,9 +102,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       setIsAdded(true);
     }
   }, [onAddToCanvas, dashboardType, dashboardTitle]);
-
   const handleGoToCanvas = useCallback(() => {
-    window.open('/', '_blank');
+    window.location.href = '/';
   }, []);
 
   // Handle escape key to close playground
@@ -129,6 +128,21 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     };
   }, [isActive, onClose]);
 
+  // Reset transform when playground becomes active
+  useEffect(() => {
+    if (isActive && transformRef.current) {
+      // Small delay to ensure the component is fully rendered
+      const timer = setTimeout(() => {
+        if (transformRef.current) {
+          transformRef.current.resetTransform();
+          setZoomLevel(100);
+        }
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isActive]);
+
   if (!isActive) {
     return null;
   }
@@ -150,31 +164,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
 
         {/* Controls in Header */}
         <div className="flex justify-center items-center gap-4 flex-wrap">          
-          {/* Dashboard Controller */}
-          {showControls && (
-            <div className="flex items-center gap-2 bg-slate-100 rounded-lg p-1.5 shadow-xs">
-              <button
-                onClick={handleAddToCanvas}
-                disabled={isAdded}
-                className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-all duration-200 ${
-                  isAdded
-                    ? 'bg-green-50 text-green-700 border border-green-200'
-                    : 'bg-blue-500 hover:bg-blue-600 text-white'
-                }`}
-              >
-                {isAdded ? (<><FiCheck size={12} />Added</>) : (<><FiPlus size={12} />Add to Canvas</>)}
-              </button>
-
-              <button
-                onClick={handleGoToCanvas}
-                className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 transition-colors"
-              >
-                <FiExternalLink size={12} />
-                View Canvas
-              </button>
-            </div>
-          )}
-          
           {/* Zoom Controls in Header */}
           {showControls && (
             <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1 px-1.5">
@@ -217,7 +206,28 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             {showControls ? <FiEyeOff size={16} /> : <FiEye size={16} />}
             {showControls ? 'Hide Controls' : 'Show Controls'}
           </button>
-          
+            
+          {/* Add to Canvas and View Canvas Buttons */}
+            <button
+            onClick={handleAddToCanvas}
+            disabled={isAdded}
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                isAdded
+                ? 'bg-green-50 text-green-700 border border-green-200'
+                : 'bg-blue-500 hover:bg-blue-600 text-white'
+            }`}
+            >
+            {isAdded ? (<><FiCheck size={16} />Added to Canvas</>) : (<><FiPlus size={16} />Add to Canvas</>)}
+            </button>
+
+            <button
+            onClick={handleGoToCanvas}
+            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:cursor-pointer hover:text-gray-900 hover:bg-slate-100 transition-colors"
+            >
+            <FiExternalLink size={16} />
+            View Canvas
+            </button>
+
           {/* Exit Playground Button */}
           <button
             onClick={onClose}
@@ -236,7 +246,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           initialScale={0.8}
           initialPositionX={-1200}
           initialPositionY={-450}
-          minScale={0.5}
+          minScale={0.25}
           maxScale={2}
           centerOnInit={true}
           limitToBounds={false}
@@ -264,7 +274,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             {/* Dashboard Content */}
             <TransformComponent>
               <div 
-                className="relative w-[4800px] h-[2400px]" 
+                className="relative w-[4800px] h-[300vh]" 
                 style={{
                   backgroundImage: 'radial-gradient(circle, #d1d5db 2px, transparent 2px)',
                   backgroundSize: '50px 50px',

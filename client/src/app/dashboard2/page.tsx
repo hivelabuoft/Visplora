@@ -309,16 +309,17 @@ export default function HRAttritionDashboard() {
           </div>
         </div>
       </div>
-      
-      {/* Dashboard Controls for Canvas Integration */}
-      <DashboardControls 
-        dashboardTitle="HR Attrition Dashboard"
-        dashboardType="hr-attrition"
-        onAddToCanvas={() => {
-          console.log('Dashboard added to canvas');
-        }}
-        onPlaygroundMode={() => setIsPlaygroundMode(true)}
-      />
+        {/* Dashboard Controls for Canvas Integration */}
+      {!isPlaygroundMode && (
+        <DashboardControls 
+          dashboardTitle="HR Attrition Dashboard"
+          dashboardType="hr-attrition"
+          onAddToCanvas={() => {
+            console.log('Dashboard added to canvas');
+          }}
+          onPlaygroundMode={() => setIsPlaygroundMode(true)}
+        />
+      )}
     </div>
   );
 

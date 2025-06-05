@@ -383,14 +383,16 @@ export default function Dashboard1() {
         </p>
       </div>
       {/* Dashboard Controls for Canvas Integration */}
-      <DashboardControls 
-        dashboardTitle="Analytics Dashboard"
-        dashboardType="analytics"
-        onAddToCanvas={() => {
-          console.log('Analytics Dashboard added to canvas');
-        }}
-        onPlaygroundMode={() => setIsPlaygroundMode(true)}
-      />
+      {!isPlaygroundMode && (
+        <DashboardControls 
+          dashboardTitle="Analytics Dashboard"
+          dashboardType="analytics"
+          onAddToCanvas={() => {
+            console.log('Analytics Dashboard added to canvas');
+          }}
+          onPlaygroundMode={() => setIsPlaygroundMode(true)}
+        />
+      )}
     </div>
   );
 

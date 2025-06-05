@@ -18,7 +18,7 @@ const DashboardControls: React.FC<DashboardControlsProps> = ({
   onPlaygroundMode
 }) => {
   const [isAdded, setIsAdded] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const router = useRouter();
 
   const handleAddToCanvas = () => {
