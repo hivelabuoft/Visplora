@@ -21,6 +21,7 @@ import {
   SelectTrigger, 
   SelectValue 
 } from '@/components/ui/select';
+import DashboardControls from '../components/DashboardControls';
 
 // Sample data - in a real application, you would fetch this from an API
 const sampleData = {
@@ -376,9 +377,17 @@ export default function Dashboard1() {
         <p className="text-sm text-gray-600 mt-2">
           The visualizations are created using Vega-Lite, a high-level visualization grammar that enables rapid creation
           of interactive visualizations. In a production environment, these visualizations would be connected to live data
-          sources and could include additional interactivity features.
-        </p>
+          sources and could include additional interactivity features.        </p>
       </div>
+
+      {/* Dashboard Controls for Canvas Integration */}
+      <DashboardControls 
+        dashboardTitle="Analytics Dashboard"
+        dashboardType="analytics"
+        onAddToCanvas={() => {
+          console.log('Analytics Dashboard added to canvas');
+        }}
+      />
     </div>
   );
 }

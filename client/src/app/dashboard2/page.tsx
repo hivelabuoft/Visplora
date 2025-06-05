@@ -6,6 +6,7 @@ import { HRData, FilterCriteria } from "../types/interfaces";
 import { DataLoader } from "./dataLoader";
 import { HRAnalytics } from "./analytics";
 import { DepartmentWidget, JobRoleWidget, GenderWidget, AgeGroupWidget, EducationWidget, SurveyScoreWidget, ScrollableAttritionWidget, DistanceFromHomeWidget } from "./widgets";
+import DashboardControls from "../components/DashboardControls";
 
 export default function HRAttritionDashboard() {
   const [data, setData] = useState<HRData[]>([]);
@@ -306,6 +307,15 @@ export default function HRAttritionDashboard() {
           </div>
         </div>
       </div>
+      
+      {/* Dashboard Controls for Canvas Integration */}
+      <DashboardControls 
+        dashboardTitle="HR Attrition Dashboard"
+        dashboardType="hr-attrition"
+        onAddToCanvas={() => {
+          console.log('Dashboard added to canvas');
+        }}
+      />
     </div>
   );
 }

@@ -71,7 +71,6 @@ export function DepartmentWidget({ data, onDepartmentClick, selectedDepartment }
 
 export function JobRoleWidget({ data, onJobRoleClick, selectedJobRole }: JobRoleWidgetProps) {
   const roleData = HRAnalytics.processJobRoleData(data);
-  console.log('Role Data:', roleData);
   return (
     <div className="space-y-2">
       {roleData.map((item) => (
