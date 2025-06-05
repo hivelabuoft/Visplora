@@ -63,10 +63,8 @@ const DashboardControls: React.FC<DashboardControlsProps> = ({
   };
 
   return (
-    <div 
-      className="fixed top-3 right-3 z-50 transition-transform duration-200"
-    >
-      <div className="bg-white w-48 rounded-lg shadow-lg border border-slate-200">
+    <div className="fixed top-4 right-4 z-50 transition-transform duration-200">
+      <div className="bg-white w-50 rounded-lg shadow-lg border border-slate-200">
         {/* Header with collapse toggle */}
         <div className="rounded-lg items-center justify-between p-1 bg-slate-50 border-b border-slate-200">
           <button
@@ -75,7 +73,7 @@ const DashboardControls: React.FC<DashboardControlsProps> = ({
           >
             <div className="flex items-center gap-2">
                 <div className="w-6 h-6 hover:bg-blue-200 bg-blue-100 rounded flex items-center justify-center">
-                <FiLayout size={12} className="text-blue-600" />
+                <FiLayout size={14} className="text-blue-600" />
                 </div>
                 <span className="text-sm hover:underline font-medium text-slate-900 mr-2">Canvas Controls</span>
             </div>
@@ -85,12 +83,12 @@ const DashboardControls: React.FC<DashboardControlsProps> = ({
 
         {/* Collapsible content */}
         {!isCollapsed && (
-          <div className="p-2 w-48">
+          <div className="p-2 w-50">
             {/* Canvas Actions */}
-            <div className="space-y-1">
+            <div className="space-y-1 text-sm font-medium">
               <button
                 onClick={() => onPlaygroundMode && onPlaygroundMode()}
-                className="w-full flex items-center justify-center gap-1.5 px-2 py-1.5 rounded text-xs font-medium bg-purple-500 hover:bg-purple-600 text-white transition-colors"
+                className="w-full flex items-center justify-center gap-1.5 p-2 rounded bg-purple-500 hover:bg-purple-600 text-white transition-colors"
               >
                 <FiPlay size={14} />
                 Playground Mode
@@ -99,21 +97,21 @@ const DashboardControls: React.FC<DashboardControlsProps> = ({
               <button
                 onClick={handleAddToCanvas}
                 disabled={isAdded}
-                className={`w-full flex items-center justify-center gap-1.5 px-2 py-1.5 rounded text-xs font-medium transition-all duration-200 ${
+                className={`w-full flex items-center justify-center gap-1.5 p-2 rounded transition-all duration-200 ${
                   isAdded
                     ? 'bg-green-50 text-green-700 border border-green-200'
                     : 'bg-blue-500 hover:bg-blue-600 text-white'
                 }`}
               >
-                {isAdded ? (<><FiCheck size={14} />Added</>) : (<><FiPlus size={14} />Add to Canvas</>)}
+                {isAdded ? (<><FiCheck size={14} />Added to VISplora</>) : (<><FiPlus size={14} />Add to VISplora</>)}
               </button>
 
               <button
                 onClick={handleGoToCanvas}
-                className="w-full flex items-center justify-center gap-1.5 px-2 py-1.5 rounded text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-slate-200 transition-colors"
+                className="w-full flex items-center justify-center gap-1.5 p-2 rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 transition-colors"
               >
                 <FiExternalLink size={14} />
-                View Canvas
+                VISplora
               </button>
             </div>
           </div>

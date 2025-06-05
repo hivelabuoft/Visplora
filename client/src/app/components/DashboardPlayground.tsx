@@ -24,10 +24,12 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
 }) => {
   const [zoomLevel, setZoomLevel] = useState(100);
   const [isPanning, setIsPanning] = useState(false);
-  const [showControls, setShowControls] = useState(true);
+  const [showControls, setShowControls] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
+  const [canvasHeight, setCanvasHeight] = useState(3000);
   const transformRef = useRef<ReactZoomPanPinchRef>(null);
-  
+  const dashboardRef = useRef<HTMLDivElement>(null);
+
   // Convert between slider value (0-100) and actual zoom level (50-200)
   const sliderToZoom = useCallback((sliderValue: number): number => {
     return 50 + (sliderValue / 100) * 150;
@@ -127,10 +129,19 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       document.body.style.overflow = 'auto';
     };
   }, [isActive, onClose]);
-
-  // Reset transform when playground becomes active
+  // Reset transform when playground becomes active and measure dashboard height
   useEffect(() => {
     if (isActive && transformRef.current) {
+      // Measure the dashboard height when playground becomes active
+      if (dashboardRef.current) {
+        const dashboardHeight = dashboardRef.current.scrollHeight;
+        console.log('Dashboard Height:', dashboardHeight);
+        const calculatedCanvasHeight = dashboardHeight * 3;
+        if (calculatedCanvasHeight > 3000) {
+          setCanvasHeight(calculatedCanvasHeight);
+        }
+      }
+      
       // Small delay to ensure the component is fully rendered
       const timer = setTimeout(() => {
         if (transformRef.current) {
@@ -171,10 +182,9 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 onClick={handleZoomOut}
                 className="p-1.5 rounded bg-none hover:cursor-pointer hover:bg-gray-200 transition-colors"
               >
-                <FiZoomOut size={14} />
+                <FiZoomOut size={16} />
               </button>
-              
-              <input
+                <input
                 type="range"
                 min="0"
                 max="100"
@@ -187,13 +197,13 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 onClick={handleZoomIn}
                 className="p-1.5 rounded bg-none hover:cursor-pointer hover:bg-gray-200 transition-colors"
               >
-                <FiZoomIn size={14} />
+                <FiZoomIn size={16} />
               </button>
                 <button
                 onClick={handleResetView}
-                className="flex items-center gap-2 px-2 py-1 bg-blue-100 text-blue-700 rounded hover:cursor-pointer hover:bg-blue-200 transition-colors text-sm"
+                className="flex items-center gap-2 px-2 py-1 text-blue-700 rounded-lg hover:cursor-pointer hover:bg-blue-100 transition-colors text-sm"
               >
-                <FiMaximize2 size={12} />
+                <FiMaximize2 size={16} />
                 Reset View
               </button>
             </div>
@@ -211,21 +221,21 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             <button
             onClick={handleAddToCanvas}
             disabled={isAdded}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
                 isAdded
                 ? 'bg-green-50 text-green-700 border border-green-200'
                 : 'bg-blue-500 hover:bg-blue-600 text-white'
             }`}
             >
-            {isAdded ? (<><FiCheck size={16} />Added to Canvas</>) : (<><FiPlus size={16} />Add to Canvas</>)}
+            {isAdded ? (<><FiCheck size={16} />Added to VISplora</>) : (<><FiPlus size={16} />Add to VISplora</>)}
             </button>
 
             <button
             onClick={handleGoToCanvas}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:cursor-pointer hover:text-gray-900 hover:bg-slate-100 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 hover:cursor-pointer hover:text-gray-900 hover:bg-slate-100 transition-colors"
             >
             <FiExternalLink size={16} />
-            View Canvas
+            VISplora
             </button>
 
           {/* Exit Playground Button */}
@@ -253,12 +263,12 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           smooth={true}
           wheel={{
             disabled: false,
-            step: 0.05,
+            step: 0.001,
             smoothStep: 0.01
           }}
           doubleClick={{
             disabled: false,
-            step: 0.3
+            step: 0.5
           }}
           onTransformed={(ref) => {
             const newZoom = ref.state.scale * 100;
@@ -274,8 +284,9 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             {/* Dashboard Content */}
             <TransformComponent>
               <div 
-                className="relative w-[4800px] h-[300vh]" 
+                className="relative w-[4800px]" 
                 style={{
+                  height: `${canvasHeight}px`,
                   backgroundImage: 'radial-gradient(circle, #d1d5db 2px, transparent 2px)',
                   backgroundSize: '50px 50px',
                   backgroundPosition: '0 0',
@@ -284,6 +295,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
               >
                 {/* Center the dashboard in the grid */}
                 <div 
+                  ref={dashboardRef}
                   className="absolute bg-white rounded-xl shadow-lg overflow-hidden" 
                   style={{ 
                     maxWidth: '1600px',
@@ -314,7 +326,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
               <span>Interactive Mode {isPanning ? '(Panning)' : ''}</span>
             </div>
             <span>Zoom: {Math.round(zoomLevel)}%</span>
-            <span>Grid Scale: 50px per division</span>
+            <span>Playground Dimension: {4800}px x {canvasHeight}px</span>
           </div>
         </div>
       </div>

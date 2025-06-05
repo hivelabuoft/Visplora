@@ -226,6 +226,8 @@ const pieChartSpec = {
 export default function Dashboard1() {
   const [activeRegion, setActiveRegion] = useState<string>('all');
   const [isPlaygroundMode, setIsPlaygroundMode] = useState(false);
+  const [dashboardHeight, setDashboardHeight] = useState<number>(0);
+  const dashboardContentRef = React.useRef<HTMLDivElement>(null);
   
   // Filter data based on selected region
   const filteredData = {
@@ -239,11 +241,18 @@ export default function Dashboard1() {
     totalValue: filteredData.values.reduce((sum, d) => sum + d.value, 0),
     averageValue: Math.round(filteredData.values.reduce((sum, d) => sum + d.value, 0) / filteredData.values.length),
     maxValue: Math.max(...filteredData.values.map(d => d.value)),
-    categories: new Set(filteredData.values.map(d => d.category)).size
-  };
+    categories: new Set(filteredData.values.map(d => d.category)).size  };
+
+  // Measure dashboard height when content changes
+  React.useEffect(() => {
+    if (dashboardContentRef.current && !isPlaygroundMode) {
+      const height = dashboardContentRef.current.scrollHeight;
+      setDashboardHeight(height);
+    }
+  }, [activeRegion, isPlaygroundMode]);
 
   const dashboardContent = (
-    <div className="p-6 space-y-6 bg-[#f8f9fa]">
+    <div ref={dashboardContentRef} className="p-6 space-y-6 bg-[#f8f9fa]">
       <div className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold">Performance Analytics Dashboard</h1>
         <p className="text-gray-600 max-w-3xl">
@@ -399,7 +408,7 @@ export default function Dashboard1() {
   return (
     <>
       {dashboardContent}
-        <DashboardPlayground
+      <DashboardPlayground
         isActive={isPlaygroundMode}
         onClose={() => setIsPlaygroundMode(false)}
         dashboardTitle="Analytics Dashboard"

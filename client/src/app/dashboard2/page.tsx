@@ -19,6 +19,8 @@ export default function HRAttritionDashboard() {
   const [showEducationField, setShowEducationField] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isPlaygroundMode, setIsPlaygroundMode] = useState(false);
+  const [dashboardHeight, setDashboardHeight] = useState<number>(0);
+  const dashboardContentRef = React.useRef<HTMLDivElement>(null);
 
   // Helper function to check if any filters are active
   const hasActiveFilters = () => {
@@ -61,8 +63,15 @@ export default function HRAttritionDashboard() {
       showOnlyAttrition
     };
     const filtered = HRAnalytics.filterEmployeeData(data, criteria);
-    setFilteredData(filtered);
-  }, [data, selectedDepartment, selectedJobRole, selectedGender, showOnlyAttrition]);
+    setFilteredData(filtered);  }, [data, selectedDepartment, selectedJobRole, selectedGender, showOnlyAttrition]);
+
+  // Measure dashboard height when content changes
+  useEffect(() => {
+    if (dashboardContentRef.current && !isPlaygroundMode) {
+      const height = dashboardContentRef.current.scrollHeight;
+      setDashboardHeight(height);
+    }
+  }, [data, filteredData, isPlaygroundMode]);
 
   // Get unique departments and KPIs
   const kpis = HRAnalytics.calculateKPIMetrics(data);
@@ -74,9 +83,8 @@ export default function HRAttritionDashboard() {
       </div>
     );
   }
-
   const dashboardContent = (
-    <div className="min-h-5/6 bg-[#f5f4f2] m-6 rounded-xl p-6">
+    <div ref={dashboardContentRef} className="min-h-5/6 bg-[#f5f4f2] m-6 rounded-xl p-6">
       {/* Header */}
       <div className="mb-8">
         <div className="flex justify-between items-center mb-4 gap-4">
@@ -325,8 +333,7 @@ export default function HRAttritionDashboard() {
 
   return (
     <>
-      {dashboardContent}
-        <DashboardPlayground
+      {dashboardContent}        <DashboardPlayground
         isActive={isPlaygroundMode}
         onClose={() => setIsPlaygroundMode(false)}
         dashboardTitle="HR Attrition Dashboard"
