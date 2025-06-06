@@ -58,7 +58,7 @@ const DashboardControls: React.FC<DashboardControlsProps> = ({
     }
   };
 
-  const handleGoToCanvas = () => {
+  const handleGoToMainPage = () => {
     router.push('/');
   };
 
@@ -107,7 +107,7 @@ const DashboardControls: React.FC<DashboardControlsProps> = ({
               </button>
 
               <button
-                onClick={handleGoToCanvas}
+                onClick={handleGoToMainPage}
                 className="w-full flex items-center justify-center gap-1.5 p-2 rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 transition-colors"
               >
                 <FiExternalLink size={14} />
