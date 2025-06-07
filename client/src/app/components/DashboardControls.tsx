@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FiPlus, FiLayout, FiCheck, FiExternalLink, FiChevronDown, FiPlay } from 'react-icons/fi';
+import { FiPlus, FiLayout, FiCheck, FiChevronDown, FiPlay, FiLink } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
 
 interface DashboardControlsProps {
@@ -88,29 +88,29 @@ const DashboardControls: React.FC<DashboardControlsProps> = ({
             <div className="space-y-1 text-sm font-medium">
               <button
                 onClick={() => onPlaygroundMode && onPlaygroundMode()}
-                className="w-full flex items-center justify-center gap-1.5 p-2 rounded bg-purple-500 hover:bg-purple-600 text-white transition-colors"
+                className="w-full flex items-center justify-center gap-2 p-2 rounded bg-purple-500 hover:bg-purple-600 text-white transition-colors"
               >
-                <FiPlay size={14} />
+                <FiPlay size={16} />
                 Playground Mode
               </button>
               
               <button
                 onClick={handleAddToCanvas}
                 disabled={isAdded}
-                className={`w-full flex items-center justify-center gap-1.5 p-2 rounded transition-all duration-200 ${
+                className={`w-full flex items-center justify-center gap-2 p-2 rounded transition-all duration-200 ${
                   isAdded
                     ? 'bg-green-50 text-green-700 border border-green-200'
                     : 'bg-blue-500 hover:bg-blue-600 text-white'
                 }`}
               >
-                {isAdded ? (<><FiCheck size={14} />Added to VISplora</>) : (<><FiPlus size={14} />Add to VISplora</>)}
+                {isAdded ? (<><FiCheck size={16} />Added to VISplora</>) : (<><FiPlus size={16} />Add to VISplora</>)}
               </button>
 
               <button
                 onClick={handleGoToMainPage}
-                className="w-full flex items-center justify-center gap-1.5 p-2 rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 transition-colors"
+                className="w-full flex items-center justify-center gap-2 p-2 rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 transition-colors"
               >
-                <FiExternalLink size={14} />
+                <FiLink size={16} />
                 VISplora
               </button>
             </div>

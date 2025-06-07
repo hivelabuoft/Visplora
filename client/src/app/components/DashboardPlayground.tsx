@@ -2,10 +2,10 @@
 
 import React, { useState, useCallback, useEffect, ReactNode, useRef } from 'react';
 import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
-import { FiZoomIn, FiZoomOut, FiMaximize2, FiX, FiMove, FiPlus, FiCheck, FiExternalLink } from 'react-icons/fi';
+import { FiZoomIn, FiZoomOut, FiMaximize2, FiX, FiMove, FiPlus, FiCheck, FiLink } from 'react-icons/fi';
 import styles from './DashboardPlayground.module.css';
 import { FilePenLine } from 'lucide-react';
-import { scale } from 'vega';
+import InteractiveGrid from '../../components/ui/interactive-grid';
 
 interface DashboardPlaygroundProps {
   children: ReactNode;
@@ -29,9 +29,56 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const [isAnnotationMode, setIsAnnotationMode] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   const [canvasHeight, setCanvasHeight] = useState(3000);
+  const [showGrid, setShowGrid] = useState(false);
+  const [hoveredCell, setHoveredCell] = useState<string | null>(null);
+  const [occupiedCells, setOccupiedCells] = useState<Set<string>>(new Set());
+  const [showTips, setShowTips] = useState(false);
   const transformRef = useRef<ReactZoomPanPinchRef>(null);
   const dashboardRef = useRef<HTMLDivElement>(null);
   const currentPositionRef = useRef({ x: -1200, y: -450 });
+
+  // Grid configuration
+  const canvasWidth = 4800;
+  const CELL_SIZE = 100;
+  const DASHBOARD_WIDTH = 1600; // Fixed dashboard width
+
+  // Calculate dashboard bounds and position for the grid
+  const getDashboardGridInfo = () => {
+    const cols = Math.floor(canvasWidth / CELL_SIZE);
+    const rows = Math.floor(canvasHeight / CELL_SIZE);
+    
+    // Calculate how many cells the dashboard needs
+    const cellsWide = Math.ceil(DASHBOARD_WIDTH / CELL_SIZE);
+    
+    // Measure actual dashboard height if available, otherwise estimate
+    let dashboardHeight = 1600; // default estimate
+    if (dashboardRef.current) {
+      dashboardHeight = dashboardRef.current.scrollHeight || 1600;
+    }
+    
+    const cellsHigh = Math.ceil(dashboardHeight / CELL_SIZE);
+    
+    // Calculate center position
+    const centerRow = Math.floor(rows / 2);
+    const centerCol = Math.floor(cols / 2);
+    
+    // Calculate starting position to center the dashboard
+    const startRow = Math.max(0, centerRow - Math.floor(cellsHigh / 2));
+    const startCol = Math.max(0, centerCol - Math.floor(cellsWide / 2));
+    const endRow = Math.min(rows - 1, startRow + cellsHigh - 1);
+    const endCol = Math.min(cols - 1, startCol + cellsWide - 1);
+    
+    // Calculate actual pixel position (centered within the grid cells)
+    const x = startCol * CELL_SIZE + (cellsWide * CELL_SIZE - DASHBOARD_WIDTH) / 2;
+    const y = startRow * CELL_SIZE + (cellsHigh * CELL_SIZE - dashboardHeight) / 2;
+    
+    return {
+      bounds: { startRow, endRow, startCol, endCol },
+      position: { x, y },
+      size: { width: DASHBOARD_WIDTH, height: dashboardHeight },
+      cells: { cellsWide, cellsHigh }
+    };
+  };
   
   const handleSliderChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const sliderValue = parseInt(event.target.value);
@@ -140,7 +187,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         </div>
 
         {/* Controls in Header */}
-        <div className="flex justify-center items-center gap-4 flex-wrap">          
+        <div className="flex justify-center items-center gap-4 flex-wrap">
           {/* Zoom Controls in Header */}
           <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1 px-1.5">
             <button onClick={handleZoomOut} className="p-1.5 rounded bg-none hover:cursor-pointer hover:bg-gray-200 transition-colors">
@@ -160,7 +207,10 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           
           {/* Annotations Button - Prominent Position */}
           <button
-            onClick={() => setIsAnnotationMode(!isAnnotationMode)}
+            onClick={() => {
+              setIsAnnotationMode(!isAnnotationMode);
+              setShowGrid(!showGrid);
+            }}
             className={`flex items-center gap-2 px-4 py-2 text-sm rounded-lg font-medium transition-all duration-200 
                 ${isAnnotationMode ? 'bg-orange-500 text-white shadow-md border-2 border-orange-600'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border-2 border-transparent'}`
@@ -186,7 +236,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             onClick={handleGoToCanvas}
             className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 hover:cursor-pointer hover:text-gray-900 hover:bg-slate-100 transition-colors"
             >
-            <FiExternalLink size={16} />
+            <FiLink size={16} />
             VISplora
             </button>
 
@@ -248,15 +298,33 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     transformOrigin: '0 0'
                 }}
               >
+                {/* Interactive Grid */}
+                <InteractiveGrid
+                  canvasWidth={canvasWidth}
+                  canvasHeight={canvasHeight}
+                  cellSize={CELL_SIZE}
+                  showGrid={showGrid}
+                  dashboardBounds={getDashboardGridInfo().bounds}
+                  occupiedCells={occupiedCells}
+                  onCellHover={(cell) => setHoveredCell(cell ? `Row: ${cell.row}- Col: ${cell.col}` : null)}
+                  onCellClick={(cell) => {
+                    if (!cell.isOccupied && isAnnotationMode) {
+                      // Here you would create a sticky note at this cell
+                      console.log(`Creating note at cell ${cell.row}-${cell.col}`, { x: cell.x, y: cell.y });
+                      setIsAnnotationMode(false);
+                      setShowGrid(false);
+                    }
+                  }}
+                />
+                
                 {/* Center the dashboard in the grid */}
                 <div 
                   ref={dashboardRef}
                   className="absolute bg-white p-2 rounded-xl shadow-xl overflow-hidden" 
                   style={{ 
-                    maxWidth: '1600px',
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)'
+                    width: `${DASHBOARD_WIDTH}px`,
+                    left: `${getDashboardGridInfo().position.x}px`,
+                    top: `${getDashboardGridInfo().position.y}px`
                   }}
                 >
                   {children}
@@ -265,15 +333,38 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             </TransformComponent>
           </React.Fragment>
         </TransformWrapper>
-      </div>      
+      </div>
       {/* Footer */}
       <div className="bg-white border-t border-gray-200 p-1 px-6">
         <div className="flex items-center justify-between text-sm text-gray-500">   
-            <div className="flex items-center gap-4">
-            <span>• Drag to pan around the dashboard</span>
-            <span>• Scroll or use controls to zoom</span>
-            <span>• Use "Reset View" to return to center</span>
-            <span>• Press ESC to exit</span>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setShowTips(!showTips)}
+              className="flex items-center gap-2 px-3 py-1 text-xs bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 rounded-md transition-colors duration-200"
+            >
+              <span>Help</span>
+              <span className={`transform transition-transform duration-200 ${showTips ? 'rotate-180' : ''}`}>
+                ▼
+              </span>
+            </button>
+            {showTips && (
+              <div className="absolute bottom-10 left-2 flex flex-col bg-white gap-3 p-3 rounded-lg shadow-lg text-xs text-gray-700 border border-gray-200">
+                <span>• Drag to pan around the dashboard.</span>
+                <span>• Scroll or use controls to zoom.</span>
+                <span>• Use "Reset View" to return to center.</span>
+                <span>• Click "Add Annotations" to toggle sticky notes.</span>
+                <span>• Click "Add to VISplora" to save dashboard.</span>
+                <span>• Press ESC to exit playground mode.</span>
+              </div>
+            )}
+            {isAnnotationMode && <span className="text-orange-600">• Click a grid cell to add sticky note</span>}
+            {showGrid && (
+              <span className="text-orange-600">
+                Dashboard Size: {getDashboardGridInfo().cells.cellsWide}×{getDashboardGridInfo().cells.cellsHigh} cells
+                | Occupied Cells: {getDashboardGridInfo().cells.cellsWide * getDashboardGridInfo().cells.cellsHigh}
+                {hoveredCell && ` | Hovered: ${hoveredCell}`}
+              </span>
+            )}
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
@@ -281,7 +372,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
               <span>Interactive Mode {isPanning ? '(Panning)' : ''}</span>
             </div>
             <span>Zoom: {Math.round(zoomLevel)}%</span>
-            <span>Playground Dimension: {4800}px x {canvasHeight}px</span>
+            <span>Dimension: {Math.floor(canvasWidth / CELL_SIZE)}×{Math.floor(canvasHeight / CELL_SIZE)} ({CELL_SIZE}px cells)</span>
           </div>
         </div>
       </div>
