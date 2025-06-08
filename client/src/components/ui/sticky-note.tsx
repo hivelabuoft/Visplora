@@ -39,6 +39,7 @@ interface StickyNoteProps {
   onMoveStart?: (noteId: string) => void;
   onMoveEnd?: () => void;
   getOccupiedCells?: () => Set<string>;
+  zoomLevel?: number;
 }
 
 const StickyNote: React.FC<StickyNoteProps> = ({
@@ -52,7 +53,8 @@ const StickyNote: React.FC<StickyNoteProps> = ({
   onResizeEnd,
   onMoveStart,
   onMoveEnd,
-  getOccupiedCells
+  getOccupiedCells,
+  zoomLevel = 100 // Default zoom level is 100%
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState(note.content);
@@ -115,11 +117,12 @@ const StickyNote: React.FC<StickyNoteProps> = ({
     const startRow = note.row;
     const startCol = note.col;
     const startPixelX = note.x;
-    const startPixelY = note.y;
-
+    const startPixelY = note.y;    
     const handleMouseMove = (e: MouseEvent) => {
-      const deltaX = e.clientX - startX;
-      const deltaY = e.clientY - startY;
+      // Apply zoom level scaling to mouse movements
+      const zoomFactor = 100 / zoomLevel;
+      const deltaX = (e.clientX - startX) * zoomFactor;
+      const deltaY = (e.clientY - startY) * zoomFactor;
       
       const newPixelX = startPixelX + deltaX;
       const newPixelY = startPixelY + deltaY;
@@ -185,11 +188,12 @@ const StickyNote: React.FC<StickyNoteProps> = ({
     const startX = e.clientX;
     const startY = e.clientY;
     const startWidth = note.width;
-    const startHeight = note.height;
-
+    const startHeight = note.height;    
     const handleMouseMove = (e: MouseEvent) => {
-      const deltaX = e.clientX - startX;
-      const deltaY = e.clientY - startY;
+      // Apply zoom level scaling to mouse movements
+      const zoomFactor = 100 / zoomLevel;
+      const deltaX = (e.clientX - startX) * zoomFactor;
+      const deltaY = (e.clientY - startY) * zoomFactor;
       
       let newWidth = startWidth;
       let newHeight = startHeight;
@@ -273,7 +277,7 @@ const StickyNote: React.FC<StickyNoteProps> = ({
               <FiSave size={14} />
             </button>
           )}
-          {note.isSelected && !isEditing && (
+          {!isEditing && (
             <button
               className={`${styles.stickyNoteButton} ${styles.moveButton} ${note.isDark ? styles.darkModeButton : styles.lightModeButton}`}
               onMouseDown={handleMoveStart}
@@ -282,7 +286,8 @@ const StickyNote: React.FC<StickyNoteProps> = ({
               <FiMove size={14} />
             </button>
           )}
-        </div>        <button
+        </div>
+        <button
           className={`${styles.stickyNoteButton} ${note.isDark ? styles.darkModeButton : styles.lightModeButton} ${styles.deleteButton} ${note.isDark ? styles.darkModeDeleteButton : ''}`}
           onClick={() => onDelete(note.id)}
           title="Delete note"

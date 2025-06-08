@@ -474,6 +474,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     onMoveStart={() => setIsMoving(true)}
                     onMoveEnd={() => setIsMoving(false)}
                     getOccupiedCells={getAllOccupiedCells}
+                    zoomLevel={zoomLevel}
                   />
                 ))}
               </div>
