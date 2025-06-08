@@ -6,6 +6,8 @@ import { FiZoomIn, FiZoomOut, FiMaximize2, FiX, FiMove, FiPlus, FiCheck, FiLink 
 import styles from './DashboardPlayground.module.css';
 import { FilePenLine } from 'lucide-react';
 import InteractiveGrid from '../../components/ui/interactive-grid';
+import StickyNote from '../../components/ui/sticky-note';
+import { useStickyNotesManager } from '../../components/ui/sticky-notes-manager';
 
 interface DashboardPlaygroundProps {
   children: ReactNode;
@@ -36,6 +38,22 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const transformRef = useRef<ReactZoomPanPinchRef>(null);
   const dashboardRef = useRef<HTMLDivElement>(null);
   const currentPositionRef = useRef({ x: -1200, y: -450 });
+  // Sticky notes manager
+  const {
+    stickyNotes,
+    selectedNoteId,
+    isResizing,
+    isMoving,
+    createStickyNote,
+    updateStickyNote,
+    deleteStickyNote,
+    selectNote,
+    getStickyNoteOccupiedCells,
+    clearAllNotes,
+    setIsResizing,
+    setIsMoving,
+    notesCount
+  } = useStickyNotesManager(dashboardTitle);
 
   // Grid configuration
   const canvasWidth = 4800;
@@ -43,7 +61,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const DASHBOARD_WIDTH = 1600; // Fixed dashboard width
 
   // Calculate dashboard bounds and position for the grid
-  const getDashboardGridInfo = () => {
+  const getDashboardGridInfo = useCallback(() => {
     const cols = Math.floor(canvasWidth / CELL_SIZE);
     const rows = Math.floor(canvasHeight / CELL_SIZE);
     
@@ -55,7 +73,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     if (dashboardRef.current) {
       dashboardHeight = dashboardRef.current.scrollHeight || 1600;
     }
-    
     const cellsHigh = Math.ceil(dashboardHeight / CELL_SIZE);
     
     // Calculate center position
@@ -78,7 +95,113 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       size: { width: DASHBOARD_WIDTH, height: dashboardHeight },
       cells: { cellsWide, cellsHigh }
     };
-  };
+  }, [canvasHeight]);
+  // Calculate all occupied cells (dashboard + sticky notes) - stable version
+  const getAllOccupiedCells = useCallback((): Set<string> => {
+    const allOccupied = new Set<string>();
+    
+    // Add dashboard cells
+    const cols = Math.floor(canvasWidth / CELL_SIZE);
+    const rows = Math.floor(canvasHeight / CELL_SIZE);
+    const cellsWide = Math.ceil(DASHBOARD_WIDTH / CELL_SIZE);
+    let dashboardHeight = 1600;
+    if (dashboardRef.current) {
+      dashboardHeight = dashboardRef.current.scrollHeight || 1600;
+    }
+    const cellsHigh = Math.ceil(dashboardHeight / CELL_SIZE);
+    const centerRow = Math.floor(rows / 2);
+    const centerCol = Math.floor(cols / 2);
+    const startRow = Math.max(0, centerRow - Math.floor(cellsHigh / 2));
+    const startCol = Math.max(0, centerCol - Math.floor(cellsWide / 2));
+    const endRow = Math.min(rows - 1, startRow + cellsHigh - 1);
+    const endCol = Math.min(cols - 1, startCol + cellsWide - 1);
+    
+    for (let row = startRow; row <= endRow; row++) {
+      for (let col = startCol; col <= endCol; col++) {
+        allOccupied.add(`${row}-${col}`);
+      }
+    }
+    
+    // Add sticky note cells
+    stickyNotes.forEach(note => {
+      for (let r = note.row; r < note.row + note.height; r++) {
+        for (let c = note.col; c < note.col + note.width; c++) {
+          allOccupied.add(`${r}-${c}`);
+        }
+      }
+    });
+    
+    return allOccupied;
+  }, [canvasHeight, stickyNotes]);
+  // Update occupied cells when dashboard or sticky notes change
+  useEffect(() => {
+    const allOccupied = new Set<string>();
+    
+    // Add dashboard cells
+    const dashboardInfo = getDashboardGridInfo();
+    for (let row = dashboardInfo.bounds.startRow; row <= dashboardInfo.bounds.endRow; row++) {
+      for (let col = dashboardInfo.bounds.startCol; col <= dashboardInfo.bounds.endCol; col++) {
+        allOccupied.add(`${row}-${col}`);
+      }
+    }
+    
+    // Add sticky note cells
+    stickyNotes.forEach(note => {
+      for (let r = note.row; r < note.row + note.height; r++) {
+        for (let c = note.col; c < note.col + note.width; c++) {
+          allOccupied.add(`${r}-${c}`);
+        }
+      }
+    });
+    
+    setOccupiedCells(allOccupied);
+  }, [stickyNotes, canvasHeight]); // Only depend on stickyNotes and canvasHeight    // Handle grid cell click for sticky note creation
+  const handleGridCellClick = useCallback((cell: any) => {    if (!cell.isOccupied && isAnnotationMode) {
+      // Check if there's enough space for a 2x2 note
+      const noteWidth = 2;
+      const noteHeight = 2;
+      let hasEnoughSpace = true;
+      
+      // Check if all cells for the 2x2 note are available
+      for (let r = cell.row; r < cell.row + noteHeight; r++) {
+        for (let c = cell.col; c < cell.col + noteWidth; c++) {
+          const cellKey = `${r}-${c}`;
+          if (occupiedCells.has(cellKey)) {
+            hasEnoughSpace = false;
+            break;
+          }
+        }
+        if (!hasEnoughSpace) break;
+      }
+      
+      if (hasEnoughSpace) {
+        const noteId = createStickyNote(cell.row, cell.col, cell.x, cell.y);
+        setIsAnnotationMode(false);
+        setShowGrid(false);
+        
+        // Zoom to 110% and center on the new note
+        if (transformRef.current) {
+          const centerX = cell.x + (noteWidth * CELL_SIZE / 2);
+          const centerY = cell.y + (noteHeight * CELL_SIZE / 2);
+          
+          // Calculate position to center the note
+          const targetX = -centerX * 1.1 + (window.innerWidth / 2);
+          const targetY = -centerY * 1.1 + (window.innerHeight / 2);
+          
+          transformRef.current.setTransform(targetX, targetY, 1.1, 1000, "easeOutCubic");
+          setZoomLevel(110);
+          currentPositionRef.current = { x: targetX, y: targetY };
+        }
+      }
+    }
+  }, [isAnnotationMode, createStickyNote, CELL_SIZE, occupiedCells]);
+
+  // Handle clicking outside notes to deselect
+  const handleCanvasClick = useCallback((e: React.MouseEvent) => {
+    if (!isResizing && !isMoving && e.target === e.currentTarget) {
+      selectNote(null);
+    }
+  }, [isResizing, isMoving, selectNote]);
   
   const handleSliderChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const sliderValue = parseInt(event.target.value);
@@ -203,8 +326,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 Reset View
             </button>
           </div>
-          
-          
+
           {/* Annotations Button - Prominent Position */}
           <button
             onClick={() => {
@@ -216,8 +338,22 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border-2 border-transparent'}`
             }>
             <FilePenLine size={16} />
-            {isAnnotationMode ? 'Exit Annotations' : 'Add Annotations'}
+            <span>{isAnnotationMode ? 'Exit Annotations' : 'Add Annotations'}</span>
+            {notesCount > 0 && (
+                <span className={`text-xs px-1.5 py-0.5 rounded-full 
+                    ${isAnnotationMode ? 'bg-orange-600 text-orange-100' : 'bg-orange-500 text-white'}`}>
+                    {notesCount}
+                </span>
+            )}
           </button>
+            {notesCount > 0 && (
+                <button
+                onClick={clearAllNotes}
+                className="text-xs px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded transition-colors"
+                >
+                Clear All Notes ({notesCount})
+                </button>
+            )}
             
           {/* Add to Canvas and View Canvas Buttons */}
             <button
@@ -297,24 +433,18 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     backgroundPosition: '0 0',
                     transformOrigin: '0 0'
                 }}
+                onClick={handleCanvasClick}
               >
                 {/* Interactive Grid */}
                 <InteractiveGrid
                   canvasWidth={canvasWidth}
                   canvasHeight={canvasHeight}
                   cellSize={CELL_SIZE}
-                  showGrid={showGrid}
+                  showGrid={showGrid || isResizing || isMoving}
                   dashboardBounds={getDashboardGridInfo().bounds}
                   occupiedCells={occupiedCells}
                   onCellHover={(cell) => setHoveredCell(cell ? `Row: ${cell.row}- Col: ${cell.col}` : null)}
-                  onCellClick={(cell) => {
-                    if (!cell.isOccupied && isAnnotationMode) {
-                      // Here you would create a sticky note at this cell
-                      console.log(`Creating note at cell ${cell.row}-${cell.col}`, { x: cell.x, y: cell.y });
-                      setIsAnnotationMode(false);
-                      setShowGrid(false);
-                    }
-                  }}
+                  onCellClick={handleGridCellClick}
                 />
                 
                 {/* Center the dashboard in the grid */}
@@ -329,6 +459,23 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 >
                   {children}
                 </div>
+                {/* Sticky Notes */}
+                {stickyNotes.map((note) => (
+                  <StickyNote
+                    key={note.id}
+                    note={note}
+                    cellSize={CELL_SIZE}
+                    onUpdate={updateStickyNote}
+                    onDelete={deleteStickyNote}
+                    onSelect={selectNote}
+                    isResizing={isResizing}
+                    onResizeStart={() => setIsResizing(true)}
+                    onResizeEnd={() => setIsResizing(false)}
+                    onMoveStart={() => setIsMoving(true)}
+                    onMoveEnd={() => setIsMoving(false)}
+                    getOccupiedCells={getAllOccupiedCells}
+                  />
+                ))}
               </div>
             </TransformComponent>
           </React.Fragment>
@@ -357,14 +504,19 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 <span>• Press ESC to exit playground mode.</span>
               </div>
             )}
-            {isAnnotationMode && <span className="text-orange-600">• Click a grid cell to add sticky note</span>}
-            {showGrid && (
-              <span className="text-orange-600">
-                Dashboard Size: {getDashboardGridInfo().cells.cellsWide}×{getDashboardGridInfo().cells.cellsHigh} cells
-                | Occupied Cells: {getDashboardGridInfo().cells.cellsWide * getDashboardGridInfo().cells.cellsHigh}
-                {hoveredCell && ` | Hovered: ${hoveredCell}`}
-              </span>
-            )}
+            {(isAnnotationMode || isResizing || isMoving) && (
+              <div className="flex items-center gap-4">
+                {isAnnotationMode && <span className="text-orange-600">• Click a grid cell to add sticky note</span>}
+                {isResizing && <span className="text-blue-600">• Resizing note - grid overlay enabled</span>}
+                {isMoving && <span className="text-green-600">• Moving note - grid overlay enabled</span>}
+                <span className={`${isAnnotationMode ? 'text-orange-600' : isResizing ? 'text-blue-600' : 'text-green-600'}`}>
+                    Dashboard Size: {getDashboardGridInfo().cells.cellsWide}×{getDashboardGridInfo().cells.cellsHigh} cells
+                    | Occupied Cells: {occupiedCells.size}
+                    {notesCount > 0 && ` | Sticky Notes: ${notesCount}`}
+                    {hoveredCell && ` | ${hoveredCell}`}
+                </span>
+              </div>
+            )}            
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
