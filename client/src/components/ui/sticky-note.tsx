@@ -13,6 +13,36 @@ import {
 } from './sticky-note-styles';
 import styles from './sticky-note.module.css';
 
+// Add throttle function to prevent too many updates
+const throttle = (func: Function, delay: number) => {
+  let lastCall = 0;
+  let lastArgs: any[] | null = null;
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  return function(...args: any[]) {
+    const now = Date.now();
+    lastArgs = args;
+    
+    // If enough time has passed since last call, execute immediately
+    if (now - lastCall >= delay) {
+      lastCall = now;
+      return func(...args);
+    }
+    
+    // Otherwise schedule for later and ensure only the last call gets executed
+    if (timeoutId === null) {
+      timeoutId = setTimeout(() => {
+        if (lastArgs) {
+          lastCall = Date.now();
+          func(...lastArgs);
+        }
+        timeoutId = null;
+        lastArgs = null;
+      }, delay - (now - lastCall));
+    }
+  };
+};
+
 export interface StickyNoteData {
   id: string;
   row: number;
@@ -118,24 +148,32 @@ const StickyNote: React.FC<StickyNoteProps> = ({
     const startCol = note.col;
     const startPixelX = note.x;
     const startPixelY = note.y;    
-    const handleMouseMove = (e: MouseEvent) => {
+      // Use throttling to prevent too many updates
+    const throttledMouseMove = throttle((e: MouseEvent) => {
       // Apply zoom level scaling to mouse movements
       const zoomFactor = 100 / zoomLevel;
       const deltaX = (e.clientX - startX) * zoomFactor;
       const deltaY = (e.clientY - startY) * zoomFactor;
       
+      // Calculate new position
       const newPixelX = startPixelX + deltaX;
       const newPixelY = startPixelY + deltaY;
       
       // Snap to grid
       const newCol = Math.round(newPixelX / cellSize);
       const newRow = Math.round(newPixelY / cellSize);
+
+      // Ensure we're not trying to move to a negative position
+      if (newRow < 0 || newCol < 0) {
+        return;
+      }
       
       // Check if the new position would conflict with occupied cells
       if (getOccupiedCells) {
         const occupiedCells = getOccupiedCells();
         let hasConflict = false;
         
+        // Check for conflicts with other cells
         for (let r = newRow; r < newRow + note.height; r++) {
           for (let c = newCol; c < newCol + note.width; c++) {
             const cellKey = `${r}-${c}`;
@@ -154,15 +192,24 @@ const StickyNote: React.FC<StickyNoteProps> = ({
           if (hasConflict) break;
         }
 
-        if (!hasConflict && newRow >= 0 && newCol >= 0) {
+        // Only update if there's no conflict
+        if (!hasConflict) {
+          const exactX = newCol * cellSize;
+          const exactY = newRow * cellSize;
+          
+          // Update note position
           onUpdate(note.id, { 
             row: newRow, 
             col: newCol, 
-            x: newCol * cellSize, 
-            y: newRow * cellSize 
+            x: exactX, 
+            y: exactY 
           });
         }
       }
+    }, 30); // Decrease throttle time for smoother movement
+
+    const handleMouseMove = (e: MouseEvent) => {
+      throttledMouseMove(e);
     };
 
     const handleMouseUp = () => {
@@ -189,7 +236,8 @@ const StickyNote: React.FC<StickyNoteProps> = ({
     const startY = e.clientY;
     const startWidth = note.width;
     const startHeight = note.height;    
-    const handleMouseMove = (e: MouseEvent) => {
+      // Use throttling to prevent too many updates
+    const throttledMouseMove = throttle((e: MouseEvent) => {
       // Apply zoom level scaling to mouse movements
       const zoomFactor = 100 / zoomLevel;
       const deltaX = (e.clientX - startX) * zoomFactor;
@@ -204,6 +252,11 @@ const StickyNote: React.FC<StickyNoteProps> = ({
       if (direction.includes('bottom')) {
         newHeight = Math.max(1, startHeight + Math.round(deltaY / cellSize));
       }
+
+      // Limit maximum size to prevent performance issues with very large notes
+      const MAX_SIZE = 20;
+      newWidth = Math.min(newWidth, MAX_SIZE);
+      newHeight = Math.min(newHeight, MAX_SIZE);
 
       // Check if the new size would conflict with occupied cells
       if (getOccupiedCells) {
@@ -228,12 +281,18 @@ const StickyNote: React.FC<StickyNoteProps> = ({
           if (hasConflict) break;
         }
 
-        if (!hasConflict) {
+        // Only update if there's a change and no conflicts
+        if (!hasConflict && (newWidth !== note.width || newHeight !== note.height)) {
           onUpdate(note.id, { width: newWidth, height: newHeight });
         }
-      } else {
+      } else if (newWidth !== note.width || newHeight !== note.height) {
+        // Only update if there's actually a change in size
         onUpdate(note.id, { width: newWidth, height: newHeight });
       }
+    }, 30); // Decreased throttle time for smoother resizing
+
+    const handleMouseMove = (e: MouseEvent) => {
+      throttledMouseMove(e);
     };
 
     const handleMouseUp = () => {
@@ -246,7 +305,8 @@ const StickyNote: React.FC<StickyNoteProps> = ({
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);  };  
+    document.addEventListener('mouseup', handleMouseUp);
+  };  
   
   return (
     <div ref={noteRef} style={getNoteStyle({ note, cellSize, isEditing, isMoving, isDragging })} onClick={handleNoteClick}>

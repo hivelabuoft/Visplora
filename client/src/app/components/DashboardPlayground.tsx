@@ -96,45 +96,9 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       cells: { cellsWide, cellsHigh }
     };
   }, [canvasHeight]);
+
   // Calculate all occupied cells (dashboard + sticky notes) - stable version
   const getAllOccupiedCells = useCallback((): Set<string> => {
-    const allOccupied = new Set<string>();
-    
-    // Add dashboard cells
-    const cols = Math.floor(canvasWidth / CELL_SIZE);
-    const rows = Math.floor(canvasHeight / CELL_SIZE);
-    const cellsWide = Math.ceil(DASHBOARD_WIDTH / CELL_SIZE);
-    let dashboardHeight = 1600;
-    if (dashboardRef.current) {
-      dashboardHeight = dashboardRef.current.scrollHeight || 1600;
-    }
-    const cellsHigh = Math.ceil(dashboardHeight / CELL_SIZE);
-    const centerRow = Math.floor(rows / 2);
-    const centerCol = Math.floor(cols / 2);
-    const startRow = Math.max(0, centerRow - Math.floor(cellsHigh / 2));
-    const startCol = Math.max(0, centerCol - Math.floor(cellsWide / 2));
-    const endRow = Math.min(rows - 1, startRow + cellsHigh - 1);
-    const endCol = Math.min(cols - 1, startCol + cellsWide - 1);
-    
-    for (let row = startRow; row <= endRow; row++) {
-      for (let col = startCol; col <= endCol; col++) {
-        allOccupied.add(`${row}-${col}`);
-      }
-    }
-    
-    // Add sticky note cells
-    stickyNotes.forEach(note => {
-      for (let r = note.row; r < note.row + note.height; r++) {
-        for (let c = note.col; c < note.col + note.width; c++) {
-          allOccupied.add(`${r}-${c}`);
-        }
-      }
-    });
-    
-    return allOccupied;
-  }, [canvasHeight, stickyNotes]);
-  // Update occupied cells when dashboard or sticky notes change
-  useEffect(() => {
     const allOccupied = new Set<string>();
     
     // Add dashboard cells
@@ -143,8 +107,32 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       for (let col = dashboardInfo.bounds.startCol; col <= dashboardInfo.bounds.endCol; col++) {
         allOccupied.add(`${row}-${col}`);
       }
-    }
-    
+    }    
+    // Add sticky note cells except for the currently selected note which might be moving
+    stickyNotes.forEach(note => {
+      // Skip the currently selected note if we're moving it
+      if (isMoving && note.id === selectedNoteId) {
+        return;
+      }      
+      for (let r = note.row; r < note.row + note.height; r++) {
+        for (let c = note.col; c < note.col + note.width; c++) {
+          allOccupied.add(`${r}-${c}`);
+        }
+      }
+    });    
+    return allOccupied;
+  }, [canvasHeight, stickyNotes, isMoving, selectedNoteId, getDashboardGridInfo]);
+
+  // Update occupied cells when dashboard or sticky notes change
+  useEffect(() => {
+    const allOccupied = new Set<string>();
+    // Add dashboard cells
+    const dashboardInfo = getDashboardGridInfo();
+    for (let row = dashboardInfo.bounds.startRow; row <= dashboardInfo.bounds.endRow; row++) {
+      for (let col = dashboardInfo.bounds.startCol; col <= dashboardInfo.bounds.endCol; col++) {
+        allOccupied.add(`${row}-${col}`);
+      }
+    }    
     // Add sticky note cells
     stickyNotes.forEach(note => {
       for (let r = note.row; r < note.row + note.height; r++) {
@@ -152,11 +140,13 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           allOccupied.add(`${r}-${c}`);
         }
       }
-    });
-    
+    });    
     setOccupiedCells(allOccupied);
-  }, [stickyNotes, canvasHeight]); // Only depend on stickyNotes and canvasHeight    // Handle grid cell click for sticky note creation
-  const handleGridCellClick = useCallback((cell: any) => {    if (!cell.isOccupied && isAnnotationMode) {
+  }, [stickyNotes, canvasHeight]); // Only depend on stickyNotes and canvasHeight
+
+  // Handle grid cell click for sticky note creation
+  const handleGridCellClick = useCallback((cell: any) => {
+    if (!cell.isOccupied && isAnnotationMode) {
       // Check if there's enough space for a 2x2 note
       const noteWidth = 2;
       const noteHeight = 2;
@@ -181,20 +171,35 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         
         // Zoom to 110% and center on the new note
         if (transformRef.current) {
+          // Calculate the center position of the note
           const centerX = cell.x + (noteWidth * CELL_SIZE / 2);
           const centerY = cell.y + (noteHeight * CELL_SIZE / 2);
           
-          // Calculate position to center the note
-          const targetX = -centerX * 1.1 + (window.innerWidth / 2);
-          const targetY = -centerY * 1.1 + (window.innerHeight / 2);
+          // Get current viewport dimensions and calculate scale
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
+          const scale = 1.1;
           
-          transformRef.current.setTransform(targetX, targetY, 1.1, 1000, "easeOutCubic");
+          // Calculate position to center the note in the viewport
+          const targetX = -centerX * scale + (viewportWidth / 2);
+          const targetY = -centerY * scale + (viewportHeight / 2);
+          
+          // Apply the transform with animation
+          transformRef.current.setTransform(
+            targetX, 
+            targetY, 
+            scale, 
+            1000, 
+            "easeOutCubic"
+          );
+          
+          // Update state
           setZoomLevel(110);
           currentPositionRef.current = { x: targetX, y: targetY };
         }
       }
     }
-  }, [isAnnotationMode, createStickyNote, CELL_SIZE, occupiedCells]);
+  }, [isAnnotationMode, createStickyNote, CELL_SIZE, occupiedCells, transformRef]);
 
   // Handle clicking outside notes to deselect
   const handleCanvasClick = useCallback((e: React.MouseEvent) => {
@@ -485,40 +490,44 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       {/* Footer */}
       <div className="bg-white border-t border-gray-200 p-1 px-6">
         <div className="flex items-center justify-between text-sm text-gray-500">   
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setShowTips(!showTips)}
-              className="flex items-center gap-2 px-3 py-1 text-xs bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 rounded-md transition-colors duration-200"
-            >
-              <span>Help</span>
-              <span className={`transform transition-transform duration-200 ${showTips ? 'rotate-180' : ''}`}>
-                ▼
-              </span>
-            </button>
-            {showTips && (
-              <div className="absolute bottom-10 left-2 flex flex-col bg-white gap-3 p-3 rounded-lg shadow-lg text-xs text-gray-700 border border-gray-200">
-                <span>• Drag to pan around the dashboard.</span>
-                <span>• Scroll or use controls to zoom.</span>
-                <span>• Use "Reset View" to return to center.</span>
-                <span>• Click "Add Annotations" to toggle sticky notes.</span>
-                <span>• Click "Add to VISplora" to save dashboard.</span>
-                <span>• Press ESC to exit playground mode.</span>
-              </div>
-            )}
-            {(isAnnotationMode || isResizing || isMoving) && (
-              <div className="flex items-center gap-4">
-                {isAnnotationMode && <span className="text-orange-600">• Click a grid cell to add sticky note</span>}
-                {isResizing && <span className="text-blue-600">• Resizing note - grid overlay enabled</span>}
-                {isMoving && <span className="text-green-600">• Moving note - grid overlay enabled</span>}
-                <span className={`${isAnnotationMode ? 'text-orange-600' : isResizing ? 'text-blue-600' : 'text-green-600'}`}>
+          <button
+            onClick={() => setShowTips(!showTips)}
+            className="flex items-center gap-2 px-3 py-1 text-xs bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 rounded-md transition-colors duration-200"
+          >
+            <span>Help</span>
+            <span className={`transform transition-transform duration-200 ${showTips ? 'rotate-180' : ''}`}>
+              ▼
+            </span>
+          </button>
+          {showTips && (
+            <div className="absolute bottom-10 left-2 flex flex-col bg-white gap-3 p-3 rounded-lg shadow-lg text-xs text-gray-700 border border-gray-200">
+              <span>• Drag to pan around the dashboard.</span>
+              <span>• Scroll or use controls to zoom.</span>
+              <span>• Use "Reset View" to return to center.</span>
+              <span>• Click "Add to VISplora" to save dashboard.</span>
+              <span>• Press ESC to exit playground mode.</span>
+              <span>• Click "Add Annotations" to toggle sticky notes.</span>
+              <span>• Click a grid cell to add a sticky note.</span>
+              <span>• Resize or move notes by dragging edges or title bar.</span>
+              <span>• Use the "Clear All Notes" button to remove all sticky notes.</span>
+            </div>
+          )}
+          {(isAnnotationMode || isResizing || isMoving) && (
+            <div className="flex items-center justify-center gap-4">
+              {isAnnotationMode && <span className="text-orange-600 font-semibold">Click a grid cell to add sticky note</span>}
+              {isResizing && <span className="text-blue-600 font-semibold">Resizing note - drop note to confirm size</span>}
+              {isMoving && <span className="text-green-600 font-semibold">Moving note - drop note to confirm placement</span>}
+              {isAnnotationMode ? (
+                <span className='text-orange-600'>
                     Dashboard Size: {getDashboardGridInfo().cells.cellsWide}×{getDashboardGridInfo().cells.cellsHigh} cells
                     | Occupied Cells: {occupiedCells.size}
                     {notesCount > 0 && ` | Sticky Notes: ${notesCount}`}
                     {hoveredCell && ` | ${hoveredCell}`}
                 </span>
-              </div>
-            )}            
-          </div>
+              ): <></> }
+            </div>
+          )}            
+          
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <span className={`w-2 h-2 rounded-full transition-colors duration-200 ${isPanning ? 'bg-green-400 ' + styles.panningIndicator : 'bg-gray-300'}`}></span>

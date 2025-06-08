@@ -51,7 +51,9 @@ export const useStickyNotesManager = (dashboardTitle: string) => {
     setStickyNotes(prev => [...prev, newNote]);
     setSelectedNoteId(newNote.id);
     return newNote.id;
-  }, []);  const updateStickyNote = useCallback((noteId: string, updates: Partial<StickyNoteData>) => {
+  }, []);  
+  
+  const updateStickyNote = useCallback((noteId: string, updates: Partial<StickyNoteData>) => {
     setStickyNotes(prev => 
       prev.map(note => 
         note.id === noteId ? { ...note, ...updates } : note
@@ -87,9 +89,19 @@ export const useStickyNotesManager = (dashboardTitle: string) => {
       }
     });
     return occupiedCells;
-  }, [stickyNotes]);  const clearAllNotes = useCallback(() => {
+  }, [stickyNotes]);  
+  
+  const clearAllNotes = useCallback(() => {
     setStickyNotes([]);
     setSelectedNoteId(null);
+  }, []);
+  
+  const setIsResizingCallback = useCallback((value: boolean) => {
+    setIsResizing(value);
+  }, []);
+  
+  const setIsMovingCallback = useCallback((value: boolean) => {
+    setIsMoving(value);
   }, []);
 
   return {
@@ -103,8 +115,8 @@ export const useStickyNotesManager = (dashboardTitle: string) => {
     selectNote,
     getStickyNoteOccupiedCells,
     clearAllNotes,
-    setIsResizing,
-    setIsMoving,
+    setIsResizing: setIsResizingCallback,
+    setIsMoving: setIsMovingCallback,
     notesCount: stickyNotes.length
   };
 };
