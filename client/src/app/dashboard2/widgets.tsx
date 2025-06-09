@@ -178,7 +178,7 @@ export function SurveyScoreWidget({ data }: ChartWidgetProps) {
   const surveyData = HRAnalytics.processSurveyScoreData(data);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       {/* Score Header */}
       <div className="flex justify-between items-center">
         <div className='text-xs ml-2'>Score {'>>'}</div>
@@ -278,7 +278,7 @@ export function ScrollableAttritionWidget({ data }: ChartWidgetProps) {
       </div>
 
       {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto pr-2 space-y-3 max-h-64">
+      <div className="flex-1 overflow-y-auto pr-2 space-y-3 max-h-86">
         {filteredEmployees.length > 0 ? (
           filteredEmployees.map((emp) => (
             <div key={emp.id} className="border-l-4 border-[#ef9f56] pl-3 bg-gray-50 p-2 rounded-r">

@@ -8,6 +8,7 @@ import { HRAnalytics } from "./analytics";
 import { DepartmentWidget, JobRoleWidget, GenderWidget, AgeGroupWidget, EducationWidget, SurveyScoreWidget, ScrollableAttritionWidget, DistanceFromHomeWidget } from "./widgets";
 import DashboardControls from "../components/DashboardControls";
 import DashboardPlayground from "../components/DashboardPlayground";
+import { LinkableCard } from "@/components/ui/card-linkable";
 
 export default function HRAttritionDashboard() {
   const [data, setData] = useState<HRData[]>([]);
@@ -84,7 +85,7 @@ export default function HRAttritionDashboard() {
     );
   }
   const dashboardContent = (
-    <div ref={dashboardContentRef} className="min-h-5/6 bg-[#f5f4f2] m-6 rounded-xl p-6">
+    <div ref={dashboardContentRef} className="min-h-screen bg-[#f5f4f2] m-6 rounded-xl p-6">
       {/* Header */}
       <div className="mb-8">
         <div className="flex justify-between items-center mb-4 gap-4">
@@ -136,184 +137,212 @@ export default function HRAttritionDashboard() {
         {/* Left Column - Overview & Department */}
         <div className="col-span-12 lg:col-span-5 space-y-4 h-full">
           {/* Overview Cards */}
-          <Card className="bg-white border-none shadow-sm gap-2">
-            <CardHeader>
-              <div className="flex items-center justify-start gap-4">
-                <CardTitle className="text-lg font-bold text-gray-700 font-mono">OVERVIEW</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-3 gap-4">
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
-                      <span className="text-sm">📊</span>
-                    </div>
-                  </div>
-                  <div className="text-2xl font-bold text-gray-800">
-                    {kpis.attritionRate}%
-                  </div>
-                  <div className="text-xs text-gray-500 uppercase">Attrition Rate</div>
+          <LinkableCard 
+            isPlaygroundMode={isPlaygroundMode}
+            elementId="overview-section"
+          >
+            <Card className="bg-white border-none shadow-sm gap-2">
+              <CardHeader>
+                <div className="flex items-center justify-start gap-4">
+                  <CardTitle className="text-lg font-bold text-gray-700 font-mono">OVERVIEW</CardTitle>
                 </div>
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
-                      <span className="text-sm">👥</span>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <div className="flex items-center justify-center mb-2">
+                      <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                        <span className="text-sm">📊</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="text-2xl font-bold text-gray-800">
-                    {kpis.totalAttrition}
-                  </div>
-                  <div className="text-xs text-gray-500 uppercase">Total Attrition</div>
-                </div>
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
-                      <span className="text-sm">👤</span>
+                    <div className="text-2xl font-bold text-gray-800">
+                      {kpis.attritionRate}%
                     </div>
+                    <div className="text-xs text-gray-500 uppercase">Attrition Rate</div>
                   </div>
-                  <div className="text-2xl font-bold text-gray-800">
-                    {kpis.currentEmployees}
+                  <div className="text-center">
+                    <div className="flex items-center justify-center mb-2">
+                      <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                        <span className="text-sm">👥</span>
+                      </div>
+                    </div>
+                    <div className="text-2xl font-bold text-gray-800">
+                      {kpis.totalAttrition}
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase">Total Attrition</div>
                   </div>
-                  <div className="text-xs text-gray-500 uppercase">Current Employees</div>
+                  <div className="text-center">
+                    <div className="flex items-center justify-center mb-2">
+                      <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                        <span className="text-sm">👤</span>
+                      </div>
+                    </div>
+                    <div className="text-2xl font-bold text-gray-800">
+                      {kpis.currentEmployees}
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase">Current Employees</div>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </LinkableCard>
 
-          <Card className="xl:flex-row justify-around">
-            {/* Department Analysis */}
-            <div className="bg-0 border-none shadow-none gap-2">
-                <CardHeader>
-                    <div className="flex justify-between">
-                      <CardTitle className="text-lg font-bold text-gray-700 font-mono mb-2">DEPARTMENT</CardTitle>
-                      {selectedDepartment !== 'all' && (
-                        <button
-                          onClick={() => setSelectedDepartment('all')}
-                          className="text-xs bg-blue-100 text-blue-700 ml-2 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
-                        >
-                          Clear Filter
-                        </button>
-                      )}
-                    </div>
-                </CardHeader>
-                <CardContent>
-                    <DepartmentWidget data={filteredData} onDepartmentClick={setSelectedDepartment} selectedDepartment={selectedDepartment} />
-                </CardContent>
-            </div>
-            {/* Job Role Analysis */}
-            <div className="bg-0 border-none shadow-none gap-2">
-                <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-lg font-bold text-gray-700 font-mono">JOB ROLE</CardTitle>
-                      {selectedJobRole !== 'all' && (
-                        <button
-                          onClick={() => setSelectedJobRole('all')}
-                          className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
-                        >
-                          Clear Filter
-                        </button>
-                      )}
-                    </div>
-                </CardHeader>
-                <CardContent>
-                    <JobRoleWidget 
-                      data={filteredData} 
-                      onJobRoleClick={setSelectedJobRole}
-                      selectedJobRole={selectedJobRole}
-                    />
-                </CardContent>
-            </div>
-          </Card>
+          <LinkableCard 
+            isPlaygroundMode={isPlaygroundMode}
+            elementId="department-section"
+          >
+            <Card className="xl:flex-row justify-around">
+              {/* Department Analysis */}
+              <div className="bg-0 border-none shadow-none gap-2">
+                  <CardHeader>
+                      <div className="flex justify-between">
+                        <CardTitle className="text-lg font-bold text-gray-700 font-mono mb-2">DEPARTMENT</CardTitle>
+                        {selectedDepartment !== 'all' && (
+                          <button
+                            onClick={() => setSelectedDepartment('all')}
+                            className="text-xs bg-blue-100 text-blue-700 ml-2 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                          >
+                            Clear Filter
+                          </button>
+                        )}
+                      </div>
+                  </CardHeader>
+                  <CardContent>
+                      <DepartmentWidget data={filteredData} onDepartmentClick={setSelectedDepartment} selectedDepartment={selectedDepartment} />
+                  </CardContent>
+              </div>
+              {/* Job Role Analysis */}
+              <div className="bg-0 border-none shadow-none gap-2">
+                  <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-lg font-bold text-gray-700 font-mono">JOB ROLE</CardTitle>
+                        {selectedJobRole !== 'all' && (
+                          <button
+                            onClick={() => setSelectedJobRole('all')}
+                            className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                          >
+                            Clear Filter
+                          </button>
+                        )}
+                      </div>
+                  </CardHeader>
+                  <CardContent>
+                      <JobRoleWidget 
+                        data={filteredData} 
+                        onJobRoleClick={setSelectedJobRole}
+                        selectedJobRole={selectedJobRole}
+                      />
+                  </CardContent>
+              </div>
+            </Card>
+          </LinkableCard>
           {/* Bottom Row - Distance From Home */}
-          <Card className="bg-white shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg font-bold font-mono text-gray-700 font-mono">DISTANCE FROM HOME</CardTitle>
-            </CardHeader>
-            <CardContent className="text-center">
-              <DistanceFromHomeWidget data={filteredData} />
-            </CardContent>
-          </Card>
+          <LinkableCard 
+            isPlaygroundMode={isPlaygroundMode}
+            elementId="distance-section"
+          >
+            <Card className="bg-white shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-lg font-bold font-mono text-gray-700 font-mono">DISTANCE FROM HOME</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <DistanceFromHomeWidget data={filteredData} />
+              </CardContent>
+            </Card>
+          </LinkableCard>
         </div>
 
         {/* Right Side - Demographics, Survey Score & Recent Attrition */}
-        <div className="col-span-12 lg:col-span-7 grid gap-4">
-          <Card className="bg-white border-none shadow-sm">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg font-bold text-gray-700 font-mono">DEMOGRAPHICS</CardTitle>
-                {selectedGender !== 'all' && (
-                  <button
-                    onClick={() => setSelectedGender('all')}
-                    className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
-                  >
-                    Clear Filter
-                  </button>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent className="flex flex-row justify-center sm:justify-between text-center lg:text-start flex-wrap">
-              {/* Gender Distribution */}
-              <div className="pr-4 xl:border-r-2 border-gray-300">
-                <h4 className="font-semibold text-gray-600 mb-3">GENDER</h4>
-                <GenderWidget 
-                  data={filteredData} 
-                  onGenderClick={setSelectedGender}
-                  selectedGender={selectedGender}
-                />
-              </div>
-              {/* Age Group Distribution */}
-              <div className="px-4 xl:border-r-2 border-gray-300">
-                <h4 className="font-semibold text-gray-600 mb-3">AGE GROUP</h4>
-                <AgeGroupWidget data={filteredData} />
-              </div>
-              {/* Education Distribution */}
-              <div className="pl-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-semibold text-gray-600">{!showEducationField ? "EDUCATION" : "EDUCATION FIELD"}</h4>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-gray-500">Toggle Education</span>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={showEducationField}
-                        onChange={(e) => setShowEducationField(e.target.checked)}
-                        className="sr-only"
-                      />
-                      <div className={`w-8 h-4 rounded-full transition-colors ${showEducationField ? "bg-[#ef9f56]" : "bg-gray-300"}`}>
-                        <div className={`dot absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full transition-transform ${showEducationField ? "translate-x-4" : ""}`}/>
-                      </div>
-                    </label>
-                  </div>
+        <div className="grid col-span-12 lg:col-span-7 xl:grid-rows-5 gap-4">
+          <LinkableCard 
+            isPlaygroundMode={isPlaygroundMode}
+            elementId="demographics-section"
+            className="xl:row-span-2 xl:h-full"
+          >
+            <Card className="bg-white border-none shadow-sm xl:h-full">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg font-bold text-gray-700 font-mono">DEMOGRAPHICS</CardTitle>
+                  {selectedGender !== 'all' && (
+                    <button
+                      onClick={() => setSelectedGender('all')}
+                      className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                    >
+                      Clear Filter
+                    </button>
+                  )}
                 </div>
-                <EducationWidget data={filteredData} showEducationField={showEducationField} />
-              </div>
-            </CardContent>
-          </Card>
-        
+              </CardHeader>
+              <CardContent className="xl:h-full flex flex-row justify-center sm:justify-between text-center lg:text-start flex-wrap">
+                {/* Gender Distribution */}
+                <div className="pr-4 xl:border-r-2 border-gray-300">
+                  <h4 className="font-semibold text-gray-600 mb-3">GENDER</h4>
+                  <GenderWidget 
+                    data={filteredData} 
+                    onGenderClick={setSelectedGender}
+                    selectedGender={selectedGender}
+                  />
+                </div>
+                {/* Age Group Distribution */}
+                <div className="px-4 xl:border-r-2 border-gray-300">
+                  <h4 className="font-semibold text-gray-600 mb-3">AGE GROUP</h4>
+                  <AgeGroupWidget data={filteredData} />
+                </div>
+                {/* Education Distribution */}
+                <div className="pl-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold text-gray-600">{!showEducationField ? "EDUCATION" : "EDUCATION FIELD"}</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-500">Toggle Education</span>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={showEducationField}
+                          onChange={(e) => setShowEducationField(e.target.checked)}
+                          className="sr-only"
+                        />
+                        <div className={`w-8 h-4 rounded-full transition-colors ${showEducationField ? "bg-[#ef9f56]" : "bg-gray-300"}`}>
+                          <div className={`dot absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full transition-transform ${showEducationField ? "translate-x-4" : ""}`}/>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                  <EducationWidget data={filteredData} showEducationField={showEducationField} />
+                </div>
+              </CardContent>
+            </Card>
+          </LinkableCard>
           {/* Survey Score and Recent Attrition */}
-          <div className="grid grid-cols-7 gap-4">
-            <div className="col-span-7 xl:col-span-3">
-              <Card className="bg-white border-none shadow-sm h-full gap-2">
-                <CardHeader>
+          <div className="grid grid-cols-7 gap-4 h-full xl:row-span-3">
+            <LinkableCard 
+              isPlaygroundMode={isPlaygroundMode}
+              elementId="survey-score-section"
+              className="col-span-7 xl:col-span-3 h-full"
+            >
+              <Card className="bg-white border-none shadow-sm h-full gap-2 flex flex-col">
+                <CardHeader className="flex-none">
                   <CardTitle className="text-lg font-bold text-gray-700 font-mono">SURVEY SCORE</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <SurveyScoreWidget data={filteredData} />
-                </CardContent>
+                <CardContent className="flex-1">
+                <SurveyScoreWidget data={filteredData} />
+              </CardContent>
               </Card>
-            </div>
-          
-            <div className="col-span-7 xl:col-span-4">
+            </LinkableCard>
+        
+            <LinkableCard 
+              isPlaygroundMode={isPlaygroundMode}
+              elementId="recent-attritions-section"
+              className="col-span-7 xl:col-span-4 h-full"
+            >
               <Card className="bg-white border-none shadow-sm h-full">
-                <CardHeader>
+                <CardHeader className="flex-none">
                   <CardTitle className="text-lg font-bold text-gray-700 font-mono">RECENT ATTRITIONS</CardTitle>
                 </CardHeader>
                 <CardContent className="h-full">
                   <ScrollableAttritionWidget data={filteredData}/>
                 </CardContent>
               </Card>
-            </div>
+            </LinkableCard>
           </div>
         </div>
       </div>
