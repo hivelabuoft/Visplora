@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { FiX, FiEdit3, FiSun, FiMoon, FiSave, FiMove, FiLink } from 'react-icons/fi';
+import { useDashboardPlayground } from '../../app/components/DashboardPlayground';
 import { 
   getNoteStyle, 
   headerStyle, 
@@ -94,6 +95,18 @@ const StickyNote: React.FC<StickyNoteProps> = ({
   const [isMoving, setIsMoving] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const noteRef = useRef<HTMLDivElement>(null);
+  // Get the dashboard playground context
+  let activateLinkedNoteMode: ((elementId?: string) => void) | undefined;
+  let activateElementSelectionMode: ((noteId: string) => void) | undefined;
+  try {
+    const context = useDashboardPlayground();
+    activateLinkedNoteMode = context.activateLinkedNoteMode;
+    activateElementSelectionMode = context.activateElementSelectionMode;
+  } catch {
+    // Context not available, component used outside of DashboardPlayground
+    activateLinkedNoteMode = undefined;
+    activateElementSelectionMode = undefined;
+  }
 
   // Auto-select and focus new notes (empty content means new)
   useEffect(() => {
@@ -365,8 +378,7 @@ const StickyNote: React.FC<StickyNoteProps> = ({
             <button
               className={`${styles.stickyNoteButton} ${note.isDark ? styles.darkModeButton : styles.lightModeButton} ${
                 note.isLinked ? 'opacity-100' : 'opacity-50'
-              }`}
-              onClick={() => {
+              }`}              onClick={() => {
                 if (note.isLinked && note.linkedElementId) {
                   // If note is linked, unlink it
                   onUpdate(note.id, { 
@@ -374,12 +386,17 @@ const StickyNote: React.FC<StickyNoteProps> = ({
                     isLinked: false 
                   });
                 } else {
-                  alert('This note is not linked to any dashboard element');
+                  // If note is unlinked, activate element selection mode
+                  if (activateElementSelectionMode) {
+                    activateElementSelectionMode(note.id);
+                  } else {
+                    alert('This note is not linked to any dashboard element');
+                  }
                 }
               }}
               title={note.isLinked 
                 ? `Linked to ${note.linkedElementId || 'Unknown'}. Click to unlink.` 
-                : 'Unlinked'
+                : 'Unlinked. Click to link.'
               }
               style={{
                 color: note.isLinked 

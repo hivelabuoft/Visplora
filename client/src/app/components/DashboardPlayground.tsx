@@ -8,11 +8,14 @@ import { FilePenLine } from 'lucide-react';
 import InteractiveGrid from '../../components/ui/interactive-grid';
 import StickyNote from '../../components/ui/sticky-note';
 import { useStickyNotesManager } from '../../components/ui/sticky-notes-manager';
-import { get } from 'http';
 
 // Context for dashboard playground operations
 interface DashboardPlaygroundContextType {
-  activateNoteLinkingMode: ((elementId?: string) => void) | undefined;
+  activateLinkedNoteMode: ((elementId?: string) => void) | undefined;
+  activateElementSelectionMode: ((noteId: string) => void) | undefined;
+  isElementSelectionMode: boolean;
+  noteToLink: string | null;
+  linkNoteToElement: ((noteId: string, elementId: string) => void) | undefined;
 }
 
 const DashboardPlaygroundContext = createContext<DashboardPlaygroundContextType | undefined>(undefined);
@@ -46,6 +49,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const [isPanning, setIsPanning] = useState(false);
   const [isAnnotationMode, setIsAnnotationMode] = useState(false);
   const [isNoteLinkingMode, setIsNoteLinkingMode] = useState(false);
+  const [isElementSelectionMode, setIsElementSelectionMode] = useState(false);
+  const [noteToLink, setNoteToLink] = useState<string | null>(null);
   const [linkingElementId, setLinkingElementId] = useState<string | null>(null);
   const [isAdded, setIsAdded] = useState(false);
   const [canvasHeight, setCanvasHeight] = useState(3000);
@@ -55,7 +60,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const [showTips, setShowTips] = useState(false);
   const transformRef = useRef<ReactZoomPanPinchRef>(null);
   const dashboardRef = useRef<HTMLDivElement>(null);
-  const currentPositionRef = useRef({ x: -1200, y: -450 });
+  const dashboardPositionRef = useRef({ x: -1200, y: -450 });
   // Sticky notes manager
   const {
     stickyNotes,
@@ -231,8 +236,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     const sliderValue = parseInt(event.target.value);
     if (transformRef.current) {
         transformRef.current.setTransform(
-        currentPositionRef.current.x,
-        currentPositionRef.current.y,
+        dashboardPositionRef.current.x,
+        dashboardPositionRef.current.y,
         sliderValue / 100,
         0,
         "easeInCubic"
@@ -258,8 +263,9 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       transformRef.current.resetTransform();
     }
   }, []);
+
   // Activate note linking mode and zoom out
-  const activateNoteLinkingMode = useCallback((elementId?: string) => {
+  const activateLinkedNoteMode = useCallback((elementId?: string) => {
     if (!isNoteLinkingMode) {
       setIsNoteLinkingMode(true);
       setLinkingElementId(elementId || null);
@@ -305,6 +311,55 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     }
   }, [isNoteLinkingMode, getDashboardGridInfo, zoomLevel]);
 
+  // Activate element selection mode for linking existing notes
+  const activateElementSelectionMode = useCallback((noteId: string) => {
+    setIsElementSelectionMode(true);
+    setNoteToLink(noteId);
+    
+    if (transformRef.current) {
+      // Get dashboard position and size
+      const dashboardInfo = getDashboardGridInfo();
+      const dashboardCanvasX = dashboardInfo.position.x;
+      const dashboardCanvasY = dashboardInfo.position.y;
+      const dashboardWidth = dashboardInfo.size.width;
+      const dashboardHeight = dashboardInfo.size.height;
+      
+      // Calculate center of dashboard in canvas coordinates
+      const dashboardCenterX = dashboardCanvasX + dashboardWidth / 2;
+      const dashboardCenterY = dashboardCanvasY + dashboardHeight / 2;
+      
+      // Get viewport dimensions
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      let targetScale = 0.5;
+      
+      // Calculate position to center the dashboard in the viewport at 40% zoom
+      const targetX = (viewportWidth / 2) - (dashboardCenterX * targetScale);
+      const targetY = (viewportHeight / 2) - (dashboardCenterY * targetScale);
+      
+      transformRef.current.setTransform(
+        targetX,
+        targetY - 50,
+        targetScale,
+        1000,
+        "easeOutCubic"
+      );
+      setZoomLevel(targetScale * 100);
+    }
+  }, [getDashboardGridInfo, zoomLevel]);
+
+  // Link a note to an element (used in element selection mode)
+  const linkNoteToElement = useCallback((noteId: string, elementId: string) => {
+    updateStickyNote(noteId, {
+      linkedElementId: elementId,
+      isLinked: true
+    });
+    
+    // Exit element selection mode
+    setIsElementSelectionMode(false);
+    setNoteToLink(null);
+  }, [updateStickyNote]);
+
   const handleAddToCanvas = useCallback(() => {
     if (onAddToCanvas) {
       onAddToCanvas();
@@ -317,12 +372,40 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const handleGoToCanvas = useCallback(() => {
     window.location.href = '/';
   }, []);
-
-  // Handle escape key to close playground
+  // Handle escape key to close playground or exit modes
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isActive) {
-        onClose();
+        // Exit modes in priority order (most specific to least specific)
+        if (showTips) {
+          // Close tips first if open
+          setShowTips(false);
+        } else if (isResizing) {
+          // Exit resize mode
+          setIsResizing(false);
+        } else if (isMoving) {
+          // Exit move mode
+          setIsMoving(false);
+        } else if (isElementSelectionMode) {
+          // Exit element selection mode
+          setIsElementSelectionMode(false);
+          setNoteToLink(null);
+        } else if (isNoteLinkingMode) {
+          // Exit note linking mode
+          setIsNoteLinkingMode(false);
+          setLinkingElementId(null);
+          setShowGrid(false);
+        } else if (isAnnotationMode) {
+          // Exit annotation mode
+          setIsAnnotationMode(false);
+          setShowGrid(false);
+        } else if (selectedNoteId) {
+          // Deselect any selected note
+          selectNote(null);
+        } else {
+          // Finally, close the playground
+          onClose();
+        }
       }
     };
     if (isActive) {
@@ -336,7 +419,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'auto';
     };
-  }, [isActive, onClose]);
+  }, [isActive, onClose, showTips, isResizing, isMoving, isElementSelectionMode, isNoteLinkingMode, isAnnotationMode, selectedNoteId, setIsResizing, setIsMoving, selectNote]);
 
   // Reset transform when playground becomes active and measure dashboard height
   useEffect(() => {
@@ -357,6 +440,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         }
         setIsAnnotationMode(false);
         setIsNoteLinkingMode(false);
+        setIsElementSelectionMode(false);
+        setNoteToLink(null);
         setLinkingElementId(null);
         setShowGrid(false);
       }, 100);
@@ -369,7 +454,13 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   }
 
   return (
-    <DashboardPlaygroundContext.Provider value={{ activateNoteLinkingMode }}>
+    <DashboardPlaygroundContext.Provider value={{ 
+      activateLinkedNoteMode, 
+      activateElementSelectionMode,
+      isElementSelectionMode,
+      noteToLink,
+      linkNoteToElement
+    }}>
       <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-95 flex flex-col">
         {/* Header */}
         <div className="bg-white border-b border-gray-200 p-2 px-4 flex-col xl:flex-row flex items-center justify-between flex-wrap">
@@ -485,8 +576,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             }}
             onTransformed={(ref) => {
               const newZoom = ref.state.scale * 100;
-              currentPositionRef.current.x = ref.state.positionX;
-              currentPositionRef.current.y = ref.state.positionY;
+              dashboardPositionRef.current.x = ref.state.positionX;
+              dashboardPositionRef.current.y = ref.state.positionY;
               setZoomLevel(Math.round(newZoom));
             }}
             onPanning={(ref) => {
@@ -570,7 +661,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         </div>
         {/* Footer */}
         <div className="bg-white border-t border-gray-200 p-1 px-6">
-          <div className="flex items-center justify-between text-sm text-gray-500">   
+          <div className="flex items-center gap-2 justify-between text-sm text-gray-500">   
             <button
               onClick={() => setShowTips(!showTips)}
               className="flex items-center gap-2 px-3 py-1 text-xs bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 rounded-md transition-colors duration-200"
@@ -580,38 +671,47 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 ▼
               </span>
             </button>
-            {showTips && (
-              <div className="absolute bottom-10 left-2 flex flex-col bg-white gap-3 p-3 rounded-lg shadow-lg text-xs text-gray-700 border border-gray-200">
+            {showTips && (              <div className="absolute bottom-10 left-2 flex flex-col bg-white gap-3 p-3 rounded-lg shadow-lg text-xs text-gray-700 border border-gray-200">
                 <span>• Drag to pan around the dashboard.</span>
                 <span>• Scroll or use controls to zoom.</span>
                 <span>• Use "Reset View" to return to center.</span>
                 <span>• Click "Add to VISplora" to save dashboard.</span>
-                <span>• Press ESC to exit playground mode.</span>
+                <span className="text-blue-600 font-semibold">• Press ESC to exit current mode or close playground.</span>
                 <span>• Click "Add Annotations" to toggle sticky notes.</span>
                 <span>• Click a grid cell to add a sticky note.</span>
                 <span>• Resize or move notes by dragging edges or title bar.</span>
                 <span>• Use the "Clear All Notes" button to remove all sticky notes.</span>
+                <span>• Click link button on notes to link/unlink from elements.</span>
               </div>
-            )}            {(isAnnotationMode || isNoteLinkingMode || isResizing || isMoving) && (
+            )}
+            {(isAnnotationMode || isNoteLinkingMode || isElementSelectionMode || isResizing || isMoving) && (
               <div className="flex items-center justify-center gap-4">
-                {isAnnotationMode && <span className="text-orange-600 font-bold">Click a grid cell to add sticky note</span>}
+                {isAnnotationMode && 
+                <span className="text-orange-600 font-bold">Select a grid cell to add sticky note
+                </span>}
                 {isNoteLinkingMode && (
-                  <span className="text-purple-600 font-bold">
-                    Click a grid cell to place linked note
+                  <span className="text-sky-500 font-bold">
+                    Select a grid cell to place linked note
                     {linkingElementId && ` for element: ${linkingElementId}`}
-                  </span>
-                )}
-                {isResizing && <span className="text-blue-600 font-semibold">Resizing note - drop note to confirm size</span>}
-                {isMoving && <span className="text-green-600 font-semibold">Moving note - drop note to confirm placement</span>}
+                  </span>)}
+                {isElementSelectionMode && (
+                  <span className="text-purple-600 font-bold">
+                    Select the dashboard element to link selected note with
+                  </span>)}
+                {isResizing && <span className="text-blue-600 font-semibold">
+                  Resizing note - drop note to confirm size
+                  </span>}
+                {isMoving && <span className="text-green-600 font-semibold">
+                  Moving note - drop note to confirm placement
+                  </span>}
                 {(isAnnotationMode || isNoteLinkingMode) ? (
-                  <span className={isAnnotationMode ? 'text-orange-600' : 'text-purple-600'}>
+                  <span className={isAnnotationMode ? 'text-orange-600' : 'text-sky-500'}>
                       Dashboard Size: {getDashboardGridInfo().cells.cellsWide}×{getDashboardGridInfo().cells.cellsHigh} | Occupied Cells: {occupiedCells.size}
-                      {notesCount > 0 && ` | Sticky Notes: ${notesCount}`}
                       {hoveredCell && ` | ${hoveredCell}`}
                   </span>
                 ): <></> }
               </div>
-            )}            
+            )}
             
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
