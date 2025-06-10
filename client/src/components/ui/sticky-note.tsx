@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { FiX, FiEdit3, FiSun, FiMoon, FiSave, FiMove } from 'react-icons/fi';
+import { FiX, FiEdit3, FiSun, FiMoon, FiSave, FiMove, FiLink } from 'react-icons/fi';
 import { 
   getNoteStyle, 
   headerStyle, 
@@ -55,6 +55,8 @@ export interface StickyNoteData {
   isDark: boolean;
   createdAt: number;
   isSelected?: boolean;
+  linkedElementId?: string; // ID of the linked dashboard element
+  isLinked?: boolean; // Whether this note is linked to an element
 }
 
 interface StickyNoteProps {
@@ -307,9 +309,21 @@ const StickyNote: React.FC<StickyNoteProps> = ({
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
   };  
-  
-  return (
+    return (
     <div ref={noteRef} style={getNoteStyle({ note, cellSize, isEditing, isMoving, isDragging })} onClick={handleNoteClick}>
+      {/* Linked indicator badge */}
+      {note.isLinked && (
+        <div 
+          className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center z-20 bg-purple-600"
+          style={{
+            color: '#ffffff'
+          }}
+          title={`Linked to: ${note.linkedElementId || 'Unknown'}`}
+        >
+          <FiLink size={12} />
+        </div>
+      )}
+      
       <div style={headerStyle}>
         <div style={{ display: 'flex', gap: '2px' }}>
           <button
@@ -344,6 +358,40 @@ const StickyNote: React.FC<StickyNoteProps> = ({
               title="Move note"
             >
               <FiMove size={14} />
+            </button>
+          )}
+          {/* Link status button */}
+          {!isEditing && (
+            <button
+              className={`${styles.stickyNoteButton} ${note.isDark ? styles.darkModeButton : styles.lightModeButton} ${
+                note.isLinked ? 'opacity-100' : 'opacity-50'
+              }`}              
+              onClick={() => {
+                if (note.isLinked && note.linkedElementId) {
+                  // Create a temporary highlight effect for better UX
+                  const message = `This note is linked to dashboard element: ${note.linkedElementId}`;
+                  const customEvent = new CustomEvent('showLinkInfo', { 
+                    detail: { message, elementId: note.linkedElementId } 
+                  });
+                  window.dispatchEvent(customEvent);
+                  
+                  // Fallback to alert if no custom handler is available
+                  setTimeout(() => alert(message), 100);
+                } else {
+                  alert('This note is not linked to any dashboard element');
+                }
+              }}
+              title={note.isLinked 
+                ? `Linked to ${note.linkedElementId || 'Unknown'}. Click to unlink.` 
+                : 'Unlinked'
+              }
+              style={{
+                color: note.isLinked 
+                  ? (note.isDark ? '#fbbf24' : '#d97706') 
+                  : undefined
+              }}
+            >
+              <FiLink size={14} />
             </button>
           )}
         </div>

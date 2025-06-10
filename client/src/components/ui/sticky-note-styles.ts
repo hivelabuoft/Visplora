@@ -17,9 +17,13 @@ export const getNoteStyle = ({ note, cellSize, isEditing, isMoving, isDragging }
   height: (note.height * cellSize) - 8,
   minHeight: cellSize - 8,
   backgroundColor: note.isDark ? '#1f2937' : '#fef3c7',
-  border: `2px solid ${note.isSelected 
-    ? (note.isDark ? '#60a5fa' : '#f59e0b') 
-    : (note.isDark ? '#374151' : '#f59e0b')}`,
+  border: `2px solid ${
+    note.isLinked 
+      ? '#9b04e6' // Purple border for linked notes
+      : note.isSelected 
+        ? (note.isDark ? '#60a5fa' : '#f59e0b') 
+        : (note.isDark ? '#374151' : '#f59e0b')
+  }`,
   borderRadius: '8px',
   padding: '8px',
   fontSize: '12px',
@@ -34,7 +38,6 @@ export const getNoteStyle = ({ note, cellSize, isEditing, isMoving, isDragging }
       ? '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)' 
       : '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'),
   zIndex: note.isSelected ? 40 : 30,
-  overflow: 'hidden',
   display: 'flex',
   flexDirection: 'column',
   transition: (isDragging || isMoving) ? 'none' : 'all 0.2s ease'

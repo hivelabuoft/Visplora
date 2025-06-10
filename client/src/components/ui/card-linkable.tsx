@@ -18,11 +18,10 @@ export function LinkableCard({
   elementId,
   className,
   hasNotes = false,
-}: LinkableCardProps) {
-  const [isHovered, setIsHovered] = React.useState(false);  
+}: LinkableCardProps) {  const [isHovered, setIsHovered] = React.useState(false);  
   
   // Get the note linking mode function from context
-  let activateNoteLinkingMode: (() => void) | undefined; 
+  let activateNoteLinkingMode: ((elementId?: string) => void) | undefined; 
   try {
     const context = useDashboardPlayground();
     activateNoteLinkingMode = context.activateNoteLinkingMode;
@@ -42,12 +41,11 @@ export function LinkableCard({
       setIsHovered(false);
     }
   };
-
   const handleAddNoteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (activateNoteLinkingMode) {
-      activateNoteLinkingMode();
+      activateNoteLinkingMode(elementId);
     }
   };
 

@@ -12,7 +12,7 @@ import { get } from 'http';
 
 // Context for dashboard playground operations
 interface DashboardPlaygroundContextType {
-  activateNoteLinkingMode: (() => void) | undefined;
+  activateNoteLinkingMode: ((elementId?: string) => void) | undefined;
 }
 
 const DashboardPlaygroundContext = createContext<DashboardPlaygroundContextType | undefined>(undefined);
@@ -46,6 +46,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const [isPanning, setIsPanning] = useState(false);
   const [isAnnotationMode, setIsAnnotationMode] = useState(false);
   const [isNoteLinkingMode, setIsNoteLinkingMode] = useState(false);
+  const [linkingElementId, setLinkingElementId] = useState<string | null>(null);
   const [isAdded, setIsAdded] = useState(false);
   const [canvasHeight, setCanvasHeight] = useState(3000);
   const [showGrid, setShowGrid] = useState(false);
@@ -179,15 +180,21 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         }
         if (!hasEnoughSpace) break;
       }
-      
-      if (hasEnoughSpace) {
-        createStickyNote(cell.row, cell.col, cell.x, cell.y);
+        if (hasEnoughSpace) {
+        // Create note with linking information if in note linking mode
+        if (isNoteLinkingMode && linkingElementId) {
+          createStickyNote(cell.row, cell.col, cell.x, cell.y, linkingElementId);
+        } else {
+          createStickyNote(cell.row, cell.col, cell.x, cell.y);
+        }
+        
         // Exit the appropriate mode
         if (isAnnotationMode) {
           setIsAnnotationMode(false);
         }
         if (isNoteLinkingMode) {
           setIsNoteLinkingMode(false);
+          setLinkingElementId(null);
         }
         setShowGrid(false);
 
@@ -215,11 +222,10 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             "easeOutCubic"
           );
           setZoomLevel(110);
-          currentPositionRef.current = { x: targetX, y: targetY };
         }
       }
     }
-  }, [isAnnotationMode, isNoteLinkingMode, createStickyNote, CELL_SIZE, occupiedCells, transformRef]);
+  }, [isAnnotationMode, isNoteLinkingMode, linkingElementId, createStickyNote, CELL_SIZE, occupiedCells, transformRef]);
 
   const handleSliderChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const sliderValue = parseInt(event.target.value);
@@ -253,9 +259,10 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     }
   }, []);
   // Activate note linking mode and zoom out
-  const activateNoteLinkingMode = useCallback(() => {
+  const activateNoteLinkingMode = useCallback((elementId?: string) => {
     if (!isNoteLinkingMode) {
       setIsNoteLinkingMode(true);
+      setLinkingElementId(elementId || null);
       setShowGrid(true);
       
       if (transformRef.current) {
@@ -294,7 +301,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           "easeOutCubic"
         );
         setZoomLevel(targetScale * 100);
-        currentPositionRef.current = { x: targetX, y: targetY };
       }
     }
   }, [isNoteLinkingMode, getDashboardGridInfo, zoomLevel]);
@@ -351,6 +357,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         }
         setIsAnnotationMode(false);
         setIsNoteLinkingMode(false);
+        setLinkingElementId(null);
         setShowGrid(false);
       }, 100);
       return () => clearTimeout(timer);
@@ -575,7 +582,12 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             )}            {(isAnnotationMode || isNoteLinkingMode || isResizing || isMoving) && (
               <div className="flex items-center justify-center gap-4">
                 {isAnnotationMode && <span className="text-orange-600 font-bold">Click a grid cell to add sticky note</span>}
-                {isNoteLinkingMode && <span className="text-purple-600 font-bold">Click a grid cell to place linked note</span>}
+                {isNoteLinkingMode && (
+                  <span className="text-purple-600 font-bold">
+                    Click a grid cell to place linked note
+                    {linkingElementId && ` for element: ${linkingElementId}`}
+                  </span>
+                )}
                 {isResizing && <span className="text-blue-600 font-semibold">Resizing note - drop note to confirm size</span>}
                 {isMoving && <span className="text-green-600 font-semibold">Moving note - drop note to confirm placement</span>}
                 {(isAnnotationMode || isNoteLinkingMode) ? (

@@ -33,8 +33,14 @@ export const useStickyNotesManager = (dashboardTitle: string) => {
       console.error('Failed to save sticky notes:', error);
     }
   }, [stickyNotes, storageKey]);  
-  
-  const createStickyNote = useCallback((row: number, col: number, x: number, y: number): string => {
+
+  const createStickyNote = useCallback((
+    row: number, 
+    col: number, 
+    x: number, 
+    y: number, 
+    linkedElementId?: string
+    ): string => {
     const newNote: StickyNoteData = {
       id: `note-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       row,
@@ -46,7 +52,9 @@ export const useStickyNotesManager = (dashboardTitle: string) => {
       content: '',
       isDark: false,
       createdAt: Date.now(),
-      isSelected: true // Auto-select new notes
+      isSelected: true, // Auto-select new notes
+      linkedElementId,
+      isLinked: !!linkedElementId
     };
     setStickyNotes(prev => [...prev, newNote]);
     setSelectedNoteId(newNote.id);
