@@ -1,5 +1,7 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
+import { useDashboardPlayground } from "@/app/components/DashboardPlayground"
+import { FiPlus } from 'react-icons/fi'
 
 interface LinkableCardProps {
   children: React.ReactNode;
@@ -15,9 +17,19 @@ export function LinkableCard({
   isPlaygroundMode,
   elementId,
   className,
-  tooltip = "Link note with this element",
   hasNotes = false,
-}: LinkableCardProps) {  const [isHovered, setIsHovered] = React.useState(false);
+}: LinkableCardProps) {
+  const [isHovered, setIsHovered] = React.useState(false);  
+  
+  // Get the note linking mode function from context
+  let activateNoteLinkingMode: (() => void) | undefined; 
+  try {
+    const context = useDashboardPlayground();
+    activateNoteLinkingMode = context.activateNoteLinkingMode;
+  } catch {
+    // Context not available, component used outside of DashboardPlayground
+    activateNoteLinkingMode = undefined;
+  }
 
   const handleMouseEnter = () => {
     if (isPlaygroundMode) {
@@ -28,6 +40,14 @@ export function LinkableCard({
   const handleMouseLeave = () => {
     if (isPlaygroundMode) {
       setIsHovered(false);
+    }
+  };
+
+  const handleAddNoteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (activateNoteLinkingMode) {
+      activateNoteLinkingMode();
     }
   };
 
@@ -45,25 +65,22 @@ export function LinkableCard({
       data-element-id={elementId}
     >
       {children}
-      
       {/* Note indicator */}
       {isPlaygroundMode && hasNotes && (
-        <div className="absolute top-2 right-2 w-2 h-2 bg-sky-400 " />
+        <div className="absolute top-2 right-2 w-2 h-2 bg-sky-500" ></div>
       )}
-        {/* Hover tooltip */}
-      {isPlaygroundMode && isHovered && (
-        <div 
-          className="absolute z-50 left-1/2 -top-10 bg-sky-400 text-slate-100 px-3 py-1 rounded-md text-sm shadow-xl pointer-events-none transform -translate-x-1/2 flex items-center gap-2 whitespace-nowrap"
+
+      {/* Add Note Button - appears on hover */}
+      {isPlaygroundMode && isHovered && activateNoteLinkingMode && (
+        <button
+          onClick={handleAddNoteClick}
+          className="absolute top-2 right-2 w-8 h-8 bg-sky-500 hover:bg-sky-600 text-white rounded-full 
+                     flex items-center justify-center shadow-lg transition-all duration-200 z-10
+                     transform hover:scale-110"
+          title="Add note for this element"
         >
-          {tooltip}
-          {hasNotes && (
-            <span className="text-xs bg-sky-400 px-1.5 py-0.5 rounded">
-              Has Notes
-            </span>
-          )}
-          {/* Tooltip arrow */}
-          <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-sky-400 rotate-45" />
-        </div>
+          <FiPlus size={14} />
+        </button>
       )}
     </div>
   );
