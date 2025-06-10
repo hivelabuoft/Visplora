@@ -16,6 +16,7 @@ interface DashboardPlaygroundContextType {
   isElementSelectionMode: boolean;
   noteToLink: string | null;
   linkNoteToElement: ((noteId: string, elementId: string) => void) | undefined;
+  isElementLinked: ((elementId: string) => boolean) | undefined;
 }
 
 const DashboardPlaygroundContext = createContext<DashboardPlaygroundContextType | undefined>(undefined);
@@ -287,14 +288,12 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
         let targetScale;
-        console.log(zoomLevel)
         if (zoomLevel > 40) {
           targetScale = 0.4;
         } else {
           targetScale = zoomLevel / 100;
         }
 
-        console.log('Target Scale:', targetScale);
         // Calculate position to center the dashboard in the viewport at 40% zoom
         const targetX = (viewportWidth / 2) - (dashboardCenterX * targetScale);
         const targetY = (viewportHeight / 2) - (dashboardCenterY * targetScale);
@@ -348,7 +347,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     }
   }, [getDashboardGridInfo, zoomLevel]);
 
-  // Link a note to an element (used in element selection mode)
   const linkNoteToElement = useCallback((noteId: string, elementId: string) => {
     updateStickyNote(noteId, {
       linkedElementId: elementId,
@@ -359,6 +357,11 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     setIsElementSelectionMode(false);
     setNoteToLink(null);
   }, [updateStickyNote]);
+
+  // Check if an element is linked to any note
+  const isElementLinked = useCallback((elementId: string): boolean => {
+    return stickyNotes.some(note => note.isLinked && note.linkedElementId === elementId);
+  }, [stickyNotes]);
 
   const handleAddToCanvas = useCallback(() => {
     if (onAddToCanvas) {
@@ -459,7 +462,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       activateElementSelectionMode,
       isElementSelectionMode,
       noteToLink,
-      linkNoteToElement
+      linkNoteToElement,
+      isElementLinked
     }}>
       <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-95 flex flex-col">
         {/* Header */}
@@ -691,7 +695,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 </span>}
                 {isNoteLinkingMode && (
                   <span className="text-sky-500 font-bold">
-                    Select a grid cell to place linked note
+                    Place linked note
                     {linkingElementId && ` for element: ${linkingElementId}`}
                   </span>)}
                 {isElementSelectionMode && (
@@ -710,6 +714,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       {hoveredCell && ` | ${hoveredCell}`}
                   </span>
                 ): <></> }
+                <span>Press ESC to exit</span>
               </div>
             )}
             
