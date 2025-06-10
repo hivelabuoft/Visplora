@@ -8,6 +8,7 @@ import {
   CardHeader, 
   CardTitle 
 } from '@/components/ui/card';
+import { LinkableCard } from '@/components/ui/card-linkable';
 import { 
   Tabs, 
   TabsContent, 
@@ -276,73 +277,82 @@ export default function Dashboard1() {
             </SelectContent>
           </Select>
         </div>
-      </div>
-
-      {/* KPI summary cards */}
+      </div>      {/* KPI summary cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Total Value</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{kpiData.totalValue.toLocaleString()}</div>
-            <p className="text-xs text-gray-500 mt-1">Across all categories</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Average Value</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{kpiData.averageValue.toLocaleString()}</div>
-            <p className="text-xs text-gray-500 mt-1">Per data point</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Maximum Value</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{kpiData.maxValue.toLocaleString()}</div>
-            <p className="text-xs text-gray-500 mt-1">Highest recorded value</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Categories</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{kpiData.categories}</div>
-            <p className="text-xs text-gray-500 mt-1">Distinct categories</p>
-          </CardContent>
-        </Card>
+        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="kpi-total-value">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-500">Total Value</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{kpiData.totalValue.toLocaleString()}</div>
+              <p className="text-xs text-gray-500 mt-1">Across all categories</p>
+            </CardContent>
+          </Card>
+        </LinkableCard>
+        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="kpi-average-value">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-500">Average Value</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{kpiData.averageValue.toLocaleString()}</div>
+              <p className="text-xs text-gray-500 mt-1">Per data point</p>
+            </CardContent>
+          </Card>
+        </LinkableCard>
+        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="kpi-max-value">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-500">Maximum Value</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{kpiData.maxValue.toLocaleString()}</div>
+              <p className="text-xs text-gray-500 mt-1">Highest recorded value</p>
+            </CardContent>
+          </Card>
+        </LinkableCard>
+        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="kpi-categories">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-500">Categories</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{kpiData.categories}</div>
+              <p className="text-xs text-gray-500 mt-1">Distinct categories</p>
+            </CardContent>
+          </Card>
+        </LinkableCard>
       </div>
-      
-      {/* Main visualization area */}
+        {/* Main visualization area */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <Card className="col-span-1">
-          <CardHeader>
-            <CardTitle>Value by Category</CardTitle>
-            <p className="text-sm text-gray-500">
-              Distribution of values across different categories
-            </p>
-          </CardHeader>
-          <CardContent>
-            <VegaLite spec={barChartSpec} data={filteredData} />
-          </CardContent>
-        </Card>
+        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="chart-bar-category">
+          <Card className="col-span-1">
+            <CardHeader>
+              <CardTitle>Value by Category</CardTitle>
+              <p className="text-sm text-gray-500">
+                Distribution of values across different categories
+              </p>
+            </CardHeader>
+            <CardContent>
+              <VegaLite spec={barChartSpec} data={filteredData} />
+            </CardContent>
+          </Card>
+        </LinkableCard>
         
-        <Card className="col-span-1">
-          <CardHeader>
-            <CardTitle>Regional Distribution</CardTitle>
-            <p className="text-sm text-gray-500">
-              Value distribution by region
-            </p>
-          </CardHeader>
-          <CardContent>
-            <VegaLite spec={pieChartSpec} data={filteredData} />
-          </CardContent>
-        </Card>
+        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="chart-pie-regional">
+          <Card className="col-span-1">
+            <CardHeader>
+              <CardTitle>Regional Distribution</CardTitle>
+              <p className="text-sm text-gray-500">
+                Value distribution by region
+              </p>
+            </CardHeader>
+            <CardContent>
+              <VegaLite spec={pieChartSpec} data={filteredData} />
+            </CardContent>
+          </Card>
+        </LinkableCard>
       </div>
       
       {/* Additional visualizations */}
@@ -350,32 +360,35 @@ export default function Dashboard1() {
         <TabsList>
           <TabsTrigger value="trend">Historical Trend</TabsTrigger>
           <TabsTrigger value="heatmap">Category Heatmap</TabsTrigger>
-        </TabsList>
-        <TabsContent value="trend">
-          <Card>
-            <CardHeader>
-              <CardTitle>Historical Performance</CardTitle>
-              <p className="text-sm text-gray-500">
-                Trends and forecasts over time
-              </p>
-            </CardHeader>
-            <CardContent>
-              <VegaLite spec={lineChartSpec} data={timeSeriesData} />
-            </CardContent>
-          </Card>
+        </TabsList>        <TabsContent value="trend">
+          <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="chart-line-trend">
+            <Card>
+              <CardHeader>
+                <CardTitle>Historical Performance</CardTitle>
+                <p className="text-sm text-gray-500">
+                  Trends and forecasts over time
+                </p>
+              </CardHeader>
+              <CardContent>
+                <VegaLite spec={lineChartSpec} data={timeSeriesData} />
+              </CardContent>
+            </Card>
+          </LinkableCard>
         </TabsContent>
         <TabsContent value="heatmap">
-          <Card>
-            <CardHeader>
-              <CardTitle>Category-Region Heat Map</CardTitle>
-              <p className="text-sm text-gray-500">
-                Value intensity across categories and regions
-              </p>
-            </CardHeader>
-            <CardContent>
-              <VegaLite spec={heatmapSpec} data={sampleData} />
-            </CardContent>
-          </Card>
+          <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="chart-heatmap-category">
+            <Card>
+              <CardHeader>
+                <CardTitle>Category-Region Heat Map</CardTitle>
+                <p className="text-sm text-gray-500">
+                  Value intensity across categories and regions
+                </p>
+              </CardHeader>
+              <CardContent>
+                <VegaLite spec={heatmapSpec} data={sampleData} />
+              </CardContent>
+            </Card>
+          </LinkableCard>
         </TabsContent>
       </Tabs>
 
