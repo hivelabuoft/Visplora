@@ -29,11 +29,12 @@ export const getNoteStyle = ({ note, cellSize, isEditing, isMoving, isDragging }
   fontSize: '12px',
   fontFamily: 'system-ui, -apple-system, sans-serif',
   color: note.isDark ? '#f9fafb' : '#1f2937',
-  cursor: isEditing ? 'text' : (isMoving ? 'grabbing' : 'pointer'),
-  boxShadow: note.isSelected
-    ? (note.isDark 
-      ? '0 0 0 3px rgba(96, 165, 250, 0.3), 0 4px 6px -1px rgba(0, 0, 0, 0.3)' 
-      : '0 0 0 3px rgba(245, 158, 11, 0.3), 0 4px 6px -1px rgba(0, 0, 0, 0.1)')
+  cursor: isEditing ? 'text' : (isMoving ? 'grabbing' : 'pointer'),  boxShadow: note.isSelected
+    ? (note.isLinked
+      ? '0 0 0 3px rgba(155, 4, 230, 0.3), 0 4px 6px -1px rgba(0, 0, 0, 0.2)' // Purple glow for linked notes
+      : note.isDark 
+        ? '0 0 0 3px rgba(96, 165, 250, 0.3), 0 4px 6px -1px rgba(0, 0, 0, 0.3)' 
+        : '0 0 0 3px rgba(245, 158, 11, 0.3), 0 4px 6px -1px rgba(0, 0, 0, 0.1)')
     : (note.isDark 
       ? '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)' 
       : '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'),
@@ -91,26 +92,26 @@ export const contentStyle: CSSProperties = {
   overflow: 'hidden'
 };
 
-export const getCornerResizeHandleStyle = (isDark: boolean): CSSProperties => ({
+export const getCornerResizeHandleStyle = (isDark: boolean, isLinked: boolean = false): CSSProperties => ({
   position: 'absolute',
   bottom: -2,
   right: -2,
   width: 12,
   height: 12,
-  backgroundColor: isDark ? '#60a5fa' : '#f59e0b',
+  backgroundColor: isLinked ? '#9b04e6' : (isDark ? '#60a5fa' : '#f59e0b'),
   border: '1px solid white',
   borderRadius: '2px',
   cursor: 'se-resize',
   zIndex: 50
 });
 
-export const getRightResizeHandleStyle = (isDark: boolean): CSSProperties => ({
+export const getRightResizeHandleStyle = (isDark: boolean, isLinked: boolean = false): CSSProperties => ({
   position: 'absolute',
   top: '50%',
   right: -2,
   width: 6,
   height: 20,
-  backgroundColor: isDark ? '#60a5fa' : '#f59e0b',
+  backgroundColor: isLinked ? '#9b04e6' : (isDark ? '#60a5fa' : '#f59e0b'),
   border: '1px solid white',
   borderRadius: '3px',
   cursor: 'e-resize',
@@ -118,13 +119,13 @@ export const getRightResizeHandleStyle = (isDark: boolean): CSSProperties => ({
   zIndex: 50
 });
 
-export const getBottomResizeHandleStyle = (isDark: boolean): CSSProperties => ({
+export const getBottomResizeHandleStyle = (isDark: boolean, isLinked: boolean = false): CSSProperties => ({
   position: 'absolute',
   bottom: -2,
   left: '50%',
   width: 20,
   height: 6,
-  backgroundColor: isDark ? '#60a5fa' : '#f59e0b',
+  backgroundColor: isLinked ? '#9b04e6' : (isDark ? '#60a5fa' : '#f59e0b'),
   border: '1px solid white',
   borderRadius: '3px',
   cursor: 's-resize',

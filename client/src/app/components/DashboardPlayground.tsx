@@ -496,7 +496,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
               setTimeout(() => setIsPanning(false), 100);
             }}>
             <React.Fragment>
-              {/* Dashboard Content */}
               <TransformComponent>
                 <div 
                   className="relative w-[4800px] rounded-xl" 
@@ -507,6 +506,12 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       backgroundSize: '50px 50px',
                       backgroundPosition: '0 0',
                       transformOrigin: '0 0'
+                  }}
+                  // Deselect notes when clicking on canvas background (not on notes or dashboard)
+                  onClick={(e) => {
+                    if (e.target === e.currentTarget) {
+                      selectNote(null);
+                    }
                   }}
                 >
                   {/* Interactive Grid */}
@@ -520,7 +525,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     onCellHover={(cell) => setHoveredCell(cell ? `Row: ${cell.row} - Col: ${cell.col}` : null)}
                     onCellClick={handleGridCellClick}
                   />
-                    {/* Center the dashboard in the grid */}
+                  
+                  {/* Center the dashboard in the grid */}
                   <div 
                     ref={dashboardRef}
                     className="absolute bg-white p-2 rounded-xl shadow-xl overflow-hidden" 
@@ -529,9 +535,16 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       left: `${getDashboardGridInfo().position.x}px`,
                       top: `${getDashboardGridInfo().position.y}px`
                     }}
+                    onClick={(e) => {
+                      // Deselect notes when clicking on dashboard area
+                      if (e.target === e.currentTarget || e.currentTarget.contains(e.target as Node)) {
+                        selectNote(null);
+                      }
+                    }}
                   >
                     {children}
                   </div>
+
                   {/* Sticky Notes */}
                   {stickyNotes.map((note) => (
                     <StickyNote

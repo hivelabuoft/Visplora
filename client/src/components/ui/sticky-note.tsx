@@ -325,7 +325,7 @@ const StickyNote: React.FC<StickyNoteProps> = ({
       )}
       
       <div style={headerStyle}>
-        <div style={{ display: 'flex', gap: '2px' }}>
+        <div className='flex items-center gap-1 flex-wrap'>
           <button
             className={`${styles.stickyNoteButton} ${note.isDark ? styles.darkModeButton : styles.lightModeButton}`}
             onClick={toggleTheme}
@@ -365,18 +365,14 @@ const StickyNote: React.FC<StickyNoteProps> = ({
             <button
               className={`${styles.stickyNoteButton} ${note.isDark ? styles.darkModeButton : styles.lightModeButton} ${
                 note.isLinked ? 'opacity-100' : 'opacity-50'
-              }`}              
+              }`}
               onClick={() => {
                 if (note.isLinked && note.linkedElementId) {
-                  // Create a temporary highlight effect for better UX
-                  const message = `This note is linked to dashboard element: ${note.linkedElementId}`;
-                  const customEvent = new CustomEvent('showLinkInfo', { 
-                    detail: { message, elementId: note.linkedElementId } 
+                  // If note is linked, unlink it
+                  onUpdate(note.id, { 
+                    linkedElementId: undefined, 
+                    isLinked: false 
                   });
-                  window.dispatchEvent(customEvent);
-                  
-                  // Fallback to alert if no custom handler is available
-                  setTimeout(() => alert(message), 100);
                 } else {
                   alert('This note is not linked to any dashboard element');
                 }
@@ -421,26 +417,25 @@ const StickyNote: React.FC<StickyNoteProps> = ({
           {note.content || 'Click to edit...'}
         </div>
       )}
-
       {/* Resize Handles */}
       {note.isSelected && !isEditing && (
         <>
           {/* Bottom-right corner handle */}
           <div
-            style={getCornerResizeHandleStyle(note.isDark)}
+            style={getCornerResizeHandleStyle(note.isDark, note.isLinked)}
             onMouseDown={(e) => handleResizeStart('bottom-right', e)}
             title="Resize note"
           />
           
           {/* Right edge handle */}
           <div
-            style={getRightResizeHandleStyle(note.isDark)}
+            style={getRightResizeHandleStyle(note.isDark, note.isLinked)}
             onMouseDown={(e) => handleResizeStart('right', e)}
             title="Resize width"          />
           
           {/* Bottom edge handle */}
           <div
-            style={getBottomResizeHandleStyle(note.isDark)}
+            style={getBottomResizeHandleStyle(note.isDark, note.isLinked)}
             onMouseDown={(e) => handleResizeStart('bottom', e)}
             title="Resize height"
           />
