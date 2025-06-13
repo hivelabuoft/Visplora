@@ -86,7 +86,7 @@ export default function HRAttritionDashboard() {
       {/* Header */}
       <div className="mb-8">
         <div className="flex justify-between items-center mb-4 gap-4">
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-row gap-4">
             <h1 className="text-3xl font-bold text-gray-800 tracking-wide">HR ATTRITION DASHBOARD</h1>
             {/* Clear All Filters Button */}
             {hasActiveFilters() && (
@@ -98,7 +98,7 @@ export default function HRAttritionDashboard() {
               </button>
             )}
           </div>
-          <div className="flex flex-col sm:flex-row items-center gap-8">
+          <div className="flex flex-row items-center gap-8">
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium">SHOW ONLY ATTRITION</span>
               <label className="relative inline-flex items-center cursor-pointer">
@@ -115,7 +115,7 @@ export default function HRAttritionDashboard() {
             </div>
             
             <div className="text-right">
-              <div className="flex flex-col lg:flex-row gap-2 text-sm">
+              <div className="flex flex-row gap-2 text-sm">
                 <span className="flex items-center gap-1 mr-2">
                   <div className="w-4 h-4 bg-black rounded-full"></div>
                   RETENTION
@@ -129,209 +129,214 @@ export default function HRAttritionDashboard() {
           </div>
         </div>
       </div>
-
       <div className="grid grid-cols-12 gap-4">
         {/* Left Column - Overview & Department */}
-        <div className="col-span-12 lg:col-span-5 space-y-4 h-full">
-          {/* Overview Cards */}          <LinkableCard 
-            elementId="overview-section"
-          >
-            <Card className="bg-white border-none shadow-sm gap-2">
-              <CardHeader>
-                <div className="flex items-center justify-start gap-4">
-                  <CardTitle className="text-lg font-bold text-gray-700 font-mono">OVERVIEW</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="text-center">
-                    <div className="flex items-center justify-center mb-2">
-                      <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
-                        <span className="text-sm">📊</span>
-                      </div>
-                    </div>
-                    <div className="text-2xl font-bold text-gray-800">
-                      {kpis.attritionRate}%
-                    </div>
-                    <div className="text-xs text-gray-500 uppercase">Attrition Rate</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="flex items-center justify-center mb-2">
-                      <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
-                        <span className="text-sm">👥</span>
-                      </div>
-                    </div>
-                    <div className="text-2xl font-bold text-gray-800">
-                      {kpis.totalAttrition}
-                    </div>
-                    <div className="text-xs text-gray-500 uppercase">Total Attrition</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="flex items-center justify-center mb-2">
-                      <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
-                        <span className="text-sm">👤</span>
-                      </div>
-                    </div>
-                    <div className="text-2xl font-bold text-gray-800">
-                      {kpis.currentEmployees}
-                    </div>
-                    <div className="text-xs text-gray-500 uppercase">Current Employees</div>
+        <div className="col-span-5 space-y-4 h-full">
+          {/* Overview Cards - Make each KPI its own linkable element */}
+          <div className="grid grid-cols-3 gap-4">
+            <LinkableCard 
+              elementId="attrition-rate-kpi"
+              className="bg-white border-none shadow-sm rounded-lg p-4"
+            >
+              <div className="text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                    <span className="text-sm">📊</span>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </LinkableCard>
-          <LinkableCard 
-            elementId="department-section"
-          >
-            <Card className="xl:flex-row justify-around">
-              {/* Department Analysis */}
-              <div className="bg-0 border-none shadow-none gap-2">
-                  <CardHeader>
-                      <div className="flex justify-between">
-                        <CardTitle className="text-lg font-bold text-gray-700 font-mono mb-2">DEPARTMENT</CardTitle>
-                        {selectedDepartment !== 'all' && (
-                          <button
-                            onClick={() => setSelectedDepartment('all')}
-                            className="text-xs bg-blue-100 text-blue-700 ml-2 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
-                          >
-                            Clear Filter
-                          </button>
-                        )}
-                      </div>
-                  </CardHeader>
-                  <CardContent>
-                      <DepartmentWidget data={filteredData} onDepartmentClick={setSelectedDepartment} selectedDepartment={selectedDepartment} />
-                  </CardContent>
+                <div className="text-2xl font-bold text-gray-800">
+                  {kpis.attritionRate}%
+                </div>
+                <div className="text-xs text-gray-500 uppercase">Attrition Rate</div>
               </div>
-              {/* Job Role Analysis */}
-              <div className="bg-0 border-none shadow-none gap-2">
-                  <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg font-bold text-gray-700 font-mono">JOB ROLE</CardTitle>
-                        {selectedJobRole !== 'all' && (
-                          <button
-                            onClick={() => setSelectedJobRole('all')}
-                            className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
-                          >
-                            Clear Filter
-                          </button>
-                        )}
-                      </div>
-                  </CardHeader>
-                  <CardContent>
-                      <JobRoleWidget 
-                        data={filteredData} 
-                        onJobRoleClick={setSelectedJobRole}
-                        selectedJobRole={selectedJobRole}
-                      />
-                  </CardContent>
+            </LinkableCard>
+            
+            <LinkableCard 
+              elementId="total-attrition-kpi"
+              className="bg-white border-none shadow-sm rounded-lg p-4"
+            >
+              <div className="text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                    <span className="text-sm">👥</span>
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-gray-800">
+                  {kpis.totalAttrition}
+                </div>
+                <div className="text-xs text-gray-500 uppercase">Total Attrition</div>
               </div>
-            </Card>
-          </LinkableCard>
-          {/* Bottom Row - Distance From Home */}
-          <LinkableCard 
-            elementId="distance-section"
-          >
-            <Card className="bg-white shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-lg font-bold font-mono text-gray-700 font-mono">DISTANCE FROM HOME</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <DistanceFromHomeWidget data={filteredData} />
-              </CardContent>
-            </Card>
-          </LinkableCard>
-        </div>
-
-        {/* Right Side - Demographics, Survey Score & Recent Attrition */}
-        <div className="grid col-span-12 lg:col-span-7 xl:grid-rows-5 gap-4">
-          <LinkableCard 
-            elementId="demographics-section"
-            className="xl:row-span-2 xl:h-full"
-          >
-            <Card className="bg-white border-none shadow-sm xl:h-full">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg font-bold text-gray-700 font-mono">DEMOGRAPHICS</CardTitle>
-                  {selectedGender !== 'all' && (
+            </LinkableCard>
+            
+            <LinkableCard 
+              elementId="current-employees-kpi"
+              className="bg-white border-none shadow-sm rounded-lg p-4"
+            >
+              <div className="text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                    <span className="text-sm">👤</span>
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-gray-800">
+                  {kpis.currentEmployees}
+                </div>
+                <div className="text-xs text-gray-500 uppercase">Current Employees</div>
+              </div>
+            </LinkableCard>
+          </div>
+          
+          {/* Department and Job Role Analysis - Separate LinkableCards */}
+          <div className="grid grid-cols-2 gap-4">
+            <LinkableCard 
+              elementId="department-widget"
+              className="bg-white border-none shadow-sm rounded-lg"
+            >
+              <div className="p-4">
+                <div className="flex justify-between mb-4">
+                  <h3 className="text-lg font-bold text-gray-700 font-mono">DEPARTMENT</h3>
+                  {selectedDepartment !== 'all' && (
                     <button
-                      onClick={() => setSelectedGender('all')}
+                      onClick={() => setSelectedDepartment('all')}
                       className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
                     >
                       Clear Filter
                     </button>
                   )}
                 </div>
-              </CardHeader>
-              <CardContent className="xl:h-full flex flex-row justify-center sm:justify-between text-center lg:text-start flex-wrap">
-                {/* Gender Distribution */}
-                <div className="pr-4 xl:border-r-2 border-gray-300">
-                  <h4 className="font-semibold text-gray-600 mb-3">GENDER</h4>
-                  <GenderWidget 
-                    data={filteredData} 
-                    onGenderClick={setSelectedGender}
-                    selectedGender={selectedGender}
-                  />
-                </div>
-                {/* Age Group Distribution */}
-                <div className="px-4 xl:border-r-2 border-gray-300">
-                  <h4 className="font-semibold text-gray-600 mb-3">AGE GROUP</h4>
-                  <AgeGroupWidget data={filteredData} />
-                </div>
-                {/* Education Distribution */}
-                <div className="pl-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-semibold text-gray-600">{!showEducationField ? "EDUCATION" : "EDUCATION FIELD"}</h4>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-500">Toggle Education</span>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={showEducationField}
-                          onChange={(e) => setShowEducationField(e.target.checked)}
-                          className="sr-only"
-                        />
-                        <div className={`w-8 h-4 rounded-full transition-colors ${showEducationField ? "bg-[#ef9f56]" : "bg-gray-300"}`}>
-                          <div className={`dot absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full transition-transform ${showEducationField ? "translate-x-4" : ""}`}/>
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                  <EducationWidget data={filteredData} showEducationField={showEducationField} />
-                </div>
-              </CardContent>
-            </Card>
-          </LinkableCard>
-          {/* Survey Score and Recent Attrition */}
-          <div className="grid grid-cols-7 gap-4 h-full xl:row-span-3">
-            <LinkableCard 
-              elementId="survey-score-section"
-              className="col-span-7 xl:col-span-3 h-full"
-            >
-              <Card className="bg-white border-none shadow-sm h-full gap-2 flex flex-col">
-                <CardHeader className="flex-none">
-                  <CardTitle className="text-lg font-bold text-gray-700 font-mono">SURVEY SCORE</CardTitle>
-                </CardHeader>
-                <CardContent className="flex-1">
-                <SurveyScoreWidget data={filteredData} />
-              </CardContent>
-              </Card>
+                <DepartmentWidget data={filteredData} onDepartmentClick={setSelectedDepartment} selectedDepartment={selectedDepartment} />
+              </div>
             </LinkableCard>
+            
             <LinkableCard 
-              elementId="recent-attritions-section"
-              className="col-span-7 xl:col-span-4 h-full"
+              elementId="job-role-widget"
+              className="bg-white border-none shadow-sm rounded-lg"
             >
-              <Card className="bg-white border-none shadow-sm h-full">
-                <CardHeader className="flex-none">
-                  <CardTitle className="text-lg font-bold text-gray-700 font-mono">RECENT ATTRITIONS</CardTitle>
-                </CardHeader>
-                <CardContent className="h-full">
-                  <ScrollableAttritionWidget data={filteredData}/>
-                </CardContent>
-              </Card>
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-bold text-gray-700 font-mono">JOB ROLE</h3>
+                  {selectedJobRole !== 'all' && (
+                    <button
+                      onClick={() => setSelectedJobRole('all')}
+                      className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                    >
+                      Clear Filter
+                    </button>
+                  )}
+                </div>
+                <JobRoleWidget 
+                  data={filteredData} 
+                  onJobRoleClick={setSelectedJobRole}
+                  selectedJobRole={selectedJobRole}
+                />
+              </div>
             </LinkableCard>
+          </div>
+          
+          {/* Distance From Home */}
+          <LinkableCard 
+            elementId="distance-widget"
+            className="bg-white shadow-sm rounded-lg"
+          >
+            <div className="p-4">
+              <h3 className="text-lg font-bold font-mono text-gray-700 mb-4">DISTANCE FROM HOME</h3>
+              <div className="text-center">
+                <DistanceFromHomeWidget data={filteredData} />
+              </div>
             </div>
+          </LinkableCard>
+        </div>
+        {/* Right Side - Demographics, Survey Score & Recent Attrition */}
+        <div className="col-span-7 space-y-4">
+          {/* Demographics - Split into individual linkable widgets */}
+          <div className="grid grid-cols-3 gap-4">
+            <LinkableCard 
+              elementId="gender-widget"
+              className="bg-white border-none shadow-sm rounded-lg"
+              >
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-lg font-bold font-mono text-gray-700">GENDER</h4>
+                  {selectedGender !== 'all' && (
+                    <button
+                    onClick={() => setSelectedGender('all')}
+                      className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                    >
+                      Clear Filter
+                    </button>
+                  )}
+                </div>
+                <GenderWidget 
+                  data={filteredData} 
+                  onGenderClick={setSelectedGender}
+                  selectedGender={selectedGender}
+                />
+              </div>
+            </LinkableCard>
+            
+            <LinkableCard 
+              elementId="age-group-widget"
+              className="bg-white border-none shadow-sm rounded-lg"
+              >
+              <div className="p-4">
+                <h4 className="text-lg font-bold font-mono text-gray-700 mb-4">AGE GROUP</h4>
+                <AgeGroupWidget data={filteredData} />
+              </div>
+            </LinkableCard>
+            
+            <LinkableCard 
+              elementId="education-widget"
+              className="bg-white border-none shadow-sm rounded-lg"
+              >
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-lg font-bold font-mono text-gray-700">{!showEducationField ? "EDUCATION" : "EDUCATION FIELD"}</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-gray-500">Toggle</span>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={showEducationField}
+                        onChange={(e) => setShowEducationField(e.target.checked)}
+                        className="sr-only"
+                      />
+                      <div className={`w-8 h-4 rounded-full transition-colors ${showEducationField ? "bg-[#ef9f56]" : "bg-gray-300"}`}>
+                        <div className={`dot absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full transition-transform ${showEducationField ? "translate-x-4" : ""}`}/>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <EducationWidget data={filteredData} showEducationField={showEducationField} />
+              </div>
+            </LinkableCard>
+          </div>
+          
+          {/* Survey Score and Recent Attrition - As separate widgets */}
+          <div className="grid grid-cols-2 gap-4">
+            <LinkableCard 
+              elementId="survey-score-widget"
+              className="bg-white border-none shadow-sm rounded-lg h-full"
+              >
+              <div className="p-4 h-full flex flex-col">
+                <h3 className="text-lg font-bold text-gray-700 font-mono mb-4">SURVEY SCORE</h3>
+                <div className="h-full">
+                  <SurveyScoreWidget data={filteredData} />
+                </div>
+              </div>
+            </LinkableCard>
+            
+            <LinkableCard 
+              elementId="recent-attritions-widget"
+              className="bg-white border-none shadow-sm rounded-lg h-full"
+              >
+              <div className="p-4 h-full flex flex-col">
+                <h3 className="text-lg font-bold text-gray-700 font-mono mb-4">RECENT ATTRITIONS</h3>
+                <div className="flex-1">
+                  <ScrollableAttritionWidget data={filteredData}/>
+                </div>
+              </div>
+            </LinkableCard>
+          </div>
         </div>
       </div>
     </div>

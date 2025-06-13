@@ -26,19 +26,19 @@ export function DepartmentWidget({ data, onDepartmentClick, selectedDepartment }
   const departments = HRAnalytics.getUniqueDepartments(data);
   
   return (
-    <div className="grid grid-cols-1">
+    <div className="grid grid-cols-1 gap-2">
       {departments.map((dept) => {
         const chartData = HRAnalytics.processDepartmentRetentionData(data, dept);
         const spec = createDepartmentRetentionChart();
         const totalCount = chartData.reduce((sum, item) => sum + item.count, 0);
 
         return (
-          <div key={dept} className="flex items-center">            
+          <div key={dept} className="flex items-center justify-center">            
             <div>
               <VegaLite spec={{ ...spec, data: { values: chartData } }} actions={false} />
             </div>
             <div 
-              className={`hover:bg-gray-100 p-2 rounded ml-2 cursor-pointer transition-colors 
+              className={`hover:bg-gray-100 p-2 w-28 rounded ml-2 cursor-pointer transition-colors 
                 ${selectedDepartment === dept ? 'bg-blue-100 border border-blue-300' : ''}`}
               onClick={() => {
                 // Toggle selection: if same department is clicked, clear filter
@@ -108,12 +108,12 @@ export function GenderWidget({ data, onGenderClick, selectedGender }: GenderWidg
   const spec = createGenderAttritionDonutChart();
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col justify-center items-center">
       {/* Male Attrition/Retention */}
       <div className="flex flex-row items-center">
         <VegaLite spec={{ ...spec, data: { values: maleData } }} actions={false} />
         <div 
-          className={`p-2 rounded cursor-pointer transition-colors ${
+          className={`p-2 w-20 rounded cursor-pointer transition-colors ${
             selectedGender === 'Male' ? 'bg-blue-100 border border-blue-300' : 'hover:bg-gray-100'
           }`}
           onClick={() => {
@@ -133,7 +133,7 @@ export function GenderWidget({ data, onGenderClick, selectedGender }: GenderWidg
       <div className="flex flex-row items-center">
         <VegaLite spec={{ ...spec, data: { values: femaleData } }} actions={false} />
         <div 
-          className={`p-2 rounded cursor-pointer transition-colors ${
+          className={`p-2 w-20 rounded cursor-pointer transition-colors ${
             selectedGender === 'Female' ? 'bg-blue-100 border border-blue-300' : 'hover:bg-gray-100'
           }`}
           onClick={() => {

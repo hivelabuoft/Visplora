@@ -127,13 +127,13 @@ export const createEducationBarChart = (): VegaLiteSpec => ({
   padding: 0,
   mark: "bar" as const,
   encoding: {
-    y: { 
+    x: { 
       field: "education", 
       type: "ordinal" as const, 
       axis: { title: null },
       sort: { field: "count", order: "descending" }
     },
-    x: { 
+    y: { 
       field: "count", 
       type: "quantitative" as const, 
       axis: { title: null }
@@ -156,18 +156,18 @@ export const createEducationBarChart = (): VegaLiteSpec => ({
 
 export const createEducationFieldBarChart = (): VegaLiteSpec => ({
   $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
-  width: 180,
+  width: 200,
   height: 160,
   padding: 0,
   mark: "bar" as const,
   encoding: {
-    y: { 
+    x: { 
       field: "field", 
       type: "ordinal" as const, 
       axis: { title: null },
       sort: { field: "count", order: "descending" }
     },
-    x: { 
+    y: { 
       field: "count", 
       type: "quantitative" as const, 
       axis: { title: null }
