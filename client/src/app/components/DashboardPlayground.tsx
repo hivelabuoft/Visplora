@@ -32,7 +32,6 @@ export const useDashboardPlayground = () => {
 interface DashboardPlaygroundProps {
   children: ReactNode;
   isActive: boolean;
-  onClose: () => void;
   dashboardTitle?: string;
   dashboardType?: string;
   onAddToCanvas?: () => void;
@@ -41,7 +40,6 @@ interface DashboardPlaygroundProps {
 const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   children,
   isActive,
-  onClose,
   dashboardTitle = "Dashboard",
   dashboardType = "default",
   onAddToCanvas
@@ -401,13 +399,10 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         } else if (isAnnotationMode) {
           // Exit annotation mode
           setIsAnnotationMode(false);
-          setShowGrid(false);
-        } else if (selectedNoteId) {
+          setShowGrid(false);        
           // Deselect any selected note
+        } else if (selectedNoteId) {
           selectNote(null);
-        } else {
-          // Finally, close the playground
-          onClose();
         }
       }
     };
@@ -422,7 +417,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'auto';
     };
-  }, [isActive, onClose, showTips, isResizing, isMoving, isElementSelectionMode, isNoteLinkingMode, isAnnotationMode, selectedNoteId, setIsResizing, setIsMoving, selectNote]);
+  }, [isActive, showTips, isResizing, isMoving, isElementSelectionMode, isNoteLinkingMode, 
+    isAnnotationMode, selectedNoteId, setIsResizing, setIsMoving, selectNote]);
 
   // Reset transform when playground becomes active and measure dashboard height
   useEffect(() => {
@@ -544,16 +540,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
               >
               <FiLink size={16} />
               VISplora
-              </button>
-
-            {/* Exit Playground Button */}
-            <button
-              onClick={onClose}
-              className="flex text-sm items-center gap-2 px-3 py-2 text-gray-600 hover:cursor-pointer hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <FiX size={16} />
-              Exit Playground
-            </button>
+              </button>            
           </div>
         </div>
         
@@ -675,17 +662,23 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 ▼
               </span>
             </button>
-            {showTips && (              <div className="absolute bottom-10 left-2 flex flex-col bg-white gap-3 p-3 rounded-lg shadow-lg text-xs text-gray-700 border border-gray-200">
-                <span>• Drag to pan around the dashboard.</span>
-                <span>• Scroll or use controls to zoom.</span>
-                <span>• Use "Reset View" to return to center.</span>
-                <span>• Click "Add to VISplora" to save dashboard.</span>
-                <span className="text-blue-600 font-semibold">• Press ESC to exit current mode or close playground.</span>
-                <span>• Click "Add Annotations" to toggle sticky notes.</span>
-                <span>• Click a grid cell to add a sticky note.</span>
-                <span>• Resize or move notes by dragging edges or title bar.</span>
-                <span>• Use the "Clear All Notes" button to remove all sticky notes.</span>
-                <span>• Click link button on notes to link/unlink from elements.</span>
+            {showTips && (              
+              <div className="absolute bottom-10 left-2 flex flex-col bg-white gap-3 p-3 rounded-lg shadow-lg text-xs text-gray-700 border border-gray-200">
+                {/* Navigation */}
+                <span><strong>Navigation:</strong> Drag to pan around the dashboard.</span>
+                <span><strong>Zooming:</strong> Scroll or use controls to zoom.</span>
+                <span><strong>Centering:</strong> Use "Reset View" to return to center.</span>
+
+                {/* Dashboard Management */}
+                <span><strong>Saving:</strong> Click "Add to VISplora" to save dashboard.</span>
+                <span><strong>Exiting:</strong> Press ESC to exit current mode or close playground.</span>
+
+                {/* Sticky Notes */}
+                <span><strong>Notes Mode:</strong> Click "Add Annotations" to toggle sticky notes.</span>
+                <span><strong>Adding Notes:</strong> Click a grid cell to add a sticky note.</span>
+                <span><strong>Note Controls:</strong> Resize or move notes by dragging edges or title bar.</span>
+                <span><strong>Note Clearing:</strong> Use the "Clear All Notes" button to remove all sticky notes.</span>
+                <span><strong>Linking:</strong> Click link button on notes to link/unlink from elements.</span>
               </div>
             )}
             {(isAnnotationMode || isNoteLinkingMode || isElementSelectionMode || isResizing || isMoving) && (

@@ -22,7 +22,6 @@ import {
   SelectTrigger, 
   SelectValue 
 } from '@/components/ui/select';
-import DashboardControls from '../components/DashboardControls';
 import DashboardPlayground from '../components/DashboardPlayground';
 
 // Sample data - in a real application, you would fetch this from an API
@@ -226,7 +225,6 @@ const pieChartSpec = {
 
 export default function Dashboard1() {
   const [activeRegion, setActiveRegion] = useState<string>('all');
-  const [isPlaygroundMode, setIsPlaygroundMode] = useState(false);
   const [dashboardHeight, setDashboardHeight] = useState<number>(0);
   const dashboardContentRef = React.useRef<HTMLDivElement>(null);
   
@@ -243,14 +241,13 @@ export default function Dashboard1() {
     averageValue: Math.round(filteredData.values.reduce((sum, d) => sum + d.value, 0) / filteredData.values.length),
     maxValue: Math.max(...filteredData.values.map(d => d.value)),
     categories: new Set(filteredData.values.map(d => d.category)).size  };
-
   // Measure dashboard height when content changes
   React.useEffect(() => {
-    if (dashboardContentRef.current && !isPlaygroundMode) {
+    if (dashboardContentRef.current) {
       const height = dashboardContentRef.current.scrollHeight;
       setDashboardHeight(height);
     }
-  }, [activeRegion, isPlaygroundMode]);
+  }, [activeRegion]);
 
   const dashboardContent = (
     <div ref={dashboardContentRef} className="p-6 space-y-6 bg-[#f8f9fa]">
@@ -279,7 +276,7 @@ export default function Dashboard1() {
         </div>
       </div>      {/* KPI summary cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="kpi-total-value">
+        <LinkableCard elementId="kpi-total-value">
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-gray-500">Total Value</CardTitle>
@@ -290,7 +287,7 @@ export default function Dashboard1() {
             </CardContent>
           </Card>
         </LinkableCard>
-        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="kpi-average-value">
+        <LinkableCard elementId="kpi-average-value">
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-gray-500">Average Value</CardTitle>
@@ -301,7 +298,7 @@ export default function Dashboard1() {
             </CardContent>
           </Card>
         </LinkableCard>
-        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="kpi-max-value">
+        <LinkableCard elementId="kpi-max-value">
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-gray-500">Maximum Value</CardTitle>
@@ -312,7 +309,7 @@ export default function Dashboard1() {
             </CardContent>
           </Card>
         </LinkableCard>
-        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="kpi-categories">
+        <LinkableCard elementId="kpi-categories">
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-gray-500">Categories</CardTitle>
@@ -326,7 +323,7 @@ export default function Dashboard1() {
       </div>
         {/* Main visualization area */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="chart-bar-category">
+        <LinkableCard elementId="chart-bar-category">
           <Card className="col-span-1">
             <CardHeader>
               <CardTitle>Value by Category</CardTitle>
@@ -340,7 +337,7 @@ export default function Dashboard1() {
           </Card>
         </LinkableCard>
         
-        <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="chart-pie-regional">
+        <LinkableCard elementId="chart-pie-regional">
           <Card className="col-span-1">
             <CardHeader>
               <CardTitle>Regional Distribution</CardTitle>
@@ -361,7 +358,7 @@ export default function Dashboard1() {
           <TabsTrigger value="trend">Historical Trend</TabsTrigger>
           <TabsTrigger value="heatmap">Category Heatmap</TabsTrigger>
         </TabsList>        <TabsContent value="trend">
-          <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="chart-line-trend">
+          <LinkableCard elementId="chart-line-trend">
             <Card>
               <CardHeader>
                 <CardTitle>Historical Performance</CardTitle>
@@ -376,7 +373,7 @@ export default function Dashboard1() {
           </LinkableCard>
         </TabsContent>
         <TabsContent value="heatmap">
-          <LinkableCard isPlaygroundMode={isPlaygroundMode} elementId="chart-heatmap-category">
+          <LinkableCard elementId="chart-heatmap-category">
             <Card>
               <CardHeader>
                 <CardTitle>Category-Region Heat Map</CardTitle>
@@ -404,34 +401,17 @@ export default function Dashboard1() {
           sources and could include additional interactivity features.
         </p>
       </div>
-      {/* Dashboard Controls for Canvas Integration */}
-      {!isPlaygroundMode && (
-        <DashboardControls 
-          dashboardTitle="Analytics Dashboard"
-          dashboardType="analytics"
-          onAddToCanvas={() => {
-            console.log('Analytics Dashboard added to canvas');
-          }}
-          onPlaygroundMode={() => setIsPlaygroundMode(true)}
-        />
-      )}
     </div>
-  );
-
-  return (
-    <>
+  );  return (    
+  <DashboardPlayground
+      isActive={true}
+      dashboardTitle="Analytics Dashboard"
+      dashboardType="analytics"
+      onAddToCanvas={() => {
+        console.log('Dashboard added to canvas from playground');
+      }}
+    >
       {dashboardContent}
-      <DashboardPlayground
-        isActive={isPlaygroundMode}
-        onClose={() => setIsPlaygroundMode(false)}
-        dashboardTitle="Analytics Dashboard"
-        dashboardType="analytics"
-        onAddToCanvas={() => {
-          console.log('Dashboard added to canvas from playground');
-        }}
-      >
-        {dashboardContent}
-      </DashboardPlayground>
-    </>
+    </DashboardPlayground>
   );
 }

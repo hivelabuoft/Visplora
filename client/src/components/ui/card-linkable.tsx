@@ -5,7 +5,6 @@ import { FiPlus, FiLink } from 'react-icons/fi'
 
 interface LinkableCardProps {
   children: React.ReactNode;
-  isPlaygroundMode: boolean;
   elementId?: string;
   className?: string;
   tooltip?: string;
@@ -14,7 +13,6 @@ interface LinkableCardProps {
 
 export function LinkableCard({
   children,
-  isPlaygroundMode,
   elementId,
   className,
   hasNotes = false,
@@ -43,22 +41,21 @@ export function LinkableCard({
   }
 
   const handleMouseEnter = () => {
-    if (isPlaygroundMode) {
-      setIsHovered(true);
-    }
+    setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
-    if (isPlaygroundMode) {
-      setIsHovered(false);
-    }
-  };  const handleAddNoteClick = (e: React.MouseEvent) => {
+    setIsHovered(false);
+  };
+  
+  const handleAddNoteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (activateLinkedNoteMode) {
       activateLinkedNoteMode(elementId);
     }
   };
+
   const handleElementClick = (e: React.MouseEvent) => {
     if (isElementSelectionMode && noteToLink && linkNoteToElement && elementId) {
       e.preventDefault();
@@ -77,10 +74,9 @@ export function LinkableCard({
         isElementSelectionMode ? "cursor-pointer" : "",
         className
       )}      style={{
-        boxShadow: isPlaygroundMode ? (
-          isElementSelectionMode ? "0 0 15px 0px rgb(155, 4, 230)"
-            : isLinked ? "0 0 12px 2px rgba(155, 4, 230, 0.4)"
-              : isHovered ? "0 0 20px 0 rgb(30, 199, 255)" : "none") : "none",
+        boxShadow: isElementSelectionMode ? "0 0 15px 0px rgb(155, 4, 230)"
+          : isLinked ? "0 0 12px 2px rgba(155, 4, 230, 0.4)"
+            : isHovered ? "0 0 20px 0 rgb(30, 199, 255)" : "none",
         border: isElementSelectionMode ? "1px solid rgb(155, 4, 230)" 
           : isLinked ? "1px solid rgba(155, 4, 230, 0.6)" : "none"
       }}
@@ -90,8 +86,8 @@ export function LinkableCard({
       data-element-id={elementId}
     >
       {children}
-        {/* Linked indicator badge */}
-      {isPlaygroundMode && isLinked && (
+      {/* Linked indicator badge */}
+      {isLinked && (
         <div className="absolute top-2 right-2 w-8 h-8 bg-purple-600 text-white rounded-full 
                         flex items-center justify-center z-10 shadow-lg"
              title="This element has linked notes">
@@ -100,7 +96,7 @@ export function LinkableCard({
       )}
       
       {/* Add Note Button - appears on hover */}
-      {isPlaygroundMode && isHovered && !isElementSelectionMode && (
+      {isHovered && !isElementSelectionMode && (
         <button
           onClick={handleAddNoteClick}
           className={`absolute top-2 right-2 w-8 h-8 bg-sky-500 hover:bg-sky-600 text-white rounded-full 
@@ -113,7 +109,7 @@ export function LinkableCard({
       )}
 
       {/* Element selection mode indicator */}
-      {isPlaygroundMode && isElementSelectionMode && isHovered && (
+      {isElementSelectionMode && isHovered && (
         <div className="absolute top-2 left-2 bg-purple-600 text-white px-4 py-1 rounded-full text-lg font-semibold">
           Click to Link
         </div>

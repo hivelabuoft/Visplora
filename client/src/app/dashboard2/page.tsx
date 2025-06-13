@@ -6,7 +6,6 @@ import { HRData, FilterCriteria } from "../types/interfaces";
 import { DataLoader } from "./dataLoader";
 import { HRAnalytics } from "./analytics";
 import { DepartmentWidget, JobRoleWidget, GenderWidget, AgeGroupWidget, EducationWidget, SurveyScoreWidget, ScrollableAttritionWidget, DistanceFromHomeWidget } from "./widgets";
-import DashboardControls from "../components/DashboardControls";
 import DashboardPlayground from "../components/DashboardPlayground";
 import { LinkableCard } from "@/components/ui/card-linkable";
 
@@ -19,7 +18,6 @@ export default function HRAttritionDashboard() {
   const [showOnlyAttrition, setShowOnlyAttrition] = useState(false);
   const [showEducationField, setShowEducationField] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [isPlaygroundMode, setIsPlaygroundMode] = useState(false);
   const [dashboardHeight, setDashboardHeight] = useState<number>(0);
   const dashboardContentRef = React.useRef<HTMLDivElement>(null);
 
@@ -65,14 +63,13 @@ export default function HRAttritionDashboard() {
     };
     const filtered = HRAnalytics.filterEmployeeData(data, criteria);
     setFilteredData(filtered);  }, [data, selectedDepartment, selectedJobRole, selectedGender, showOnlyAttrition]);
-
   // Measure dashboard height when content changes
   useEffect(() => {
-    if (dashboardContentRef.current && !isPlaygroundMode) {
+    if (dashboardContentRef.current) {
       const height = dashboardContentRef.current.scrollHeight;
       setDashboardHeight(height);
     }
-  }, [data, filteredData, isPlaygroundMode]);
+  }, [data, filteredData]);
 
   // Get unique departments and KPIs
   const kpis = HRAnalytics.calculateKPIMetrics(data);
@@ -136,9 +133,7 @@ export default function HRAttritionDashboard() {
       <div className="grid grid-cols-12 gap-4">
         {/* Left Column - Overview & Department */}
         <div className="col-span-12 lg:col-span-5 space-y-4 h-full">
-          {/* Overview Cards */}
-          <LinkableCard 
-            isPlaygroundMode={isPlaygroundMode}
+          {/* Overview Cards */}          <LinkableCard 
             elementId="overview-section"
           >
             <Card className="bg-white border-none shadow-sm gap-2">
@@ -186,9 +181,7 @@ export default function HRAttritionDashboard() {
               </CardContent>
             </Card>
           </LinkableCard>
-
           <LinkableCard 
-            isPlaygroundMode={isPlaygroundMode}
             elementId="department-section"
           >
             <Card className="xl:flex-row justify-around">
@@ -238,7 +231,6 @@ export default function HRAttritionDashboard() {
           </LinkableCard>
           {/* Bottom Row - Distance From Home */}
           <LinkableCard 
-            isPlaygroundMode={isPlaygroundMode}
             elementId="distance-section"
           >
             <Card className="bg-white shadow-sm">
@@ -255,7 +247,6 @@ export default function HRAttritionDashboard() {
         {/* Right Side - Demographics, Survey Score & Recent Attrition */}
         <div className="grid col-span-12 lg:col-span-7 xl:grid-rows-5 gap-4">
           <LinkableCard 
-            isPlaygroundMode={isPlaygroundMode}
             elementId="demographics-section"
             className="xl:row-span-2 xl:h-full"
           >
@@ -315,7 +306,6 @@ export default function HRAttritionDashboard() {
           {/* Survey Score and Recent Attrition */}
           <div className="grid grid-cols-7 gap-4 h-full xl:row-span-3">
             <LinkableCard 
-              isPlaygroundMode={isPlaygroundMode}
               elementId="survey-score-section"
               className="col-span-7 xl:col-span-3 h-full"
             >
@@ -328,9 +318,7 @@ export default function HRAttritionDashboard() {
               </CardContent>
               </Card>
             </LinkableCard>
-        
             <LinkableCard 
-              isPlaygroundMode={isPlaygroundMode}
               elementId="recent-attritions-section"
               className="col-span-7 xl:col-span-4 h-full"
             >
@@ -343,36 +331,20 @@ export default function HRAttritionDashboard() {
                 </CardContent>
               </Card>
             </LinkableCard>
-          </div>
+            </div>
         </div>
       </div>
-        {/* Dashboard Controls for Canvas Integration */}
-      {!isPlaygroundMode && (
-        <DashboardControls 
-          dashboardTitle="HR Attrition Dashboard"
-          dashboardType="hr-attrition"
-          onAddToCanvas={() => {
-            console.log('Dashboard added to canvas');
-          }}
-          onPlaygroundMode={() => setIsPlaygroundMode(true)}
-        />
-      )}
     </div>
-  );
-
-  return (
-    <>
-      {dashboardContent}        <DashboardPlayground
-        isActive={isPlaygroundMode}
-        onClose={() => setIsPlaygroundMode(false)}
-        dashboardTitle="HR Attrition Dashboard"
-        dashboardType="hr-attrition"
-        onAddToCanvas={() => {
-          console.log('Dashboard added to canvas from playground');
-        }}
-      >
-        {dashboardContent}
-      </DashboardPlayground>
-    </>
+  );  return (    
+  <DashboardPlayground
+      isActive={true}
+      dashboardTitle="HR Attrition Dashboard"
+      dashboardType="hr-attrition"
+      onAddToCanvas={() => {
+        console.log('Dashboard added to canvas from playground');
+      }}
+    >
+      {dashboardContent}
+    </DashboardPlayground>
   );
 }
