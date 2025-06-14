@@ -269,7 +269,7 @@ const StickyNote: React.FC<StickyNoteProps> = ({
       }
 
       // Limit maximum size to prevent performance issues with very large notes
-      const MAX_SIZE = 20;
+      const MAX_SIZE = 60;
       newWidth = Math.min(newWidth, MAX_SIZE);
       newHeight = Math.min(newHeight, MAX_SIZE);
 

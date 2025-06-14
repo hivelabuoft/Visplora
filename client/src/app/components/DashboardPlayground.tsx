@@ -43,8 +43,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   dashboardTitle = "Dashboard",
   dashboardType = "default",
   onAddToCanvas
-}) => {
-  const [zoomLevel, setZoomLevel] = useState(100);
+}) => {  const [zoomLevel, setZoomLevel] = useState(100);
   const [isPanning, setIsPanning] = useState(false);
   const [isAnnotationMode, setIsAnnotationMode] = useState(false);
   const [isNoteLinkingMode, setIsNoteLinkingMode] = useState(false);
@@ -57,6 +56,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const [hoveredCell, setHoveredCell] = useState<string | null>(null);
   const [occupiedCells, setOccupiedCells] = useState<Set<string>>(new Set());
   const [showTips, setShowTips] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const transformRef = useRef<ReactZoomPanPinchRef>(null);
   const dashboardRef = useRef<HTMLDivElement>(null);
   const dashboardPositionRef = useRef({ x: -1200, y: -450 });
@@ -228,9 +228,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           setZoomLevel(110);
         }
       }
-    } else {
-      // If the cell is occupied, do nothing or show a message
-      console.warn("Cell is already occupied or not in annotation/note linking mode");
     }
   }, [isAnnotationMode, isNoteLinkingMode, linkingElementId, createStickyNote, CELL_SIZE, occupiedCells, transformRef]);
 
@@ -443,7 +440,27 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       }, 100);
       return () => clearTimeout(timer);
     }
-  }, [isActive]);
+  }, [isActive]);  // Handle mouse movement for note preview
+  const handleCanvasMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (isAnnotationMode && !isPanning && !isMoving) {
+      // Use offsetX/offsetY which are relative to the canvas element
+      const mouseX = e.nativeEvent.offsetX;
+      const mouseY = e.nativeEvent.offsetY;
+      
+      // Snap to grid - find the top-left corner of the current grid cell
+      const col = Math.floor(mouseX / CELL_SIZE);
+      const row = Math.floor(mouseY / CELL_SIZE);
+      const gridX = col * CELL_SIZE;
+      const gridY = row * CELL_SIZE;
+      
+      // Position the note preview at the exact grid position (top-left corner)
+      // This matches where the actual note will be placed
+      setMousePosition({
+        x: gridX,
+        y: gridY
+      });
+    }
+  }, [isAnnotationMode, isPanning, isMoving, CELL_SIZE]);
 
   if (!isActive) {
     return null;
@@ -503,7 +520,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
               <FilePenLine size={16} />
               <span>{isAnnotationMode ? 'Exit Annotations' : 'Add Annotations'}</span>
               {notesCount > 0 && (
-                  <span className={`text-xs px-1.5 py-0.5 rounded-full 
+                  <span className={`text-xs px-2 py-0.5 rounded-full 
                       ${isAnnotationMode ? 'bg-orange-600 text-orange-100' : 'bg-orange-500 text-white'}`}>
                       {notesCount}
                   </span>
@@ -512,7 +529,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
               {notesCount > 0 && (
                   <button
                   onClick={clearAllNotes}
-                  className="text-xs px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded transition-colors"
+                  className="text-xs px-3 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg transition-colors"
                   >
                   Clear All Notes ({notesCount})
                   </button>
@@ -584,7 +601,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       backgroundImage: 'radial-gradient(circle, #d1d5db 2px, transparent 2px)',
                       backgroundSize: '50px 50px',
                       backgroundPosition: '0 0',
-                      transformOrigin: '0 0'
+                      transformOrigin: '0 0',
+                      cursor: isPanning ? 'grabbing' : isAnnotationMode ? 'cell' : 'default'
                   }}
                   // Deselect notes when clicking on canvas background (not on notes or dashboard)
                   onClick={(e) => {
@@ -592,7 +610,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       selectNote(null);
                     }
                   }}
-                >                  {/* Interactive Grid */}
+                  onMouseMove={handleCanvasMouseMove}
+                >{/* Interactive Grid */}
                   <InteractiveGrid
                     canvasWidth={canvasWidth}
                     canvasHeight={canvasHeight}
@@ -643,6 +662,39 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       zoomLevel={zoomLevel}
                     />
                   ))}
+                  {/* Note Preview - follows cursor in annotation mode */}
+                  {isAnnotationMode && !isPanning && !isMoving && (
+                    <div
+                      className="absolute pointer-events-none z-50 transition-opacity duration-200"
+                      style={{
+                        left: `${mousePosition.x}px`,
+                        top: `${mousePosition.y}px`,
+                        width: `${CELL_SIZE * 8}px`,
+                        height: `${CELL_SIZE * 8}px`,
+                        transform: 'translate(0, 0)', // Position from top-left of cursor
+                        opacity: hoveredCell ? '0.8' : '0.4'
+                      }}
+                    >
+                      <div className="w-full h-full bg-gradient-to-br from-yellow-200 to-yellow-300 border-2 border-yellow-400 rounded-lg shadow-xl flex flex-col p-3">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="text-yellow-800 text-xs font-semibold">
+                            📝 New Note
+                          </div>
+                          <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                        </div>
+                        <div className="flex-1 bg-yellow-100 rounded border border-yellow-300 opacity-60 flex flex-col items-center justify-center">
+                          <div className="text-yellow-700 text-xs">
+                            Click to place
+                          </div>
+                          {hoveredCell && (
+                            <div className="mt-1 text-xs text-yellow-700 text-center">
+                              {hoveredCell}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </TransformComponent>
             </React.Fragment>
@@ -711,7 +763,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className={`w-2 h-2 rounded-full transition-colors duration-200 ${isPanning ? 'bg-green-400 ' + styles.panningIndicator : 'bg-gray-300'}`}></span>
-                <span>Interactive Mode {isPanning ? '(Panning)' : ''}</span>
+                <span>Interactive Mode</span>
               </div>
               <span>Zoom: {Math.round(zoomLevel)}%</span>
               <span>Dimension: {Math.floor(canvasWidth / CELL_SIZE)}×{Math.floor(canvasHeight / CELL_SIZE)} ({CELL_SIZE}px cells)</span>
