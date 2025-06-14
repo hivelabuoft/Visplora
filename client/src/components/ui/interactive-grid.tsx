@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 
 interface GridCell {
   row: number;
@@ -22,6 +22,8 @@ interface InteractiveGridProps {
   onCellHover?: (cell: GridCell | null) => void;
   occupiedCells?: Set<string>; // Set of "row-col" strings
   dashboardBounds?: { startRow: number; endRow: number; startCol: number; endCol: number };
+  isMoving?: boolean; // Disable interactions when moving notes
+  isPanning?: boolean; // Disable expensive operations during panning
 }
 
 const InteractiveGrid: React.FC<InteractiveGridProps> = ({
@@ -32,118 +34,173 @@ const InteractiveGrid: React.FC<InteractiveGridProps> = ({
   onCellClick,
   onCellHover,
   occupiedCells = new Set(),
-  dashboardBounds
+  dashboardBounds,
+  isMoving = false,
+  isPanning = false
 }) => {
   const [hoveredCell, setHoveredCell] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const throttleRef = useRef<number | null>(null);
 
+  // Efficient grid data calculation - avoid expensive operations during panning
   const gridData = useMemo(() => {
+    // Don't recalculate during movement or panning to improve performance
+    if (isMoving || isPanning) {
+      return { rows: 0, cols: 0 };
+    }
+    
     const cols = Math.floor(canvasWidth / cellSize);
     const rows = Math.floor(canvasHeight / cellSize);
-    const cells: GridCell[] = [];
+    return { rows, cols };
+  }, [canvasWidth, canvasHeight, cellSize, isMoving, isPanning]);  // Handle click using coordinate calculation instead of pre-rendered cells
+  const handleContainerClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMoving || isPanning || !onCellClick) return;
+    
+    // Use offsetX/offsetY to get coordinates relative to the element itself
+    // This should work correctly with the transformed canvas
+    const x = e.nativeEvent.offsetX;
+    const y = e.nativeEvent.offsetY;
+    
+    // Calculate grid cell position
+    const col = Math.floor(x / cellSize);
+    const row = Math.floor(y / cellSize);
+    
+    // Ensure we're within grid bounds
+    if (col >= 0 && col < gridData.cols && row >= 0 && row < gridData.rows) {
+      const cellKey = `${row}-${col}`;
+      const isOccupied = occupiedCells.has(cellKey);
+      const isDashboard = dashboardBounds ? 
+        row >= dashboardBounds.startRow && 
+        row <= dashboardBounds.endRow &&
+        col >= dashboardBounds.startCol && 
+        col <= dashboardBounds.endCol : false;
 
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const cellKey = `${row}-${col}`;
-        const isOccupied = occupiedCells.has(cellKey);
-          // Check if this cell is part of the dashboard
-        const isDashboard = dashboardBounds ? 
-          row >= dashboardBounds.startRow && 
-          row <= dashboardBounds.endRow &&
-          col >= dashboardBounds.startCol && 
-          col <= dashboardBounds.endCol : false;
-
-        cells.push({
+      // Only allow clicks on unoccupied, non-dashboard cells
+      if (!isOccupied && !isDashboard) {
+        const cell: GridCell = {
           row,
           col,
           x: col * cellSize,
           y: row * cellSize,
           width: cellSize,
           height: cellSize,
-          isOccupied: isOccupied || isDashboard,
-          occupiedBy: isDashboard ? 'dashboard' : (isOccupied ? 'sticky-note' : undefined)
+          isOccupied: false,
+          occupiedBy: undefined
+        };
+        
+        console.log('Grid click:', { 
+          mouseX: x, 
+          mouseY: y, 
+          col, 
+          row, 
+          cellX: cell.x, 
+          cellY: cell.y,
+          cellSize,
+          canvasWidth,
+          canvasHeight
         });
+        
+        onCellClick(cell);
       }
     }
-    return { cells, rows, cols };
-  }, [canvasWidth, canvasHeight, cellSize, occupiedCells, dashboardBounds]);
-
-  const handleCellMouseEnter = (cell: GridCell) => {
-    const cellKey = `${cell.row}-${cell.col}`;
-    setHoveredCell(cellKey);
-    onCellHover?.(cell);
-  };
-
-  const handleCellMouseLeave = () => {
-    setHoveredCell(null);
-    onCellHover?.(null);
-  };
-
-  const handleCellClick = (cell: GridCell) => {
-    onCellClick?.(cell);
-  };
-
-  const getCellStyle = (cell: GridCell): React.CSSProperties => {
-    const cellKey = `${cell.row}-${cell.col}`;
-    const isHovered = hoveredCell === cellKey;
+  }, [cellSize, gridData.cols, gridData.rows, occupiedCells, dashboardBounds, onCellClick, isMoving, isPanning]);
+  // Handle hover using coordinate calculation with throttling for performance
+  const handleContainerMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMoving || isPanning || !onCellHover) return;
     
-    let backgroundColor = 'transparent';
-    let borderColor = 'rgba(59, 130, 246, 0.2)';
-    
-    if (cell.occupiedBy === 'dashboard') {
-      backgroundColor = isHovered ? 'rgba(59, 130, 246, 0.15)' : 'rgba(59, 130, 246, 0.08)';
-      borderColor = 'rgba(59, 130, 246, 0.3)';
-    } else if (cell.isOccupied) {
-      backgroundColor = isHovered ? 'rgba(239, 68, 68, 0.15)' : 'rgba(239, 68, 68, 0.08)';
-      borderColor = 'rgba(239, 68, 68, 0.3)';
-    } else if (isHovered) {
-      backgroundColor = 'rgba(34, 197, 94, 0.1)';
-      borderColor = 'rgba(34, 197, 94, 0.4)';
+    // Throttle mouse move events to improve performance during rapid movement
+    if (throttleRef.current) {
+      return;
     }
+      throttleRef.current = window.requestAnimationFrame(() => {
+      // Use offsetX/offsetY for consistent coordinate calculation
+      const x = e.nativeEvent.offsetX;
+      const y = e.nativeEvent.offsetY;
+      
+      const col = Math.floor(x / cellSize);
+      const row = Math.floor(y / cellSize);
+      
+      if (col >= 0 && col < gridData.cols && row >= 0 && row < gridData.rows) {
+        const cellKey = `${row}-${col}`;
+        if (hoveredCell !== cellKey) {
+          const isOccupied = occupiedCells.has(cellKey);
+          const isDashboard = dashboardBounds ? 
+            row >= dashboardBounds.startRow && 
+            row <= dashboardBounds.endRow &&
+            col >= dashboardBounds.startCol && 
+            col <= dashboardBounds.endCol : false;
 
-    return {
-      position: 'absolute',
-      left: cell.x,
-      top: cell.y,
-      width: cell.width,
-      height: cell.height,
-      backgroundColor,
-      border: `1px solid ${borderColor}`,
-      cursor: cell.isOccupied ? 'not-allowed' : 'pointer',
-      transition: 'all 0.2s ease',
-      pointerEvents: 'auto',
-      zIndex: isHovered ? 15 : 10
+          if (!isOccupied && !isDashboard) {
+            const cell: GridCell = {
+              row,
+              col,
+              x: col * cellSize,
+              y: row * cellSize,
+              width: cellSize,
+              height: cellSize,
+              isOccupied: false,
+              occupiedBy: undefined
+            };
+            setHoveredCell(cellKey);
+            onCellHover(cell);
+          } else {
+            // Clear hover if over occupied/dashboard area
+            if (hoveredCell) {
+              setHoveredCell(null);
+              onCellHover(null);
+            }
+          }
+        }
+      } else {
+        // Clear hover if outside grid bounds
+        if (hoveredCell) {
+          setHoveredCell(null);
+          onCellHover(null);
+        }
+      }
+      
+      throttleRef.current = null;
+    });
+  }, [cellSize, gridData.cols, gridData.rows, occupiedCells, dashboardBounds, onCellHover, hoveredCell, isMoving, isPanning]);
+  const handleContainerMouseLeave = useCallback(() => {
+    if (isMoving || isPanning) return;
+    
+    // Cancel any pending throttled updates
+    if (throttleRef.current) {
+      cancelAnimationFrame(throttleRef.current);
+      throttleRef.current = null;
+    }
+    
+    setHoveredCell(null);
+    onCellHover?.(null);  }, [onCellHover, isMoving, isPanning]);
+
+  // Cleanup throttled animations on unmount
+  useEffect(() => {
+    return () => {
+      if (throttleRef.current) {
+        cancelAnimationFrame(throttleRef.current);
+      }
     };
-  };
-
-  if (!showGrid) return null;
+  }, []);
+  
+  if (!showGrid) 
+    return null;
 
   return (
     <div 
-      className="absolute inset-0 pointer-events-none"
-      style={{ width: canvasWidth, height: canvasHeight }}
-    >
-      {/* Grid cells */}
-      {gridData.cells.map((cell) => {
-        const cellKey = `${cell.row}-${cell.col}`;
-        return (
-          <div
-            key={cellKey}
-            style={getCellStyle(cell)}
-            onMouseEnter={() => handleCellMouseEnter(cell)}
-            onMouseLeave={handleCellMouseLeave}
-            onClick={() => handleCellClick(cell)}
-            title={`Cell (R: ${cell.row}, C: ${cell.col}) - ${cell.isOccupied ? `Occupied by ${cell.occupiedBy}` : 'Available'}`}
-          />
-        );
-      })}
-      
-      {/* Grid info overlay */}
-      {hoveredCell && (
-        <div className="absolute -top-16 left-560 bg-black bg-opacity-75 text-white px-5 py-3 rounded-lg text-xl pointer-events-none z-20">
-          Cell: {hoveredCell} | Size: {cellSize}px | {gridData.cells.find(c => `${c.row}-${c.col}` === hoveredCell)?.isOccupied ? 'Occupied' : 'Available'}
-        </div>
-      )}
-    </div>
+      ref={containerRef}
+      className="absolute inset-0 pointer-events-auto"
+      style={{ 
+        width: canvasWidth, 
+        height: canvasHeight,
+        cursor: (isMoving || isPanning) ? 'default' : 'crosshair',
+        // Disable mouse events completely during panning for performance
+        pointerEvents: isPanning ? 'none' : 'auto'
+      }}
+      onMouseMove={handleContainerMouseMove}
+      onMouseLeave={handleContainerMouseLeave}
+      onClick={handleContainerClick}
+    />
   );
 };
 

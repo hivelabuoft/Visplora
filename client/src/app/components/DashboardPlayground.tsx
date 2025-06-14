@@ -78,7 +78,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
 
   // Grid configuration
   const canvasWidth = 4800;
-  const CELL_SIZE = 100;
+  const CELL_SIZE = 25;
   const DASHBOARD_WIDTH = 1600; // Fixed dashboard width
 
   // Calculate dashboard bounds and position for the grid
@@ -169,8 +169,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const handleGridCellClick = useCallback((cell: any) => {
     if (!cell.isOccupied && (isAnnotationMode || isNoteLinkingMode)) {
       // Check if there's enough space for a 2x2 note
-      const noteWidth = 2;
-      const noteHeight = 2;
+      const noteWidth = 8;
+      const noteHeight = 8;
       let hasEnoughSpace = true;
       
       // Check if all cells for the 2x2 note are available
@@ -228,6 +228,9 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           setZoomLevel(110);
         }
       }
+    } else {
+      // If the cell is occupied, do nothing or show a message
+      console.warn("Cell is already occupied or not in annotation/note linking mode");
     }
   }, [isAnnotationMode, isNoteLinkingMode, linkingElementId, createStickyNote, CELL_SIZE, occupiedCells, transformRef]);
 
@@ -381,12 +384,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         if (showTips) {
           // Close tips first if open
           setShowTips(false);
-        } else if (isResizing) {
-          // Exit resize mode
-          setIsResizing(false);
-        } else if (isMoving) {
-          // Exit move mode
-          setIsMoving(false);
         } else if (isElementSelectionMode) {
           // Exit element selection mode
           setIsElementSelectionMode(false);
@@ -595,8 +592,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       selectNote(null);
                     }
                   }}
-                >
-                  {/* Interactive Grid */}
+                >                  {/* Interactive Grid */}
                   <InteractiveGrid
                     canvasWidth={canvasWidth}
                     canvasHeight={canvasHeight}
@@ -606,6 +602,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     occupiedCells={occupiedCells}
                     onCellHover={(cell) => setHoveredCell(cell ? `Row: ${cell.row} - Col: ${cell.col}` : null)}
                     onCellClick={handleGridCellClick}
+                    isMoving={isMoving}
+                    isPanning={isPanning}
                   />
                   
                   {/* Center the dashboard in the grid */}
@@ -704,7 +702,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 {(isAnnotationMode || isNoteLinkingMode) ? (
                   <span className={isAnnotationMode ? 'text-orange-600' : 'text-sky-500'}>
                       Dashboard Size: {getDashboardGridInfo().cells.cellsWide}×{getDashboardGridInfo().cells.cellsHigh} | Occupied Cells: {occupiedCells.size}
-                      {hoveredCell && ` | ${hoveredCell}`}
                   </span>
                 ): <></> }
                 <span>Press ESC to exit</span>
