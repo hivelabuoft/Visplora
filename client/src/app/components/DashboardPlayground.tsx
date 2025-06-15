@@ -507,34 +507,35 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
               </button>
             </div>
 
-            {/* Annotations Button - Prominent Position */}
+            {/* Annotations Button */}
+            {notesCount > 0 && (
+                  <button
+                  onClick={clearAllNotes}
+                  className="text-xs px-3 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg transition-colors"
+                  >
+                  Clear All Notes
+                  </button>
+              )}
             <button
               onClick={() => {
                 setIsAnnotationMode(!isAnnotationMode);
                 setShowGrid(!showGrid);
               }}
               className={`flex items-center gap-2 px-4 py-2 text-sm rounded-lg font-medium transition-all duration-200 
-                  ${isAnnotationMode ? 'bg-orange-500 text-white shadow-md border-2 border-orange-600'
+                  ${isAnnotationMode ? 'bg-orange-500 text-white shadow-md border-1 border-orange-600 hover:bg-orange-600'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border-2 border-transparent'}`
               }>
               <FilePenLine size={16} />
               <span>{isAnnotationMode ? 'Exit Annotations' : 'Add Annotations'}</span>
               {notesCount > 0 && (
-                  <span className={`text-xs px-2 py-0.5 rounded-full 
-                      ${isAnnotationMode ? 'bg-orange-600 text-orange-100' : 'bg-orange-500 text-white'}`}>
+                  <span className={`text-xs px-2 py-0.5 rounded-full transition-colors duration-200 hover:bg-orange-600 hover:text-white
+                      ${isAnnotationMode ? 'bg-white text-orange-500' : 'bg-orange-500 text-white'}`}
+                      title='Number of notes'>
                       {notesCount}
                   </span>
               )}
             </button>
-              {notesCount > 0 && (
-                  <button
-                  onClick={clearAllNotes}
-                  className="text-xs px-3 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg transition-colors"
-                  >
-                  Clear All Notes ({notesCount})
-                  </button>
-              )}
-              
+
             {/* Add to Canvas and View Canvas Buttons */}
               <button
               onClick={handleAddToCanvas}
@@ -564,7 +565,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             ref={transformRef}
             initialScale={0.8}
             initialPositionX={-getDashboardGridInfo().position.x + 400}
-            initialPositionY={-getDashboardGridInfo().position.y + 400}
+            initialPositionY={-getDashboardGridInfo().position.y + 250}
             minScale={0.25}
             maxScale={2}
             centerOnInit={true}
@@ -602,7 +603,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       backgroundSize: '50px 50px',
                       backgroundPosition: '0 0',
                       transformOrigin: '0 0',
-                      cursor: isPanning ? 'grabbing' : isAnnotationMode ? 'cell' : 'default'
+                      cursor: isPanning ? 'grabbing' : isAnnotationMode ? 'not-allowed' : 'default'
                   }}
                   // Deselect notes when clicking on canvas background (not on notes or dashboard)
                   onClick={(e) => {
