@@ -673,7 +673,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                         width: `${CELL_SIZE * 8}px`,
                         height: `${CELL_SIZE * 8}px`,
                         transform: 'translate(0, 0)', // Position from top-left of cursor
-                        opacity: hoveredCell ? '0.8' : '0.4'
+                        opacity: hoveredCell ? '0.75' : '0.25'
                       }}
                     >
                       <div className="w-full h-full bg-gradient-to-br from-yellow-200 to-yellow-300 border-2 border-yellow-400 rounded-lg shadow-xl flex flex-col p-3">

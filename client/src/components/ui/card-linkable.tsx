@@ -78,7 +78,6 @@ export function LinkableCard({
       linkNoteToElement(noteToLink, elementId);
     }
   };
-
   // Simple connection node component
   const ConnectionNode = ({ position }: { position: 'top' | 'right' | 'bottom' | 'left' }) => {
     const handleMouseDown = (e: React.MouseEvent) => {
@@ -87,95 +86,51 @@ export function LinkableCard({
       console.log(`Connection node clicked: ${position} on element ${elementId}`);
       // TODO: Implement connection logic here
     };
-    
-    // Calculate node center position based on card dimensions
-    const getNodeCenter = () => {
-      if (!cardRef.current) return { x: 0, y: 0 };
-      
-      const rect = cardRef.current.getBoundingClientRect();
-      const cardWidth = rect.width;
-      const cardHeight = rect.height;
-      
-      switch (position) {
-        case 'top':
-          return { x: cardWidth / 2, y: 0 };
-        case 'right':
-          return { x: cardWidth, y: cardHeight / 2 };
-        case 'bottom':
-          return { x: cardWidth / 2, y: cardHeight };
-        case 'left':
-          return { x: 0, y: cardHeight / 2 };
-        default:
-          return { x: 0, y: 0 };
-      }
-    };
-    
-    // Calculate distance from mouse to this node
-    const getDistanceToMouse = () => {
-      const nodeCenter = getNodeCenter();
-      const dx = mousePosition.x - nodeCenter.x;
-      const dy = mousePosition.y - nodeCenter.y;
-      return Math.sqrt(dx * dx + dy * dy);
-    };
-
-    // Determine if node should be large based on proximity
-    const proximityThreshold = 40; // pixels - increased for easier testing
-    const distance = getDistanceToMouse();
-    const isNearMouse = distance < proximityThreshold;
-    
-    // Binary scale factor - either normal or large
-    const scaleFactor = isNearMouse ? 1.5 : 1.0;
 
     const getPositionStyles = () => {
       const baseStyles = {
         position: 'absolute' as const,
         zIndex: 50,
+        width: '8px',
+        height: '8px',
+        borderRadius: '50%',
+        cursor: 'crosshair',
       };
-      // Base size - we'll use transform scale for smooth animation
-      const baseSize = { width: 6, height: 24 };
+
       switch (position) {
         case 'top':
           return { 
             ...baseStyles, 
-            top: '-3px', 
+            top: '-4px', 
             left: '50%', 
-            transform: `translateX(-50%) scale(${scaleFactor})`,
-            width: `${baseSize.height}px`,
-            height: `${baseSize.width}px`,
+            transform: 'translateX(-50%)',
           };
         case 'right':
           return { 
             ...baseStyles, 
-            right: '-3px', 
+            right: '-4px', 
             top: '50%', 
-            transform: `translateY(-50%) scale(${scaleFactor})`,
-            width: `${baseSize.width}px`,
-            height: `${baseSize.height}px`,
+            transform: 'translateY(-50%)',
           };
         case 'bottom':
           return { 
             ...baseStyles, 
-            bottom: '-3px', 
+            bottom: '-4px', 
             left: '50%', 
-            transform: `translateX(-50%) scale(${scaleFactor})`,
-            width: `${baseSize.height}px`,
-            height: `${baseSize.width}px`,
+            transform: 'translateX(-50%)',
           };
         case 'left':
           return { 
             ...baseStyles, 
-            left: '-3px', 
+            left: '-4px', 
             top: '50%', 
-            transform: `translateY(-50%) scale(${scaleFactor})`,
-            width: `${baseSize.width}px`,
-            height: `${baseSize.height}px`,
+            transform: 'translateY(-50%)',
           };
       }
-    };
-    return (
+    };    return (
       <div
         style={getPositionStyles()}
-        className={`bg-gray-400 hover:bg-sky-500 rounded-md cursor-pointer`}
+        className="bg-gray-400 border-1 border-white hover:bg-sky-500 cursor-pointer"
         onMouseDown={handleMouseDown}
         title={`Connect from ${position}`}
       >
