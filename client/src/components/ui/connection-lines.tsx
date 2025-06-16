@@ -10,6 +10,7 @@ interface ConnectionLinesProps {
   dashboardPosition: { x: number; y: number };
   dashboardWidth: number;
   hoveredElementId?: string | null;
+  onRemoveConnection?: (noteId: string) => void;
 }
 
 interface ElementPosition {
@@ -24,9 +25,11 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
   cellSize,
   dashboardPosition,
   dashboardWidth,
-  hoveredElementId
+  hoveredElementId,
+  onRemoveConnection
 }) => {
   const [elementPositions, setElementPositions] = useState<Map<string, ElementPosition>>(new Map());
+  const [hoveredConnectionId, setHoveredConnectionId] = useState<string | null>(null);
   
   // Function to get element positions from the DOM
   const updateElementPositions = useCallback(() => {
@@ -293,13 +296,19 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
         }        
         const { note: notePos, element: elementPoint, noteConnectionPosition, elementConnectionPosition } = getConnectionPoints(note, elementPosition);
         const pathData = createCurvedPath(notePos, elementPoint, noteConnectionPosition, elementConnectionPosition);
-        
+
         // Check if either the note or element is hovered for glow effect
         // Note: we'll need to add hover tracking for notes in the future
         const shouldGlow = note.isSelected || (hoveredElementId === note.linkedElementId);
+        const connectionId = `connection-${note.id}`;
+        const isHovered = hoveredConnectionId === connectionId;
+        
+        // Calculate midpoint for tooltip
+        const midX = (notePos.x + elementPoint.x) / 2;
+        const midY = (notePos.y + elementPoint.y) / 2;
         
         return (
-          <g key={`connection-${note.id}`}>
+          <g key={connectionId}>
             {/* Glow effect line - only show when selected */}
             {shouldGlow && (
               <path
@@ -310,15 +319,58 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
                 filter="url(#glow)"
               />
             )}
-            
-            {/* Main line - simple dark purple */}
+            {/* Clickable invisible line for better click area */}
             <path
               d={pathData}
-              stroke={shouldGlow ? "rgba(155, 4, 230, 0.8)" : "#000"}
-              strokeWidth="2"
+              stroke="transparent"
+              strokeWidth="10"
               fill="none"
-              opacity={shouldGlow ? 1 : 0.7}
+              style={{ pointerEvents: 'stroke', cursor: 'pointer' }}
+              onMouseEnter={() => setHoveredConnectionId(connectionId)}
+              onMouseLeave={() => setHoveredConnectionId(null)}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onRemoveConnection) {
+                  onRemoveConnection(note.id);
+                }
+              }}
             />
+            {/* Main line - simple dark purple with hover detection */}
+            <path
+              d={pathData}
+              stroke={isHovered ? "#ff4444" : shouldGlow ? "rgba(155, 4, 230, 0.8)" : "#000"}
+              strokeWidth={isHovered ? "3" : "2"}
+              fill="none"
+              opacity={shouldGlow || isHovered ? 1 : 0.7}
+              style={{ pointerEvents: 'none' }}
+            />
+            
+            {/* Tooltip that appears on hover */}
+            {isHovered && (
+              <g style={{ pointerEvents: 'none' }}>
+                {/* Tooltip background */}
+                <rect
+                  x={midX - 45}
+                  y={midY - 25}
+                  width="90"
+                  height="20"
+                  rx="4"
+                  fill="rgba(0, 0, 0, 0.8)"
+                  stroke="rgba(255, 255, 255, 0.3)"
+                  strokeWidth="1"
+                />
+                {/* Tooltip text */}
+                <text
+                  x={midX}
+                  y={midY - 10}
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                >
+                  Click to delete
+                </text>
+              </g>
+            )}
             
             {/* Connection point on note */}
             <circle
@@ -328,6 +380,7 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
               fill="rgba(155, 4, 230, 0.9)"
               stroke="white"
               strokeWidth="1"
+              style={{ pointerEvents: 'none' }}
             />
 
             {/* Connection point on element */}
@@ -338,8 +391,9 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
               fill="rgba(155, 4, 230, 0.9)"
               stroke="white"
               strokeWidth="1"
+              style={{ pointerEvents: 'none' }}
             />
-          </g>
+        </g>
         );
       })}
     </svg>

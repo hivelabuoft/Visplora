@@ -358,6 +358,14 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     setNoteToLink(null);
   }, [updateStickyNote]);
 
+  // Remove connection between note and element
+  const removeConnection = useCallback((noteId: string) => {
+    updateStickyNote(noteId, {
+      linkedElementId: undefined,
+      isLinked: false
+    });
+  }, [updateStickyNote]);
+
   // Check if an element is linked to any note
   const isElementLinked = useCallback((elementId: string): boolean => {
     return stickyNotes.some(note => note.isLinked && note.linkedElementId === elementId);
@@ -654,6 +662,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     dashboardPosition={getDashboardGridInfo().position}
                     dashboardWidth={DASHBOARD_WIDTH}
                     hoveredElementId={hoveredElementId}
+                    onRemoveConnection={removeConnection}
                   />
 
                   {/* Sticky Notes */}

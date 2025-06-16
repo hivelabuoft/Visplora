@@ -86,20 +86,7 @@ const InteractiveGrid: React.FC<InteractiveGridProps> = ({
           height: cellSize,
           isOccupied: false,
           occupiedBy: undefined
-        };
-        
-        console.log('Grid click:', { 
-          mouseX: x, 
-          mouseY: y, 
-          col, 
-          row, 
-          cellX: cell.x, 
-          cellY: cell.y,
-          cellSize,
-          canvasWidth,
-          canvasHeight
-        });
-        
+        };        
         onCellClick(cell);
       }
     }
