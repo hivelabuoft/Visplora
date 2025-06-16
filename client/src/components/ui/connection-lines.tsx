@@ -4,6 +4,17 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { StickyNoteData } from './sticky-note';
 import { getConnectionNodePositions, ConnectionNodePosition } from './connection-nodes';
 
+// Interface for manual connections between nodes
+export interface ManualConnection {
+  id: string;
+  sourceId: string; // Element or note ID
+  sourceType: 'element' | 'note';
+  sourcePosition: 'top' | 'right' | 'bottom' | 'left';
+  targetId: string; // Element or note ID
+  targetType: 'element' | 'note';
+  targetPosition: 'top' | 'right' | 'bottom' | 'left';
+}
+
 interface ConnectionLinesProps {
   stickyNotes: StickyNoteData[];
   cellSize: number;
@@ -11,6 +22,26 @@ interface ConnectionLinesProps {
   dashboardWidth: number;
   hoveredElementId?: string | null;
   onRemoveConnection?: (noteId: string) => void;
+  manualConnections?: ManualConnection[];
+  onAddManualConnection?: (connection: ManualConnection) => void;
+  onRemoveManualConnection?: (connectionId: string) => void;
+  onConnectionDragStart?: (
+    elementId: string, 
+    type: 'element' | 'note', 
+    position: 'top' | 'right' | 'bottom' | 'left',
+    x: number,
+    y: number
+  ) => void;
+  // Drag state passed from parent
+  isDragging?: boolean;
+  dragStart?: {
+    id: string;
+    type: 'element' | 'note';
+    position: 'top' | 'right' | 'bottom' | 'left';
+    x: number;
+    y: number;
+  } | null;
+  dragPreview?: { x: number; y: number } | null;
 }
 
 interface ElementPosition {
@@ -26,7 +57,14 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
   dashboardPosition,
   dashboardWidth,
   hoveredElementId,
-  onRemoveConnection
+  onRemoveConnection,
+  manualConnections = [],
+  onAddManualConnection,
+  onRemoveManualConnection,
+  onConnectionDragStart,
+  isDragging = false,
+  dragStart = null,
+  dragPreview = null
 }) => {
   const [elementPositions, setElementPositions] = useState<Map<string, ElementPosition>>(new Map());
   const [hoveredConnectionId, setHoveredConnectionId] = useState<string | null>(null);
@@ -264,9 +302,47 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
         cp2x = to.x - dx * 0.3;
         cp2y = to.y;
     }
-    
-    // Create a smooth cubic bezier curve directly from node to node
-    return `M ${from.x} ${from.y} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${to.x} ${to.y}`;
+      // Create a smooth cubic bezier curve directly from node to node
+    return `M ${from.x} ${from.y} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${to.x} ${to.y}`;  };
+
+  // Get position for a connection node
+  const getConnectionNodePosition = (
+    id: string, 
+    type: 'element' | 'note', 
+    position: 'top' | 'right' | 'bottom' | 'left'
+  ): { x: number; y: number } | null => {
+    if (type === 'element') {
+      const elementPos = elementPositions.get(id);
+      if (!elementPos) return null;
+      
+      const bounds = {
+        x: dashboardPosition.x + elementPos.x,
+        y: dashboardPosition.y + elementPos.y,
+        width: elementPos.width,
+        height: elementPos.height
+      };
+      
+      const nodes = getEdgeConnectionPositions(bounds);
+      return { x: nodes[position].x, y: nodes[position].y };
+    } else {
+      // Note position
+      const note = stickyNotes.find(n => n.id === id);
+      if (!note) return null;
+      
+      const bounds = {
+        x: note.x,
+        y: note.y,
+        width: note.width * cellSize,
+        height: note.height * cellSize
+      };
+      
+      const nodes = getEdgeConnectionPositions(bounds);
+      nodes.top.y += 5;
+      nodes.bottom.y -= 5;
+      nodes.left.x += 5;
+      nodes.right.x -= 5;
+        return { x: nodes[position].x, y: nodes[position].y };
+    }
   };
 
   return (
@@ -288,6 +364,8 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
           </feMerge>
         </filter>
       </defs>
+      
+      {/* Render automatic connections (note to element) */}
       {linkedNotes.map((note) => {
         if (!note.linkedElementId) return null;
           const elementPosition = elementPositions.get(note.linkedElementId);
@@ -314,7 +392,7 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
               <path
                 d={pathData}
                 stroke="rgba(155, 4, 230, 0.2)"
-                strokeWidth="5"
+                strokeWidth="8"
                 fill="none"
                 filter="url(#glow)"
               />
@@ -339,7 +417,7 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
             <path
               d={pathData}
               stroke={isHovered ? "#ff4444" : shouldGlow ? "rgba(155, 4, 230, 0.8)" : "#000"}
-              strokeWidth={isHovered ? "3" : "2"}
+              strokeWidth={isHovered ? "4" : "2"}
               fill="none"
               opacity={shouldGlow || isHovered ? 1 : 0.7}
               style={{ pointerEvents: 'none' }}
@@ -396,6 +474,150 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
         </g>
         );
       })}
+
+      {/* Render manual connections */}
+      {manualConnections.map((connection) => {
+        const sourcePos = getConnectionNodePosition(connection.sourceId, connection.sourceType, connection.sourcePosition);
+        const targetPos = getConnectionNodePosition(connection.targetId, connection.targetType, connection.targetPosition);
+        
+        if (!sourcePos || !targetPos) return null;
+        
+        const pathData = createCurvedPath(sourcePos, targetPos, connection.sourcePosition, connection.targetPosition);
+        const connectionId = `manual-${connection.id}`;
+        const isHovered = hoveredConnectionId === connectionId;
+        
+        // Calculate midpoint for tooltip
+        const midX = (sourcePos.x + targetPos.x) / 2;
+        const midY = (sourcePos.y + targetPos.y) / 2;
+        
+        return (
+          <g key={connectionId}>
+            {/* Clickable invisible line for better click area */}
+            <path
+              d={pathData}
+              stroke="transparent"
+              strokeWidth="10"
+              fill="none"
+              style={{ pointerEvents: 'stroke', cursor: 'pointer' }}
+              onMouseEnter={() => setHoveredConnectionId(connectionId)}
+              onMouseLeave={() => setHoveredConnectionId(null)}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onRemoveManualConnection) {
+                  onRemoveManualConnection(connection.id);
+                }
+              }}
+            />
+            {/* Main line - blue for manual connections */}
+            <path
+              d={pathData}
+              stroke={isHovered ? "#ff4444" : "#000"}
+              strokeWidth={isHovered ? "3" : "2"}
+              fill="none"
+              opacity={isHovered ? 1 : 0.8}
+              style={{ pointerEvents: 'none' }}
+            />
+            
+            {/* Tooltip that appears on hover */}
+            {isHovered && (
+              <g style={{ pointerEvents: 'none' }}>
+                {/* Tooltip background */}
+                <rect
+                  x={midX - 45}
+                  y={midY - 25}
+                  width="90"
+                  height="20"
+                  rx="4"
+                  fill="rgba(0, 0, 0, 0.8)"
+                  stroke="rgba(255, 255, 255, 0.3)"
+                  strokeWidth="1"
+                />
+                {/* Tooltip text */}
+                <text
+                  x={midX}
+                  y={midY - 10}
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                >
+                  Click to delete
+                </text>
+              </g>
+            )}
+            
+            {/* Connection point on source */}
+            <circle
+              cx={sourcePos.x}
+              cy={sourcePos.y}
+              r="4"
+              fill="#0066cc"
+              stroke="white"
+              strokeWidth="1"
+              style={{ pointerEvents: 'none' }}
+            />
+
+            {/* Connection point on target */}
+            <circle
+              cx={targetPos.x}
+              cy={targetPos.y}
+              r="4"
+              fill="#0066cc"
+              stroke="white"
+              strokeWidth="1"
+              style={{ pointerEvents: 'none' }}
+            />
+          </g>
+        );
+      })}
+
+      {/* Drag preview line */}
+      {isDragging && dragStart && dragPreview && (
+        <g>
+          {/* Preview line with glow effect */}
+          <path
+            d={`M ${dragStart.x} ${dragStart.y} L ${dragPreview.x} ${dragPreview.y}`}
+            stroke="#0066cc"
+            strokeWidth="4"
+            strokeDasharray="8,4"
+            fill="none"
+            opacity="0.4"
+            style={{ pointerEvents: 'none' }}
+            filter="url(#glow)"
+          />
+          {/* Main preview line */}
+          <path
+            d={`M ${dragStart.x} ${dragStart.y} L ${dragPreview.x} ${dragPreview.y}`}
+            stroke="#0088ff"
+            strokeWidth="2"
+            strokeDasharray="8,4"
+            fill="none"
+            opacity="0.8"
+            style={{ pointerEvents: 'none' }}
+          />
+          {/* Drag start indicator */}
+          <circle
+            cx={dragStart.x}
+            cy={dragStart.y}
+            r="6"
+            fill="#0088ff"
+            stroke="white"
+            strokeWidth="2"
+            opacity="0.9"
+            style={{ pointerEvents: 'none' }}
+          />
+          {/* Mouse cursor indicator */}
+          <circle
+            cx={dragPreview.x}
+            cy={dragPreview.y}
+            r="4"
+            fill="#0088ff"
+            stroke="white"
+            strokeWidth="1"
+            opacity="0.7"
+            style={{ pointerEvents: 'none' }}
+          />
+        </g>
+      )}
     </svg>
   );
 };

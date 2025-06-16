@@ -7,18 +7,28 @@ import styles from './DashboardPlayground.module.css';
 import { FilePenLine } from 'lucide-react';
 import InteractiveGrid from '../../components/ui/interactive-grid';
 import StickyNote from '../../components/ui/sticky-note';
-import ConnectionLines from '../../components/ui/connection-lines';
+import ConnectionLines, { ManualConnection } from '../../components/ui/connection-lines';
 import { useStickyNotesManager } from '../../components/ui/sticky-notes-manager';
 
 // Context for dashboard playground operations
-interface DashboardPlaygroundContextType {
-  activateLinkedNoteMode: ((elementId?: string) => void) | undefined;
+interface DashboardPlaygroundContextType {  activateLinkedNoteMode: ((elementId?: string) => void) | undefined;
   activateElementSelectionMode: ((noteId: string) => void) | undefined;
   isElementSelectionMode: boolean;
   noteToLink: string | null;
   linkNoteToElement: ((noteId: string, elementId: string) => void) | undefined;
   isElementLinked: ((elementId: string) => boolean) | undefined;
+  getLinkedElementInfo: ((noteId: string) => { elementId: string; type: 'automatic' | 'manual' } | null) | undefined;
   setHoveredElementId: (elementId: string | null) => void;
+  // Manual connection drag functionality
+  onConnectionDragStart?: (
+    elementId: string, 
+    type: 'element' | 'note', 
+    position: 'top' | 'right' | 'bottom' | 'left',
+    x: number,
+    y: number
+  ) => void;
+  isDragging: boolean;
+  isValidDropTarget: (elementId: string, type: 'element' | 'note') => boolean;
 }
 
 const DashboardPlaygroundContext = createContext<DashboardPlaygroundContextType | undefined>(undefined);
@@ -77,6 +87,12 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     setIsMoving,
     notesCount
   } = useStickyNotesManager(dashboardTitle);
+
+  // Manual connections state
+  const [manualConnections, setManualConnections] = useState<ManualConnection[]>([]);
+  
+  // Connection feedback state for footer
+  const [connectionFeedback, setConnectionFeedback] = useState<string | null>(null);
 
   // Grid configuration
   const canvasWidth = 4800;
@@ -365,11 +381,290 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       isLinked: false
     });
   }, [updateStickyNote]);
-
-  // Check if an element is linked to any note
+  
+  // Check if an element is linked to any note (either automatic or manual connection)
   const isElementLinked = useCallback((elementId: string): boolean => {
-    return stickyNotes.some(note => note.isLinked && note.linkedElementId === elementId);
-  }, [stickyNotes]);
+    // Check for automatic connections
+    const hasAutomaticConnection = stickyNotes.some(note => note.isLinked && note.linkedElementId === elementId);
+    
+    // Check for manual connections
+    const hasManualConnection = manualConnections.some(conn => 
+      (conn.sourceId === elementId && conn.sourceType === 'element') ||
+      (conn.targetId === elementId && conn.targetType === 'element')
+    );
+    
+    return hasAutomaticConnection || hasManualConnection;
+  }, [stickyNotes, manualConnections]);
+
+  // Get linked element information for a note (checks both automatic and manual connections)
+  const getLinkedElementInfo = useCallback((noteId: string): { elementId: string; type: 'automatic' | 'manual' } | null => {
+    // Check for automatic connection
+    const note = stickyNotes.find(n => n.id === noteId);
+    if (note?.linkedElementId) {
+      return { elementId: note.linkedElementId, type: 'automatic' };
+    }
+    
+    // Check for manual connections
+    const manualConnection = manualConnections.find(conn => 
+      (conn.sourceId === noteId && conn.sourceType === 'note' && conn.targetType === 'element') ||
+      (conn.targetId === noteId && conn.targetType === 'note' && conn.sourceType === 'element')
+    );
+    
+    if (manualConnection) {
+      const elementId = manualConnection.sourceId === noteId ? manualConnection.targetId : manualConnection.sourceId;
+      return { elementId, type: 'manual' };
+    }
+    
+    return null;
+  }, [stickyNotes, manualConnections]);
+
+  // Manual connection handlers
+  const handleAddManualConnection = useCallback((connection: ManualConnection) => {
+    setManualConnections(prev => [...prev, connection]);
+  }, []);
+  const handleRemoveManualConnection = useCallback((connectionId: string) => {
+    const connectionToRemove = manualConnections.find(conn => conn.id === connectionId);
+    if (!connectionToRemove) return;
+    
+    setManualConnections(prev => prev.filter(conn => conn.id !== connectionId));
+    
+    // Check if notes should be unlinked after removing this connection
+    const remainingConnections = manualConnections.filter(conn => conn.id !== connectionId);
+    // Check source note
+    if (connectionToRemove.sourceType === 'note') {
+      const sourceHasOtherConnections = remainingConnections.some(conn => 
+        conn.sourceId === connectionToRemove.sourceId || conn.targetId === connectionToRemove.sourceId
+      );
+      const sourceHasAutomaticConnection = stickyNotes.find(note => 
+        note.id === connectionToRemove.sourceId && note.linkedElementId
+      );
+      
+      if (!sourceHasOtherConnections && !sourceHasAutomaticConnection) {
+        updateStickyNote(connectionToRemove.sourceId, { 
+          isLinked: false, 
+          linkedElementId: undefined 
+        });
+      } else if (connectionToRemove.targetType === 'element') {
+        // If removing connection to element, clear the linkedElementId
+        const sourceNote = stickyNotes.find(note => note.id === connectionToRemove.sourceId);
+        if (sourceNote?.linkedElementId === connectionToRemove.targetId) {
+          updateStickyNote(connectionToRemove.sourceId, { 
+            linkedElementId: undefined 
+          });
+        }
+      }
+    }
+    
+    // Check target note
+    if (connectionToRemove.targetType === 'note') {
+      const targetHasOtherConnections = remainingConnections.some(conn => 
+        conn.sourceId === connectionToRemove.targetId || conn.targetId === connectionToRemove.targetId
+      );
+      const targetHasAutomaticConnection = stickyNotes.find(note => 
+        note.id === connectionToRemove.targetId && note.linkedElementId
+      );
+      
+      if (!targetHasOtherConnections && !targetHasAutomaticConnection) {
+        updateStickyNote(connectionToRemove.targetId, { 
+          isLinked: false, 
+          linkedElementId: undefined 
+        });
+      } else if (connectionToRemove.sourceType === 'element') {
+        // If removing connection from element, clear the linkedElementId
+        const targetNote = stickyNotes.find(note => note.id === connectionToRemove.targetId);
+        if (targetNote?.linkedElementId === connectionToRemove.sourceId) {
+          updateStickyNote(connectionToRemove.targetId, { 
+            linkedElementId: undefined 
+          });
+        }
+      }
+    }
+  }, [manualConnections, stickyNotes, updateStickyNote]);// Drag state for manual connections
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState<{
+    id: string;
+    type: 'element' | 'note';
+    position: 'top' | 'right' | 'bottom' | 'left';
+    x: number;
+    y: number;
+  } | null>(null);
+  const [dragPreview, setDragPreview] = useState<{ x: number; y: number } | null>(null);
+  const handleConnectionDragStart = useCallback((
+    elementId: string, 
+    type: 'element' | 'note', 
+    position: 'top' | 'right' | 'bottom' | 'left',
+    x: number,
+    y: number
+  ) => {
+    setConnectionFeedback(`Dragging from ${type === 'note' ? 'note' : 'element'} (${position} edge) - drag to another connection node to create link`);
+    setIsDragging(true);
+    setDragStart({ id: elementId, type, position, x, y });
+    setDragPreview({ x, y });
+  }, []);
+
+  // Handle drag movement
+  const handleDragMove = useCallback((e: MouseEvent) => {
+    if (!isDragging || !dragStart) return;
+    
+    // Get mouse position relative to the canvas
+    const canvasRect = document.querySelector('[data-dashboard-container]')?.getBoundingClientRect();
+    if (!canvasRect) return;
+
+    const x = e.clientX - canvasRect.left;
+    const y = e.clientY - canvasRect.top;
+      setDragPreview({ x, y });
+  }, [isDragging, dragStart]);
+
+  // Validate connection rules
+  const validateConnection = useCallback((
+    sourceId: string, 
+    sourceType: 'element' | 'note',
+    targetId: string, 
+    targetType: 'element' | 'note'
+  ): boolean => {
+    // Rule: Connections are only allowed between:
+    // 1. Note to Note
+    // 2. Note to Element  
+    // 3. Element to Note
+    if (sourceType === 'element' && targetType === 'element') {
+      return false; // Element to Element not allowed
+    }
+    
+    // Don't allow self-connections
+    if (sourceId === targetId) {
+      return false;
+    }
+      // Check if connection already exists (manual connections)
+    const manualConnectionExists = manualConnections.some(conn => 
+      (conn.sourceId === sourceId && conn.targetId === targetId) ||
+      (conn.sourceId === targetId && conn.targetId === sourceId)
+    );
+    
+    // Check if automatic connection already exists
+    const automaticConnectionExists = (
+      (sourceType === 'note' && targetType === 'element' && 
+       stickyNotes.some(note => note.id === sourceId && note.linkedElementId === targetId)) ||
+      (sourceType === 'element' && targetType === 'note' && 
+       stickyNotes.some(note => note.id === targetId && note.linkedElementId === sourceId))
+    );
+    
+    return !manualConnectionExists && !automaticConnectionExists;
+  }, [manualConnections, stickyNotes]);
+
+  // Handle drag end - check for valid drop target
+  const handleDragEnd = useCallback((e: MouseEvent) => {
+    if (!isDragging || !dragStart) {
+      setIsDragging(false);
+      setDragStart(null);
+      setDragPreview(null);
+      return;
+    }
+
+    // Find connection node under mouse
+    const target = document.elementFromPoint(e.clientX, e.clientY);
+    const connectionNode = target?.closest('[data-connection-node]') as HTMLElement;
+    
+    if (connectionNode) {
+      const targetElementId = connectionNode.getAttribute('data-element-id');
+      const targetPosition = connectionNode.getAttribute('data-connection-node') as 'top' | 'right' | 'bottom' | 'left';
+      const targetType = connectionNode.getAttribute('data-note-id') ? 'note' : 'element';
+      
+      if (targetElementId && targetPosition && 
+          (targetElementId !== dragStart.id || targetPosition !== dragStart.position)) {
+        
+        // Validate connection rules
+        const isValidConnection = validateConnection(
+          dragStart.id, dragStart.type,
+          targetElementId, targetType
+        );
+          if (isValidConnection) {
+          const connection: ManualConnection = {
+            id: `manual-${dragStart.id}-${dragStart.position}-${targetElementId}-${targetPosition}`,
+            sourceId: dragStart.id,
+            sourceType: dragStart.type,
+            sourcePosition: dragStart.position,
+            targetId: targetElementId,
+            targetType: targetType,
+            targetPosition: targetPosition
+          };
+            handleAddManualConnection(connection);
+          
+          // Activate linked state for connected notes and clear any conflicting automatic connections
+          if (dragStart.type === 'note') {
+            // Check if this note was automatically linked to the target element, if so clear it
+            const sourceNote = stickyNotes.find(note => note.id === dragStart.id);
+            const updateData: any = { isLinked: true };
+            if (targetType === 'element' && sourceNote?.linkedElementId === targetElementId) {
+              updateData.linkedElementId = undefined;
+            }
+            updateStickyNote(dragStart.id, updateData);
+          }
+          if (targetType === 'note') {
+            // Check if this note was automatically linked to the source element, if so clear it
+            const targetNote = stickyNotes.find(note => note.id === targetElementId);
+            const updateData: any = { isLinked: true };
+            if (dragStart.type === 'element' && targetNote?.linkedElementId === dragStart.id) {
+              updateData.linkedElementId = undefined;
+            }
+            updateStickyNote(targetElementId, updateData);
+          }
+          
+          setConnectionFeedback(`✓ Connection created between ${dragStart.type} and ${targetType}`);
+          // Clear feedback after a delay
+          setTimeout(() => setConnectionFeedback(null), 5000);
+        } else {
+          setConnectionFeedback(`✗ Invalid connection: cannot connect ${dragStart.type} to ${targetType} (or connection already exists)`);
+          // Clear feedback after a delay
+          setTimeout(() => setConnectionFeedback(null), 5000);
+        }
+      } else {
+        // No valid target found
+        setConnectionFeedback(`Connection cancelled - no valid target found`);
+        // Clear feedback after a delay
+        setTimeout(() => setConnectionFeedback(null), 5000);
+      }
+    } else {
+      // Drag ended without finding any connection node
+      setConnectionFeedback(`Connection cancelled - drag to a connection node to create a link`);
+      // Clear feedback after a delay
+      setTimeout(() => setConnectionFeedback(null), 5000);
+    }
+
+    setIsDragging(false);
+    setDragStart(null);
+    setDragPreview(null);
+  }, [isDragging, dragStart, handleAddManualConnection, manualConnections, updateStickyNote, stickyNotes]);
+  // Validate connection rules  // Set up global drag event listeners
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleDragMove);
+      document.addEventListener('mouseup', handleDragEnd);
+      
+      return () => {
+        document.removeEventListener('mousemove', handleDragMove);
+        document.removeEventListener('mouseup', handleDragEnd);
+      };
+    }
+  }, [isDragging, handleDragMove, handleDragEnd]);
+
+  // Helper function to determine if a note is a valid drop target
+  const isValidDropTarget = useCallback((noteId: string, noteType: 'element' | 'note') => {
+    if (!isDragging || !dragStart) return false;
+    
+    // Can't drop on self
+    if (dragStart.id === noteId) return false;
+    
+    // Apply connection rules
+    if (dragStart.type === 'element' && noteType === 'element') return false; // Element to Element not allowed
+    
+    // Check if connection already exists
+    const connectionExists = manualConnections.some(conn => 
+      (conn.sourceId === dragStart.id && conn.targetId === noteId) ||
+      (conn.sourceId === noteId && conn.targetId === dragStart.id)
+    );
+    
+    return !connectionExists;
+  }, [isDragging, dragStart, manualConnections]);
 
   const handleAddToCanvas = useCallback(() => {
     if (onAddToCanvas) {
@@ -388,7 +683,15 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isActive) {
         // Exit modes in priority order (most specific to least specific)
-        if (showTips) {
+        if (isDragging) {
+          // Cancel drag operation
+          setIsDragging(false);
+          setDragStart(null);
+          setDragPreview(null);
+          setConnectionFeedback('Connection cancelled');
+          // Clear feedback after a delay
+          setTimeout(() => setConnectionFeedback(null), 5000);
+        } else if (showTips) {
           // Close tips first if open
           setShowTips(false);
         } else if (isElementSelectionMode) {
@@ -420,9 +723,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'auto';
-    };
-  }, [isActive, showTips, isResizing, isMoving, isElementSelectionMode, isNoteLinkingMode, 
-    isAnnotationMode, selectedNoteId, setIsResizing, setIsMoving, selectNote]);
+    };  }, [isActive, showTips, isResizing, isMoving, isElementSelectionMode, isNoteLinkingMode, 
+    isAnnotationMode, selectedNoteId, isDragging, setIsResizing, setIsMoving, selectNote]);
 
   // Reset transform when playground becomes active and measure dashboard height
   useEffect(() => {
@@ -476,15 +778,18 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     return null;
   }
 
-  return (
-    <DashboardPlaygroundContext.Provider value={{ 
+  return (    <DashboardPlaygroundContext.Provider value={{ 
       activateLinkedNoteMode, 
       activateElementSelectionMode,
       isElementSelectionMode,
       noteToLink,
       linkNoteToElement,
       isElementLinked,
-      setHoveredElementId
+      getLinkedElementInfo,
+      setHoveredElementId,
+      onConnectionDragStart: handleConnectionDragStart,
+      isDragging,
+      isValidDropTarget
     }}>
       <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-95 flex flex-col">
         {/* Header */}
@@ -663,8 +968,14 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     dashboardWidth={DASHBOARD_WIDTH}
                     hoveredElementId={hoveredElementId}
                     onRemoveConnection={removeConnection}
+                    manualConnections={manualConnections}
+                    onAddManualConnection={handleAddManualConnection}
+                    onRemoveManualConnection={handleRemoveManualConnection}
+                    onConnectionDragStart={handleConnectionDragStart}
+                    isDragging={isDragging}
+                    dragStart={dragStart}
+                    dragPreview={dragPreview}
                   />
-
                   {/* Sticky Notes */}
                   {stickyNotes.map((note) => (
                     <StickyNote
@@ -681,6 +992,9 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       onMoveEnd={() => setIsMoving(false)}
                       getOccupiedCells={getAllOccupiedCells}
                       zoomLevel={zoomLevel}
+                      onConnectionDragStart={handleConnectionDragStart}
+                      isDragging={isDragging}
+                      isDragTarget={isValidDropTarget(note.id, 'note')}
                     />
                   ))}
                   {/* Note Preview - follows cursor in annotation mode */}
@@ -752,13 +1066,13 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 <span><strong>Linking:</strong> Click link button on notes to link/unlink from elements.</span>
               </div>
             )}
-            {(isAnnotationMode || isNoteLinkingMode || isElementSelectionMode || isResizing || isMoving) && (
+            {(isAnnotationMode || isNoteLinkingMode || isElementSelectionMode || isResizing || isMoving || isDragging || connectionFeedback) && (
               <div className="flex items-center justify-center gap-4">
                 {isAnnotationMode && 
                 <span className="text-orange-600 font-bold">Select a grid cell to add sticky note
                 </span>}
                 {isNoteLinkingMode && (
-                  <span className="text-sky-500 font-bold">
+                  <span className="text-blue-500 font-bold">
                     Place linked note
                     {linkingElementId && ` for element: ${linkingElementId}`}
                   </span>)}
@@ -772,12 +1086,26 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 {isMoving && <span className="text-green-600 font-semibold">
                   Moving note - drop note to confirm placement
                   </span>}
+                {isDragging && !connectionFeedback && (
+                  <span className="text-indigo-600 font-bold">
+                    Creating connection - drag to a connection node to link
+                  </span>)}
+                {connectionFeedback && (
+                  <span className={`font-semibold ${
+                    connectionFeedback.startsWith('✓') ? 'text-green-600' : 
+                    connectionFeedback.startsWith('✗') ? 'text-red-600' : 
+                    'text-blue-600'
+                  }`}>
+                    {connectionFeedback}
+                  </span>)}
                 {(isAnnotationMode || isNoteLinkingMode) ? (
-                  <span className={isAnnotationMode ? 'text-orange-600' : 'text-sky-500'}>
-                      Dashboard Size: {getDashboardGridInfo().cells.cellsWide}×{getDashboardGridInfo().cells.cellsHigh} | Occupied Cells: {occupiedCells.size}
-                  </span>
+                    <span className={isAnnotationMode ? 'text-orange-600' : 'text-blue-500'}>
+                        Dashboard Size: {getDashboardGridInfo().cells.cellsWide}×{getDashboardGridInfo().cells.cellsHigh} | Occupied Cells: {occupiedCells.size}
+                    </span>
                 ): <></> }
-                <span>Press ESC to exit</span>
+                {(isAnnotationMode || isNoteLinkingMode || isElementSelectionMode || isDragging) && (
+                  <span>Press ESC to exit</span>
+                )}
               </div>
             )}
             

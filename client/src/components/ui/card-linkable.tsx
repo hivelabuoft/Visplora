@@ -28,6 +28,9 @@ export function LinkableCard({
   let linkNoteToElement: ((noteId: string, elementId: string) => void) | undefined;
   let isElementLinked: ((elementId: string) => boolean) | undefined;
   let setHoveredElementId: ((elementId: string | null) => void) | undefined;
+  let onConnectionDragStart: ((elementId: string, type: 'element' | 'note', position: 'top' | 'right' | 'bottom' | 'left', x: number, y: number) => void) | undefined;
+  let isDragging = false;
+  let isValidDropTarget: ((elementId: string, type: 'element' | 'note') => boolean) | undefined;
   
   try {
     const context = useDashboardPlayground();
@@ -37,6 +40,9 @@ export function LinkableCard({
     linkNoteToElement = context.linkNoteToElement;
     isElementLinked = context.isElementLinked;
     setHoveredElementId = context.setHoveredElementId;
+    onConnectionDragStart = context.onConnectionDragStart;
+    isDragging = context.isDragging;
+    isValidDropTarget = context.isValidDropTarget;
   } catch {
     // Context not available, component used outside of DashboardPlayground
     activateLinkedNoteMode = undefined;
@@ -45,6 +51,9 @@ export function LinkableCard({
     linkNoteToElement = undefined;
     isElementLinked = undefined;
     setHoveredElementId = undefined;
+    onConnectionDragStart = undefined;
+    isDragging = false;
+    isValidDropTarget = undefined;
   }
 
   const handleMouseEnter = () => {
@@ -102,12 +111,15 @@ export function LinkableCard({
       data-element-id={elementId}
     >
       {children}
-      
       {/* Connection Nodes */}
       <ConnectionNodes
         elementId={elementId || ''}
-        isVisible={showConnectionNodes}
+        isVisible={showConnectionNodes || isDragging}
         isLinked={isLinked}
+        onDragStart={onConnectionDragStart}
+        isNote={false}
+        isDragging={isDragging}
+        isDragTarget={elementId && isValidDropTarget ? isValidDropTarget(elementId, 'element') : false}
       />
 
       {/* Linked indicator badge */}

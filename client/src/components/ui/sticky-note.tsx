@@ -74,13 +74,21 @@ interface StickyNoteProps {
   onMoveEnd?: () => void;
   getOccupiedCells?: () => Set<string>;
   zoomLevel?: number;
+  onConnectionDragStart?: (
+    elementId: string, 
+    type: 'element' | 'note', 
+    position: 'top' | 'right' | 'bottom' | 'left',
+    x: number,
+    y: number
+  ) => void;
+  isDragging?: boolean; // Whether a drag operation is currently active
+  isDragTarget?: boolean; // Whether this note is a valid drop target during drag
 }
 
 const StickyNote: React.FC<StickyNoteProps> = ({
   note,
   cellSize,
-  onUpdate,
-  onDelete,
+  onUpdate,  onDelete,
   onSelect,
   isResizing,
   onResizeStart,
@@ -88,26 +96,43 @@ const StickyNote: React.FC<StickyNoteProps> = ({
   onMoveStart,
   onMoveEnd,
   getOccupiedCells,
-  zoomLevel = 100 // Default zoom level is 100%
+  zoomLevel = 100, // Default zoom level is 100%
+  onConnectionDragStart,
+  isDragging: globalIsDragging = false,
+  isDragTarget = false
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState(note.content);
   const [isDragging, setIsDragging] = useState(false);
-  const [isMoving, setIsMoving] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [isMoving, setIsMoving] = useState(false);  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const noteRef = useRef<HTMLDivElement>(null);
-  // Get the dashboard playground context
+  const wasSelectedRef = useRef(note.isSelected);  // Get the dashboard playground context
   let activateLinkedNoteMode: ((elementId?: string) => void) | undefined;
   let activateElementSelectionMode: ((noteId: string) => void) | undefined;
+  let getLinkedElementInfo: ((noteId: string) => { elementId: string; type: 'automatic' | 'manual' } | null) | undefined;
   try {
     const context = useDashboardPlayground();
     activateLinkedNoteMode = context.activateLinkedNoteMode;
     activateElementSelectionMode = context.activateElementSelectionMode;
+    getLinkedElementInfo = context.getLinkedElementInfo;
   } catch {
     // Context not available, component used outside of DashboardPlayground
     activateLinkedNoteMode = undefined;
     activateElementSelectionMode = undefined;
+    getLinkedElementInfo = undefined;
   }
+  // Get linked element display information
+  const getLinkedElementDisplay = (): { id: string; type: 'automatic' | 'manual' } | null => {
+    if (getLinkedElementInfo) {
+      const result = getLinkedElementInfo(note.id);
+      return result ? { id: result.elementId, type: result.type } : null;
+    }
+    // Fallback to the old method for backward compatibility
+    if (note.linkedElementId) {
+      return { id: note.linkedElementId, type: 'automatic' };
+    }
+    return null;
+  };
 
   // Auto-select and focus new notes (empty content means new)
   useEffect(() => {
@@ -121,8 +146,9 @@ const StickyNote: React.FC<StickyNoteProps> = ({
     if (isEditing && textareaRef.current) {
       textareaRef.current.focus();
       textareaRef.current.select();
-    }
-  }, [isEditing]);  const handleSave = () => {
+    }  }, [isEditing]);
+
+  const handleSave = () => {
     onUpdate(note.id, { content: content.trim() });
     setIsEditing(false);
   };
@@ -323,6 +349,18 @@ const StickyNote: React.FC<StickyNoteProps> = ({
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
   };  
+
+  // Auto-save when note becomes unselected while being edited
+  useEffect(() => {
+    // If note was selected and editing, but now is not selected, auto-save
+    if (wasSelectedRef.current && !note.isSelected && isEditing) {
+      handleSave();
+    }
+    
+    // Update the ref for next render
+    wasSelectedRef.current = note.isSelected;
+  }, [note.isSelected, isEditing]);
+
     return (
     <div ref={noteRef} style={getNoteStyle({ note, cellSize, isEditing, isMoving, isDragging })} onClick={handleNoteClick}>
       {/* Linked indicator badge */}
@@ -332,7 +370,12 @@ const StickyNote: React.FC<StickyNoteProps> = ({
           style={{
             color: '#ffffff'
           }}
-          title={`Linked to: ${note.linkedElementId || 'Unknown'}`}
+          title={(() => {
+            const linkedInfo = getLinkedElementDisplay();
+            if (!linkedInfo) return 'Linked to: Unknown';
+            const connectionType = linkedInfo.type === 'manual' ? ' (manual)' : '';
+            return `Linked to: ${linkedInfo.id}${connectionType}`;
+          })()}
         >
           <FiLink size={12} />
         </div>
@@ -394,11 +437,13 @@ const StickyNote: React.FC<StickyNoteProps> = ({
                     alert('This note is not linked to any dashboard element');
                   }
                 }
-              }}
-              title={note.isLinked 
-                ? `Linked to ${note.linkedElementId || 'Unknown'}. Click to unlink.` 
-                : 'Unlinked. Click to link.'
-              }
+              }}              title={(() => {
+                if (!note.isLinked) return 'Unlinked. Click to link.';
+                const linkedInfo = getLinkedElementDisplay();
+                if (!linkedInfo) return 'Linked to Unknown. Click to unlink.';
+                const connectionType = linkedInfo.type === 'manual' ? ' (manual)' : '';
+                return `Linked to ${linkedInfo.id}${connectionType}. Click to unlink.`;
+              })()}
               style={{
                 color: note.isLinked 
                   ? (note.isDark ? '#fbbf24' : '#d97706') 
@@ -460,12 +505,15 @@ const StickyNote: React.FC<StickyNoteProps> = ({
           />
         </>
       )}
-      
-      {/* Connection Nodes */}
+        {/* Connection Nodes */}
       <ConnectionNodes
         elementId={note.id}
-        isVisible={note.isSelected}
+        isVisible={note.isSelected || isEditing || globalIsDragging}
         isLinked={note.isLinked}
+        onDragStart={onConnectionDragStart}
+        isNote={true}
+        isDragging={globalIsDragging}
+        isDragTarget={isDragTarget}
       />
     </div>
   );
