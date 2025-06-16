@@ -2,6 +2,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import { useDashboardPlayground } from "@/app/components/DashboardPlayground"
 import { FiPlus, FiLink } from 'react-icons/fi'
+import { ConnectionNodes } from './connection-nodes'
 
 interface LinkableCardProps {
   children: React.ReactNode;
@@ -19,14 +20,14 @@ export function LinkableCard({
 }: LinkableCardProps) {
   const [isHovered, setIsHovered] = React.useState(false);
   const [showConnectionNodes, setShowConnectionNodes] = React.useState(false);
-  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
   const cardRef = React.useRef<HTMLDivElement>(null);
-  
+
   let activateLinkedNoteMode: ((elementId?: string) => void) | undefined;
   let isElementSelectionMode = false;
   let noteToLink: string | null = null;
   let linkNoteToElement: ((noteId: string, elementId: string) => void) | undefined;
   let isElementLinked: ((elementId: string) => boolean) | undefined;
+  let setHoveredElementId: ((elementId: string | null) => void) | undefined;
   
   try {
     const context = useDashboardPlayground();
@@ -35,6 +36,7 @@ export function LinkableCard({
     noteToLink = context.noteToLink;
     linkNoteToElement = context.linkNoteToElement;
     isElementLinked = context.isElementLinked;
+    setHoveredElementId = context.setHoveredElementId;
   } catch {
     // Context not available, component used outside of DashboardPlayground
     activateLinkedNoteMode = undefined;
@@ -42,24 +44,22 @@ export function LinkableCard({
     noteToLink = null;
     linkNoteToElement = undefined;
     isElementLinked = undefined;
+    setHoveredElementId = undefined;
   }
+
   const handleMouseEnter = () => {
     setIsHovered(true);
     setShowConnectionNodes(true);
+    if (setHoveredElementId && elementId) {
+      setHoveredElementId(elementId);
+    }
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
     setShowConnectionNodes(false);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (cardRef.current) {
-      const rect = cardRef.current.getBoundingClientRect();
-      setMousePosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
+    if (setHoveredElementId) {
+      setHoveredElementId(null);
     }
   };
   
@@ -77,65 +77,6 @@ export function LinkableCard({
       e.stopPropagation();
       linkNoteToElement(noteToLink, elementId);
     }
-  };
-  // Simple connection node component
-  const ConnectionNode = ({ position }: { position: 'top' | 'right' | 'bottom' | 'left' }) => {
-    const handleMouseDown = (e: React.MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      console.log(`Connection node clicked: ${position} on element ${elementId}`);
-      // TODO: Implement connection logic here
-    };
-
-    const getPositionStyles = () => {
-      const baseStyles = {
-        position: 'absolute' as const,
-        zIndex: 50,
-        width: '8px',
-        height: '8px',
-        borderRadius: '50%',
-        cursor: 'crosshair',
-      };
-
-      switch (position) {
-        case 'top':
-          return { 
-            ...baseStyles, 
-            top: '-4px', 
-            left: '50%', 
-            transform: 'translateX(-50%)',
-          };
-        case 'right':
-          return { 
-            ...baseStyles, 
-            right: '-4px', 
-            top: '50%', 
-            transform: 'translateY(-50%)',
-          };
-        case 'bottom':
-          return { 
-            ...baseStyles, 
-            bottom: '-4px', 
-            left: '50%', 
-            transform: 'translateX(-50%)',
-          };
-        case 'left':
-          return { 
-            ...baseStyles, 
-            left: '-4px', 
-            top: '50%', 
-            transform: 'translateY(-50%)',
-          };
-      }
-    };    return (
-      <div
-        style={getPositionStyles()}
-        className="bg-gray-400 border-1 border-white hover:bg-sky-500 cursor-pointer"
-        onMouseDown={handleMouseDown}
-        title={`Connect from ${position}`}
-      >
-      </div>
-    );
   };
 
   // Check if this element is currently linked to any note
@@ -157,28 +98,24 @@ export function LinkableCard({
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onMouseMove={handleMouseMove}
       onClick={handleElementClick}
       data-element-id={elementId}
     >
       {children}
       
-      {/* Connection Nodes - 4 draggable points */}
-      {showConnectionNodes && elementId && (
-        <>
-          <ConnectionNode position="top" />
-          <ConnectionNode position="right" />
-          <ConnectionNode position="bottom" />
-          <ConnectionNode position="left" />
-        </>
-      )}
+      {/* Connection Nodes */}
+      <ConnectionNodes
+        elementId={elementId || ''}
+        isVisible={showConnectionNodes}
+        isLinked={isLinked}
+      />
 
       {/* Linked indicator badge */}
       {isLinked && (
         <div className="absolute top-1 right-1 w-6 h-6 bg-purple-600 text-white rounded-full 
                         flex items-center justify-center z-10 shadow-lg"
              title="This element has linked notes">
-          <FiLink size={14} />
+          <FiLink size={12} />
         </div>
       )}
       
@@ -188,10 +125,10 @@ export function LinkableCard({
           onClick={handleAddNoteClick}
           className={`absolute w-6 h-6 bg-sky-500 hover:bg-sky-600 text-white rounded-full 
                      flex items-center justify-center shadow-lg transition-all duration-200 z-10 transform 
-                     hover:scale-110 ${isLinked || hasNotes ? 'top-1 right-10' : 'top-1 right-1'}`}
+                     hover:scale-110 ${isLinked || hasNotes ? 'top-1 right-8' : 'top-1 right-1'}`}
           title="Add note for this element"
         >
-          <FiPlus size={14} />
+          <FiPlus size={12} />
         </button>
       )}
 

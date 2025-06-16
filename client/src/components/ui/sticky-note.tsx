@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FiX, FiEdit3, FiSun, FiMoon, FiSave, FiMove, FiLink } from 'react-icons/fi';
 import { useDashboardPlayground } from '../../app/components/DashboardPlayground';
+import { ConnectionNodes } from './connection-nodes';
 import { 
   getNoteStyle, 
   headerStyle, 
@@ -448,7 +449,8 @@ const StickyNote: React.FC<StickyNoteProps> = ({
           <div
             style={getRightResizeHandleStyle(note.isDark, note.isLinked)}
             onMouseDown={(e) => handleResizeStart('right', e)}
-            title="Resize width"          />
+            title="Resize width"
+          />
           
           {/* Bottom edge handle */}
           <div
@@ -458,6 +460,13 @@ const StickyNote: React.FC<StickyNoteProps> = ({
           />
         </>
       )}
+      
+      {/* Connection Nodes */}
+      <ConnectionNodes
+        elementId={note.id}
+        isVisible={note.isSelected}
+        isLinked={note.isLinked}
+      />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import styles from './DashboardPlayground.module.css';
 import { FilePenLine } from 'lucide-react';
 import InteractiveGrid from '../../components/ui/interactive-grid';
 import StickyNote from '../../components/ui/sticky-note';
+import ConnectionLines from '../../components/ui/connection-lines';
 import { useStickyNotesManager } from '../../components/ui/sticky-notes-manager';
 
 // Context for dashboard playground operations
@@ -17,6 +18,7 @@ interface DashboardPlaygroundContextType {
   noteToLink: string | null;
   linkNoteToElement: ((noteId: string, elementId: string) => void) | undefined;
   isElementLinked: ((elementId: string) => boolean) | undefined;
+  setHoveredElementId: (elementId: string | null) => void;
 }
 
 const DashboardPlaygroundContext = createContext<DashboardPlaygroundContextType | undefined>(undefined);
@@ -54,9 +56,9 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const [canvasHeight, setCanvasHeight] = useState(3000);
   const [showGrid, setShowGrid] = useState(false);
   const [hoveredCell, setHoveredCell] = useState<string | null>(null);
-  const [occupiedCells, setOccupiedCells] = useState<Set<string>>(new Set());
-  const [showTips, setShowTips] = useState(false);
+  const [occupiedCells, setOccupiedCells] = useState<Set<string>>(new Set());  const [showTips, setShowTips] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [hoveredElementId, setHoveredElementId] = useState<string | null>(null);
   const transformRef = useRef<ReactZoomPanPinchRef>(null);
   const dashboardRef = useRef<HTMLDivElement>(null);
   const dashboardPositionRef = useRef({ x: -1200, y: -450 });
@@ -473,7 +475,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       isElementSelectionMode,
       noteToLink,
       linkNoteToElement,
-      isElementLinked
+      isElementLinked,
+      setHoveredElementId
     }}>
       <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-95 flex flex-col">
         {/* Header */}
@@ -625,7 +628,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     isMoving={isMoving}
                     isPanning={isPanning}
                   />
-                  
                   {/* Center the dashboard in the grid */}
                   <div 
                     ref={dashboardRef}
@@ -641,9 +643,18 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                         selectNote(null);
                       }
                     }}
+                    data-dashboard-container
                   >
                     {children}
                   </div>
+                  {/* Connection Lines - between linked notes and dashboard elements */}
+                  <ConnectionLines
+                    stickyNotes={stickyNotes}
+                    cellSize={CELL_SIZE}
+                    dashboardPosition={getDashboardGridInfo().position}
+                    dashboardWidth={DASHBOARD_WIDTH}
+                    hoveredElementId={hoveredElementId}
+                  />
 
                   {/* Sticky Notes */}
                   {stickyNotes.map((note) => (
