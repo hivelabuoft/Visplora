@@ -565,7 +565,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     const connectionNode = target?.closest('[data-connection-node]') as HTMLElement;
     
     if (connectionNode) {
-      const targetElementId = connectionNode.getAttribute('data-element-id');
+      const targetElementId = connectionNode.getAttribute('data-connection-element-id');
       const targetPosition = connectionNode.getAttribute('data-connection-node') as 'top' | 'right' | 'bottom' | 'left';
       const targetType = connectionNode.getAttribute('data-note-id') ? 'note' : 'element';
       

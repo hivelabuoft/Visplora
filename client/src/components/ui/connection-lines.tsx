@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { StickyNoteData } from './sticky-note';
-import { getConnectionNodePositions, ConnectionNodePosition } from './connection-nodes';
+import { ConnectionNodePosition } from './connection-nodes';
 
 // Interface for manual connections between nodes
 export interface ManualConnection {
@@ -77,7 +77,7 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
     if (!dashboardContainer) {
       return;
     }    
-    const elements = dashboardContainer.querySelectorAll('[data-element-id]');
+   const elements = dashboardContainer.querySelectorAll('[data-element-id]');
     elements.forEach((element) => {
       const elementId = element.getAttribute('data-element-id');
       if (elementId) {
@@ -240,7 +240,9 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
       noteConnectionPosition: noteNode.position,
       elementConnectionPosition: elementNode.position
     };
-  };  // Function to create a smooth curved path directly between two nodes
+  };
+  
+  // Function to create a smooth curved path directly between two nodes
   const createCurvedPath = (
     from: { x: number; y: number }, 
     to: { x: number; y: number }, 
@@ -341,7 +343,7 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
       nodes.bottom.y -= 5;
       nodes.left.x += 5;
       nodes.right.x -= 5;
-        return { x: nodes[position].x, y: nodes[position].y };
+      return { x: nodes[position].x, y: nodes[position].y };
     }
   };
 
@@ -353,7 +355,7 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
         height: '100%',
         zIndex: 1, // Below notes but above dashboard
         overflow: 'visible'
-      }}    >
+      }}>
       <defs>
         {/* Glow filter for the lines */}
         <filter id="glow">
@@ -486,12 +488,33 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
         const connectionId = `manual-${connection.id}`;
         const isHovered = hoveredConnectionId === connectionId;
         
+        // Check if either the source or target is hovered for glow effect
+        const isSourceHovered = hoveredElementId === connection.sourceId;
+        const isTargetHovered = hoveredElementId === connection.targetId;
+        // Also check if any connected note is selected
+        const isSourceNoteSelected = connection.sourceType === 'note' && 
+          stickyNotes.find(note => note.id === connection.sourceId)?.isSelected;
+        const isTargetNoteSelected = connection.targetType === 'note' && 
+          stickyNotes.find(note => note.id === connection.targetId)?.isSelected;
+        
+        const shouldGlow = isSourceHovered || isTargetHovered || isSourceNoteSelected || isTargetNoteSelected;
+        
         // Calculate midpoint for tooltip
         const midX = (sourcePos.x + targetPos.x) / 2;
         const midY = (sourcePos.y + targetPos.y) / 2;
         
         return (
           <g key={connectionId}>
+            {/* Glow effect line - only show when should glow */}
+            {shouldGlow && (
+              <path
+                d={pathData}
+                stroke="rgba(59, 130, 246, 0.2)"
+                strokeWidth="8"
+                fill="none"
+                filter="url(#glow)"
+              />
+            )}
             {/* Clickable invisible line for better click area */}
             <path
               d={pathData}
@@ -511,10 +534,10 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
             {/* Main line - blue for manual connections */}
             <path
               d={pathData}
-              stroke={isHovered ? "#ff4444" : "#000"}
+              stroke={isHovered ? "#ff4444" : shouldGlow ? "rgba(59, 130, 246, 0.8)" : "#000"}
               strokeWidth={isHovered ? "3" : "2"}
               fill="none"
-              opacity={isHovered ? 1 : 0.8}
+              opacity={shouldGlow || isHovered ? 1 : 0.8}
               style={{ pointerEvents: 'none' }}
             />
             

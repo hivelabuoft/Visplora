@@ -98,7 +98,8 @@ export function LinkableCard({
         "transition-all duration-200 rounded-xl relative group",
         isElementSelectionMode ? "cursor-pointer" : "",
         className
-      )}      style={{
+      )}
+      style={{
         boxShadow: isElementSelectionMode ? "0 0 15px 0px rgb(155, 4, 230)"
           : isLinked ? "0 0 12px 2px rgba(155, 4, 230, 0.4)"
             : isHovered ? "0 0 20px 0 rgb(30, 199, 255)" : "none",

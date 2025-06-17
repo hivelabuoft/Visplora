@@ -139,7 +139,7 @@ export const ConnectionNodes: React.FC<ConnectionNodesProps> = ({
         onMouseDown={handleMouseDown('top')}
         title={`Connect from top of ${elementId}`}
         data-connection-node="top"
-        data-element-id={elementId}
+        data-connection-element-id={elementId}
         data-note-id={isNote ? elementId : undefined}
       />
       
@@ -151,7 +151,7 @@ export const ConnectionNodes: React.FC<ConnectionNodesProps> = ({
         onMouseDown={handleMouseDown('right')}
         title={`Connect from right of ${elementId}`}
         data-connection-node="right"
-        data-element-id={elementId}
+        data-connection-element-id={elementId}
         data-note-id={isNote ? elementId : undefined}
       />
       
@@ -163,7 +163,7 @@ export const ConnectionNodes: React.FC<ConnectionNodesProps> = ({
         onMouseDown={handleMouseDown('bottom')}
         title={`Connect from bottom of ${elementId}`}
         data-connection-node="bottom"
-        data-element-id={elementId}
+        data-connection-element-id={elementId}
         data-note-id={isNote ? elementId : undefined}
       />
       
@@ -175,39 +175,9 @@ export const ConnectionNodes: React.FC<ConnectionNodesProps> = ({
         onMouseDown={handleMouseDown('left')}
         title={`Connect from left of ${elementId}`}
         data-connection-node="left"
-        data-element-id={elementId}
+        data-connection-element-id={elementId}
         data-note-id={isNote ? elementId : undefined}
       />
     </>
   );
 };
-
-// Helper function to get connection node positions for a given element
-export const getConnectionNodePositions = (
-  elementBounds: { x: number; y: number; width: number; height: number }
-): Record<'top' | 'right' | 'bottom' | 'left', ConnectionNodePosition> => {
-  return {
-    top: {
-      position: 'top',
-      x: elementBounds.x + elementBounds.width / 2,
-      y: elementBounds.y - 6,
-    },
-    right: {
-      position: 'right',
-      x: elementBounds.x + elementBounds.width + 6,
-      y: elementBounds.y + elementBounds.height / 2,
-    },
-    bottom: {
-      position: 'bottom',
-      x: elementBounds.x + elementBounds.width / 2,
-      y: elementBounds.y + elementBounds.height + 6,
-    },
-    left: {
-      position: 'left',
-      x: elementBounds.x - 6,
-      y: elementBounds.y + elementBounds.height / 2,
-    },
-  };
-};
-
-export default ConnectionNodes;
