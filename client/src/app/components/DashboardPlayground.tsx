@@ -778,7 +778,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     return null;
   }
 
-  return (    <DashboardPlaygroundContext.Provider value={{ 
+  return (
+  <DashboardPlaygroundContext.Provider value={{ 
       activateLinkedNoteMode, 
       activateElementSelectionMode,
       isElementSelectionMode,
@@ -791,43 +792,47 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       isDragging,
       isValidDropTarget
     }}>
-      <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-95 flex flex-col">
+      <div className={styles.playgroundContainer}>
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 p-2 px-4 flex-col xl:flex-row flex items-center justify-between flex-wrap">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
-              <FiMove size={16} className="text-blue-600" />
+        <div className={styles.playgroundHeader}>
+          <div className={styles.headerTitleSection}>
+            <div className={styles.headerIcon}>
+              <FiMove size={16} />
             </div>
             <div>
-              <h3 className="text-md font-semibold text-gray-900">
+              <h3 className={styles.headerTitle}>
                 Playground Mode - {dashboardTitle} 
               </h3>
             </div>
           </div>
-
           {/* Controls in Header */}
-          <div className="flex justify-center items-center gap-4 flex-wrap">
+          <div className={styles.headerControls}>
             {/* Zoom Controls in Header */}
-            <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1 px-1.5">
-              <button onClick={handleZoomOut} className="p-1.5 rounded bg-none hover:cursor-pointer hover:bg-gray-200 transition-colors">
+            <div className={styles.zoomControls}>
+              <button onClick={handleZoomOut} className={styles.zoomButton}>
                   <FiZoomOut size={16}/>
               </button>
-              <input type="range" min="25" max="200" value={zoomLevel} onChange={handleSliderChange} className={`w-24 hover:w-40 transition-all duration-200 ${styles.playgroundSlider}`}/>
-
-              <button onClick={handleZoomIn} className="p-1.5 rounded bg-none hover:cursor-pointer hover:bg-gray-200 transition-colors">
+              <input 
+                type="range" 
+                min="25" 
+                max="200" 
+                value={zoomLevel} 
+                onChange={handleSliderChange} 
+                className={styles.playgroundSlider}
+              />
+              <button onClick={handleZoomIn} className={styles.zoomButton}>
                   <FiZoomIn size={16}/>
               </button>
-              <button onClick={handleResetView} className="flex items-center gap-2 px-2 py-1 text-blue-700 rounded-lg hover:cursor-pointer hover:bg-blue-100 transition-colors text-sm">
+              <button onClick={handleResetView} className={styles.resetViewButton}>
                   <FiMaximize2 size={16}/>
                   Reset View
               </button>
             </div>
-
             {/* Annotations Button */}
             {notesCount > 0 && (
                   <button
                   onClick={clearAllNotes}
-                  className="text-xs px-3 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg transition-colors"
+                  className={styles.clearNotesButton}
                   >
                   Clear All Notes
                   </button>
@@ -837,46 +842,38 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 setIsAnnotationMode(!isAnnotationMode);
                 setShowGrid(!showGrid);
               }}
-              className={`flex items-center gap-2 px-4 py-2 text-sm rounded-lg font-medium transition-all duration-200 
-                  ${isAnnotationMode ? 'bg-orange-500 text-white shadow-md border-1 border-orange-600 hover:bg-orange-600'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border-2 border-transparent'}`
-              }>
+              className={`${styles.annotationsButton} ${isAnnotationMode ? styles.active : styles.inactive}`}
+              >
               <FilePenLine size={16} />
               <span>{isAnnotationMode ? 'Exit Annotations' : 'Add Annotations'}</span>
               {notesCount > 0 && (
-                  <span className={`text-xs px-2 py-0.5 rounded-full transition-colors duration-200 hover:bg-orange-600 hover:text-white
-                      ${isAnnotationMode ? 'bg-white text-orange-500' : 'bg-orange-500 text-white'}`}
+                  <span className={`${styles.notesCountBadge} ${isAnnotationMode ? styles.active : styles.inactive}`}
                       title='Number of notes'>
                       {notesCount}
                   </span>
               )}
             </button>
-
             {/* Add to Canvas and View Canvas Buttons */}
               <button
               onClick={handleAddToCanvas}
               disabled={isAdded}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
-                  isAdded
-                  ? 'bg-green-50 text-green-700 border border-green-200'
-                  : 'bg-blue-500 hover:bg-blue-600 text-white'
-              }`}
+              className={`${styles.addToCanvasButton} ${isAdded ? styles.added : styles.notAdded}`}
               >
               {isAdded ? (<><FiCheck size={16} />Added to VISplora</>) : (<><FiPlus size={16} />Add to VISplora</>)}
               </button>
 
               <button
               onClick={handleGoToCanvas}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 hover:cursor-pointer hover:text-gray-900 hover:bg-slate-100 transition-colors"
+              className={styles.viewCanvasButton}
               >
               <FiLink size={16} />
               VISplora
               </button>            
           </div>
-        </div>
-        
+        </div>    
+
         {/* Playground Canvas */}
-        <div className="flex-1 relative overflow-hidden bg-slate-50">
+        <div className={styles.canvasContainer}>
           <TransformWrapper
             ref={transformRef}
             initialScale={0.8}
@@ -911,15 +908,13 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             <React.Fragment>
               <TransformComponent>
                 <div 
-                  className="relative w-[4800px] rounded-xl" 
+                  className={`${styles.canvasBackground} ${
+                    isPanning ? styles.panning : 
+                    isAnnotationMode ? styles.annotationMode : 
+                    styles.default
+                  }`}
                   style={{
-                      height: `${canvasHeight}px`,
-                      boxShadow: '0 0 100px rgba(0, 0, 0, 0.1)', 
-                      backgroundImage: 'radial-gradient(circle, #d1d5db 2px, transparent 2px)',
-                      backgroundSize: '50px 50px',
-                      backgroundPosition: '0 0',
-                      transformOrigin: '0 0',
-                      cursor: isPanning ? 'grabbing' : isAnnotationMode ? 'not-allowed' : 'default'
+                      height: `${canvasHeight}px`
                   }}
                   // Deselect notes when clicking on canvas background (not on notes or dashboard)
                   onClick={(e) => {
@@ -944,7 +939,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                   {/* Center the dashboard in the grid */}
                   <div 
                     ref={dashboardRef}
-                    className="absolute bg-white p-2 rounded-xl shadow-xl overflow-hidden" 
+                    className={styles.dashboardContainer}
                     style={{ 
                       width: `${DASHBOARD_WIDTH}px`,
                       left: `${getDashboardGridInfo().position.x}px`,
@@ -1000,29 +995,28 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                   {/* Note Preview - follows cursor in annotation mode */}
                   {isAnnotationMode && !isPanning && !isMoving && (
                     <div
-                      className="absolute pointer-events-none z-50 transition-opacity duration-200"
+                      className={styles.notePreview}
                       style={{
                         left: `${mousePosition.x}px`,
                         top: `${mousePosition.y}px`,
                         width: `${CELL_SIZE * 8}px`,
                         height: `${CELL_SIZE * 8}px`,
-                        transform: 'translate(0, 0)', // Position from top-left of cursor
                         opacity: hoveredCell ? '0.75' : '0.25'
                       }}
                     >
-                      <div className="w-full h-full bg-gradient-to-br from-yellow-200 to-yellow-300 border-2 border-yellow-400 rounded-lg shadow-xl flex flex-col p-3">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="text-yellow-800 text-xs font-semibold">
+                      <div className={styles.notePreviewContent}>
+                        <div className={styles.notePreviewHeader}>
+                          <div className={styles.notePreviewTitle}>
                             📝 New Note
                           </div>
-                          <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                          <div className={styles.notePreviewDot}></div>
                         </div>
-                        <div className="flex-1 bg-yellow-100 rounded border border-yellow-300 opacity-60 flex flex-col items-center justify-center">
-                          <div className="text-yellow-700 text-xs">
+                        <div className={styles.notePreviewBody}>
+                          <div className={styles.notePreviewText}>
                             Click to place
                           </div>
                           {hoveredCell && (
-                            <div className="mt-1 text-xs text-yellow-700 text-center">
+                            <div className={styles.notePreviewPosition}>
                               {hoveredCell}
                             </div>
                           )}
@@ -1035,20 +1029,21 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             </React.Fragment>
           </TransformWrapper>
         </div>
+        
         {/* Footer */}
-        <div className="bg-white border-t border-gray-200 p-1 px-6">
-          <div className="flex items-center gap-2 justify-between text-sm text-gray-500">   
+        <div className={styles.playgroundFooter}>
+          <div className={styles.footerContent}>   
             <button
               onClick={() => setShowTips(!showTips)}
-              className="flex items-center gap-2 px-3 py-1 text-xs bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 rounded-md transition-colors duration-200"
+              className={styles.helpButton}
             >
               <span>Help</span>
-              <span className={`transform transition-transform duration-200 ${showTips ? 'rotate-180' : ''}`}>
+              <span className={`${styles.helpArrow} ${showTips ? styles.rotated : ''}`}>
                 ▼
               </span>
             </button>
             {showTips && (              
-              <div className="absolute bottom-10 left-2 flex flex-col bg-white gap-3 p-3 rounded-lg shadow-lg text-xs text-gray-700 border border-gray-200">
+              <div className={styles.helpTooltip}>
                 {/* Navigation */}
                 <span><strong>Navigation:</strong> Drag to pan around the dashboard.</span>
                 <span><strong>Zooming:</strong> Scroll or use controls to zoom.</span>
@@ -1067,39 +1062,39 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
               </div>
             )}
             {(isAnnotationMode || isNoteLinkingMode || isElementSelectionMode || isResizing || isMoving || isDragging || connectionFeedback) && (
-              <div className="flex items-center justify-center gap-4">
+              <div className={styles.feedbackCenter}>
                 {isAnnotationMode && 
-                <span className="text-orange-600 font-bold">Select a grid cell to add sticky note
+                <span className={`${styles.feedbackText} ${styles.annotation}`}>Select a grid cell to add sticky note
                 </span>}
                 {isNoteLinkingMode && (
-                  <span className="text-blue-500 font-bold">
+                  <span className={`${styles.feedbackText} ${styles.noteLinking}`}>
                     Place linked note
                     {linkingElementId && ` for element: ${linkingElementId}`}
                   </span>)}
                 {isElementSelectionMode && (
-                  <span className="text-purple-600 font-bold">
+                  <span className={`${styles.feedbackText} ${styles.elementSelection}`}>
                     Select the dashboard element to link selected note with
                   </span>)}
-                {isResizing && <span className="text-blue-600 font-semibold">
+                {isResizing && <span className={`${styles.feedbackText} ${styles.resizing}`}>
                   Resizing note - drop note to confirm size
                   </span>}
-                {isMoving && <span className="text-green-600 font-semibold">
+                {isMoving && <span className={`${styles.feedbackText} ${styles.moving}`}>
                   Moving note - drop note to confirm placement
                   </span>}
                 {isDragging && !connectionFeedback && (
-                  <span className="text-indigo-600 font-bold">
+                  <span className={`${styles.feedbackText} ${styles.dragging}`}>
                     Creating connection - drag to a connection node to link
                   </span>)}
                 {connectionFeedback && (
-                  <span className={`font-semibold ${
-                    connectionFeedback.startsWith('✓') ? 'text-green-600' : 
-                    connectionFeedback.startsWith('✗') ? 'text-red-600' : 
-                    'text-blue-600'
+                  <span className={`${styles.feedbackText} ${
+                    connectionFeedback.startsWith('✓') ? styles.success : 
+                    connectionFeedback.startsWith('✗') ? styles.error : 
+                    styles.info
                   }`}>
                     {connectionFeedback}
                   </span>)}
                 {(isAnnotationMode || isNoteLinkingMode) ? (
-                    <span className={isAnnotationMode ? 'text-orange-600' : 'text-blue-500'}>
+                    <span className={isAnnotationMode ? styles.annotation : styles.noteLinking}>
                         Dashboard Size: {getDashboardGridInfo().cells.cellsWide}×{getDashboardGridInfo().cells.cellsHigh} | Occupied Cells: {occupiedCells.size}
                     </span>
                 ): <></> }
@@ -1107,11 +1102,10 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                   <span>Press ESC to exit</span>
                 )}
               </div>
-            )}
-            
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full transition-colors duration-200 ${isPanning ? 'bg-green-400 ' + styles.panningIndicator : 'bg-gray-300'}`}></span>
+            )}            
+            <div className={styles.statusIndicators}>
+              <div className={styles.statusIndicator}>
+                <span className={`${styles.statusDot} ${isPanning ? styles.active + ' ' + styles.panningIndicator : styles.inactive}`}></span>
                 <span>Interactive Mode</span>
               </div>
               <span>Zoom: {Math.round(zoomLevel)}%</span>
