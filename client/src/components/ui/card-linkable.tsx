@@ -1,8 +1,9 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { useDashboardPlayground } from "@/app/components/DashboardPlayground"
-import { FiPlus, FiLink } from 'react-icons/fi'
+import { FiPlus, FiLink, FiSidebar, FiCheck } from 'react-icons/fi'
 import { ConnectionNodes } from './connection-nodes'
+import { useSelectedElements } from "@/components/context/SelectedElementsContext"
 
 interface LinkableCardProps {
   children: React.ReactNode;
@@ -10,6 +11,9 @@ interface LinkableCardProps {
   className?: string;
   tooltip?: string;
   hasNotes?: boolean;
+  elementName?: string;
+  elementType?: string;
+  onAddToSidebar?: (elementId: string, elementName: string, elementType: string) => void;
 }
 
 export function LinkableCard({
@@ -17,10 +21,23 @@ export function LinkableCard({
   elementId,
   className,
   hasNotes = false,
+  elementName,
+  elementType,
+  onAddToSidebar,
 }: LinkableCardProps) {
   const [isHovered, setIsHovered] = React.useState(false);
   const [showConnectionNodes, setShowConnectionNodes] = React.useState(false);
   const cardRef = React.useRef<HTMLDivElement>(null);
+  
+  // Check if element is already in sidebar
+  let isInSidebar = false;
+  try {
+    const { isElementSelected } = useSelectedElements();
+    isInSidebar = elementId ? isElementSelected(elementId) : false;
+  } catch {
+    // Context not available
+    isInSidebar = false;
+  }
 
   let activateLinkedNoteMode: ((elementId?: string) => void) | undefined;
   let isElementSelectionMode = false;
@@ -80,6 +97,14 @@ export function LinkableCard({
     }
   };
 
+  const handleAddToSidebar = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onAddToSidebar && elementId && elementName && elementType) {
+      onAddToSidebar(elementId, elementName, elementType);
+    }
+  };
+
   const handleElementClick = (e: React.MouseEvent) => {
     if (isElementSelectionMode && noteToLink && linkNoteToElement && elementId) {
       e.preventDefault();
@@ -131,18 +156,48 @@ export function LinkableCard({
           <FiLink size={12} />
         </div>
       )}
-      
+
+      {/* Sidebar indicator badge */}
+      {isInSidebar && (
+        <div className={`absolute w-6 h-6 bg-green-600 text-white rounded-full 
+                        flex items-center justify-center z-10 shadow-lg ${
+                          isLinked ? 'top-1 right-8' : 'top-1 right-1'
+                        }`}
+             title="This element is already in sidebar">
+          <FiCheck size={12} />
+        </div>
+      )}
       {/* Add Note Button - appears on hover */}
       {isHovered && !isElementSelectionMode && (
-        <button
-          onClick={handleAddNoteClick}
-          className={`absolute w-6 h-6 bg-sky-500 hover:bg-sky-600 text-white rounded-full 
-                     flex items-center justify-center shadow-lg transition-all duration-200 z-10 transform 
-                     hover:scale-110 ${isLinked || hasNotes ? 'top-1 right-8' : 'top-1 right-1'}`}
-          title="Add note for this element"
-        >
-          <FiPlus size={12} />
-        </button>
+        <>
+          <button
+            onClick={handleAddNoteClick}
+            className={`absolute w-6 h-6 bg-sky-500 hover:bg-sky-600 text-white rounded-full 
+                       flex items-center justify-center shadow-lg transition-all duration-200 z-10 transform 
+                       hover:scale-110 ${
+                         isLinked ? 'top-1 right-15' : 'top-1 right-8'
+                       }`}
+            title="Add note for this element"
+          >
+            <FiPlus size={12} />
+          </button>
+          
+          {/* Add to Sidebar Button */}
+          {onAddToSidebar && elementId && elementName && elementType && !isInSidebar && (
+            <button
+              onClick={handleAddToSidebar}
+              className={`absolute w-6 h-6 bg-green-500 hover:bg-green-600 text-white rounded-full 
+                         flex items-center justify-center transition-all duration-200 z-10 transform 
+                         hover:scale-110 ${
+                           isLinked && isInSidebar ? 'top-1 right-26' :
+                           isLinked || isInSidebar ? 'top-1 right-8' : 'top-1 right-1'
+                         }`}
+              title="Add to sidebar"
+            >
+              <FiSidebar size={12} />
+            </button>
+          )}
+        </>
       )}
 
       {/* Element selection mode indicator */}

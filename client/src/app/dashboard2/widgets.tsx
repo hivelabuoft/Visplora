@@ -8,7 +8,8 @@ import {
   DepartmentWidgetProps,
   JobRoleWidgetProps,
   GenderWidgetProps,
-  EducationWidgetProps
+  EducationWidgetProps,
+  VegaLiteSpec
 } from '../types/interfaces';
 import {
   createDepartmentRetentionChart,
@@ -19,9 +20,260 @@ import {
   createEducationFieldBarChart
 } from '../data/chartSpecs';
 
+export interface WidgetChartData {
+  vegaSpec: VegaLiteSpec;
+  data: any[];
+  fields: string[];
+  description: string;
+  originalData: HRData[]; // Store original HR data for widget rendering
+  filterContext?: any;
+}
+
 /**
- * Reusable dashboard widgets for HR visualizations
+ * Simplified function to get widget data by element ID - no duplication
  */
+export function getWidgetDataForSidebar(elementId: string, data: HRData[], filterContext?: any): WidgetChartData | null {
+  switch (elementId) {
+    case 'department-widget': {
+      const departments = HRAnalytics.getUniqueDepartments(data);
+      const allDeptData = departments.map(dept => {
+        const chartData = HRAnalytics.processDepartmentRetentionData(data, dept);
+        return chartData.map(item => ({ ...item, department: dept }));
+      }).flat();
+
+      return {
+        vegaSpec: {
+          ...createDepartmentRetentionChart(),
+          width: 250,
+          height: 150,
+          facet: { field: 'department', type: 'nominal', columns: 1 }
+        },
+        data: allDeptData,
+        fields: ['department', 'type', 'count', 'percentage'],
+        description: 'Employee retention and attrition breakdown by department showing the proportion of employees who stayed versus left the company in each department.',
+        originalData: data
+      };
+    }
+    
+    case 'job-role-widget': {
+      const roleData = HRAnalytics.processJobRoleData(data);
+      const chartData = roleData.map(item => [
+        { role: item.role, type: 'attrition', count: item.attrition },
+        { role: item.role, type: 'retention', count: item.total - item.attrition }
+      ]).flat();
+
+      return {
+        vegaSpec: {
+          $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+          width: 280,
+          height: 180,
+          mark: 'bar',
+          encoding: {
+            x: { field: 'count', type: 'quantitative', axis: { title: 'Count' } },
+            y: { field: 'role', type: 'nominal', axis: { title: 'Job Role', labelLimit: 80 } },
+            color: {
+              field: 'type',
+              type: 'nominal',
+              scale: { domain: ['retention', 'attrition'], range: ['#1b2a3a', '#ef9f56'] }
+            }
+          }
+        },
+        data: chartData,
+        fields: ['role', 'type', 'count'],
+        description: 'Employee counts by job role, showing retention vs attrition for each position type within the organization.',
+        originalData: data
+      };
+    }
+    
+    case 'gender-widget': {
+      const maleData = HRAnalytics.processGenderAttritionData(data, 'Male');
+      const femaleData = HRAnalytics.processGenderAttritionData(data, 'Female');
+      const combinedData = [
+        ...maleData.map(item => ({ ...item, gender: 'Male' })),
+        ...femaleData.map(item => ({ ...item, gender: 'Female' }))
+      ];
+
+      return {
+        vegaSpec: {
+          ...createGenderAttritionDonutChart(),
+          width: 250,
+          height: 120,
+          facet: { field: 'gender', type: 'nominal', columns: 2 }
+        },
+        data: combinedData,
+        fields: ['gender', 'type', 'count', 'percentage'],
+        description: 'Gender-based analysis of employee attrition and retention, comparing how male and female employees are distributed across retention categories.',
+        originalData: data
+      };
+    }
+      case 'age-group-widget': {
+      const chartData = HRAnalytics.processAgeGroupData(data);
+      const spec = { ...createAgeGroupBarChart(), width: 280, height: 160 };
+      return {
+        vegaSpec: spec,
+        data: chartData,
+        fields: ['ageGroup', 'type', 'count'],
+        description: 'Age group distribution showing employee retention and attrition patterns across different age demographics.',
+        originalData: data
+      };
+    }
+    
+    case 'education-widget': {
+      const showEducationField = filterContext?.showEducationField;
+      const chartData = showEducationField 
+        ? HRAnalytics.processEducationFieldData(data)
+        : HRAnalytics.processEducationData(data);
+      const spec = showEducationField 
+        ? createEducationFieldBarChart()
+        : createEducationBarChart();
+      return {
+        vegaSpec: { ...spec, width: 280, height: 160 },
+        data: chartData,
+        fields: showEducationField ? ['educationField', 'type', 'count'] : ['education', 'type', 'count'],
+        description: showEducationField 
+          ? 'Employee distribution by education field, showing retention and attrition patterns across different areas of study.'
+          : 'Employee distribution by education level, showing how different educational backgrounds correlate with retention and attrition.',
+        originalData: data,
+        filterContext: { showEducationField }
+      };
+    }
+      case 'distance-widget': {
+      const { processedData } = HRAnalytics.processDistanceFromHomeData(data);
+      const spec = { ...createDistanceFromHomeChart(), width: 280, height: 160 };
+      return {
+        vegaSpec: spec,
+        data: processedData,
+        fields: ['interval', 'type', 'count'],
+        description: 'Analysis of employee commute distance impact on retention, showing attrition and retention patterns based on distance from home to workplace.',
+        originalData: data
+      };
+    }
+    
+    case 'survey-score-widget': {
+      const surveyData = HRAnalytics.processSurveyScoreData(data);
+      const chartData = surveyData.map(item => 
+        item.scoreCounts.map(sc => [
+          { category: item.category, score: sc.score, type: 'retention', count: sc.retention },
+          { category: item.category, score: sc.score, type: 'attrition', count: sc.attrition }
+        ])
+      ).flat(2);
+
+      return {
+        vegaSpec: {
+          $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+          width: 280,
+          height: 200,
+          mark: 'bar',
+          encoding: {
+            x: { field: 'score', type: 'ordinal', axis: { title: 'Survey Score' } },
+            y: { field: 'count', type: 'quantitative', axis: { title: 'Count' } },
+            color: {
+              field: 'type',
+              type: 'nominal',
+              scale: { domain: ['retention', 'attrition'], range: ['#1b2a3a', '#ef9f56'] }
+            },
+            row: { field: 'category', type: 'nominal' }
+          }
+        },
+        data: chartData,
+        fields: ['category', 'score', 'type', 'count'],
+        description: 'Employee satisfaction survey scores across different categories, showing how satisfaction levels correlate with employee retention and attrition.',
+        originalData: data
+      };
+    }
+    
+    case 'recent-attritions-widget': {
+      const attritionEmployees = data.filter(emp => emp.Attrition === 'Yes').slice(0, 50);
+      return {
+        vegaSpec: {
+          $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+          width: 280,
+          height: 160,
+          mark: 'point',
+          encoding: {
+            x: { field: 'JobSatisfaction', type: 'quantitative', title: 'Job Satisfaction' },
+            y: { field: 'MonthlyIncome', type: 'quantitative', title: 'Monthly Income' },
+            color: { field: 'Department', type: 'nominal' },
+            size: { field: 'Age', type: 'quantitative' }
+          }
+        },
+        data: attritionEmployees,
+        fields: ['JobSatisfaction', 'MonthlyIncome', 'Department', 'Age', 'JobRole'],
+        description: 'Recent employee attritions showing relationship between job satisfaction, income, department, and age.',
+        originalData: data
+      };
+    }
+    
+    case 'attrition-rate-kpi':
+    case 'total-attrition-kpi':
+    case 'current-employees-kpi': {
+      const kpis = HRAnalytics.calculateKPIMetrics(data);
+      
+      if (elementId === 'attrition-rate-kpi') {
+        return {
+          vegaSpec: {
+            $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+            width: 120, height: 120,
+            mark: { type: 'arc', innerRadius: 20, outerRadius: 50 },
+            encoding: {
+              theta: { field: 'value', type: 'quantitative', scale: { range: [0, 6.28] } },
+              color: { value: '#ef9f56' }
+            }
+          },
+          data: [{ metric: 'Attrition Rate', value: parseFloat(kpis.attritionRate.toString()) }],
+          fields: ['metric', 'value'],
+          description: `Current attrition rate of ${kpis.attritionRate}% representing the percentage of employees who have left the organization.`,
+          originalData: data
+        };
+      }
+      
+      if (elementId === 'total-attrition-kpi') {
+        return {
+          vegaSpec: {
+            $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+            width: 150, height: 100, mark: 'bar',
+            encoding: {
+              x: { field: 'category', type: 'nominal', axis: { labelAngle: -45 } },
+              y: { field: 'count', type: 'quantitative' },
+              color: { field: 'category', scale: { domain: ['Total Attrition', 'Current Employees'], range: ['#ef9f56', '#1b2a3a'] } }
+            }
+          },
+          data: [
+            { category: 'Total Attrition', count: kpis.totalAttrition },
+            { category: 'Current Employees', count: kpis.currentEmployees }
+          ],
+          fields: ['category', 'count'],
+          description: `Total of ${kpis.totalAttrition} employees who have left the organization out of the total workforce.`,
+          originalData: data
+        };
+      }
+        if (elementId === 'current-employees-kpi') {
+          return {
+          vegaSpec: {
+            $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+            width: 120, height: 120, mark: { type: 'arc' },
+            encoding: {
+              theta: { field: 'count', type: 'quantitative' },
+              color: { field: 'status', scale: { domain: ['Current Employees', 'Attrition'], range: ['#1b2a3a', '#ef9f56'] } }
+            }
+          },
+          data: [
+            { status: 'Current Employees', count: kpis.currentEmployees },
+            { status: 'Attrition', count: kpis.totalAttrition }
+          ],
+          fields: ['status', 'count'],
+          description: `Current employee count of ${kpis.currentEmployees} representing active workforce members in the organization.`,
+          originalData: data
+        };
+      }
+      return null;
+    }
+    
+    default:
+      return null;
+  }
+}
+
 export function DepartmentWidget({ data, onDepartmentClick, selectedDepartment }: DepartmentWidgetProps) {
   const departments = HRAnalytics.getUniqueDepartments(data);
   
@@ -343,4 +595,155 @@ export function DistanceFromHomeWidget({ data }: { data: HRData[] }) {
   };
 
   return <VegaLite spec={updatedSpec} actions={false} />;
+}
+
+/**
+ * Function to render original dashboard widgets for sidebar display
+ */
+export function renderWidgetForSidebar(elementId: string, originalData?: HRData[], filterContext?: any): React.ReactNode {
+  // If no data is provided, show a placeholder
+  if (!originalData || originalData.length === 0) {
+    return (
+      <div className="p-6 text-center text-gray-500 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="text-4xl mb-2">📊</div>
+        <div className="text-sm">Widget Preview</div>
+        <div className="text-xs mt-1">Data not available</div>
+      </div>
+    );
+  }
+
+  switch (elementId) {
+    case 'department-widget':
+      return (
+        <div className="max-w-sm">
+          <DepartmentWidget 
+            data={originalData} 
+            onDepartmentClick={() => {}} 
+            selectedDepartment="all" 
+          />
+        </div>
+      );
+    
+    case 'job-role-widget':
+      return (
+        <div className="max-w-sm">
+          <JobRoleWidget 
+            data={originalData} 
+            onJobRoleClick={() => {}} 
+            selectedJobRole="all" 
+          />
+        </div>
+      );
+    
+    case 'gender-widget':
+      return (
+        <div className="max-w-sm">
+          <GenderWidget 
+            data={originalData} 
+            onGenderClick={() => {}} 
+            selectedGender="all" 
+          />
+        </div>
+      );
+    
+    case 'age-group-widget':
+      return (
+        <div className="max-w-sm">
+          <AgeGroupWidget data={originalData} />
+        </div>
+      );
+    
+    case 'education-widget':
+      return (
+        <div className="max-w-sm">
+          <EducationWidget 
+            data={originalData} 
+            showEducationField={filterContext?.showEducationField || false}
+          />
+        </div>
+      );
+    
+    case 'distance-widget':
+      return (
+        <div className="max-w-sm">
+          <DistanceFromHomeWidget data={originalData} />
+        </div>
+      );
+    
+    case 'survey-score-widget':
+      return (
+        <div className="max-w-sm max-h-80 overflow-y-auto">
+          <SurveyScoreWidget data={originalData} />
+        </div>
+      );
+    
+    case 'recent-attritions-widget':
+      return (
+        <div className="h-64">
+          <ScrollableAttritionWidget data={originalData} />
+        </div>
+      );
+    
+    case 'attrition-rate-kpi':
+    case 'total-attrition-kpi':
+    case 'current-employees-kpi':
+      const kpis = HRAnalytics.calculateKPIMetrics(originalData);
+      
+      if (elementId === 'attrition-rate-kpi') {
+        return (
+          <div className="text-center p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg border border-orange-200">
+            <div className="flex items-center justify-center mb-3">
+              <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white">
+                <span className="text-lg">📊</span>
+              </div>
+            </div>
+            <div className="text-3xl font-bold text-gray-800 mb-1">
+              {kpis.attritionRate}%
+            </div>
+            <div className="text-sm text-gray-600 uppercase tracking-wide">Attrition Rate</div>
+          </div>
+        );
+      }
+      
+      if (elementId === 'total-attrition-kpi') {
+        return (
+          <div className="text-center p-6 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200">
+            <div className="flex items-center justify-center mb-3">
+              <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white">
+                <span className="text-lg">👥</span>
+              </div>
+            </div>
+            <div className="text-3xl font-bold text-gray-800 mb-1">
+              {kpis.totalAttrition}
+            </div>
+            <div className="text-sm text-gray-600 uppercase tracking-wide">Total Attrition</div>
+          </div>
+        );
+      }
+      
+      if (elementId === 'current-employees-kpi') {
+        return (
+          <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
+            <div className="flex items-center justify-center mb-3">
+              <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                <span className="text-lg">👤</span>
+              </div>
+            </div>
+            <div className="text-3xl font-bold text-gray-800 mb-1">
+              {kpis.currentEmployees}
+            </div>
+            <div className="text-sm text-gray-600 uppercase tracking-wide">Current Employees</div>
+          </div>
+        );
+      }
+      break;
+    
+    default:
+      return (
+        <div className="p-6 text-center text-gray-500 bg-gray-50 rounded-lg border border-gray-200">
+          <div className="text-4xl mb-2">❓</div>
+          <div>Widget not found</div>
+        </div>
+      );
+  }
 }

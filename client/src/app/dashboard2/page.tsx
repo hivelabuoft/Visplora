@@ -1,15 +1,25 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HRData, FilterCriteria } from "../types/interfaces";
 import { DataLoader } from "./dataLoader";
 import { HRAnalytics } from "./analytics";
-import { DepartmentWidget, JobRoleWidget, GenderWidget, AgeGroupWidget, EducationWidget, SurveyScoreWidget, ScrollableAttritionWidget, DistanceFromHomeWidget } from "./widgets";
+import { 
+  DepartmentWidget,
+  JobRoleWidget,
+  GenderWidget,
+  AgeGroupWidget,
+  EducationWidget,
+  SurveyScoreWidget,
+  ScrollableAttritionWidget,
+  DistanceFromHomeWidget,
+  getWidgetDataForSidebar
+} from "./widgets";
 import DashboardPlayground from "../components/DashboardPlayground";
 import { LinkableCard } from "@/components/ui/card-linkable";
+import { useSelectedElements, SelectedElementsProvider } from "../../components/context/SelectedElementsContext";
 
-export default function HRAttritionDashboard() {
+function HRAttritionDashboardContent() {
   const [data, setData] = useState<HRData[]>([]);
   const [filteredData, setFilteredData] = useState<HRData[]>([]);
   const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
@@ -20,6 +30,46 @@ export default function HRAttritionDashboard() {
   const [loading, setLoading] = useState(true);
   const [dashboardHeight, setDashboardHeight] = useState<number>(0);
   const dashboardContentRef = React.useRef<HTMLDivElement>(null);
+  const { addElement, isElementSelected } = useSelectedElements();
+  
+  // Handle adding element to sidebar
+  const handleAddToSidebar = (elementId: string, elementName: string, elementType: string) => {
+    if (isElementSelected(elementId)) {
+      return; // Already selected
+    }
+    const elementData = getWidgetDataForSidebar(
+      elementId, 
+      filteredData,
+      { showEducationField }
+    );
+    if (elementData) {
+      addElement({
+        id: elementId,
+        name: elementName,
+        type: elementType,
+        description: elementData.description,
+        dashboardSource: 'HR Attrition Dashboard',
+        fields: elementData.fields,
+        filterContext: {
+          selectedDepartment,
+          selectedJobRole,
+          selectedGender,
+          showOnlyAttrition,
+          showEducationField
+        },
+        metadata: {
+          createdAt: new Date(),
+          filterContext: {
+            selectedDepartment,
+            selectedJobRole,
+            selectedGender,
+            showOnlyAttrition,
+            showEducationField
+          }
+        }
+      });
+    }
+  };
 
   // Helper function to check if any filters are active
   const hasActiveFilters = () => {
@@ -137,6 +187,9 @@ export default function HRAttritionDashboard() {
             <LinkableCard 
               elementId="attrition-rate-kpi"
               className="bg-white border-none shadow-sm rounded-lg p-4"
+              elementName="Attrition Rate KPI"
+              elementType="KPI Metric"
+              onAddToSidebar={handleAddToSidebar}
             >
               <div className="text-center">
                 <div className="flex items-center justify-center mb-2">
@@ -154,6 +207,9 @@ export default function HRAttritionDashboard() {
             <LinkableCard 
               elementId="total-attrition-kpi"
               className="bg-white border-none shadow-sm rounded-lg p-4"
+              elementName="Total Attrition KPI"
+              elementType="KPI Metric"
+              onAddToSidebar={handleAddToSidebar}
             >
               <div className="text-center">
                 <div className="flex items-center justify-center mb-2">
@@ -171,6 +227,9 @@ export default function HRAttritionDashboard() {
             <LinkableCard 
               elementId="current-employees-kpi"
               className="bg-white border-none shadow-sm rounded-lg p-4"
+              elementName="Current Employees KPI"
+              elementType="KPI Metric"
+              onAddToSidebar={handleAddToSidebar}
             >
               <div className="text-center">
                 <div className="flex items-center justify-center mb-2">
@@ -191,6 +250,9 @@ export default function HRAttritionDashboard() {
             <LinkableCard 
               elementId="department-widget"
               className="bg-white border-none shadow-sm rounded-lg"
+              elementName="Department Analysis"
+              elementType="Chart Widget"
+              onAddToSidebar={handleAddToSidebar}
             >
               <div className="p-4">
                 <div className="flex justify-between mb-4">
@@ -211,6 +273,9 @@ export default function HRAttritionDashboard() {
             <LinkableCard 
               elementId="job-role-widget"
               className="bg-white border-none shadow-sm rounded-lg"
+              elementName="Job Role Analysis"
+              elementType="Chart Widget"
+              onAddToSidebar={handleAddToSidebar}
             >
               <div className="p-4">
                 <div className="flex items-center justify-between mb-4">
@@ -237,6 +302,9 @@ export default function HRAttritionDashboard() {
           <LinkableCard 
             elementId="distance-widget"
             className="bg-white shadow-sm rounded-lg"
+            elementName="Distance From Home"
+            elementType="Chart Widget"
+            onAddToSidebar={handleAddToSidebar}
           >
             <div className="p-4">
               <h3 className="text-lg font-bold font-mono text-gray-700 mb-4">DISTANCE FROM HOME</h3>
@@ -253,6 +321,9 @@ export default function HRAttritionDashboard() {
             <LinkableCard 
               elementId="gender-widget"
               className="bg-white border-none shadow-sm rounded-lg"
+              elementName="Gender Analysis"
+              elementType="Chart Widget"
+              onAddToSidebar={handleAddToSidebar}
               >
               <div className="p-4">
                 <div className="flex items-center justify-between mb-4">
@@ -277,6 +348,9 @@ export default function HRAttritionDashboard() {
             <LinkableCard 
               elementId="age-group-widget"
               className="bg-white border-none shadow-sm rounded-lg"
+              elementName="Age Group Analysis"
+              elementType="Chart Widget"
+              onAddToSidebar={handleAddToSidebar}
               >
               <div className="p-4">
                 <h4 className="text-lg font-bold font-mono text-gray-700 mb-4">AGE GROUP</h4>
@@ -287,6 +361,9 @@ export default function HRAttritionDashboard() {
             <LinkableCard 
               elementId="education-widget"
               className="bg-white border-none shadow-sm rounded-lg"
+              elementName="Education Analysis"
+              elementType="Chart Widget"
+              onAddToSidebar={handleAddToSidebar}
               >
               <div className="p-4">
                 <div className="flex items-center justify-between mb-4">
@@ -316,6 +393,9 @@ export default function HRAttritionDashboard() {
             <LinkableCard 
               elementId="survey-score-widget"
               className="bg-white border-none shadow-sm rounded-lg h-full"
+              elementName="Survey Score Analysis"
+              elementType="Chart Widget"
+              onAddToSidebar={handleAddToSidebar}
               >
               <div className="p-4 h-full flex flex-col">
                 <h3 className="text-lg font-bold text-gray-700 font-mono mb-4">SURVEY SCORE</h3>
@@ -328,6 +408,9 @@ export default function HRAttritionDashboard() {
             <LinkableCard 
               elementId="recent-attritions-widget"
               className="bg-white border-none shadow-sm rounded-lg h-full"
+              elementName="Recent Attritions"
+              elementType="Data Widget"
+              onAddToSidebar={handleAddToSidebar}
               >
               <div className="p-4 h-full flex flex-col">
                 <h3 className="text-lg font-bold text-gray-700 font-mono mb-4">RECENT ATTRITIONS</h3>
@@ -340,7 +423,9 @@ export default function HRAttritionDashboard() {
         </div>
       </div>
     </div>
-  );  return (    
+  );  
+  
+  return (    
   <DashboardPlayground
       isActive={true}
       dashboardTitle="HR Attrition Dashboard"
@@ -351,5 +436,13 @@ export default function HRAttritionDashboard() {
     >
       {dashboardContent}
     </DashboardPlayground>
+  );
+}
+
+export default function HRAttritionDashboard() {
+  return (
+    <SelectedElementsProvider>
+      <HRAttritionDashboardContent />
+    </SelectedElementsProvider>
   );
 }

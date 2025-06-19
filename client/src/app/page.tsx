@@ -1,16 +1,35 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import TopNavbar from './components/TopNavbar';
 import Sidebar from './components/Sidebar';
 import Canvas from './components/Canvas';
 import { chartTemplates } from './data/chartTemplates';
 import { Visualization, ChartTemplate } from './types/visualization';
+import { SelectedElementsProvider, useSelectedElements } from '../components/context/SelectedElementsContext';
+import { DataLoader } from './dashboard2/dataLoader';
+import { HRData } from './types/interfaces';
 
-export default function Home() {
+function HomeContent() {
   const [projectName, setProjectName] = useState('Untitled Project');
   const [visualizations, setVisualizations] = useState<Visualization[]>([]);
+  const [hrData, setHrData] = useState<HRData[]>([]);
+  const { selectedElements, removeElement } = useSelectedElements();
+
+  // Load HR data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await DataLoader.loadEmployeeData();
+        setHrData(data);
+      } catch (error) {
+        console.error('Failed to load HR data for sidebar:', error);
+      }
+    };
+    
+    loadData();
+  }, []);
 
   // Handle adding a new visualization from template
   const handleTemplateSelect = (template: ChartTemplate) => {
@@ -48,13 +67,26 @@ export default function Home() {
     <div className="flex flex-col h-screen bg-slate-50">
       <TopNavbar projectName={projectName} onProjectNameChange={setProjectName} />
       
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar />
+      <div className="flex flex-1 overflow-hidden">        <Sidebar 
+          selectedElements={selectedElements}
+          onElementRemove={removeElement}
+          chartTemplates={chartTemplates}
+          onTemplateSelect={handleTemplateSelect}
+          hrData={hrData}
+        />
         
         <main className="flex-1 overflow-hidden p-2">
           <Canvas visualizations={visualizations} onVisualizationMove={handleVisualizationMove} />
         </main>
       </div>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <SelectedElementsProvider>
+      <HomeContent />
+    </SelectedElementsProvider>
   );
 }
