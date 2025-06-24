@@ -288,15 +288,19 @@ const StickyNote: React.FC<StickyNoteProps> = ({
       let newWidth = startWidth;
       let newHeight = startHeight;
 
+      // Define minimum sizes for better usability
+      const MIN_WIDTH = 30; // Minimum 3 cells wide
+      const MIN_HEIGHT = 15; // Minimum 2 cells high
+
       if (direction.includes('right')) {
-        newWidth = Math.max(1, startWidth + Math.round(deltaX / cellSize));
+        newWidth = Math.max(MIN_WIDTH, startWidth + Math.round(deltaX / cellSize));
       }
       if (direction.includes('bottom')) {
-        newHeight = Math.max(1, startHeight + Math.round(deltaY / cellSize));
+        newHeight = Math.max(MIN_HEIGHT, startHeight + Math.round(deltaY / cellSize));
       }
 
       // Limit maximum size to prevent performance issues with very large notes
-      const MAX_SIZE = 60;
+      const MAX_SIZE = 500;
       newWidth = Math.min(newWidth, MAX_SIZE);
       newHeight = Math.min(newHeight, MAX_SIZE);
 

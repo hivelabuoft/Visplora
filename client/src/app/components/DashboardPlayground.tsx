@@ -96,7 +96,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
 
   // Grid configuration
   const canvasWidth = 4800;
-  const CELL_SIZE = 25;
+  const CELL_SIZE = 5;
   const DASHBOARD_WIDTH = 1600; // Fixed dashboard width
 
   // Calculate dashboard bounds and position for the grid
@@ -999,8 +999,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       style={{
                         left: `${mousePosition.x}px`,
                         top: `${mousePosition.y}px`,
-                        width: `${CELL_SIZE * 8}px`,
-                        height: `${CELL_SIZE * 8}px`,
+                        width: `${CELL_SIZE * 50}px`,
+                        height: `${CELL_SIZE * 50}px`,
                         opacity: hoveredCell ? '0.75' : '0.25'
                       }}
                     >
@@ -1093,11 +1093,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                   }`}>
                     {connectionFeedback}
                   </span>)}
-                {(isAnnotationMode || isNoteLinkingMode) ? (
-                    <span className={isAnnotationMode ? styles.annotation : styles.noteLinking}>
-                        Dashboard Size: {getDashboardGridInfo().cells.cellsWide}×{getDashboardGridInfo().cells.cellsHigh} | Occupied Cells: {occupiedCells.size}
-                    </span>
-                ): <></> }
                 {(isAnnotationMode || isNoteLinkingMode || isElementSelectionMode || isDragging) && (
                   <span>Press ESC to exit</span>
                 )}
