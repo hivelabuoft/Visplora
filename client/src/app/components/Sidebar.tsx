@@ -9,7 +9,10 @@ import {
   FiLayout,
   FiChevronDown,
   FiChevronUp,
-  FiInfo
+  FiInfo,
+  FiMaximize2,
+  FiMinimize2,
+  FiPlus
 } from 'react-icons/fi';
 import { ChartTemplate } from '../types/visualization';
 import { SelectedElement } from '../../components/context/SelectedElementsContext';
@@ -38,6 +41,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   const [dashboardCount, setDashboardCount] = useState(0);
   const [expandedElementId, setExpandedElementId] = useState<string | null>(null);
   const [showAllFields, setShowAllFields] = useState(false);
+  const [isChatExpanded, setIsChatExpanded] = useState(false);
+  const [chatContextElements, setChatContextElements] = useState<SelectedElement[]>([]);
   const [chatMessages, setChatMessages] = useState<Array<{text: string, isUser: boolean}>>([
     { text: "Welcome! I can help visualize your data. What would you like to know?", isUser: false },
   ]);
@@ -49,12 +54,66 @@ const Sidebar: React.FC<SidebarProps> = ({
     setShowAllFields(false);
   };
 
-  const suggestedPrompts = [
-    "Create a bar chart showing sales by region",
-    "Compare revenue between 2023 and 2024",
-    "Visualize user engagement over time",
-    "Show distribution of customer demographics"
-  ];
+  const addElementToChat = (element: SelectedElement) => {
+    setChatContextElements(prev => {
+      // Check if element is already in context
+      if (prev.find(el => el.id === element.id)) {
+        return prev;
+      }
+      return [...prev, element];
+    });
+    
+    // Auto-open chat if it's not open
+    if (!isChatOpen) {
+      setIsChatOpen(true);
+    }
+  };
+
+  const removeElementFromChat = (elementId: string) => {
+    setChatContextElements(prev => prev.filter(el => el.id !== elementId));
+  };
+
+  const generateContextualPrompts = (): string[] => {
+    if (chatContextElements.length === 0) {
+      return [
+        "Create a bar chart showing sales by region",
+        "Compare revenue between 2023 and 2024", 
+        "Visualize user engagement over time",
+        "Show distribution of customer demographics"
+      ];
+    }
+
+    const prompts: string[] = [];
+    
+    chatContextElements.forEach(element => {
+      const fields = element.fields.join(', ');
+      
+      if (element.type === 'Chart') {
+        prompts.push(`Analyze the ${element.name} chart and suggest improvements`);
+        prompts.push(`Create a complementary visualization for ${fields}`);
+        prompts.push(`Compare ${element.name} with another metric`);
+      } else if (element.type === 'KPI') {
+        prompts.push(`Create a trend chart for the ${element.name} KPI`);
+        prompts.push(`Show breakdown of factors affecting ${element.name}`);
+        prompts.push(`Compare ${element.name} across different segments`);
+      } else if (element.type === 'Table') {
+        prompts.push(`Convert ${element.name} table to an interactive chart`);
+        prompts.push(`Show top insights from ${fields} data`);
+        prompts.push(`Create a summary visualization for ${element.name}`);
+      }
+    });
+
+    // Add some general prompts based on the context fields
+    const allFields = [...new Set(chatContextElements.flatMap(el => el.fields))];
+    if (allFields.length > 0) {
+      prompts.push(`Create a correlation analysis between ${allFields.slice(0, 3).join(', ')}`);
+      prompts.push(`Show distribution patterns in ${allFields[0]} data`);
+      prompts.push(`Generate insights from ${chatContextElements.length} selected elements`);
+    }
+
+    return prompts.slice(0, 6); // Limit to 6 prompts
+  };
+  const suggestedPrompts = generateContextualPrompts();
   
   const handleSendMessage = () => {
     if (chatInput.trim() === '') return;
@@ -150,6 +209,16 @@ const Sidebar: React.FC<SidebarProps> = ({
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
+                          addElementToChat(element);
+                        }}
+                        className={`${styles.elementActionButton} ${styles.elementAddToChatButton}`}
+                        title="Add to AI chat context"
+                      >
+                        <FiPlus size={16} />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
                           toggleElementExpansion(element.id);
                         }}
                         className={`${styles.elementActionButton} ${styles.elementExpandButton} ${
@@ -198,23 +267,58 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
         </div>
       </div>
-      
-      {/* Chat panel - slides in from the right side, 50% height */}
+        {/* Chat panel - slides in from the right side, 50% height */}
       <div 
         className={`${styles.chatPanel} ${isChatOpen ? styles.chatPanelVisible : styles.chatPanelHidden} ${
           expandedElementId ? styles.chatPanelBesideExpanded : styles.chatPanelStandalone
-        }`}
+        } ${isChatExpanded ? styles.chatPanelExpanded : ''}`}
       >
         <div className={styles.chatHeader}>
           <h2 className={styles.chatTitle}>AI Assistant</h2>
-          <button 
-            onClick={() => setIsChatOpen(false)}
-            className={styles.chatCloseBtn}
-            aria-label="Close chat"
-          >
-            <FiX size={20} />
-          </button>
+          <div className={styles.chatHeaderActions}>
+            <button 
+              onClick={() => setIsChatExpanded(!isChatExpanded)}
+              className={styles.chatExpandBtn}
+              aria-label={isChatExpanded ? "Minimize chat" : "Expand chat"}
+              title={isChatExpanded ? "Minimize chat" : "Expand chat"}
+            >
+              {isChatExpanded ? <FiMinimize2 size={18} /> : <FiMaximize2 size={18} />}
+            </button>
+            <button 
+              onClick={() => setIsChatOpen(false)}
+              className={styles.chatCloseBtn}
+              aria-label="Close chat"
+            >
+              <FiX size={20} />
+            </button>
+          </div>
         </div>
+
+        {/* Context Elements Display */}
+        {chatContextElements.length > 0 && (
+          <div className={styles.chatContextSection}>
+            <div className={styles.chatContextHeader}>
+              <span className={styles.chatContextTitle}>Context Elements ({chatContextElements.length})</span>
+            </div>
+            <div className={styles.chatContextList}>
+              {chatContextElements.map(element => (
+                <div key={element.id} className={styles.chatContextItem}>
+                  <div className={styles.chatContextInfo}>
+                    <span className={styles.chatContextName}>{element.name}</span>
+                    <span className={styles.chatContextType}>{element.type}</span>
+                  </div>
+                  <button
+                    onClick={() => removeElementFromChat(element.id)}
+                    className={styles.chatContextRemoveBtn}
+                    title="Remove from context"
+                  >
+                    <FiX size={14} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         
         {/* Chat messages */}
         <div className={styles.chatMessagesContainer}>
@@ -235,11 +339,15 @@ const Sidebar: React.FC<SidebarProps> = ({
             </div>
           ))}
           <div ref={chatMessagesEndRef} />
-          
-          {/* Suggested prompts */}
+            {/* Suggested prompts */}
           {chatMessages.length <= 2 && (
             <div className={styles.suggestedPromptsContainer}>
-              <p className={styles.suggestedPromptsTitle}>Try asking:</p>
+              <p className={styles.suggestedPromptsTitle}>
+                {chatContextElements.length > 0 
+                  ? `Try asking about your ${chatContextElements.length} selected element${chatContextElements.length > 1 ? 's' : ''}:`
+                  : "Try asking:"
+                }
+              </p>
               <div className={styles.promptsList}>
                 {suggestedPrompts.map((prompt, index) => (
                   <button
@@ -269,7 +377,10 @@ const Sidebar: React.FC<SidebarProps> = ({
               type="text"
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
-              placeholder="Ask any other questions..."
+              placeholder={chatContextElements.length > 0 
+                ? `Ask about your ${chatContextElements.length} selected element${chatContextElements.length > 1 ? 's' : ''}...`
+                : "Ask any other questions..."
+              }
               className={styles.chatInput}
             />
             <button
