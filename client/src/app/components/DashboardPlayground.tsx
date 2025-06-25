@@ -63,15 +63,16 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const [noteToLink, setNoteToLink] = useState<string | null>(null);
   const [linkingElementId, setLinkingElementId] = useState<string | null>(null);
   const [isAdded, setIsAdded] = useState(false);
-  const [canvasHeight, setCanvasHeight] = useState(3000);
+  const [canvasHeight, setCanvasHeight] = useState(5000);
   const [showGrid, setShowGrid] = useState(false);
   const [hoveredCell, setHoveredCell] = useState<string | null>(null);
-  const [occupiedCells, setOccupiedCells] = useState<Set<string>>(new Set());  const [showTips, setShowTips] = useState(false);
+  const [occupiedCells, setOccupiedCells] = useState<Set<string>>(new Set());
+  const [showTips, setShowTips] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [hoveredElementId, setHoveredElementId] = useState<string | null>(null);
   const transformRef = useRef<ReactZoomPanPinchRef>(null);
   const dashboardRef = useRef<HTMLDivElement>(null);
-  const dashboardPositionRef = useRef({ x: -1200, y: -450 });
+  const dashboardPositionRef = useRef({ x: 0, y: 0 });
   // Sticky notes manager
   const {
     stickyNotes,
@@ -95,7 +96,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const [connectionFeedback, setConnectionFeedback] = useState<string | null>(null);
 
   // Grid configuration
-  const canvasWidth = 4800;
+  const canvasWidth = 6000;
   const CELL_SIZE = 5;
   const DASHBOARD_WIDTH = 1600; // Fixed dashboard width
 
@@ -187,8 +188,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   const handleGridCellClick = useCallback((cell: any) => {
     if (!cell.isOccupied && (isAnnotationMode || isNoteLinkingMode)) {
       // Check if there's enough space for a 2x2 note
-      const noteWidth = 8;
-      const noteHeight = 8;
+      const noteWidth = 50;
+      const noteHeight = 50;
       let hasEnoughSpace = true;
       
       // Check if all cells for the 2x2 note are available
@@ -222,14 +223,14 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
 
         // Zoom to 110% and center on the new note
         if (transformRef.current) {
-          // Calculate the center position of the note
+          // Calculate the center position of the note in canvas coordinates
           const centerX = cell.x + (noteWidth * CELL_SIZE / 2);
           const centerY = cell.y + (noteHeight * CELL_SIZE / 2);
           
           // Get current viewport dimensions and calculate scale
           const viewportWidth = window.innerWidth;
           const viewportHeight = window.innerHeight;
-          const scale = 1.1;
+          const scale = 1;
           
           // Calculate position to center the note in the viewport
           const targetX = (viewportWidth / 2) - (centerX * scale);
@@ -277,9 +278,24 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
 
   const handleResetView = useCallback(() => {
     if (transformRef.current) {
-      transformRef.current.resetTransform();
+      // Calculate proper center position for the current canvas size
+      const dashboardInfo = getDashboardGridInfo();
+      const dashboardCenterX = dashboardInfo.position.x + dashboardInfo.size.width / 2;
+      const dashboardCenterY = dashboardInfo.position.y + dashboardInfo.size.height / 2;
+      
+      // Get viewport dimensions
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const scale = 0.8; // Default scale
+      
+      // Calculate position to center the dashboard in the viewport
+      const targetX = (viewportWidth / 2) - (dashboardCenterX * scale);
+      const targetY = (viewportHeight / 2) - (dashboardCenterY * scale);
+      
+      transformRef.current.setTransform(targetX, targetY, scale, 500, "easeInCubic");
+      setZoomLevel(80);
     }
-  }, []);
+  }, [getDashboardGridInfo]);
 
   // Activate note linking mode and zoom out
   const activateLinkedNoteMode = useCallback((elementId?: string) => {
@@ -736,12 +752,12 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         if (calculatedCanvasHeight > 2800) {
           setCanvasHeight(calculatedCanvasHeight + 500);
         }
-      }      
+      }
       // Small delay to ensure the component is fully rendered
       const timer = setTimeout(() => {
         if (transformRef.current) {
-          transformRef.current.resetTransform();
-          handleResetView
+          // Use handleResetView to properly center the dashboard instead of resetTransform
+          handleResetView();
         }
         setIsAnnotationMode(false);
         setIsNoteLinkingMode(false);
@@ -752,7 +768,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       }, 100);
       return () => clearTimeout(timer);
     }
-  }, [isActive]);  // Handle mouse movement for note preview
+  }, [isActive, handleResetView]);
+  // Handle mouse movement for note preview
   const handleCanvasMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (isAnnotationMode && !isPanning && !isMoving) {
       // Use offsetX/offsetY which are relative to the canvas element
@@ -877,8 +894,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           <TransformWrapper
             ref={transformRef}
             initialScale={0.8}
-            initialPositionX={-getDashboardGridInfo().position.x + 400}
-            initialPositionY={-getDashboardGridInfo().position.y + 250}
+            initialPositionX={-getDashboardGridInfo().position.x}
+            initialPositionY={-getDashboardGridInfo().position.y}
             minScale={0.25}
             maxScale={2}
             centerOnInit={true}
@@ -914,6 +931,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     styles.default
                   }`}
                   style={{
+                      width: `${canvasWidth}px`,
                       height: `${canvasHeight}px`
                   }}
                   // Deselect notes when clicking on canvas background (not on notes or dashboard)
