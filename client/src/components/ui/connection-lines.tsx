@@ -42,6 +42,16 @@ interface ConnectionLinesProps {
     y: number;
   } | null;
   dragPreview?: { x: number; y: number } | null;
+  // Dropped elements for connection support
+  droppedElements?: Array<{
+    id: string;
+    elementId: string;
+    elementName: string;
+    elementType: string;
+    position: { x: number; y: number };
+    gridPosition: { row: number; col: number };
+    size: { width: number; height: number };
+  }>;
 }
 
 interface ElementPosition {
@@ -64,7 +74,8 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
   onConnectionDragStart,
   isDragging = false,
   dragStart = null,
-  dragPreview = null
+  dragPreview = null,
+  droppedElements = []
 }) => {
   const [elementPositions, setElementPositions] = useState<Map<string, ElementPosition>>(new Map());
   const [hoveredConnectionId, setHoveredConnectionId] = useState<string | null>(null);
@@ -72,37 +83,48 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
   // Function to get element positions from the DOM
   const updateElementPositions = useCallback(() => {
     const positions = new Map<string, ElementPosition>();    
-    // Find all elements with data-element-id attribute within the dashboard
+    
+    // Add dashboard elements
     const dashboardContainer = document.querySelector('[data-dashboard-container]');
-    if (!dashboardContainer) {
-      return;
-    }    
-   const elements = dashboardContainer.querySelectorAll('[data-element-id]');
-    elements.forEach((element) => {
-      const elementId = element.getAttribute('data-element-id');
-      if (elementId) {
-        // Use offsetLeft and offsetTop for more accurate positioning within the canvas
-        const htmlElement = element as HTMLElement;        
-        // Get position relative to the dashboard container
-        let offsetX = htmlElement.offsetLeft;
-        let offsetY = htmlElement.offsetTop;        
-        // Walk up the offset parent chain until we reach the dashboard container
-        let offsetParent = htmlElement.offsetParent as HTMLElement;
-        while (offsetParent && offsetParent !== dashboardContainer) {
-          offsetX += offsetParent.offsetLeft;
-          offsetY += offsetParent.offsetTop;
-          offsetParent = offsetParent.offsetParent as HTMLElement;
-        }        
-        positions.set(elementId, {
-          x: offsetX,
-          y: offsetY,
-          width: htmlElement.offsetWidth,
-          height: htmlElement.offsetHeight
-        });
-      }
-    });   
+    if (dashboardContainer) {
+      const elements = dashboardContainer.querySelectorAll('[data-element-id]');
+      elements.forEach((element) => {
+        const elementId = element.getAttribute('data-element-id');
+        if (elementId) {
+          // Use offsetLeft and offsetTop for more accurate positioning within the canvas
+          const htmlElement = element as HTMLElement;        
+          // Get position relative to the dashboard container
+          let offsetX = htmlElement.offsetLeft;
+          let offsetY = htmlElement.offsetTop;        
+          // Walk up the offset parent chain until we reach the dashboard container
+          let offsetParent = htmlElement.offsetParent as HTMLElement;
+          while (offsetParent && offsetParent !== dashboardContainer) {
+            offsetX += offsetParent.offsetLeft;
+            offsetY += offsetParent.offsetTop;
+            offsetParent = offsetParent.offsetParent as HTMLElement;
+          }        
+          positions.set(elementId, {
+            x: offsetX,
+            y: offsetY,
+            width: htmlElement.offsetWidth,
+            height: htmlElement.offsetHeight
+          });
+        }
+      });
+    }
+    
+    // Add dropped elements positions (they have direct position data)
+    droppedElements.forEach((element) => {
+      positions.set(element.id, {
+        x: element.position.x, // Already in canvas coordinates
+        y: element.position.y, // Already in canvas coordinates
+        width: element.size.width * cellSize,
+        height: element.size.height * cellSize
+      });
+    });
+   
     setElementPositions(positions);
-  }, []);
+  }, [droppedElements, cellSize]);
   
   // Update element positions when component mounts and when notes change
   useEffect(() => {
@@ -140,10 +162,10 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
     };
   }, [updateElementPositions]);
   
-  // Trigger position update when sticky notes change
+  // Trigger position update when sticky notes or dropped elements change
   useEffect(() => {
     updateElementPositions();
-  }, [stickyNotes, updateElementPositions]);
+  }, [stickyNotes, droppedElements, updateElementPositions]);
 
   // Filter notes that are linked to elements
   const linkedNotes = stickyNotes.filter(note => note.isLinked && note.linkedElementId);
@@ -177,7 +199,7 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
   };
 
   // Function to calculate connection points between note and element connection nodes
-  const getConnectionPoints = (note: StickyNoteData, elementPos: ElementPosition) => {
+  const getConnectionPoints = (note: StickyNoteData, elementPos: ElementPosition, elementId: string) => {
     // Note bounds in canvas coordinates
     const noteBounds = {
       x: note.x,
@@ -185,13 +207,25 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
       width: note.width * cellSize,
       height: note.height * cellSize
     };
-    // Element bounds in canvas coordinates (add dashboard position)
-    const elementBounds = {
+    
+    // Check if this is a dropped element or dashboard element
+    const isDroppedElement = droppedElements.some(el => el.id === elementId);
+    
+    // Element bounds in canvas coordinates
+    const elementBounds = isDroppedElement ? {
+      // Dropped elements already have direct canvas coordinates
+      x: elementPos.x,
+      y: elementPos.y,
+      width: elementPos.width,
+      height: elementPos.height
+    } : {
+      // Dashboard elements need dashboard position offset
       x: dashboardPosition.x + elementPos.x,
       y: dashboardPosition.y + elementPos.y,
       width: elementPos.width,
       height: elementPos.height
     };
+    
     // Get edge-based connection positions (directly on edges, no offset)
     const noteNodes = getEdgeConnectionPositions(noteBounds);
     const elementNodes = getEdgeConnectionPositions(elementBounds);
@@ -317,7 +351,17 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
       const elementPos = elementPositions.get(id);
       if (!elementPos) return null;
       
-      const bounds = {
+      // Check if this is a dropped element or dashboard element
+      const isDroppedElement = droppedElements.some(el => el.id === id);
+      
+      const bounds = isDroppedElement ? {
+        // Dropped elements already have direct canvas coordinates
+        x: elementPos.x,
+        y: elementPos.y,
+        width: elementPos.width,
+        height: elementPos.height
+      } : {
+        // Dashboard elements need dashboard position offset
         x: dashboardPosition.x + elementPos.x,
         y: dashboardPosition.y + elementPos.y,
         width: elementPos.width,
@@ -374,7 +418,7 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
         if (!elementPosition) {
           return null;
         }        
-        const { note: notePos, element: elementPoint, noteConnectionPosition, elementConnectionPosition } = getConnectionPoints(note, elementPosition);
+        const { note: notePos, element: elementPoint, noteConnectionPosition, elementConnectionPosition } = getConnectionPoints(note, elementPosition, note.linkedElementId);
         const pathData = createCurvedPath(notePos, elementPoint, noteConnectionPosition, elementConnectionPosition);
 
         // Check if either the note or element is hovered for glow effect

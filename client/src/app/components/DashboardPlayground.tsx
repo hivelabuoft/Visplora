@@ -9,9 +9,12 @@ import InteractiveGrid from '../../components/ui/interactive-grid';
 import StickyNote from '../../components/ui/sticky-note';
 import ConnectionLines, { ManualConnection } from '../../components/ui/connection-lines';
 import { useStickyNotesManager } from '../../components/ui/sticky-notes-manager';
+import DroppedElement from '../../components/ui/dropped-element';
+import { HRData } from '../types/interfaces';
 
 // Context for dashboard playground operations
-interface DashboardPlaygroundContextType {  activateLinkedNoteMode: ((elementId?: string) => void) | undefined;
+interface DashboardPlaygroundContextType {
+  activateLinkedNoteMode: ((elementId?: string) => void) | undefined;
   activateElementSelectionMode: ((noteId: string) => void) | undefined;
   isElementSelectionMode: boolean;
   noteToLink: string | null;
@@ -29,6 +32,10 @@ interface DashboardPlaygroundContextType {  activateLinkedNoteMode: ((elementId?
   ) => void;
   isDragging: boolean;
   isValidDropTarget: (elementId: string, type: 'element' | 'note') => boolean;
+  // Element dragging functionality
+  onElementDragStart?: (elementId: string, elementName: string, elementType: string, x: number, y: number) => void;
+  isElementDragging: boolean;
+  disablePanning: (disabled: boolean) => void;
 }
 
 const DashboardPlaygroundContext = createContext<DashboardPlaygroundContextType | undefined>(undefined);
@@ -47,6 +54,7 @@ interface DashboardPlaygroundProps {
   dashboardTitle?: string;
   dashboardType?: string;
   onAddToCanvas?: () => void;
+  hrData?: HRData[]; // Add HR data prop
 }
 
 const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
@@ -54,7 +62,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   isActive,
   dashboardTitle = "Dashboard",
   dashboardType = "default",
-  onAddToCanvas
+  onAddToCanvas,
+  hrData = [] // Default to empty array if no data provided
 }) => {  const [zoomLevel, setZoomLevel] = useState(100);
   const [isPanning, setIsPanning] = useState(false);
   const [isAnnotationMode, setIsAnnotationMode] = useState(false);
@@ -94,6 +103,26 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   
   // Connection feedback state for footer
   const [connectionFeedback, setConnectionFeedback] = useState<string | null>(null);
+
+  // Element dragging state
+  const [isElementDragging, setIsElementDragging] = useState(false);
+  const [elementDragData, setElementDragData] = useState<{
+    elementId: string;
+    elementName: string;
+    elementType: string;
+    startX: number;
+    startY: number;
+  } | null>(null);
+  const [elementDragPosition, setElementDragPosition] = useState<{ x: number; y: number } | null>(null);
+  const [droppedElements, setDroppedElements] = useState<Array<{
+    id: string;
+    elementId: string;
+    elementName: string;
+    elementType: string;
+    position: { x: number; y: number };
+    gridPosition: { row: number; col: number };
+    size: { width: number; height: number };
+  }>>([]);
 
   // Grid configuration
   const canvasWidth = 6000;
@@ -159,9 +188,18 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           allOccupied.add(`${r}-${c}`);
         }
       }
+    });
+
+    // Add dropped element cells
+    droppedElements.forEach(element => {
+      for (let r = element.gridPosition.row; r < element.gridPosition.row + element.size.height; r++) {
+        for (let c = element.gridPosition.col; c < element.gridPosition.col + element.size.width; c++) {
+          allOccupied.add(`${r}-${c}`);
+        }
+      }
     });    
     return allOccupied;
-  }, [canvasHeight, stickyNotes, isMoving, selectedNoteId, getDashboardGridInfo]);
+  }, [canvasHeight, stickyNotes, droppedElements, isMoving, selectedNoteId, getDashboardGridInfo]);
 
   // Update occupied cells when dashboard or sticky notes change
   useEffect(() => {
@@ -180,9 +218,18 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           allOccupied.add(`${r}-${c}`);
         }
       }
+    });
+
+    // Add dropped element cells
+    droppedElements.forEach(element => {
+      for (let r = element.gridPosition.row; r < element.gridPosition.row + element.size.height; r++) {
+        for (let c = element.gridPosition.col; c < element.gridPosition.col + element.size.width; c++) {
+          allOccupied.add(`${r}-${c}`);
+        }
+      }
     });    
     setOccupiedCells(allOccupied);
-  }, [stickyNotes, canvasHeight]); // Only depend on stickyNotes and canvasHeight
+  }, [stickyNotes, droppedElements, canvasHeight]); // Include droppedElements in dependencies
 
   // Handle grid cell click for sticky note creation
   const handleGridCellClick = useCallback((cell: any) => {
@@ -403,7 +450,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     // Check for automatic connections
     const hasAutomaticConnection = stickyNotes.some(note => note.isLinked && note.linkedElementId === elementId);
     
-    // Check for manual connections
+    // Check for manual connections (including dropped elements)
     const hasManualConnection = manualConnections.some(conn => 
       (conn.sourceId === elementId && conn.sourceType === 'element') ||
       (conn.targetId === elementId && conn.targetType === 'element')
@@ -663,6 +710,73 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     }
   }, [isDragging, handleDragMove, handleDragEnd]);
 
+  // Element dragging handlers
+  const handleElementDragStart = useCallback((
+    elementId: string,
+    elementName: string, 
+    elementType: string,
+    x: number,
+    y: number
+  ) => {
+    setIsElementDragging(true);
+    setElementDragData({ elementId, elementName, elementType, startX: x, startY: y });
+    setElementDragPosition({ x, y });
+    
+    // Note: Panning will be automatically disabled during drag due to event handling
+  }, []);
+
+  // Handle element drag movement
+  const handleElementDragMove = useCallback((e: MouseEvent) => {
+    if (!isElementDragging || !elementDragData) return;
+    
+    // Use viewport coordinates for the preview position
+    const viewportX = e.clientX;
+    const viewportY = e.clientY;
+    
+    setElementDragPosition({ x: viewportX, y: viewportY });
+  }, [isElementDragging, elementDragData]);
+
+  // Handle element drag end - create copied element near dashboard
+  const handleElementDragEnd = useCallback((e: MouseEvent) => {
+    if (!isElementDragging || !elementDragData) {
+      setIsElementDragging(false);
+      setElementDragData(null);
+      setElementDragPosition(null);
+      return;
+    }
+
+    // Always place elements near the dashboard (to the right side)
+    const dashboardInfo = getDashboardGridInfo();
+    const elementWidth = 80; // Grid cells wide
+    const elementHeight = 80; // Grid cells high
+    
+    // Calculate position to the right of the dashboard with some spacing
+    const spacing = 20; // Grid cells spacing from dashboard
+    const col = dashboardInfo.bounds.endCol + spacing;
+    const row = dashboardInfo.bounds.startRow + (droppedElements.length * (elementHeight + 10)); // Stack vertically
+    
+    const gridX = col * CELL_SIZE;
+    const gridY = row * CELL_SIZE;
+    
+    const newElement = {
+      id: `dropped-${elementDragData.elementId}-${Date.now()}`,
+      elementId: elementDragData.elementId,
+      elementName: elementDragData.elementName,
+      elementType: elementDragData.elementType,
+      position: { x: gridX, y: gridY },
+      gridPosition: { row, col },
+      size: { width: elementWidth, height: elementHeight }
+    };
+    
+    setDroppedElements(prev => [...prev, newElement]);
+    setConnectionFeedback(`✓ ${elementDragData.elementName} copied to playground`);
+    setTimeout(() => setConnectionFeedback(null), 3000);
+
+    setIsElementDragging(false);
+    setElementDragData(null);
+    setElementDragPosition(null);
+  }, [isElementDragging, elementDragData, CELL_SIZE, getDashboardGridInfo, droppedElements.length]);
+
   // Helper function to determine if a note is a valid drop target
   const isValidDropTarget = useCallback((noteId: string, noteType: 'element' | 'note') => {
     if (!isDragging || !dragStart) return false;
@@ -681,6 +795,71 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     
     return !connectionExists;
   }, [isDragging, dragStart, manualConnections]);
+
+  // Helper function to determine if an element is a valid drop target for connections
+  const isValidDropTargetForConnections = useCallback((elementId: string, elementType: 'element' | 'note') => {
+    if (!isDragging || !dragStart) return false;
+    
+    // Can't drop on self
+    if (dragStart.id === elementId) return false;
+    
+    // Apply connection rules
+    if (dragStart.type === 'element' && elementType === 'element') return false; // Element to Element not allowed
+    
+    // Check if connection already exists
+    const connectionExists = manualConnections.some(conn => 
+      (conn.sourceId === dragStart.id && conn.targetId === elementId) ||
+      (conn.sourceId === elementId && conn.targetId === dragStart.id)
+    );
+    
+    return !connectionExists;
+  }, [isDragging, dragStart, manualConnections]);
+
+  // Dropped element moving state
+  const [isDroppedElementMoving, setIsDroppedElementMoving] = useState(false);
+
+  // Handle dropped element move
+  const handleDroppedElementMove = useCallback((
+    elementId: string,
+    newPosition: { x: number; y: number },
+    newGridPosition: { row: number; col: number }
+  ) => {
+    setDroppedElements(prev => prev.map(element => 
+      element.id === elementId 
+        ? { ...element, position: newPosition, gridPosition: newGridPosition }
+        : element
+    ));
+    setIsDroppedElementMoving(false);
+  }, []);
+
+  // Handle dropped element move start
+  const handleDroppedElementMoveStart = useCallback(() => {
+    setIsDroppedElementMoving(true);
+  }, []);
+
+  // Handle dropped element move end
+  const handleDroppedElementMoveEnd = useCallback(() => {
+    setIsDroppedElementMoving(false);
+  }, []);
+
+  // Set up global element drag event listeners
+  useEffect(() => {
+    if (isElementDragging) {
+      document.addEventListener('mousemove', handleElementDragMove);
+      document.addEventListener('mouseup', handleElementDragEnd);
+      
+      return () => {
+        document.removeEventListener('mousemove', handleElementDragMove);
+        document.removeEventListener('mouseup', handleElementDragEnd);
+      };
+    }
+  }, [isElementDragging, handleElementDragMove, handleElementDragEnd]);
+
+  // Disable/enable panning function
+  const disablePanning = useCallback((disabled: boolean) => {
+    // The transform wrapper handles this through wheel and doubleClick settings
+    // We'll manage this through the isDragging state
+  }, []);
 
   const handleAddToCanvas = useCallback(() => {
     if (onAddToCanvas) {
@@ -705,6 +884,14 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           setDragStart(null);
           setDragPreview(null);
           setConnectionFeedback('Connection cancelled');
+          // Clear feedback after a delay
+          setTimeout(() => setConnectionFeedback(null), 5000);
+        } else if (isElementDragging) {
+          // Cancel element drag operation
+          setIsElementDragging(false);
+          setElementDragData(null);
+          setElementDragPosition(null);
+          setConnectionFeedback('Element drag cancelled');
           // Clear feedback after a delay
           setTimeout(() => setConnectionFeedback(null), 5000);
         } else if (showTips) {
@@ -740,7 +927,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'auto';
     };  }, [isActive, showTips, isResizing, isMoving, isElementSelectionMode, isNoteLinkingMode, 
-    isAnnotationMode, selectedNoteId, isDragging, setIsResizing, setIsMoving, selectNote]);
+    isAnnotationMode, selectedNoteId, isDragging, isElementDragging, setIsResizing, setIsMoving, selectNote]);
 
   // Reset transform when playground becomes active and measure dashboard height
   useEffect(() => {
@@ -807,7 +994,10 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
       setHoveredElementId,
       onConnectionDragStart: handleConnectionDragStart,
       isDragging,
-      isValidDropTarget
+      isValidDropTarget,
+      onElementDragStart: handleElementDragStart,
+      isElementDragging,
+      disablePanning
     }}>
       <div className={styles.playgroundContainer}>
         {/* Header */}
@@ -901,13 +1091,14 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             centerOnInit={true}
             limitToBounds={false}
             smooth={true}
+            disabled={isElementDragging}
             wheel={{
-              disabled: false,
+              disabled: isElementDragging,
               step: 0.001,
               smoothStep: 0.0005
             }}
             doubleClick={{
-              disabled: false,
+              disabled: isElementDragging,
               step: 0.5
             }}
             onTransformed={(ref) => {
@@ -988,6 +1179,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     isDragging={isDragging}
                     dragStart={dragStart}
                     dragPreview={dragPreview}
+                    droppedElements={droppedElements}
                   />
                   {/* Sticky Notes */}
                   {stickyNotes.map((note) => (
@@ -1008,6 +1200,23 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       onConnectionDragStart={handleConnectionDragStart}
                       isDragging={isDragging}
                       isDragTarget={isValidDropTarget(note.id, 'note')}
+                    />
+                  ))}
+                  {/* Dropped Elements */}
+                  {droppedElements.map((element) => (
+                    <DroppedElement
+                      key={element.id}
+                      element={element}
+                      cellSize={CELL_SIZE}
+                      hrData={hrData}
+                      zoomLevel={zoomLevel}
+                      onRemove={(id) => setDroppedElements(prev => prev.filter(el => el.id !== id))}
+                      onMove={handleDroppedElementMove}
+                      onMoveStart={handleDroppedElementMoveStart}
+                      onMoveEnd={handleDroppedElementMoveEnd}
+                      onConnectionDragStart={handleConnectionDragStart}
+                      isDragging={isDragging}
+                      isDragTarget={isValidDropTargetForConnections(element.id, 'element')}
                     />
                   ))}
                   {/* Note Preview - follows cursor in annotation mode */}
@@ -1038,6 +1247,32 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                               {hoveredCell}
                             </div>
                           )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {/* Element Drag Preview - follows cursor during element dragging */}
+                  {isElementDragging && elementDragPosition && elementDragData && (
+                    <div
+                      className="fixed bg-white border-2 border-orange-400 rounded-lg shadow-xl opacity-75 pointer-events-none z-50"
+                      style={{
+                        left: `${elementDragPosition.x - 200}px`,
+                        top: `${elementDragPosition.y - 150}px`,
+                        width: `400px`, // Larger preview to match new dropped element size
+                        height: `300px`, // Larger preview to match new dropped element size
+                      }}
+                    >
+                      <div className="bg-orange-100 px-3 py-2 border-b border-orange-200 flex items-center">
+                        <FiMove size={12} className="text-orange-600 mr-2" />
+                        <div className="text-xl font-medium text-orange-800 truncate">
+                          {elementDragData.elementName}
+                        </div>
+                      </div>
+                      <div className="p-4 flex items-center justify-center text-center">
+                        <div>
+                          <div className="text-2xl mb-2">📊</div>
+                          <div className="text-lg text-gray-600">Dragging {elementDragData.elementType}</div>
+                          <div className="text-lg text-gray-500 mt-2">Drop anywhere to copy</div>
                         </div>
                       </div>
                     </div>
@@ -1077,9 +1312,15 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 <span><strong>Note Controls:</strong> Resize or move notes by dragging edges or title bar.</span>
                 <span><strong>Note Clearing:</strong> Use the "Clear All Notes" button to remove all sticky notes.</span>
                 <span><strong>Linking:</strong> Click link button on notes to link/unlink from elements.</span>
+
+                {/* Copied Elements */}
+                <span><strong>Copying Elements:</strong> Use drag button on linkable elements to copy to playground.</span>
+                <span><strong>Moving Copies:</strong> Click the move button on copied elements to reposition them.</span>
+                <span><strong>Connecting Copies:</strong> Use connection nodes on copied elements to link with notes or other elements.</span>
+                <span><strong>Removing Copies:</strong> Click the X button on copied elements to remove them.</span>
               </div>
             )}
-            {(isAnnotationMode || isNoteLinkingMode || isElementSelectionMode || isResizing || isMoving || isDragging || connectionFeedback) && (
+            {(isAnnotationMode || isNoteLinkingMode || isElementSelectionMode || isResizing || isMoving || isDragging || isElementDragging || isDroppedElementMoving || connectionFeedback) && (
               <div className={styles.feedbackCenter}>
                 {isAnnotationMode && 
                 <span className={`${styles.feedbackText} ${styles.annotation}`}>Select a grid cell to add sticky note
@@ -1099,6 +1340,13 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                 {isMoving && <span className={`${styles.feedbackText} ${styles.moving}`}>
                   Moving note - drop note to confirm placement
                   </span>}
+                {isDroppedElementMoving && <span className={`${styles.feedbackText} ${styles.moving}`}>
+                  Moving copied element - drop to confirm placement
+                  </span>}
+                {isElementDragging && (
+                  <span className={`${styles.feedbackText} ${styles.dragging}`}>
+                    Dragging element - will be placed near dashboard (movable after drop)
+                  </span>)}
                 {isDragging && !connectionFeedback && (
                   <span className={`${styles.feedbackText} ${styles.dragging}`}>
                     Creating connection - drag to a connection node to link
@@ -1111,7 +1359,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                   }`}>
                     {connectionFeedback}
                   </span>)}
-                {(isAnnotationMode || isNoteLinkingMode || isElementSelectionMode || isDragging) && (
+                {(isAnnotationMode || isNoteLinkingMode || isElementSelectionMode || isDragging || isElementDragging) && (
                   <span>Press ESC to exit</span>
                 )}
               </div>

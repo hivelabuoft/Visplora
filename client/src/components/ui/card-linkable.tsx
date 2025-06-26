@@ -1,7 +1,7 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { useDashboardPlayground } from "@/app/components/DashboardPlayground"
-import { FiPlus, FiLink, FiSidebar, FiCheck } from 'react-icons/fi'
+import { FiPlus, FiLink, FiSidebar, FiCheck, FiMove } from 'react-icons/fi'
 import { ConnectionNodes } from './connection-nodes'
 import { useSelectedElements } from "@/components/context/SelectedElementsContext"
 
@@ -48,6 +48,8 @@ export function LinkableCard({
   let onConnectionDragStart: ((elementId: string, type: 'element' | 'note', position: 'top' | 'right' | 'bottom' | 'left', x: number, y: number) => void) | undefined;
   let isDragging = false;
   let isValidDropTarget: ((elementId: string, type: 'element' | 'note') => boolean) | undefined;
+  let onElementDragStart: ((elementId: string, elementName: string, elementType: string, x: number, y: number) => void) | undefined;
+  let isElementDragging = false;
   
   try {
     const context = useDashboardPlayground();
@@ -60,6 +62,8 @@ export function LinkableCard({
     onConnectionDragStart = context.onConnectionDragStart;
     isDragging = context.isDragging;
     isValidDropTarget = context.isValidDropTarget;
+    onElementDragStart = context.onElementDragStart;
+    isElementDragging = context.isElementDragging;
   } catch {
     // Context not available, component used outside of DashboardPlayground
     activateLinkedNoteMode = undefined;
@@ -71,6 +75,8 @@ export function LinkableCard({
     onConnectionDragStart = undefined;
     isDragging = false;
     isValidDropTarget = undefined;
+    onElementDragStart = undefined;
+    isElementDragging = false;
   }
 
   const handleMouseEnter = () => {
@@ -105,6 +111,17 @@ export function LinkableCard({
     }
   };
 
+  const handleElementDrag = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onElementDragStart && elementId && elementName && elementType) {
+      const rect = cardRef.current?.getBoundingClientRect();
+      if (rect) {
+        onElementDragStart(elementId, elementName, elementType, e.clientX, e.clientY);
+      }
+    }
+  };
+
   const handleElementClick = (e: React.MouseEvent) => {
     if (isElementSelectionMode && noteToLink && linkNoteToElement && elementId) {
       e.preventDefault();
@@ -134,6 +151,7 @@ export function LinkableCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleElementClick}
+      onDrag={handleElementDrag}
       data-element-id={elementId}
     >
       {children}
@@ -168,7 +186,7 @@ export function LinkableCard({
         </div>
       )}
       {/* Add Note Button - appears on hover */}
-      {isHovered && !isElementSelectionMode && (
+      {isHovered && !isElementSelectionMode && !isElementDragging && (
         <>
           <button
             onClick={handleAddNoteClick}
@@ -180,6 +198,17 @@ export function LinkableCard({
             title="Add note for this element"
           >
             <FiPlus size={12} />
+          </button>
+
+          {/* Drag Element Button */}
+          <button
+            onMouseDown={handleElementDrag}
+            className={`absolute w-6 h-6 bg-gray-400 hover:bg-gray-600 text-white rounded-full 
+                       flex items-center justify-center shadow-lg transition-all duration-200 z-10 transform 
+                       hover:scale-110 cursor-grab active:cursor-grabbing top-1 left-1`}
+            title="Drag to copy this element"
+          >
+            <FiMove size={12} />
           </button>
           
           {/* Add to Sidebar Button */}

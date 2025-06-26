@@ -430,6 +430,7 @@ function HRAttritionDashboardContent() {
       isActive={true}
       dashboardTitle="HR Attrition Dashboard"
       dashboardType="hr-attrition"
+      hrData={filteredData}
       onAddToCanvas={() => {
         console.log('Dashboard added to canvas from playground');
       }}
