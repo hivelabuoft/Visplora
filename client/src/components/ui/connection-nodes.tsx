@@ -15,13 +15,20 @@ interface ConnectionNodesProps {
   onNodeClick?: (elementId: string, position: 'top' | 'right' | 'bottom' | 'left') => void;
   onDragStart?: (
     elementId: string, 
-    type: 'element' | 'note', 
+    type: 'element' | 'note' | 'ai-assistant', 
     position: 'top' | 'right' | 'bottom' | 'left',
     x: number,
     y: number
   ) => void;
+  onDrop?: (
+    targetId: string,
+    targetType: 'element' | 'note' | 'ai-assistant',
+    targetPosition: 'top' | 'right' | 'bottom' | 'left'
+  ) => boolean;
+  onDragEnd?: () => void;
   className?: string;
   isNote?: boolean; // Flag to indicate if this is for a note instead of an element
+  isAIAssistant?: boolean; // Flag to indicate if this is for an AI assistant
   isDragTarget?: boolean; // Whether this node is a valid drop target during drag
   isDragging?: boolean; // Whether a drag operation is currently active
 }
@@ -32,8 +39,11 @@ export const ConnectionNodes: React.FC<ConnectionNodesProps> = ({
   isLinked = false,
   onNodeClick,
   onDragStart,
+  onDrop,
+  onDragEnd,
   className = '',
   isNote = false,
+  isAIAssistant = false,
   isDragTarget = false,
   isDragging = false
 }) => {const handleNodeClick = (position: 'top' | 'right' | 'bottom' | 'left') => (e: React.MouseEvent) => {
@@ -58,9 +68,32 @@ export const ConnectionNodes: React.FC<ConnectionNodesProps> = ({
       const x = rect.left + rect.width / 2 - canvasRect.left;
       const y = rect.top + rect.height / 2 - canvasRect.top;
       
-      onDragStart(elementId, isNote ? 'note' : 'element', position, x, y);
+      const nodeType = isAIAssistant ? 'ai-assistant' : (isNote ? 'note' : 'element');
+      onDragStart(elementId, nodeType, position, x, y);
     }
-  };// Show nodes during drag even if not normally visible (for drop targets)
+  };
+
+  // Handle drop events
+  const handleDrop = (position: 'top' | 'right' | 'bottom' | 'left') => (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (onDrop && isDragTarget) {
+      const nodeType = isAIAssistant ? 'ai-assistant' : (isNote ? 'note' : 'element');
+      const success = onDrop(elementId, nodeType, position);
+      if (success && onDragEnd) {
+        onDragEnd();
+      }
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    if (isDragTarget) {
+      e.preventDefault(); // Allow drop
+    }
+  };
+
+  // Show nodes during drag even if not normally visible (for drop targets)
   const shouldShow = isVisible || (isDragging && isDragTarget);
 
   const getNodeStyle = (position: 'top' | 'right' | 'bottom' | 'left') => {
@@ -137,6 +170,8 @@ export const ConnectionNodes: React.FC<ConnectionNodesProps> = ({
         className={getNodeClass('top')}
         onClick={handleNodeClick('top')}
         onMouseDown={handleMouseDown('top')}
+        onDrop={handleDrop('top')}
+        onDragOver={handleDragOver}
         title={`Connect from top of ${elementId}`}
         data-connection-node="top"
         data-connection-element-id={elementId}
@@ -149,6 +184,8 @@ export const ConnectionNodes: React.FC<ConnectionNodesProps> = ({
         className={getNodeClass('right')}
         onClick={handleNodeClick('right')}
         onMouseDown={handleMouseDown('right')}
+        onDrop={handleDrop('right')}
+        onDragOver={handleDragOver}
         title={`Connect from right of ${elementId}`}
         data-connection-node="right"
         data-connection-element-id={elementId}
@@ -161,6 +198,8 @@ export const ConnectionNodes: React.FC<ConnectionNodesProps> = ({
         className={getNodeClass('bottom')}
         onClick={handleNodeClick('bottom')}
         onMouseDown={handleMouseDown('bottom')}
+        onDrop={handleDrop('bottom')}
+        onDragOver={handleDragOver}
         title={`Connect from bottom of ${elementId}`}
         data-connection-node="bottom"
         data-connection-element-id={elementId}
@@ -173,6 +212,8 @@ export const ConnectionNodes: React.FC<ConnectionNodesProps> = ({
         className={getNodeClass('left')}
         onClick={handleNodeClick('left')}
         onMouseDown={handleMouseDown('left')}
+        onDrop={handleDrop('left')}
+        onDragOver={handleDragOver}
         title={`Connect from left of ${elementId}`}
         data-connection-node="left"
         data-connection-element-id={elementId}

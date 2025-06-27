@@ -60,7 +60,7 @@ export interface DroppedElement {
 
 export interface DragState {
   id: string;
-  type: 'element' | 'note';
+  type: 'element' | 'note' | 'ai-assistant';
   position: 'top' | 'right' | 'bottom' | 'left';
   x: number;
   y: number;

@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { DroppedElement, ElementDragData } from '../../../components/context/DashboardPlaygroundContext';
-import { CELL_SIZE } from '../playgroundComponents/DashboardPlaygroundUtils';
+import { DroppedElement, ElementDragData } from '../context/DashboardPlaygroundContext';
+import { CELL_SIZE } from '../../app/components/DashboardPlayground';
 
 export const useElementDragging = (
   getDashboardGridInfo: () => any,

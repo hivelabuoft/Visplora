@@ -7,12 +7,13 @@ import { ConnectionNodePosition } from './connection-nodes';
 // Interface for manual connections between nodes
 export interface ManualConnection {
   id: string;
-  sourceId: string; // Element or note ID
-  sourceType: 'element' | 'note';
+  sourceId: string; // Element, note, or AI assistant ID
+  sourceType: 'element' | 'note' | 'ai-assistant';
   sourcePosition: 'top' | 'right' | 'bottom' | 'left';
-  targetId: string; // Element or note ID
-  targetType: 'element' | 'note';
+  targetId: string; // Element, note, or AI assistant ID
+  targetType: 'element' | 'note' | 'ai-assistant';
   targetPosition: 'top' | 'right' | 'bottom' | 'left';
+  createdAt?: number;
 }
 
 interface ConnectionLinesProps {
@@ -52,6 +53,18 @@ interface ConnectionLinesProps {
     gridPosition: { row: number; col: number };
     size: { width: number; height: number };
   }>;
+  // AI Assistant data for connection support
+  aiAssistant?: {
+    id: string;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    connectedElements: Array<{
+      id: string;
+      type: string;
+    }>;
+  } | null;
 }
 
 interface ElementPosition {
@@ -75,7 +88,8 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
   isDragging = false,
   dragStart = null,
   dragPreview = null,
-  droppedElements = []
+  droppedElements = [],
+  aiAssistant = null
 }) => {
   const [elementPositions, setElementPositions] = useState<Map<string, ElementPosition>>(new Map());
   const [hoveredConnectionId, setHoveredConnectionId] = useState<string | null>(null);
@@ -344,10 +358,23 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
   // Get position for a connection node
   const getConnectionNodePosition = (
     id: string, 
-    type: 'element' | 'note', 
+    type: 'element' | 'note' | 'ai-assistant', 
     position: 'top' | 'right' | 'bottom' | 'left'
   ): { x: number; y: number } | null => {
-    if (type === 'element') {
+    if (type === 'ai-assistant') {
+      // Use AI assistant position data directly instead of DOM queries
+      if (!aiAssistant || aiAssistant.id !== id) return null;
+      
+      const bounds = {
+        x: aiAssistant.x,
+        y: aiAssistant.y,
+        width: aiAssistant.width,
+        height: aiAssistant.height
+      };
+      
+      const nodes = getEdgeConnectionPositions(bounds);
+      return { x: nodes[position].x, y: nodes[position].y };
+    } else if (type === 'element') {
       const elementPos = elementPositions.get(id);
       if (!elementPos) return null;
       
@@ -553,7 +580,8 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
             {shouldGlow && (
               <path
                 d={pathData}
-                stroke="rgba(59, 130, 246, 0.2)"
+                stroke={connection.sourceType === 'ai-assistant' || connection.targetType === 'ai-assistant' ? 
+                  "rgba(34, 197, 94, 0.2)" : "rgba(59, 130, 246, 0.2)"}
                 strokeWidth="8"
                 fill="none"
                 filter="url(#glow)"
@@ -575,10 +603,14 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
                 }
               }}
             />
-            {/* Main line - blue for manual connections */}
+            {/* Main line - different colors for AI assistant connections */}
             <path
               d={pathData}
-              stroke={isHovered ? "#ff4444" : shouldGlow ? "rgba(59, 130, 246, 0.8)" : "#000"}
+              stroke={isHovered ? "#ff4444" : shouldGlow ? 
+                (connection.sourceType === 'ai-assistant' || connection.targetType === 'ai-assistant' ? 
+                  "rgba(34, 197, 94, 0.8)" : "rgba(59, 130, 246, 0.8)") : 
+                (connection.sourceType === 'ai-assistant' || connection.targetType === 'ai-assistant' ? 
+                  "rgba(34, 197, 94, 0.6)" : "#000")}
               strokeWidth={isHovered ? "3" : "2"}
               fill="none"
               opacity={shouldGlow || isHovered ? 1 : 0.8}
@@ -617,7 +649,8 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
               cx={sourcePos.x}
               cy={sourcePos.y}
               r="4"
-              fill="#0066cc"
+              fill={connection.sourceType === 'ai-assistant' || connection.targetType === 'ai-assistant' ? 
+                "rgba(34, 197, 94, 0.8)" : "#0066cc"}
               stroke="white"
               strokeWidth="1"
               style={{ pointerEvents: 'none' }}
@@ -628,7 +661,8 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
               cx={targetPos.x}
               cy={targetPos.y}
               r="4"
-              fill="#0066cc"
+              fill={connection.sourceType === 'ai-assistant' || connection.targetType === 'ai-assistant' ? 
+                "rgba(34, 197, 94, 0.8)" : "#0066cc"}
               stroke="white"
               strokeWidth="1"
               style={{ pointerEvents: 'none' }}

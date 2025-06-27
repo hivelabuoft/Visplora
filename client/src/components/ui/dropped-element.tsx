@@ -22,7 +22,7 @@ interface DroppedElementProps {
   onMoveEnd?: () => void;
   hrData?: HRData[]; // Add HR data prop
   zoomLevel?: number; // Add zoom level prop for zoom-aware movement
-  onConnectionDragStart?: (elementId: string, type: 'element' | 'note', position: 'top' | 'right' | 'bottom' | 'left', x: number, y: number) => void;
+  onConnectionDragStart?: (elementId: string, type: 'element' | 'note' | 'ai-assistant', position: 'top' | 'right' | 'bottom' | 'left', x: number, y: number) => void;
   isDragging?: boolean;
   isDragTarget?: boolean;
 }

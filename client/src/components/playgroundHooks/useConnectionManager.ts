@@ -1,12 +1,15 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { ManualConnection } from '../../../components/ui/connection-lines';
-import { DragState } from '../../../components/context/DashboardPlaygroundContext';
+import { ManualConnection } from '../ui/connection-lines';
+import { DragState } from '../context/DashboardPlaygroundContext';
 
 export const useConnectionManager = (
   stickyNotes: any[],
-  updateStickyNote: (id: string, updates: any) => void
+  updateStickyNote: (id: string, updates: any) => void,
+  aiAssistant?: any,
+  addConnectionToAssistant?: (elementId: string, type: 'element' | 'note', data: any) => void,
+  removeConnectionFromAssistant?: (elementId: string, type: 'element' | 'note') => void
 ) => {
   const [manualConnections, setManualConnections] = useState<ManualConnection[]>([]);
   const [connectionFeedback, setConnectionFeedback] = useState<string | null>(null);
@@ -19,16 +22,25 @@ export const useConnectionManager = (
   // Validate connection rules
   const validateConnection = useCallback((
     sourceId: string, 
-    sourceType: 'element' | 'note',
+    sourceType: 'element' | 'note' | 'ai-assistant',
     targetId: string, 
-    targetType: 'element' | 'note'
+    targetType: 'element' | 'note' | 'ai-assistant'
   ): boolean => {
-    // Rule: Connections are only allowed between:
+    // Rule: Connections are allowed between:
     // 1. Note to Note
     // 2. Note to Element  
     // 3. Element to Note
+    // 4. Note to AI Assistant
+    // 5. Element to AI Assistant
+    // 6. AI Assistant to Note
+    // 7. AI Assistant to Element
+    
     if (sourceType === 'element' && targetType === 'element') {
       return false; // Element to Element not allowed
+    }
+    
+    if (sourceType === 'ai-assistant' && targetType === 'ai-assistant') {
+      return false; // AI Assistant to AI Assistant not allowed
     }
     
     // Don't allow self-connections
@@ -50,8 +62,16 @@ export const useConnectionManager = (
        stickyNotes.some(note => note.id === targetId && note.linkedElementId === sourceId))
     );
     
-    return !manualConnectionExists && !automaticConnectionExists;
-  }, [manualConnections, stickyNotes]);
+    // Check if AI assistant connection already exists
+    const aiAssistantConnectionExists = aiAssistant && (
+      (sourceType === 'ai-assistant' && 
+       aiAssistant.connectedElements.some((el: any) => el.id === targetId && el.type === targetType)) ||
+      (targetType === 'ai-assistant' && 
+       aiAssistant.connectedElements.some((el: any) => el.id === sourceId && el.type === sourceType))
+    );
+    
+    return !manualConnectionExists && !automaticConnectionExists && !aiAssistantConnectionExists;
+  }, [manualConnections, stickyNotes, aiAssistant]);
 
   const handleAddManualConnection = useCallback((connection: ManualConnection) => {
     setManualConnections(prev => [...prev, connection]);
@@ -115,7 +135,14 @@ export const useConnectionManager = (
         }
       }
     }
-  }, [manualConnections, stickyNotes, updateStickyNote]);
+    
+    // Handle AI assistant connection removal
+    if (connectionToRemove.sourceType === 'ai-assistant' && removeConnectionFromAssistant && connectionToRemove.targetType !== 'ai-assistant') {
+      removeConnectionFromAssistant(connectionToRemove.targetId, connectionToRemove.targetType);
+    } else if (connectionToRemove.targetType === 'ai-assistant' && removeConnectionFromAssistant && connectionToRemove.sourceType !== 'ai-assistant') {
+      removeConnectionFromAssistant(connectionToRemove.sourceId, connectionToRemove.sourceType);
+    }
+  }, [manualConnections, stickyNotes, updateStickyNote, removeConnectionFromAssistant]);
 
   // Check if an element is linked to any note (either automatic or manual connection)
   const isElementLinked = useCallback((elementId: string): boolean => {
@@ -153,37 +180,133 @@ export const useConnectionManager = (
     return null;
   }, [stickyNotes, manualConnections]);
 
+  // Update connection drag start to support AI assistant
   const handleConnectionDragStart = useCallback((
     elementId: string, 
-    type: 'element' | 'note', 
+    type: 'element' | 'note' | 'ai-assistant', 
     position: 'top' | 'right' | 'bottom' | 'left',
     x: number,
     y: number
   ) => {
-    setConnectionFeedback(`Dragging from ${type === 'note' ? 'note' : 'element'} (${position} edge) - drag to another connection node to create link`);
+    setConnectionFeedback(`Dragging from ${type === 'ai-assistant' ? 'AI assistant' : type === 'note' ? 'note' : 'element'} (${position} edge) - drag to another connection node to create link`);
     setIsDragging(true);
     setDragStart({ id: elementId, type, position, x, y });
     setDragPreview({ x, y });
   }, []);
 
-  // Helper function to determine if a note is a valid drop target
-  const isValidDropTarget = useCallback((noteId: string, noteType: 'element' | 'note') => {
+  // Handle connection drop
+  const handleConnectionDrop = useCallback((
+    targetId: string,
+    targetType: 'element' | 'note' | 'ai-assistant',
+    targetPosition: 'top' | 'right' | 'bottom' | 'left'
+  ) => {
+    if (!isDragging || !dragStart) return false;
+
+    // Validate the connection
+    if (!validateConnection(dragStart.id, dragStart.type, targetId, targetType)) {
+      setConnectionFeedback('Invalid connection - check connection rules');
+      setTimeout(() => setConnectionFeedback(null), 2000);
+      return false;
+    }
+
+    // Handle AI assistant connections
+    if (dragStart.type === 'ai-assistant' || targetType === 'ai-assistant') {
+      if (dragStart.type === 'ai-assistant' && addConnectionToAssistant && targetType !== 'ai-assistant') {
+        // Find the data for the target element/note
+        let targetData = null;
+        if (targetType === 'element') {
+          // Find in dropped elements (you may need to pass this data)
+          targetData = { id: targetId, type: 'element' };
+        } else if (targetType === 'note') {
+          targetData = stickyNotes.find(note => note.id === targetId);
+        }
+        if (targetData) {
+          addConnectionToAssistant(targetId, targetType, targetData);
+        }
+        
+        // Also create a manual connection for visual rendering
+        const connection: ManualConnection = {
+          id: `ai-connection-${Date.now()}`,
+          sourceId: dragStart.id,
+          sourceType: dragStart.type,
+          sourcePosition: dragStart.position,
+          targetId,
+          targetType,
+          targetPosition,
+          createdAt: Date.now()
+        };
+        handleAddManualConnection(connection);
+        
+      } else if (targetType === 'ai-assistant' && addConnectionToAssistant && dragStart.type !== 'ai-assistant') {
+        // Find the data for the source element/note
+        let sourceData = null;
+        if (dragStart.type === 'element') {
+          sourceData = { id: dragStart.id, type: 'element' };
+        } else if (dragStart.type === 'note') {
+          sourceData = stickyNotes.find(note => note.id === dragStart.id);
+        }
+        if (sourceData) {
+          addConnectionToAssistant(dragStart.id, dragStart.type, sourceData);
+        }
+        
+        // Also create a manual connection for visual rendering
+        const connection: ManualConnection = {
+          id: `ai-connection-${Date.now()}`,
+          sourceId: dragStart.id,
+          sourceType: dragStart.type,
+          sourcePosition: dragStart.position,
+          targetId,
+          targetType,
+          targetPosition,
+          createdAt: Date.now()
+        };
+        handleAddManualConnection(connection);
+      }
+      
+      setConnectionFeedback('AI assistant connection created!');
+      setTimeout(() => setConnectionFeedback(null), 2000);
+      return true;
+    }
+
+    // Handle regular manual connections
+    const connection: ManualConnection = {
+      id: `connection-${Date.now()}`,
+      sourceId: dragStart.id,
+      sourceType: dragStart.type,
+      sourcePosition: dragStart.position,
+      targetId,
+      targetType,
+      targetPosition,
+      createdAt: Date.now()
+    };
+
+    handleAddManualConnection(connection);
+    setConnectionFeedback('Connection created!');
+    setTimeout(() => setConnectionFeedback(null), 2000);
+    
+    return true;
+  }, [isDragging, dragStart, validateConnection, addConnectionToAssistant, stickyNotes, handleAddManualConnection]);
+
+  // Update drop handling
+  const handleConnectionDragEnd = useCallback(() => {
+    setIsDragging(false);
+    setDragStart(null);
+    setDragPreview(null);
+    if (connectionFeedback && !connectionFeedback.includes('created')) {
+      setConnectionFeedback(null);
+    }
+  }, [connectionFeedback]);
+
+  // Helper function to determine if a target is valid for drop
+  const isValidDropTarget = useCallback((targetId: string, targetType: 'element' | 'note' | 'ai-assistant') => {
     if (!isDragging || !dragStart) return false;
     
     // Can't drop on self
-    if (dragStart.id === noteId) return false;
+    if (dragStart.id === targetId) return false;
     
-    // Apply connection rules
-    if (dragStart.type === 'element' && noteType === 'element') return false; // Element to Element not allowed
-    
-    // Check if connection already exists
-    const connectionExists = manualConnections.some(conn => 
-      (conn.sourceId === dragStart.id && conn.targetId === noteId) ||
-      (conn.sourceId === noteId && conn.targetId === dragStart.id)
-    );
-    
-    return !connectionExists;
-  }, [isDragging, dragStart, manualConnections]);
+    // Use the validation function
+    return validateConnection(dragStart.id, dragStart.type, targetId, targetType);
+  }, [isDragging, dragStart, validateConnection]);
 
   return {
     manualConnections,
@@ -201,6 +324,8 @@ export const useConnectionManager = (
     isElementLinked,
     getLinkedElementInfo,
     handleConnectionDragStart,
+    handleConnectionDrop,
+    handleConnectionDragEnd,
     isValidDropTarget
   };
 };
