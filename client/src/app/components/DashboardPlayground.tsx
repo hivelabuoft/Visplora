@@ -73,65 +73,6 @@ export const getDashboardGridInfo = (canvasWidth: number, canvasHeight: number, 
   };
 };
 
-// Calculate all occupied cells (dashboard + sticky notes + dropped elements + AI assistant)
-export const getAllOccupiedCells = (
-  canvasHeight: number,
-  canvasWidth: number,
-  stickyNotes: any[],
-  droppedElements: any[],
-  isMoving: boolean,
-  selectedNoteId: string | null,
-  dashboardRef?: React.RefObject<HTMLDivElement | null>,
-  aiAssistant?: any
-): Set<string> => {
-  const allOccupied = new Set<string>();
-  
-  // Add dashboard cells
-  const dashboardInfo = getDashboardGridInfo(canvasWidth, canvasHeight, dashboardRef);
-  for (let row = dashboardInfo.bounds.startRow; row <= dashboardInfo.bounds.endRow; row++) {
-    for (let col = dashboardInfo.bounds.startCol; col <= dashboardInfo.bounds.endCol; col++) {
-      allOccupied.add(`${row}-${col}`);
-    }
-  }    
-  
-  // Add sticky note cells except for the currently selected note which might be moving
-  stickyNotes.forEach(note => {
-    // Skip the currently selected note if we're moving it
-    if (isMoving && note.id === selectedNoteId) {
-      return;
-    }      
-    for (let r = note.row; r < note.row + note.height; r++) {
-      for (let c = note.col; c < note.col + note.width; c++) {
-        allOccupied.add(`${r}-${c}`);
-      }
-    }
-  });
-
-  // Add AI assistant cells
-  if (aiAssistant) {
-    // Convert pixel dimensions to grid cells
-    const widthInCells = Math.ceil(aiAssistant.width / CELL_SIZE);
-    const heightInCells = Math.ceil(aiAssistant.height / CELL_SIZE);
-    
-    for (let r = aiAssistant.row; r < aiAssistant.row + heightInCells; r++) {
-      for (let c = aiAssistant.col; c < aiAssistant.col + widthInCells; c++) {
-        allOccupied.add(`${r}-${c}`);
-      }
-    }
-  }
-
-  // Add dropped element cells
-  droppedElements.forEach(element => {
-    for (let r = element.gridPosition.row; r < element.gridPosition.row + element.size.height; r++) {
-      for (let c = element.gridPosition.col; c < element.gridPosition.col + element.size.width; c++) {
-        allOccupied.add(`${r}-${c}`);
-      }
-    }
-  });    
-  
-  return allOccupied;
-};
-
 // ================================
 // MAIN DASHBOARD PLAYGROUND COMPONENT
 // ================================
@@ -147,11 +88,10 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   // Basic state
   const [isAnnotationMode, setIsAnnotationMode] = useState(false);
   const [isAIAssistantMode, setIsAIAssistantMode] = useState(false);
-  const [isAdded, setIsAdded] = useState(false);
   const [canvasHeight, setCanvasHeight] = useState(5000);
   const [showGrid, setShowGrid] = useState(false);
   const [hoveredCell, setHoveredCell] = useState<string | null>(null);
-  const [occupiedCells, setOccupiedCells] = useState<Set<string>>(new Set());
+  const [canPlaceAtHoveredCell, setCanPlaceAtHoveredCell] = useState<boolean>(true);
   const [showTips, setShowTips] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [hoveredElementId, setHoveredElementId] = useState<string | null>(null);
@@ -259,118 +199,91 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     handleDroppedElementMoveEnd
   } = useElementDragging(getDashboardGridInfoCallback, droppedElements, setDroppedElements, setConnectionFeedback);
 
-  // Get all occupied cells
-  const getAllOccupiedCellsCallback = useCallback((): Set<string> => {
-    return getAllOccupiedCells(
-      canvasHeight,
-      canvasWidth,
-      stickyNotes,
-      droppedElements,
-      isMoving,
-      selectedNoteId,
-      dashboardRef,
-      aiAssistant
-    );
-  }, [canvasHeight, stickyNotes, droppedElements, isMoving, selectedNoteId, aiAssistant]);
-
-  // Update occupied cells when dashboard or sticky notes change
+  // Reset canPlaceAtHoveredCell when not in AI assistant mode
   useEffect(() => {
-    const allOccupied = getAllOccupiedCellsCallback();
-    setOccupiedCells(allOccupied);
-  }, [getAllOccupiedCellsCallback]);
+    if (!isAIAssistantMode) {
+      setCanPlaceAtHoveredCell(true);
+    }
+  }, [isAIAssistantMode]);
 
   // Handle grid cell click for sticky note creation or AI assistant
   const handleGridCellClick = useCallback((cell: any) => {
-    if (!cell.isOccupied && (isAnnotationMode || isNoteLinkingMode || isAIAssistantMode)) {
-      
-      if (isAIAssistantMode) {
-        // Create AI assistant (fixed 500x250 pixels, roughly 10x5 cells)
-        const assistantWidthCells = Math.ceil(500 / CELL_SIZE);
-        const assistantHeightCells = Math.ceil(250 / CELL_SIZE);
-        let hasEnoughSpace = true;
-        
-        // Check if all cells for the AI assistant are available
-        for (let r = cell.row; r < cell.row + assistantHeightCells; r++) {
-          for (let c = cell.col; c < cell.col + assistantWidthCells; c++) {
-            const cellKey = `${r}-${c}`;
-            if (occupiedCells.has(cellKey)) {
-              hasEnoughSpace = false;
-              break;
-            }
-          }
-          if (!hasEnoughSpace) break;
-        }
-        
-        if (hasEnoughSpace && !hasAIAssistant()) {
-          createAIAssistant(cell.row, cell.col, CELL_SIZE);
-          setIsAIAssistantMode(false);
-        }
-        return;
+    if (isAIAssistantMode) {
+      // Create or move AI assistant (fixed 500x350 pixels) - no space checking needed
+      if (hasAIAssistant()) {
+        // Move existing AI assistant to new position
+        const newX = cell.col * CELL_SIZE;
+        const newY = cell.row * CELL_SIZE;
+        updateAIAssistant(aiAssistant!.id, {
+          row: cell.row,
+          col: cell.col,
+          x: newX,
+          y: newY
+        });
+        setIsAIAssistantMode(false);
+        setCanPlaceAtHoveredCell(true);
+        setShowGrid(false);
+      } else {
+        // Create new AI assistant
+        createAIAssistant(cell.row, cell.col, CELL_SIZE);
+        setIsAIAssistantMode(false);
+        setCanPlaceAtHoveredCell(true); // Reset the placement flag
+        // Automatically enable annotation mode so users can place notes
+        setIsAnnotationMode(true);
+        setShowGrid(true);
       }
-      
-      // Check if there's enough space for a 20x20 cell note (100x100 pixels)
+      return;
+    }
+    
+    // Allow sticky note placement when in annotation mode or note linking mode
+    if (isAnnotationMode || isNoteLinkingMode) {
       const noteWidth = 20;  // 20 cells wide (100 pixels)
       const noteHeight = 20; // 20 cells tall (100 pixels)
-      let hasEnoughSpace = true;
       
-      // Check if all cells for the 2x2 note are available
-      for (let r = cell.row; r < cell.row + noteHeight; r++) {
-        for (let c = cell.col; c < cell.col + noteWidth; c++) {
-          const cellKey = `${r}-${c}`;
-          if (occupiedCells.has(cellKey)) {
-            hasEnoughSpace = false;
-            break;
-          }
-        }
-        if (!hasEnoughSpace) break;
+      // Create note with linking information if in note linking mode
+      if (isNoteLinkingMode && linkingElementId) {
+        createStickyNote(cell.row, cell.col, cell.x, cell.y, linkingElementId);
+      } else {
+        createStickyNote(cell.row, cell.col, cell.x, cell.y);
       }
-        
-      if (hasEnoughSpace) {
-        // Create note with linking information if in note linking mode
-        if (isNoteLinkingMode && linkingElementId) {
-          createStickyNote(cell.row, cell.col, cell.x, cell.y, linkingElementId);
-        } else {
-          createStickyNote(cell.row, cell.col, cell.x, cell.y);
-        }
-        
-        // Exit the appropriate mode
-        if (isAnnotationMode) {
-          setIsAnnotationMode(false);
-        }
-        if (isNoteLinkingMode) {
-          setIsNoteLinkingMode(false);
-          setLinkingElementId(null);
-        }
-        setShowGrid(false);
+      
+      // Exit the appropriate mode
+      if (isAnnotationMode) {
+        setIsAnnotationMode(false);
+      }
+      if (isNoteLinkingMode) {
+        setIsNoteLinkingMode(false);
+        setLinkingElementId(null);
+      }
+      setShowGrid(false);
 
-        // Zoom to 110% and center on the new note
-        if (transformRef.current) {
-          // Calculate the center position of the note in canvas coordinates
-          const centerX = cell.x + (noteWidth * CELL_SIZE / 2);
-          const centerY = cell.y + (noteHeight * CELL_SIZE / 2);
-          
-          // Get current viewport dimensions and calculate scale
-          const viewportWidth = window.innerWidth;
-          const viewportHeight = window.innerHeight;
-          const scale = 1;
-          
-          // Calculate position to center the note in the viewport
-          const targetX = (viewportWidth / 2) - (centerX * scale);
-          const targetY = (viewportHeight / 2) - (centerY * scale);
-          
-          // Apply the transform with animation
-          transformRef.current.setTransform(
-            targetX, 
-            targetY, 
-            scale, 
-            1000, 
-            "easeOutCubic"
-          );
-          setZoomLevel(110);
-        }
+      // Zoom to 110% and center on the new note
+      if (transformRef.current) {
+        // Calculate the center position of the note in canvas coordinates
+        const centerX = cell.x + (noteWidth * CELL_SIZE / 2);
+        const centerY = cell.y + (noteHeight * CELL_SIZE / 2);
+        
+        // Get current viewport dimensions and calculate scale
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const scale = 1;
+        
+        // Calculate position to center the note in the viewport
+        const targetX = (viewportWidth / 2) - (centerX * scale);
+        const targetY = (viewportHeight / 2) - (centerY * scale);
+        
+        // Apply the transform with animation
+        transformRef.current.setTransform(
+          targetX, 
+          targetY, 
+          scale, 
+          1000, 
+          "easeOutCubic"
+        );
+        setZoomLevel(110);
       }
     }
-  }, [isAnnotationMode, isNoteLinkingMode, isAIAssistantMode, linkingElementId, createStickyNote, createAIAssistant, hasAIAssistant, occupiedCells, transformRef, setZoomLevel, setIsNoteLinkingMode, setLinkingElementId, setIsAIAssistantMode]);
+  }, [isAnnotationMode, isNoteLinkingMode, isAIAssistantMode, linkingElementId, createStickyNote, createAIAssistant, updateAIAssistant, hasAIAssistant, aiAssistant, transformRef, setZoomLevel, setIsNoteLinkingMode, setLinkingElementId, setIsAIAssistantMode]);
 
   // Handle drag movement
   const handleDragMove = useCallback((e: MouseEvent) => {
@@ -476,16 +389,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     }
   }, [isElementDragging, handleElementDragMove, handleElementDragEnd]);
 
-  // Additional handlers
-  const handleAddToCanvas = useCallback(() => {
-    if (onAddToCanvas) {
-      onAddToCanvas();
-      setIsAdded(true);
-    } else {
-      setIsAdded(true);
-    }
-  }, [onAddToCanvas]);
-
   const handleGoToCanvas = useCallback(() => {
     window.location.href = '/';
   }, []);
@@ -547,7 +450,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
           setShowGrid(false);        
         } else if (isAIAssistantMode) {
           setIsAIAssistantMode(false);
-          setShowGrid(false);        
+          setShowGrid(false);
+          setCanPlaceAtHoveredCell(true); // Reset the placement flag        
         } else if (selectedNoteId) {
           selectNote(null);
         }
@@ -589,6 +493,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         }
         setIsAnnotationMode(false);
         setIsAIAssistantMode(false);
+        setCanPlaceAtHoveredCell(true); // Reset the placement flag
         setIsNoteLinkingMode(false);
         setIsElementSelectionMode(false);
         setNoteToLink(null);
@@ -716,16 +621,23 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
             {/* AI Assistant Button */}
             <button
               onClick={() => {
-                if (!hasAIAssistant()) {
+                if (hasAIAssistant()) {
+                  // If AI assistant exists, activate move mode
+                  setIsAIAssistantMode(true);
+                  setShowGrid(true);
+                } else {
+                  // If no AI assistant, activate placement mode
                   setIsAIAssistantMode(!isAIAssistantMode);
                   setShowGrid(!showGrid);
                 }
               }}
-              disabled={hasAIAssistant()}
-              className={`${styles.annotationsButton} ${hasAIAssistant() ? styles.added : styles.inactive}`}
+              className={`${styles.aiAssistantButton} ${isAIAssistantMode ? styles.active : (hasAIAssistant() ? styles.added : styles.inactive)}`}
             >
               <FiCpu size={16} />
-              <span>{hasAIAssistant() ? 'AI Assistant Active' : 'Add AI Assistant'}</span>
+              <span>
+                {isAIAssistantMode ? 'Move AI Assistant' : 
+                 hasAIAssistant() ? 'Move AI Assistant' : 'Add AI Assistant'}
+              </span>
             </button>
 
             <button
@@ -778,6 +690,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                   className={`${styles.canvasBackground} ${
                     isPanning ? styles.panning : 
                     isAnnotationMode ? styles.annotationMode : 
+                    isAIAssistantMode ? (canPlaceAtHoveredCell ? styles.aiAssistantMode : styles.aiAssistantModeBlocked) :
                     styles.default
                   }`}
                   style={{
@@ -795,8 +708,14 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     cellSize={CELL_SIZE}
                     showGrid={showGrid || isResizing || isMoving}
                     dashboardBounds={dashboardGridInfo.bounds}
-                    occupiedCells={occupiedCells}
-                    onCellHover={(cell) => setHoveredCell(cell ? `Row: ${cell.row} - Col: ${cell.col}` : null)}
+                    onCellHover={(cell) => {
+                      setHoveredCell(cell ? `Row: ${cell.row} - Col: ${cell.col}` : null);
+                      
+                      // Always allow placement when not in AI assistant mode
+                      if (!isAIAssistantMode) {
+                        setCanPlaceAtHoveredCell(true);
+                      }
+                    }}
                     onCellClick={handleGridCellClick}
                     isMoving={isMoving}
                     isPanning={isPanning}
@@ -850,7 +769,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       onResizeEnd={() => setIsResizing(false)}
                       onMoveStart={() => setIsMoving(true)}
                       onMoveEnd={() => setIsMoving(false)}
-                      getOccupiedCells={getAllOccupiedCellsCallback}
                       zoomLevel={zoomLevel}
                       onConnectionDragStart={handleConnectionDragStart}
                       isDragging={isDragging}
@@ -870,7 +788,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       onResizeEnd={() => setIsResizing(false)}
                       onMoveStart={() => setIsMoving(true)}
                       onMoveEnd={() => setIsMoving(false)}
-                      getOccupiedCells={getAllOccupiedCellsCallback}
                       zoomLevel={zoomLevel}
                       onConnectionDragStart={handleConnectionDragStart}
                       onConnectionDrop={handleConnectionDrop}
@@ -954,7 +871,9 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       </div>
                       <div className="p-4 flex items-center justify-center text-center text-white">
                         <div>
-                          <div className="text-sm mb-1">Click to place AI Assistant</div>
+                          <div className="text-sm mb-1">
+                            {hasAIAssistant() ? 'Click to move AI Assistant' : 'Click to place AI Assistant'}
+                          </div>
                           {hoveredCell && (
                             <div className="text-xs text-blue-300">
                               {hoveredCell}

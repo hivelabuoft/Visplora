@@ -37,9 +37,12 @@ export const useAIAssistantManager = (dashboardTitle: string) => {
     });
   }, []);
 
-  const deleteAIAssistant = useCallback(() => {
-    setAiAssistant(null);
-  }, []);
+  const deleteAIAssistant = useCallback((assistantId?: string) => {
+    // Only delete if no assistantId is provided (delete current) or if the provided ID matches
+    if (!assistantId || (aiAssistant && aiAssistant.id === assistantId)) {
+      setAiAssistant(null);
+    }
+  }, [aiAssistant]);
 
   const addConnectionToAssistant = useCallback((elementId: string, type: 'element' | 'note' | 'ai-assistant', data: any) => {
     setAiAssistant(prev => {

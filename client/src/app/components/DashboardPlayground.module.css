@@ -199,6 +199,55 @@
   background-color: #e5e7eb;
 }
 
+/* AI Assistant Button - Dark Theme */
+.aiAssistantButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.aiAssistantButton.active {
+  background-color: #1e40af;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #1d4ed8;
+}
+
+.aiAssistantButton.active:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.aiAssistantButton.added {
+  background-color: #1f2937;
+  color: #60a5fa;
+  border: 2px solid #374151;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.aiAssistantButton.added:hover {
+  background-color: #374151;
+  color: #93c5fd;
+  border-color: #4b5563;
+}
+
+.aiAssistantButton.inactive {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 2px solid transparent;
+}
+
+.aiAssistantButton.inactive:hover {
+  background-color: #e5e7eb;
+}
+
 .notesCountBadge {
   font-size: 0.75rem;
   padding: 0.125rem 0.5rem;
@@ -295,6 +344,14 @@
 }
 
 .canvasBackground.annotationMode {
+  cursor: not-allowed;
+}
+
+.canvasBackground.aiAssistantMode {
+  cursor: crosshair;
+}
+
+.canvasBackground.aiAssistantModeBlocked {
   cursor: not-allowed;
 }
 

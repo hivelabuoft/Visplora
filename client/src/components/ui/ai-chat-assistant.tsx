@@ -489,7 +489,7 @@ ${JSON.stringify(context.hrDataSample, null, 2)}`;
           )}
         </div>
         
-        <span className="text-slate-400 text-xs pr-5">Drag to move</span>
+        <span className="text-slate-400 text-xs pr-12">Drag to move</span>
         
         <div className="flex items-center space-x-1">
           <button
@@ -499,7 +499,7 @@ ${JSON.stringify(context.hrDataSample, null, 2)}`;
             }}
             className="text-slate-400 hover:text-white p-1"
           >
-            {assistant.showContext ? <FiEyeOff size={14} /> : <FiEye size={14} />}
+            {assistant.showContext ? <FiEye size={14} /> : <FiEyeOff size={14} />}
           </button>
           
           <button

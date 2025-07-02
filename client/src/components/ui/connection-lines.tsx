@@ -424,7 +424,7 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
       style={{ 
         width: '100%', 
         height: '100%',
-        zIndex: 1, // Below notes but above dashboard
+        zIndex: 10, // Above AI assistant and notes
         overflow: 'visible'
       }}>
       <defs>

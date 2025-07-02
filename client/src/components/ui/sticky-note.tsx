@@ -72,11 +72,10 @@ interface StickyNoteProps {
   onResizeEnd?: () => void;
   onMoveStart?: (noteId: string) => void;
   onMoveEnd?: () => void;
-  getOccupiedCells?: () => Set<string>;
   zoomLevel?: number;
   onConnectionDragStart?: (
     elementId: string, 
-    type: 'element' | 'note', 
+    type: 'element' | 'note' | 'ai-assistant', 
     position: 'top' | 'right' | 'bottom' | 'left',
     x: number,
     y: number
@@ -95,7 +94,6 @@ const StickyNote: React.FC<StickyNoteProps> = ({
   onResizeEnd,
   onMoveStart,
   onMoveEnd,
-  getOccupiedCells,
   zoomLevel = 100, // Default zoom level is 100%
   onConnectionDragStart,
   isDragging: globalIsDragging = false,
@@ -210,44 +208,17 @@ const StickyNote: React.FC<StickyNoteProps> = ({
         return;
       }
       
-      // Check if the new position would conflict with occupied cells
-      if (getOccupiedCells) {
-        const occupiedCells = getOccupiedCells();
-        let hasConflict = false;
-        
-        // Check for conflicts with other cells
-        for (let r = newRow; r < newRow + note.height; r++) {
-          for (let c = newCol; c < newCol + note.width; c++) {
-            const cellKey = `${r}-${c}`;
-            if (occupiedCells.has(cellKey)) {
-              // Check if this cell belongs to this note's current position
-              const belongsToCurrentNote = 
-                r >= note.row && r < note.row + note.height &&
-                c >= note.col && c < note.col + note.width;
-              
-              if (!belongsToCurrentNote) {
-                hasConflict = true;
-                break;
-              }
-            }
-          }
-          if (hasConflict) break;
-        }
-
-        // Only update if there's no conflict
-        if (!hasConflict) {
-          const exactX = newCol * cellSize;
-          const exactY = newRow * cellSize;
-          
-          // Update note position
-          onUpdate(note.id, { 
-            row: newRow, 
-            col: newCol, 
-            x: exactX, 
-            y: exactY 
-          });
-        }
-      }
+      // No collision checking - allow free movement within bounds
+      const exactX = newCol * cellSize;
+      const exactY = newRow * cellSize;
+      
+      // Update note position
+      onUpdate(note.id, { 
+        row: newRow, 
+        col: newCol, 
+        x: exactX, 
+        y: exactY 
+      });
     }, 30); // Decrease throttle time for smoother movement
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -304,35 +275,8 @@ const StickyNote: React.FC<StickyNoteProps> = ({
       newWidth = Math.min(newWidth, MAX_SIZE);
       newHeight = Math.min(newHeight, MAX_SIZE);
 
-      // Check if the new size would conflict with occupied cells
-      if (getOccupiedCells) {
-        const occupiedCells = getOccupiedCells();
-        let hasConflict = false;
-        
-        for (let r = note.row; r < note.row + newHeight; r++) {
-          for (let c = note.col; c < note.col + newWidth; c++) {
-            const cellKey = `${r}-${c}`;
-            if (occupiedCells.has(cellKey)) {
-              // Check if this cell belongs to this note
-              const belongsToThisNote = 
-                r >= note.row && r < note.row + note.height &&
-                c >= note.col && c < note.col + note.width;
-              
-              if (!belongsToThisNote) {
-                hasConflict = true;
-                break;
-              }
-            }
-          }
-          if (hasConflict) break;
-        }
-
-        // Only update if there's a change and no conflicts
-        if (!hasConflict && (newWidth !== note.width || newHeight !== note.height)) {
-          onUpdate(note.id, { width: newWidth, height: newHeight });
-        }
-      } else if (newWidth !== note.width || newHeight !== note.height) {
-        // Only update if there's actually a change in size
+      // No collision checking - allow free resizing
+      if (newWidth !== note.width || newHeight !== note.height) {
         onUpdate(note.id, { width: newWidth, height: newHeight });
       }
     }, 30); // Decreased throttle time for smoother resizing
