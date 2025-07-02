@@ -45,9 +45,9 @@ export function LinkableCard({
   let linkNoteToElement: ((noteId: string, elementId: string) => void) | undefined;
   let isElementLinked: ((elementId: string) => boolean) | undefined;
   let setHoveredElementId: ((elementId: string | null) => void) | undefined;
-  let onConnectionDragStart: ((elementId: string, type: 'element' | 'note', position: 'top' | 'right' | 'bottom' | 'left', x: number, y: number) => void) | undefined;
+  let onConnectionDragStart: ((elementId: string, type: 'element' | 'note' | 'ai-assistant', position: 'top' | 'right' | 'bottom' | 'left', x: number, y: number) => void) | undefined;
   let isDragging = false;
-  let isValidDropTarget: ((elementId: string, type: 'element' | 'note') => boolean) | undefined;
+  let isValidDropTarget: ((elementId: string, type: 'element' | 'note' | 'ai-assistant') => boolean) | undefined;
   let onElementDragStart: ((elementId: string, elementName: string, elementType: string, x: number, y: number) => void) | undefined;
   let isElementDragging = false;
   

@@ -15,13 +15,13 @@ export interface DashboardPlaygroundContextType {
   // Manual connection drag functionality
   onConnectionDragStart?: (
     elementId: string, 
-    type: 'element' | 'note', 
+    type: 'element' | 'note' | 'ai-assistant', 
     position: 'top' | 'right' | 'bottom' | 'left',
     x: number,
     y: number
   ) => void;
   isDragging: boolean;
-  isValidDropTarget: (elementId: string, type: 'element' | 'note') => boolean;
+  isValidDropTarget: (elementId: string, type: 'element' | 'note' | 'ai-assistant') => boolean;
   // Element dragging functionality
   onElementDragStart?: (elementId: string, elementName: string, elementType: string, x: number, y: number) => void;
   isElementDragging: boolean;

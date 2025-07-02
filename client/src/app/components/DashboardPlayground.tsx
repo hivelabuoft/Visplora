@@ -395,7 +395,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
 
   // Handle mouse movement for note preview and AI assistant preview
   const handleCanvasMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if ((isAnnotationMode || isAIAssistantMode) && !isPanning && !isMoving) {
+    if ((isAnnotationMode || isAIAssistantMode || isNoteLinkingMode) && !isPanning && !isMoving) {
       // Use offsetX/offsetY which are relative to the canvas element
       const mouseX = e.nativeEvent.offsetX;
       const mouseY = e.nativeEvent.offsetY;
@@ -412,13 +412,37 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
         y: gridY
       });
     }
-  }, [isAnnotationMode, isAIAssistantMode, isPanning, isMoving]);
+  }, [isAnnotationMode, isAIAssistantMode, isNoteLinkingMode, isPanning, isMoving]);
 
   const handleCanvasClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
-      selectNote(null);
+      // Handle note creation when in note linking mode
+      if (isNoteLinkingMode) {        
+        // Use offsetX/offsetY which are relative to the canvas element and account for transforms
+        const mouseX = e.nativeEvent.offsetX;
+        const mouseY = e.nativeEvent.offsetY;
+        
+        // Snap to grid - find the top-left corner of the current grid cell
+        const col = Math.floor(mouseX / CELL_SIZE);
+        const row = Math.floor(mouseY / CELL_SIZE);
+        const gridX = col * CELL_SIZE;
+        const gridY = row * CELL_SIZE;
+                
+        // Create the note
+        const newNoteId = createStickyNote(row, col, gridX, gridY, linkingElementId || undefined);
+        
+        // Exit note linking mode
+        setIsNoteLinkingMode(false);
+        setLinkingElementId(null);
+        setShowGrid(false);
+        
+        // Select the newly created note
+        selectNote(newNoteId);
+      } else {
+        selectNote(null);
+      }
     }
-  }, [selectNote]);
+  }, [selectNote, isNoteLinkingMode, linkingElementId, createStickyNote, setIsNoteLinkingMode, setLinkingElementId, setShowGrid]);
 
   // Handle escape key to close playground or exit modes
   useEffect(() => {
@@ -818,8 +842,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                     />
                   ))}
                   
-                  {/* Note Preview - follows cursor in annotation mode */}
-                  {isAnnotationMode && !isPanning && !isMoving && (
+                  {/* Note Preview - follows cursor in annotation mode or note linking mode */}
+                  {(isAnnotationMode || isNoteLinkingMode) && !isPanning && !isMoving && (
                     <div
                       className={styles.notePreview}
                       style={{
@@ -833,13 +857,13 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       <div className={styles.notePreviewContent}>
                         <div className={styles.notePreviewHeader}>
                           <div className={styles.notePreviewTitle}>
-                            📝 New Note
+                            📝 {isNoteLinkingMode && linkingElementId ? 'Linked Note' : 'New Note'}
                           </div>
                           <div className={styles.notePreviewDot}></div>
                         </div>
                         <div className={styles.notePreviewBody}>
                           <div className={styles.notePreviewText}>
-                            Click to place
+                            {isNoteLinkingMode && linkingElementId ? 'Click to link note to element' : 'Click to place'}
                           </div>
                           {hoveredCell && (
                             <div className={styles.notePreviewPosition}>
