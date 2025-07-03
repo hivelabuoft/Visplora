@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { FiX, FiSend, FiCpu, FiMove, FiDatabase, FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiX, FiSend, FiCpu, FiDatabase, FiEye, FiEyeOff, FiZap, FiRefreshCw } from 'react-icons/fi';
 import { VegaLite } from 'react-vega';
 import { ConnectionNodes } from './connection-nodes';
 
@@ -11,8 +11,8 @@ export interface AIAssistantData {
   col: number;
   x: number;
   y: number;
-  width: number; // width in pixels
-  height: number; // height in pixels
+  width: number;
+  height: number;
   createdAt: number;
   connectedElements: Array<{
     id: string;
@@ -86,6 +86,9 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
   const [startSize, setStartSize] = useState({ width: 0, height: 0 });
   const [userInput, setUserInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [suggestedPrompts, setSuggestedPrompts] = useState<string[]>([]);
+  const [isGeneratingSuggestions, setIsGeneratingSuggestions] = useState(false);
   const [tempPosition, setTempPosition] = useState({ x: assistant.x, y: assistant.y });
   const [tempSize, setTempSize] = useState({ width: assistant.width, height: assistant.height });
   const [isHovered, setIsHovered] = useState(false);
@@ -145,6 +148,118 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
       }
     });
     return types;
+  };
+
+  // Generate AI-powered suggested prompts based on dataset fields and context
+  const generateSuggestedPrompts = useCallback(async () => {
+    if (!hrData.length) return [];
+
+    setIsGeneratingSuggestions(true);
+    
+    try {
+      const context = generateContext();
+      
+      // Create a prompt for the AI to generate suggestions
+      const suggestionPrompt = `Based on the following HR dataset and context, generate 8 diverse and insightful data visualization prompts that would be useful for exploring this data. 
+
+Dataset Information:
+- Total Records: ${context.totalRecords}
+- Available Columns: ${context.availableColumns.join(', ')}
+- Column Types: ${Object.entries(context.columnTypes).map(([col, type]) => `${col} (${type})`).join(', ')}
+- Connected Elements: ${context.connectedElements}
+
+Please generate exactly 8 short, actionable prompts (1-2 sentences each) that:
+1. Explore different aspects of the HR data
+2. Use various chart types (bar, pie, scatter, histogram, etc.)
+3. Focus on business insights like attrition, salary, performance, demographics
+4. Include both simple and advanced analysis requests
+5. Are specific to the available columns
+
+Return ONLY the prompts, one per line, without numbering or formatting.`;
+
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: suggestionPrompt,
+          systemPrompt: 'You are a data visualization expert. Generate clear, actionable prompts for exploring HR data.',
+          context: {
+            ...context,
+            panelWidth: actualWidth
+          }
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const prompts = data.content
+          .split('\n')
+          .map((line: string) => line.trim())
+          .filter((line: string) => line.length > 0 && !line.match(/^\d+\./)) // Remove empty lines and numbered items
+          .slice(0, 8); // Ensure we only get 8 prompts
+        
+        return prompts;
+      } else {
+        // Fallback to static prompts if AI fails
+        return getFallbackPrompts(context);
+      }
+    } catch (error) {
+      console.error('Error generating AI suggestions:', error);
+      // Fallback to static prompts if AI fails
+      const context = generateContext();
+      return getFallbackPrompts(context);
+    } finally {
+      setIsGeneratingSuggestions(false);
+    }
+  }, [hrData, generateContext, actualWidth]);
+
+  // Fallback static prompts in case AI generation fails
+  const getFallbackPrompts = (context: any) => {
+    const quantitativeFields = Object.entries(context.columnTypes)
+      .filter(([_, type]) => type === 'quantitative')
+      .map(([field, _]) => field);
+    const nominalFields = Object.entries(context.columnTypes)
+      .filter(([_, type]) => type === 'nominal')
+      .map(([field, _]) => field);
+
+    return [
+      `Show me the distribution of ${quantitativeFields[0] || 'Age'}`,
+      `Create a pie chart of ${nominalFields[0] || 'Department'}`,
+      `Show the relationship between ${quantitativeFields[0] || 'Age'} and ${quantitativeFields[1] || 'MonthlyIncome'}`,
+      'Show attrition rates by department',
+      `Create a histogram of ${quantitativeFields[1] || 'MonthlyIncome'}`,
+      `Compare ${quantitativeFields[2] || 'YearsAtCompany'} across different ${nominalFields[0] || 'Department'}`,
+      'Create a chart showing factors affecting employee attrition',
+      'Show trends in job satisfaction over years at company'
+    ];
+  };
+
+  // Handle suggested prompt selection
+  const handleSuggestionClick = (suggestion: string) => {
+    setUserInput(suggestion);
+    setShowSuggestions(false);
+  };
+
+  // Toggle suggestions panel
+  const toggleSuggestions = async () => {
+    if (!showSuggestions) {
+      setShowSuggestions(true);
+      // Only generate prompts if we don't have any existing ones
+      if (suggestedPrompts.length === 0) {
+        const prompts = await generateSuggestedPrompts();
+        setSuggestedPrompts(prompts);
+      }
+    } else {
+      setShowSuggestions(false);
+    }
+  };
+
+  // Regenerate suggestions
+  const regenerateSuggestions = async () => {
+    const prompts = await generateSuggestedPrompts();
+    setSuggestedPrompts(prompts);
   };
 
   // Handle OpenAI API call
@@ -377,7 +492,7 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
     }
     
     if (resizeMode === 'corner' || resizeMode === 'bottom') {
-      newHeight = Math.max(200, startSize.height + scaledDeltaY); // Minimum 200px height
+      newHeight = Math.max(300, startSize.height + scaledDeltaY); // Minimum 300px height
     }
     
     setTempSize({ width: newWidth, height: newHeight });
@@ -493,7 +608,7 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
             }}
             className="text-slate-400 hover:text-white p-1"
           >
-            {assistant.showContext ? <FiEye size={14} /> : <FiEyeOff size={14} />}
+            {assistant.showContext ? <FiEye size={16} /> : <FiEyeOff size={16} />}
           </button>
           
           <button
@@ -503,13 +618,13 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
             }}
             className="text-slate-400 hover:text-red-400 p-1"
           >
-            <FiX size={14} />
+            <FiX size={16} />
           </button>
         </div>
       </div>
       
       {/* Content Area - positioned below header */}
-      <div className='absolute left-0 right-0' style={{ top: '52px', bottom: '0px' }}>
+      <div className='absolute left-0 right-0' style={{ top: '40px', bottom: '0px' }}>
         {/* Context Panel */}
         {assistant.showContext && (
           <div 
@@ -549,7 +664,7 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
           className="absolute left-0 right-0 overflow-y-auto px-3 pt-3 pb-2 space-y-2"
           style={{
             top: assistant.showContext ? '80px' : '0px',
-            bottom: '70px', // Reserve 70px for input area
+            bottom: showSuggestions ? '220px' : '70px', // Adjust for dynamic input area height
           }}
         >
           {assistant.chatHistory.length === 0 && (
@@ -594,8 +709,8 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
 
         {/* Input Area */}
         <div 
-          className="absolute bottom-0 left-0 right-0 border-t border-slate-600 p-3 bg-slate-800" 
-          style={{ height: '62px' }}
+          className="absolute bottom-0 left-0 right-0 border-t border-slate-600 bg-slate-800"
+          style={{ height: showSuggestions ? '222px' : '62px' }}
           onMouseDown={(e) => {
             // Prevent the move handler from interfering with input interaction
             e.stopPropagation();
@@ -605,52 +720,115 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
             e.stopPropagation();
           }}
         >
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              sendMessage();
-            }}
-            className="flex space-x-2"
-          >
-            <input
-              type="text"
-              value={userInput}
-              onChange={(e) => {
-                e.stopPropagation();
-                setUserInput(e.target.value);
-              }}
-              onKeyDown={(e) => {
-                e.stopPropagation();
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  sendMessage();
-                }
-              }}
-              onFocus={(e) => {
-                e.stopPropagation();
-              }}
-              onBlur={(e) => {
-                e.stopPropagation();
-              }}
-              placeholder="Ask me to create a visualization..."
-              className="flex-1 bg-slate-700 text-white text-sm px-3 py-2 rounded border border-slate-600 focus:border-blue-500 focus:outline-none"
-              disabled={isLoading}
-              autoComplete="off"
-            />
-            <button
-              type="submit"
-              onClick={(e) => {
-                e.stopPropagation();
+          {/* Suggestions Panel */}
+          {showSuggestions && (
+            <div className="h-40 overflow-y-auto px-3 py-2 border-b border-slate-600">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center space-x-2">
+                  <FiZap className="text-yellow-400" size={14} />
+                  <span className="text-slate-300 text-xs font-medium">
+                    {isGeneratingSuggestions ? 'Generating AI Suggestions...' : 'AI-Generated Prompts'}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-1.5">
+                  {!isGeneratingSuggestions && (
+                    <button
+                      onClick={regenerateSuggestions}
+                      className="text-slate-400 hover:text-yellow-400 p-1 rounded transition-colors"
+                      title="Regenerate suggestions"
+                    >
+                      <FiRefreshCw size={12} />
+                    </button>
+                  )}
+                  <button
+                    onClick={toggleSuggestions}
+                    className="text-slate-400 hover:text-red-400 text-xs"
+                  >
+                    <FiX size={14} />
+                  </button>
+                </div>
+              </div>
+              
+              {isGeneratingSuggestions ? (
+                <div className="flex items-center justify-center h-24">
+                  <div className="flex items-center space-x-2 text-slate-400">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-yellow-400"></div>
+                    <span className="text-xs">Generating personalized suggestions...</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-1">
+                  {suggestedPrompts.map((prompt, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleSuggestionClick(prompt)}
+                      className="text-left text-xs p-2 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 hover:text-white transition-colors"
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Input Form */}
+          <div className={`p-3`}>
+            <form
+              onSubmit={(e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 sendMessage();
               }}
-              disabled={isLoading || !userInput.trim()}
-              className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white px-4 py-2 rounded transition-colors flex items-center justify-center min-w-[40px]"
+              className="flex space-x-2"
             >
-              <FiSend size={14} />
-            </button>
-          </form>
+              <button
+                type="button"
+                onClick={toggleSuggestions}
+                className="bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-yellow-400 px-3 py-2 rounded transition-colors flex items-center justify-center"
+                title="Show suggested prompts"
+              >
+                <FiZap size={14} />
+              </button>
+              <input
+                type="text"
+                value={userInput}
+                onChange={(e) => {
+                  e.stopPropagation();
+                  setUserInput(e.target.value);
+                }}
+                onKeyDown={(e) => {
+                  e.stopPropagation();
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                  }
+                }}
+                onFocus={(e) => {
+                  e.stopPropagation();
+                }}
+                onBlur={(e) => {
+                  e.stopPropagation();
+                }}
+                placeholder="Ask me to create a visualization..."
+                className="flex-1 bg-slate-700 text-white text-sm px-3 py-2 rounded border border-slate-600 focus:border-blue-500 focus:outline-none"
+                disabled={isLoading}
+                autoComplete="off"
+              />
+              <button
+                type="submit"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  sendMessage();
+                }}
+                disabled={isLoading || !userInput.trim()}
+                className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white px-4 py-2 rounded transition-colors flex items-center justify-center min-w-[40px]"
+              >
+                <FiSend size={14} />
+              </button>
+            </form>
+          </div>
         </div>
       </div>
       {/* Resize handles */}
