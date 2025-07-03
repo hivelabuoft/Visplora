@@ -82,7 +82,6 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   isActive,
   dashboardTitle = "Dashboard",
   dashboardType = "default",
-  onAddToCanvas,
   hrData = [] // Default to empty array if no data provided
 }) => {
   // Basic state

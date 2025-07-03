@@ -5,34 +5,6 @@ import { FiX, FiSend, FiCpu, FiMove, FiDatabase, FiEye, FiEyeOff } from 'react-i
 import { VegaLite } from 'react-vega';
 import { ConnectionNodes } from './connection-nodes';
 
-// Throttle function to prevent too many updates
-const throttle = (func: Function, delay: number) => {
-  let lastCall = 0;
-  let lastArgs: any[] | null = null;
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
-  return function(...args: any[]) {
-    const now = Date.now();
-    lastArgs = args;
-    
-    if (now - lastCall >= delay) {
-      lastCall = now;
-      return func(...args);
-    }
-    
-    if (timeoutId === null) {
-      timeoutId = setTimeout(() => {
-        if (lastArgs) {
-          lastCall = Date.now();
-          func(...lastArgs);
-        }
-        timeoutId = null;
-        lastArgs = null;
-      }, delay - (now - lastCall));
-    }
-  };
-};
-
 export interface AIAssistantData {
   id: string;
   row: number;
@@ -136,9 +108,10 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
   const generateContext = useCallback(() => {
     const context = {
       connectedElements: assistant.connectedElements.length,
-      hrDataSample: hrData.slice(0, 3), // Show sample of HR data
+      hrDataSample: hrData,
       availableColumns: hrData.length > 0 ? Object.keys(hrData[0]) : [],
       totalRecords: hrData.length,
+      columnTypes: hrData.length > 0 ? getColumnTypes(hrData[0]) : {},
       connectedData: assistant.connectedElements.map(element => {
         if (element.type === 'element') {
           const droppedElement = droppedElements.find(el => el.id === element.id);
@@ -159,6 +132,20 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
     };
     return context;
   }, [assistant.connectedElements, hrData, droppedElements, stickyNotes]);
+
+  // Helper function to determine column types
+  const getColumnTypes = (sampleRow: any) => {
+    const types: { [key: string]: string } = {};
+    Object.keys(sampleRow).forEach(key => {
+      const value = sampleRow[key];
+      if (!isNaN(Number(value)) && value !== '') {
+        types[key] = 'quantitative';
+      } else {
+        types[key] = 'nominal';
+      }
+    });
+    return types;
+  };
 
   // Handle OpenAI API call
   const sendMessage = async () => {
@@ -182,11 +169,18 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
     try {
       const context = generateContext();
       
+      // Add current panel width to context for truly responsive chart sizing
+      const contextWithPanelWidth = {
+        ...context,
+        panelWidth: actualWidth // Use current actual width of the panel
+      };
+      
       // Prepare system prompt with context
       const systemPrompt = `You are an AI assistant helping with data visualization using Vega-Lite. 
       
 Available dataset: HR Employee data with ${context.totalRecords} records
 Available columns: ${context.availableColumns.join(', ')}
+Current panel width: ${actualWidth}px
 
 Connected elements: ${context.connectedData.map(el => 
   el.type === 'visualization' ? `${el.name} (${el.elementType})` : `Note: ${el.content}`
@@ -194,20 +188,51 @@ Connected elements: ${context.connectedData.map(el =>
 
 When asked to create charts, respond with valid Vega-Lite JSON specifications using the HR dataset.
 Always ensure the chart specifications use only the available columns.
+The chart will be sized based on the panel width of ${actualWidth}px.
 
 Sample data structure:
-${JSON.stringify(context.hrDataSample, null, 2)}`;
+${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
 
-      // Mock OpenAI API call - Replace with actual API call
-      const response = await mockOpenAICall(systemPrompt, message, context);
+      // Call OpenAI API
+      console.log('Calling /api/chat');
+      console.log('Request payload:', { message, systemPrompt, context: contextWithPanelWidth });
+      
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message,
+          systemPrompt,
+          context: contextWithPanelWidth
+        }),
+      });
+
+      console.log('Response received:', response.status, response.statusText);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('API response error:', {
+          status: response.status,
+          statusText: response.statusText,
+          errorData
+        });
+        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Received data from API:', data);
       
       const assistantMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant' as const,
-        content: response.content,
+        content: data.content,
         timestamp: Date.now(),
-        vegaSpec: response.vegaSpec
+        vegaSpec: data.vegaSpec
       };
+
+      console.log('Assistant message with vegaSpec:', assistantMessage.vegaSpec);
 
       const finalHistory = [...updatedHistory, assistantMessage];
       onUpdate(assistant.id, { chatHistory: finalHistory });
@@ -226,37 +251,6 @@ ${JSON.stringify(context.hrDataSample, null, 2)}`;
     } finally {
       setIsLoading(false);
     }
-  };
-
-  // Mock OpenAI API call - Replace with actual implementation
-  const mockOpenAICall = async (systemPrompt: string, userMessage: string, context: any) => {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Simple response generation based on user input
-    if (userMessage.toLowerCase().includes('chart') || userMessage.toLowerCase().includes('visualization')) {
-      const vegaSpec = {
-        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-        "data": { "values": context.hrDataSample },
-        "mark": "bar",
-        "encoding": {
-          "x": { "field": "Department", "type": "nominal" },
-          "y": { "aggregate": "count", "type": "quantitative" }
-        },
-        "width": 300,
-        "height": 200
-      };
-
-      return {
-        content: "I've created a simple bar chart showing employee count by department. This chart uses the HR dataset available in your workspace.",
-        vegaSpec: vegaSpec
-      };
-    }
-
-    return {
-      content: `I can help you with data visualization using the HR dataset (${context.totalRecords} records). You can ask me to create charts or analyze the connected elements: ${context.connectedData.map((el: any) => el.type === 'visualization' ? el.name : 'note').join(', ')}.`,
-      vegaSpec: null
-    };
   };
 
   // Movement handlers
@@ -552,37 +546,33 @@ ${JSON.stringify(context.hrDataSample, null, 2)}`;
         {/* Chat Area */}
         <div 
           ref={chatContainerRef}
-          className="absolute left-0 right-0 overflow-y-auto px-3 pt-3 pb-2 space-y-2 scrollbar-none"
+          className="absolute left-0 right-0 overflow-y-auto px-3 pt-3 pb-2 space-y-2"
           style={{
             top: assistant.showContext ? '80px' : '0px',
             bottom: '70px', // Reserve 70px for input area
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none'
           }}
         >
-          <style jsx>{`
-            .scrollbar-none::-webkit-scrollbar {
-              display: none;
-            }
-          `}</style>
           {assistant.chatHistory.length === 0 && (
             <div className="text-center text-slate-400 text-sm py-6">
               <FiCpu size={24} className="mx-auto mb-2" />
-              <div>Hi! I'm your AI assistant.</div>
-              <div className="text-xs mt-1">Ask me to create visualizations or analyze your data!</div>
+              <div className="font-medium mb-1">Hi! I'm your AI visualization assistant.</div>
+              <div className="text-xs mt-1 space-y-1">
+                <div>Ask me to create anything!</div>
+                <div className="text-slate-500">Try: "Show me attrition by department" or "Create a salary distribution chart"</div>
+              </div>
             </div>
           )}
           
           {assistant.chatHistory.map((message) => (
             <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[85%] p-2 rounded-lg text-sm ${
+              <div className={`max-w-[85%] p-2 rounded-lg text-sm break-words ${
                 message.role === 'user' 
                   ? 'bg-blue-600 text-white' 
                   : 'bg-slate-700 text-slate-100'
-              }`}>
-                <div>{message.content}</div>
+              }`} style={{ wordWrap: 'break-word', overflowWrap: 'break-word', hyphens: 'auto' }}>
+                <div className="whitespace-pre-wrap">{message.content}</div>
                 {message.vegaSpec && (
-                  <div className="mt-2 bg-white rounded p-2">
+                  <div className="mt-2 bg-white rounded p-2 overflow-hidden" style={{ maxWidth: '100%' }}>
                     <VegaLite spec={message.vegaSpec} />
                   </div>
                 )}
@@ -603,25 +593,64 @@ ${JSON.stringify(context.hrDataSample, null, 2)}`;
         </div>
 
         {/* Input Area */}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-slate-600 p-3 bg-slate-800" style={{ height: '62px' }}>
-          <div className="flex space-x-2">
+        <div 
+          className="absolute bottom-0 left-0 right-0 border-t border-slate-600 p-3 bg-slate-800" 
+          style={{ height: '62px' }}
+          onMouseDown={(e) => {
+            // Prevent the move handler from interfering with input interaction
+            e.stopPropagation();
+          }}
+          onClick={(e) => {
+            // Prevent the move handler from interfering with input interaction
+            e.stopPropagation();
+          }}
+        >
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              sendMessage();
+            }}
+            className="flex space-x-2"
+          >
             <input
               type="text"
               value={userInput}
-              onChange={(e) => setUserInput(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+              onChange={(e) => {
+                e.stopPropagation();
+                setUserInput(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                e.stopPropagation();
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  sendMessage();
+                }
+              }}
+              onFocus={(e) => {
+                e.stopPropagation();
+              }}
+              onBlur={(e) => {
+                e.stopPropagation();
+              }}
               placeholder="Ask me to create a visualization..."
               className="flex-1 bg-slate-700 text-white text-sm px-3 py-2 rounded border border-slate-600 focus:border-blue-500 focus:outline-none"
               disabled={isLoading}
+              autoComplete="off"
             />
             <button
-              onClick={sendMessage}
+              type="submit"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                sendMessage();
+              }}
               disabled={isLoading || !userInput.trim()}
               className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white px-4 py-2 rounded transition-colors flex items-center justify-center min-w-[40px]"
             >
               <FiSend size={14} />
             </button>
-          </div>
+          </form>
         </div>
       </div>
       {/* Resize handles */}
