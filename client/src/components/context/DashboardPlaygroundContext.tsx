@@ -56,6 +56,7 @@ export interface DroppedElement {
   position: { x: number; y: number };
   gridPosition: { row: number; col: number };
   size: { width: number; height: number };
+  vegaSpec?: any; // Optional vega spec for AI-generated charts
 }
 
 export interface DragState {

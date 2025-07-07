@@ -198,6 +198,55 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
     handleDroppedElementMoveEnd
   } = useElementDragging(getDashboardGridInfoCallback, droppedElements, setDroppedElements, setConnectionFeedback);
 
+  // Function to create dropped element from AI response
+  const handleCreateElementFromAI = useCallback((elementData: {
+    elementName: string;
+    elementType: string;
+    vegaSpec: any;
+    description: string;
+  }) => {
+    const dashboardInfo = getDashboardGridInfoCallback();
+    
+    // Create element dimensions
+    const elementWidth = 100; // Grid cells wide
+    const elementHeight = 100; // Grid cells high
+    
+    // Calculate position to the right of the dashboard with some spacing
+    const spacing = 20; // Grid cells spacing from dashboard
+    const col = dashboardInfo.bounds.endCol + spacing;
+    const row = dashboardInfo.bounds.startRow + (droppedElements.length * (elementHeight + 10)); // Stack vertically
+    
+    const gridX = col * CELL_SIZE;
+    const gridY = row * CELL_SIZE;
+    
+    const newElement: DroppedElementType = {
+      id: `ai-chart-${Date.now()}`,
+      elementId: `ai-generated-${Date.now()}`, // Unique element ID for AI charts
+      elementName: elementData.elementName,
+      elementType: elementData.elementType,
+      position: { x: gridX, y: gridY },
+      gridPosition: { row, col },
+      size: { width: elementWidth, height: elementHeight },
+      vegaSpec: elementData.vegaSpec // Store the vega spec directly in the element
+    };
+    
+    setDroppedElements(prev => [...prev, newElement]);
+    setConnectionFeedback(`✓ "${elementData.elementName}" converted to movable element`);
+    setTimeout(() => setConnectionFeedback(null), 3000);
+  }, [getDashboardGridInfoCallback, droppedElements.length, setDroppedElements, setConnectionFeedback]);
+
+  // Function to handle dropped element resize
+  const handleDroppedElementResize = useCallback((
+    elementId: string,
+    newSize: { width: number; height: number }
+  ) => {
+    setDroppedElements(prev => prev.map(element => 
+      element.id === elementId 
+        ? { ...element, size: newSize }
+        : element
+    ));
+  }, [setDroppedElements]);
+
   // Reset canPlaceAtHoveredCell when not in AI assistant mode
   useEffect(() => {
     if (!isAIAssistantMode) {
@@ -820,6 +869,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       hrData={hrData}
                       droppedElements={droppedElements}
                       stickyNotes={stickyNotes}
+                      onCreateElement={handleCreateElementFromAI}
                     />
                   )}
                   
@@ -833,8 +883,11 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       zoomLevel={zoomLevel}
                       onRemove={(id) => setDroppedElements(prev => prev.filter(el => el.id !== id))}
                       onMove={handleDroppedElementMove}
+                      onResize={handleDroppedElementResize}
                       onMoveStart={handleDroppedElementMoveStart}
                       onMoveEnd={handleDroppedElementMoveEnd}
+                      onResizeStart={() => setIsResizing(true)}
+                      onResizeEnd={() => setIsResizing(false)}
                       onConnectionDragStart={handleConnectionDragStart}
                       isDragging={isDragging}
                       isDragTarget={isValidDropTargetForConnections(element.id, 'element')}

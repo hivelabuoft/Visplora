@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { FiX, FiSend, FiCpu, FiDatabase, FiEye, FiEyeOff, FiZap, FiRefreshCw } from 'react-icons/fi';
+import { FiX, FiSend, FiCpu, FiDatabase, FiEye, FiEyeOff, FiZap, FiRefreshCw, FiExternalLink } from 'react-icons/fi';
 import { VegaLite } from 'react-vega';
 import { ConnectionNodes } from './connection-nodes';
 
@@ -56,6 +56,12 @@ interface AIAssistantProps {
   hrData?: any[];
   droppedElements?: any[];
   stickyNotes?: any[];
+  onCreateElement?: (elementData: {
+    elementName: string;
+    elementType: string;
+    vegaSpec: any;
+    description: string;
+  }) => void;
 }
 
 const AIAssistant: React.FC<AIAssistantProps> = ({
@@ -78,7 +84,8 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
   isDragTarget = false,
   hrData = [],
   droppedElements = [],
-  stickyNotes = []
+  stickyNotes = [],
+  onCreateElement
 }) => {
   const [isMoving, setIsMoving] = useState(false);
   const [resizeMode, setResizeMode] = useState<'none' | 'corner' | 'right' | 'bottom'>('none');
@@ -261,6 +268,72 @@ Return ONLY the prompts, one per line, without numbering or formatting.`;
     const prompts = await generateSuggestedPrompts();
     setSuggestedPrompts(prompts);
   };
+
+  // Convert AI response to movable element
+  const convertToElement = useCallback((message: any) => {
+    if (!message.vegaSpec || !onCreateElement) return;
+
+    // Extract chart title from content or generate one
+    let chartTitle = 'AI Generated Chart';
+    const contentLines = message.content.split('\n');
+    for (const line of contentLines) {
+      if (line.includes('title') || line.includes('Title') || line.includes('chart') || line.includes('Chart')) {
+        chartTitle = line.replace(/[#*\-\s]+/g, ' ').trim();
+        if (chartTitle.length > 50) {
+          chartTitle = chartTitle.substring(0, 50) + '...';
+        }
+        break;
+      }
+    }
+
+    // If no title found in content, try to extract from vega spec
+    if (chartTitle === 'AI Generated Chart' && message.vegaSpec.title) {
+      chartTitle = typeof message.vegaSpec.title === 'string' 
+        ? message.vegaSpec.title 
+        : message.vegaSpec.title.text || 'AI Generated Chart';
+    }
+
+    // Determine chart type from vega spec
+    let chartType = 'Chart';
+    if (message.vegaSpec.mark) {
+      const mark = typeof message.vegaSpec.mark === 'string' 
+        ? message.vegaSpec.mark 
+        : message.vegaSpec.mark.type;
+      
+      switch (mark) {
+        case 'bar':
+          chartType = 'Bar Chart';
+          break;
+        case 'line':
+          chartType = 'Line Chart';
+          break;
+        case 'point':
+        case 'circle':
+          chartType = 'Scatter Plot';
+          break;
+        case 'arc':
+          chartType = 'Pie Chart';
+          break;
+        case 'rect':
+          chartType = 'Heatmap';
+          break;
+        case 'area':
+          chartType = 'Area Chart';
+          break;
+        default:
+          chartType = 'Chart';
+      }
+    }
+
+    const elementData = {
+      elementName: chartTitle,
+      elementType: `AI ${chartType}`,
+      vegaSpec: message.vegaSpec,
+      description: message.content.substring(0, 200) + (message.content.length > 200 ? '...' : '')
+    };
+
+    onCreateElement(elementData);
+  }, [onCreateElement]);
 
   // Handle OpenAI API call
   const sendMessage = async () => {
@@ -687,8 +760,23 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
               }`} style={{ wordWrap: 'break-word', overflowWrap: 'break-word', hyphens: 'auto' }}>
                 <div className="whitespace-pre-wrap">{message.content}</div>
                 {message.vegaSpec && (
-                  <div className="mt-2 bg-white rounded p-2 overflow-hidden" style={{ maxWidth: '100%' }}>
-                    <VegaLite spec={message.vegaSpec} />
+                  <div className="mt-2">
+                    <div className="bg-white rounded p-2 overflow-hidden" style={{ maxWidth: '100%' }}>
+                      <VegaLite spec={message.vegaSpec} />
+                    </div>
+                    {/* Convert to Element Button */}
+                    {onCreateElement && (
+                      <div className="mt-1">
+                        <button
+                          onClick={() => convertToElement(message)}
+                          className="flex items-center gap-1 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded transition-colors"
+                          title="Convert this chart to a movable element"
+                        >
+                          <FiExternalLink size={12} />
+                          Convert to Element
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

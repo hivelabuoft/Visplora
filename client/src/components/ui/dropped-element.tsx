@@ -14,12 +14,16 @@ interface DroppedElementProps {
     position: { x: number; y: number };
     gridPosition: { row: number; col: number };
     size: { width: number; height: number };
+    vegaSpec?: any; // Optional vega spec for AI-generated charts
   };
   cellSize: number;
   onRemove: (id: string) => void;
   onMove?: (id: string, newPosition: { x: number; y: number }, newGridPosition: { row: number; col: number }) => void;
+  onResize?: (id: string, newSize: { width: number; height: number }) => void;
   onMoveStart?: () => void;
   onMoveEnd?: () => void;
+  onResizeStart?: () => void;
+  onResizeEnd?: () => void;
   hrData?: HRData[]; // Add HR data prop
   zoomLevel?: number; // Add zoom level prop for zoom-aware movement
   onConnectionDragStart?: (elementId: string, type: 'element' | 'note' | 'ai-assistant', position: 'top' | 'right' | 'bottom' | 'left', x: number, y: number) => void;
@@ -31,9 +35,12 @@ const DroppedElement: React.FC<DroppedElementProps> = ({
   element, 
   cellSize, 
   onRemove, 
-  onMove, 
+  onMove,
+  onResize,
   onMoveStart, 
-  onMoveEnd, 
+  onMoveEnd,
+  onResizeStart,
+  onResizeEnd,
   hrData = [],
   zoomLevel = 100,
   onConnectionDragStart,
@@ -41,8 +48,12 @@ const DroppedElement: React.FC<DroppedElementProps> = ({
   isDragTarget = false
 }) => {
   const [isMoving, setIsMoving] = useState(false);
+  const [isResizing, setIsResizing] = useState(false);
+  const [resizeMode, setResizeMode] = useState<'none' | 'corner' | 'right' | 'bottom'>('none');
   const [moveStartPos, setMoveStartPos] = useState({ x: 0, y: 0 });
+  const [startSize, setStartSize] = useState({ width: 0, height: 0 });
   const [tempPosition, setTempPosition] = useState(element.position);
+  const [tempSize, setTempSize] = useState(element.size);
 
   const handleRemove = () => {
     onRemove(element.id);
@@ -146,9 +157,97 @@ const DroppedElement: React.FC<DroppedElementProps> = ({
     }
   }, [isMoving, handleMoveMove, handleMoveEnd]);
 
+  // Resize handlers
+  const handleResizeStart = useCallback((e: React.MouseEvent, mode: 'corner' | 'right' | 'bottom') => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    setIsResizing(true);
+    setResizeMode(mode);
+    setMoveStartPos({ x: e.clientX, y: e.clientY });
+    setStartSize({ width: element.size.width, height: element.size.height });
+    setTempSize(element.size);
+    
+    if (onResizeStart) {
+      onResizeStart();
+    }
+  }, [element.size, onResizeStart]);
+
+  const handleResize = useCallback((e: MouseEvent) => {
+    if (resizeMode === 'none' || !isResizing) return;
+    
+    const deltaX = e.clientX - moveStartPos.x;
+    const deltaY = e.clientY - moveStartPos.y;
+    const scale = zoomLevel / 100;
+    
+    const scaledDeltaX = deltaX / scale;
+    const scaledDeltaY = deltaY / scale;
+    
+    let newWidth = startSize.width;
+    let newHeight = startSize.height;
+    
+    if (resizeMode === 'corner' || resizeMode === 'right') {
+      newWidth = Math.max(40, startSize.width + Math.floor(scaledDeltaX / cellSize)); // Minimum 40 grid cells width
+    }
+    
+    if (resizeMode === 'corner' || resizeMode === 'bottom') {
+      newHeight = Math.max(30, startSize.height + Math.floor(scaledDeltaY / cellSize)); // Minimum 30 grid cells height
+    }
+    
+    setTempSize({ width: newWidth, height: newHeight });
+  }, [resizeMode, isResizing, moveStartPos, startSize, zoomLevel, cellSize]);
+
+  const handleResizeEnd = useCallback(() => {
+    if (resizeMode === 'none' || !isResizing) return;
+    
+    setIsResizing(false);
+    setResizeMode('none');
+    
+    if (onResize) {
+      onResize(element.id, tempSize);
+    }
+    
+    if (onResizeEnd) {
+      onResizeEnd();
+    }
+  }, [resizeMode, isResizing, onResize, onResizeEnd, element.id, tempSize]);
+
+  // Set up mouse event listeners for resizing
+  React.useEffect(() => {
+    if (isResizing) {
+      document.addEventListener('mousemove', handleResize);
+      document.addEventListener('mouseup', handleResizeEnd);
+      
+      return () => {
+        document.removeEventListener('mousemove', handleResize);
+        document.removeEventListener('mouseup', handleResizeEnd);
+      };
+    }
+  }, [isResizing, handleResize, handleResizeEnd]);
+
   const renderElementContent = () => {    
     // Use real HR data if available, otherwise fall back to sample data for development
     const dataToUse = hrData.length > 0 ? hrData : [];
+    
+    // If this is an AI-generated chart with vega spec, render it directly
+    if (element.vegaSpec) {
+      const chartSpec = {
+        ...element.vegaSpec,
+        width: Math.max(350, (tempSize.width * cellSize) - 40),
+        height: Math.max(250, (tempSize.height * cellSize) - 80),
+        // Ensure data is present - use HR data if chart uses it
+        data: element.vegaSpec.data || { values: dataToUse }
+      };
+      
+      return (
+        <div className="w-full h-full p-2 flex items-center justify-center">
+          <VegaLite 
+            spec={chartSpec} 
+            actions={false} 
+          />
+        </div>
+      );
+    }
     
     try {
       // Primary approach: Use the widget renderer directly
@@ -168,8 +267,8 @@ const DroppedElement: React.FC<DroppedElementProps> = ({
       if (widgetData && widgetData.vegaSpec && widgetData.data && widgetData.data.length > 0) {
         const chartSpec = {
           ...widgetData.vegaSpec,
-          width: Math.max(350, (element.size.width * cellSize) - 40),
-          height: Math.max(250, (element.size.height * cellSize) - 80),
+          width: Math.max(350, (tempSize.width * cellSize) - 40),
+          height: Math.max(250, (tempSize.height * cellSize) - 80),
           data: { values: widgetData.data }
         };
         
@@ -205,16 +304,17 @@ const DroppedElement: React.FC<DroppedElementProps> = ({
   };
 
   const currentPosition = isMoving ? tempPosition : element.position;
+  const currentSize = isResizing ? tempSize : element.size;
 
   return (
     <div
-      className={`absolute bg-white rounded-lg shadow-lg ring-2 border border-gray-200 group hover:shadow-lg transition-shadow duration-200 ${isMoving ? 'shadow-2xl border-blue-400' : ''} ${isDragTarget ? 'ring-2 ring-blue-400 ring-opacity-50' : 'ring-gray-200'}`}
+      className={`absolute bg-white rounded-lg shadow-lg ring-2 border border-gray-200 group hover:shadow-lg transition-shadow duration-200 ${isMoving ? 'shadow-2xl border-blue-400' : ''} ${isResizing ? 'shadow-2xl border-green-400' : ''} ${isDragTarget ? 'ring-2 ring-blue-400 ring-opacity-50' : 'ring-gray-200'}`}
       style={{
         left: `${currentPosition.x}px`,
         top: `${currentPosition.y}px`,
-        width: `${element.size.width * cellSize}px`,
-        height: `${element.size.height * cellSize}px`,
-        zIndex: isMoving ? 1000 : 10,
+        width: `${currentSize.width * cellSize}px`,
+        height: `${currentSize.height * cellSize}px`,
+        zIndex: isMoving || isResizing ? 1000 : 10,
         cursor: isMoving ? 'grabbing' : 'default'
       }}
       data-element-id={element.id}
@@ -223,7 +323,7 @@ const DroppedElement: React.FC<DroppedElementProps> = ({
       {onConnectionDragStart && (
         <ConnectionNodes
           elementId={element.id}
-          isVisible={!isDragging && !isMoving}
+          isVisible={!isDragging && !isMoving && !isResizing}
           onDragStart={onConnectionDragStart}
           isDragTarget={isDragTarget}
           isDragging={isDragging}
@@ -232,7 +332,7 @@ const DroppedElement: React.FC<DroppedElementProps> = ({
       )}
 
       {/* Header with title, move handle and remove button */}
-      <div className="absolute top-0 left-0 right-0 bg-gray-100 rounded-t-lg px-3 py-2 flex items-center justify-between border-b border-gray-200">
+      <div className="bg-gray-100 rounded-t-lg px-3 py-2 flex items-center justify-between gap-2 border-b border-gray-200">
         <button
         onMouseDown={handleMoveStart}
         className="w-6 h-6 bg-gray-400 hover:bg-gray-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-move"
@@ -264,6 +364,28 @@ const DroppedElement: React.FC<DroppedElementProps> = ({
       >
         {renderElementContent()}
       </div>
+
+      {/* Resize handles */}
+      <>
+        {/* Corner resize */}
+        <div
+          className="absolute bottom-0 right-0 w-4 h-4 cursor-nw-resize bg-slate-600 opacity-50 hover:opacity-100"
+          onMouseDown={(e) => handleResizeStart(e, 'corner')}
+          style={{ clipPath: 'polygon(100% 0, 0 100%, 100% 100%)' }}
+        />
+        
+        {/* Right resize */}
+        <div
+          className="absolute top-8 right-0 w-1 bottom-4 cursor-e-resize bg-transparent hover:bg-slate-600 opacity-0 hover:opacity-50"
+          onMouseDown={(e) => handleResizeStart(e, 'right')}
+        />
+        
+        {/* Bottom resize */}
+        <div
+          className="absolute bottom-0 left-3 right-4 h-1 cursor-s-resize bg-transparent hover:bg-slate-600 opacity-0 hover:opacity-50"
+          onMouseDown={(e) => handleResizeStart(e, 'bottom')}
+        />
+      </>
     </div>
   );
 };
