@@ -25,40 +25,68 @@ export async function POST(req: NextRequest) {
 User request: ${message}
 
 Assistant panel width: ${context.panelWidth || 400}px`,
-      instructions: `You are an expert data visualization assistant specializing in creating Vega-Lite charts. When users ask for charts, visualizations, or any data exploration, you should ALWAYS try to create a meaningful chart.
+      instructions: `You are an expert data visualization assistant that helps users explore HR data and understand their dashboard. You have THREE response modes based on the user's question:
 
-IMPORTANT: For ANY request that could benefit from a visual representation, create a chart. This includes:
-- Requests for charts, graphs, plots, visualizations
-- Questions about trends, patterns, distributions
-- Comparisons between groups or categories
-- Analysis requests that could be answered visually
-- Exploratory data analysis questions
+MODE 1 - DASHBOARD GUIDANCE (Priority): If the user's question can be answered by existing dashboard elements:
+- Provide clear instructions on which dashboard elements to examine
+- Explain what insights they can derive from those elements
+- Give specific guidance on how to interpret the visualizations
+- Use format: GUIDANCE: [detailed instructions on which dashboard elements to check]
 
-When creating charts, use this EXACT format:
+MODE 2 - FILTER ASSISTANCE: If the user's question requires filtering existing dashboard elements:
+- Determine specific filter values to apply
+- Provide filtering instructions and expected insights
+- Use format: FILTER_GUIDANCE: [specific filtering instructions and expected insights]
+- Include filter actions using: APPLY_FILTERS: {"department": "value", "jobRole": "value", "gender": "value", "showOnlyAttrition": true/false}
+
+MODE 3 - NEW VISUALIZATION: Only if the question cannot be answered by existing elements or filtering:
+- Create a new Vega-Lite chart to answer their specific question
+- Use this EXACT format for charts:
+
 CHART_EXPLANATION: [Provide a detailed explanation of the chart (3-4 sentences minimum). Include: 1) What the chart shows, 2) Which specific fields/columns are being used and their data types, 3) What insights or patterns the visualization reveals, 4) Why this type of chart is appropriate for this data]
 CHART_TITLE: [A concise, descriptive title for the chart]
 VEGA_SPEC: {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "data": {"values": []}, "mark": "...", "encoding": {..., "tooltip": [{"field": "*", "type": "nominal"}]}}
 
-CRITICAL: The VEGA_SPEC must be valid JSON on a single line. Do not include any markdown formatting or code blocks.
-- Always include tooltip encoding for interactivity
-- Charts will be automatically sized based on the assistant panel width (responsive)
-- Do not specify width, height, autosize, or config properties - these will be added automatically
-- Always provide a meaningful CHART_TITLE
-- Always provide detailed CHART_EXPLANATION with field descriptions
+ALL DASHBOARD ELEMENTS (analyze these FIRST - these are what the user can already see):
+${context.allDashboardElements ? context.allDashboardElements.map((el: any) => 
+  `- ${el.name} (${el.elementType}): ${el.description} | Fields: ${el.dataFields.join(', ')} | Insights: ${el.insights}`
+).join('\n') : 'No dashboard elements'}
 
-Example response:
-CHART_EXPLANATION: This pie chart visualizes the distribution of employees across different education fields within the organization. It uses the 'EducationField' column (categorical/nominal data) to create segments, with each segment's size determined by the count of employees in that field. The chart reveals which educational backgrounds are most prevalent among employees, helping identify skill concentrations and potential areas for diversification. A pie chart is ideal for showing parts of a whole when you want to emphasize proportional relationships between categories.
-CHART_TITLE: Employee Distribution by Education Field
-VEGA_SPEC: {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "data": {"values": []}, "mark": {"type": "arc", "innerRadius": 0}, "encoding": {"theta": {"field": "Education", "type": "quantitative", "aggregate": "count"}, "color": {"field": "EducationField", "type": "nominal"}, "tooltip": [{"field": "EducationField", "type": "nominal"}, {"field": "Education", "type": "quantitative", "aggregate": "count"}]}}
+ALL DASHBOARD NOTES:
+${context.allDashboardNotes ? context.allDashboardNotes.map((note: any) => 
+  `- Note: "${note.content.substring(0, 100)}..."`
+).join('\n') : 'No dashboard notes'}
 
-Available columns: Age, Attrition, BusinessTravel, DailyRate, Department, DistanceFromHome, Education, EducationField, EmployeeCount, EmployeeNumber, EnvironmentSatisfaction, Gender, HourlyRate, JobInvolvement, JobLevel, JobRole, JobSatisfaction, MaritalStatus, MonthlyIncome, MonthlyRate, NumCompaniesWorked, Over18, OverTime, PercentSalaryHike, PerformanceRating, RelationshipSatisfaction, StandardHours, StockOptionLevel, TotalWorkingYears, TrainingTimesLastYear, WorkLifeBalance, YearsAtCompany, YearsInCurrentRole, YearsSinceLastPromotion, YearsWithCurrManager
+Connected Dashboard Elements (elements connected to this AI assistant):
+${context.connectedData ? context.connectedData.map((el: any) => 
+  el.type === 'visualization' ? 
+    `- ${el.name} (${el.elementType}): Shows data visualization` :
+    `- Note: "${el.content.substring(0, 100)}..."`
+).join('\n') : 'No connected elements'}
 
-Chart best practices:
+Current Dashboard Context:
+- Total dashboard elements: ${context.allDashboardElements ? context.allDashboardElements.length : 0}
+- Connected elements: ${context.connectedElements || 0}
+- Available data: ${context.totalRecords || 0} HR records
+- Data columns: ${context.availableColumns ? context.availableColumns.join(', ') : 'Age, Attrition, BusinessTravel, DailyRate, Department, DistanceFromHome, Education, EducationField, EmployeeCount, EmployeeNumber, EnvironmentSatisfaction, Gender, HourlyRate, JobInvolvement, JobLevel, JobRole, JobSatisfaction, MaritalStatus, MonthlyIncome, MonthlyRate, NumCompaniesWorked, Over18, OverTime, PercentSalaryHike, PerformanceRating, RelationshipSatisfaction, StandardHours, StockOptionLevel, TotalWorkingYears, TrainingTimesLastYear, WorkLifeBalance, YearsAtCompany, YearsInCurrentRole, YearsSinceLastPromotion, YearsWithCurrManager'}
+
+Available Filter Options:
+- Department: "Sales", "Research & Development", "Human Resources"
+- Job Role: "Healthcare Representative", "Research Scientist", "Sales Executive", "Human Resources", "Research Director", "Laboratory Technician", "Manufacturing Director", "Sales Representative", "Manager"
+- Gender: "Male", "Female"
+- Show Only Attrition: true/false
+
+DECISION LOGIC:
+1. First, check if ANY dashboard element (not just connected ones) can answer the question
+2. If existing dashboard elements can answer the question, provide GUIDANCE to examine those specific elements by name
+3. If partially answerable with filtering, suggest filtering existing elements and specify exact filter values
+4. Only create new charts if the question requires data visualization not available in any existing dashboard element
+
+Chart best practices (Mode 3 only):
 - Use appropriate mark types (bar, point, line, area, arc for pie charts)
 - Choose correct encoding types (nominal, ordinal, quantitative, temporal)
-- For pie charts, use "arc" mark with "theta" encoding
-- For bar charts, use "bar" mark with x/y encodings
-- Always include "$schema" and ensure valid JSON`,
+- Always include "$schema" and ensure valid JSON
+- Include meaningful tooltips for interactivity`,
       temperature: 0.7,
       max_output_tokens: 2000,
     });
@@ -75,49 +103,54 @@ Chart best practices:
       }
     }
     
-    // Parse response to extract chart explanation and Vega spec
+    // Parse response to extract different response modes
     let content = responseContent;
     let vegaSpec = null;
     let chartTitle = null;
+    let responseMode = 'general'; // general, guidance, filter, chart
     
-    if (responseContent.includes('VEGA_SPEC:')) {
-      const parts = responseContent.split('VEGA_SPEC:');
-      if (parts.length === 2) {
-        const beforeSpec = parts[0];
-        
-        // Extract chart title if present
-        if (beforeSpec.includes('CHART_TITLE:')) {
-          const titleParts = beforeSpec.split('CHART_TITLE:');
-          if (titleParts.length === 2) {
-            chartTitle = titleParts[1].split('CHART_EXPLANATION:')[0].trim();
-            content = beforeSpec.replace('CHART_EXPLANATION:', '').replace(`CHART_TITLE: ${chartTitle}`, '').trim();
-          }
-        } else {
-          content = beforeSpec.replace('CHART_EXPLANATION:', '').trim();
-        }
-        
+    // Check for different response modes
+    if (responseContent.includes('GUIDANCE:')) {
+      responseMode = 'guidance';
+      content = responseContent.replace('GUIDANCE:', '').trim();
+    } else if (responseContent.includes('FILTER_GUIDANCE:')) {
+      responseMode = 'filter';
+      content = responseContent.replace('FILTER_GUIDANCE:', '').trim();
+    } else if (responseContent.includes('VEGA_SPEC:')) {
+      responseMode = 'chart';
+      
+      // Extract chart explanation
+      const explanationMatch = responseContent.match(/CHART_EXPLANATION:\s*([\s\S]*?)(?=\nCHART_TITLE:|VEGA_SPEC:|$)/);
+      if (explanationMatch) {
+        content = explanationMatch[1].trim();
+      }
+      
+      // Extract chart title
+      const titleMatch = responseContent.match(/CHART_TITLE:\s*(.+?)(?=\n|VEGA_SPEC:|$)/);
+      if (titleMatch) {
+        chartTitle = titleMatch[1].trim();
+      }
+      
+      // Extract Vega spec
+      const specMatch = responseContent.match(/VEGA_SPEC:\s*({[\s\S]*?})(?=\n\n|$)/);
+      if (specMatch) {
         try {
-          let specText = parts[1].trim();
+          let specText = specMatch[1].trim();
           
           // Clean up the JSON - remove any markdown formatting
           specText = specText.replace(/```json/g, '').replace(/```/g, '').trim();
           
-          // Try to find JSON object if it's embedded in text
-          const jsonMatch = specText.match(/\{[\s\S]*\}/);
-          if (jsonMatch) {
-            specText = jsonMatch[0];
-          }
-          
           vegaSpec = JSON.parse(specText);
           
           // Ensure the chart uses the actual HR data and configure properly
-          if (vegaSpec && context.hrDataSample && context.hrDataSample.length > 0) {
-            vegaSpec.data = { values: context.hrDataSample };
+          const hrData = context.hrData || context.hrDataSample || [];
+          if (vegaSpec && hrData && hrData.length > 0) {
+            vegaSpec.data = { values: hrData };
             
             // Calculate responsive dimensions based on current panel width
             const panelWidth = context.panelWidth || 400;
-            const chartWidth = Math.max(250, Math.min(panelWidth - 40, 600)); // Min 250px, max 600px, with padding
-            const chartHeight = Math.max(200, Math.min(chartWidth * 0.6, 400)); // Maintain aspect ratio, min 200px, max 400px
+            const chartWidth = Math.max(250, Math.min(panelWidth - 40, 600));
+            const chartHeight = Math.max(200, Math.min(chartWidth * 0.6, 400));
             
             vegaSpec.width = chartWidth;
             vegaSpec.height = chartHeight;
@@ -129,7 +162,7 @@ Chart best practices:
               resize: true
             };
             
-            // Disable Vega actions menu at the top level
+            // Disable Vega actions menu
             vegaSpec.actions = false;
             
             // Configure chart styling
@@ -155,26 +188,32 @@ Chart best practices:
                 fontWeight: "bold",
                 anchor: "start"
               };
-            } else if (!vegaSpec.title && content) {
-              vegaSpec.title = {
-                text: content.split('.')[0].substring(0, 50) + (content.length > 50 ? '...' : ''),
-                fontSize: 14,
-                fontWeight: "bold",
-                anchor: "start"
-              };
             }
           }
         } catch (error) {
           console.error('Error parsing Vega spec:', error);
-          console.error('Raw spec text:', parts[1]);
-          content += ' \n\nNote: There was an error parsing the chart specification. The chart may not display correctly.';
+          console.error('Raw spec text:', specMatch[1]);
+          vegaSpec = null;
         }
+      }
+    }
+
+    // Extract filter commands if present
+    let filterCommands = null;
+    const filterMatch = content.match(/APPLY_FILTERS:\s*({[\s\S]*?})(?=\n|$)/);
+    if (filterMatch) {
+      try {
+        filterCommands = JSON.parse(filterMatch[1]);
+      } catch (e) {
+        console.error('Failed to parse filter commands:', e);
       }
     }
 
     return NextResponse.json({
       content,
-      vegaSpec
+      vegaSpec,
+      responseMode,
+      filterCommands
     });
 
   } catch (error: any) {

@@ -82,7 +82,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   isActive,
   dashboardTitle = "Dashboard",
   dashboardType = "default",
-  hrData = [] // Default to empty array if no data provided
+  hrData = [], // Default to empty array if no data provided
+  onApplyFilters
 }) => {
   // Basic state
   const [isAnnotationMode, setIsAnnotationMode] = useState(false);
@@ -869,6 +870,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       hrData={hrData}
                       droppedElements={droppedElements}
                       stickyNotes={stickyNotes}
+                      onApplyFilters={onApplyFilters}
                       onCreateElement={handleCreateElementFromAI}
                     />
                   )}

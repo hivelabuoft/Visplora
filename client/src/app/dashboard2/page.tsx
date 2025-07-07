@@ -112,7 +112,30 @@ function HRAttritionDashboardContent() {
       showOnlyAttrition
     };
     const filtered = HRAnalytics.filterEmployeeData(data, criteria);
-    setFilteredData(filtered);  }, [data, selectedDepartment, selectedJobRole, selectedGender, showOnlyAttrition]);
+    setFilteredData(filtered);
+  }, [data, selectedDepartment, selectedJobRole, selectedGender, showOnlyAttrition]);
+
+  // Handle AI filter commands
+  const handleAIFilters = (filterCommands: {
+    department?: string;
+    jobRole?: string;
+    gender?: string;
+    showOnlyAttrition?: boolean;
+  }) => {
+    
+    if (filterCommands.department !== undefined) {
+      setSelectedDepartment(filterCommands.department === 'all' ? 'all' : filterCommands.department);
+    }
+    if (filterCommands.jobRole !== undefined) {
+      setSelectedJobRole(filterCommands.jobRole === 'all' ? 'all' : filterCommands.jobRole);
+    }
+    if (filterCommands.gender !== undefined) {
+      setSelectedGender(filterCommands.gender === 'all' ? 'all' : filterCommands.gender);
+    }
+    if (filterCommands.showOnlyAttrition !== undefined) {
+      setShowOnlyAttrition(filterCommands.showOnlyAttrition);
+    }
+  };
   // Measure dashboard height when content changes
   useEffect(() => {
     if (dashboardContentRef.current) {
@@ -431,6 +454,7 @@ function HRAttritionDashboardContent() {
       dashboardTitle="HR Attrition Dashboard"
       dashboardType="hr-attrition"
       hrData={filteredData}
+      onApplyFilters={handleAIFilters}
     >
       {dashboardContent}
     </DashboardPlayground>

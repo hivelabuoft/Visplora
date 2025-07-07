@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { FiX, FiSend, FiCpu, FiDatabase, FiEye, FiEyeOff, FiZap, FiRefreshCw, FiExternalLink } from 'react-icons/fi';
+import { FiX, FiSend, FiCpu, FiDatabase, FiEye, FiEyeOff, FiZap, FiRefreshCw, FiExternalLink, FiInfo, FiFilter, FiBarChart } from 'react-icons/fi';
 import { VegaLite } from 'react-vega';
 import { ConnectionNodes } from './connection-nodes';
+import { generateDashboardElementsContext, findElementsForQuestion, generateQuestionGuidance } from '../../app/dashboard2/dashboardElementsRegistry';
 
 export interface AIAssistantData {
   id: string;
@@ -25,6 +26,20 @@ export interface AIAssistantData {
     content: string;
     timestamp: number;
     vegaSpec?: any;
+    responseMode?: 'general' | 'guidance' | 'filter' | 'chart';
+    filterCommands?: {
+      department?: string;
+      jobRole?: string;
+      gender?: string;
+      showOnlyAttrition?: boolean;
+    };
+    pendingFilters?: {
+      department?: string;
+      jobRole?: string;
+      gender?: string;
+      showOnlyAttrition?: boolean;
+    };
+    filtersApplied?: boolean;
   }>;
   showContext: boolean;
 }
@@ -56,6 +71,12 @@ interface AIAssistantProps {
   hrData?: any[];
   droppedElements?: any[];
   stickyNotes?: any[];
+  onApplyFilters?: (filters: {
+    department?: string;
+    jobRole?: string;
+    gender?: string;
+    showOnlyAttrition?: boolean;
+  }) => void;
   onCreateElement?: (elementData: {
     elementName: string;
     elementType: string;
@@ -63,6 +84,91 @@ interface AIAssistantProps {
     description: string;
   }) => void;
 }
+
+// Helper functions for response modes
+const getResponseModeIcon = (mode?: string) => {
+  switch (mode) {
+    case 'guidance': return <FiInfo size={12} className="text-green-400" />;
+    case 'filter': return <FiFilter size={12} className="text-yellow-400" />;
+    case 'chart': return <FiBarChart size={12} className="text-blue-400" />;
+    default: return <FiCpu size={12} className="text-slate-400" />;
+  }
+};
+
+const getResponseModeLabel = (mode?: string) => {
+  switch (mode) {
+    case 'guidance': return 'Dashboard Guidance';
+    case 'filter': return 'Filter Assistance';
+    case 'chart': return 'New Visualization';
+    default: return 'AI Response';
+  }
+};
+
+const getMessageBackgroundClass = (mode?: string) => {
+  switch (mode) {
+    case 'guidance': return 'bg-green-700 text-green-100 border border-green-600';
+    case 'filter': return 'bg-yellow-700 text-yellow-100 border border-yellow-600';
+    case 'chart': return 'bg-blue-700 text-blue-100 border border-blue-600';
+    default: return 'bg-slate-700 text-slate-100';
+  }
+};
+
+// Helper functions for analyzing chart specifications
+const extractDataFields = (vegaSpec: any): string[] => {
+  if (!vegaSpec?.encoding) return [];
+  
+  const fields: string[] = [];
+  Object.values(vegaSpec.encoding).forEach((enc: any) => {
+    if (enc?.field && typeof enc.field === 'string') {
+      fields.push(enc.field);
+    }
+  });
+  
+  return [...new Set(fields)]; // Remove duplicates
+};
+
+const getChartDescription = (vegaSpec: any): string => {
+  if (!vegaSpec) return 'No chart specification available';
+  
+  const mark = typeof vegaSpec.mark === 'string' ? vegaSpec.mark : vegaSpec.mark?.type;
+  const fields = extractDataFields(vegaSpec);
+  
+  let chartType = 'chart';
+  switch (mark) {
+    case 'bar': chartType = 'bar chart'; break;
+    case 'line': chartType = 'line chart'; break;
+    case 'point': case 'circle': chartType = 'scatter plot'; break;
+    case 'arc': chartType = 'pie chart'; break;
+    case 'rect': chartType = 'heatmap'; break;
+    case 'area': chartType = 'area chart'; break;
+    default: chartType = mark || 'chart';
+  }
+  
+  return `${chartType} showing ${fields.join(', ')}`;
+};
+
+const getChartInsights = (vegaSpec: any): string => {
+  if (!vegaSpec?.encoding) return '';
+  
+  const fields = extractDataFields(vegaSpec);
+  const mark = typeof vegaSpec.mark === 'string' ? vegaSpec.mark : vegaSpec.mark?.type;
+  
+  // Generate insights based on chart type and fields
+  switch (mark) {
+    case 'bar':
+      return `Shows distribution/comparison of ${fields.join(' by ')}`;
+    case 'pie':
+    case 'arc':
+      return `Shows proportional breakdown of ${fields.join(', ')}`;
+    case 'line':
+      return `Shows trends over time for ${fields.join(', ')}`;
+    case 'point':
+    case 'circle':
+      return `Shows relationship between ${fields.join(' and ')}`;
+    default:
+      return `Visualizes ${fields.join(', ')}`;
+  }
+};
 
 const AIAssistant: React.FC<AIAssistantProps> = ({
   assistant,
@@ -85,6 +191,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
   hrData = [],
   droppedElements = [],
   stickyNotes = [],
+  onApplyFilters,
   onCreateElement
 }) => {
   const [isMoving, setIsMoving] = useState(false);
@@ -99,6 +206,12 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
   const [tempPosition, setTempPosition] = useState({ x: assistant.x, y: assistant.y });
   const [tempSize, setTempSize] = useState({ width: assistant.width, height: assistant.height });
   const [isHovered, setIsHovered] = useState(false);
+  const [pendingFilters, setPendingFilters] = useState<{
+    department?: string;
+    jobRole?: string;
+    gender?: string;
+    showOnlyAttrition?: boolean;
+  } | null>(null);
 
   const assistantRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -122,13 +235,47 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
       availableColumns: hrData.length > 0 ? Object.keys(hrData[0]) : [],
       totalRecords: hrData.length,
       columnTypes: hrData.length > 0 ? getColumnTypes(hrData[0]) : {},
+      
+      // All dashboard elements (for AI to know what's already available)
+      allDashboardElements: droppedElements.map(element => ({
+        type: 'visualization',
+        id: element.id,
+        name: element.elementName || 'Unknown',
+        elementType: element.elementType || 'chart',
+        description: element.vegaSpec ? getChartDescription(element.vegaSpec) : 'No description available',
+        dataFields: element.vegaSpec ? extractDataFields(element.vegaSpec) : [],
+        insights: element.vegaSpec ? getChartInsights(element.vegaSpec) : '',
+        isConnected: assistant.connectedElements.some(connEl => connEl.id === element.id && connEl.type === 'element')
+      })),
+      
+      // All sticky notes on dashboard
+      allDashboardNotes: stickyNotes.map(note => ({
+        type: 'note',
+        id: note.id,
+        content: note.content || 'No content',
+        created: note.createdAt ? new Date(note.createdAt).toLocaleString() : 'Unknown',
+        isConnected: assistant.connectedElements.some(connEl => connEl.id === note.id && connEl.type === 'note')
+      })),
+      
+      // Connected data (for backwards compatibility)
       connectedData: assistant.connectedElements.map(element => {
         if (element.type === 'element') {
           const droppedElement = droppedElements.find(el => el.id === element.id);
+          if (droppedElement) {
+            return {
+              type: 'visualization',
+              name: droppedElement.elementName || 'Unknown',
+              elementType: droppedElement.elementType || 'chart',
+              description: droppedElement.vegaSpec ? getChartDescription(droppedElement.vegaSpec) : 'No description available',
+              dataFields: droppedElement.vegaSpec ? extractDataFields(droppedElement.vegaSpec) : []
+            };
+          }
           return {
             type: 'visualization',
-            name: droppedElement?.elementName || 'Unknown',
-            elementType: droppedElement?.elementType || 'chart'
+            name: 'Unknown Element',
+            elementType: 'chart',
+            description: 'Element data not available',
+            dataFields: []
           };
         } else {
           const note = stickyNotes.find(note => note.id === element.id);
@@ -138,7 +285,18 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
             created: note?.createdAt ? new Date(note.createdAt).toLocaleString() : 'Unknown'
           };
         }
-      })
+      }),
+      // Add information about what data insights are already available
+      availableInsights: assistant.connectedElements
+        .filter(el => el.type === 'element')
+        .map(el => {
+          const droppedElement = droppedElements.find(del => del.id === el.id);
+          if (droppedElement?.vegaSpec) {
+            return getChartInsights(droppedElement.vegaSpec);
+          }
+          return null;
+        })
+        .filter(Boolean)
     };
     return context;
   }, [assistant.connectedElements, hrData, droppedElements, stickyNotes]);
@@ -166,23 +324,50 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
     try {
       const context = generateContext();
       
-      // Create a prompt for the AI to generate suggestions
-      const suggestionPrompt = `Based on the following HR dataset and context, generate 8 diverse and insightful data visualization prompts that would be useful for exploring this data. 
+      // Create different prompts based on whether there are connected elements
+      let suggestionPrompt;
+      
+      if (context.allDashboardElements.length > 0) {
+        // When there are dashboard elements, focus on analysis and guidance
+        suggestionPrompt = `Based on the following HR dashboard context, generate 8 diverse analysis prompts that help users understand their data better:
+
+Dashboard Context:
+- Total Records: ${context.totalRecords}
+- Available Columns: ${context.availableColumns.join(', ')}
+- ALL Dashboard Elements (${context.allDashboardElements.length}):
+${context.allDashboardElements.map((el: any) => 
+  `  * ${el.name} (${el.elementType}): ${el.description} | Insights: ${el.insights}`
+).join('\n')}
+- Connected Elements to me: ${context.connectedElements}
+- Available Dashboard Notes: ${context.allDashboardNotes.length}
+
+Generate prompts that:
+1. Ask questions about existing dashboard elements (60% of prompts) - reference specific element names
+2. Request filtering or deeper analysis of current data (30% of prompts)  
+3. Suggest complementary visualizations not yet shown (10% of prompts)
+
+Focus on business insights like attrition analysis, performance metrics, demographic patterns, and salary analysis.
+Make prompts specific to the existing dashboard elements by referencing their names and insights.
+Return ONLY the prompts, one per line, without numbering.`;
+      } else {
+        // When no dashboard elements, focus on initial exploration
+        suggestionPrompt = `Based on the following HR dataset, generate 8 diverse and insightful data visualization prompts:
 
 Dataset Information:
 - Total Records: ${context.totalRecords}
 - Available Columns: ${context.availableColumns.join(', ')}
 - Column Types: ${Object.entries(context.columnTypes).map(([col, type]) => `${col} (${type})`).join(', ')}
-- Connected Elements: ${context.connectedElements}
+- Dashboard Elements: None yet
 
-Please generate exactly 8 short, actionable prompts (1-2 sentences each) that:
+Generate prompts that:
 1. Explore different aspects of the HR data
 2. Use various chart types (bar, pie, scatter, histogram, etc.)
 3. Focus on business insights like attrition, salary, performance, demographics
 4. Include both simple and advanced analysis requests
 5. Are specific to the available columns
 
-Return ONLY the prompts, one per line, without numbering or formatting.`;
+Return ONLY the prompts, one per line, without numbering.`;
+      }
 
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -231,16 +416,33 @@ Return ONLY the prompts, one per line, without numbering or formatting.`;
       .filter(([_, type]) => type === 'nominal')
       .map(([field, _]) => field);
 
-    return [
-      `Show me the distribution of ${quantitativeFields[0] || 'Age'}`,
-      `Create a pie chart of ${nominalFields[0] || 'Department'}`,
-      `Show the relationship between ${quantitativeFields[0] || 'Age'} and ${quantitativeFields[1] || 'MonthlyIncome'}`,
-      'Show attrition rates by department',
-      `Create a histogram of ${quantitativeFields[1] || 'MonthlyIncome'}`,
-      `Compare ${quantitativeFields[2] || 'YearsAtCompany'} across different ${nominalFields[0] || 'Department'}`,
-      'Create a chart showing factors affecting employee attrition',
-      'Show trends in job satisfaction over years at company'
-    ];
+    // Generate different prompts based on whether there are dashboard elements
+    if (context.allDashboardElements.length > 0) {
+      // Focus on analysis and guidance when dashboard elements exist
+      const elementNames = context.allDashboardElements.map((el: any) => el.name);
+      return [
+        'What insights can I get from the existing dashboard elements?',
+        `How do I interpret the ${elementNames[0] || 'charts'} on the dashboard?`,
+        'Can you filter the current data to show only high-performing employees?',
+        'What patterns should I look for in the dashboard visualizations?',
+        `Explain what the ${elementNames[1] || 'dashboard elements'} are showing me`,
+        'How do the dashboard elements relate to employee retention?',
+        'What filtering options can help me understand attrition better?',
+        'Guide me through analyzing the dashboard step by step'
+      ];
+    } else {
+      // Focus on initial exploration when no elements exist
+      return [
+        `Show me the distribution of ${quantitativeFields[0] || 'Age'}`,
+        `Create a pie chart of ${nominalFields[0] || 'Department'}`,
+        `Show the relationship between ${quantitativeFields[0] || 'Age'} and ${quantitativeFields[1] || 'MonthlyIncome'}`,
+        'Show attrition rates by department',
+        `Create a histogram of ${quantitativeFields[1] || 'MonthlyIncome'}`,
+        `Compare ${quantitativeFields[2] || 'YearsAtCompany'} across different ${nominalFields[0] || 'Department'}`,
+        'Create a chart showing factors affecting employee attrition',
+        'Show trends in job satisfaction over years at company'
+      ];
+    }
   };
 
   // Handle suggested prompt selection
@@ -335,6 +537,42 @@ Return ONLY the prompts, one per line, without numbering or formatting.`;
     onCreateElement(elementData);
   }, [onCreateElement]);
 
+  // Apply filter commands from AI
+  const applyFilterCommands = useCallback((filterCommands: any) => {
+    if (onApplyFilters && filterCommands) {
+      onApplyFilters(filterCommands);
+    }
+  }, [onApplyFilters]);
+
+  // Handle filter permission - store filters as pending instead of applying immediately
+  const handlePendingFilters = useCallback((filterCommands: any) => {
+    if (filterCommands) {
+      setPendingFilters(filterCommands);
+    }
+  }, []);
+
+  // Apply pending filters when user gives permission
+  const applyPendingFilters = useCallback(() => {
+    if (pendingFilters && onApplyFilters) {
+      onApplyFilters(pendingFilters);
+      setPendingFilters(null);
+      
+      // Update the last message to mark filters as applied
+      const updatedHistory = assistant.chatHistory.map((message, index) => {
+        if (index === assistant.chatHistory.length - 1 && message.role === 'assistant' && message.filterCommands) {
+          return { ...message, filtersApplied: true };
+        }
+        return message;
+      });
+      onUpdate(assistant.id, { chatHistory: updatedHistory });
+    }
+  }, [pendingFilters, onApplyFilters, assistant.chatHistory, assistant.id, onUpdate]);
+
+  // Decline pending filters
+  const declinePendingFilters = useCallback(() => {
+    setPendingFilters(null);
+  }, []);
+
   // Handle OpenAI API call
   const sendMessage = async () => {
     if (!userInput.trim() || isLoading) return;
@@ -360,31 +598,48 @@ Return ONLY the prompts, one per line, without numbering or formatting.`;
       // Add current panel width to context for truly responsive chart sizing
       const contextWithPanelWidth = {
         ...context,
-        panelWidth: actualWidth // Use current actual width of the panel
+        panelWidth: actualWidth, // Use current actual width of the panel
+        hrData: hrData, // Ensure hrData is available for chart generation (both names for compatibility)
+        hrDataSample: context.hrDataSample // Keep original name too
       };
       
       // Prepare system prompt with context
       const systemPrompt = `You are an AI assistant helping with data visualization using Vega-Lite. 
-      
+
+${generateDashboardElementsContext()}
+
+CURRENT DASHBOARD STATE:
 Available dataset: HR Employee data with ${context.totalRecords} records
 Available columns: ${context.availableColumns.join(', ')}
 Current panel width: ${actualWidth}px
 
-Connected elements: ${context.connectedData.map(el => 
-  el.type === 'visualization' ? `${el.name} (${el.elementType})` : `Note: ${el.content}`
-).join(', ')}
+ALL DASHBOARD ELEMENTS (${context.allDashboardElements.length} total):
+${context.allDashboardElements.map((el: any) => 
+  `- ${el.name} (${el.elementType}): ${el.description} | Fields: ${el.dataFields.join(', ')} | Insights: ${el.insights}${el.isConnected ? ' [CONNECTED TO ME]' : ''}`
+).join('\n')}
 
-When asked to create charts, respond with valid Vega-Lite JSON specifications using the HR dataset.
-Always ensure the chart specifications use only the available columns.
-The chart will be sized based on the panel width of ${actualWidth}px.
+ALL DASHBOARD NOTES (${context.allDashboardNotes.length} total):
+${context.allDashboardNotes.map((note: any) => 
+  `- Note: "${note.content.substring(0, 100)}..."${note.isConnected ? ' [CONNECTED TO ME]' : ''}`
+).join('\n')}
+
+CONNECTED ELEMENTS TO THIS AI ASSISTANT (${context.connectedData.length}):
+${context.connectedData.map((el: any) => 
+  el.type === 'visualization' ? 
+    `- ${el.name} (${el.elementType}): ${el.description} | Fields: ${el.dataFields.join(', ')}` : 
+    `- Note: "${el.content.substring(0, 100)}..."`
+).join('\n')}
+
+CRITICAL INSTRUCTIONS:
+1. ALWAYS check the AVAILABLE DASHBOARD ELEMENTS section first to see what's already on the dashboard
+2. If existing elements can answer the user's question, provide GUIDANCE to examine those specific elements
+3. If existing elements need filtering to answer the question, provide FILTER_GUIDANCE with specific filter commands
+4. ONLY create new visualizations if no existing element can answer the question
 
 Sample data structure:
 ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
 
       // Call OpenAI API
-      console.log('Calling /api/chat');
-      console.log('Request payload:', { message, systemPrompt, context: contextWithPanelWidth });
-      
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -396,8 +651,6 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
           context: contextWithPanelWidth
         }),
       });
-
-      console.log('Response received:', response.status, response.statusText);
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -417,10 +670,20 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
         role: 'assistant' as const,
         content: data.content,
         timestamp: Date.now(),
-        vegaSpec: data.vegaSpec
+        vegaSpec: data.vegaSpec,
+        responseMode: data.responseMode || 'general',
+        filterCommands: data.filterCommands,
+        pendingFilters: data.filterCommands,
+        filtersApplied: false
       };
 
       console.log('Assistant message with vegaSpec:', assistantMessage.vegaSpec);
+      console.log('Filter commands:', assistantMessage.filterCommands);
+
+      // Store filters as pending instead of applying them immediately
+      if (data.filterCommands) {
+        handlePendingFilters(data.filterCommands);
+      }
 
       const finalHistory = [...updatedHistory, assistantMessage];
       onUpdate(assistant.id, { chatHistory: finalHistory });
@@ -740,6 +1003,40 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
             bottom: showSuggestions ? '220px' : '70px', // Adjust for dynamic input area height
           }}
         >
+          {/* Pending Filters Notification */}
+          {pendingFilters && (
+            <div className="bg-yellow-100 border border-yellow-300 rounded-lg p-3 mb-3">
+              <div className="flex items-center gap-2 mb-2">
+                <FiFilter className="text-yellow-600" size={14} />
+                <span className="text-yellow-800 font-medium text-xs">AI suggests applying filters</span>
+              </div>
+              <div className="text-yellow-700 text-xs space-y-1 mb-3">
+                {pendingFilters.department && <div>• Department: {pendingFilters.department}</div>}
+                {pendingFilters.jobRole && <div>• Job Role: {pendingFilters.jobRole}</div>}
+                {pendingFilters.gender && <div>• Gender: {pendingFilters.gender}</div>}
+                {pendingFilters.showOnlyAttrition !== undefined && (
+                  <div>• Show Only Attrition: {pendingFilters.showOnlyAttrition ? 'Yes' : 'No'}</div>
+                )}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={applyPendingFilters}
+                  className="flex items-center gap-1 px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded transition-colors"
+                >
+                  <FiFilter size={10} />
+                  Apply Filters
+                </button>
+                <button
+                  onClick={declinePendingFilters}
+                  className="flex items-center gap-1 px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white text-xs rounded transition-colors"
+                >
+                  <FiX size={10} />
+                  Decline
+                </button>
+              </div>
+            </div>
+          )}
+
           {assistant.chatHistory.length === 0 && (
             <div className="text-center text-slate-400 text-sm py-6">
               <FiCpu size={24} className="mx-auto mb-2" />
@@ -756,9 +1053,69 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
               <div className={`max-w-[85%] p-2 rounded-lg text-sm break-words ${
                 message.role === 'user' 
                   ? 'bg-blue-600 text-white' 
-                  : 'bg-slate-700 text-slate-100'
+                  : getMessageBackgroundClass(message.responseMode)
               }`} style={{ wordWrap: 'break-word', overflowWrap: 'break-word', hyphens: 'auto' }}>
+                {/* Response Mode Indicator */}
+                {message.role === 'assistant' && message.responseMode && (
+                  <div className="flex items-center gap-1 mb-2 text-xs opacity-75">
+                    {getResponseModeIcon(message.responseMode)}
+                    <span className="font-medium">{getResponseModeLabel(message.responseMode)}</span>
+                  </div>
+                )}
                 <div className="whitespace-pre-wrap">{message.content}</div>
+                
+                {/* Filter Commands Display */}
+                {message.filterCommands && (
+                  <div className="mt-2 p-2 bg-blue-50 rounded border-l-2 border-blue-400 text-xs">
+                    <div className="flex items-center gap-1 mb-1 text-blue-700 font-medium">
+                      <FiFilter size={12} />
+                      {message.filtersApplied ? 'Applied Filters:' : 'Suggested Filters:'}
+                    </div>
+                    <div className="space-y-1 text-blue-600">
+                      {message.filterCommands.department && (
+                        <div>• Department: {message.filterCommands.department}</div>
+                      )}
+                      {message.filterCommands.jobRole && (
+                        <div>• Job Role: {message.filterCommands.jobRole}</div>
+                      )}
+                      {message.filterCommands.gender && (
+                        <div>• Gender: {message.filterCommands.gender}</div>
+                      )}
+                      {message.filterCommands.showOnlyAttrition !== undefined && (
+                        <div>• Show Only Attrition: {message.filterCommands.showOnlyAttrition ? 'Yes' : 'No'}</div>
+                      )}
+                    </div>
+                    
+                    {/* Filter Permission Buttons - only show if filters haven't been applied yet */}
+                    {!message.filtersApplied && pendingFilters && (
+                      <div className="mt-2 flex gap-2">
+                        <button
+                          onClick={applyPendingFilters}
+                          className="flex items-center gap-1 px-2 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded transition-colors"
+                          title="Apply these filters to the dashboard"
+                        >
+                          <FiFilter size={10} />
+                          Apply Filters
+                        </button>
+                        <button
+                          onClick={declinePendingFilters}
+                          className="flex items-center gap-1 px-2 py-1 bg-gray-600 hover:bg-gray-700 text-white text-xs rounded transition-colors"
+                          title="Decline these filter suggestions"
+                        >
+                          <FiX size={10} />
+                          Decline
+                        </button>
+                      </div>
+                    )}
+                    
+                    {/* Show status if filters were applied */}
+                    {message.filtersApplied && (
+                      <div className="mt-2 text-green-700 text-xs font-medium">
+                        ✓ Filters have been applied to the dashboard
+                      </div>
+                    )}
+                  </div>
+                )}
                 {message.vegaSpec && (
                   <div className="mt-2">
                     <div className="bg-white rounded p-2 overflow-hidden" style={{ maxWidth: '100%' }}>

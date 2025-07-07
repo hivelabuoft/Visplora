@@ -46,6 +46,12 @@ export interface DashboardPlaygroundProps {
   dashboardType?: string;
   onAddToCanvas?: () => void;
   hrData?: any[]; // HRData type
+  onApplyFilters?: (filters: {
+    department?: string;
+    jobRole?: string;
+    gender?: string;
+    showOnlyAttrition?: boolean;
+  }) => void;
 }
 
 export interface DroppedElement {
