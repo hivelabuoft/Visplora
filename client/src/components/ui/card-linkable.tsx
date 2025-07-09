@@ -9,6 +9,7 @@ interface LinkableCardProps {
   children: React.ReactNode;
   elementId?: string;
   className?: string;
+  styles?: React.CSSProperties;
   tooltip?: string;
   hasNotes?: boolean;
   elementName?: string;
@@ -20,6 +21,7 @@ export function LinkableCard({
   children,
   elementId,
   className,
+  styles,
   hasNotes = false,
   elementName,
   elementType,
@@ -142,11 +144,12 @@ export function LinkableCard({
         className
       )}
       style={{
+        ...styles,
         boxShadow: isElementSelectionMode ? "0 0 15px 0px rgb(155, 4, 230)"
           : isLinked ? "0 0 12px 2px rgba(155, 4, 230, 0.4)"
             : isHovered ? "0 0 20px 0 rgb(30, 199, 255)" : "none",
         border: isElementSelectionMode ? "1px solid rgb(155, 4, 230)" 
-          : isLinked ? "1px solid rgba(155, 4, 230, 0.6)" : "none"
+          : isLinked ? "1px solid rgba(155, 4, 230, 0.6)" : styles?.border || "none"
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
