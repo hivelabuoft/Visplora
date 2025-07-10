@@ -1,14 +1,162 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
+import { VegaLite } from 'react-vega';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
+  const [selectedBorough, setSelectedBorough] = useState<string>('Brent');
+  const [selectedLSOA, setSelectedLSOA] = useState<string>('');
+
+  // Borough ID to name mapping based on the JSON file structure
+  const boroughIdToName: { [key: number]: string } = {
+    0: "Kingston upon Thames",
+    1: "Croydon", 
+    2: "Bromley",
+    3: "Hounslow",
+    4: "Ealing",
+    5: "Havering",
+    6: "Hillingdon",
+    7: "Harrow",
+    8: "Brent",
+    9: "Barnet",
+    10: "Lambeth",
+    11: "Southwark",
+    12: "Lewisham",
+    13: "Greenwich",
+    14: "Bexley",
+    15: "Enfield",
+    16: "Waltham Forest",
+    17: "Redbridge", 
+    18: "Sutton",
+    19: "Richmond upon Thames",
+    20: "Merton",
+    21: "Wandsworth",
+    22: "Hammersmith and Fulham",
+    23: "Kensington and Chelsea",
+    24: "Westminster",
+    25: "Camden",
+    26: "Tower Hamlets",
+    27: "Islington",
+    28: "Hackney",
+    29: "Haringey",
+    30: "Newham",
+    31: "Barking and Dagenham",
+    32: "City of London"
+  };
+
   function handleAddToSidebar(elementId: string, elementName: string, elementType: string): void {
     throw new Error('Function not implemented.');
   }
+
+  const handleBoroughClick = (name: string, value: any) => {
+    if (value && value.datum && value.datum.id) {
+      setSelectedBorough(value.datum.id);
+    }
+  };
+
+  // Vega-Lite spec for London boroughs map
+  const boroughMapSpec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+    "width": 400,
+    "height": 350,
+    "view": {
+      "stroke": "transparent"
+    },
+    "params": [
+      {
+        "name": "borough_click",
+        "select": {
+          "type": "point",
+          "on": "click"
+        }
+      },
+      {
+        "name": "borough_hover",
+        "select": {
+          "type": "point",
+          "on": "mouseover",
+          "clear": "mouseout"
+        }
+      }
+    ],
+    "layer": [
+      {
+        "data": {
+          "url": "data/londonBoroughs.json",
+          "format": {
+            "type": "topojson",
+            "feature": "boroughs"
+          }
+        },
+        "mark": {
+          "type": "geoshape",
+          "stroke": "white",
+          "strokeWidth": 1,
+          "cursor": "pointer"
+        },
+        "encoding": {
+          "color": {
+            "condition": [
+              {
+                "param": "borough_click",
+                "value": "#8B5CF6"
+              },
+            ],
+            "value": "#333"
+          },
+          "strokeWidth": {
+            "condition": [
+              {
+                "param": "borough_hover",
+                "value": 2
+              },
+              {
+                "param": "borough_click",
+                "value": 2
+              },
+            ],
+            "value": 1
+          },
+          "stroke": {
+            "condition": [
+              {
+                "param": "borough_hover",
+                "value": "#ffffff"
+              }
+            ],
+            "value": "white"
+          },
+          "opacity": {
+            "condition": [
+              {
+                "param": "borough_hover",
+                "value": 0.9
+              },
+              {
+                "param": "borough_click",
+                "value": 1
+              },
+            ],
+            "value": 0.7
+          },
+          "tooltip": {
+            "field": "id",
+            "type": "nominal",
+            "title": "Borough"
+          }
+        }
+      }
+    ],
+    "config": {
+      "background": "transparent",
+      "view": {
+        "stroke": null
+      }
+    }
+  };
 
   return (
     <DashboardPlayground
@@ -139,7 +287,7 @@ const Dashboard3: React.FC = () => {
             onAddToSidebar={handleAddToSidebar}
           >
             <div style={{ fontSize: '10px', color: '#888', marginBottom: '5px' }}>SELECTED BOROUGH</div>
-            <div style={{ fontSize: '18px', fontWeight: '600', color: '#fff' }}>Hillingdon</div>
+            <div style={{ fontSize: '18px', fontWeight: '600', color: '#fff' }}>{selectedBorough}</div>
           </LinkableCard>
 
           {/* Total Population */}
@@ -372,8 +520,8 @@ const Dashboard3: React.FC = () => {
           {/* LSOA Level Borough Map */}
           <LinkableCard 
             styles={{
-              gridColumn: '1 / 5',
-              gridRow: '2 / 6',
+              gridColumn: '1 / 4',
+              gridRow: '2 / 5',
               backgroundColor: '#1a1a1a',
               borderRadius: '8px',
               padding: '20px',
@@ -411,7 +559,7 @@ const Dashboard3: React.FC = () => {
               top: '50px',
               left: '20px',
               right: '20px',
-              bottom: '80px',
+              bottom: '20px',
               background: 'linear-gradient(135deg, #1e1e2e 0%, #2d1b69 50%, #8B5CF6 100%)',
               borderRadius: '8px',
               display: 'flex',
@@ -462,46 +610,97 @@ const Dashboard3: React.FC = () => {
                 High ●●●●●● Low
               </div>
             </div>
+          </LinkableCard>
 
-            {/* Borough Filter */}
+          {/* Middle: Borough Map */}
+          <LinkableCard 
+            styles={{
+              gridColumn: '4 / 7',
+              gridRow: '2 / 5',
+              backgroundColor: '#1a1a1a',
+              borderRadius: '8px',
+              padding: '20px',
+              border: '1px solid #333',
+              position: 'relative'
+            }}
+            elementId="borough-map"
+            elementName="Borough Map"
+            elementType="map"
+            onAddToSidebar={handleAddToSidebar}
+          >
             <div style={{
               position: 'absolute',
-              bottom: '15px',
+              top: '15px',
               left: '20px',
-              right: '20px',
-              height: '50px',
-              backgroundColor: '#333',
-              borderRadius: '8px',
-              padding: '10px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
+              fontSize: '12px',
+              fontWeight: '600',
+              color: '#fff'
             }}>
-              <div>
-                <div style={{ fontSize: '10px', color: '#888' }}>LONDON BOROUGH FILTER</div>
-                <div style={{ fontSize: '12px', color: '#fff', marginTop: '2px' }}>Click to filter dashboard</div>
-              </div>
-              <div style={{
-                fontSize: '18px',
-                fontWeight: '700',
-                color: '#8B5CF6'
-              }}>
+              LONDON BOROUGH MAP
+            </div>
+            <div style={{
+              position: 'absolute',
+              top: '15px',
+              right: '20px',
+              fontSize: '10px',
+              color: '#888'
+            }}>
+              (Click to filter dashboard)
+            </div>
+            
+            {/* Map Content */}
+            <div style={{
+              position: 'absolute',
+              top: '20px',
+              left: '80px',
+              right: '20px',
+              bottom: '20px'
+            }} title='Click outside to reset selection'>
+              <VegaLite 
+                spec={boroughMapSpec} 
+                actions={false}
+                signalListeners={{
+                  borough_click: (name: string, value: any) => {                    
+                    // Extract the borough ID from the _vgsid_ InternSet
+                    if (value && value._vgsid_) {
+                      const vgsidArray = Array.from(value._vgsid_);
+                      if (vgsidArray.length > 0) {
+                        const boroughIndex = vgsidArray[0] as number;
+                        const boroughName = boroughIdToName[boroughIndex - 1];
+                        if (boroughName) {
+                          setSelectedBorough(boroughName);
+                        }
+                      }
+                    }
+                  }
+                }}
+                style={{
+                  width: '100%',
+                  height: '100%'
+                }}
+              />
+            </div>
+
+            {/* Borough Filter */}
+            <div className="absolute bottom-4 left-4 text-md text-gray-400">
+              <div style={{ color: '#888' }}>Total Population</div>
+              <div className="text-2xl font-bold" style={{ color: '#8B5CF6' }}>
                 9.51m
               </div>
-              <div style={{ fontSize: '10px', color: '#888' }}>Total Population</div>
             </div>
           </LinkableCard>
 
-          {/* Top Right: Country of Birth */}
+          {/* Bottom Left: Country of Birth */}
           <LinkableCard 
             styles={{
-              gridColumn: '5 / 7',
-              gridRow: '2 / 4',
+              gridColumn: '1 / 4',
+              gridRow: '5 / 6',
               backgroundColor: '#1a1a1a',
               borderRadius: '8px',
               padding: '15px',
               border: '1px solid #333',
-              position: 'relative'
+              position: 'relative',
+              overflow: 'hidden'
             }}
             elementId="country-of-birth"
             elementName="Country of Birth"
@@ -637,15 +836,16 @@ const Dashboard3: React.FC = () => {
             </div>
           </LinkableCard>
 
-          {/* Middle Right: School Education Facilities */}
+          {/* Bottom Middle: School Education Facilities */}
           <LinkableCard 
             styles={{
-              gridColumn: '5 / 7',
-              gridRow: '4 / 6',
+              gridColumn: '4 / 7',
+              gridRow: '5 / 6',
               backgroundColor: '#1a1a1a',
               borderRadius: '8px',
               padding: '15px',
-              border: '1px solid #333'
+              border: '1px solid #333',
+              overflow: 'hidden'
             }}
             elementId="school-education-facilities"
             elementName="School Education Facilities"
