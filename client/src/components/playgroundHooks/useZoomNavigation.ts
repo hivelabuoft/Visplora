@@ -47,14 +47,14 @@ export const useZoomNavigation = (
       // Get viewport dimensions
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-      const scale = 0.8; // Default scale
+      const scale = 1; // Default scale
       
       // Calculate position to center the dashboard in the viewport
       const targetX = (viewportWidth / 2) - (dashboardCenterX * scale);
-      const targetY = (viewportHeight / 2) - (dashboardCenterY * scale);
+      const targetY = (viewportHeight / 2) - (dashboardCenterY * scale) + 150;
       
       transformRef.current.setTransform(targetX, targetY, scale, 500, "easeInCubic");
-      setZoomLevel(80);
+      setZoomLevel(100);
     }
   }, [getDashboardGridInfo]);
 

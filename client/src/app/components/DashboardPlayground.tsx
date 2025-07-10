@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { FiMove, FiZoomOut, FiZoomIn, FiMaximize2, FiLink, FiCpu } from 'react-icons/fi';
 import { FilePenLine } from 'lucide-react';
 import styles from './DashboardPlayground.module.css';
@@ -34,7 +34,7 @@ export { useDashboardPlayground } from '../../components/context/DashboardPlaygr
 // ================================
 
 export const CELL_SIZE = 5;
-export const DASHBOARD_WIDTH = 1600; // Fixed dashboard width
+export const DASHBOARD_WIDTH = 1440; // Fixed dashboard width
 
 // Calculate dashboard bounds and position for the grid
 export const getDashboardGridInfo = (canvasWidth: number, canvasHeight: number, dashboardRef?: React.RefObject<HTMLDivElement | null>) => {

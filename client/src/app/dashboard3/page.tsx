@@ -4,157 +4,21 @@ import React, { useState } from 'react';
 import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
+import { boroughIdToName } from './boroughMapping';
+import { boroughMapSpec, smallBoroughMapSpec } from './vegaSpecs';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
   const [selectedBorough, setSelectedBorough] = useState<string>('Brent');
   const [selectedLSOA, setSelectedLSOA] = useState<string>('');
 
-  // Borough ID to name mapping based on the JSON file structure
-  const boroughIdToName: { [key: number]: string } = {
-    0: "Kingston upon Thames",
-    1: "Croydon", 
-    2: "Bromley",
-    3: "Hounslow",
-    4: "Ealing",
-    5: "Havering",
-    6: "Hillingdon",
-    7: "Harrow",
-    8: "Brent",
-    9: "Barnet",
-    10: "Lambeth",
-    11: "Southwark",
-    12: "Lewisham",
-    13: "Greenwich",
-    14: "Bexley",
-    15: "Enfield",
-    16: "Waltham Forest",
-    17: "Redbridge", 
-    18: "Sutton",
-    19: "Richmond upon Thames",
-    20: "Merton",
-    21: "Wandsworth",
-    22: "Hammersmith and Fulham",
-    23: "Kensington and Chelsea",
-    24: "Westminster",
-    25: "Camden",
-    26: "Tower Hamlets",
-    27: "Islington",
-    28: "Hackney",
-    29: "Haringey",
-    30: "Newham",
-    31: "Barking and Dagenham",
-    32: "City of London"
-  };
-
   function handleAddToSidebar(elementId: string, elementName: string, elementType: string): void {
-    throw new Error('Function not implemented.');
+    throw new Error('Not implemented.');
   }
 
   const handleBoroughClick = (name: string, value: any) => {
     if (value && value.datum && value.datum.id) {
       setSelectedBorough(value.datum.id);
-    }
-  };
-
-  // Vega-Lite spec for London boroughs map
-  const boroughMapSpec = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-    "width": 400,
-    "height": 350,
-    "view": {
-      "stroke": "transparent"
-    },
-    "params": [
-      {
-        "name": "borough_click",
-        "select": {
-          "type": "point",
-          "on": "click"
-        }
-      },
-      {
-        "name": "borough_hover",
-        "select": {
-          "type": "point",
-          "on": "mouseover",
-          "clear": "mouseout"
-        }
-      }
-    ],
-    "layer": [
-      {
-        "data": {
-          "url": "data/londonBoroughs.json",
-          "format": {
-            "type": "topojson",
-            "feature": "boroughs"
-          }
-        },
-        "mark": {
-          "type": "geoshape",
-          "stroke": "white",
-          "strokeWidth": 1,
-          "cursor": "pointer"
-        },
-        "encoding": {
-          "color": {
-            "condition": [
-              {
-                "param": "borough_click",
-                "value": "#8B5CF6"
-              },
-            ],
-            "value": "#333"
-          },
-          "strokeWidth": {
-            "condition": [
-              {
-                "param": "borough_hover",
-                "value": 2
-              },
-              {
-                "param": "borough_click",
-                "value": 2
-              },
-            ],
-            "value": 1
-          },
-          "stroke": {
-            "condition": [
-              {
-                "param": "borough_hover",
-                "value": "#ffffff"
-              }
-            ],
-            "value": "white"
-          },
-          "opacity": {
-            "condition": [
-              {
-                "param": "borough_hover",
-                "value": 0.9
-              },
-              {
-                "param": "borough_click",
-                "value": 1
-              },
-            ],
-            "value": 0.7
-          },
-          "tooltip": {
-            "field": "id",
-            "type": "nominal",
-            "title": "Borough"
-          }
-        }
-      }
-    ],
-    "config": {
-      "background": "transparent",
-      "view": {
-        "stroke": null
-      }
     }
   };
 
@@ -164,26 +28,15 @@ const Dashboard3: React.FC = () => {
       dashboardTitle="London Numbers Dashboard"
       dashboardType="london-style"
     >
-      <div className="london-dashboard" style={{
-        width: '1600px',
+      <div className="london-dashboard p-8 rounded-lg text-white" style={{
+        width: '100%',
         height: '1100px',
         backgroundColor: '#0a0a0a',
-        color: 'white',
         fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
       }}>
         
         {/* Header */}
-        <div style={{
-          position: 'absolute',
-          top: '20px',
-          left: '20px',
-          right: '20px',
-          height: '80px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '1px solid #333'
-        }}>
+        <div className='flex items-center justify-between mb-4' style={{ borderBottom: '1px solid #333' }}>
           <div>
             <h1 style={{
               fontSize: '32px',
@@ -254,359 +107,147 @@ const Dashboard3: React.FC = () => {
         </div>
 
         {/* Grid Container */}
-        <div style={{
-          position: 'absolute',
-          top: '120px',
-          left: '20px',
-          right: '20px',
-          bottom: '20px',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(8, 1fr)',
-          gridTemplateRows: 'repeat(7, 120px)',
-          gap: '1rem'
-        }}>
-          
+        <div className="grid grid-cols-8 grid-rows-7 gap-4" style={{ gridTemplateRows: 'repeat(7, 120px)' }}>
           {/* Row 1: KPI Indicators (1x1 each) */}
-          {/* Borough Details */}
-          <LinkableCard 
-            styles={{
-              gridColumn: '1 / 2',
-              gridRow: '1 / 2',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '1px solid #333'
-            }}
-            elementId="borough-details"
-            elementName="Borough Details"
-            elementType="borough"
-            onAddToSidebar={handleAddToSidebar}
-          >
-            <div style={{ fontSize: '10px', color: '#888', marginBottom: '5px' }}>SELECTED BOROUGH</div>
-            <div style={{ fontSize: '18px', fontWeight: '600', color: '#fff' }}>{selectedBorough}</div>
-          </LinkableCard>
+          <div className="col-span-8 row-span-1 grid grid-cols-6 gap-4">
+            {/* Borough Details */}
+            <LinkableCard 
+              className='text-center p-4 col-span-1 row-span-1 bg-zinc-800 border border-gray-600'
+              styles={{}}
+              elementId="borough-details"
+              elementName="Borough Details"
+              elementType="borough"
+              onAddToSidebar={handleAddToSidebar}
+            >
+              <div className='flex items-center justify-center gap-4 h-full'>
+                <div className='text-lg font-semibold text-white'>
+                  {selectedBorough}
+                </div>
+                <div className='w-16 h-16'>
+                  <VegaLite 
+                    spec={smallBoroughMapSpec(selectedBorough)}
+                    actions={false}
+                    style={{
+                      width: '100%',
+                      height: '100%'
+                    }}
+                  />
+                </div>
+              </div>
+            </LinkableCard>
 
-          {/* Total Population */}
-          <LinkableCard 
-            styles={{
-              gridColumn: '2 / 3',
-              gridRow: '1 / 2',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '1px solid #333'
-            }}
-            elementId="total-population"
-            elementName="Total Population"
-            elementType="kpi"
-            onAddToSidebar={handleAddToSidebar}
-          >
-            <div style={{ fontSize: '24px', fontWeight: '700', color: '#fff' }}>324,091</div>
-            <div style={{ fontSize: '10px', color: '#888' }}>Borough Total Population</div>
-          </LinkableCard>
+            {/* Total Population */}
+            <LinkableCard 
+              className="col-span-1 row-span-1 bg-zinc-800 rounded-lg p-4 flex flex-col items-center justify-center border border-gray-600"
+              styles={{}}
+              elementId="total-population"
+              elementName="Total Population"
+              elementType="kpi"
+              onAddToSidebar={handleAddToSidebar}
+            >
+              <div className="text-2xl font-bold text-white">324,091</div>
+              <div className="text-xs text-gray-400">Borough Total Population</div>
+            </LinkableCard>
 
-          {/* Population Change */}
-          <LinkableCard 
-            styles={{
-              gridColumn: '3 / 4',
-              gridRow: '1 / 2',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '1px solid #333'
-            }}
-            elementId="population-change"
-            elementName="Population Change"
-            elementType="kpi"
-            onAddToSidebar={handleAddToSidebar}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <span style={{ color: '#10B981', fontSize: '18px' }}>↗</span>
-              <span style={{ fontSize: '20px', fontWeight: '600', color: '#10B981' }}>+ 14.8%</span>
-            </div>
-            <div style={{ fontSize: '10px', color: '#888' }}>Population Difference from 2011</div>
-          </LinkableCard>
+            {/* Population Change */}
+            <LinkableCard 
+              className="col-span-1 row-span-1 bg-zinc-800 rounded-lg p-4 flex flex-col items-center justify-center border border-gray-600"
+              styles={{}}
+              elementId="population-change"
+              elementName="Population Change"
+              elementType="kpi"
+              onAddToSidebar={handleAddToSidebar}
+            >
+              <div className="flex items-center gap-1">
+                <span className="text-green-500 text-lg">↗</span>
+                <span className="text-xl font-semibold text-green-500">+ 14.8%</span>
+              </div>
+              <div className="text-xs text-gray-400">Population Difference from 2011</div>
+            </LinkableCard>
 
-          {/* Population Density */}
-          <LinkableCard 
-            styles={{
-              gridColumn: '4 / 5',
-              gridRow: '1 / 2',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '1px solid #333'
-            }}
-            elementId="population-density"
-            elementName="Population Density"
-            elementType="kpi"
-            onAddToSidebar={handleAddToSidebar}
-          >
-            <div style={{ fontSize: '24px', fontWeight: '700', color: '#fff' }}>48.1</div>
-            <div style={{ fontSize: '10px', color: '#888' }}>Population Density (per 10,000 m²)</div>
-          </LinkableCard>
+            {/* Population Density */}
+            <LinkableCard 
+              className="col-span-1 row-span-1 bg-zinc-800 rounded-lg p-4 flex flex-col items-center justify-center border border-gray-600"
+              styles={{}}
+              elementId="population-density"
+              elementName="Population Density"
+              elementType="kpi"
+              onAddToSidebar={handleAddToSidebar}
+            >
+              <div className="text-2xl font-bold text-white">48.1</div>
+              <div className="text-xs text-gray-400">Population Density (per 10,000 m²)</div>
+            </LinkableCard>
 
-          {/* Mean House Price */}
-          <LinkableCard 
-            styles={{
-              gridColumn: '5 / 6',
-              gridRow: '1 / 2',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '1px solid #333'
-            }}
-            elementId="mean-house-price"
-            elementName="Mean House Price"
-            elementType="kpi"
-            onAddToSidebar={handleAddToSidebar}
-          >
-            <div style={{ fontSize: '24px', fontWeight: '700', color: '#fff' }}>£516,266</div>
-            <div style={{ fontSize: '10px', color: '#888' }}>Mean House Price</div>
-          </LinkableCard>
+            {/* Mean House Price */}
+            <LinkableCard 
+              className="col-span-1 row-span-1 bg-zinc-800 rounded-lg p-4 flex flex-col items-center justify-center border border-gray-600"
+              styles={{}}
+              elementId="mean-house-price"
+              elementName="Mean House Price"
+              elementType="kpi"
+              onAddToSidebar={handleAddToSidebar}
+            >
+              <div className="text-2xl font-bold text-white">£516,266</div>
+              <div className="text-xs text-gray-400">Mean House Price</div>
+            </LinkableCard>
 
-          {/* Mean Household Income */}
-          <LinkableCard 
-            styles={{
-              gridColumn: '6 / 7',
-              gridRow: '1 / 2',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '1px solid #333'
-            }}
-            elementId="mean-household-income"
-            elementName="Mean Household Income"
-            elementType="kpi"
-            onAddToSidebar={handleAddToSidebar}
-          >
-            <div style={{ fontSize: '24px', fontWeight: '700', color: '#fff' }}>£42,132</div>
-            <div style={{ fontSize: '10px', color: '#888' }}>Mean Household Income</div>
-          </LinkableCard>
-
-          {/* Map Controls */}
-          <LinkableCard 
-            styles={{
-              gridColumn: '7 / 8',
-              gridRow: '1 / 2',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-              border: '1px solid #333'
-            }}
-            elementId="map-controls"
-            elementName="Map Controls"
-            elementType="control"
-            onAddToSidebar={handleAddToSidebar}
-          >
-            <div style={{ fontSize: '10px', color: '#888', textAlign: 'center' }}>MAP DISPLAY</div>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '4px'
-            }}>
-              <button style={{
-                background: '#8B5CF6',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                padding: '4px 8px',
-                fontSize: '9px',
-                cursor: 'pointer'
-              }}>Population</button>
-              <button style={{
-                background: '#333',
-                color: '#888',
-                border: 'none',
-                borderRadius: '4px',
-                padding: '4px 8px',
-                fontSize: '9px',
-                cursor: 'pointer'
-              }}>House Prices</button>
-              <button style={{
-                background: '#333',
-                color: '#888',
-                border: 'none',
-                borderRadius: '4px',
-                padding: '4px 8px',
-                fontSize: '9px',
-                cursor: 'pointer'
-              }}>Car Ownership</button>
-              <button style={{
-                background: '#333',
-                color: '#888',
-                border: 'none',
-                borderRadius: '4px',
-                padding: '4px 8px',
-                fontSize: '9px',
-                cursor: 'pointer'
-              }}>Deprivation</button>
-            </div>
-          </LinkableCard>
-
-          {/* Profile Icon */}
-          <LinkableCard 
-            styles={{
-              gridColumn: '8 / 9',
-              gridRow: '1 / 2',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '1px solid #333'
-            }}
-            elementId="profile-icon"
-            elementName="Profile Icon"
-            elementType="control"
-            onAddToSidebar={handleAddToSidebar}
-          >
-            <div style={{ fontSize: '10px', color: '#888', marginBottom: '5px' }}>PROFILE</div>
-            <div style={{
-              display: 'flex',
-              gap: '5px'
-            }}>
-              <div style={{
-                width: '20px',
-                height: '20px',
-                backgroundColor: '#333',
-                borderRadius: '50%'
-              }}></div>
-              <div style={{
-                width: '20px',
-                height: '20px',
-                backgroundColor: '#333',
-                borderRadius: '50%'
-              }}></div>
-              <div style={{
-                width: '20px',
-                height: '20px',
-                backgroundColor: '#333',
-                borderRadius: '50%'
-              }}></div>
-            </div>
-          </LinkableCard>
+            {/* Mean Household Income */}
+            <LinkableCard 
+              className="col-span-1 row-span-1 bg-zinc-800 rounded-lg p-4 flex flex-col items-center justify-center border border-gray-600"
+              styles={{}}
+              elementId="mean-household-income"
+              elementName="Mean Household Income"
+              elementType="kpi"
+              onAddToSidebar={handleAddToSidebar}
+            >
+              <div className="text-2xl font-bold text-white">£42,132</div>
+              <div className="text-xs text-gray-400">Mean Household Income</div>
+            </LinkableCard>
+          </div>
 
           {/* Row 2: Large Map (4x4) + Right Side Charts (2x2 each) */}
           {/* LSOA Level Borough Map */}
           <LinkableCard 
-            styles={{
-              gridColumn: '1 / 4',
-              gridRow: '2 / 5',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '20px',
-              border: '1px solid #333',
-              position: 'relative'
-            }}
+            className="col-start-1 col-end-4 row-start-2 row-end-5 bg-zinc-800 rounded-lg p-5 border border-gray-600 relative"
+            styles={{}}
             elementId="lsoa-map"
             elementName="LSOA Level Borough Map"
             elementType="map"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div style={{
-              position: 'absolute',
-              top: '15px',
-              left: '20px',
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#fff'
-            }}>
+            <div className="absolute top-4 left-5 text-xs font-semibold text-white">
               LSOA LEVEL BOROUGH MAP | POPULATION DENSITY
             </div>
-            <div style={{
-              position: 'absolute',
-              top: '15px',
-              right: '20px',
-              fontSize: '10px',
-              color: '#888'
-            }}>
+            <div className="absolute top-4 right-5 text-xs text-gray-400">
               (Click to filter dashboard)
             </div>
             
             {/* Map Content */}
-            <div style={{
-              position: 'absolute',
-              top: '50px',
-              left: '20px',
-              right: '20px',
-              bottom: '20px',
-              background: 'linear-gradient(135deg, #1e1e2e 0%, #2d1b69 50%, #8B5CF6 100%)',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              overflow: 'hidden'
+            <div className="absolute top-12 left-5 right-5 bottom-5 rounded-lg flex items-center justify-center overflow-hidden" style={{
+              background: 'linear-gradient(135deg, #1e1e2e 0%, #2d1b69 50%, #8B5CF6 100%)'
             }}>
               {/* Simulated borough shapes */}
-              <div style={{
-                position: 'absolute',
-                width: '200px',
-                height: '150px',
+              <div className="absolute w-52 h-36 rounded-lg border-2 border-white border-opacity-30" style={{
                 background: 'rgba(139, 92, 246, 0.8)',
                 borderRadius: '20px 40px 30px 50px',
                 top: '30px',
-                left: '50px',
-                border: '2px solid rgba(255,255,255,0.3)'
+                left: '50px'
               }}></div>
-              <div style={{
-                position: 'absolute',
-                width: '180px',
-                height: '120px',
+              <div className="absolute w-44 h-28 rounded-lg border-2 border-white border-opacity-20" style={{
                 background: 'rgba(99, 102, 241, 0.6)',
                 borderRadius: '30px 20px 40px 25px',
                 top: '80px',
-                right: '60px',
-                border: '2px solid rgba(255,255,255,0.2)'
+                right: '60px'
               }}></div>
-              <div style={{
-                position: 'absolute',
-                width: '160px',
-                height: '100px',
+              <div className="absolute w-40 h-24 rounded-lg border-2 border-white border-opacity-30" style={{
                 background: 'rgba(167, 85, 247, 0.7)',
                 borderRadius: '25px 35px 20px 45px',
                 bottom: '40px',
-                left: '80px',
-                border: '2px solid rgba(255,255,255,0.3)'
+                left: '80px'
               }}></div>
               
               {/* Map legend indicator */}
-              <div style={{
-                position: 'absolute',
-                bottom: '10px',
-                right: '10px',
-                fontSize: '10px',
-                color: '#ccc'
-              }}>
+              <div className="absolute bottom-2 right-2 text-xs text-gray-300">
                 High ●●●●●● Low
               </div>
             </div>
@@ -614,48 +255,22 @@ const Dashboard3: React.FC = () => {
 
           {/* Middle: Borough Map */}
           <LinkableCard 
-            styles={{
-              gridColumn: '4 / 7',
-              gridRow: '2 / 5',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '20px',
-              border: '1px solid #333',
-              position: 'relative'
-            }}
+            className="col-start-4 col-end-7 row-start-2 row-end-5 bg-zinc-800 rounded-lg p-5 border border-gray-600 relative"
+            styles={{}}
             elementId="borough-map"
             elementName="Borough Map"
             elementType="map"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div style={{
-              position: 'absolute',
-              top: '15px',
-              left: '20px',
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#fff'
-            }}>
+            <div className="absolute top-4 left-5 text-xs font-semibold text-white">
               LONDON BOROUGH MAP
             </div>
-            <div style={{
-              position: 'absolute',
-              top: '15px',
-              right: '20px',
-              fontSize: '10px',
-              color: '#888'
-            }}>
+            <div className="absolute top-4 right-5 text-xs text-gray-400">
               (Click to filter dashboard)
             </div>
             
             {/* Map Content */}
-            <div style={{
-              position: 'absolute',
-              top: '20px',
-              left: '80px',
-              right: '20px',
-              bottom: '20px'
-            }} title='Click outside to reset selection'>
+            <div className="absolute top-5 left-20 right-5 bottom-5" title='Click outside to reset selection'>
               <VegaLite 
                 spec={boroughMapSpec} 
                 actions={false}
@@ -682,9 +297,9 @@ const Dashboard3: React.FC = () => {
             </div>
 
             {/* Borough Filter */}
-            <div className="absolute bottom-4 left-4 text-md text-gray-400">
-              <div style={{ color: '#888' }}>Total Population</div>
-              <div className="text-2xl font-bold" style={{ color: '#8B5CF6' }}>
+            <div className="absolute bottom-4 left-4 text-gray-400">
+              <div className="text-gray-400">Total Population</div>
+              <div className="text-2xl font-bold text-purple-500">
                 9.51m
               </div>
             </div>
@@ -692,68 +307,33 @@ const Dashboard3: React.FC = () => {
 
           {/* Bottom Left: Country of Birth */}
           <LinkableCard 
-            styles={{
-              gridColumn: '1 / 4',
-              gridRow: '5 / 6',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              border: '1px solid #333',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
+            className="col-start-1 col-end-4 row-start-5 row-end-6 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative overflow-hidden"
+            styles={{}}
             elementId="country-of-birth"
             elementName="Country of Birth"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div style={{
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#fff',
-              marginBottom: '10px'
-            }}>
+            <div className="text-xs font-semibold text-white mb-2">
               COUNTRY OF BIRTH
             </div>
             
             {/* Donut Chart Simulation */}
-            <div style={{
-              position: 'relative',
-              width: '120px',
-              height: '120px',
-              margin: '0 auto',
-              borderRadius: '50%',
+            <div className="relative w-32 h-32 mx-auto rounded-full" style={{
               background: `conic-gradient(
                 #8B5CF6 0deg 252deg,
                 #333 252deg 360deg
               )`
             }}>
-              <div style={{
-                position: 'absolute',
-                top: '30px',
-                left: '30px',
-                width: '60px',
-                height: '60px',
-                backgroundColor: '#1a1a1a',
-                borderRadius: '50%',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <div style={{ fontSize: '16px', fontWeight: '700', color: '#fff' }}>70.7%</div>
-                <div style={{ fontSize: '8px', color: '#888' }}>UK</div>
+              <div className="absolute top-8 left-8 w-16 h-16 bg-zinc-800 rounded-full flex flex-col items-center justify-center">
+                <div className="text-base font-bold text-white">70.7%</div>
+                <div className="text-xs text-gray-400">UK</div>
               </div>
             </div>
 
-            <div style={{
-              marginTop: '10px',
-              fontSize: '10px',
-              color: '#888',
-              textAlign: 'center'
-            }}>
+            <div className="mt-2 text-xs text-gray-400 text-center">
               <div>29.3% Outside UK</div>
-              <div style={{ color: '#10B981', marginTop: '5px' }}>
+              <div className="text-green-500 mt-1">
                 ▲ +8.5% Change from outside UK since 2011
               </div>
             </div>
@@ -761,34 +341,19 @@ const Dashboard3: React.FC = () => {
 
           {/* Top Far Right: Borough Crime Stats */}
           <LinkableCard 
-            styles={{
-              gridColumn: '7 / 9',
-              gridRow: '2 / 4',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              border: '1px solid #333'
-            }}
+            className="col-start-7 col-end-9 row-start-2 row-end-4 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            styles={{}}
             elementId="borough-crime-stats"
             elementName="Borough Crime Stats"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div style={{
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#fff',
-              marginBottom: '10px'
-            }}>
+            <div className="text-xs font-semibold text-white mb-2">
               BOROUGH'S WITH MOST CRIME | BURGLARY
             </div>
             
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px'
-            }}>
-              <div style={{ fontSize: '10px', color: '#888' }}>Select Crime Type ▼</div>
+            <div className="flex flex-col gap-2">
+              <div className="text-xs text-gray-400">Select Crime Type ▼</div>
               
               {/* Crime bars */}
               {[
@@ -798,39 +363,27 @@ const Dashboard3: React.FC = () => {
                 { name: 'Barnet', value: 65 },
                 { name: 'Hackney', value: 60 }
               ].map((borough, index) => (
-                <div key={borough.name} style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  <div style={{
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: index < 3 ? '#8B5CF6' : '#333',
-                    borderRadius: '2px'
-                  }}></div>
-                  <div style={{
-                    flex: 1,
-                    fontSize: '10px',
-                    color: '#fff'
-                  }}>
+                <div key={borough.name} className="flex items-center gap-2">
+                  <div 
+                    className="w-3 h-3 rounded-sm"
+                    style={{
+                      backgroundColor: index < 3 ? '#8B5CF6' : '#333'
+                    }}
+                  ></div>
+                  <div className="flex-1 text-xs text-white">
                     {borough.name}
                   </div>
-                  <div style={{
-                    width: `${borough.value}px`,
-                    height: '4px',
-                    backgroundColor: index < 3 ? '#8B5CF6' : '#333',
-                    borderRadius: '2px'
-                  }}></div>
+                  <div 
+                    className="h-1 rounded-sm"
+                    style={{
+                      width: `${borough.value}px`,
+                      backgroundColor: index < 3 ? '#8B5CF6' : '#333'
+                    }}
+                  ></div>
                 </div>
               ))}
               
-              <div style={{
-                marginTop: '5px',
-                fontSize: '8px',
-                color: '#888',
-                textAlign: 'right'
-              }}>
+              <div className="mt-1 text-xs text-gray-400 text-right">
                 0 1,000 2,000 3,000
               </div>
             </div>
@@ -838,81 +391,44 @@ const Dashboard3: React.FC = () => {
 
           {/* Bottom Middle: School Education Facilities */}
           <LinkableCard 
-            styles={{
-              gridColumn: '4 / 7',
-              gridRow: '5 / 6',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              border: '1px solid #333',
-              overflow: 'hidden'
-            }}
+            className="col-start-4 col-end-7 row-start-5 row-end-6 bg-zinc-800 rounded-lg p-4 border border-gray-600 overflow-hidden"
+            styles={{}}
             elementId="school-education-facilities"
             elementName="School Education Facilities"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div style={{
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#fff',
-              marginBottom: '15px'
-            }}>
+            <div className="text-xs font-semibold text-white mb-3">
               SCHOOL EDUCATION FACILITIES
             </div>
             
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px'
-            }}>
+            <div className="flex flex-col gap-3">
               {[
                 { label: 'Primary', value: 69, percentage: '61.6%' },
                 { label: 'Secondary', value: 20, percentage: '17.9%' },
                 { label: 'Other', value: 22, percentage: '19.6%' },
                 { label: 'All Through', value: 1, percentage: '0.9%' }
               ].map((item) => (
-                <div key={item.label} style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}>
-                  <div style={{
-                    fontSize: '10px',
-                    color: '#fff',
-                    minWidth: '60px'
-                  }}>
+                <div key={item.label} className="flex items-center justify-between">
+                  <div className="text-xs text-white min-w-0"
+                    style={{ minWidth: '60px' }}
+                  >
                     {item.label}
                   </div>
-                  <div style={{
-                    flex: 1,
-                    height: '8px',
-                    backgroundColor: '#333',
-                    borderRadius: '4px',
-                    margin: '0 10px',
-                    position: 'relative'
-                  }}>
-                    <div style={{
-                      width: item.percentage,
-                      height: '100%',
-                      backgroundColor: '#8B5CF6',
-                      borderRadius: '4px'
-                    }}></div>
+                  <div className="flex-1 h-2 bg-gray-700 rounded mx-2 relative">
+                    <div 
+                      className="h-full bg-purple-500 rounded"
+                      style={{ width: item.percentage }}
+                    ></div>
                   </div>
-                  <div style={{
-                    fontSize: '10px',
-                    color: '#fff',
-                    minWidth: '20px',
-                    textAlign: 'center'
-                  }}>
+                  <div className="text-xs text-white text-center"
+                    style={{ minWidth: '20px' }}
+                  >
                     {item.value}
                   </div>
-                  <div style={{
-                    fontSize: '9px',
-                    color: '#888',
-                    minWidth: '35px',
-                    textAlign: 'right'
-                  }}>
+                  <div className="text-xs text-gray-400 text-right"
+                    style={{ minWidth: '35px' }}
+                  >
                     ({item.percentage})
                   </div>
                 </div>
@@ -922,74 +438,36 @@ const Dashboard3: React.FC = () => {
 
           {/* Middle Far Right: Health Level */}
           <LinkableCard 
-            styles={{
-              gridColumn: '7 / 9',
-              gridRow: '4 / 6',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              border: '1px solid #333',
-              position: 'relative'
-            }}
+            className="col-start-7 col-end-9 row-start-4 row-end-6 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
+            styles={{}}
             elementId="health-level"
             elementName="Health Level"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div style={{
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#fff',
-              marginBottom: '10px'
-            }}>
+            <div className="text-xs font-semibold text-white mb-2">
               RECORDED HEALTH LEVEL
             </div>
-            <div style={{
-              fontSize: '9px',
-              color: '#888',
-              marginBottom: '15px'
-            }}>
+            <div className="text-xs text-gray-400 mb-4">
               Where respond was classified as Good
             </div>
             
             {/* Gauge Chart Simulation */}
-            <div style={{
-              position: 'relative',
-              width: '100px',
-              height: '50px',
-              margin: '0 auto',
+            <div className="relative w-25 h-12 mx-auto overflow-hidden" style={{
               borderRadius: '100px 100px 0 0',
               border: '8px solid #333',
-              borderBottom: 'none',
-              overflow: 'hidden'
+              borderBottom: 'none'
             }}>
-              <div style={{
-                position: 'absolute',
-                bottom: '0',
-                left: '0',
-                width: '83.9%',
-                height: '8px',
-                backgroundColor: '#8B5CF6',
-                borderRadius: '4px'
-              }}></div>
+              <div className="absolute bottom-0 left-0 h-2 bg-purple-500 rounded"
+                style={{ width: '83.9%' }}
+              ></div>
             </div>
             
-            <div style={{
-              textAlign: 'center',
-              marginTop: '10px'
-            }}>
-              <div style={{
-                fontSize: '24px',
-                fontWeight: '700',
-                color: '#8B5CF6'
-              }}>
+            <div className="text-center mt-2">
+              <div className="text-2xl font-bold text-purple-500">
                 83.9%
               </div>
-              <div style={{
-                fontSize: '8px',
-                color: '#888',
-                marginTop: '5px'
-              }}>
+              <div className="text-xs text-gray-400 mt-1">
                 0 25 75 100
               </div>
             </div>
@@ -998,74 +476,40 @@ const Dashboard3: React.FC = () => {
           {/* Row 3: Bottom Charts (2x2 each) */}
           {/* Car Ownership */}
           <LinkableCard 
-            styles={{
-              gridColumn: '1 / 3',
-              gridRow: '6 / 8',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              border: '1px solid #333',
-              position: 'relative'
-            }}
+            className="col-start-1 col-end-3 row-start-6 row-end-8 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
+            styles={{}}
             elementId="car-ownership"
             elementName="Car Ownership"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div style={{
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#fff',
-              marginBottom: '10px'
-            }}>
+            <div className="text-xs font-semibold text-white mb-2">
               CAR OWNERSHIP
             </div>
-            <div style={{
-              fontSize: '9px',
-              color: '#888',
-              marginBottom: '15px'
-            }}>
+            <div className="text-xs text-gray-400 mb-4">
               Households with one or more vehicles
             </div>
             
             {/* Gauge Chart */}
-            <div style={{
-              position: 'relative',
+            <div className="relative mx-auto overflow-hidden" style={{
               width: '120px',
               height: '60px',
-              margin: '0 auto',
               borderRadius: '120px 120px 0 0',
               border: '12px solid #333',
-              borderBottom: 'none',
-              overflow: 'hidden'
+              borderBottom: 'none'
             }}>
-              <div style={{
-                position: 'absolute',
-                bottom: '0',
-                left: '0',
+              <div className="absolute bottom-0 left-0 bg-purple-500" style={{
                 width: '43.6%',
                 height: '12px',
-                backgroundColor: '#8B5CF6',
                 borderRadius: '6px'
               }}></div>
             </div>
             
-            <div style={{
-              textAlign: 'center',
-              marginTop: '15px'
-            }}>
-              <div style={{
-                fontSize: '28px',
-                fontWeight: '700',
-                color: '#8B5CF6'
-              }}>
+            <div className="text-center mt-4">
+              <div className="text-2xl font-bold text-purple-500">
                 43.6%
               </div>
-              <div style={{
-                fontSize: '8px',
-                color: '#888',
-                marginTop: '5px'
-              }}>
+              <div className="text-xs text-gray-400 mt-1">
                 0 25 75 100
               </div>
             </div>
@@ -1073,34 +517,17 @@ const Dashboard3: React.FC = () => {
 
           {/* Mean House Price Chart */}
           <LinkableCard 
-            styles={{
-              gridColumn: '3 / 5',
-              gridRow: '6 / 8',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              border: '1px solid #333'
-            }}
+            className="col-start-3 col-end-5 row-start-6 row-end-8 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            styles={{}}
             elementId="mean-house-price-chart"
             elementName="Mean House Price Chart"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div style={{
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#fff',
-              marginBottom: '5px'
-            }}>
+            <div className="text-xs font-semibold text-white mb-1">
               MEAN HOUSE PRICE
             </div>
-            <div style={{
-              fontSize: '9px',
-              color: '#888',
-              display: 'flex',
-              gap: '10px',
-              marginBottom: '15px'
-            }}>
+            <div className="text-xs text-gray-400 flex gap-2 mb-4">
               <span>● London</span>
               <span>● National Average</span>
             </div>
@@ -1162,14 +589,8 @@ const Dashboard3: React.FC = () => {
 
           {/* All Ethnicity Types */}
           <LinkableCard 
-            styles={{
-              gridColumn: '5 / 7',
-              gridRow: '6 / 8',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              border: '1px solid #333'
-            }}
+            className="col-start-5 col-end-7 row-start-6 row-end-8 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            styles={{}}
             elementId="all-ethnicity-types"
             elementName="All Ethnicity Types"
             elementType="chart"
@@ -1280,14 +701,8 @@ const Dashboard3: React.FC = () => {
 
           {/* Map Layers */}
           <LinkableCard 
-            styles={{
-              gridColumn: '7 / 9',
-              gridRow: '6 / 8',
-              backgroundColor: '#1a1a1a',
-              borderRadius: '8px',
-              padding: '15px',
-              border: '1px solid #333'
-            }}
+            className="col-start-7 col-end-9 row-start-6 row-end-8 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            styles={{}}
             elementId="map-layers"
             elementName="Map Layers"
             elementType="control"
