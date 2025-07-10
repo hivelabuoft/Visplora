@@ -18,7 +18,7 @@ import {
   createGenderAttritionDonutChart,
   createEducationBarChart,
   createEducationFieldBarChart
-} from '../data/chartSpecs';
+} from './chartSpecs';
 
 export interface WidgetChartData {
   vegaSpec: VegaLiteSpec;

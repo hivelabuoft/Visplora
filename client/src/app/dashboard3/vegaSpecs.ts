@@ -1,3 +1,5 @@
+import { title } from "process";
+
 // Vega-Lite specification for London boroughs map
 export const boroughMapSpec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
@@ -236,3 +238,101 @@ export const lsoaMapSpec = (selectedBorough: string) => {
     }
   };
 };
+
+// Population Growth & Projections Chart specification
+export const populationTimelineChartSpec = (data: Array<{year: number, population: number, type: string}>) => ({
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+  "width": 420,
+  "height": 130,
+  "background": "transparent",
+  "data": {
+    "values": data
+  },
+  "params": [
+    {
+      "name": "hover",
+      "select": {
+        "type": "point",
+        "on": "mouseover",
+        "clear": "mouseout"
+      }
+    }
+  ],
+  "mark": {
+    "type": "bar" as const,
+    "width": 7,
+    "cursor": "pointer" as const
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal" as const,
+      "axis": {
+        "labelColor": "#888",
+        "titleColor": "#888",
+        "labelFontSize": 8,
+        "labelAngle": -45,
+        "grid": false,
+        "ticks": false,
+        "domain": false,
+        "values": [1999, 2003, 2007, 2011, 2015, 2019, 2023, 2027, 2031],
+        "title": null
+      }
+    },
+    "y": {
+      "field": "population",
+      "type": "quantitative" as const,
+      "axis": {
+        "labelColor": "#888",
+        "titleColor": "#888",
+        "labelFontSize": 8,
+        "grid": false,
+        "ticks": false,
+        "domain": false,
+        "format": ".2s",
+        "title": null
+      }
+    },
+    "color": {
+      "field": "type",
+      "type": "nominal" as const,
+      "scale": {
+        "domain": ["Historical", "Projected"],
+        "range": ["#8B5CF6", "#4C1D95"]
+      },
+      "legend": null
+    },
+    "stroke": {
+      "condition": {
+        "param": "hover",
+        "value": "#ffffffff"
+      },
+      "value": "transparent"
+    },
+    "strokeWidth": {
+      "condition": {
+        "param": "hover",
+        "value": 0.1
+      },
+      "value": 0
+    },
+    "opacity": {
+      "condition": {
+        "param": "hover",
+        "value": 1
+      },
+      "value": 0.5
+    },
+    "tooltip": [
+      {"field": "year", "type": "ordinal" as const, "title": "Year"},
+      {"field": "population", "type": "quantitative" as const, "title": "Population", "format": ","},
+      {"field": "type", "type": "nominal" as const, "title": "Data Type"}
+    ]
+  },
+  "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    }
+  }
+});

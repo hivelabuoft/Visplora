@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import TopNavbar from './components/TopNavbar';
 import Sidebar from './components/Sidebar';
 import Canvas from './components/Canvas';
-import { chartTemplates } from './data/chartTemplates';
+import { chartTemplates } from './dashboard1/chartTemplates';
 import { Visualization, ChartTemplate } from './types/visualization';
 import { SelectedElementsProvider, useSelectedElements } from '../components/context/SelectedElementsContext';
 import { DataLoader } from './dashboard2/dataLoader';
@@ -67,7 +67,8 @@ function HomeContent() {
     <div className="flex flex-col h-screen bg-slate-50">
       <TopNavbar projectName={projectName} onProjectNameChange={setProjectName} />
       
-      <div className="flex flex-1 overflow-hidden">        <Sidebar 
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar 
           selectedElements={selectedElements}
           onElementRemove={removeElement}
           chartTemplates={chartTemplates}

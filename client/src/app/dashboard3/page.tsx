@@ -5,14 +5,46 @@ import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
 import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec } from './vegaSpecs';
-import { repeat } from 'vega';
+import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec } from './vegaSpecs';
+import { 
+  loadPopulationData, 
+  processPopulationData, 
+  formatNumber, 
+  formatPercentage, 
+  formatDensity,
+  generatePopulationTimelineData,
+  BoroughPopulationMetrics,
+  PopulationData,
+  PopulationTimelineData
+} from './populationData';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
   const [selectedBorough, setSelectedBorough] = useState<string>('Brent');
   const [selectedLSOA, setSelectedLSOA] = useState<string>('');
   const [lsoaDataAvailable, setLsoaDataAvailable] = useState<boolean>(false);
+  const [populationMetrics, setPopulationMetrics] = useState<Map<string, BoroughPopulationMetrics>>(new Map());
+  const [populationRawData, setPopulationRawData] = useState<PopulationData[]>([]);
+  const [isLoadingPopulation, setIsLoadingPopulation] = useState<boolean>(true);
+
+  // Load population data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoadingPopulation(true);
+      try {
+        const data = await loadPopulationData();
+        setPopulationRawData(data);
+        const metrics = processPopulationData(data);
+        setPopulationMetrics(metrics);
+      } catch (error) {
+        console.error('Error loading population data:', error);
+      } finally {
+        setIsLoadingPopulation(false);
+      }
+    };
+    
+    loadData();
+  }, []);
 
   // Check if LSOA data is available for the selected borough
   useEffect(() => {
@@ -40,6 +72,31 @@ const Dashboard3: React.FC = () => {
       setSelectedBorough(value.datum.id);
     }
   };
+
+  // Get population metrics for the currently selected borough
+  const getCurrentBoroughMetrics = (): BoroughPopulationMetrics | null => {
+    return populationMetrics.get(selectedBorough) || null;
+  };
+
+  // Calculate total London population from all boroughs
+  const getTotalLondonPopulation = (): number => {
+    let total = 0;
+    populationMetrics.forEach((metrics) => {
+      total += metrics.population2023;
+    });
+    return total;
+  };
+
+  const currentMetrics = getCurrentBoroughMetrics();
+  const totalLondonPopulation = getTotalLondonPopulation();
+  
+  // Generate population timeline data for the selected borough
+  const getPopulationTimelineData = (): PopulationTimelineData[] => {
+    if (populationRawData.length === 0) return [];
+    return generatePopulationTimelineData(populationRawData, selectedBorough);
+  };
+  
+  const populationTimelineData = getPopulationTimelineData();
 
   return (
     <DashboardPlayground
@@ -92,7 +149,7 @@ const Dashboard3: React.FC = () => {
               textAlign: 'right'
             }}>
               Charts based on data from the<br />
-              <strong>2021</strong> census, where applicable
+              <strong>2023</strong> census, where applicable
             </div>
             <div style={{
               width: '40px',
@@ -138,7 +195,7 @@ const Dashboard3: React.FC = () => {
               onAddToSidebar={handleAddToSidebar}
             >
               <div className='flex items-center justify-center gap-2 h-full'>
-                <div className='text-sm font-semibold text-white'>
+                <div className='text-md font-semibold text-white'>
                   {selectedBorough}
                 </div>
                 <div className='w-[50px] h-[50px]'>
@@ -163,7 +220,10 @@ const Dashboard3: React.FC = () => {
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-2xl font-bold text-white">324,091</div>
+              <div className="text-lg font-bold text-white">
+                {isLoadingPopulation ? 'Loading...' : 
+                 currentMetrics ? formatNumber(currentMetrics.population2023) : 'N/A'}
+              </div>
               <div className="text-xs text-gray-400">Borough Total Population</div>
             </LinkableCard>
 
@@ -177,10 +237,22 @@ const Dashboard3: React.FC = () => {
               onAddToSidebar={handleAddToSidebar}
             >
               <div className="flex items-center gap-1">
-                <span className="text-green-500 text-lg">↗</span>
-                <span className="text-xl font-semibold text-green-500">+ 14.8%</span>
+                {isLoadingPopulation ? (
+                  <span className="text-lg font-semibold text-white">Loading...</span>
+                ) : currentMetrics ? (
+                  <>
+                    <span className={`text-lg ${currentMetrics.populationChangeFromPrevYearPercent >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {currentMetrics.populationChangeFromPrevYearPercent >= 0 ? '↗' : '↘'}
+                    </span>
+                    <span className={`text-lg font-semibold ${currentMetrics.populationChangeFromPrevYearPercent >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {formatPercentage(currentMetrics.populationChangeFromPrevYearPercent)}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-lg font-semibold text-white">N/A</span>
+                )}
               </div>
-              <div className="text-xs text-gray-400">Population Difference from 2011</div>
+              <div className="text-center text-xs text-gray-400">Population Difference from 2022</div>
             </LinkableCard>
 
             {/* Population Density */}
@@ -192,8 +264,11 @@ const Dashboard3: React.FC = () => {
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-2xl font-bold text-white">48.1</div>
-              <div className="text-xs text-gray-400">Population Density (per 10,000 m²)</div>
+              <div className="text-lg font-bold text-white">
+                {isLoadingPopulation ? 'Loading...' : 
+                 currentMetrics ? formatDensity(currentMetrics.populationDensityPer10000) : 'N/A'}
+              </div>
+              <div className="text-center text-xs text-gray-400">Population Density <br />(per 10,000 m²)</div>
             </LinkableCard>
 
             {/* Mean House Price */}
@@ -233,7 +308,7 @@ const Dashboard3: React.FC = () => {
             elementType="map"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="absolute top-4 left-5 text-xs font-semibold text-white">
+            <div className="absolute top-4 left-5 text-sm font-semibold text-white">
               LSOA LEVEL BOROUGH MAP | {selectedBorough.toUpperCase()}
             </div>
             <div className="absolute top-4 right-5 text-xs text-gray-400">
@@ -341,42 +416,50 @@ const Dashboard3: React.FC = () => {
             <div className="absolute bottom-4 left-4 text-gray-400">
               <div className="text-xs text-gray-400">Total Population</div>
               <div className="text-xl font-bold text-purple-500">
-                9.51m
+                {isLoadingPopulation ? 'Loading...' : 
+                 totalLondonPopulation > 0 ? 
+                   (totalLondonPopulation / 1000000).toFixed(2) + 'M' : 
+                   'N/A'}
               </div>
             </div>
           </LinkableCard>
 
-          {/* Bottom Left: Country of Birth */}
+          {/* Bottom Left: Population Growth & Projections */}
           <LinkableCard 
             className="col-start-1 col-end-4 row-start-5 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative overflow-hidden"
             styles={{}}
-            elementId="country-of-birth"
-            elementName="Country of Birth"
+            elementId="population-growth-projections"
+            elementName="Population Growth & Projections"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-xs font-semibold text-white mb-2">
-              COUNTRY OF BIRTH
+            <div className="text-sm font-semibold text-white mb-2">
+              POPULATION GROWTH & PROJECTIONS
+            </div>
+            <div className="text-xs text-gray-400 mb-3">
+              Historical data (1999-2023) and projections (2024-2033)
             </div>
             
-            {/* Donut Chart Simulation */}
-            <div className="relative w-32 h-32 mx-auto rounded-full" style={{
-              background: `conic-gradient(
-                #8B5CF6 0deg 252deg,
-                #333 252deg 360deg
-              )`
-            }}>
-              <div className="absolute top-8 left-8 w-16 h-16 bg-zinc-800 rounded-full flex flex-col items-center justify-center">
-                <div className="text-base font-bold text-white">70.7%</div>
-                <div className="text-xs text-gray-400">UK</div>
-              </div>
-            </div>
-
-            <div className="mt-2 text-xs text-gray-400 text-center">
-              <div>29.3% Outside UK</div>
-              <div className="text-green-500 mt-1">
-                ▲ +8.5% Change from outside UK since 2011
-              </div>
+            {/* Vega-Lite Bar Chart */}
+            <div className="absolute bottom-0 left-4 right-4">
+              {isLoadingPopulation ? (
+                <div className="flex items-center justify-center h-full text-gray-400">
+                  Loading chart data...
+                </div>
+              ) : populationTimelineData.length > 0 ? (
+                <VegaLite
+                  spec={populationTimelineChartSpec(populationTimelineData)}
+                  actions={false}
+                  style={{
+                    width: '100%',
+                    height: '100%'
+                  }}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-400">
+                  No data available
+                </div>
+              )}
             </div>
           </LinkableCard>
 
