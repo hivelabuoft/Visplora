@@ -1,0 +1,398 @@
+{
+  "Barking and Dagenham": {
+    "lsoa_count": 115,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Barking and Dagenham.json"
+  },
+  "Barnet": {
+    "lsoa_count": 220,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Barnet.json"
+  },
+  "Bexley": {
+    "lsoa_count": 148,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Bexley.json"
+  },
+  "Brent": {
+    "lsoa_count": 181,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Brent.json"
+  },
+  "Bromley": {
+    "lsoa_count": 199,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Bromley.json"
+  },
+  "Camden": {
+    "lsoa_count": 130,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Camden.json"
+  },
+  "City of London": {
+    "lsoa_count": 6,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/City of London.json"
+  },
+  "Croydon": {
+    "lsoa_count": 229,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Croydon.json"
+  },
+  "Ealing": {
+    "lsoa_count": 199,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Ealing.json"
+  },
+  "Enfield": {
+    "lsoa_count": 183,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Enfield.json"
+  },
+  "Greenwich": {
+    "lsoa_count": 164,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Greenwich.json"
+  },
+  "Hackney": {
+    "lsoa_count": 149,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Hackney.json"
+  },
+  "Hammersmith and Fulham": {
+    "lsoa_count": 115,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Hammersmith and Fulham.json"
+  },
+  "Haringey": {
+    "lsoa_count": 147,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Haringey.json"
+  },
+  "Harrow": {
+    "lsoa_count": 144,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Harrow.json"
+  },
+  "Havering": {
+    "lsoa_count": 153,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Havering.json"
+  },
+  "Hillingdon": {
+    "lsoa_count": 170,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Hillingdon.json"
+  },
+  "Hounslow": {
+    "lsoa_count": 150,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Hounslow.json"
+  },
+  "Islington": {
+    "lsoa_count": 126,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Islington.json"
+  },
+  "Kensington and Chelsea": {
+    "lsoa_count": 101,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Kensington and Chelsea.json"
+  },
+  "Kingston upon Thames": {
+    "lsoa_count": 99,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Kingston upon Thames.json"
+  },
+  "Lambeth": {
+    "lsoa_count": 181,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Lambeth.json"
+  },
+  "Lewisham": {
+    "lsoa_count": 175,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Lewisham.json"
+  },
+  "Merton": {
+    "lsoa_count": 126,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Merton.json"
+  },
+  "Newham": {
+    "lsoa_count": 185,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Newham.json"
+  },
+  "Redbridge": {
+    "lsoa_count": 164,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Redbridge.json"
+  },
+  "Richmond upon Thames": {
+    "lsoa_count": 115,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Richmond upon Thames.json"
+  },
+  "Southwark": {
+    "lsoa_count": 173,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Southwark.json"
+  },
+  "Sutton": {
+    "lsoa_count": 123,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Sutton.json"
+  },
+  "Tower Hamlets": {
+    "lsoa_count": 169,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Tower Hamlets.json"
+  },
+  "Waltham Forest": {
+    "lsoa_count": 146,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Waltham Forest.json"
+  },
+  "Wandsworth": {
+    "lsoa_count": 186,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Wandsworth.json"
+  },
+  "Westminster": {
+    "lsoa_count": 123,
+    "properties": [
+      "lsoa21cd",
+      "lsoa21nm",
+      "msoa21cd",
+      "msoa21nm",
+      "lad22cd",
+      "lad22nm"
+    ],
+    "file_path": "data/lsoa-london/Westminster.json"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "londonBoroughs": {
+    "lsoa_count": 0,
+    "properties": [],
+    "file_path": "data/lsoa-london/londonBoroughs.json"
+  },
+  "londonBoroughsBoundaries": {
+    "lsoa_count": 0,
+    "properties": [],
+    "file_path": "data/lsoa-london/londonBoroughsBoundaries.json"
+  },
+  "lsoa_index": {
+    "lsoa_count": 0,
+    "properties": [],
+    "file_path": "data/lsoa-london/lsoa_index.json"
+  }
+}

@@ -1,16 +1,35 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
 import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec } from './vegaSpecs';
+import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec } from './vegaSpecs';
+import { repeat } from 'vega';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
   const [selectedBorough, setSelectedBorough] = useState<string>('Brent');
   const [selectedLSOA, setSelectedLSOA] = useState<string>('');
+  const [lsoaDataAvailable, setLsoaDataAvailable] = useState<boolean>(false);
+
+  // Check if LSOA data is available for the selected borough
+  useEffect(() => {
+    const checkLsoaData = async () => {
+      try {
+        // Don't URL encode - use the exact borough name as it appears in file names
+        const url = `/data/lsoa-london/${selectedBorough}.json`;
+        const response = await fetch(url);
+        setLsoaDataAvailable(response.ok);
+      } catch (error) {
+        console.error('Error checking LSOA data:', error);
+        setLsoaDataAvailable(false);
+      }
+    };
+    
+    checkLsoaData();
+  }, [selectedBorough]);
 
   function handleAddToSidebar(elementId: string, elementName: string, elementType: string): void {
     throw new Error('Not implemented.');
@@ -28,9 +47,8 @@ const Dashboard3: React.FC = () => {
       dashboardTitle="London Numbers Dashboard"
       dashboardType="london-style"
     >
-      <div className="london-dashboard p-8 rounded-lg text-white" style={{
+      <div className="london-dashboard p-6 rounded-lg text-white" style={{
         width: '100%',
-        height: '1100px',
         backgroundColor: '#0a0a0a',
         fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
       }}>
@@ -107,23 +125,23 @@ const Dashboard3: React.FC = () => {
         </div>
 
         {/* Grid Container */}
-        <div className="grid grid-cols-8 grid-rows-7 gap-4" style={{ gridTemplateRows: 'repeat(7, 120px)' }}>
+        <div className="grid grid-cols-8 grid-rows-8 gap-4" style={{ gridTemplateRows: '100px repeat(7, 110px)'}}>
           {/* Row 1: KPI Indicators (1x1 each) */}
           <div className="col-span-8 row-span-1 grid grid-cols-6 gap-4">
             {/* Borough Details */}
             <LinkableCard 
-              className='text-center p-4 col-span-1 row-span-1 bg-zinc-800 border border-gray-600'
+              className='text-center p-2 col-span-1 row-span-1 bg-zinc-800 border border-gray-600'
               styles={{}}
               elementId="borough-details"
               elementName="Borough Details"
               elementType="borough"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className='flex items-center justify-center gap-4 h-full'>
-                <div className='text-lg font-semibold text-white'>
+              <div className='flex items-center justify-center gap-2 h-full'>
+                <div className='text-sm font-semibold text-white'>
                   {selectedBorough}
                 </div>
-                <div className='w-16 h-16'>
+                <div className='w-[50px] h-[50px]'>
                   <VegaLite 
                     spec={smallBoroughMapSpec(selectedBorough)}
                     actions={false}
@@ -216,40 +234,63 @@ const Dashboard3: React.FC = () => {
             onAddToSidebar={handleAddToSidebar}
           >
             <div className="absolute top-4 left-5 text-xs font-semibold text-white">
-              LSOA LEVEL BOROUGH MAP | POPULATION DENSITY
+              LSOA LEVEL BOROUGH MAP | {selectedBorough.toUpperCase()}
             </div>
             <div className="absolute top-4 right-5 text-xs text-gray-400">
-              (Click to filter dashboard)
+              (Click LSOA to filter)
             </div>
             
             {/* Map Content */}
-            <div className="absolute top-12 left-5 right-5 bottom-5 rounded-lg flex items-center justify-center overflow-hidden" style={{
-              background: 'linear-gradient(135deg, #1e1e2e 0%, #2d1b69 50%, #8B5CF6 100%)'
-            }}>
-              {/* Simulated borough shapes */}
-              <div className="absolute w-52 h-36 rounded-lg border-2 border-white border-opacity-30" style={{
-                background: 'rgba(139, 92, 246, 0.8)',
-                borderRadius: '20px 40px 30px 50px',
-                top: '30px',
-                left: '50px'
-              }}></div>
-              <div className="absolute w-44 h-28 rounded-lg border-2 border-white border-opacity-20" style={{
-                background: 'rgba(99, 102, 241, 0.6)',
-                borderRadius: '30px 20px 40px 25px',
-                top: '80px',
-                right: '60px'
-              }}></div>
-              <div className="absolute w-40 h-24 rounded-lg border-2 border-white border-opacity-30" style={{
-                background: 'rgba(167, 85, 247, 0.7)',
-                borderRadius: '25px 35px 20px 45px',
-                bottom: '40px',
-                left: '80px'
-              }}></div>
-              
-              {/* Map legend indicator */}
-              <div className="absolute bottom-2 right-2 text-xs text-gray-300">
-                High ●●●●●● Low
+            <div className="absolute top-10 left-10">
+              {lsoaDataAvailable ? (
+                <VegaLite 
+                  spec={lsoaMapSpec(selectedBorough)} 
+                  actions={false}
+                  signalListeners={{
+                    lsoa_click: (name: string, value: any) => {
+                      // Handle LSOA selection
+                      if (value && value.datum && value.datum.properties) {
+                        const lsoaCode = value.datum.properties.lsoa21cd;
+                        const lsoaName = value.datum.properties.lsoa21nm;
+                        setSelectedLSOA(lsoaCode);
+                        console.log('Selected LSOA:', lsoaName, lsoaCode);
+                      }
+                    }
+                  }}
+                  style={{
+                    width: '100%',
+                    height: '100%'
+                  }}
+                />
+              ) : (
+                /* Fallback content when LSOA data is not available */
+                <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm" 
+                     style={{ 
+                       background: 'linear-gradient(135deg, #1e1e2e 0%, #2d1b69 50%, #8B5CF6 100%)'
+                     }}>
+                  <div className="text-center">
+                    <div className="mb-2">📍</div>
+                    <div>LSOA data for {selectedBorough}</div>
+                    <div className="text-xs mt-1">Run conversion script to load data</div>
+                    <div className="text-xs mt-2 opacity-75">
+                      /public/data/lsoa-london/convert_shapefiles_to_geojson.py
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* LSOA Info */}
+            <div className="absolute bottom-4 left-4 text-gray-400">
+              { selectedLSOA ? ( 
+              <>
+              <div className="text-xs text-gray-400">Selected LSOA</div>
+              <div className="text-sm font-semibold text-purple-500">
+                {selectedLSOA}
               </div>
+              </> ) : (
+                <></>
+              )}
             </div>
           </LinkableCard>
 
@@ -262,7 +303,7 @@ const Dashboard3: React.FC = () => {
             elementType="map"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="absolute top-4 left-5 text-xs font-semibold text-white">
+            <div className="absolute top-4 left-5 text-sm font-semibold text-white">
               LONDON BOROUGH MAP
             </div>
             <div className="absolute top-4 right-5 text-xs text-gray-400">
@@ -270,7 +311,7 @@ const Dashboard3: React.FC = () => {
             </div>
             
             {/* Map Content */}
-            <div className="absolute top-5 left-20 right-5 bottom-5" title='Click outside to reset selection'>
+            <div className="absolute top-2 left-12 right-5 bottom-5" title='Click outside to reset selection'>
               <VegaLite 
                 spec={boroughMapSpec} 
                 actions={false}
@@ -298,8 +339,8 @@ const Dashboard3: React.FC = () => {
 
             {/* Borough Filter */}
             <div className="absolute bottom-4 left-4 text-gray-400">
-              <div className="text-gray-400">Total Population</div>
-              <div className="text-2xl font-bold text-purple-500">
+              <div className="text-xs text-gray-400">Total Population</div>
+              <div className="text-xl font-bold text-purple-500">
                 9.51m
               </div>
             </div>
@@ -307,7 +348,7 @@ const Dashboard3: React.FC = () => {
 
           {/* Bottom Left: Country of Birth */}
           <LinkableCard 
-            className="col-start-1 col-end-4 row-start-5 row-end-6 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative overflow-hidden"
+            className="col-start-1 col-end-4 row-start-5 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative overflow-hidden"
             styles={{}}
             elementId="country-of-birth"
             elementName="Country of Birth"
@@ -391,7 +432,7 @@ const Dashboard3: React.FC = () => {
 
           {/* Bottom Middle: School Education Facilities */}
           <LinkableCard 
-            className="col-start-4 col-end-7 row-start-5 row-end-6 bg-zinc-800 rounded-lg p-4 border border-gray-600 overflow-hidden"
+            className="col-start-4 col-end-7 row-start-5 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600 overflow-hidden"
             styles={{}}
             elementId="school-education-facilities"
             elementName="School Education Facilities"
@@ -438,7 +479,7 @@ const Dashboard3: React.FC = () => {
 
           {/* Middle Far Right: Health Level */}
           <LinkableCard 
-            className="col-start-7 col-end-9 row-start-4 row-end-6 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
+            className="col-start-7 col-end-9 row-start-4 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
             styles={{}}
             elementId="health-level"
             elementName="Health Level"
@@ -476,7 +517,7 @@ const Dashboard3: React.FC = () => {
           {/* Row 3: Bottom Charts (2x2 each) */}
           {/* Car Ownership */}
           <LinkableCard 
-            className="col-start-1 col-end-3 row-start-6 row-end-8 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
+            className="col-start-1 col-end-3 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
             styles={{}}
             elementId="car-ownership"
             elementName="Car Ownership"
@@ -517,7 +558,7 @@ const Dashboard3: React.FC = () => {
 
           {/* Mean House Price Chart */}
           <LinkableCard 
-            className="col-start-3 col-end-5 row-start-6 row-end-8 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            className="col-start-3 col-end-5 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
             styles={{}}
             elementId="mean-house-price-chart"
             elementName="Mean House Price Chart"
@@ -589,7 +630,7 @@ const Dashboard3: React.FC = () => {
 
           {/* All Ethnicity Types */}
           <LinkableCard 
-            className="col-start-5 col-end-7 row-start-6 row-end-8 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            className="col-start-5 col-end-7 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
             styles={{}}
             elementId="all-ethnicity-types"
             elementName="All Ethnicity Types"
@@ -701,8 +742,8 @@ const Dashboard3: React.FC = () => {
 
           {/* Map Layers */}
           <LinkableCard 
-            className="col-start-7 col-end-9 row-start-6 row-end-8 bg-zinc-800 rounded-lg p-4 border border-gray-600"
-            styles={{}}
+            className="col-start-7 col-end-9 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            styles={{overflow: 'hidden'}}
             elementId="map-layers"
             elementName="Map Layers"
             elementType="control"
