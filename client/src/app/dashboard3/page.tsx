@@ -5,7 +5,7 @@ import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
 import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartSpec, crimePieChartSpec } from './vegaSpecs';
+import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec } from './vegaSpecs';
 import { 
   loadPopulationData, 
   processPopulationData, 
@@ -28,13 +28,19 @@ import {
 import { 
   loadCrimeData,
   processBoroughCrimeStats,
+  processBoroughCrimeStatsComparison,
   CrimeData,
   BoroughCrimeStats,
+  BoroughCrimeStatsComparison,
   CrimeCategory,
+  CrimeCategoryComparison,
   getTopBoroughsByCategory,
+  getTopBoroughsByCategoryComparison,
   getBoroughCrimeCategories,
+  getBoroughCrimeCategoriesComparison,
   CRIME_CATEGORY_MAPPING,
-  CRIME_CATEGORY_COLORS
+  CRIME_CATEGORY_COLORS,
+  SAMPLE_BOROUGH_CRIME_DATA_COMPARISON
 } from './crimeData';
 
 // Dashboard 3 - London Numbers Style Dashboard
@@ -50,9 +56,12 @@ const Dashboard3: React.FC = () => {
   // Crime-related state
   const [selectedCrimeCategory, setSelectedCrimeCategory] = useState<string>('Anti-social behaviour');
   const [crimeBarData, setCrimeBarData] = useState<Array<{borough: string, count: number}>>([]);
+  const [crimeBarDataComparison, setCrimeBarDataComparison] = useState<Array<{borough: string, count2022: number, count2023: number, change?: number}>>([]);
   const [crimePieData, setCrimePieData] = useState<CrimeCategory[]>([]);
+  const [crimePieDataComparison, setCrimePieDataComparison] = useState<CrimeCategoryComparison[]>([]);
   const [crimeRawData, setCrimeRawData] = useState<CrimeData[]>([]);
   const [boroughCrimeStats, setBoroughCrimeStats] = useState<BoroughCrimeStats[]>([]);
+  const [boroughCrimeStatsComparison, setBoroughCrimeStatsComparison] = useState<BoroughCrimeStatsComparison[]>([]);
   const [isLoadingCrime, setIsLoadingCrime] = useState<boolean>(true);
 
   // Load population data on component mount
@@ -81,8 +90,13 @@ const Dashboard3: React.FC = () => {
       try {
         const data = await loadCrimeData();
         setCrimeRawData(data);
+        
+        // Process data for both individual year and comparison
         const stats = processBoroughCrimeStats(data);
         setBoroughCrimeStats(stats);
+        
+        const statsComparison = processBoroughCrimeStatsComparison(data);
+        setBoroughCrimeStatsComparison(statsComparison);
       } catch (error) {
         console.error('Error loading crime data:', error);
       } finally {
@@ -122,13 +136,21 @@ const Dashboard3: React.FC = () => {
       const topBoroughs = getTopBoroughsByCategory(boroughCrimeStats, selectedCrimeCategory, 10);
       setCrimeBarData(topBoroughs);
     }
-  }, [selectedCrimeCategory, boroughCrimeStats]);
+    
+    if (boroughCrimeStatsComparison.length > 0) {
+      const topBoroughsComparison = getTopBoroughsByCategoryComparison(boroughCrimeStatsComparison, selectedCrimeCategory, 10);
+      setCrimeBarDataComparison(topBoroughsComparison);
+    }
+  }, [selectedCrimeCategory, boroughCrimeStats, boroughCrimeStatsComparison]);
 
   // Update crime pie chart data when selected borough changes
   useEffect(() => {
     if (crimeRawData.length > 0) {
       const categories = getBoroughCrimeCategories(crimeRawData, selectedBorough);
       setCrimePieData(categories);
+      
+      const categoriesComparison = getBoroughCrimeCategoriesComparison(crimeRawData, selectedBorough);
+      setCrimePieDataComparison(categoriesComparison);
     }
   }, [selectedBorough, crimeRawData]);
 
@@ -161,6 +183,10 @@ const Dashboard3: React.FC = () => {
   
   // Calculate total crime cases for the selected borough
   const getTotalCrimeCases = (): number => {
+    if (crimePieDataComparison.length > 0) {
+      return crimePieDataComparison.reduce((total, category) => 
+        total + category.count2023, 0); // Default to 2023 data
+    }
     return crimePieData.reduce((total, category) => total + category.count, 0);
   };
   
@@ -564,10 +590,10 @@ const Dashboard3: React.FC = () => {
                       e.stopPropagation();
                       setSelectedCrimeCategory(category);
                     }}
-                    className={`w-[17px] h-[17px] rounded-full text-[10px] cursor-pointer transition-all duration-200 mb-1 ${
+                    className={`w-[17px] h-[17px] rounded-full cursor-pointer transition-all duration-200 mb-1 ${
                       isSelected 
-                        ? 'bg-purple-600 text-white font-bold' 
-                        : 'bg-gray-600 text-gray-300 font-medium hover:bg-gray-500'
+                        ? 'bg-purple-600 text-white font-bold text-[11px]' 
+                        : 'bg-gray-600 text-gray-300 font-medium text-[9px] hover:bg-gray-500'
                     }`}
                     title={category}
                   >
@@ -577,15 +603,15 @@ const Dashboard3: React.FC = () => {
               })}
             </div>
             
-            {/* Vega-Lite Crime Bar Chart */}
+            {/* Vega-Lite Crime Bar Chart with Comparison */}
             <div className="">
               {isLoadingCrime ? (
                 <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
                   Loading crime data...
                 </div>
-              ) : crimeBarData.length > 0 ? (
+              ) : crimeBarDataComparison.length > 0 ? (
                 <VegaLite
-                  spec={crimeBarChartSpec(crimeBarData, selectedCrimeCategory)}
+                  spec={crimeBarChartComparisonSpec(crimeBarDataComparison, selectedCrimeCategory)}
                   actions={false}
                 />
               ) : (
@@ -643,19 +669,20 @@ const Dashboard3: React.FC = () => {
             <div className="text-sm font-semibold text-white">
               CRIME CATEGORIES
             </div>
-            <div className="text-xs text-gray-400">
-              Total Cases: {totalCrimeCases.toLocaleString()}
+            <div className="flex flex-col justify-between text-xs text-gray-400">
+                Total Cases (2022 vs 2023): <br></br>
+                {crimePieDataComparison.reduce((sum, cat) => sum + cat.count2022, 0).toLocaleString()} vs {crimePieDataComparison.reduce((sum, cat) => sum + cat.count2023, 0).toLocaleString()}
             </div>
             
-            {/* Vega-Lite Crime Pie Chart */}
-            <div className="absolute bottom-2 left-3 flex-shrink-0">
+            {/* Vega-Lite Crime Pie Chart with Comparison */}
+            <div className="absolute bottom-0 left-3 flex-shrink-0">
               {isLoadingCrime ? (
                 <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
                   Loading...
                 </div>
-              ) : crimePieData.length > 0 ? (
+              ) : crimePieDataComparison.length > 0 ? (
                 <VegaLite
-                  spec={crimePieChartSpec(crimePieData)}
+                  spec={crimePieChartComparisonSpec(crimePieDataComparison, 2023)}
                   actions={false}
                   style={{}}
                 />
@@ -666,15 +693,23 @@ const Dashboard3: React.FC = () => {
               )}
             </div>
             
-            {/* Legend */}
+            {/* Legend with comparison data */}
             <div className="absolute bottom-2 right-3 text-xs text-gray-400">
-              {crimePieData.map((category, index) => (
+              {crimePieDataComparison.map((category, index) => (
                 <div key={category.name} className="flex items-center gap-1 mb-0.5">
                   <div 
                     className="w-2 h-2 rounded-sm flex-shrink-0" 
                     style={{ backgroundColor: CRIME_CATEGORY_COLORS[index] }}
                   ></div>
-                  <span className="text-[8px]">{category.name}: {category.percentage.toFixed(1)}%</span>
+                  <div className="text-[8px] flex flex-col">
+                    <span>{category.name}: 
+                    {category.change !== undefined && (
+                      <span className={`${category.change > 0 ? 'text-red-400' : 'text-green-400'}`}>
+                        {category.change > 0 ? '+' : ''}{category.change.toFixed(1)}%
+                      </span>
+                    )}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>

@@ -24,6 +24,26 @@ export interface CrimeCategory {
   percentage: number;
 }
 
+// Extended interface for year-based comparison
+export interface CrimeCategoryComparison {
+  code: string;
+  name: string;
+  count2022: number;
+  count2023: number;
+  percentage2022: number;
+  percentage2023: number;
+  change: number; // Percentage change from 2022 to 2023
+}
+
+export interface BoroughCrimeStatsComparison {
+  borough: string;
+  totalCrimes2022: number;
+  totalCrimes2023: number;
+  crimesByCategory2022: Record<string, number>;
+  crimesByCategory2023: Record<string, number>;
+  totalChange: number; // Percentage change from 2022 to 2023
+}
+
 // Crime category mapping for better display
 export const CRIME_CATEGORY_MAPPING: Record<string, string> = {
   'anti-social-behaviour': 'Anti-social behaviour',
@@ -134,6 +154,49 @@ export const processBoroughCrimeStats = (crimeData: CrimeData[]): BoroughCrimeSt
   return Object.values(boroughStats).sort((a, b) => b.totalCrimes - a.totalCrimes);
 };
 
+// Process crime data to get borough statistics with year comparison
+export const processBoroughCrimeStatsComparison = (crimeData: CrimeData[]): BoroughCrimeStatsComparison[] => {
+  const boroughStats: Record<string, BoroughCrimeStatsComparison> = {};
+  
+  crimeData.forEach(crime => {
+    if (!boroughStats[crime.borough_name]) {
+      boroughStats[crime.borough_name] = {
+        borough: crime.borough_name,
+        totalCrimes2022: 0,
+        totalCrimes2023: 0,
+        crimesByCategory2022: {},
+        crimesByCategory2023: {},
+        totalChange: 0
+      };
+    }
+    
+    const categoryName = CRIME_CATEGORY_MAPPING[crime.crime_category] || crime.crime_category_name;
+    
+    if (crime.year === 2022) {
+      boroughStats[crime.borough_name].totalCrimes2022++;
+      if (!boroughStats[crime.borough_name].crimesByCategory2022[categoryName]) {
+        boroughStats[crime.borough_name].crimesByCategory2022[categoryName] = 0;
+      }
+      boroughStats[crime.borough_name].crimesByCategory2022[categoryName]++;
+    } else if (crime.year === 2023) {
+      boroughStats[crime.borough_name].totalCrimes2023++;
+      if (!boroughStats[crime.borough_name].crimesByCategory2023[categoryName]) {
+        boroughStats[crime.borough_name].crimesByCategory2023[categoryName] = 0;
+      }
+      boroughStats[crime.borough_name].crimesByCategory2023[categoryName]++;
+    }
+  });
+  
+  // Calculate percentage changes
+  Object.values(boroughStats).forEach(stat => {
+    if (stat.totalCrimes2022 > 0) {
+      stat.totalChange = ((stat.totalCrimes2023 - stat.totalCrimes2022) / stat.totalCrimes2022) * 100;
+    }
+  });
+  
+  return Object.values(boroughStats).sort((a, b) => (b.totalCrimes2022 + b.totalCrimes2023) - (a.totalCrimes2022 + a.totalCrimes2023));
+};
+
 // Get crime categories for a specific borough
 export const getBoroughCrimeCategories = (
   crimeData: CrimeData[], 
@@ -160,6 +223,58 @@ export const getBoroughCrimeCategories = (
       percentage: (count / totalCrimes) * 100
     }))
     .sort((a, b) => b.count - a.count);
+};
+
+// Get crime categories for a specific borough with year comparison
+export const getBoroughCrimeCategoriesComparison = (
+  crimeData: CrimeData[], 
+  boroughName: string
+): CrimeCategoryComparison[] => {
+  const borough2022Crimes = crimeData.filter(crime => crime.borough_name === boroughName && crime.year === 2022);
+  const borough2023Crimes = crimeData.filter(crime => crime.borough_name === boroughName && crime.year === 2023);
+  
+  const categoryStats2022: Record<string, number> = {};
+  const categoryStats2023: Record<string, number> = {};
+  
+  borough2022Crimes.forEach(crime => {
+    const categoryName = CRIME_CATEGORY_MAPPING[crime.crime_category] || crime.crime_category_name;
+    if (!categoryStats2022[categoryName]) {
+      categoryStats2022[categoryName] = 0;
+    }
+    categoryStats2022[categoryName]++;
+  });
+  
+  borough2023Crimes.forEach(crime => {
+    const categoryName = CRIME_CATEGORY_MAPPING[crime.crime_category] || crime.crime_category_name;
+    if (!categoryStats2023[categoryName]) {
+      categoryStats2023[categoryName] = 0;
+    }
+    categoryStats2023[categoryName]++;
+  });
+  
+  const total2022 = borough2022Crimes.length;
+  const total2023 = borough2023Crimes.length;
+  
+  // Get all unique categories
+  const allCategories = new Set([...Object.keys(categoryStats2022), ...Object.keys(categoryStats2023)]);
+  
+  return Array.from(allCategories).map(categoryName => {
+    const count2022 = categoryStats2022[categoryName] || 0;
+    const count2023 = categoryStats2023[categoryName] || 0;
+    const percentage2022 = total2022 > 0 ? (count2022 / total2022) * 100 : 0;
+    const percentage2023 = total2023 > 0 ? (count2023 / total2023) * 100 : 0;
+    const change = count2022 > 0 ? ((count2023 - count2022) / count2022) * 100 : 0;
+    
+    return {
+      code: categoryName.toLowerCase().replace(/\s+/g, '-'),
+      name: categoryName,
+      count2022,
+      count2023,
+      percentage2022,
+      percentage2023,
+      change
+    };
+  }).sort((a, b) => (b.count2022 + b.count2023) - (a.count2022 + a.count2023));
 };
 
 // Sample data for testing (based on the README statistics)
@@ -440,3 +555,220 @@ export const getTopBoroughsByCategory = (
     .sort((a, b) => b.count - a.count)
     .slice(0, limit);
 };
+
+// Get top boroughs by specific crime category with year comparison
+export const getTopBoroughsByCategoryComparison = (
+  boroughStats: BoroughCrimeStatsComparison[],
+  categoryName: string,
+  limit: number = 10
+): Array<{borough: string, count2022: number, count2023: number, change?: number}> => {
+  return boroughStats
+    .map(stat => {
+      const count2022 = stat.crimesByCategory2022[categoryName] || 0;
+      const count2023 = stat.crimesByCategory2023[categoryName] || 0;
+      const change = count2022 > 0 ? ((count2023 - count2022) / count2022) * 100 : 0;
+      
+      return {
+        borough: stat.borough,
+        count2022,
+        count2023,
+        change
+      };
+    })
+    .sort((a, b) => Math.max(b.count2022, b.count2023) - Math.max(a.count2022, a.count2023))
+    .slice(0, limit);
+};
+
+// Sample data for testing with 2022/2023 comparison (based on the README statistics)
+export const SAMPLE_BOROUGH_CRIME_DATA_COMPARISON: BoroughCrimeStatsComparison[] = [
+  {
+    borough: 'Westminster',
+    totalCrimes2022: 20568,
+    totalCrimes2023: 20569,
+    totalChange: 0.0,
+    crimesByCategory2022: {
+      'Anti-social behaviour': 2470,
+      'Violent crime': 2427,
+      'Other theft': 1785,
+      'Burglary': 1769,
+      'Vehicle crime': 1758,
+      'Bicycle theft': 1353,
+      'Theft from the person': 1329,
+      'Criminal damage and arson': 1309,
+      'Robbery': 1308,
+      'Shoplifting': 1298,
+      'Public order': 1296,
+      'Other crime': 1280,
+      'Drugs': 602,
+      'Possession of weapons': 602
+    },
+    crimesByCategory2023: {
+      'Anti-social behaviour': 2470,
+      'Violent crime': 2427,
+      'Other theft': 1785,
+      'Burglary': 1769,
+      'Vehicle crime': 1758,
+      'Bicycle theft': 1354,
+      'Theft from the person': 1329,
+      'Criminal damage and arson': 1310,
+      'Robbery': 1308,
+      'Shoplifting': 1299,
+      'Public order': 1296,
+      'Other crime': 1281,
+      'Drugs': 603,
+      'Possession of weapons': 602
+    }
+  },
+  {
+    borough: 'Southwark',
+    totalCrimes2022: 20268,
+    totalCrimes2023: 20269,
+    totalChange: 0.0,
+    crimesByCategory2022: {
+      'Anti-social behaviour': 2432,
+      'Violent crime': 2391,
+      'Other theft': 1761,
+      'Burglary': 1745,
+      'Vehicle crime': 1734,
+      'Bicycle theft': 1335,
+      'Theft from the person': 1311,
+      'Criminal damage and arson': 1291,
+      'Robbery': 1290,
+      'Shoplifting': 1280,
+      'Public order': 1278,
+      'Other crime': 1263,
+      'Drugs': 594,
+      'Possession of weapons': 594
+    },
+    crimesByCategory2023: {
+      'Anti-social behaviour': 2432,
+      'Violent crime': 2392,
+      'Other theft': 1761,
+      'Burglary': 1745,
+      'Vehicle crime': 1735,
+      'Bicycle theft': 1335,
+      'Theft from the person': 1311,
+      'Criminal damage and arson': 1292,
+      'Robbery': 1290,
+      'Shoplifting': 1281,
+      'Public order': 1278,
+      'Other crime': 1263,
+      'Drugs': 595,
+      'Possession of weapons': 594
+    }
+  },
+  {
+    borough: 'Camden',
+    totalCrimes2022: 20083,
+    totalCrimes2023: 20083,
+    totalChange: 0.0,
+    crimesByCategory2022: {
+      'Anti-social behaviour': 2410,
+      'Violent crime': 2370,
+      'Other theft': 1745,
+      'Burglary': 1730,
+      'Vehicle crime': 1719,
+      'Bicycle theft': 1323,
+      'Theft from the person': 1299,
+      'Criminal damage and arson': 1280,
+      'Robbery': 1278,
+      'Shoplifting': 1269,
+      'Public order': 1266,
+      'Other crime': 1251,
+      'Drugs': 589,
+      'Possession of weapons': 588
+    },
+    crimesByCategory2023: {
+      'Anti-social behaviour': 2410,
+      'Violent crime': 2370,
+      'Other theft': 1746,
+      'Burglary': 1730,
+      'Vehicle crime': 1720,
+      'Bicycle theft': 1323,
+      'Theft from the person': 1300,
+      'Criminal damage and arson': 1280,
+      'Robbery': 1279,
+      'Shoplifting': 1269,
+      'Public order': 1267,
+      'Other crime': 1252,
+      'Drugs': 589,
+      'Possession of weapons': 588
+    }
+  },
+  {
+    borough: 'Tower Hamlets',
+    totalCrimes2022: 19924,
+    totalCrimes2023: 19925,
+    totalChange: 0.0,
+    crimesByCategory2022: {
+      'Anti-social behaviour': 2391,
+      'Violent crime': 2351,
+      'Other theft': 1733,
+      'Burglary': 1717,
+      'Vehicle crime': 1707,
+      'Bicycle theft': 1313,
+      'Theft from the person': 1290,
+      'Criminal damage and arson': 1270,
+      'Robbery': 1269,
+      'Shoplifting': 1259,
+      'Public order': 1257,
+      'Other crime': 1242,
+      'Drugs': 585,
+      'Possession of weapons': 584
+    },
+    crimesByCategory2023: {
+      'Anti-social behaviour': 2391,
+      'Violent crime': 2352,
+      'Other theft': 1733,
+      'Burglary': 1717,
+      'Vehicle crime': 1707,
+      'Bicycle theft': 1314,
+      'Theft from the person': 1290,
+      'Criminal damage and arson': 1271,
+      'Robbery': 1269,
+      'Shoplifting': 1260,
+      'Public order': 1257,
+      'Other crime': 1242,
+      'Drugs': 585,
+      'Possession of weapons': 584
+    }
+  },
+  {
+    borough: 'Lambeth',
+    totalCrimes2022: 9883,
+    totalCrimes2023: 9884,
+    totalChange: 0.0,
+    crimesByCategory2022: {
+      'Anti-social behaviour': 1186,
+      'Violent crime': 1166,
+      'Other theft': 859,
+      'Burglary': 852,
+      'Vehicle crime': 846,
+      'Bicycle theft': 651,
+      'Theft from the person': 640,
+      'Criminal damage and arson': 630,
+      'Robbery': 629,
+      'Shoplifting': 624,
+      'Public order': 623,
+      'Other crime': 616,
+      'Drugs': 290,
+      'Possession of weapons': 289
+    },
+    crimesByCategory2023: {
+      'Anti-social behaviour': 1186,
+      'Violent crime': 1166,
+      'Other theft': 860,
+      'Burglary': 852,
+      'Vehicle crime': 847,
+      'Bicycle theft': 652,
+      'Theft from the person': 640,
+      'Criminal damage and arson': 631,
+      'Robbery': 630,
+      'Shoplifting': 625,
+      'Public order': 623,
+      'Other crime': 616,
+      'Drugs': 290,
+      'Possession of weapons': 290
+    }
+  }
+];

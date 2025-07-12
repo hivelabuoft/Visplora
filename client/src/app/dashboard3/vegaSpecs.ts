@@ -1,5 +1,5 @@
 import { title } from "process";
-import { BoroughCrimeStats, CrimeCategory, CRIME_CATEGORY_COLORS } from './crimeData';
+import { BoroughCrimeStats, CrimeCategory, CRIME_CATEGORY_COLORS, BoroughCrimeStatsComparison, CrimeCategoryComparison } from './crimeData';
 
 // Vega-Lite specification for London boroughs map
 export const boroughMapSpec = {
@@ -287,7 +287,9 @@ export const populationTimelineChartSpec = (data: Array<{year: number, populatio
         "labelColor": "#888",
         "titleColor": "#888",
         "labelFontSize": 8,
-        "grid": false,
+        "gridColor": "#888",
+        "gridDash": [2, 2],
+        "grid": true,
         "ticks": true,
         "domain": true,
         "format": ".2s",
@@ -386,6 +388,8 @@ export const incomeTimelineChartSpec = (data: Array<{year: string, meanIncome: n
         "titleColor": "#888",
         "labelFontSize": 8,
         "labelAngle": -45,
+        "gridColor": "#888",
+        "gridDash": [2, 2],
         "grid": false,
         "ticks": true,
         "domain": true,
@@ -400,8 +404,10 @@ export const incomeTimelineChartSpec = (data: Array<{year: string, meanIncome: n
         "labelColor": "#888",
         "titleColor": "#888",
         "labelFontSize": 8,
-        "grid": false,
-        "ticks": true,
+        "gridColor": "#888",
+        "gridDash": [2, 2],
+        "grid": true,
+        "ticks": false,
         "domain": true,
         "title": null
       }
@@ -446,17 +452,20 @@ export const incomeTimelineChartSpec = (data: Array<{year: string, meanIncome: n
   }
 });
 
-// Crime Bar Chart specification - shows top boroughs by crime category
-export const crimeBarChartSpec = (
-  data: Array<{borough: string, count: number}>,
+// Crime Bar Chart specification with year comparison - shows top boroughs by crime category for both years
+export const crimeBarChartComparisonSpec = (
+  data: Array<{borough: string, count2022: number, count2023: number, change?: number}>,
   categoryName: string
 ) => ({
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
-  "width": 210,
+  "width": 200,
   "height": 250,
   "background": "transparent",
   "data": {
-    "values": data
+    "values": data.flatMap(d => [
+      {borough: d.borough, year: "2022", count: d.count2022, change: d.change},
+      {borough: d.borough, year: "2023", count: d.count2023, change: d.change}
+    ])
   },
   "params": [
     {
@@ -477,7 +486,11 @@ export const crimeBarChartSpec = (
     "y": {
       "field": "borough",
       "type": "nominal" as const,
-      "sort": "-x",
+      "sort": {
+        "field": "count",
+        "op": "max",
+        "order": "descending"
+      },
       "axis": {
         "labelColor": "#888",
         "titleColor": "#888",
@@ -504,22 +517,40 @@ export const crimeBarChartSpec = (
       }
     },
     "color": {
+      "field": "year",
+      "type": "nominal" as const,
+      "scale": {
+        "domain": ["2022", "2023"],
+        "range": ["#A855F7", "#4C1D95"]
+      },
+      "legend": null
+    },
+    "stroke": {
       "condition": {
         "param": "hover_crime_bar",
-        "value": "#A855F7"
+        "value": "#272729"
       },
-      "value": "#8B5CF6"
+      "value": "transparent"
+    },
+    "strokeWidth": {
+      "condition": {
+        "param": "hover_crime_bar",
+        "value": 0.7
+      },
+      "value": 0.5
     },
     "opacity": {
       "condition": {
         "param": "hover_crime_bar",
         "value": 1
       },
-      "value": 0.8
+      "value": 0.6
     },
     "tooltip": [
       {"field": "borough", "type": "nominal" as const, "title": "Borough"},
-      {"field": "count", "type": "quantitative" as const, "title": `${categoryName} Cases`, "format": ","}
+      {"field": "year", "type": "nominal" as const, "title": "Year"},
+      {"field": "count", "type": "quantitative" as const, "title": `Cases`, "format": ","},
+      {"field": "change", "type": "quantitative" as const, "title": "Change since 2022", "format": "+.1f"}
     ]
   },
   "config": {
@@ -530,75 +561,148 @@ export const crimeBarChartSpec = (
   }
 });
 
-// Crime Pie Chart specification - shows crime categories for selected borough
-export const crimePieChartSpec = (data: CrimeCategory[]) => ({
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
-  "width": 150,
-  "height": 150,
-  "background": "transparent",
-  "data": {
-    "values": data
-  },
-  "params": [
-    {
-      "name": "hover_crime_pie",
-      "select": {
-        "type": "point",
-        "on": "mouseover",
-        "clear": "mouseout"
+// Crime Pie Chart specification with year comparison - shows crime categories for selected borough and year
+export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], selectedYear: number) => {
+  const totalChange = data.reduce((sum, d) => sum + d.change, 0) / data.length;
+  
+  return {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+    "width": 150,
+    "height": 150,
+    "background": "transparent",
+    "layer": [
+      {
+        "data": {
+          "values": data.map(d => ({
+            name: d.name,
+            count: selectedYear === 2022 ? d.count2022 : d.count2023,
+            percentage: selectedYear === 2022 ? d.percentage2022 : d.percentage2023,
+            change: d.change
+          }))
+        },
+        "params": [
+          {
+            "name": "hover_crime_pie",
+            "select": {
+              "type": "point",
+              "on": "mouseover",
+              "clear": "mouseout"
+            }
+          }
+        ],
+        "mark": {
+          "type": "arc" as const,
+          "innerRadius": 35,
+          "outerRadius": 70,
+          "cursor": "pointer" as const
+        },
+        "encoding": {
+          "theta": {
+            "field": "count",
+            "type": "quantitative" as const
+          },
+          "color": {
+            "field": "name",
+            "type": "nominal" as const,
+            "scale": {
+              "range": CRIME_CATEGORY_COLORS
+            },
+            "legend": null
+          },
+          "stroke": {
+            "condition": {
+              "param": "hover_crime_pie",
+              "value": "white"
+            },
+            "value": "white"
+          },
+          "strokeWidth": {
+            "condition": {
+              "param": "hover_crime_pie",
+              "value": 1
+            },
+            "value": 0.2
+          },
+          "opacity": {
+            "condition": {
+              "param": "hover_crime_pie",
+              "value": 1
+            },
+            "value": 0.6
+          },
+          "tooltip": [
+            {"field": "name", "type": "nominal" as const, "title": "Crime Type"},
+            {"field": "count", "type": "quantitative" as const, "title": `Cases (${selectedYear})`, "format": ","},
+            {"field": "percentage", "type": "quantitative" as const, "title": "Percentage", "format": ".1f"},
+            {"field": "change", "type": "quantitative" as const, "title": "Change since 2022 (%)", "format": "+.1f"}
+          ]
+        }
+      },
+      {
+        "data": {
+          "values": [{"change": totalChange}]
+        },
+        "mark": {
+          "type": "text",
+          "align": "center",
+          "baseline": "middle",
+          "fontSize": 12,
+          "fontWeight": "bold",
+          "color": totalChange > 0 ? "#ef4444" : "#22c55e",
+          "dy": -8
+        },
+        "encoding": {
+          "text": {
+            "field": "change",
+            "type": "quantitative",
+            "format": totalChange > 0 ? "+.1f" : ".1f"
+          }
+        }
+      },
+      {
+        "data": {
+          "values": [{"text": "Change from"}]
+        },
+        "mark": {
+          "type": "text",
+          "align": "center",
+          "baseline": "middle",
+          "fontSize": 8,
+          "color": "#888",
+          "dy": 4
+        },
+        "encoding": {
+          "text": {
+            "field": "text",
+            "type": "nominal"
+          }
+        }
+      },
+      {
+        "data": {
+          "values": [{"text": "2022"}]
+        },
+        "mark": {
+          "type": "text",
+          "align": "center",
+          "baseline": "middle",
+          "fontSize": 8,
+          "color": "#888",
+          "dy": 14
+        },
+        "encoding": {
+          "text": {
+            "field": "text",
+            "type": "nominal"
+          }
+        }
+      }
+    ],
+    "config": {
+      "background": "transparent",
+      "view": {
+        "stroke": null
       }
     }
-  ],
-  "mark": {
-    "type": "arc" as const,
-    "innerRadius": 30,
-    "outerRadius": 70,
-    "cursor": "pointer" as const
-  },
-  "encoding": {
-    "theta": {
-      "field": "count",
-      "type": "quantitative" as const
-    },
-    "color": {
-      "field": "name",
-      "type": "nominal" as const,
-      "scale": {
-        "range": CRIME_CATEGORY_COLORS
-      },
-      "legend": null
-    },
-    "stroke": {
-      "condition": {
-        "param": "hover_crime_pie",
-        "value": "white"
-      },
-      "value": "white"
-    },
-    "strokeWidth": {
-      "condition": {
-        "param": "hover_crime_pie",
-        "value": 1
-      },
-      "value": 0.2
-    },
-    "opacity": {
-      "condition": {
-        "param": "hover_crime_pie",
-        "value": 1
-      },
-      "value": 0.6
-    },
-    "tooltip": [
-      {"field": "name", "type": "nominal" as const, "title": "Crime Type"},
-      {"field": "count", "type": "quantitative" as const, "title": "Cases", "format": ","},
-      {"field": "percentage", "type": "quantitative" as const, "title": "Percentage", "format": ".1f"}
-    ]
-  },
-  "config": {
-    "background": "transparent",
-    "view": {
-      "stroke": null
-    }
-  }
-});
+  };
+};
