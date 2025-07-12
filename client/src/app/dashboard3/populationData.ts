@@ -194,3 +194,32 @@ export const generatePopulationTimelineData = (data: PopulationData[], boroughNa
   
   return timelineData.sort((a, b) => a.year - b.year);
 };
+
+// Utility functions for dashboard
+export const getBoroughMetrics = (populationMetrics: Map<string, BoroughPopulationMetrics>, borough: string): BoroughPopulationMetrics | null => {
+  return populationMetrics.get(borough) || null;
+};
+
+export const getTotalLondonPopulation = (populationMetrics: Map<string, BoroughPopulationMetrics>): number => {
+  let total = 0;
+  populationMetrics.forEach((metrics) => {
+    total += metrics.population2023;
+  });
+  return total;
+};
+
+export const getPopulationTimelineDataForBorough = (populationRawData: PopulationData[], borough: string): PopulationTimelineData[] => {
+  if (populationRawData.length === 0) return [];
+  return generatePopulationTimelineData(populationRawData, borough);
+};
+
+export const checkLsoaDataAvailability = async (selectedBorough: string): Promise<boolean> => {
+  try {
+    const url = `/data/lsoa-london/${selectedBorough}.json`;
+    const response = await fetch(url);
+    return response.ok;
+  } catch (error) {
+    console.error('Error checking LSOA data:', error);
+    return false;
+  }
+};

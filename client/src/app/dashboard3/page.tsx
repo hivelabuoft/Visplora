@@ -5,7 +5,7 @@ import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
 import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec } from './vegaSpecs';
+import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec } from './vegaSpecs';
 import { 
   loadPopulationData, 
   processPopulationData, 
@@ -17,6 +17,14 @@ import {
   PopulationData,
   PopulationTimelineData
 } from './populationData';
+import { 
+  getIncomeTimelineDataForBorough,
+  getCurrentMeanIncome,
+  getCurrentMedianIncome,
+  formatIncome,
+  getIncomeChangePercentage,
+  IncomeTimelineData
+} from './incomeData';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
@@ -26,6 +34,7 @@ const Dashboard3: React.FC = () => {
   const [populationMetrics, setPopulationMetrics] = useState<Map<string, BoroughPopulationMetrics>>(new Map());
   const [populationRawData, setPopulationRawData] = useState<PopulationData[]>([]);
   const [isLoadingPopulation, setIsLoadingPopulation] = useState<boolean>(true);
+  const [incomeTimelineData, setIncomeTimelineData] = useState<IncomeTimelineData[]>([]);
 
   // Load population data on component mount
   useEffect(() => {
@@ -61,6 +70,12 @@ const Dashboard3: React.FC = () => {
     };
     
     checkLsoaData();
+  }, [selectedBorough]);
+
+  // Load income data when selected borough changes
+  useEffect(() => {
+    const incomeData = getIncomeTimelineDataForBorough(selectedBorough);
+    setIncomeTimelineData(incomeData);
   }, [selectedBorough]);
 
   function handleAddToSidebar(elementId: string, elementName: string, elementType: string): void {
@@ -280,7 +295,7 @@ const Dashboard3: React.FC = () => {
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-2xl font-bold text-white">£516,266</div>
+              <div className="text-md font-bold text-white">£516,266</div>
               <div className="text-xs text-gray-400">Mean House Price</div>
             </LinkableCard>
 
@@ -293,7 +308,9 @@ const Dashboard3: React.FC = () => {
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-2xl font-bold text-white">£42,132</div>
+              <div className="text-md font-bold text-white">
+                {formatIncome(getCurrentMeanIncome(selectedBorough))}
+              </div>
               <div className="text-xs text-gray-400">Mean Household Income</div>
             </LinkableCard>
           </div>
@@ -433,11 +450,11 @@ const Dashboard3: React.FC = () => {
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-sm font-semibold text-white mb-2">
+            <div className="text-sm font-semibold text-white">
               POPULATION GROWTH & PROJECTIONS
             </div>
             <div className="text-xs text-gray-400 mb-3">
-              Historical data (1999-2023) and projections (2024-2033)
+              Historical data (1999-2023) and projections (2024-2033) for {selectedBorough}
             </div>
             
             {/* Vega-Lite Bar Chart */}
@@ -513,50 +530,38 @@ const Dashboard3: React.FC = () => {
             </div>
           </LinkableCard>
 
-          {/* Bottom Middle: School Education Facilities */}
+          {/* Bottom Middle: Mean Income Timeline */}
           <LinkableCard 
-            className="col-start-4 col-end-7 row-start-5 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600 overflow-hidden"
+            className="col-start-4 col-end-7 row-start-5 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600"
             styles={{}}
-            elementId="school-education-facilities"
-            elementName="School Education Facilities"
+            elementId="mean-income-timeline"
+            elementName="Mean Income Timeline"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-xs font-semibold text-white mb-3">
-              SCHOOL EDUCATION FACILITIES
+            <div className="text-sm font-semibold text-white">
+              INCOME TRENDS OVER TIME
+            </div>
+            <div className="text-xs text-gray-400 mb-3">
+              Mean and median income for {selectedBorough} (1999-2023)
             </div>
             
-            <div className="flex flex-col gap-3">
-              {[
-                { label: 'Primary', value: 69, percentage: '61.6%' },
-                { label: 'Secondary', value: 20, percentage: '17.9%' },
-                { label: 'Other', value: 22, percentage: '19.6%' },
-                { label: 'All Through', value: 1, percentage: '0.9%' }
-              ].map((item) => (
-                <div key={item.label} className="flex items-center justify-between">
-                  <div className="text-xs text-white min-w-0"
-                    style={{ minWidth: '60px' }}
-                  >
-                    {item.label}
-                  </div>
-                  <div className="flex-1 h-2 bg-gray-700 rounded mx-2 relative">
-                    <div 
-                      className="h-full bg-purple-500 rounded"
-                      style={{ width: item.percentage }}
-                    ></div>
-                  </div>
-                  <div className="text-xs text-white text-center"
-                    style={{ minWidth: '20px' }}
-                  >
-                    {item.value}
-                  </div>
-                  <div className="text-xs text-gray-400 text-right"
-                    style={{ minWidth: '35px' }}
-                  >
-                    ({item.percentage})
-                  </div>
+            {/* Vega-Lite Line Chart */}
+            <div className="absolute bottom-0 left-4 right-4">
+              {incomeTimelineData.length > 0 ? (
+                <VegaLite
+                  spec={incomeTimelineChartSpec(incomeTimelineData)}
+                  actions={false}
+                  style={{
+                    width: '100%',
+                    height: '100%'
+                  }}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-400">
+                  No income data available
                 </div>
-              ))}
+              )}
             </div>
           </LinkableCard>
 

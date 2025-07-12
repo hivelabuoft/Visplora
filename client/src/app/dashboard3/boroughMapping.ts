@@ -34,3 +34,36 @@ export const boroughIdToName: { [key: number]: string } = {
   31: "Barking and Dagenham",
   32: "City of London"
 };
+
+// Event handler for borough selection
+export const createBoroughClickHandler = (setSelectedBorough: (borough: string) => void) => {
+  return (name: string, value: any) => {
+    if (value && value._vgsid_) {
+      const vgsidArray = Array.from(value._vgsid_);
+      if (vgsidArray.length > 0) {
+        const boroughIndex = vgsidArray[0] as number;
+        const boroughName = boroughIdToName[boroughIndex - 1];
+        if (boroughName) {
+          setSelectedBorough(boroughName);
+        }
+      }
+    }
+  };
+};
+
+// Event handler for LSOA selection
+export const createLsoaClickHandler = (setSelectedLSOA: (lsoa: string) => void) => {
+  return (name: string, value: any) => {
+    if (value && value.datum && value.datum.properties) {
+      const lsoaCode = value.datum.properties.lsoa21cd;
+      const lsoaName = value.datum.properties.lsoa21nm;
+      setSelectedLSOA(lsoaCode);
+      console.log('Selected LSOA:', lsoaName, lsoaCode);
+    }
+  };
+};
+
+// Placeholder handler
+export const handleAddToSidebar = (elementId: string, elementName: string, elementType: string): void => {
+  throw new Error('Not implemented.');
+};

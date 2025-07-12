@@ -250,7 +250,7 @@ export const populationTimelineChartSpec = (data: Array<{year: number, populatio
   },
   "params": [
     {
-      "name": "hover",
+      "name": "hover_population",
       "select": {
         "type": "point",
         "on": "mouseover",
@@ -273,8 +273,8 @@ export const populationTimelineChartSpec = (data: Array<{year: number, populatio
         "labelFontSize": 8,
         "labelAngle": -45,
         "grid": false,
-        "ticks": false,
-        "domain": false,
+        "ticks": true,
+        "domain": true,
         "values": [1999, 2003, 2007, 2011, 2015, 2019, 2023, 2027, 2031],
         "title": null
       }
@@ -287,8 +287,8 @@ export const populationTimelineChartSpec = (data: Array<{year: number, populatio
         "titleColor": "#888",
         "labelFontSize": 8,
         "grid": false,
-        "ticks": false,
-        "domain": false,
+        "ticks": true,
+        "domain": true,
         "format": ".2s",
         "title": null
       }
@@ -304,21 +304,21 @@ export const populationTimelineChartSpec = (data: Array<{year: number, populatio
     },
     "stroke": {
       "condition": {
-        "param": "hover",
+        "param": "hover_population",
         "value": "#ffffffff"
       },
       "value": "transparent"
     },
     "strokeWidth": {
       "condition": {
-        "param": "hover",
+        "param": "hover_population",
         "value": 0.1
       },
       "value": 0
     },
     "opacity": {
       "condition": {
-        "param": "hover",
+        "param": "hover_population",
         "value": 1
       },
       "value": 0.5
@@ -327,6 +327,114 @@ export const populationTimelineChartSpec = (data: Array<{year: number, populatio
       {"field": "year", "type": "ordinal" as const, "title": "Year"},
       {"field": "population", "type": "quantitative" as const, "title": "Population", "format": ","},
       {"field": "type", "type": "nominal" as const, "title": "Data Type"}
+    ]
+  },
+  "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    }
+  }
+});
+
+// Income Timeline Chart specification
+export const incomeTimelineChartSpec = (data: Array<{year: string, meanIncome: number, medianIncome: number, borough: string}>) => ({
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+  "width": 420,
+  "height": 130,
+  "background": "transparent",
+  "data": {
+    "values": data
+  },
+  "transform": [
+    {
+      "fold": ["meanIncome", "medianIncome"],
+      "as": ["incomeType", "income"] as [string, string]
+    },
+    {
+      "calculate": "datum.incomeType === 'meanIncome' ? 'Mean' : 'Median'",
+      "as": "incomeLabel"
+    }
+  ],
+  "params": [
+    {
+      "name": "hover_point",
+      "select": {
+        "type": "point",
+        "on": "mouseover",
+        "clear": "mouseout",
+        "fields": ["year", "incomeType"]
+      }
+    }
+  ],
+  "mark": {
+    "type": "area" as const,
+    "point": {
+      "size": 40,
+      "filled": true
+    },
+    "strokeWidth": 0.1,
+    "cursor": "pointer" as const
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal" as const,
+      "axis": {
+        "labelColor": "#888",
+        "titleColor": "#888",
+        "labelFontSize": 8,
+        "labelAngle": -45,
+        "grid": false,
+        "ticks": true,
+        "domain": true,
+        "values": ["1999", "2003", "2007", "2011", "2015", "2019", "2023"],
+        "title": null
+      }
+    },
+    "y": {
+      "field": "income",
+      "type": "quantitative" as const,
+      "axis": {
+        "labelColor": "#888",
+        "titleColor": "#888",
+        "labelFontSize": 8,
+        "grid": false,
+        "ticks": true,
+        "domain": true,
+        "title": null
+      }
+    },
+    "color": {
+      "field": "incomeType",
+      "type": "nominal" as const,
+      "scale": {
+        "domain": ["meanIncome", "medianIncome"],
+        "range": ["#8B5CF6", "#4C1D95"]
+      },
+      "legend": null
+    },
+    "stroke": {
+      "value": "black"
+    },
+    "strokeWidth": {
+      "condition": {
+        "param": "hover_point",
+        "value": 1
+      },
+      "value": 0.5
+    },
+    "opacity": {
+      "condition": {
+        "param": "hover_point",
+        "value": 1
+      },
+      "value": 0.8
+    },
+    "tooltip": [
+      {"field": "year", "type": "ordinal" as const, "title": "Year"},
+      {"field": "income", "type": "quantitative" as const, "title": "Income (£)", "format": ",.0f"},
+      {"field": "incomeLabel", "type": "nominal" as const, "title": "Type"}
     ]
   },
   "config": {
