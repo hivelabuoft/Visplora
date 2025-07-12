@@ -5,7 +5,7 @@ import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
 import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec } from './vegaSpecs';
+import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartSpec, crimePieChartSpec } from './vegaSpecs';
 import { 
   loadPopulationData, 
   processPopulationData, 
@@ -25,6 +25,17 @@ import {
   getIncomeChangePercentage,
   IncomeTimelineData
 } from './incomeData';
+import { 
+  loadCrimeData,
+  processBoroughCrimeStats,
+  CrimeData,
+  BoroughCrimeStats,
+  CrimeCategory,
+  getTopBoroughsByCategory,
+  getBoroughCrimeCategories,
+  CRIME_CATEGORY_MAPPING,
+  CRIME_CATEGORY_COLORS
+} from './crimeData';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
@@ -35,6 +46,14 @@ const Dashboard3: React.FC = () => {
   const [populationRawData, setPopulationRawData] = useState<PopulationData[]>([]);
   const [isLoadingPopulation, setIsLoadingPopulation] = useState<boolean>(true);
   const [incomeTimelineData, setIncomeTimelineData] = useState<IncomeTimelineData[]>([]);
+  
+  // Crime-related state
+  const [selectedCrimeCategory, setSelectedCrimeCategory] = useState<string>('Anti-social behaviour');
+  const [crimeBarData, setCrimeBarData] = useState<Array<{borough: string, count: number}>>([]);
+  const [crimePieData, setCrimePieData] = useState<CrimeCategory[]>([]);
+  const [crimeRawData, setCrimeRawData] = useState<CrimeData[]>([]);
+  const [boroughCrimeStats, setBoroughCrimeStats] = useState<BoroughCrimeStats[]>([]);
+  const [isLoadingCrime, setIsLoadingCrime] = useState<boolean>(true);
 
   // Load population data on component mount
   useEffect(() => {
@@ -49,6 +68,25 @@ const Dashboard3: React.FC = () => {
         console.error('Error loading population data:', error);
       } finally {
         setIsLoadingPopulation(false);
+      }
+    };
+    
+    loadData();
+  }, []);
+
+  // Load crime data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoadingCrime(true);
+      try {
+        const data = await loadCrimeData();
+        setCrimeRawData(data);
+        const stats = processBoroughCrimeStats(data);
+        setBoroughCrimeStats(stats);
+      } catch (error) {
+        console.error('Error loading crime data:', error);
+      } finally {
+        setIsLoadingCrime(false);
       }
     };
     
@@ -78,6 +116,22 @@ const Dashboard3: React.FC = () => {
     setIncomeTimelineData(incomeData);
   }, [selectedBorough]);
 
+  // Update crime bar chart data when crime category changes
+  useEffect(() => {
+    if (boroughCrimeStats.length > 0) {
+      const topBoroughs = getTopBoroughsByCategory(boroughCrimeStats, selectedCrimeCategory, 10);
+      setCrimeBarData(topBoroughs);
+    }
+  }, [selectedCrimeCategory, boroughCrimeStats]);
+
+  // Update crime pie chart data when selected borough changes
+  useEffect(() => {
+    if (crimeRawData.length > 0) {
+      const categories = getBoroughCrimeCategories(crimeRawData, selectedBorough);
+      setCrimePieData(categories);
+    }
+  }, [selectedBorough, crimeRawData]);
+
   function handleAddToSidebar(elementId: string, elementName: string, elementType: string): void {
     throw new Error('Not implemented.');
   }
@@ -104,6 +158,13 @@ const Dashboard3: React.FC = () => {
 
   const currentMetrics = getCurrentBoroughMetrics();
   const totalLondonPopulation = getTotalLondonPopulation();
+  
+  // Calculate total crime cases for the selected borough
+  const getTotalCrimeCases = (): number => {
+    return crimePieData.reduce((total, category) => total + category.count, 0);
+  };
+  
+  const totalCrimeCases = getTotalCrimeCases();
   
   // Generate population timeline data for the selected borough
   const getPopulationTimelineData = (): PopulationTimelineData[] => {
@@ -217,10 +278,6 @@ const Dashboard3: React.FC = () => {
                   <VegaLite 
                     spec={smallBoroughMapSpec(selectedBorough)}
                     actions={false}
-                    style={{
-                      width: '100%',
-                      height: '100%'
-                    }}
                   />
                 </div>
               </div>
@@ -295,7 +352,7 @@ const Dashboard3: React.FC = () => {
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-md font-bold text-white">£516,266</div>
+              <div className="text-lg font-bold text-white">£516,266</div>
               <div className="text-xs text-gray-400">Mean House Price</div>
             </LinkableCard>
 
@@ -308,7 +365,7 @@ const Dashboard3: React.FC = () => {
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-md font-bold text-white">
+              <div className="text-lg font-bold text-white">
                 {formatIncome(getCurrentMeanIncome(selectedBorough))}
               </div>
               <div className="text-xs text-gray-400">Mean Household Income</div>
@@ -482,51 +539,60 @@ const Dashboard3: React.FC = () => {
 
           {/* Top Far Right: Borough Crime Stats */}
           <LinkableCard 
-            className="col-start-7 col-end-9 row-start-2 row-end-4 bg-zinc-800 rounded-lg p-4 border border-gray-600"
-            styles={{}}
+            className="col-start-7 col-end-9 row-start-2 row-end-5 bg-zinc-800 rounded-lg p-4 border border-gray-600 flex flex-col"
+            styles={{ position: 'relative', zIndex: 1 }}
             elementId="borough-crime-stats"
             elementName="Borough Crime Stats"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-xs font-semibold text-white mb-2">
-              BOROUGH'S WITH MOST CRIME | BURGLARY
+            <div className="text-sm font-semibold text-white">
+              BOROUGHS WITH MOST CRIME
             </div>
             
-            <div className="flex flex-col gap-2">
-              <div className="text-xs text-gray-400">Select Crime Type ▼</div>
-              
-              {/* Crime bars */}
-              {[
-                { name: 'Westminster', value: 100 },
-                { name: 'Southwark', value: 85 },
-                { name: 'Tower Hamlets', value: 75 },
-                { name: 'Barnet', value: 65 },
-                { name: 'Hackney', value: 60 }
-              ].map((borough, index) => (
-                <div key={borough.name} className="flex items-center gap-2">
-                  <div 
-                    className="w-3 h-3 rounded-sm"
-                    style={{
-                      backgroundColor: index < 3 ? '#8B5CF6' : '#333'
+            {/* Crime Category Selector */}
+            <div className="flex items-center justify-between flex-wrap gap-1">
+              <div className="text-xs text-gray-400 w-full">Selected Crime Type: {selectedCrimeCategory}</div>
+              {Object.values(CRIME_CATEGORY_MAPPING).map((category) => {
+                const isSelected = selectedCrimeCategory === category;
+                const firstLetter = category.charAt(0).toUpperCase();
+                
+                return (
+                  <button
+                    key={category}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedCrimeCategory(category);
                     }}
-                  ></div>
-                  <div className="flex-1 text-xs text-white">
-                    {borough.name}
-                  </div>
-                  <div 
-                    className="h-1 rounded-sm"
-                    style={{
-                      width: `${borough.value}px`,
-                      backgroundColor: index < 3 ? '#8B5CF6' : '#333'
-                    }}
-                  ></div>
+                    className={`w-[17px] h-[17px] rounded-full text-[10px] cursor-pointer transition-all duration-200 mb-1 ${
+                      isSelected 
+                        ? 'bg-purple-600 text-white font-bold' 
+                        : 'bg-gray-600 text-gray-300 font-medium hover:bg-gray-500'
+                    }`}
+                    title={category}
+                  >
+                    {firstLetter}
+                  </button>
+                );
+              })}
+            </div>
+            
+            {/* Vega-Lite Crime Bar Chart */}
+            <div className="">
+              {isLoadingCrime ? (
+                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
+                  Loading crime data...
                 </div>
-              ))}
-              
-              <div className="mt-1 text-xs text-gray-400 text-right">
-                0 1,000 2,000 3,000
-              </div>
+              ) : crimeBarData.length > 0 ? (
+                <VegaLite
+                  spec={crimeBarChartSpec(crimeBarData, selectedCrimeCategory)}
+                  actions={false}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
+                  No crime data available
+                </div>
+              )}
             </div>
           </LinkableCard>
 
@@ -564,41 +630,53 @@ const Dashboard3: React.FC = () => {
               )}
             </div>
           </LinkableCard>
-
-          {/* Middle Far Right: Health Level */}
+          
+          {/* Bottom Right: Crime Categories for Selected Borough */}
           <LinkableCard 
-            className="col-start-7 col-end-9 row-start-4 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
+            className="col-start-7 col-end-9 row-start-5 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600"
             styles={{}}
-            elementId="health-level"
-            elementName="Health Level"
+            elementId="borough-crime-categories"
+            elementName="Borough Crime Categories"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-xs font-semibold text-white mb-2">
-              RECORDED HEALTH LEVEL
+            <div className="text-sm font-semibold text-white">
+              CRIME CATEGORIES
             </div>
-            <div className="text-xs text-gray-400 mb-4">
-              Where respond was classified as Good
-            </div>
-            
-            {/* Gauge Chart Simulation */}
-            <div className="relative w-25 h-12 mx-auto overflow-hidden" style={{
-              borderRadius: '100px 100px 0 0',
-              border: '8px solid #333',
-              borderBottom: 'none'
-            }}>
-              <div className="absolute bottom-0 left-0 h-2 bg-purple-500 rounded"
-                style={{ width: '83.9%' }}
-              ></div>
+            <div className="text-xs text-gray-400">
+              Total Cases: {totalCrimeCases.toLocaleString()}
             </div>
             
-            <div className="text-center mt-2">
-              <div className="text-2xl font-bold text-purple-500">
-                83.9%
-              </div>
-              <div className="text-xs text-gray-400 mt-1">
-                0 25 75 100
-              </div>
+            {/* Vega-Lite Crime Pie Chart */}
+            <div className="absolute bottom-2 left-3 flex-shrink-0">
+              {isLoadingCrime ? (
+                <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
+                  Loading...
+                </div>
+              ) : crimePieData.length > 0 ? (
+                <VegaLite
+                  spec={crimePieChartSpec(crimePieData)}
+                  actions={false}
+                  style={{}}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
+                  No data
+                </div>
+              )}
+            </div>
+            
+            {/* Legend */}
+            <div className="absolute bottom-2 right-3 text-xs text-gray-400">
+              {crimePieData.map((category, index) => (
+                <div key={category.name} className="flex items-center gap-1 mb-0.5">
+                  <div 
+                    className="w-2 h-2 rounded-sm flex-shrink-0" 
+                    style={{ backgroundColor: CRIME_CATEGORY_COLORS[index] }}
+                  ></div>
+                  <span className="text-[8px]">{category.name}: {category.percentage.toFixed(1)}%</span>
+                </div>
+              ))}
             </div>
           </LinkableCard>
 
@@ -828,107 +906,40 @@ const Dashboard3: React.FC = () => {
             </div>
           </LinkableCard>
 
-          {/* Map Layers */}
+          {/* Bottom Far Right: Health Level */}
           <LinkableCard 
-            className="col-start-7 col-end-9 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
-            styles={{overflow: 'hidden'}}
-            elementId="map-layers"
-            elementName="Map Layers"
-            elementType="control"
+            className="col-start-7 col-end-9 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
+            styles={{}}
+            elementId="health-level"
+            elementName="Health Level"
+            elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div style={{
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#fff',
-              marginBottom: '15px'
-            }}>
-              MAP LAYERS
+            <div className="text-xs font-semibold text-white mb-2">
+              RECORDED HEALTH LEVEL
+            </div>
+            <div className="text-xs text-gray-400 mb-4">
+              Where respond was classified as Good
             </div>
             
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px'
+            {/* Gauge Chart Simulation */}
+            <div className="relative w-25 h-12 mx-auto overflow-hidden" style={{
+              borderRadius: '100px 100px 0 0',
+              border: '8px solid #333',
+              borderBottom: 'none'
             }}>
-              <div style={{
-                padding: '10px',
-                backgroundColor: '#333',
-                borderRadius: '6px',
-                textAlign: 'center'
-              }}>
-                <div style={{ fontSize: '10px', color: '#888' }}>Underground Stations</div>
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: '5px'
-                }}>
-                  <label style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    fontSize: '10px',
-                    color: '#fff'
-                  }}>
-                    <input 
-                      type="checkbox" 
-                      style={{
-                        width: '12px',
-                        height: '12px'
-                      }}
-                    />
-                    OFF
-                  </label>
-                </div>
-              </div>
-              
-              <div style={{
-                padding: '10px',
-                backgroundColor: '#333',
-                borderRadius: '6px',
-                textAlign: 'center'
-              }}>
-                <div style={{ fontSize: '10px', color: '#888' }}>Secondary Schools</div>
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: '5px'
-                }}>
-                  <label style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    fontSize: '10px',
-                    color: '#fff'
-                  }}>
-                    <input 
-                      type="checkbox" 
-                      style={{
-                        width: '12px',
-                        height: '12px'
-                      }}
-                    />
-                    OFF
-                  </label>
-                </div>
-              </div>
+              <div className="absolute bottom-0 left-0 h-2 bg-purple-500 rounded"
+                style={{ width: '83.9%' }}
+              ></div>
             </div>
             
-            <div style={{
-              marginTop: '15px',
-              padding: '8px',
-              backgroundColor: '#2a2a2a',
-              borderRadius: '4px',
-              textAlign: 'center'
-            }}>
-              <div style={{ fontSize: '10px', color: '#888' }}>INFORMATION</div>
-              <div style={{
-                marginTop: '5px',
-                fontSize: '18px',
-                color: '#fff'
-              }}>ⓘ</div>
+            <div className="text-center mt-2">
+              <div className="text-2xl font-bold text-purple-500">
+                83.9%
+              </div>
+              <div className="text-xs text-gray-400 mt-1">
+                0 25 75 100
+              </div>
             </div>
           </LinkableCard>
         </div>

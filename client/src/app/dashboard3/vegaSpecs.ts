@@ -1,4 +1,5 @@
 import { title } from "process";
+import { BoroughCrimeStats, CrimeCategory, CRIME_CATEGORY_COLORS } from './crimeData';
 
 // Vega-Lite specification for London boroughs map
 export const boroughMapSpec = {
@@ -435,6 +436,163 @@ export const incomeTimelineChartSpec = (data: Array<{year: string, meanIncome: n
       {"field": "year", "type": "ordinal" as const, "title": "Year"},
       {"field": "income", "type": "quantitative" as const, "title": "Income (£)", "format": ",.0f"},
       {"field": "incomeLabel", "type": "nominal" as const, "title": "Type"}
+    ]
+  },
+  "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    }
+  }
+});
+
+// Crime Bar Chart specification - shows top boroughs by crime category
+export const crimeBarChartSpec = (
+  data: Array<{borough: string, count: number}>,
+  categoryName: string
+) => ({
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+  "width": 210,
+  "height": 250,
+  "background": "transparent",
+  "data": {
+    "values": data
+  },
+  "params": [
+    {
+      "name": "hover_crime_bar",
+      "select": {
+        "type": "point",
+        "on": "mouseover",
+        "clear": "mouseout"
+      }
+    }
+  ],
+  "mark": {
+    "type": "bar" as const,
+    "cursor": "pointer" as const,
+    "cornerRadiusEnd": 2
+  },
+  "encoding": {
+    "y": {
+      "field": "borough",
+      "type": "nominal" as const,
+      "sort": "-x",
+      "axis": {
+        "labelColor": "#888",
+        "titleColor": "#888",
+        "labelFontSize": 9,
+        "grid": false,
+        "ticks": true,
+        "domain": true,
+        "title": null,
+        "labelLimit": 70
+      }
+    },
+    "x": {
+      "field": "count",
+      "type": "quantitative" as const,
+      "axis": {
+        "labelColor": "#888",
+        "titleColor": "#888",
+        "labelFontSize": 8,
+        "grid": false,
+        "ticks": true,
+        "domain": true,
+        "title": null,
+        "format": ".0f"
+      }
+    },
+    "color": {
+      "condition": {
+        "param": "hover_crime_bar",
+        "value": "#A855F7"
+      },
+      "value": "#8B5CF6"
+    },
+    "opacity": {
+      "condition": {
+        "param": "hover_crime_bar",
+        "value": 1
+      },
+      "value": 0.8
+    },
+    "tooltip": [
+      {"field": "borough", "type": "nominal" as const, "title": "Borough"},
+      {"field": "count", "type": "quantitative" as const, "title": `${categoryName} Cases`, "format": ","}
+    ]
+  },
+  "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    }
+  }
+});
+
+// Crime Pie Chart specification - shows crime categories for selected borough
+export const crimePieChartSpec = (data: CrimeCategory[]) => ({
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+  "width": 150,
+  "height": 150,
+  "background": "transparent",
+  "data": {
+    "values": data
+  },
+  "params": [
+    {
+      "name": "hover_crime_pie",
+      "select": {
+        "type": "point",
+        "on": "mouseover",
+        "clear": "mouseout"
+      }
+    }
+  ],
+  "mark": {
+    "type": "arc" as const,
+    "innerRadius": 30,
+    "outerRadius": 70,
+    "cursor": "pointer" as const
+  },
+  "encoding": {
+    "theta": {
+      "field": "count",
+      "type": "quantitative" as const
+    },
+    "color": {
+      "field": "name",
+      "type": "nominal" as const,
+      "scale": {
+        "range": CRIME_CATEGORY_COLORS
+      },
+      "legend": null
+    },
+    "stroke": {
+      "condition": {
+        "param": "hover_crime_pie",
+        "value": "white"
+      },
+      "value": "white"
+    },
+    "strokeWidth": {
+      "condition": {
+        "param": "hover_crime_pie",
+        "value": 1
+      },
+      "value": 0.2
+    },
+    "opacity": {
+      "condition": {
+        "param": "hover_crime_pie",
+        "value": 1
+      },
+      "value": 0.6
+    },
+    "tooltip": [
+      {"field": "name", "type": "nominal" as const, "title": "Crime Type"},
+      {"field": "count", "type": "quantitative" as const, "title": "Cases", "format": ","},
+      {"field": "percentage", "type": "quantitative" as const, "title": "Percentage", "format": ".1f"}
     ]
   },
   "config": {
