@@ -62,22 +62,22 @@ export const CRIME_CATEGORY_MAPPING: Record<string, string> = {
   'other-crime': 'Other crime'
 };
 
-// Color scheme for crime categories - matching dashboard theme (dark with purple accents)
+// Color scheme for crime categories - matching dashboard theme (blue and purple)
 export const CRIME_CATEGORY_COLORS = [
   '#8B5CF6', // Primary purple
+  '#3B82F6', // Bright blue
+  '#06B6D4', // Cyan blue
+  '#1E40AF', // Dark blue
   '#7C3AED', // Deep purple
-  '#A855F7', // Light purple
-  '#9333EA', // Medium purple
-  '#6D28D9', // Dark purple
-  '#C084FC', // Soft purple
-  '#B794F6', // Pale purple
+  '#0EA5E9', // Sky blue
+  '#3730A3', // Indigo
+  '#1E3A8A', // Blue
   '#5B21B6', // Deep indigo
-  '#6B21A8', // Dark magenta
-  '#7E22CE', // Rich purple
+  '#2563EB', // Blue-600
   '#4C1D95', // Very dark purple
-  '#581C87', // Dark plum
-  '#A78BFA', // Lavender
-  '#9F7AEA', // Light lavender
+  '#1D4ED8', // Blue-700
+  '#6366F1', // Indigo-500
+  '#2DD4BF', // Teal-400
   '#805AD5'  // Medium lavender
 ];
 

@@ -5,7 +5,7 @@ import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
 import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec } from './vegaSpecs';
+import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec } from './vegaSpecs';
 import { 
   loadPopulationData, 
   processPopulationData, 
@@ -42,6 +42,15 @@ import {
   CRIME_CATEGORY_COLORS,
   SAMPLE_BOROUGH_CRIME_DATA_COMPARISON
 } from './crimeData';
+import { 
+  CountryOfBirthData,
+  CountryOfBirthStats,
+  CountryOfBirthComparison,
+  parseCountryOfBirthCSV,
+  getCountryOfBirthStats,
+  getCountryOfBirthComparison,
+  getAvailableYears
+} from './countryOfBirthData';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
@@ -60,6 +69,15 @@ const Dashboard3: React.FC = () => {
   const [crimePieData, setCrimePieData] = useState<CrimeCategory[]>([]);
   const [crimePieDataComparison, setCrimePieDataComparison] = useState<CrimeCategoryComparison[]>([]);
   const [crimeRawData, setCrimeRawData] = useState<CrimeData[]>([]);
+
+  // Country of Birth state
+  const [countryOfBirthData, setCountryOfBirthData] = useState<CountryOfBirthData[]>([]);
+  const [selectedBirthYear, setSelectedBirthYear] = useState<number>(2023);
+  const [selectedBaseYear, setSelectedBaseYear] = useState<number>(2004);
+  const [countryOfBirthStats, setCountryOfBirthStats] = useState<CountryOfBirthStats | null>(null);
+  const [countryOfBirthComparison, setCountryOfBirthComparison] = useState<CountryOfBirthComparison | null>(null);
+  const [birthYears, setBirthYears] = useState<number[]>([]);
+  const [isLoadingBirthData, setIsLoadingBirthData] = useState<boolean>(false);
   const [boroughCrimeStats, setBoroughCrimeStats] = useState<BoroughCrimeStats[]>([]);
   const [boroughCrimeStatsComparison, setBoroughCrimeStatsComparison] = useState<BoroughCrimeStatsComparison[]>([]);
   const [isLoadingCrime, setIsLoadingCrime] = useState<boolean>(true);
@@ -153,6 +171,45 @@ const Dashboard3: React.FC = () => {
       setCrimePieDataComparison(categoriesComparison);
     }
   }, [selectedBorough, crimeRawData]);
+
+  // Load country of birth data on component mount
+  useEffect(() => {
+    const loadCountryOfBirthData = async () => {
+      try {
+        setIsLoadingBirthData(true);
+        const response = await fetch('/dataset/london/country-of-births/cob-borough.csv');
+        const csvText = await response.text();
+        const data = parseCountryOfBirthCSV(csvText);
+        setCountryOfBirthData(data);
+        
+        const availableYears = getAvailableYears(data);
+        setBirthYears(availableYears);
+        
+        // Set default years (2023 as current, 2004 as base)
+        if (availableYears.length > 0) {
+          setSelectedBirthYear(2023); // Latest available year
+          setSelectedBaseYear(2004); // Base year for comparison
+        }
+      } catch (error) {
+        console.error('Error loading country of birth data:', error);
+      } finally {
+        setIsLoadingBirthData(false);
+      }
+    };
+    
+    loadCountryOfBirthData();
+  }, []);
+
+  // Update country of birth stats when year selection changes
+  useEffect(() => {
+    if (countryOfBirthData.length > 0) {
+      const stats = getCountryOfBirthStats(countryOfBirthData, selectedBirthYear);
+      setCountryOfBirthStats(stats);
+      
+      const comparison = getCountryOfBirthComparison(countryOfBirthData, selectedBaseYear, selectedBirthYear);
+      setCountryOfBirthComparison(comparison);
+    }
+  }, [countryOfBirthData, selectedBirthYear, selectedBaseYear]);
 
   function handleAddToSidebar(elementId: string, elementName: string, elementType: string): void {
     throw new Error('Not implemented.');
@@ -718,7 +775,7 @@ const Dashboard3: React.FC = () => {
           {/* Row 3: Bottom Charts (2x2 each) */}
           {/* Car Ownership */}
           <LinkableCard 
-            className="col-start-1 col-end-3 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
+            className="col-start-7 col-end-9 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
             styles={{}}
             elementId="car-ownership"
             elementName="Car Ownership"
@@ -941,39 +998,77 @@ const Dashboard3: React.FC = () => {
             </div>
           </LinkableCard>
 
-          {/* Bottom Far Right: Health Level */}
+          {/* Bottom Far Left: Country of Birth */}
           <LinkableCard 
-            className="col-start-7 col-end-9 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
+            className="col-start-1 col-end-3 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
             styles={{}}
-            elementId="health-level"
-            elementName="Health Level"
+            elementId="country-of-birth"
+            elementName="Country of Birth"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-xs font-semibold text-white mb-2">
-              RECORDED HEALTH LEVEL
+            <div className="text-sm font-semibold text-white">
+              COUNTRY OF BIRTH
             </div>
-            <div className="text-xs text-gray-400 mb-4">
-              Where respond was classified as Good
-            </div>
-            
-            {/* Gauge Chart Simulation */}
-            <div className="relative w-25 h-12 mx-auto overflow-hidden" style={{
-              borderRadius: '100px 100px 0 0',
-              border: '8px solid #333',
-              borderBottom: 'none'
-            }}>
-              <div className="absolute bottom-0 left-0 h-2 bg-purple-500 rounded"
-                style={{ width: '83.9%' }}
-              ></div>
+            <div className="text-xs text-gray-400 mb-1">
+              London population by place of birth
             </div>
             
-            <div className="text-center mt-2">
-              <div className="text-2xl font-bold text-purple-500">
-                83.9%
+            {/* Year selector circles */}
+            <div className="flex justify-between items-center">
+              {birthYears.map((year) => (
+                <button
+                  key={year}
+                  onClick={() => setSelectedBirthYear(year)}
+                  className={`flex justify-center items-center p-1 text-[8px] transition-colors ${
+                    selectedBirthYear === year
+                      ? 'bg-purple-500 text-white font-bold hover:bg-purple-600'
+                      : 'bg-gray-600 text-gray-300 font-regular hover:bg-gray-500'
+                  }`}
+                >
+                  20{year.toString().slice(-2)}
+                </button>
+              ))}
+            </div>
+            
+            {/* Chart and Legend Container */}
+            <div className="absolute flex justify-between items-start h-full">
+              {/* Pie Chart */}
+              <div className="flex-1 flex items-center justify-center">
+                {isLoadingBirthData ? (
+                  <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
+                    Loading...
+                  </div>
+                ) : countryOfBirthStats ? (
+                  <VegaLite
+                    spec={countryOfBirthPieChartSpec(countryOfBirthStats, countryOfBirthComparison || undefined)}
+                    actions={false}
+                    style={{}}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
+                    No data
+                  </div>
+                )}
               </div>
-              <div className="text-xs text-gray-400 mt-1">
-                0 25 75 100
+              
+              {/* Legend and Comparison - fixed at bottom */}
+              <div className="flex flex-col justify-center space-y-1 pt-4 h-32">
+                {/* Legend */}
+                {countryOfBirthStats?.regions.map((region, index) => {
+                  const colors = ["#8B5CF6", "#3B82F6", "#06B6D4", "#8B5CF6", "#1E40AF"];
+                  return (
+                    <div key={region.region} className="flex items-center gap-1">
+                      <div 
+                        className="w-2 h-2 rounded-sm" 
+                        style={{ backgroundColor: colors[index] }}
+                      ></div>
+                      <span className="text-xs text-gray-300">
+                        {region.region}: {region.percentage.toFixed(1)}%
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </LinkableCard>

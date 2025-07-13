@@ -1,5 +1,5 @@
-import { title } from "process";
 import { BoroughCrimeStats, CrimeCategory, CRIME_CATEGORY_COLORS, BoroughCrimeStatsComparison, CrimeCategoryComparison } from './crimeData';
+import { CountryOfBirthStats, CountryOfBirthComparison } from './countryOfBirthData';
 
 // Vega-Lite specification for London boroughs map
 export const boroughMapSpec = {
@@ -456,110 +456,159 @@ export const incomeTimelineChartSpec = (data: Array<{year: string, meanIncome: n
 export const crimeBarChartComparisonSpec = (
   data: Array<{borough: string, count2022: number, count2023: number, change?: number}>,
   categoryName: string
-) => ({
+) => {
+  // Sort data by count2023 in descending order (most crimes first) and add index
+  const sortedData = data
+    .sort((a, b) => b.count2023 - a.count2023)
+    .map((d, index) => ({ ...d, sortIndex: index }));
+  
+  return {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
-  "width": 200,
-  "height": 250,
+  "width": 280,
+  "height": 230,
   "background": "transparent",
   "data": {
-    "values": data.flatMap(d => [
-      {borough: d.borough, year: "2022", count: d.count2022, change: d.change},
-      {borough: d.borough, year: "2023", count: d.count2023, change: d.change}
-    ])
+    "values": sortedData
   },
-  "params": [
+  "transform": [
+    {"calculate": "datum.count2022", "as": "count2022_positive"},
+    {"calculate": "-datum.count2023", "as": "count2023_negative"}
+  ],
+  "layer": [
     {
-      "name": "hover_crime_bar",
-      "select": {
-        "type": "point",
-        "on": "mouseover",
-        "clear": "mouseout"
+      "params": [
+        {
+          "name": "hover_crime_bar",
+          "select": {
+            "type": "point" as const,
+            "on": "mouseover" as const,
+            "clear": "mouseout" as const
+          }
+        }
+      ],
+      "transform": [
+        {"fold": ["count2022_positive", "count2023_negative"], "as": ["year_type", "count"]},
+        {"calculate": "datum.year_type == 'count2022_positive' ? '2022' : '2023'", "as": "year"},
+        {"calculate": "abs(datum.count)", "as": "absolute_count"}
+      ],
+      "mark": {
+        "type": "bar" as const,
+        "cursor": "pointer" as const,
+        "cornerRadiusEnd": 2
+      },
+      "encoding": {
+        "y": {
+          "field": "borough",
+          "type": "nominal" as const,
+          "scale": {
+            "domain": sortedData.map(d => d.borough)
+          },
+          "axis": null
+        },
+        "x": {
+          "field": "count",
+          "type": "quantitative" as const,
+          "axis": {
+            "labelColor": "#888",
+            "titleColor": "#888",
+            "labelFontSize": 8,
+            "grid": true,
+            "gridColor": "#888",
+            "gridDash": [2, 2],
+            "ticks": true,
+            "domain": true,
+            "title": null,
+            "format": "s"
+          }
+        },
+        "color": {
+          "field": "year",
+          "type": "nominal" as const,
+          "scale": {
+            "domain": ["2022", "2023"],
+            "range": ["#A855F7", "#4C1D95"]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top" as const,
+            "titleColor": "#fff",
+            "labelColor": "#fff",
+            "titleFontSize": 10,
+            "labelFontSize": 9,
+            "symbolSize": 80,
+            "offset": 5
+          }
+        },
+        "stroke": {
+          "condition": {
+            "param": "hover_crime_bar",
+            "value": "#272729"
+          },
+          "value": "transparent"
+        },
+        "strokeWidth": {
+          "condition": {
+            "param": "hover_crime_bar",
+            "value": 1
+          },
+          "value": 0.5
+        },
+        "opacity": {
+          "condition": {
+            "param": "hover_crime_bar",
+            "value": 1
+          },
+          "value": 0.6
+        },
+        "tooltip": [
+          {"field": "borough", "type": "nominal" as const, "title": "Borough"},
+          {"field": "year", "type": "nominal" as const, "title": "Year"},
+          {
+            "field": "absolute_count", 
+            "type": "quantitative" as const, 
+            "title": "Cases", 
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text" as const,
+        "align": "center" as const,
+        "baseline": "middle" as const,
+        "dx": 0,
+        "dy": 0,
+        "fontSize": 10,
+        "fontWeight": "normal" as const,
+        "color": "#fff"
+      },
+      "encoding": {
+        "y": {
+          "field": "borough",
+          "type": "nominal" as const,
+          "scale": {
+            "domain": sortedData.map(d => d.borough)
+          }
+        },
+        "x": {
+          "value": 140
+        },
+        "text": {
+          "field": "borough",
+          "type": "nominal" as const
+        }
       }
     }
   ],
-  "mark": {
-    "type": "bar" as const,
-    "cursor": "pointer" as const,
-    "cornerRadiusEnd": 2
-  },
-  "encoding": {
-    "y": {
-      "field": "borough",
-      "type": "nominal" as const,
-      "sort": {
-        "field": "count",
-        "op": "max",
-        "order": "descending"
-      },
-      "axis": {
-        "labelColor": "#888",
-        "titleColor": "#888",
-        "labelFontSize": 9,
-        "grid": false,
-        "ticks": true,
-        "domain": true,
-        "title": null,
-        "labelLimit": 70
-      }
-    },
-    "x": {
-      "field": "count",
-      "type": "quantitative" as const,
-      "axis": {
-        "labelColor": "#888",
-        "titleColor": "#888",
-        "labelFontSize": 8,
-        "grid": false,
-        "ticks": true,
-        "domain": true,
-        "title": null,
-        "format": ".0f"
-      }
-    },
-    "color": {
-      "field": "year",
-      "type": "nominal" as const,
-      "scale": {
-        "domain": ["2022", "2023"],
-        "range": ["#A855F7", "#4C1D95"]
-      },
-      "legend": null
-    },
-    "stroke": {
-      "condition": {
-        "param": "hover_crime_bar",
-        "value": "#272729"
-      },
-      "value": "transparent"
-    },
-    "strokeWidth": {
-      "condition": {
-        "param": "hover_crime_bar",
-        "value": 0.7
-      },
-      "value": 0.5
-    },
-    "opacity": {
-      "condition": {
-        "param": "hover_crime_bar",
-        "value": 1
-      },
-      "value": 0.6
-    },
-    "tooltip": [
-      {"field": "borough", "type": "nominal" as const, "title": "Borough"},
-      {"field": "year", "type": "nominal" as const, "title": "Year"},
-      {"field": "count", "type": "quantitative" as const, "title": `Cases`, "format": ","},
-      {"field": "change", "type": "quantitative" as const, "title": "Change since 2022", "format": "+.1f"}
-    ]
-  },
   "config": {
     "background": "transparent",
     "view": {
       "stroke": null
     }
   }
-});
+};
+};
 
 // Crime Pie Chart specification with year comparison - shows crime categories for selected borough and year
 export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], selectedYear: number) => {
@@ -646,7 +695,7 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
           "type": "text",
           "align": "center",
           "baseline": "middle",
-          "fontSize": 12,
+          "fontSize": 14,
           "fontWeight": "bold",
           "color": totalChange > 0 ? "#ef4444" : "#22c55e",
           "dy": -8
@@ -667,8 +716,8 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
           "type": "text",
           "align": "center",
           "baseline": "middle",
-          "fontSize": 8,
-          "color": "#888",
+          "fontSize": 9,
+          "color": "#d1d5db",
           "dy": 4
         },
         "encoding": {
@@ -686,9 +735,9 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
           "type": "text",
           "align": "center",
           "baseline": "middle",
-          "fontSize": 8,
-          "color": "#888",
-          "dy": 14
+          "fontSize": 9,
+          "color": "#d1d5db",
+          "dy": 15
         },
         "encoding": {
           "text": {
@@ -706,3 +755,196 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
     }
   };
 };
+
+// Country of Birth Pie Chart Specification
+export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, comparison?: CountryOfBirthComparison) => ({
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+  "width": 140,
+  "height": 140,
+  "background": "transparent",
+  "layer": [
+    {
+      "data": {
+        "values": stats.regions.map(region => ({
+          "category": region.region,
+          "value": region.estimate,
+          "percentage": region.percentage
+        }))
+      },
+      "params": [
+        {
+          "name": "hover_birth_pie",
+          "select": {
+            "type": "point",
+            "on": "mouseover",
+            "clear": "mouseout"
+          }
+        }
+      ],
+      "mark": {
+        "type": "arc" as const,
+        "innerRadius": 35,
+        "outerRadius": 70,
+        "cursor": "pointer" as const
+      },
+      "encoding": {
+        "theta": {
+          "field": "value",
+          "type": "quantitative" as const
+        },
+        "color": {
+          "field": "category",
+          "type": "nominal" as const,
+          "scale": {
+            "domain": ["United Kingdom", "European Union", "Other Europe", "Asia", "Rest of the World"],
+            "range": ["#8B5CF6", "#3B82F6", "#06B6D4", "#8B5CF6", "#1E40AF"]
+          },
+          "legend": null
+        },
+        "stroke": {
+          "condition": {
+            "param": "hover_birth_pie",
+            "value": "white"
+          },
+          "value": "white"
+        },
+        "strokeWidth": {
+          "condition": {
+            "param": "hover_birth_pie",
+            "value": 1
+          },
+          "value": 0.5
+        },
+        "opacity": {
+          "condition": {
+            "param": "hover_birth_pie",
+            "value": 1
+          },
+          "value": 0.5
+        },
+        "tooltip": [
+          {
+            "field": "category",
+            "type": "nominal",
+            "title": "Region"
+          },
+          {
+            "field": "value",
+            "type": "quantitative",
+            "title": "Population",
+            "format": ".0f"
+          },
+          {
+            "field": "percentage",
+            "type": "quantitative",
+            "title": "Percentage",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "text": comparison ? `${comparison.percentageChange >= 0 ? '+' : ''}${comparison.percentageChange.toFixed(1)}%` : `${stats.total.toLocaleString()}`,
+            "category": "Total"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "middle",
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "dy": -12,
+        "color": comparison ? (comparison.percentageChange >= 0 ?  "#22c55e" : "#ef4444") : "white"
+      },
+      "encoding": {
+        "text": {
+          "field": "text",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "text": comparison ? `Change from` : "Total",
+            "category": "Total"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "middle",
+        "fontSize": 9,
+        "dy": 0,
+        "color": "#d1d5db"
+      },
+      "encoding": {
+        "text": {
+          "field": "text",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "text": comparison ? `outside UK` : "Population",
+            "category": "Total"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "middle",
+        "fontSize": 9,
+        "dy": 10,
+        "color": "#d1d5db"
+      },
+      "encoding": {
+        "text": {
+          "field": "text",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "text": comparison ? `since 2004` : "",
+            "category": "Total"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "middle",
+        "fontSize": 9,
+        "dy": 20,
+        "color": "#d1d5db"
+      },
+      "encoding": {
+        "text": {
+          "field": "text",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    }
+  }
+});
