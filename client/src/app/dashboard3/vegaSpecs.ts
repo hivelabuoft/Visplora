@@ -1,6 +1,7 @@
 import { BoroughCrimeStats, CrimeCategory, CRIME_CATEGORY_COLORS, BoroughCrimeStatsComparison, CrimeCategoryComparison } from './crimeData';
 import { CountryOfBirthStats, CountryOfBirthComparison } from './countryOfBirthData';
 import { BoroughSchoolStats, SCHOOL_TYPE_COLORS } from './schoolData';
+import { HousePriceTimelineData } from './housePriceData';
 
 // Vega-Lite specification for London boroughs map
 export const boroughMapSpec = {
@@ -244,7 +245,7 @@ export const lsoaMapSpec = (selectedBorough: string) => {
 // Population Growth & Projections Chart specification
 export const populationTimelineChartSpec = (data: Array<{year: number, population: number, type: string}>) => ({
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
-  "width": 420,
+  "width": 250,
   "height": 130,
   "background": "transparent",
   "data": {
@@ -252,12 +253,15 @@ export const populationTimelineChartSpec = (data: Array<{year: number, populatio
   },
   "params": [
     {
-      "name": "hover_population",
+      "name": "highlight",
       "select": {
         "type": "point",
-        "on": "mouseover",
-        "clear": "mouseout"
+        "on": "pointerover"
       }
+    },
+    {
+      "name": "select",
+      "select": "point"
     }
   ],
   "mark": {
@@ -307,25 +311,29 @@ export const populationTimelineChartSpec = (data: Array<{year: number, populatio
       "legend": null
     },
     "stroke": {
-      "condition": {
-        "param": "hover_population",
-        "value": "#ffffffff"
-      },
-      "value": "transparent"
+      "value": "#272729"
     },
     "strokeWidth": {
-      "condition": {
-        "param": "hover_population",
-        "value": 0.1
-      },
+      "condition": [
+        {
+          "param": "select",
+          "empty": false,
+          "value": 1
+        },
+        {
+          "param": "highlight",
+          "empty": false,
+          "value": 1
+        }
+      ],
       "value": 0
     },
     "opacity": {
       "condition": {
-        "param": "hover_population",
+        "param": "select",
         "value": 1
       },
-      "value": 0.5
+      "value": 0.6
     },
     "tooltip": [
       {"field": "year", "type": "ordinal" as const, "title": "Year"},
@@ -360,26 +368,6 @@ export const incomeTimelineChartSpec = (data: Array<{year: string, meanIncome: n
       "as": "incomeLabel"
     }
   ],
-  "params": [
-    {
-      "name": "hover_point",
-      "select": {
-        "type": "point",
-        "on": "mouseover",
-        "clear": "mouseout",
-        "fields": ["year", "incomeType"]
-      }
-    }
-  ],
-  "mark": {
-    "type": "area" as const,
-    "point": {
-      "size": 40,
-      "filled": true
-    },
-    "strokeWidth": 0.1,
-    "cursor": "pointer" as const
-  },
   "encoding": {
     "x": {
       "field": "year",
@@ -418,33 +406,63 @@ export const incomeTimelineChartSpec = (data: Array<{year: string, meanIncome: n
       "type": "nominal" as const,
       "scale": {
         "domain": ["meanIncome", "medianIncome"],
-        "range": ["#8B5CF6", "#4C1D95"]
+        "range": ["#8B5CF6", "#3B82F6"]
       },
       "legend": null
-    },
-    "stroke": {
-      "value": "black"
-    },
-    "strokeWidth": {
-      "condition": {
-        "param": "hover_point",
-        "value": 1
-      },
-      "value": 0.5
-    },
-    "opacity": {
-      "condition": {
-        "param": "hover_point",
-        "value": 1
-      },
-      "value": 0.8
-    },
-    "tooltip": [
-      {"field": "year", "type": "ordinal" as const, "title": "Year"},
-      {"field": "income", "type": "quantitative" as const, "title": "Income (£)", "format": ",.0f"},
-      {"field": "incomeLabel", "type": "nominal" as const, "title": "Type"}
-    ]
+    }
   },
+  "layer": [
+    {
+      "mark": {
+        "type": "line" as const,
+        "strokeWidth": 2,
+        "cursor": "pointer" as const
+      }
+    },
+    {
+      "params": [
+        {
+          "name": "hover",
+          "select": {
+            "type": "point" as const,
+            "on": "pointerover" as const,
+            "clear": "pointerout" as const
+          }
+        }
+      ],
+      "mark": {
+        "type": "circle" as const,
+        "tooltip": true
+      },
+      "encoding": {
+        "opacity": {
+          "condition": {
+            "test": {
+              "param": "hover",
+              "empty": false
+            },
+            "value": 1
+          },
+          "value": 0
+        },
+        "size": {
+          "condition": {
+            "test": {
+              "param": "hover",
+              "empty": false
+            },
+            "value": 48
+          },
+          "value": 100
+        },
+        "tooltip": [
+          {"field": "year", "type": "ordinal" as const, "title": "Year"},
+          {"field": "income", "type": "quantitative" as const, "title": "Income (£)", "format": ",.0f"},
+          {"field": "incomeLabel", "type": "nominal" as const, "title": "Type"}
+        ]
+      }
+    }
+  ],
   "config": {
     "background": "transparent",
     "view": {
@@ -479,12 +497,15 @@ export const crimeBarChartComparisonSpec = (
     {
       "params": [
         {
-          "name": "hover_crime_bar",
+          "name": "highlight",
           "select": {
             "type": "point" as const,
-            "on": "mouseover" as const,
-            "clear": "mouseout" as const
+            "on": "pointerover" as const
           }
+        },
+        {
+          "name": "select",
+          "select": "point" as const
         }
       ],
       "transform": [
@@ -541,22 +562,26 @@ export const crimeBarChartComparisonSpec = (
           }
         },
         "stroke": {
-          "condition": {
-            "param": "hover_crime_bar",
-            "value": "#272729"
-          },
-          "value": "transparent"
+          "value": "#272729"
         },
         "strokeWidth": {
-          "condition": {
-            "param": "hover_crime_bar",
-            "value": 1
-          },
-          "value": 0.5
+          "condition": [
+            {
+              "param": "select",
+              "empty": false,
+              "value": 1
+            },
+            {
+              "param": "highlight",
+              "empty": false,
+              "value": 1
+            }
+          ],
+          "value": 0
         },
         "opacity": {
           "condition": {
-            "param": "hover_crime_bar",
+            "param": "select",
             "value": 1
           },
           "value": 0.6
@@ -798,7 +823,7 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
           "type": "nominal" as const,
           "scale": {
             "domain": ["United Kingdom", "European Union", "Other Europe", "Asia", "Rest of the World"],
-            "range": ["#8B5CF6", "#3B82F6", "#06B6D4", "#8B5CF6", "#1E40AF"]
+            "range": ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#1E40AF"]
           },
           "legend": null
         },
@@ -1046,3 +1071,155 @@ export const schoolEducationFacilitiesSpec = (schoolStats: BoroughSchoolStats) =
     }
   }
 });
+
+// House Price Timeline Chart Specification with Highlighting
+export const housePriceTimelineChartSpec = (data: HousePriceTimelineData[]) => {
+  // Transform data for multi-series format
+  const transformedData = data.flatMap(d => [
+    { date: d.date, year: d.year, price: d.mean, series: 'Mean Price', borough: d.borough },
+    { date: d.date, year: d.year, price: d.median, series: 'Median Price', borough: d.borough },
+    { date: d.date, year: d.year, price: d.sales, series: 'Sales Volume', borough: d.borough }
+  ]);
+
+  return {
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
+    "width": 440,
+    "height": 130,
+    "background": "transparent",
+    "data": {
+      "values": transformedData
+    },
+    "layer": [
+      {
+        "encoding": {
+          "x": {
+            "field": "year",
+            "type": "ordinal" as const,
+            "axis": {
+              "labelColor": "#888",
+              "titleColor": "#888",
+              "labelFontSize": 8,
+              "labelAngle": -45,
+              "grid": false,
+              "ticks": true,
+              "domain": true,
+              "title": null,
+              "values": [1995, 1999, 2003, 2007, 2011, 2015, 2019, 2023]
+            }
+          },
+          "y": {
+            "field": "price",
+            "type": "quantitative" as const,
+            "axis": {
+              "labelColor": "#888",
+              "titleColor": "#888",
+              "labelFontSize": 8,
+              "gridColor": "#888",
+              "gridDash": [2, 2],
+              "grid": true,
+              "ticks": true,
+              "domain": true,
+              "title": null,
+              "format": ".0s"
+            }
+          },
+          "color": {
+            "field": "series",
+            "type": "nominal" as const,
+            "scale": {
+              "domain": ["Mean Price", "Median Price", "Sales Volume"],
+              "range": ["#8B5CF6", "#3B82F6", "#06B6D4"]
+            },
+            "legend": null
+          }
+        },
+        "layer": [
+          {
+            "mark": {
+              "type": "line" as const,
+              "strokeWidth": 2,
+              "cursor": "pointer" as const
+            }
+          },
+          {
+            "params": [{
+              "name": "label",
+              "select": {
+                "type": "point" as const,
+                "encodings": ["x"] as ("x")[],
+                "nearest": true,
+                "on": "pointerover" as const
+              }
+            }],
+            "mark": {
+              "type": "point" as const,
+              "size": 40,
+              "cursor": "pointer" as const
+            },
+            "encoding": {
+              "opacity": {
+                "condition": {
+                  "param": "label",
+                  "empty": false,
+                  "value": 1
+                },
+                "value": 0
+              }
+            }
+          }
+        ]
+      },
+      {
+        "transform": [{"filter": {"param": "label", "empty": false}}],
+        "layer": [
+          {
+            "mark": {"type": "rule" as const, "color": "#666", "strokeWidth": 1},
+            "encoding": {
+              "x": {"type": "ordinal" as const, "field": "year", "aggregate": "min" as const}
+            }
+          },
+          {
+            "encoding": {
+              "text": {"type": "quantitative" as const, "field": "price", "format": ".2s"},
+              "x": {"type": "ordinal" as const, "field": "year"},
+              "y": {"type": "quantitative" as const, "field": "price"}
+            },
+            "layer": [
+              {
+                "mark": {
+                  "type": "text" as const,
+                  "stroke": "#0a0a0a",
+                  "strokeWidth": 3,
+                  "align": "left" as const,
+                  "dx": 8,
+                  "dy": -8,
+                  "fontSize": 10,
+                  "fontWeight": "bold" as const
+                }
+              },
+              {
+                "mark": {
+                  "type": "text" as const,
+                  "align": "left" as const,
+                  "dx": 8,
+                  "dy": -8,
+                  "fontSize": 10,
+                  "fontWeight": "bold" as const
+                },
+                "encoding": {
+                  "color": {"type": "nominal" as const, "field": "series"}
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "config": {
+      "background": "transparent",
+      "view": {
+        "stroke": null
+      }
+    }
+  };
+};

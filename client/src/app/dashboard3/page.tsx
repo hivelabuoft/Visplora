@@ -5,7 +5,7 @@ import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
 import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec } from './vegaSpecs';
+import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec, housePriceTimelineChartSpec } from './vegaSpecs';
 import { 
   loadPopulationData, 
   processPopulationData, 
@@ -57,6 +57,13 @@ import {
   loadSchoolData,
   getBoroughSchoolStats
 } from './schoolData';
+import { 
+  HousePriceData,
+  HousePriceTimelineData,
+  loadHousePriceData,
+  getHousePriceTimelineForBorough,
+  formatPrice
+} from './housePriceData';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
@@ -92,6 +99,11 @@ const Dashboard3: React.FC = () => {
   const [schoolData, setSchoolData] = useState<SchoolData[]>([]);
   const [boroughSchoolStats, setBoroughSchoolStats] = useState<BoroughSchoolStats | null>(null);
   const [isLoadingSchool, setIsLoadingSchool] = useState<boolean>(true);
+
+  // House price-related state
+  const [housePriceData, setHousePriceData] = useState<HousePriceData[]>([]);
+  const [housePriceTimelineData, setHousePriceTimelineData] = useState<HousePriceTimelineData[]>([]);
+  const [isLoadingHousePrice, setIsLoadingHousePrice] = useState<boolean>(true);
 
   // Load population data on component mount
   useEffect(() => {
@@ -155,6 +167,25 @@ const Dashboard3: React.FC = () => {
     loadData();
   }, []);
 
+  // Load house price data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoadingHousePrice(true);
+      try {
+        const data = await loadHousePriceData();
+        setHousePriceData(data);
+        console.log(`Loaded ${data.length} house price records`);
+      } catch (error) {
+        console.error('Error loading house price data:', error);
+        setHousePriceData([]);
+      } finally {
+        setIsLoadingHousePrice(false);
+      }
+    };
+    
+    loadData();
+  }, []);
+
   // Check if LSOA data is available for the selected borough
   useEffect(() => {
     const checkLsoaData = async () => {
@@ -212,6 +243,35 @@ const Dashboard3: React.FC = () => {
       setBoroughSchoolStats(null);
     }
   }, [selectedBorough, schoolData]);
+
+  // Load house price data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoadingHousePrice(true);
+      try {
+        const data = await loadHousePriceData();
+        setHousePriceData(data);
+        console.log(`Loaded ${data.length} house price records`);
+      } catch (error) {
+        console.error('Error loading house price data:', error);
+        setHousePriceData([]);
+      } finally {
+        setIsLoadingHousePrice(false);
+      }
+    };
+    
+    loadData();
+  }, []);
+
+  // Update house price timeline when selected borough changes
+  useEffect(() => {
+    if (housePriceData.length > 0) {
+      const timeline = getHousePriceTimelineForBorough(housePriceData, selectedBorough);
+      setHousePriceTimelineData(timeline);
+    } else {
+      setHousePriceTimelineData([]);
+    }
+  }, [selectedBorough, housePriceData]);
 
   // Load country of birth data on component mount
   useEffect(() => {
@@ -464,7 +524,7 @@ const Dashboard3: React.FC = () => {
                 {isLoadingPopulation ? 'Loading...' : 
                  currentMetrics ? formatDensity(currentMetrics.populationDensityPer10000) : 'N/A'}
               </div>
-              <div className="text-center text-xs text-gray-400">Population Density <br />(per 10,000 m²)</div>
+              <div className="text-center text-xs text-gray-400">Population Density <br />(persons per 10,000m²)</div>
             </LinkableCard>
 
             {/* Mean House Price */}
@@ -476,7 +536,7 @@ const Dashboard3: React.FC = () => {
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-lg font-bold text-white">£516,266</div>
+              <div className="text-lg font-bold text-white">{formatPrice(housePriceTimelineData[housePriceTimelineData.length - 1]?.mean || 0)}</div>
               <div className="text-xs text-gray-400">Mean House Price</div>
             </LinkableCard>
 
@@ -624,18 +684,18 @@ const Dashboard3: React.FC = () => {
 
           {/* Bottom Left: Population Growth & Projections */}
           <LinkableCard 
-            className="col-start-1 col-end-4 row-start-5 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative overflow-hidden"
+            className="col-start-3 col-end-5 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative overflow-hidden"
             styles={{}}
             elementId="population-growth-projections"
             elementName="Population Growth & Projections"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-sm font-semibold text-white">
+            <div className="text-xs font-semibold text-white">
               POPULATION GROWTH & PROJECTIONS
             </div>
-            <div className="text-xs text-gray-400 mb-3">
-              Historical data (1999-2023) and projections (2024-2033) for {selectedBorough}
+            <div className="text-xs text-gray-400">
+              Historical and projected population data for {selectedBorough}
             </div>
             
             {/* Vega-Lite Bar Chart */}
@@ -732,20 +792,28 @@ const Dashboard3: React.FC = () => {
             <div className="text-sm font-semibold text-white">
               INCOME TRENDS OVER TIME
             </div>
-            <div className="text-xs text-gray-400 mb-3">
-              Mean and median income for {selectedBorough} (1999-2023)
+            <div className="text-xs text-gray-400 mb-1">
+              Mean and median income for {selectedBorough}
+            </div>
+            
+            {/* Custom Legend */}
+            <div className="flex justify-center items-center gap-4 text-[10px] text-gray-300 mb-2">
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-purple-500"></div>
+                <span>Mean Income</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-blue-500"></div>
+                <span>Median Income</span>
+              </div>
             </div>
             
             {/* Vega-Lite Line Chart */}
-            <div className="absolute bottom-0 left-4 right-4">
+            <div className="absolute -bottom-1 left-4 right-4">
               {incomeTimelineData.length > 0 ? (
                 <VegaLite
                   spec={incomeTimelineChartSpec(incomeTimelineData)}
                   actions={false}
-                  style={{
-                    width: '100%',
-                    height: '100%'
-                  }}
                 />
               ) : (
                 <div className="flex items-center justify-center h-full text-gray-400">
@@ -823,7 +891,7 @@ const Dashboard3: React.FC = () => {
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-xs font-semibold text-white mb-1">
+            <div className="text-xs font-semibold text-white">
               SCHOOL EDUCATION FACILITIES
             </div>
             <div className="text-xs text-gray-400">
@@ -866,75 +934,54 @@ const Dashboard3: React.FC = () => {
             </div>
           </LinkableCard>
 
-          {/* Mean House Price Chart */}
+          {/* House Price Timeline Chart */}
           <LinkableCard 
-            className="col-start-3 col-end-5 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            className="col-start-1 col-end-4 row-start-5 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600"
             styles={{}}
-            elementId="mean-house-price-chart"
-            elementName="Mean House Price Chart"
+            elementId="house-price-timeline"
+            elementName="House Price Timeline"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-xs font-semibold text-white mb-1">
-              MEAN HOUSE PRICE
+            <div className="text-sm font-semibold text-white">
+              HOUSE PRICE TRENDS
             </div>
-            <div className="text-xs text-gray-400 flex gap-2 mb-4">
-              <span>● London</span>
-              <span>● National Average</span>
+            <div className="text-xs text-gray-400 mb-1">
+              Mean, median prices & sales volume for {selectedBorough}
+            </div>            
+            
+            {/* Custom Legend */}
+            <div className="flex justify-center items-center gap-4 text-[10px] text-gray-300">
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-purple-500"></div>
+                <span>Mean Price</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-blue-500"></div>
+                <span>Median Price</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-cyan-500"></div>
+                <span>Sales Volume</span>
+              </div>
             </div>
             
-            {/* Bar Chart Simulation */}
-            <div style={{
-              height: '80px',
-              display: 'flex',
-              alignItems: 'end',
-              gap: '4px',
-              padding: '0 10px'
-            }}>
-              {[
-                { year: '2005', height: '20px' },
-                { year: '2007', height: '35px' },
-                { year: '2009', height: '25px' },
-                { year: '2011', height: '30px' },
-                { year: '2013', height: '40px' },
-                { year: '2015', height: '50px' },
-                { year: '2017', height: '65px' },
-                { year: '2019', height: '70px' },
-                { year: '2021', height: '60px' },
-                { year: '2023', height: '75px' }
-              ].map((bar) => (
-                <div key={bar.year} style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  flex: 1
-                }}>
-                  <div style={{
-                    width: '100%',
-                    height: bar.height,
-                    backgroundColor: '#8B5CF6',
-                    borderRadius: '2px 2px 0 0'
-                  }}></div>
-                  <div style={{
-                    fontSize: '7px',
-                    color: '#888',
-                    marginTop: '2px',
-                    transform: 'rotate(-45deg)',
-                    transformOrigin: 'center'
-                  }}>
-                    {bar.year}
-                  </div>
+            {/* Vega-Lite House Price Timeline Chart */}
+            <div className="absolute -bottom-1 left-4 right-4">
+              {isLoadingHousePrice ? (
+                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
+                  Loading house price data...
                 </div>
-              ))}
-            </div>
-            
-            <div style={{
-              fontSize: '8px',
-              color: '#888',
-              textAlign: 'left',
-              marginTop: '10px'
-            }}>
-              £0K £200K £400K
+              ) : housePriceTimelineData.length > 0 ? (
+                <VegaLite
+                  spec={housePriceTimelineChartSpec(housePriceTimelineData)}
+                  actions={false}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
+                  No house price data available
+                </div>
+              )}
             </div>
           </LinkableCard>
 
@@ -1108,7 +1155,7 @@ const Dashboard3: React.FC = () => {
               <div className="flex flex-col justify-center space-y-1 pt-4 h-32">
                 {/* Legend */}
                 {countryOfBirthStats?.regions.map((region, index) => {
-                  const colors = ["#8B5CF6", "#3B82F6", "#06B6D4", "#8B5CF6", "#1E40AF"];
+                  const colors = ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#1E40AF"];
                   return (
                     <div key={region.region} className="flex items-center gap-1">
                       <div 
