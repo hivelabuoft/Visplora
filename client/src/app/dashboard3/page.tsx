@@ -5,7 +5,7 @@ import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
 import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec } from './vegaSpecs';
+import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec } from './vegaSpecs';
 import { 
   loadPopulationData, 
   processPopulationData, 
@@ -51,6 +51,12 @@ import {
   getCountryOfBirthComparison,
   getAvailableYears
 } from './countryOfBirthData';
+import { 
+  SchoolData,
+  BoroughSchoolStats,
+  loadSchoolData,
+  getBoroughSchoolStats
+} from './schoolData';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
@@ -81,6 +87,11 @@ const Dashboard3: React.FC = () => {
   const [boroughCrimeStats, setBoroughCrimeStats] = useState<BoroughCrimeStats[]>([]);
   const [boroughCrimeStatsComparison, setBoroughCrimeStatsComparison] = useState<BoroughCrimeStatsComparison[]>([]);
   const [isLoadingCrime, setIsLoadingCrime] = useState<boolean>(true);
+
+  // School-related state
+  const [schoolData, setSchoolData] = useState<SchoolData[]>([]);
+  const [boroughSchoolStats, setBoroughSchoolStats] = useState<BoroughSchoolStats | null>(null);
+  const [isLoadingSchool, setIsLoadingSchool] = useState<boolean>(true);
 
   // Load population data on component mount
   useEffect(() => {
@@ -119,6 +130,25 @@ const Dashboard3: React.FC = () => {
         console.error('Error loading crime data:', error);
       } finally {
         setIsLoadingCrime(false);
+      }
+    };
+    
+    loadData();
+  }, []);
+
+  // Load school data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoadingSchool(true);
+      try {
+        const data = await loadSchoolData();
+        setSchoolData(data);
+        console.log(`Loaded ${data.length} schools`);
+      } catch (error) {
+        console.error('Error loading school data:', error);
+        setSchoolData([]);
+      } finally {
+        setIsLoadingSchool(false);
       }
     };
     
@@ -171,6 +201,17 @@ const Dashboard3: React.FC = () => {
       setCrimePieDataComparison(categoriesComparison);
     }
   }, [selectedBorough, crimeRawData]);
+
+  // Update school stats when selected borough changes
+  useEffect(() => {
+    if (schoolData.length > 0) {
+      const stats = getBoroughSchoolStats(schoolData, selectedBorough);
+      setBoroughSchoolStats(stats);
+    } else {
+      // No data available - set empty stats
+      setBoroughSchoolStats(null);
+    }
+  }, [selectedBorough, schoolData]);
 
   // Load country of birth data on component mount
   useEffect(() => {
@@ -726,7 +767,7 @@ const Dashboard3: React.FC = () => {
             <div className="text-sm font-semibold text-white">
               CRIME CATEGORIES
             </div>
-            <div className="flex flex-col justify-between text-xs text-gray-400">
+            <div className="flex flex-col justify-between text-[11px] text-gray-400">
                 Total Cases (2022 vs 2023): <br></br>
                 {crimePieDataComparison.reduce((sum, cat) => sum + cat.count2022, 0).toLocaleString()} vs {crimePieDataComparison.reduce((sum, cat) => sum + cat.count2023, 0).toLocaleString()}
             </div>
@@ -773,44 +814,55 @@ const Dashboard3: React.FC = () => {
           </LinkableCard>
 
           {/* Row 3: Bottom Charts (2x2 each) */}
-          {/* Car Ownership */}
+          {/* School Education Facilities */}
           <LinkableCard 
             className="col-start-7 col-end-9 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
             styles={{}}
-            elementId="car-ownership"
-            elementName="Car Ownership"
+            elementId="school-education-facilities"
+            elementName="School Education Facilities"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-xs font-semibold text-white mb-2">
-              CAR OWNERSHIP
+            <div className="text-xs font-semibold text-white mb-1">
+              SCHOOL EDUCATION FACILITIES
             </div>
-            <div className="text-xs text-gray-400 mb-4">
-              Households with one or more vehicles
-            </div>
-            
-            {/* Gauge Chart */}
-            <div className="relative mx-auto overflow-hidden" style={{
-              width: '120px',
-              height: '60px',
-              borderRadius: '120px 120px 0 0',
-              border: '12px solid #333',
-              borderBottom: 'none'
-            }}>
-              <div className="absolute bottom-0 left-0 bg-purple-500" style={{
-                width: '43.6%',
-                height: '12px',
-                borderRadius: '6px'
-              }}></div>
+            <div className="text-xs text-gray-400">
+              Types of schools in {selectedBorough}
             </div>
             
-            <div className="text-center mt-4">
-              <div className="text-2xl font-bold text-purple-500">
-                43.6%
+            {/* School Type Summary */}
+            <div className="flex justify-between text-[11px] text-gray-400 mb-2">
+              <div>
+                Primary: {boroughSchoolStats?.primarySchools || 0}
               </div>
-              <div className="text-xs text-gray-400 mt-1">
-                0 25 75 100
+              <div>
+                Secondary: {boroughSchoolStats?.secondarySchools || 0}
               </div>
+              <div>
+                Total: {boroughSchoolStats?.totalSchools || 0}
+              </div>
+            </div>
+            
+            {/* Vega-Lite School Bar Chart */}
+            <div className="absolute bottom-2 left-4 right-4">
+              {isLoadingSchool ? (
+                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
+                  Loading school data...
+                </div>
+              ) : boroughSchoolStats ? (
+                <VegaLite
+                  spec={schoolEducationFacilitiesSpec(boroughSchoolStats)}
+                  actions={false}
+                  style={{
+                    width: '100%',
+                    height: '100%'
+                  }}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
+                  No school data available
+                </div>
+              )}
             </div>
           </LinkableCard>
 
@@ -1007,7 +1059,7 @@ const Dashboard3: React.FC = () => {
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-sm font-semibold text-white">
+            <div className="text-xs font-semibold text-white">
               COUNTRY OF BIRTH
             </div>
             <div className="text-xs text-gray-400 mb-1">
@@ -1063,7 +1115,7 @@ const Dashboard3: React.FC = () => {
                         className="w-2 h-2 rounded-sm" 
                         style={{ backgroundColor: colors[index] }}
                       ></div>
-                      <span className="text-xs text-gray-300">
+                      <span className="text-[11px] text-gray-300">
                         {region.region}: {region.percentage.toFixed(1)}%
                       </span>
                     </div>

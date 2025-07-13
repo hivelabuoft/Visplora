@@ -1,5 +1,6 @@
 import { BoroughCrimeStats, CrimeCategory, CRIME_CATEGORY_COLORS, BoroughCrimeStatsComparison, CrimeCategoryComparison } from './crimeData';
 import { CountryOfBirthStats, CountryOfBirthComparison } from './countryOfBirthData';
+import { BoroughSchoolStats, SCHOOL_TYPE_COLORS } from './schoolData';
 
 // Vega-Lite specification for London boroughs map
 export const boroughMapSpec = {
@@ -487,7 +488,7 @@ export const crimeBarChartComparisonSpec = (
         }
       ],
       "transform": [
-        {"fold": ["count2022_positive", "count2023_negative"], "as": ["year_type", "count"]},
+        {"fold": ["count2022_positive", "count2023_negative"], "as": ["year_type", "count"] as [string, string]},
         {"calculate": "datum.year_type == 'count2022_positive' ? '2022' : '2023'", "as": "year"},
         {"calculate": "abs(datum.count)", "as": "absolute_count"}
       ],
@@ -641,7 +642,7 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
         ],
         "mark": {
           "type": "arc" as const,
-          "innerRadius": 35,
+          "innerRadius": 50,
           "outerRadius": 70,
           "cursor": "pointer" as const
         },
@@ -661,9 +662,9 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
           "stroke": {
             "condition": {
               "param": "hover_crime_pie",
-              "value": "white"
+              "value": "#272729"
             },
-            "value": "white"
+            "value": "#272729"
           },
           "strokeWidth": {
             "condition": {
@@ -695,10 +696,10 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
           "type": "text",
           "align": "center",
           "baseline": "middle",
-          "fontSize": 14,
+          "fontSize": 16,
           "fontWeight": "bold",
           "color": totalChange > 0 ? "#ef4444" : "#22c55e",
-          "dy": -8
+          "dy": -12
         },
         "encoding": {
           "text": {
@@ -716,7 +717,7 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
           "type": "text",
           "align": "center",
           "baseline": "middle",
-          "fontSize": 9,
+          "fontSize": 10,
           "color": "#d1d5db",
           "dy": 4
         },
@@ -735,9 +736,9 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
           "type": "text",
           "align": "center",
           "baseline": "middle",
-          "fontSize": 9,
+          "fontSize": 10,
           "color": "#d1d5db",
-          "dy": 15
+          "dy": 16
         },
         "encoding": {
           "text": {
@@ -783,7 +784,7 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
       ],
       "mark": {
         "type": "arc" as const,
-        "innerRadius": 35,
+        "innerRadius": 50,
         "outerRadius": 70,
         "cursor": "pointer" as const
       },
@@ -804,9 +805,9 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
         "stroke": {
           "condition": {
             "param": "hover_birth_pie",
-            "value": "white"
+            "value": "#272729"
           },
-          "value": "white"
+          "value": "#272729"
         },
         "strokeWidth": {
           "condition": {
@@ -856,9 +857,9 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
         "type": "text",
         "align": "center",
         "baseline": "middle",
-        "fontSize": 14,
+        "fontSize": 16,
         "fontWeight": "bold",
-        "dy": -12,
+        "dy": -16,
         "color": comparison ? (comparison.percentageChange >= 0 ?  "#22c55e" : "#ef4444") : "white"
       },
       "encoding": {
@@ -881,7 +882,7 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
         "type": "text",
         "align": "center",
         "baseline": "middle",
-        "fontSize": 9,
+        "fontSize": 10,
         "dy": 0,
         "color": "#d1d5db"
       },
@@ -905,8 +906,8 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
         "type": "text",
         "align": "center",
         "baseline": "middle",
-        "fontSize": 9,
-        "dy": 10,
+        "fontSize": 10,
+        "dy": 11,
         "color": "#d1d5db"
       },
       "encoding": {
@@ -929,8 +930,8 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
         "type": "text",
         "align": "center",
         "baseline": "middle",
-        "fontSize": 9,
-        "dy": 20,
+        "fontSize": 10,
+        "dy": 22,
         "color": "#d1d5db"
       },
       "encoding": {
@@ -941,6 +942,103 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
       }
     }
   ],
+  "config": {
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    }
+  }
+});
+
+// School Education Facilities Bar Chart Specification
+export const schoolEducationFacilitiesSpec = (schoolStats: BoroughSchoolStats) => ({
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+  "width": 200,
+  "height": 130,
+  "background": "transparent",
+  "data": {
+    "values": schoolStats.schoolTypes
+  },
+  "params": [
+    {
+      "name": "hover_school_bar",
+      "select": {
+        "type": "point" as const,
+        "on": "mouseover" as const,
+        "clear": "mouseout" as const
+      }
+    }
+  ],
+  "mark": {
+    "type": "bar" as const,
+    "cursor": "pointer" as const,
+    "cornerRadiusEnd": 4,
+    "height": 8
+  },
+  "encoding": {
+    "y": {
+      "field": "type",
+      "type": "nominal" as const,
+      "sort": {
+        "field": "count",
+        "order": "descending" as const
+      },
+      "axis": {
+        "labelColor": "#888",
+        "titleColor": "#fff",
+        "labelFontSize": 10,
+        "labelLimit": 80,
+        "title": null,
+        "grid": false,
+        "ticks": true,
+        "domain": true
+      }
+    },
+    "x": {
+      "field": "count",
+      "type": "quantitative" as const,
+      "axis": {
+        "labelColor": "#888",
+        "titleColor": "#888",
+        "labelFontSize": 8,
+        "grid": true,
+        "gridColor": "#888",
+        "gridDash": [2, 2],
+        "ticks": true,
+        "domain": true,
+        "title": null
+      }
+    },
+    "color": {
+      "value": "#8B5CF6"
+    },
+    "stroke": {
+      "condition": {
+        "param": "hover_school_bar",
+        "value": "transparent"
+      },
+      "value": "transparent"
+    },
+    "strokeWidth": {
+      "condition": {
+        "param": "hover_school_bar",
+        "value": 0
+      },
+      "value": 0
+    },
+    "opacity": {
+      "condition": {
+        "param": "hover_school_bar",
+        "value": 1
+      },
+      "value": 0.6
+    },
+    "tooltip": [
+      {"field": "type", "type": "nominal" as const, "title": "School Type"},
+      {"field": "count", "type": "quantitative" as const, "title": "Number of Schools"},
+      {"field": "percentage", "type": "quantitative" as const, "title": "Percentage", "format": ".1f"}
+    ]
+  },
   "config": {
     "background": "transparent",
     "view": {

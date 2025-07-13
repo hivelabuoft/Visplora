@@ -194,7 +194,7 @@ export function LinkableCard({
         <>
           <button
             onClick={handleAddNoteClick}
-            className={`absolute w-6 h-6 bg-sky-500 hover:bg-sky-600 text-white rounded-full opacity-50 hover:opacity-100 
+            className={`absolute w-6 h-6 bg-sky-500 hover:bg-sky-600 text-white rounded-full opacity-25 hover:opacity-100 
                        flex items-center justify-center shadow-lg transition-all duration-200 z-10 transform 
                        hover:scale-110 ${
                          isLinked ? 'top-1 right-15' : 'top-1 right-8'
@@ -207,7 +207,7 @@ export function LinkableCard({
           {/* Drag Element Button */}
           <button
             onMouseDown={handleElementDrag}
-            className={`absolute w-6 h-6 bg-gray-400 hover:bg-gray-600 text-white rounded-full opacity-50 hover:opacity-100
+            className={`absolute w-6 h-6 bg-gray-400 hover:bg-gray-600 text-white rounded-full opacity-25 hover:opacity-100
                        flex items-center justify-center shadow-lg transition-all duration-200 z-10 transform 
                        hover:scale-110 cursor-grab active:cursor-grabbing top-1 left-1`}
             title="Drag to copy this element"
@@ -219,7 +219,7 @@ export function LinkableCard({
           {onAddToSidebar && elementId && elementName && elementType && !isInSidebar && (
             <button
               onClick={handleAddToSidebar}
-              className={`absolute w-6 h-6 bg-green-500 hover:bg-green-600 text-white rounded-full opacity-50 hover:opacity-100
+              className={`absolute w-6 h-6 bg-green-500 hover:bg-green-600 text-white rounded-full opacity-25 hover:opacity-100
                          flex items-center justify-center transition-all duration-200 z-10 transform 
                          hover:scale-110 ${
                            isLinked && isInSidebar ? 'top-1 right-26' :
