@@ -51,7 +51,26 @@ export interface DashboardPlaygroundProps {
     jobRole?: string;
     gender?: string;
     showOnlyAttrition?: boolean;
+    // London dashboard filters
+    borough?: string;
+    crimeCategory?: string;
+    birthYear?: number;
+    baseYear?: number;
+    lsoa?: string;
   }) => void;
+  dashboardFilters?: {
+    selectedBorough?: string;
+    selectedCrimeCategory?: string;
+    selectedBirthYear?: number;
+    selectedBaseYear?: number;
+    selectedLSOA?: string;
+  };
+  availableFilters?: {
+    boroughs?: string[];
+    crimeCategories?: string[];
+    birthYears?: number[];
+    baseYears?: number[];
+  };
 }
 
 export interface DroppedElement {

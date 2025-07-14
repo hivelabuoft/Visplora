@@ -84,6 +84,12 @@ interface AIAssistantProps {
     jobRole?: string;
     gender?: string;
     showOnlyAttrition?: boolean;
+    // London dashboard filters
+    borough?: string;
+    crimeCategory?: string;
+    birthYear?: number;
+    baseYear?: number;
+    lsoa?: string;
   }) => void;
   onCreateElement?: (elementData: {
     elementName: string;
@@ -91,6 +97,19 @@ interface AIAssistantProps {
     vegaSpec: any;
     description: string;
   }) => void;
+  dashboardFilters?: {
+    selectedBorough?: string;
+    selectedCrimeCategory?: string;
+    selectedBirthYear?: number;
+    selectedBaseYear?: number;
+    selectedLSOA?: string;
+  };
+  availableFilters?: {
+    boroughs?: string[];
+    crimeCategories?: string[];
+    birthYears?: number[];
+    baseYears?: number[];
+  };
 }
 
 // Helper functions for response modes
@@ -200,7 +219,9 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
   droppedElements = [],
   stickyNotes = [],
   onApplyFilters,
-  onCreateElement
+  onCreateElement,
+  dashboardFilters,
+  availableFilters
 }) => {
   const [isMoving, setIsMoving] = useState(false);
   const [resizeMode, setResizeMode] = useState<'none' | 'corner' | 'right' | 'bottom'>('none');
@@ -226,6 +247,13 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
   const [loadingFileData, setLoadingFileData] = useState(false);
   const [londonDataSummary, setLondonDataSummary] = useState<{[key: string]: any}>({});
   const [showDatasetFiles, setShowDatasetFiles] = useState(false);
+  
+  // Dropdown states for context panel sections
+  const [showDatasetsDropdown, setShowDatasetsDropdown] = useState(false);
+  const [showCurrentFiltersDropdown, setShowCurrentFiltersDropdown] = useState(false);
+  const [showAvailableFiltersDropdown, setShowAvailableFiltersDropdown] = useState(false);
+  const [showElementsDropdown, setShowElementsDropdown] = useState(false);
+  const [showDatasetCategoriesDropdown, setShowDatasetCategoriesDropdown] = useState<{[key: string]: boolean}>({});
 
   const assistantRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -1076,31 +1104,197 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
             className="absolute top-0 left-0 right-0 bg-slate-800 border-b-2 border-slate-500 p-3 overflow-y-auto" 
             style={{
               height: '50%',
-              scrollbarWidth: 'thin',
               msOverflowStyle: 'none'
             }}
           >
-            <div className="text-xs text-slate-300">
-              <div className="flex items-center space-x-2 mb-1">
-                <FiDatabase size={12} />
-                <span className="font-medium">Available Datasets:</span>
-              </div>
-              <div className="space-y-1">
-                <div>Total Datasets: {(hrData.length > 0 ? 1 : 0) + Object.keys(londonDataSummary).length} loaded</div>
-                {hrData.length > 0 && (
-                  <div>• HR Employee Data: {hrData.length} records</div>
+            <div className="text-xs text-slate-300 space-y-2">
+              {/* Available Datasets Section */}
+              <div className="border-b border-slate-600 pb-2">
+                <button
+                  onClick={() => setShowDatasetsDropdown(!showDatasetsDropdown)}
+                  className="flex items-center space-x-2 w-full text-left hover:bg-slate-700 p-1 rounded transition-colors"
+                >
+                  {showDatasetsDropdown ? <FiChevronDown size={12} /> : <FiChevronRight size={12} />}
+                  <FiDatabase size={12} />
+                  <span className="font-medium">Available Datasets</span>
+                  <span className="text-slate-400 ml-auto">({(hrData.length > 0 ? 1 : 0) + Object.keys(londonDataSummary).length})</span>
+                </button>
+                {showDatasetsDropdown && (
+                  <div className="mt-2 ml-4 space-y-1">
+                    {hrData.length > 0 && (
+                      <div className="text-slate-400">• HR Employee Data: {hrData.length} records</div>
+                    )}
+                    {Object.entries(londonDataSummary).map(([fileId, fileInfo]) => (
+                      <div key={fileId} className="text-slate-400">• {fileInfo.name}: {fileInfo.totalRecords} records</div>
+                    ))}
+                    {(hrData.length === 0 && Object.keys(londonDataSummary).length === 0) && (
+                      <div className="text-slate-500 italic">No datasets loaded</div>
+                    )}
+                  </div>
                 )}
-                {Object.entries(londonDataSummary).map(([fileId, fileInfo]) => (
-                  <div key={fileId}>• {fileInfo.name}: {fileInfo.totalRecords} records</div>
-                ))}
-                <div className="mt-2 pt-2 border-t border-slate-600">
-                  <div>Connected Elements: {assistant.connectedElements.length}</div>
-                  {assistant.connectedElements.map((element, index) => (
-                    <div key={index} className="text-blue-300">
-                      • {element.type === 'element' ? 'Chart' : 'Note'}: {element.id.slice(0, 8)}...
+              </div>
+
+              {/* Current Dashboard Filters Section */}
+              {dashboardFilters && (
+                <div className="border-b border-slate-600 pb-2">
+                  <button
+                    onClick={() => setShowCurrentFiltersDropdown(!showCurrentFiltersDropdown)}
+                    className="flex items-center space-x-2 w-full text-left hover:bg-slate-700 p-1 rounded transition-colors"
+                  >
+                    {showCurrentFiltersDropdown ? <FiChevronDown size={12} /> : <FiChevronRight size={12} />}
+                    <FiFilter size={12} className="text-yellow-400" />
+                    <span className="font-medium">Current Filters</span>
+                    <span className="text-slate-400 ml-auto">
+                      ({Object.values(dashboardFilters).filter(Boolean).length})
+                    </span>
+                  </button>
+                  {showCurrentFiltersDropdown && (
+                    <div className="mt-2 ml-4 space-y-1">
+                      {dashboardFilters.selectedBorough && (
+                        <div className="text-slate-400">• Borough: <span className="text-blue-300">{dashboardFilters.selectedBorough}</span></div>
+                      )}
+                      {dashboardFilters.selectedCrimeCategory && (
+                        <div className="text-slate-400">• Crime Category: <span className="text-red-300">{dashboardFilters.selectedCrimeCategory}</span></div>
+                      )}
+                      {dashboardFilters.selectedBirthYear && (
+                        <div className="text-slate-400">• Birth Year: <span className="text-green-300">{dashboardFilters.selectedBirthYear}</span></div>
+                      )}
+                      {dashboardFilters.selectedBaseYear && (
+                        <div className="text-slate-400">• Base Year: <span className="text-purple-300">{dashboardFilters.selectedBaseYear}</span></div>
+                      )}
+                      {dashboardFilters.selectedLSOA && (
+                        <div className="text-slate-400">• LSOA: <span className="text-cyan-300">{dashboardFilters.selectedLSOA}</span></div>
+                      )}
+                      {Object.values(dashboardFilters).filter(Boolean).length === 0 && (
+                        <div className="text-slate-500 italic">No filters applied</div>
+                      )}
                     </div>
-                  ))}
+                  )}
                 </div>
+              )}
+
+              {/* Available Filters Section */}
+              {availableFilters && (
+                <div className="border-b border-slate-600 pb-2">
+                  <button
+                    onClick={() => setShowAvailableFiltersDropdown(!showAvailableFiltersDropdown)}
+                    className="flex items-center space-x-2 w-full text-left hover:bg-slate-700 p-1 rounded transition-colors"
+                  >
+                    {showAvailableFiltersDropdown ? <FiChevronDown size={12} /> : <FiChevronRight size={12} />}
+                    <FiFilter size={12} className="text-green-400" />
+                    <span className="font-medium">Available Filters</span>
+                    <span className="text-slate-400 ml-auto">
+                      ({Object.keys(availableFilters).length})
+                    </span>
+                  </button>
+                  {showAvailableFiltersDropdown && (
+                    <div className="mt-2 ml-4 space-y-1">
+                      {availableFilters.boroughs && (
+                        <div className="text-slate-400">
+                          • Boroughs: {availableFilters.boroughs.length} available
+                          <div className="ml-3 mt-1 text-slate-500 text-xs">
+                            {availableFilters.boroughs.slice(0, 5).map((borough: string, index: number) => (
+                              <div key={index}>- {borough}</div>
+                            ))}
+                            {availableFilters.boroughs.length > 5 && (
+                              <div className="text-slate-600">... and {availableFilters.boroughs.length - 5} more</div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      {availableFilters.crimeCategories && (
+                        <div className="text-slate-400">
+                          • Crime Categories: {availableFilters.crimeCategories.length} available
+                          <div className="ml-3 mt-1 text-slate-500 text-xs">
+                            {availableFilters.crimeCategories.slice(0, 5).map((category: string, index: number) => (
+                              <div key={index}>- {category}</div>
+                            ))}
+                            {availableFilters.crimeCategories.length > 5 && (
+                              <div className="text-slate-600">... and {availableFilters.crimeCategories.length - 5} more</div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      {availableFilters.birthYears && (
+                        <div className="text-slate-400">
+                          • Birth Years: {availableFilters.birthYears.length} available
+                          <div className="ml-3 mt-1 text-slate-500 text-xs">
+                            {availableFilters.birthYears.slice(0, 5).map((year: number, index: number) => (
+                              <div key={index}>- {year}</div>
+                            ))}
+                            {availableFilters.birthYears.length > 5 && (
+                              <div className="text-slate-600">... and {availableFilters.birthYears.length - 5} more</div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Dashboard Elements Section */}
+              <div className="pb-2">
+                <button
+                  onClick={() => setShowElementsDropdown(!showElementsDropdown)}
+                  className="flex items-center space-x-2 w-full text-left hover:bg-slate-700 p-1 rounded transition-colors"
+                >
+                  {showElementsDropdown ? <FiChevronDown size={12} /> : <FiChevronRight size={12} />}
+                  <FiBarChart size={12} className="text-blue-400" />
+                  <span className="font-medium">Dashboard Elements</span>
+                  <span className="text-slate-400 ml-auto">
+                    ({(droppedElements?.length || 0) + (stickyNotes?.length || 0)})
+                  </span>
+                </button>
+                {showElementsDropdown && (
+                  <div className="mt-2 ml-4 space-y-1">
+                    {/* Connected Elements */}
+                    {assistant.connectedElements.length > 0 && (
+                      <div className="mb-2">
+                        <div className="text-blue-300 font-medium mb-1">Connected to me ({assistant.connectedElements.length}):</div>
+                        {assistant.connectedElements.map((element, index) => (
+                          <div key={index} className="text-blue-300 ml-2">
+                            • {element.type === 'element' ? 'Chart' : 'Note'}: {element.id.slice(0, 8)}...
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {/* All Dashboard Elements */}
+                    {droppedElements && droppedElements.length > 0 && (
+                      <div className="mb-2">
+                        <div className="text-slate-400 font-medium mb-1">All Charts ({droppedElements.length}):</div>
+                        {droppedElements.map((element, index) => (
+                          <div key={index} className="text-slate-400 ml-2 text-xs">
+                            • {element.elementName || 'Unnamed Chart'} 
+                            {assistant.connectedElements.some(conn => conn.id === element.id) && (
+                              <span className="text-blue-300 ml-1">[Connected]</span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {/* All Sticky Notes */}
+                    {stickyNotes && stickyNotes.length > 0 && (
+                      <div className="mb-2">
+                        <div className="text-slate-400 font-medium mb-1">All Notes ({stickyNotes.length}):</div>
+                        {stickyNotes.map((note, index) => (
+                          <div key={index} className="text-slate-400 ml-2 text-xs">
+                            • {note.content ? `${note.content.substring(0, 30)}...` : 'Empty note'}
+                            {assistant.connectedElements.some(conn => conn.id === note.id) && (
+                              <span className="text-blue-300 ml-1">[Connected]</span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {(!droppedElements || droppedElements.length === 0) && (!stickyNotes || stickyNotes.length === 0) && (
+                      <div className="text-slate-500 italic">No dashboard elements</div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -1112,61 +1306,140 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
             className="absolute top-0 left-0 right-0 bg-slate-800 border-b-2 border-slate-500 p-3 overflow-y-auto" 
             style={{
               height: '50%',
-              scrollbarWidth: 'thin',
               msOverflowStyle: 'none'
             }}
           >
             <div className="text-xs text-slate-300">
-              <div className="flex items-center space-x-2 mb-1">
+              <div className="flex items-center space-x-2 mb-3">
                 <FiFolder size={12} className="text-green-400" />
-                <span className="font-medium">London Data Files:</span>
+                <span className="font-medium">London Data Files ({Object.keys(londonDataSummary).length})</span>
               </div>
-              <div className="space-y-1 max-h-full overflow-y-auto">
-                {Object.entries(londonDataSummary).map(([fileId, fileInfo]) => (
-                  <button
-                    key={fileId}
-                    onClick={() => {
-                      setSelectedDataFile(londonDataCategories
-                        .flatMap(cat => cat.files)
-                        .find(f => f.id === fileId) || null);
-                      if (londonDataCategories.flatMap(cat => cat.files).find(f => f.id === fileId)) {
-                        handleFileSelect(londonDataCategories.flatMap(cat => cat.files).find(f => f.id === fileId)!);
-                      }
-                    }}
-                    className={`block w-full text-left p-1 rounded hover:bg-slate-700 transition-colors ${
-                      selectedDataFile?.id === fileId ? 'bg-slate-700' : ''
-                    }`}
-                  >
-                    <div className="text-slate-300 truncate">
-                      📊 {fileInfo.name} ({fileInfo.totalRecords} records)
+              
+              {/* London Data Files by Category */}
+              <div className="space-y-2 max-h-[60%] overflow-y-auto">
+                {londonDataCategories.map((category) => {
+                  const categoryFiles = category.files.filter(file => londonDataSummary[file.id]);
+                  if (categoryFiles.length === 0) return null;
+                  
+                  const isCategoryOpen = showDatasetCategoriesDropdown[category.name] === true;
+                  
+                  return (
+                    <div key={category.name} className="border border-slate-600 rounded">
+                      <button
+                        onClick={() => setShowDatasetCategoriesDropdown(prev => ({
+                          ...prev,
+                          [category.name]: prev[category.name] === true ? false : true
+                        }))}
+                        className="w-full flex items-center space-x-2 p-2 hover:bg-slate-700 transition-colors"
+                      >
+                        {isCategoryOpen ? <FiChevronDown size={12} /> : <FiChevronRight size={12} />}
+                        <FiFolder size={12} className="text-green-400" />
+                        <span className="font-medium">{category.name}</span>
+                        <span className="text-slate-400 ml-auto">({categoryFiles.length})</span>
+                      </button>
+                      
+                      {isCategoryOpen && (
+                        <div className="p-2 pt-0 space-y-1">
+                          {categoryFiles.map((file) => {
+                            const fileInfo = londonDataSummary[file.id];
+                            return (
+                              <button
+                                key={file.id}
+                                onClick={() => {
+                                  setSelectedDataFile(file);
+                                  handleFileSelect(file);
+                                }}
+                                className={`block w-full text-left p-2 rounded border transition-colors ${
+                                  selectedDataFile?.id === file.id 
+                                    ? 'bg-slate-700 border-green-500' 
+                                    : 'bg-slate-800 border-slate-600 hover:bg-slate-700 hover:border-slate-500'
+                                }`}
+                              >
+                                <div className="flex items-center space-x-2 mb-1">
+                                  <FiDatabase size={10} className="text-green-400" />
+                                  <span className="text-slate-300 font-medium truncate">
+                                    {fileInfo.name}
+                                  </span>
+                                </div>
+                                <div className="text-slate-500 text-xs truncate mb-1">
+                                  {fileInfo.description}
+                                </div>
+                                <div className="text-slate-400 text-xs">
+                                  {fileInfo.totalRecords} records • {fileInfo.columns.length} columns
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
-                    <div className="text-slate-500 text-xs truncate">
-                      {fileInfo.description}
-                    </div>
-                  </button>
-                ))}
+                  );
+                })}
+                
+                {/* HR Data Section */}
+                {hrData.length > 0 && (
+                  <div className="border border-slate-600 rounded">
+                    <button
+                      onClick={() => setShowDatasetCategoriesDropdown(prev => ({
+                        ...prev,
+                        'HR Data': prev['HR Data'] === true ? false : true
+                      }))}
+                      className="w-full flex items-center space-x-2 p-2 hover:bg-slate-700 transition-colors"
+                    >
+                      {showDatasetCategoriesDropdown['HR Data'] === true ? <FiChevronDown size={12} /> : <FiChevronRight size={12} />}
+                      <FiDatabase size={12} className="text-blue-400" />
+                      <span className="font-medium">HR Data</span>
+                      <span className="text-slate-400 ml-auto">(1)</span>
+                    </button>
+                    
+                    {showDatasetCategoriesDropdown['HR Data'] === true && (
+                      <div className="p-2 pt-0">
+                        <div className="bg-slate-800 border border-slate-600 rounded p-2">
+                          <div className="flex items-center space-x-2 mb-1">
+                            <FiDatabase size={10} className="text-blue-400" />
+                            <span className="text-slate-300 font-medium">HR Employee Data</span>
+                          </div>
+                          <div className="text-slate-500 text-xs mb-1">
+                            Employee attrition and performance data
+                          </div>
+                          <div className="text-slate-400 text-xs">
+                            {hrData.length} records • {hrData.length > 0 ? Object.keys(hrData[0]).length : 0} columns
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {Object.keys(londonDataSummary).length === 0 && hrData.length === 0 && (
+                  <div className="text-slate-500 italic text-center py-4">
+                    No data files loaded
+                  </div>
+                )}
               </div>
               
               {/* Selected File Preview */}
               {selectedDataFile && londonDataSummary[selectedDataFile.id] && (
-                <div className="mt-2 border-t border-slate-600 pt-2">
-                  <div className="flex items-center space-x-2 mb-1">
+                <div className="mt-3 border-t border-slate-600 pt-3">
+                  <div className="flex items-center space-x-2 mb-2">
                     <FiFile size={12} className="text-yellow-400" />
-                    <span className="font-medium">Selected: {selectedDataFile.name}</span>
+                    <span className="font-medium">Preview: {selectedDataFile.name}</span>
                   </div>
                   <div className="bg-slate-900 p-2 rounded text-xs">
-                    <div className="text-slate-400 mb-1">
-                      Columns: {londonDataSummary[selectedDataFile.id].columns.join(', ')}
+                    <div className="text-slate-400 mb-2">
+                      <span className="font-medium">Columns:</span> {londonDataSummary[selectedDataFile.id].columns.join(', ')}
                     </div>
-                    <div className="text-slate-400 mb-1">Sample Data:</div>
-                    {londonDataSummary[selectedDataFile.id].sampleData.map((row: any, index: number) => {
-                      const values = Object.values(row);
-                      return (
-                        <div key={index} className="text-slate-300 truncate font-mono">
-                          {values.join(', ')}
-                        </div>
-                      );
-                    })}
+                    <div className="text-slate-400 mb-1 font-medium">Sample Data:</div>
+                    <div className="max-h-24 overflow-y-auto space-y-1">
+                      {londonDataSummary[selectedDataFile.id].sampleData.map((row: any, index: number) => {
+                        const values = Object.values(row);
+                        return (
+                          <div key={index} className="text-slate-300 truncate font-mono bg-slate-800 p-1 rounded">
+                            {values.join(' • ')}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               )}
@@ -1177,7 +1450,7 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
         {/* Chat Area */}
         <div 
           ref={chatContainerRef}
-          className="absolute left-0 right-0 overflow-y-auto px-3 pt-3 pb-2 space-y-2 flex flex-col items-center justify-center"
+          className="absolute left-0 right-0 overflow-y-auto px-3 pt-3 pb-2 space-y-2"
           style={{
             top: getTopPosition(),
             bottom: showSuggestions ? '220px' : '70px', // Adjust for dynamic input area height

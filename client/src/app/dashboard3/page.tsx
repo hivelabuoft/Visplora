@@ -75,8 +75,47 @@ import {
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
-  const [selectedBorough, setSelectedBorough] = useState<string>('Brent');
-  const [selectedLSOA, setSelectedLSOA] = useState<string>('');
+  // Dashboard filter state that AI can control
+  const [dashboardFilters, setDashboardFilters] = useState({
+    selectedBorough: 'Brent',
+    selectedCrimeCategory: 'Anti-social behaviour',
+    selectedBirthYear: 2023,
+    selectedBaseYear: 2004,
+    selectedLSOA: ''
+  });
+
+  // Update individual filter states when dashboardFilters changes
+  useEffect(() => {
+    // No need to set individual state since we're using dashboardFilters directly
+  }, [dashboardFilters]);
+
+  // AI filter handler
+  const handleAIFilters = (filters: any) => {
+    const newFilters = { ...dashboardFilters };
+    
+    if (filters.borough) {
+      newFilters.selectedBorough = filters.borough;
+    }
+    if (filters.crimeCategory) {
+      newFilters.selectedCrimeCategory = filters.crimeCategory;
+    }
+    if (filters.birthYear) {
+      newFilters.selectedBirthYear = filters.birthYear;
+    }
+    if (filters.baseYear) {
+      newFilters.selectedBaseYear = filters.baseYear;
+    }
+    if (filters.lsoa) {
+      newFilters.selectedLSOA = filters.lsoa;
+    }
+    
+    setDashboardFilters(newFilters);
+  };
+
+  // Update dashboardFilters when individual states change (for manual controls)
+  const updateDashboardFilter = (key: string, value: any) => {
+    setDashboardFilters(prev => ({ ...prev, [key]: value }));
+  };
   const [lsoaDataAvailable, setLsoaDataAvailable] = useState<boolean>(false);
   const [populationMetrics, setPopulationMetrics] = useState<Map<string, BoroughPopulationMetrics>>(new Map());
   const [populationRawData, setPopulationRawData] = useState<PopulationData[]>([]);
@@ -84,7 +123,6 @@ const Dashboard3: React.FC = () => {
   const [incomeTimelineData, setIncomeTimelineData] = useState<IncomeTimelineData[]>([]);
   
   // Crime-related state
-  const [selectedCrimeCategory, setSelectedCrimeCategory] = useState<string>('Anti-social behaviour');
   const [crimeBarData, setCrimeBarData] = useState<Array<{borough: string, count: number}>>([]);
   const [crimeBarDataComparison, setCrimeBarDataComparison] = useState<Array<{borough: string, count2022: number, count2023: number, change?: number}>>([]);
   const [crimePieData, setCrimePieData] = useState<CrimeCategory[]>([]);
@@ -93,8 +131,6 @@ const Dashboard3: React.FC = () => {
 
   // Country of Birth state
   const [countryOfBirthData, setCountryOfBirthData] = useState<CountryOfBirthData[]>([]);
-  const [selectedBirthYear, setSelectedBirthYear] = useState<number>(2023);
-  const [selectedBaseYear, setSelectedBaseYear] = useState<number>(2004);
   const [countryOfBirthStats, setCountryOfBirthStats] = useState<CountryOfBirthStats | null>(null);
   const [countryOfBirthComparison, setCountryOfBirthComparison] = useState<CountryOfBirthComparison | null>(null);
   const [birthYears, setBirthYears] = useState<number[]>([]);
@@ -117,6 +153,13 @@ const Dashboard3: React.FC = () => {
   const [ethnicityData, setEthnicityData] = useState<EthnicityData[]>([]);
   const [boroughEthnicityStats, setBoroughEthnicityStats] = useState<BoroughEthnicityStats | null>(null);
   const [isLoadingEthnicity, setIsLoadingEthnicity] = useState<boolean>(true);
+
+  // Extract individual filter values for easier access
+  const selectedBorough = dashboardFilters.selectedBorough;
+  const selectedCrimeCategory = dashboardFilters.selectedCrimeCategory;
+  const selectedBirthYear = dashboardFilters.selectedBirthYear;
+  const selectedBaseYear = dashboardFilters.selectedBaseYear;
+  const selectedLSOA = dashboardFilters.selectedLSOA;
 
   // Load population data on component mount
   useEffect(() => {
@@ -333,8 +376,8 @@ const Dashboard3: React.FC = () => {
         
         // Set default years (2023 as current, 2004 as base)
         if (availableYears.length > 0) {
-          setSelectedBirthYear(2023); // Latest available year
-          setSelectedBaseYear(2004); // Base year for comparison
+          updateDashboardFilter('selectedBirthYear', 2023); // Latest available year
+          updateDashboardFilter('selectedBaseYear', 2004); // Base year for comparison
         }
       } catch (error) {
         console.error('Error loading country of birth data:', error);
@@ -363,7 +406,7 @@ const Dashboard3: React.FC = () => {
 
   const handleBoroughClick = (name: string, value: any) => {
     if (value && value.datum && value.datum.id) {
-      setSelectedBorough(value.datum.id);
+      updateDashboardFilter('selectedBorough', value.datum.id);
     }
   };
 
@@ -408,6 +451,14 @@ const Dashboard3: React.FC = () => {
       isActive={true}
       dashboardTitle="London Numbers Dashboard"
       dashboardType="london-style"
+      onApplyFilters={handleAIFilters}
+      dashboardFilters={dashboardFilters}
+      availableFilters={{
+        boroughs: ['Brent', 'Camden', 'Westminster', 'Kensington and Chelsea', 'Hammersmith and Fulham', 'Wandsworth', 'Lambeth', 'Southwark', 'Tower Hamlets', 'Hackney', 'Islington', 'Haringey', 'Enfield', 'Barnet', 'Harrow', 'Hillingdon', 'Ealing', 'Hounslow', 'Richmond upon Thames', 'Kingston upon Thames', 'Merton', 'Sutton', 'Croydon', 'Bromley', 'Lewisham', 'Greenwich', 'Bexley', 'Havering', 'Redbridge', 'Newham', 'Waltham Forest', 'Barking and Dagenham', 'City of London'],
+        crimeCategories: Object.values(CRIME_CATEGORY_MAPPING),
+        birthYears: birthYears,
+        baseYears: birthYears
+      }}
     >
       <div className="london-dashboard p-6 rounded-lg text-white" style={{
         width: '100%',
@@ -630,7 +681,7 @@ const Dashboard3: React.FC = () => {
                       if (value && value.datum && value.datum.properties) {
                         const lsoaCode = value.datum.properties.lsoa21cd;
                         const lsoaName = value.datum.properties.lsoa21nm;
-                        setSelectedLSOA(lsoaCode);
+                        updateDashboardFilter('selectedLSOA', lsoaCode);
                         console.log('Selected LSOA:', lsoaName, lsoaCode);
                       }
                     }
@@ -702,7 +753,7 @@ const Dashboard3: React.FC = () => {
                         const boroughIndex = vgsidArray[0] as number;
                         const boroughName = boroughIdToName[boroughIndex - 1];
                         if (boroughName) {
-                          setSelectedBorough(boroughName);
+                          updateDashboardFilter('selectedBorough', boroughName);
                         }
                       }
                     }
@@ -791,7 +842,7 @@ const Dashboard3: React.FC = () => {
                     key={category}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setSelectedCrimeCategory(category);
+                      updateDashboardFilter('selectedCrimeCategory', category);
                     }}
                     className={`w-[17px] h-[17px] rounded-full cursor-pointer transition-all duration-200 mb-1 ${
                       isSelected 
@@ -1099,7 +1150,7 @@ const Dashboard3: React.FC = () => {
               {birthYears.map((year) => (
                 <button
                   key={year}
-                  onClick={() => setSelectedBirthYear(year)}
+                  onClick={() => updateDashboardFilter('selectedBirthYear', year)}
                   className={`flex justify-center items-center p-1 text-[8px] transition-colors ${
                     selectedBirthYear === year
                       ? 'bg-purple-500 text-white font-bold hover:bg-purple-600'
