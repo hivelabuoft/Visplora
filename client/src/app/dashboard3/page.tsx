@@ -5,7 +5,7 @@ import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
 import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec, housePriceTimelineChartSpec } from './vegaSpecs';
+import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec, housePriceTimelineChartSpec, ethnicityMinorityGroupsBarChartSpec } from './vegaSpecs';
 import { 
   loadPopulationData, 
   processPopulationData, 
@@ -64,6 +64,14 @@ import {
   getHousePriceTimelineForBorough,
   formatPrice
 } from './housePriceData';
+import { 
+  EthnicityData,
+  BoroughEthnicityStats,
+  loadEthnicityData,
+  processBoroughEthnicityStats,
+  formatPercentage as formatEthnicityPercentage,
+  formatNumber as formatEthnicityNumber
+} from './ethnicityData';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
@@ -104,6 +112,11 @@ const Dashboard3: React.FC = () => {
   const [housePriceData, setHousePriceData] = useState<HousePriceData[]>([]);
   const [housePriceTimelineData, setHousePriceTimelineData] = useState<HousePriceTimelineData[]>([]);
   const [isLoadingHousePrice, setIsLoadingHousePrice] = useState<boolean>(true);
+
+  // Ethnicity-related state
+  const [ethnicityData, setEthnicityData] = useState<EthnicityData[]>([]);
+  const [boroughEthnicityStats, setBoroughEthnicityStats] = useState<BoroughEthnicityStats | null>(null);
+  const [isLoadingEthnicity, setIsLoadingEthnicity] = useState<boolean>(true);
 
   // Load population data on component mount
   useEffect(() => {
@@ -272,6 +285,35 @@ const Dashboard3: React.FC = () => {
       setHousePriceTimelineData([]);
     }
   }, [selectedBorough, housePriceData]);
+
+  // Load ethnicity data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoadingEthnicity(true);
+      try {
+        const data = await loadEthnicityData();
+        setEthnicityData(data);
+        console.log(`Loaded ${data.length} ethnicity records`);
+      } catch (error) {
+        console.error('Error loading ethnicity data:', error);
+        setEthnicityData([]);
+      } finally {
+        setIsLoadingEthnicity(false);
+      }
+    };
+    
+    loadData();
+  }, []);
+
+  // Update ethnicity stats when selected borough changes
+  useEffect(() => {
+    if (ethnicityData.length > 0) {
+      const stats = processBoroughEthnicityStats(ethnicityData, selectedBorough, 2023);
+      setBoroughEthnicityStats(stats);
+    } else {
+      setBoroughEthnicityStats(null);
+    }
+  }, [selectedBorough, ethnicityData]);
 
   // Load country of birth data on component mount
   useEffect(() => {
@@ -985,114 +1027,50 @@ const Dashboard3: React.FC = () => {
             </div>
           </LinkableCard>
 
-          {/* All Ethnicity Types */}
+          {/* Ethnicity Minority Groups */}
           <LinkableCard 
             className="col-start-5 col-end-7 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
             styles={{}}
-            elementId="all-ethnicity-types"
-            elementName="All Ethnicity Types"
+            elementId="ethnicity-minority-groups"
+            elementName="Ethnicity Minority Groups"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div style={{
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#fff',
-              marginBottom: '10px'
-            }}>
-              ALL ETHNICITY TYPES
+            <div className="text-xs font-semibold text-white">
+              ETHNICITY MINORITY GROUPS
+            </div>
+            <div className="text-xs text-gray-400">
+              Ethnic minority breakdown for {selectedBorough} (2023)
             </div>
             
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '15px'
-            }}>
-              <div style={{ fontSize: '10px', color: '#888' }}>Select Chart Type ▼</div>
-              <div style={{
-                display: 'flex',
-                gap: '5px'
-              }}>
-                <div style={{
-                  width: '20px',
-                  height: '20px',
-                  backgroundColor: '#8B5CF6',
-                  borderRadius: '4px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '10px'
-                }}>△</div>
-                <div style={{
-                  width: '20px',
-                  height: '20px',
-                  backgroundColor: '#333',
-                  borderRadius: '4px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '10px'
-                }}>○</div>
+            {/* BAME Statistics */}
+            <div className="flex justify-between text-[11px] text-gray-400 mb-2">
+              <div>
+                BAME Population: {boroughEthnicityStats ? formatEthnicityNumber(boroughEthnicityStats.bameTotal) : 'N/A'} ({boroughEthnicityStats ? formatEthnicityPercentage(boroughEthnicityStats.bamePercentage) : 'N/A'} of total)
+              </div>
+              <div>
               </div>
             </div>
             
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px'
-            }}>
-              {[
-                { label: 'White', percentage: '62.4%', width: '85%' },
-                { label: 'Black', percentage: '15.9%', width: '25%' },
-                { label: 'Asian', percentage: '11.1%', width: '18%' },
-                { label: 'Mixed', percentage: '5.5%', width: '10%' },
-                { label: 'Other', percentage: '5.1%', width: '8%' }
-              ].map((item) => (
-                <div key={item.label} style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}>
-                  <div style={{
-                    fontSize: '10px',
-                    color: '#fff',
-                    minWidth: '40px'
-                  }}>
-                    {item.label}
-                  </div>
-                  <div style={{
-                    flex: 1,
-                    height: '6px',
-                    backgroundColor: '#333',
-                    borderRadius: '3px',
-                    margin: '0 8px',
-                    position: 'relative'
-                  }}>
-                    <div style={{
-                      width: item.width,
-                      height: '100%',
-                      backgroundColor: '#8B5CF6',
-                      borderRadius: '3px'
-                    }}></div>
-                  </div>
-                  <div style={{
-                    fontSize: '9px',
-                    color: '#888',
-                    minWidth: '35px',
-                    textAlign: 'right'
-                  }}>
-                    {item.percentage}
-                  </div>
+            {/* Vega-Lite Ethnicity Bar Chart */}
+            <div className="absolute bottom-2 left-4 right-4">
+              {isLoadingEthnicity ? (
+                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
+                  Loading ethnicity data...
                 </div>
-              ))}
+              ) : boroughEthnicityStats && boroughEthnicityStats.minorityGroups.length > 0 ? (
+                <VegaLite
+                  spec={ethnicityMinorityGroupsBarChartSpec(boroughEthnicityStats)}
+                  actions={false}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
+                  No ethnicity data available
+                </div>
+              )}
             </div>
             
-            <div style={{
-              fontSize: '8px',
-              color: '#888',
-              marginTop: '8px'
-            }}>
+            <div className="text-[8px] text-gray-400 absolute bottom-1 left-4">
               BAME = Black, Asian & Minority Ethnicity
             </div>
           </LinkableCard>

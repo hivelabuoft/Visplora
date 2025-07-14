@@ -122,7 +122,6 @@ export const parseSchoolCSV = (csvText: string): SchoolData[] => {
   if (lines.length < 2) return [];
   
   const headers = parseCSVLine(lines[0]);
-  console.log('CSV Headers:', headers);
   
   const schoolData: SchoolData[] = [];
   

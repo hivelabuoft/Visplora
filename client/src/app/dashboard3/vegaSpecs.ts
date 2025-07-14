@@ -2,6 +2,7 @@ import { BoroughCrimeStats, CrimeCategory, CRIME_CATEGORY_COLORS, BoroughCrimeSt
 import { CountryOfBirthStats, CountryOfBirthComparison } from './countryOfBirthData';
 import { BoroughSchoolStats, SCHOOL_TYPE_COLORS } from './schoolData';
 import { HousePriceTimelineData } from './housePriceData';
+import { BoroughEthnicityStats, MinorityGroup } from './ethnicityData';
 
 // Vega-Lite specification for London boroughs map
 export const boroughMapSpec = {
@@ -1215,6 +1216,106 @@ export const housePriceTimelineChartSpec = (data: HousePriceTimelineData[]) => {
         ]
       }
     ],
+    "config": {
+      "background": "transparent",
+      "view": {
+        "stroke": null
+      }
+    }
+  };
+};
+
+// Vega-Lite specification for ethnicity minority groups bar chart
+export const ethnicityMinorityGroupsBarChartSpec = (ethnicityStats: BoroughEthnicityStats): any => {
+  return {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+    "width": 200,
+    "height": 130,
+    "background": "transparent",
+    "data": {
+      "values": ethnicityStats.minorityGroups
+    },
+    "params": [
+      {
+        "name": "hover_ethnicity_bar",
+        "select": {
+          "type": "point" as const,
+          "on": "mouseover" as const,
+          "clear": "mouseout" as const
+        }
+      }
+    ],
+    "mark": {
+      "type": "bar" as const,
+      "cursor": "pointer" as const,
+      "cornerRadiusEnd": 4,
+      "height": 8
+    },
+    "encoding": {
+      "y": {
+        "field": "name",
+        "type": "nominal" as const,
+        "sort": {
+          "field": "count",
+          "order": "descending" as const
+        },
+        "axis": {
+          "labelColor": "#888",
+          "titleColor": "#fff",
+          "labelFontSize": 10,
+          "labelLimit": 80,
+          "title": null,
+          "grid": false,
+          "ticks": true,
+          "domain": true
+        }
+      },
+      "x": {
+        "field": "percentage",
+        "type": "quantitative" as const,
+        "axis": {
+          "labelColor": "#888",
+          "titleColor": "#888",
+          "labelFontSize": 8,
+          "grid": true,
+          "gridColor": "#888",
+          "gridDash": [2, 2],
+          "ticks": true,
+          "domain": true,
+          "title": null,
+          "format": ".1f"
+        }
+      },
+      "color": {
+        "value": "#8B5CF6"
+      },
+      "stroke": {
+        "condition": {
+          "param": "hover_ethnicity_bar",
+          "value": "transparent"
+        },
+        "value": "transparent"
+      },
+      "strokeWidth": {
+        "condition": {
+          "param": "hover_ethnicity_bar",
+          "value": 0
+        },
+        "value": 0
+      },
+      "opacity": {
+        "condition": {
+          "param": "hover_ethnicity_bar",
+          "value": 1
+        },
+        "value": 0.6
+      },
+      "tooltip": [
+        {"field": "name", "type": "nominal" as const, "title": "Ethnic Group"},
+        {"field": "count", "type": "quantitative" as const, "title": "Population", "format": ","},
+        {"field": "percentage", "type": "quantitative" as const, "title": "Percentage", "format": ".1f"}
+      ]
+    },
     "config": {
       "background": "transparent",
       "view": {
