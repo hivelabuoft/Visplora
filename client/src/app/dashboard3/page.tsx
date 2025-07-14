@@ -127,6 +127,7 @@ const Dashboard3: React.FC = () => {
         setPopulationRawData(data);
         const metrics = processPopulationData(data);
         setPopulationMetrics(metrics);
+        console.log(`Loaded ${data.length} population records`);
       } catch (error) {
         console.error('Error loading population data:', error);
       } finally {
@@ -151,6 +152,7 @@ const Dashboard3: React.FC = () => {
         
         const statsComparison = processBoroughCrimeStatsComparison(data);
         setBoroughCrimeStatsComparison(statsComparison);
+        console.log(`Loaded ${data.length} crime records`);
       } catch (error) {
         console.error('Error loading crime data:', error);
       } finally {
@@ -324,7 +326,8 @@ const Dashboard3: React.FC = () => {
         const csvText = await response.text();
         const data = parseCountryOfBirthCSV(csvText);
         setCountryOfBirthData(data);
-        
+        console.log(`Loaded ${data.length} country of birth records`);
+
         const availableYears = getAvailableYears(data);
         setBirthYears(availableYears);
         

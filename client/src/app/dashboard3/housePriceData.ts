@@ -130,7 +130,6 @@ export const parseHousePriceCSV = (csvText: string): HousePriceData[] => {
     }
   }
   
-  console.log(`Parsed ${housePriceData.length} house price records`);
   return housePriceData;
 };
 
@@ -181,7 +180,6 @@ export const getHousePriceTimelineForBorough = (housePriceData: HousePriceData[]
 // Load house price data
 export const loadHousePriceData = async (): Promise<HousePriceData[]> => {
   try {
-    console.log('Loading house price data from CSV...');
     const response = await fetch('/dataset/london/house-prices/land-registry-house-prices-borough.csv');
     
     if (!response.ok) {
@@ -190,7 +188,6 @@ export const loadHousePriceData = async (): Promise<HousePriceData[]> => {
     
     const csvText = await response.text();
     const data = parseHousePriceCSV(csvText);
-    console.log(`Successfully loaded ${data.length} house price records`);
     return data;
   } catch (error) {
     console.error('Error loading house price data:', error);

@@ -1,10 +1,18 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { FiX, FiSend, FiCpu, FiDatabase, FiEye, FiEyeOff, FiZap, FiRefreshCw, FiExternalLink, FiInfo, FiFilter, FiBarChart } from 'react-icons/fi';
+import { FiX, FiSend, FiCpu, FiDatabase, FiEye, FiEyeOff, FiZap, FiRefreshCw, FiExternalLink, FiInfo, FiFilter, FiBarChart, FiFolder, FiFile, FiChevronDown, FiChevronRight } from 'react-icons/fi';
 import { VegaLite } from 'react-vega';
 import { ConnectionNodes } from './connection-nodes';
 import { generateDashboardElementsContext, findElementsForQuestion, generateQuestionGuidance } from '../../app/dashboard2/dashboardElementsRegistry';
+import { 
+  LondonDataFile, 
+  LondonDataCategory, 
+  loadAllLondonData, 
+  getFullCSVData, 
+  generateLondonDataContext, 
+  searchLondonData 
+} from '../../utils/londonDataLoader';
 
 export interface AIAssistantData {
   id: string;
@@ -212,6 +220,12 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
     gender?: string;
     showOnlyAttrition?: boolean;
   } | null>(null);
+  const [londonDataCategories, setLondonDataCategories] = useState<LondonDataCategory[]>([]);
+  const [selectedDataFile, setSelectedDataFile] = useState<LondonDataFile | null>(null);
+  const [fileData, setFileData] = useState<any[]>([]);
+  const [loadingFileData, setLoadingFileData] = useState(false);
+  const [londonDataSummary, setLondonDataSummary] = useState<{[key: string]: any}>({});
+  const [showDatasetFiles, setShowDatasetFiles] = useState(false);
 
   const assistantRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -222,6 +236,38 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [assistant.chatHistory]);
+
+  // Load London data on component mount
+  useEffect(() => {
+    const loadLondonData = async () => {
+      try {
+        const categories = await loadAllLondonData();
+        setLondonDataCategories(categories);
+        
+        // Store summary data for each loaded file
+        const summaryData: {[key: string]: any} = {};
+        categories.forEach(category => {
+          category.files.forEach(file => {
+            if (file.isLoaded && file.sampleData.length > 0) {
+              summaryData[file.id] = {
+                name: file.name,
+                description: file.description,
+                columns: file.columns,
+                totalRecords: file.totalRecords,
+                sampleData: file.sampleData.slice(0, 3), // Store first 3 records
+                category: file.category
+              };
+            }
+          });
+        });
+        setLondonDataSummary(summaryData);
+      } catch (error) {
+        console.error('Error loading London data:', error);
+      }
+    };
+    
+    loadLondonData();
+  }, []);
 
   // Use fixed pixel dimensions
   const actualWidth = tempSize.width;
@@ -296,10 +342,16 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
           }
           return null;
         })
-        .filter(Boolean)
+        .filter(Boolean),
+      
+      // London data context
+      londonDataSummary: londonDataSummary,
+      londonDataCategories: londonDataCategories,
+      selectedLondonFile: selectedDataFile,
+      londonFileData: selectedDataFile ? fileData.slice(0, 10) : []
     };
     return context;
-  }, [assistant.connectedElements, hrData, droppedElements, stickyNotes]);
+  }, [assistant.connectedElements, hrData, droppedElements, stickyNotes, londonDataCategories, selectedDataFile, fileData, londonDataSummary]);
 
   // Helper function to determine column types
   const getColumnTypes = (sampleRow: any) => {
@@ -465,6 +517,30 @@ Return ONLY the prompts, one per line, without numbering.`;
     }
   };
 
+  // Handle file selection and loading
+  const handleFileSelect = async (file: LondonDataFile) => {
+    setSelectedDataFile(file);
+    setLoadingFileData(true);
+    
+    try {
+      const data = await getFullCSVData(file);
+      setFileData(data);
+    } catch (error) {
+      console.error('Error loading file data:', error);
+      setFileData([]);
+    } finally {
+      setLoadingFileData(false);
+    }
+  };
+
+  // Calculate top position for chat area based on visible panels
+  const getTopPosition = () => {
+    if (assistant.showContext || showDatasetFiles) {
+      return '50%'; // Either context or dataset panel takes up 50% of the height
+    }
+    return '0px';
+  };
+
   // Regenerate suggestions
   const regenerateSuggestions = async () => {
     const prompts = await generateSuggestedPrompts();
@@ -613,6 +689,8 @@ Available dataset: HR Employee data with ${context.totalRecords} records
 Available columns: ${context.availableColumns.join(', ')}
 Current panel width: ${actualWidth}px
 
+${context.londonDataSummary}
+
 ALL DASHBOARD ELEMENTS (${context.allDashboardElements.length} total):
 ${context.allDashboardElements.map((el: any) => 
   `- ${el.name} (${el.elementType}): ${el.description} | Fields: ${el.dataFields.join(', ')} | Insights: ${el.insights}${el.isConnected ? ' [CONNECTED TO ME]' : ''}`
@@ -630,13 +708,24 @@ ${context.connectedData.map((el: any) =>
     `- Note: "${el.content.substring(0, 100)}..."`
 ).join('\n')}
 
-CRITICAL INSTRUCTIONS:
-1. ALWAYS check the AVAILABLE DASHBOARD ELEMENTS section first to see what's already on the dashboard
-2. If existing elements can answer the user's question, provide GUIDANCE to examine those specific elements
-3. If existing elements need filtering to answer the question, provide FILTER_GUIDANCE with specific filter commands
-4. ONLY create new visualizations if no existing element can answer the question
+${context.selectedLondonFile ? `
+CURRENTLY SELECTED LONDON FILE: ${context.selectedLondonFile.name}
+Description: ${context.selectedLondonFile.description}
+Columns: ${context.selectedLondonFile.columns.join(', ')}
+Total Records: ${context.selectedLondonFile.totalRecords}
+Sample Data: ${JSON.stringify(context.londonFileData.slice(0, 3), null, 2)}
+` : ''}
 
-Sample data structure:
+CRITICAL INSTRUCTIONS:
+1. You have access to HR employee data AND comprehensive London datasets
+2. ALWAYS check the AVAILABLE DASHBOARD ELEMENTS section first to see what's already on the dashboard
+3. Use the London datasets to create rich visualizations about London boroughs, demographics, crime, housing, etc.
+4. If existing elements can answer the user's question, provide GUIDANCE to examine those specific elements
+5. If existing elements need filtering to answer the question, provide FILTER_GUIDANCE with specific filter commands
+6. ONLY create new visualizations if no existing element can answer the question
+7. When creating charts with London data, make sure to use the correct dataset path and structure
+
+Sample HR data structure:
 ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
 
       // Call OpenAI API
@@ -942,9 +1031,29 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
               e.stopPropagation();
               onUpdate(assistant.id, { showContext: !assistant.showContext });
             }}
-            className="text-slate-400 hover:text-white p-1"
+            className={`p-1 rounded transition-colors ${
+              assistant.showContext 
+                ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                : 'text-slate-400 hover:text-white hover:bg-slate-600'
+            }`}
+            title="Toggle Context"
           >
             {assistant.showContext ? <FiEye size={16} /> : <FiEyeOff size={16} />}
+          </button>
+          
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDatasetFiles(!showDatasetFiles);
+            }}
+            className={`p-1 rounded transition-colors ${
+              showDatasetFiles 
+                ? 'bg-green-600 text-white hover:bg-green-700' 
+                : 'text-slate-400 hover:text-white hover:bg-slate-600'
+            }`}
+            title="Toggle Datasets"
+          >
+            <FiDatabase size={16} />
           </button>
           
           <button
@@ -964,32 +1073,103 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
         {/* Context Panel */}
         {assistant.showContext && (
           <div 
-            className="absolute top-0 left-0 right-0 bg-slate-800 border-b border-slate-600 p-3 overflow-y-auto" 
+            className="absolute top-0 left-0 right-0 bg-slate-800 border-b-2 border-slate-500 p-3 overflow-y-auto" 
             style={{
-              height: '80px',
-              scrollbarWidth: 'none',
+              height: '50%',
+              scrollbarWidth: 'thin',
               msOverflowStyle: 'none'
             }}
           >
-            <style jsx>{`
-              .scrollbar-none::-webkit-scrollbar {
-                display: none;
-              }
-            `}</style>
             <div className="text-xs text-slate-300">
               <div className="flex items-center space-x-2 mb-1">
                 <FiDatabase size={12} />
-                <span className="font-medium">Connected Context:</span>
+                <span className="font-medium">Available Datasets:</span>
               </div>
               <div className="space-y-1">
-                <div>HR Dataset: {hrData.length} records</div>
-                <div>Connected Elements: {assistant.connectedElements.length}</div>
-                {assistant.connectedElements.map((element, index) => (
-                  <div key={index} className="text-blue-300">
-                    • {element.type === 'element' ? 'Chart' : 'Note'}: {element.id.slice(0, 8)}...
-                  </div>
+                <div>Total Datasets: {(hrData.length > 0 ? 1 : 0) + Object.keys(londonDataSummary).length} loaded</div>
+                {hrData.length > 0 && (
+                  <div>• HR Employee Data: {hrData.length} records</div>
+                )}
+                {Object.entries(londonDataSummary).map(([fileId, fileInfo]) => (
+                  <div key={fileId}>• {fileInfo.name}: {fileInfo.totalRecords} records</div>
+                ))}
+                <div className="mt-2 pt-2 border-t border-slate-600">
+                  <div>Connected Elements: {assistant.connectedElements.length}</div>
+                  {assistant.connectedElements.map((element, index) => (
+                    <div key={index} className="text-blue-300">
+                      • {element.type === 'element' ? 'Chart' : 'Note'}: {element.id.slice(0, 8)}...
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Dataset Files Panel */}
+        {showDatasetFiles && (
+          <div 
+            className="absolute top-0 left-0 right-0 bg-slate-800 border-b-2 border-slate-500 p-3 overflow-y-auto" 
+            style={{
+              height: '50%',
+              scrollbarWidth: 'thin',
+              msOverflowStyle: 'none'
+            }}
+          >
+            <div className="text-xs text-slate-300">
+              <div className="flex items-center space-x-2 mb-1">
+                <FiFolder size={12} className="text-green-400" />
+                <span className="font-medium">London Data Files:</span>
+              </div>
+              <div className="space-y-1 max-h-full overflow-y-auto">
+                {Object.entries(londonDataSummary).map(([fileId, fileInfo]) => (
+                  <button
+                    key={fileId}
+                    onClick={() => {
+                      setSelectedDataFile(londonDataCategories
+                        .flatMap(cat => cat.files)
+                        .find(f => f.id === fileId) || null);
+                      if (londonDataCategories.flatMap(cat => cat.files).find(f => f.id === fileId)) {
+                        handleFileSelect(londonDataCategories.flatMap(cat => cat.files).find(f => f.id === fileId)!);
+                      }
+                    }}
+                    className={`block w-full text-left p-1 rounded hover:bg-slate-700 transition-colors ${
+                      selectedDataFile?.id === fileId ? 'bg-slate-700' : ''
+                    }`}
+                  >
+                    <div className="text-slate-300 truncate">
+                      📊 {fileInfo.name} ({fileInfo.totalRecords} records)
+                    </div>
+                    <div className="text-slate-500 text-xs truncate">
+                      {fileInfo.description}
+                    </div>
+                  </button>
                 ))}
               </div>
+              
+              {/* Selected File Preview */}
+              {selectedDataFile && londonDataSummary[selectedDataFile.id] && (
+                <div className="mt-2 border-t border-slate-600 pt-2">
+                  <div className="flex items-center space-x-2 mb-1">
+                    <FiFile size={12} className="text-yellow-400" />
+                    <span className="font-medium">Selected: {selectedDataFile.name}</span>
+                  </div>
+                  <div className="bg-slate-900 p-2 rounded text-xs">
+                    <div className="text-slate-400 mb-1">
+                      Columns: {londonDataSummary[selectedDataFile.id].columns.join(', ')}
+                    </div>
+                    <div className="text-slate-400 mb-1">Sample Data:</div>
+                    {londonDataSummary[selectedDataFile.id].sampleData.map((row: any, index: number) => {
+                      const values = Object.values(row);
+                      return (
+                        <div key={index} className="text-slate-300 truncate font-mono">
+                          {values.join(', ')}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -997,9 +1177,9 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
         {/* Chat Area */}
         <div 
           ref={chatContainerRef}
-          className="absolute left-0 right-0 overflow-y-auto px-3 pt-3 pb-2 space-y-2"
+          className="absolute left-0 right-0 overflow-y-auto px-3 pt-3 pb-2 space-y-2 flex flex-col items-center justify-center"
           style={{
-            top: assistant.showContext ? '80px' : '0px',
+            top: getTopPosition(),
             bottom: showSuggestions ? '220px' : '70px', // Adjust for dynamic input area height
           }}
         >

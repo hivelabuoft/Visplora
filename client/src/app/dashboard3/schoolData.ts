@@ -162,7 +162,6 @@ export const parseSchoolCSV = (csvText: string): SchoolData[] => {
     }
   }
   
-  console.log(`Parsed ${schoolData.length} schools from CSV`);
   return schoolData;
 };
 
@@ -269,7 +268,6 @@ export const getBoroughSchoolStats = (schoolData: SchoolData[], borough: string)
 // Load school data
 export const loadSchoolData = async (): Promise<SchoolData[]> => {
   try {
-    console.log('Loading school data from CSV...');
     const response = await fetch('/dataset/london/schools-colleges/2022-2023_england_school_information.csv');
     
     if (!response.ok) {
@@ -278,7 +276,6 @@ export const loadSchoolData = async (): Promise<SchoolData[]> => {
     
     const csvText = await response.text();
     const data = parseSchoolCSV(csvText);
-    console.log(`Successfully loaded ${data.length} school records`);
     return data;
   } catch (error) {
     console.error('Error loading school data:', error);
