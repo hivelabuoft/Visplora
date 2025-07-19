@@ -7,6 +7,7 @@ const openai = new OpenAI({
 
 export async function POST(req: NextRequest) {
   try {
+    // throw new Error('test');
     // Check if API key exists
     if (!process.env.OPENAI_API_KEY) {
       console.error('OpenAI API key not found');
@@ -18,194 +19,431 @@ export async function POST(req: NextRequest) {
     
     const { message, systemPrompt, context } = await req.json();
 
-    const response = await openai.responses.create({
+    const response = await openai.chat.completions.create({
       model: "gpt-4o",
-      input: `${systemPrompt}
-
-User request: ${message}
-
-Assistant panel width: ${context.panelWidth || 400}px`,
-      instructions: `You are an expert data visualization assistant that helps users explore HR data and understand their dashboard. You have THREE response modes based on the user's question:
-
-MODE 1 - DASHBOARD GUIDANCE (Priority): If the user's question can be answered by existing dashboard elements:
-- Provide clear instructions on which dashboard elements to examine
-- Explain what insights they can derive from those elements
-- Give specific guidance on how to interpret the visualizations
-- Use format: GUIDANCE: [detailed instructions on which dashboard elements to check]
-
-MODE 2 - FILTER ASSISTANCE: If the user's question requires filtering existing dashboard elements:
-- Determine specific filter values to apply
-- Provide filtering instructions and expected insights
-- Use format: FILTER_GUIDANCE: [specific filtering instructions and expected insights]
-- Include filter actions using: APPLY_FILTERS: {"department": "value", "jobRole": "value", "gender": "value", "showOnlyAttrition": true/false}
-
-MODE 3 - NEW VISUALIZATION: Only if the question cannot be answered by existing elements or filtering:
-- Create a new Vega-Lite chart to answer their specific question
-- Use this EXACT format for charts:
-
-CHART_EXPLANATION: [Provide a detailed explanation of the chart (3-4 sentences minimum). Include: 1) What the chart shows, 2) Which specific fields/columns are being used and their data types, 3) What insights or patterns the visualization reveals, 4) Why this type of chart is appropriate for this data]
-CHART_TITLE: [A concise, descriptive title for the chart]
-VEGA_SPEC: {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "data": {"values": []}, "mark": "...", "encoding": {..., "tooltip": [{"field": "*", "type": "nominal"}]}}
-
-ALL DASHBOARD ELEMENTS (analyze these FIRST - these are what the user can already see):
-${context.allDashboardElements ? context.allDashboardElements.map((el: any) => 
-  `- ${el.name} (${el.elementType}): ${el.description} | Fields: ${el.dataFields.join(', ')} | Insights: ${el.insights}`
-).join('\n') : 'No dashboard elements'}
-
-ALL DASHBOARD NOTES:
-${context.allDashboardNotes ? context.allDashboardNotes.map((note: any) => 
-  `- Note: "${note.content.substring(0, 100)}..."`
-).join('\n') : 'No dashboard notes'}
-
-Connected Dashboard Elements (elements connected to this AI assistant):
-${context.connectedData ? context.connectedData.map((el: any) => 
-  el.type === 'visualization' ? 
-    `- ${el.name} (${el.elementType}): Shows data visualization` :
-    `- Note: "${el.content.substring(0, 100)}..."`
-).join('\n') : 'No connected elements'}
-
-Current Dashboard Context:
-- Total dashboard elements: ${context.allDashboardElements ? context.allDashboardElements.length : 0}
-- Connected elements: ${context.connectedElements || 0}
-- Available data: ${context.totalRecords || 0} HR records
-- Data columns: ${context.availableColumns ? context.availableColumns.join(', ') : 'Age, Attrition, BusinessTravel, DailyRate, Department, DistanceFromHome, Education, EducationField, EmployeeCount, EmployeeNumber, EnvironmentSatisfaction, Gender, HourlyRate, JobInvolvement, JobLevel, JobRole, JobSatisfaction, MaritalStatus, MonthlyIncome, MonthlyRate, NumCompaniesWorked, Over18, OverTime, PercentSalaryHike, PerformanceRating, RelationshipSatisfaction, StandardHours, StockOptionLevel, TotalWorkingYears, TrainingTimesLastYear, WorkLifeBalance, YearsAtCompany, YearsInCurrentRole, YearsSinceLastPromotion, YearsWithCurrManager'}
-
-Available Filter Options:
-- Department: "Sales", "Research & Development", "Human Resources"
-- Job Role: "Healthcare Representative", "Research Scientist", "Sales Executive", "Human Resources", "Research Director", "Laboratory Technician", "Manufacturing Director", "Sales Representative", "Manager"
-- Gender: "Male", "Female"
-- Show Only Attrition: true/false
-
-DECISION LOGIC:
-1. First, check if ANY dashboard element (not just connected ones) can answer the question
-2. If existing dashboard elements can answer the question, provide GUIDANCE to examine those specific elements by name
-3. If partially answerable with filtering, suggest filtering existing elements and specify exact filter values
-4. Only create new charts if the question requires data visualization not available in any existing dashboard element
-
-Chart best practices (Mode 3 only):
-- Use appropriate mark types (bar, point, line, area, arc for pie charts)
-- Choose correct encoding types (nominal, ordinal, quantitative, temporal)
-- Always include "$schema" and ensure valid JSON
-- Include meaningful tooltips for interactivity`,
-      temperature: 0.7,
-      max_output_tokens: 2000,
+      messages: [
+        {
+          role: "system",
+          content: systemPrompt
+        },
+        {
+          role: "user",
+          content: message
+        }
+      ],
+      temperature: 1
     });
 
-    // Get the response content based on the new API structure
+    // Get the response content from the proper OpenAI API response structure
     let responseContent = "I'm sorry, I couldn't process that request.";
-    if (response.output && response.output.length > 0) {
-      const output = response.output[0];
-      if ('content' in output && output.content && output.content.length > 0) {
-        const contentItem = output.content[0];
-        if ('text' in contentItem) {
-          responseContent = contentItem.text;
-        }
+    if (response.choices && response.choices.length > 0) {
+      const choice = response.choices[0];
+      if (choice.message && choice.message.content) {
+        responseContent = choice.message.content;
       }
     }
-    
-    // Parse response to extract different response modes
+    console.log("RAW RESPONSE:", responseContent);
+
+    // Parse response to extract structured format
     let content = responseContent;
     let vegaSpec = null;
     let chartTitle = null;
-    let responseMode = 'general'; // general, guidance, filter, chart
-    
-    // Check for different response modes
-    if (responseContent.includes('GUIDANCE:')) {
-      responseMode = 'guidance';
-      content = responseContent.replace('GUIDANCE:', '').trim();
-    } else if (responseContent.includes('FILTER_GUIDANCE:')) {
-      responseMode = 'filter';
-      content = responseContent.replace('FILTER_GUIDANCE:', '').trim();
-    } else if (responseContent.includes('VEGA_SPEC:')) {
-      responseMode = 'chart';
+    let responseMode = 'guidance'; // guidance, filter, chart
+    let filterCommands = null;
+
+    // Try to parse as JSON first (your current response format)
+    try {
+      const jsonResponse = JSON.parse(responseContent);
       
-      // Extract chart explanation
-      const explanationMatch = responseContent.match(/CHART_EXPLANATION:\s*([\s\S]*?)(?=\nCHART_TITLE:|VEGA_SPEC:|$)/);
-      if (explanationMatch) {
-        content = explanationMatch[1].trim();
+      if (jsonResponse && typeof jsonResponse === 'object') {
+        // Extract TYPE
+        if (jsonResponse.TYPE) {
+          const type = jsonResponse.TYPE.toLowerCase();
+          if (type === 'guidance') {
+            responseMode = 'guidance';
+          } else if (type === 'filter') {
+            responseMode = 'filter';
+          } else if (type === 'chart') {
+            responseMode = 'chart';
+          }
+        }
+        
+        // Extract TITLE
+        if (jsonResponse.TITLE) {
+          chartTitle = jsonResponse.TITLE;
+        }
+        
+        // Extract DESCRIPTION
+        if (jsonResponse.DESCRIPTION) {
+          content = jsonResponse.DESCRIPTION;
+        }
+        
+        // Extract VEGA_SPEC
+        if (jsonResponse.VEGA_SPEC) {
+          vegaSpec = jsonResponse.VEGA_SPEC;
+        }
+        
+        // Extract APPLY_FILTERS
+        if (jsonResponse.APPLY_FILTERS) {
+          filterCommands = jsonResponse.APPLY_FILTERS;
+        }
       }
+    } catch (jsonError) {
+      // If JSON parsing fails, fall back to regex parsing (your original format)
+      console.log('JSON parsing failed, falling back to regex parsing');
       
-      // Extract chart title
-      const titleMatch = responseContent.match(/CHART_TITLE:\s*(.+?)(?=\n|VEGA_SPEC:|$)/);
+      // Extract TYPE
+      const typeMatch = responseContent.match(/TYPE:\s*(.+?)(?=\n|$)/);
+      if (typeMatch) {
+        const type = typeMatch[1].trim().toLowerCase();
+        if (type === 'guidance') {
+          responseMode = 'guidance';
+        } else if (type === 'filter') {
+          responseMode = 'filter';
+        } else if (type === 'chart') {
+          responseMode = 'chart';
+        }
+      }
+
+      // Extract TITLE
+      const titleMatch = responseContent.match(/TITLE:\s*(.+?)(?=\n|$)/);
       if (titleMatch) {
         chartTitle = titleMatch[1].trim();
       }
-      
-      // Extract Vega spec
-      const specMatch = responseContent.match(/VEGA_SPEC:\s*({[\s\S]*?})(?=\n\n|$)/);
+
+      // Extract DESCRIPTION
+      const descriptionMatch = responseContent.match(/DESCRIPTION:\s*([\s\S]*?)(?=\nAPPLY_FILTERS:|VEGA_SPEC:|$)/);
+      if (descriptionMatch) {
+        content = descriptionMatch[1].trim();
+      }
+
+      // Extract VEGA_SPEC
+      const specMatch = responseContent.match(/VEGA_SPEC:\s*({[\s\S]*?})(?=\n\n|\nTYPE:|$)/);
       if (specMatch) {
         try {
           let specText = specMatch[1].trim();
-          
-          // Clean up the JSON - remove any markdown formatting
+          // Clean up the JSON - remove any markdown formatting and fix common issues
           specText = specText.replace(/```json/g, '').replace(/```/g, '').trim();
+          specText = specText.replace(/,\s*}]/g, '}');
+          specText = specText.replace(/,\s*}/g, '}');
+          
+          const jsonStart = specText.indexOf('{');
+          const jsonEnd = specText.lastIndexOf('}');
+          if (jsonStart !== -1 && jsonEnd !== -1 && jsonEnd > jsonStart) {
+            specText = specText.substring(jsonStart, jsonEnd + 1);
+          }
           
           vegaSpec = JSON.parse(specText);
-          
-          // Ensure the chart uses the actual HR data and configure properly
-          const hrData = context.hrData || context.hrDataSample || [];
-          if (vegaSpec && hrData && hrData.length > 0) {
-            vegaSpec.data = { values: hrData };
-            
-            // Calculate responsive dimensions based on current panel width
-            const panelWidth = context.panelWidth || 400;
-            const chartWidth = Math.max(250, Math.min(panelWidth - 40, 600));
-            const chartHeight = Math.max(200, Math.min(chartWidth * 0.6, 400));
-            
-            vegaSpec.width = chartWidth;
-            vegaSpec.height = chartHeight;
-            
-            // Make it responsive to container width with proper fitting
-            vegaSpec.autosize = {
-              type: "fit",
-              contains: "padding",
-              resize: true
-            };
-            
-            // Disable Vega actions menu
-            vegaSpec.actions = false;
-            
-            // Configure chart styling
-            vegaSpec.config = {
-              ...vegaSpec.config,
-              view: {
-                stroke: "transparent"
-              }
-            };
-            
-            // Ensure encoding has tooltips
-            if (vegaSpec.encoding) {
-              vegaSpec.encoding.tooltip = vegaSpec.encoding.tooltip || [
-                {"field": "*", "type": "nominal"}
-              ];
-            }
-            
-            // Add the chart title if provided by AI
-            if (chartTitle && !vegaSpec.title) {
-              vegaSpec.title = {
-                text: chartTitle,
-                fontSize: 14,
-                fontWeight: "bold",
-                anchor: "start"
-              };
-            }
-          }
         } catch (error) {
           console.error('Error parsing Vega spec:', error);
-          console.error('Raw spec text:', specMatch[1]);
           vegaSpec = null;
+        }
+      }
+
+      // Extract APPLY_FILTERS
+      const filterMatch = responseContent.match(/APPLY_FILTERS:\s*({[\s\S]*?})(?=\n|VEGA_SPEC:|TYPE:|$)/);
+      if (filterMatch) {
+        try {
+          let filterText = filterMatch[1].trim();
+          filterText = filterText.replace(/```json/g, '').replace(/```/g, '').trim();
+          filterText = filterText.replace(/,\s*}]/g, '}');
+          filterText = filterText.replace(/,\s*}/g, '}');
+          
+          const jsonStart = filterText.indexOf('{');
+          const jsonEnd = filterText.lastIndexOf('}');
+          if (jsonStart !== -1 && jsonEnd !== -1 && jsonEnd > jsonStart) {
+            filterText = filterText.substring(jsonStart, jsonEnd + 1);
+          }
+          
+          filterCommands = JSON.parse(filterText);
+        } catch (e) {
+          console.error('Failed to parse filter commands:', e);
         }
       }
     }
 
-    // Extract filter commands if present
-    let filterCommands = null;
-    const filterMatch = content.match(/APPLY_FILTERS:\s*({[\s\S]*?})(?=\n|$)/);
-    if (filterMatch) {
+    if (vegaSpec) {
       try {
-        filterCommands = JSON.parse(filterMatch[1]);
-      } catch (e) {
-        console.error('Failed to parse filter commands:', e);
+        // ...existing code for dataset selection and chart config...
+        // Determine which dataset to use based on dashboard context and set appropriate data URL
+        let dataUrl = null;
+        const selectedLondonFile = context.selectedLondonFile;
+        const hasHRData = context.hrData && context.hrData.length > 0;
+        const hasLondonData = context.londonDataSummary && Object.keys(context.londonDataSummary).length > 0;
+
+        // Function to get correct CSV file path based on category and name
+        // No longer needed: getCsvPath. Use file.path directly from selectedLondonFile or summary.
+
+        // ...existing code for dataset selection and chart config...
+        if (selectedLondonFile) {
+          dataUrl = selectedLondonFile.path;
+        } else if (hasLondonData && !hasHRData) {
+          const userMessage = message.toLowerCase();
+          const aiResponse = content.toLowerCase();
+          const datasetKeywords = {
+            'vehicles': ['vehicle', 'car', 'transport', 'traffic', 'licensing', 'automotive'],
+            'crime-rates': ['crime', 'criminal', 'offense', 'police', 'arrest', 'theft'],
+            'population': ['population', 'demographic', 'resident', 'people', 'housing density'],
+            'house-prices': ['house', 'home', 'property', 'price', 'real estate', 'rent'],
+            'income': ['income', 'salary', 'wage', 'earning', 'tax', 'pay'],
+            'ethnicity': ['ethnic', 'race', 'diversity', 'cultural', 'background'],
+            'gyms': ['gym', 'fitness', 'exercise', 'sport', 'recreation'],
+            'libraries': ['library', 'book', 'reading', 'education'],
+            'restaurants': ['restaurant', 'food', 'dining', 'cafe', 'catering'],
+            'schools-colleges': ['school', 'education', 'student', 'college', 'university'],
+            'private-rent': ['rent', 'rental', 'tenant', 'landlord', 'accommodation'],
+            'country-of-births': ['birth', 'origin', 'nationality', 'migration', 'immigrant']
+          };
+          let bestMatch: any = null;
+          let bestScore = 0;
+          for (const [category, keywords] of Object.entries(datasetKeywords)) {
+            let score = 0;
+            for (const keyword of keywords) {
+              if (userMessage.includes(keyword)) score += 2;
+              if (aiResponse.includes(keyword)) score += 1;
+            }
+            const availableFile = Object.values(context.londonDataSummary).find((file: any) => file.category === category);
+            if (availableFile && score > bestScore) {
+              bestScore = score;
+              bestMatch = availableFile;
+            }
+          }
+          if (bestMatch) {
+            dataUrl = bestMatch.path;
+          } else {
+            const firstFileId = Object.keys(context.londonDataSummary)[0];
+            if (firstFileId) {
+              const firstFile = context.londonDataSummary[firstFileId];
+              dataUrl = firstFile.path;
+            }
+          }
+        } else if (hasHRData && !hasLondonData) {
+          dataUrl = "/dataset/HR-Employee-Attrition.csv";
+        } else if (hasHRData && hasLondonData) {
+          const userMessage = message.toLowerCase();
+          const aiResponse = content.toLowerCase();
+          const hrKeywords = ['employee', 'attrition', 'hr', 'human resources', 'department', 'job', 'salary', 'performance'];
+          const hrScore = hrKeywords.reduce((score, keyword) => {
+            if (userMessage.includes(keyword)) score += 2;
+            if (aiResponse.includes(keyword)) score += 1;
+            return score;
+          }, 0);
+          const londonKeywords = ['borough', 'london', 'crime', 'population', 'housing', 'vehicle', 'area'];
+          const londonScore = londonKeywords.reduce((score, keyword) => {
+            if (userMessage.includes(keyword)) score += 2;
+            if (aiResponse.includes(keyword)) score += 1;
+            return score;
+          }, 0);
+          if (hrScore > londonScore) {
+            dataUrl = "/dataset/HR-Employee-Attrition.csv";
+          } else {
+            const datasetKeywords = {
+              'vehicles': ['vehicle', 'car', 'transport', 'traffic', 'licensing', 'automotive'],
+              'crime-rates': ['crime', 'criminal', 'offense', 'police', 'arrest', 'theft'],
+              'population': ['population', 'demographic', 'resident', 'people', 'housing density'],
+              'house-prices': ['house', 'home', 'property', 'price', 'real estate', 'rent'],
+              'income': ['income', 'salary', 'wage', 'earning', 'tax', 'pay'],
+              'ethnicity': ['ethnic', 'race', 'diversity', 'cultural', 'background'],
+              'gyms': ['gym', 'fitness', 'exercise', 'sport', 'recreation'],
+              'libraries': ['library', 'book', 'reading', 'education'],
+              'restaurants': ['restaurant', 'food', 'dining', 'cafe', 'catering'],
+              'schools-colleges': ['school', 'education', 'student', 'college', 'university'],
+              'private-rent': ['rent', 'rental', 'tenant', 'landlord', 'accommodation'],
+              'country-of-births': ['birth', 'origin', 'nationality', 'migration', 'immigrant']
+            };
+            let bestMatch: any = null;
+            let bestScore = 0;
+            for (const [category, keywords] of Object.entries(datasetKeywords)) {
+              let score = 0;
+              for (const keyword of keywords) {
+                if (userMessage.includes(keyword)) score += 2;
+                if (aiResponse.includes(keyword)) score += 1;
+              }
+              const availableFile = Object.values(context.londonDataSummary).find((file: any) => file.category === category);
+              if (availableFile && score > bestScore) {
+                bestScore = score;
+                bestMatch = availableFile;
+              }
+            }
+            if (bestMatch) {
+              dataUrl = bestMatch.path;
+            } else {
+              const firstFileId = Object.keys(context.londonDataSummary)[0];
+              const firstFile = context.londonDataSummary[firstFileId];
+              dataUrl = firstFile.path;
+            }
+          }
+        }
+
+        // ...existing code for chart config...
+        if (vegaSpec && dataUrl) {
+          vegaSpec.data = { url: dataUrl };
+          const panelWidth = context.panelWidth || 400;
+          const chartWidth = Math.max(250, Math.min(panelWidth - 40, 600));
+          const chartHeight = Math.max(200, Math.min(chartWidth * 0.6, 400));
+          vegaSpec.width = chartWidth;
+          vegaSpec.height = chartHeight;
+          vegaSpec.autosize = {
+            type: "fit",
+            contains: "padding",
+            resize: true
+          };
+          vegaSpec.actions = false;
+          vegaSpec.config = {
+            ...vegaSpec.config,
+            view: {
+              stroke: "transparent"
+            }
+          };
+          if (vegaSpec.encoding) {
+            vegaSpec.encoding.tooltip = vegaSpec.encoding.tooltip || [
+              {"field": "*", "type": "nominal"}
+            ];
+          }
+          if (chartTitle && !vegaSpec.title) {
+            vegaSpec.title = {
+              text: chartTitle,
+              fontSize: 14,
+              fontWeight: "bold",
+              anchor: "start"
+            };
+          }
+        } else {
+          console.warn('No data URL could be determined for chart generation');
+          if (vegaSpec && !dataUrl) {
+            console.warn('Vega spec generated but no data URL available - chart may not render properly');
+          }
+        }
+      } catch (error) {
+        console.error('Error parsing Vega spec:', error);
+        vegaSpec = null;
+      }
+    } else {
+      if (responseMode === 'chart' || responseContent.toLowerCase().includes('chart') || 
+          responseContent.toLowerCase().includes('visualization') || 
+          responseContent.toLowerCase().includes('vega')) {
+      }
+    }
+    
+    // Auto-detect filters from user message and AI response if no explicit filters provided
+    if (!filterCommands) {
+      const hasLondonData = context.londonDataSummary && Object.keys(context.londonDataSummary).length > 0;
+      const hasHRData = context.hrData && context.hrData.length > 0;
+      
+      let detectedFilters = {} as any;
+      
+      // London data filters
+      if (hasLondonData) {
+        const availableBoroughs = context.availableFilters?.boroughs || [];
+        const availableCrimeCategories = context.availableFilters?.crimeCategories || [];
+        const availableYears = context.availableFilters?.birthYears || context.availableFilters?.baseYears || [];
+        
+        // Check for borough names in user message
+        for (const borough of availableBoroughs) {
+          if (message.toLowerCase().includes(borough.toLowerCase())) {
+            detectedFilters.borough = borough;
+            break;
+          }
+        }
+        
+        // Check for crime categories in user message
+        for (const category of availableCrimeCategories) {
+          if (message.toLowerCase().includes(category.toLowerCase())) {
+            detectedFilters.crimeCategory = category;
+            break;
+          }
+        }
+        
+        // Check for years in user message
+        const yearInMessage = message.match(/\b(19|20)\d{2}\b/);
+        if (yearInMessage && availableYears.includes(yearInMessage[0])) {
+          detectedFilters.baseYear = yearInMessage[0];
+        }
+        
+        // Check AI response for London filter suggestions
+        const boroughMatch = content.match(/(?:borough|Borough)[:\s]*['"]([^'"]+)['"]|(?:borough|Borough)[:\s]*(\w+(?:\s+\w+)*)/i);
+        const crimeMatch = content.match(/(?:crime|Crime)[:\s]*['"]([^'"]+)['"]|(?:crime|Crime)[:\s]*(\w+(?:\s+\w+)*)/i);
+        const yearMatch = content.match(/(?:year|Year)[:\s]*['"]?(\d{4})['"]?/i);
+        
+        if (boroughMatch && !detectedFilters.borough) {
+          const value = boroughMatch[1] || boroughMatch[2];
+          if (value && value.trim() && value.length >= 3) {
+            const trimmedValue = value.trim();
+            const matchedBorough = availableBoroughs.find((borough: string) => 
+              borough.toLowerCase().includes(trimmedValue.toLowerCase()) || 
+              trimmedValue.toLowerCase().includes(borough.toLowerCase())
+            );
+            if (matchedBorough) {
+              detectedFilters.borough = matchedBorough;
+            }
+          }
+        }
+        
+        if (crimeMatch && !detectedFilters.crimeCategory) {
+          const value = crimeMatch[1] || crimeMatch[2];
+          if (value && value.trim() && value.length >= 3) {
+            const trimmedValue = value.trim();
+            const matchedCategory = availableCrimeCategories.find((category: string) => 
+              category.toLowerCase().includes(trimmedValue.toLowerCase()) || 
+              trimmedValue.toLowerCase().includes(category.toLowerCase())
+            );
+            if (matchedCategory) {
+              detectedFilters.crimeCategory = matchedCategory;
+            }
+          }
+        }
+        
+        if (yearMatch && !detectedFilters.baseYear) {
+          const value = yearMatch[1];
+          if (value && value.trim()) {
+            const year = value.trim();
+            if (availableYears.includes(year)) {
+              detectedFilters.baseYear = year;
+            }
+          }
+        }
+      }
+      
+      // HR data filters
+      if (hasHRData) {
+        const userMessage = message.toLowerCase();
+        const aiResponse = content.toLowerCase();
+        
+        // Check for department mentions
+        const commonDepartments = ['sales', 'research', 'development', 'human resources', 'hr', 'marketing', 'finance', 'engineering', 'operations', 'it', 'technology'];
+        for (const dept of commonDepartments) {
+          if (userMessage.includes(dept) || aiResponse.includes(dept)) {
+            detectedFilters.department = dept;
+            break;
+          }
+        }
+        
+        // Check for job role mentions
+        const commonRoles = ['manager', 'executive', 'analyst', 'specialist', 'director', 'representative', 'developer', 'engineer', 'scientist', 'technician'];
+        for (const role of commonRoles) {
+          if (userMessage.includes(role) || aiResponse.includes(role)) {
+            detectedFilters.jobRole = role;
+            break;
+          }
+        }
+        
+        // Check for gender mentions
+        if (userMessage.includes('male') || userMessage.includes('female') || aiResponse.includes('male') || aiResponse.includes('female')) {
+          if (userMessage.includes('male') || aiResponse.includes('male')) {
+            detectedFilters.gender = userMessage.includes('female') || aiResponse.includes('female') ? 'Female' : 'Male';
+          }
+        }
+        
+        // Check for attrition mentions
+        if (userMessage.includes('attrition') || userMessage.includes('left') || userMessage.includes('quit') || 
+            aiResponse.includes('attrition') || aiResponse.includes('left') || aiResponse.includes('quit')) {
+          detectedFilters.showOnlyAttrition = true;
+        }
+      }
+      
+      // Apply detected filters if any were found
+      if (Object.keys(detectedFilters).length > 0) {
+        filterCommands = detectedFilters;
       }
     }
 
@@ -213,7 +451,8 @@ Chart best practices (Mode 3 only):
       content,
       vegaSpec,
       responseMode,
-      filterCommands
+      filterCommands,
+      title: chartTitle
     });
 
   } catch (error: any) {

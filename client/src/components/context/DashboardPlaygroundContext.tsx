@@ -71,6 +71,14 @@ export interface DashboardPlaygroundProps {
     birthYears?: number[];
     baseYears?: number[];
   };
+  dashboardElements?: {
+    id: string;
+    name: string;
+    type: string;
+    description: string;
+    category: string;
+    dataFields: string[];
+  }[];
 }
 
 export interface DroppedElement {

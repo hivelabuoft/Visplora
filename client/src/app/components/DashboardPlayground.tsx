@@ -85,7 +85,8 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
   hrData = [], // Default to empty array if no data provided
   onApplyFilters,
   dashboardFilters,
-  availableFilters
+  availableFilters,
+  dashboardElements = []
 }) => {
   // Basic state
   const [isAnnotationMode, setIsAnnotationMode] = useState(false);
@@ -744,7 +745,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
               smoothStep: 0.0005
             }}
             doubleClick={{
-              disabled: isElementDragging,
+              disabled: true,
               step: 0.5
             }}
             onTransformed={(ref) => {
@@ -876,6 +877,7 @@ const DashboardPlayground: React.FC<DashboardPlaygroundProps> = ({
                       onCreateElement={handleCreateElementFromAI}
                       dashboardFilters={dashboardFilters}
                       availableFilters={availableFilters}
+                      dashboardElements={dashboardElements}
                     />
                   )}
                   

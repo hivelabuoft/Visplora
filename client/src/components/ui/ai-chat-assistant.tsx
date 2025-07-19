@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { FiX, FiSend, FiCpu, FiDatabase, FiEye, FiEyeOff, FiZap, FiRefreshCw, FiExternalLink, FiInfo, FiFilter, FiBarChart, FiFolder, FiFile, FiChevronDown, FiChevronRight } from 'react-icons/fi';
 import { VegaLite } from 'react-vega';
 import { ConnectionNodes } from './connection-nodes';
-import { generateDashboardElementsContext, findElementsForQuestion, generateQuestionGuidance } from '../../app/dashboard2/dashboardElementsRegistry';
 import { 
   LondonDataFile, 
   LondonDataCategory, 
@@ -40,12 +39,24 @@ export interface AIAssistantData {
       jobRole?: string;
       gender?: string;
       showOnlyAttrition?: boolean;
+      // London dashboard filters
+      borough?: string;
+      crimeCategory?: string;
+      birthYear?: number;
+      baseYear?: number;
+      lsoa?: string;
     };
     pendingFilters?: {
       department?: string;
       jobRole?: string;
       gender?: string;
       showOnlyAttrition?: boolean;
+      // London dashboard filters
+      borough?: string;
+      crimeCategory?: string;
+      birthYear?: number;
+      baseYear?: number;
+      lsoa?: string;
     };
     filtersApplied?: boolean;
   }>;
@@ -110,6 +121,14 @@ interface AIAssistantProps {
     birthYears?: number[];
     baseYears?: number[];
   };
+  dashboardElements?: {
+    id: string;
+    name: string;
+    type: string;
+    description: string;
+    category: string;
+    dataFields: string[];
+  }[];
 }
 
 // Helper functions for response modes
@@ -221,7 +240,8 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
   onApplyFilters,
   onCreateElement,
   dashboardFilters,
-  availableFilters
+  availableFilters,
+  dashboardElements = []
 }) => {
   const [isMoving, setIsMoving] = useState(false);
   const [resizeMode, setResizeMode] = useState<'none' | 'corner' | 'right' | 'bottom'>('none');
@@ -240,6 +260,12 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
     jobRole?: string;
     gender?: string;
     showOnlyAttrition?: boolean;
+    // London dashboard filters
+    borough?: string;
+    crimeCategory?: string;
+    birthYear?: number;
+    baseYear?: number;
+    lsoa?: string;
   } | null>(null);
   const [londonDataCategories, setLondonDataCategories] = useState<LondonDataCategory[]>([]);
   const [selectedDataFile, setSelectedDataFile] = useState<LondonDataFile | null>(null);
@@ -279,6 +305,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
             if (file.isLoaded && file.sampleData.length > 0) {
               summaryData[file.id] = {
                 name: file.name,
+                path: file.path,
                 description: file.description,
                 columns: file.columns,
                 totalRecords: file.totalRecords,
@@ -311,16 +338,64 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
       columnTypes: hrData.length > 0 ? getColumnTypes(hrData[0]) : {},
       
       // All dashboard elements (for AI to know what's already available)
-      allDashboardElements: droppedElements.map(element => ({
-        type: 'visualization',
-        id: element.id,
-        name: element.elementName || 'Unknown',
-        elementType: element.elementType || 'chart',
-        description: element.vegaSpec ? getChartDescription(element.vegaSpec) : 'No description available',
-        dataFields: element.vegaSpec ? extractDataFields(element.vegaSpec) : [],
-        insights: element.vegaSpec ? getChartInsights(element.vegaSpec) : '',
-        isConnected: assistant.connectedElements.some(connEl => connEl.id === element.id && connEl.type === 'element')
-      })),
+      allDashboardElements: [
+        // Pre-existing dashboard elements from the dashboard page
+        ...dashboardElements.map(element => ({
+          type: 'dashboard_element',
+          id: element.id,
+          elementId: element.id,
+          name: element.name,
+          elementType: element.type,
+          title: element.name,
+          description: element.description,
+          dataFields: element.dataFields,
+          category: element.category,
+          isConnected: false, // Dashboard elements can't be connected
+          isDashboardElement: true,
+          rawData: {
+            elementId: element.id,
+            elementName: element.name,
+            elementType: element.type,
+            category: element.category,
+            dataFields: element.dataFields
+          }
+        })),
+        // Dropped elements from the playground (AI-generated or dragged)
+        ...droppedElements.map(element => ({
+          type: 'visualization',
+          id: element.id,
+          elementId: element.elementId,
+          name: element.elementName || 'Unknown Chart',
+          elementType: element.elementType || 'chart',
+          title: element.elementName || 'Untitled Chart',
+          description: element.vegaSpec ? getChartDescription(element.vegaSpec) : `${element.elementType} visualization`,
+          dataFields: element.vegaSpec ? extractDataFields(element.vegaSpec) : [],
+          insights: element.vegaSpec ? getChartInsights(element.vegaSpec) : `This is a ${element.elementType} showing data visualization`,
+          position: {
+            x: element.position?.x || 0,
+            y: element.position?.y || 0,
+            width: element.size?.width || 0,
+            height: element.size?.height || 0
+          },
+          gridPosition: {
+            row: element.gridPosition?.row || 0,
+            col: element.gridPosition?.col || 0
+          },
+          category: element.elementType || 'general',
+          isConnected: assistant.connectedElements.some(connEl => connEl.id === element.id && connEl.type === 'element'),
+          isDashboardElement: false,
+          // Add raw element data for reference
+          rawData: {
+            elementId: element.elementId,
+            elementName: element.elementName,
+            elementType: element.elementType,
+            hasVegaSpec: !!element.vegaSpec,
+            position: element.position,
+            gridPosition: element.gridPosition,
+            size: element.size
+          }
+        }))
+      ],
       
       // All sticky notes on dashboard
       allDashboardNotes: stickyNotes.map(note => ({
@@ -376,7 +451,10 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
       londonDataSummary: londonDataSummary,
       londonDataCategories: londonDataCategories,
       selectedLondonFile: selectedDataFile,
-      londonFileData: selectedDataFile ? fileData.slice(0, 10) : []
+      londonFileData: selectedDataFile ? fileData.slice(0, 10) : [],
+      
+      // Available filters for this dashboard
+      availableFilters: availableFilters || {}
     };
     return context;
   }, [assistant.connectedElements, hrData, droppedElements, stickyNotes, londonDataCategories, selectedDataFile, fileData, londonDataSummary]);
@@ -397,58 +475,100 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
 
   // Generate AI-powered suggested prompts based on dataset fields and context
   const generateSuggestedPrompts = useCallback(async () => {
-    if (!hrData.length) return [];
+    // Check if we have any data available
+    const hasData = hrData.length > 0 || Object.keys(londonDataSummary).length > 0;
+    if (!hasData) return [];
 
     setIsGeneratingSuggestions(true);
     
     try {
       const context = generateContext();
       
+      // Determine available datasets for prompt generation
+      const hasHRData = hrData.length > 0;
+      const hasLondonData = Object.keys(londonDataSummary).length > 0;
+      const selectedLondonFile = context.selectedLondonFile;
+      
+      // Build dataset description for prompts
+      let datasetContext = '';
+      if (hasHRData) {
+        datasetContext += `HR Employee Dataset: ${context.totalRecords} records with columns: ${context.availableColumns.join(', ')}\n`;
+      }
+      if (hasLondonData) {
+        datasetContext += `London Data Files: ${Object.keys(londonDataSummary).length} files including: 
+${Object.values(londonDataSummary).map((file: any) => `- ${file.name}, Column Names: ${file.columns.join(', ')}`)
+.join('\n')}`;
+        if (selectedLondonFile) {
+          datasetContext += `Selected London File: ${selectedLondonFile.name} with columns: ${selectedLondonFile.columns.join(', ')}\n`;
+        }
+      }
+      
       // Create different prompts based on whether there are connected elements
       let suggestionPrompt;
-      
       if (context.allDashboardElements.length > 0) {
         // When there are dashboard elements, focus on analysis and guidance
-        suggestionPrompt = `Based on the following HR dashboard context, generate 8 diverse analysis prompts that help users understand their data better:
+        suggestionPrompt = `Based on the following dashboard context, generate 7 diverse analysis prompts that help users understand their data better:
 
-Dashboard Context:
-- Total Records: ${context.totalRecords}
-- Available Columns: ${context.availableColumns.join(', ')}
-- ALL Dashboard Elements (${context.allDashboardElements.length}):
+Focus on insights relevant to the available datasets:
+${hasHRData ? '- HR insights: attrition analysis, performance metrics, demographic patterns, salary analysis, employee engagement trends, workforce diversity, and more' : ''}
+${hasLondonData ? '- London insights: borough analysis, crime patterns, demographic trends, geographic patterns, temporal trends, economic indicators, housing affordability, and more' : ''}
+
+Available Datasets:
+${datasetContext}
+
+Dashboard Context (Elements already on the dashboard):
+- ${context.allDashboardElements.length} Elements available:
 ${context.allDashboardElements.map((el: any) => 
-  `  * ${el.name} (${el.elementType}): ${el.description} | Insights: ${el.insights}`
+  `  * ${el.name} (Element Type: ${el.elementType}): ${el.description} | Fields Used: ${el.dataFields.join(', ')}`
 ).join('\n')}
-- Connected Elements to me: ${context.connectedElements}
-- Available Dashboard Notes: ${context.allDashboardNotes.length}
+${context.connectedElements > 0 ? `- Elements focused by user: ${context.connectedElements}` : ''}
+${context.allDashboardNotes.length > 0 ? `- User's Dashboard Notes: ${context.allDashboardNotes.length}` : ''}
+
+FILTERS AVAILABLE THAT CAN BE APPLIED:
+${hasHRData ? 
+`### HR DASHBOARD FILTERS:
+- HR department: use "department" field
+- Job role: use "jobRole" field
+- Gender: use "gender" field
+- Show only attrition: use "showOnlyAttrition" field (boolean)
+` : ''}
+${hasLondonData ? 
+`### LONDON DASHBOARD FILTERS:
+- London borough: use "borough" field to filter all elements by borough
+- Crime category: use "crimeCategory" field to see boroughs with most crimes of that type
+- Birth year: use "birthYear" field to see trends in place of birth and the percentage change in UK since 2004
+` : ''}
 
 Generate prompts that:
-1. Ask questions about existing dashboard elements (60% of prompts) - reference specific element names
-2. Request filtering or deeper analysis of current data (30% of prompts)  
-3. Suggest complementary visualizations not yet shown (10% of prompts)
+1. Ask questions about one of the existing dashboard elements (1 prompt) - reference its title and visual type 
+2. Request filtering or deeper analysis of current data using available filtration options (2 prompts) - write the prompt in a way that indicates filtering or analysis of existing data
+3. Suggest relationships between datasets that are not used in the current dashboard elements. (2 prompts) - use specific language to indicate formation of new charts or insights
+4. Suggest relationships between columns of the same dataset (2 prompts) - use specific language to indicate formation of new charts or insights
 
-Focus on business insights like attrition analysis, performance metrics, demographic patterns, and salary analysis.
-Make prompts specific to the existing dashboard elements by referencing their names and insights.
+Make prompts specific to the dataset. Make the prompts short and ambiguous.
 Return ONLY the prompts, one per line, without numbering.`;
-      } else {
+      } 
+      else {
         // When no dashboard elements, focus on initial exploration
-        suggestionPrompt = `Based on the following HR dataset, generate 8 diverse and insightful data visualization prompts:
+        suggestionPrompt = `Based on the following datasets, generate 6 diverse and insightful data visualization prompts:
 
-Dataset Information:
-- Total Records: ${context.totalRecords}
-- Available Columns: ${context.availableColumns.join(', ')}
-- Column Types: ${Object.entries(context.columnTypes).map(([col, type]) => `${col} (${type})`).join(', ')}
-- Dashboard Elements: None yet
+Available Datasets:
+${datasetContext}
 
 Generate prompts that:
-1. Explore different aspects of the HR data
-2. Use various chart types (bar, pie, scatter, histogram, etc.)
-3. Focus on business insights like attrition, salary, performance, demographics
+1. Explore different aspects of the available data
+2. Use various chart types (bar, pie, scatter, histogram, line, area, etc.)
+3. Focus on relevant business insights based on available datasets
 4. Include both simple and advanced analysis requests
-5. Are specific to the available columns
+5. Are specific to the available data columns and types
 
-Return ONLY the prompts, one per line, without numbering.`;
-      }
+Focus areas:
+${hasHRData ? '- HR data: employee attrition, performance, demographics, salary distribution, department analysis, ' : ''}
+${hasLondonData ? '- London data: borough comparisons, crime analysis, demographic trends, geographic visualizations, temporal patterns' : ''}
 
+Return ONLY the prompts, one per line, without numbering.`;}
+
+      console.log(suggestionPrompt);
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -474,56 +594,17 @@ Return ONLY the prompts, one per line, without numbering.`;
         
         return prompts;
       } else {
-        // Fallback to static prompts if AI fails
-        return getFallbackPrompts(context);
+        // Return empty array if AI fails
+        return [];
       }
     } catch (error) {
       console.error('Error generating AI suggestions:', error);
-      // Fallback to static prompts if AI fails
-      const context = generateContext();
-      return getFallbackPrompts(context);
+      // Return empty array if AI fails
+      return [];
     } finally {
       setIsGeneratingSuggestions(false);
     }
   }, [hrData, generateContext, actualWidth]);
-
-  // Fallback static prompts in case AI generation fails
-  const getFallbackPrompts = (context: any) => {
-    const quantitativeFields = Object.entries(context.columnTypes)
-      .filter(([_, type]) => type === 'quantitative')
-      .map(([field, _]) => field);
-    const nominalFields = Object.entries(context.columnTypes)
-      .filter(([_, type]) => type === 'nominal')
-      .map(([field, _]) => field);
-
-    // Generate different prompts based on whether there are dashboard elements
-    if (context.allDashboardElements.length > 0) {
-      // Focus on analysis and guidance when dashboard elements exist
-      const elementNames = context.allDashboardElements.map((el: any) => el.name);
-      return [
-        'What insights can I get from the existing dashboard elements?',
-        `How do I interpret the ${elementNames[0] || 'charts'} on the dashboard?`,
-        'Can you filter the current data to show only high-performing employees?',
-        'What patterns should I look for in the dashboard visualizations?',
-        `Explain what the ${elementNames[1] || 'dashboard elements'} are showing me`,
-        'How do the dashboard elements relate to employee retention?',
-        'What filtering options can help me understand attrition better?',
-        'Guide me through analyzing the dashboard step by step'
-      ];
-    } else {
-      // Focus on initial exploration when no elements exist
-      return [
-        `Show me the distribution of ${quantitativeFields[0] || 'Age'}`,
-        `Create a pie chart of ${nominalFields[0] || 'Department'}`,
-        `Show the relationship between ${quantitativeFields[0] || 'Age'} and ${quantitativeFields[1] || 'MonthlyIncome'}`,
-        'Show attrition rates by department',
-        `Create a histogram of ${quantitativeFields[1] || 'MonthlyIncome'}`,
-        `Compare ${quantitativeFields[2] || 'YearsAtCompany'} across different ${nominalFields[0] || 'Department'}`,
-        'Create a chart showing factors affecting employee attrition',
-        'Show trends in job satisfaction over years at company'
-      ];
-    }
-  };
 
   // Handle suggested prompt selection
   const handleSuggestionClick = (suggestion: string) => {
@@ -581,25 +662,11 @@ Return ONLY the prompts, one per line, without numbering.`;
 
     // Extract chart title from content or generate one
     let chartTitle = 'AI Generated Chart';
-    const contentLines = message.content.split('\n');
-    for (const line of contentLines) {
-      if (line.includes('title') || line.includes('Title') || line.includes('chart') || line.includes('Chart')) {
-        chartTitle = line.replace(/[#*\-\s]+/g, ' ').trim();
-        if (chartTitle.length > 50) {
-          chartTitle = chartTitle.substring(0, 50) + '...';
-        }
-        break;
-      }
+    if (message.title) {
+      chartTitle = message.title;
     }
 
-    // If no title found in content, try to extract from vega spec
-    if (chartTitle === 'AI Generated Chart' && message.vegaSpec.title) {
-      chartTitle = typeof message.vegaSpec.title === 'string' 
-        ? message.vegaSpec.title 
-        : message.vegaSpec.title.text || 'AI Generated Chart';
-    }
-
-    // Determine chart type from vega spec
+    // Determine chart type from chart spec
     let chartType = 'Chart';
     if (message.vegaSpec.mark) {
       const mark = typeof message.vegaSpec.mark === 'string' 
@@ -635,7 +702,7 @@ Return ONLY the prompts, one per line, without numbering.`;
       elementName: chartTitle,
       elementType: `AI ${chartType}`,
       vegaSpec: message.vegaSpec,
-      description: message.content.substring(0, 200) + (message.content.length > 200 ? '...' : '')
+      description: message.content
     };
 
     onCreateElement(elementData);
@@ -699,7 +766,7 @@ Return ONLY the prompts, one per line, without numbering.`;
     try {
       const context = generateContext();
       
-      // Add current panel width to context for truly responsive chart sizing
+      // Add current panel width to context for responsive chart sizing
       const contextWithPanelWidth = {
         ...context,
         panelWidth: actualWidth, // Use current actual width of the panel
@@ -707,55 +774,237 @@ Return ONLY the prompts, one per line, without numbering.`;
         hrDataSample: context.hrDataSample // Keep original name too
       };
       
+      // Determine available datasets
+      const hasHRData = hrData.length > 0;
+      const hasLondonData = Object.keys(londonDataSummary).length > 0;
+      
       // Prepare system prompt with context
       const systemPrompt = `You are an AI assistant helping with data visualization using Vega-Lite. 
 
-${generateDashboardElementsContext()}
+# CURRENT DASHBOARD STATE:
+You have access to ${hasHRData ? 'HR employee data' : ''}${hasHRData && hasLondonData ? ' AND ' : ''}${hasLondonData ? 'comprehensive London datasets' : ''}
 
-CURRENT DASHBOARD STATE:
-Available dataset: HR Employee data with ${context.totalRecords} records
-Available columns: ${context.availableColumns.join(', ')}
-Current panel width: ${actualWidth}px
+### CURRENT PANEL WIDTH: ${actualWidth}px
 
-${context.londonDataSummary}
-
-ALL DASHBOARD ELEMENTS (${context.allDashboardElements.length} total):
+### ALL DASHBOARD ELEMENTS (${context.allDashboardElements.length} total):
 ${context.allDashboardElements.map((el: any) => 
-  `- ${el.name} (${el.elementType}): ${el.description} | Fields: ${el.dataFields.join(', ')} | Insights: ${el.insights}${el.isConnected ? ' [CONNECTED TO ME]' : ''}`
+  `- ${el.name} (Element Type: ${el.elementType}): ${el.description} | Fields Used: ${el.dataFields.join(', ')} ${el.isConnected ? ' [Focused by User]' : ''}`
 ).join('\n')}
+${context.allDashboardNotes.length > 0 ? 
+  `### ALL DASHBOARD NOTES (${context.allDashboardNotes.length} total):
+  ${context.allDashboardNotes.map((note: any) => 
+    `- Note: "${note.content.substring(0, 100)}..."${note.isConnected ? ' [FOCUSED]' : ''}`
+  ).join('\n')}`
+: ''}
+${context.connectedData.length > 0 ? 
+  `### CONNECTED ELEMENTS TO THIS AI ASSISTANT (${context.connectedData.length}):
+  ${context.connectedData.map((el: any) => 
+    el.type === 'visualization' ? 
+      `- ${el.name} (${el.elementType}): ${el.description} | Fields Used: ${el.dataFields.join(', ')}` : 
+      `- Note: "${el.content.substring(0, 100)}..."`
+  ).join('\n')}`
+: ''}
 
-ALL DASHBOARD NOTES (${context.allDashboardNotes.length} total):
-${context.allDashboardNotes.map((note: any) => 
-  `- Note: "${note.content.substring(0, 100)}..."${note.isConnected ? ' [CONNECTED TO ME]' : ''}`
-).join('\n')}
+# AVAILABLE DATASETS FOR CHARTS
+${hasHRData ? 
+`### HR EMPLOYEE DATASET:
+- CSV File Path: "/dataset/HR-Employee-Attrition.csv"
+- Columns: ${context.availableColumns.join(', ')}
+- Sample Data: ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}
+- Column Types: ${JSON.stringify(context.columnTypes, null, 2)}
+- Use this path in Vega spec: {"data": {"url": "/dataset/HR-Employee-Attrition.csv"}}`
+: ''}
+${hasLondonData ? 
+`### LONDON DATASETS:
+${Object.entries(londonDataSummary).map(([fileId, fileInfo]: [string, any]) => 
+  `- ${fileInfo.name} (Category: ${fileInfo.category}):
+    * File Path: ${fileInfo.path}
+    * Description: ${fileInfo.description}
+    * Column Names: ${fileInfo.columns.join(', ')}`
+).join('\n')}`
+: ''}
 
-CONNECTED ELEMENTS TO THIS AI ASSISTANT (${context.connectedData.length}):
-${context.connectedData.map((el: any) => 
-  el.type === 'visualization' ? 
-    `- ${el.name} (${el.elementType}): ${el.description} | Fields: ${el.dataFields.join(', ')}` : 
-    `- Note: "${el.content.substring(0, 100)}..."`
-).join('\n')}
-
-${context.selectedLondonFile ? `
-CURRENTLY SELECTED LONDON FILE: ${context.selectedLondonFile.name}
-Description: ${context.selectedLondonFile.description}
-Columns: ${context.selectedLondonFile.columns.join(', ')}
-Total Records: ${context.selectedLondonFile.totalRecords}
-Sample Data: ${JSON.stringify(context.londonFileData.slice(0, 3), null, 2)}
+${context.selectedLondonFile ? 
+`### SELECTED LONDON FILE FOR CHARTS: ${context.selectedLondonFile.name}
+- File Path: ${context.selectedLondonFile.path}
+- Category: ${context.selectedLondonFile.category}
+- Column Names: ${context.selectedLondonFile.columns.join(', ')}
+- Total Records: ${context.selectedLondonFile.totalRecords}
+- Sample: ${JSON.stringify(context.londonFileData.slice(0, 3), null, 3)}
 ` : ''}
 
-CRITICAL INSTRUCTIONS:
-1. You have access to HR employee data AND comprehensive London datasets
-2. ALWAYS check the AVAILABLE DASHBOARD ELEMENTS section first to see what's already on the dashboard
-3. Use the London datasets to create rich visualizations about London boroughs, demographics, crime, housing, etc.
-4. If existing elements can answer the user's question, provide GUIDANCE to examine those specific elements
-5. If existing elements need filtering to answer the question, provide FILTER_GUIDANCE with specific filter commands
-6. ONLY create new visualizations if no existing element can answer the question
-7. When creating charts with London data, make sure to use the correct dataset path and structure
+# FILTERS AVAILABLE THAT CAN BE APPLIED:
+${hasHRData ? 
+`### HR DASHBOARD FILTERS:
+- HR department: use "department" field
+- Job role: use "jobRole" field
+- Gender: use "gender" field
+- Show only attrition: use "showOnlyAttrition" field (boolean)
+` : ''}
+${hasLondonData ? 
+`### LONDON DASHBOARD FILTERS:
+- London borough: use "borough" field to filter all elements by borough
+- Crime category: use "crimeCategory" field to see boroughs with most crimes of that type
+- Birth year: use "birthYear" field to see trends in place of birth and the percentage change in UK since 2004
+` : ''}
 
-Sample HR data structure:
-${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
+# RESPONSE FORMATS:
+### RESPONSE TYPE GUIDELINES:
+- Use "guidance" when directing users to examine existing dashboard elements that already show the requested information. Provide clear instructions on how to find and interpret those elements.
+- Use "filter" when applying data filters to existing elements, tell the user what filters are being applied, and how to understand the filtered data.
+- Use "chart" when creating new visualizations or charts, explain how the chart was created, what data it uses, and what insights it provides. Always include a complete Vega Spec.
 
+### WHEN TO CREATE CHARTS:
+- When user explicitly asks for a chart, graph, or visualization
+- When user asks "show me", "create", "visualize", "plot", or "chart" 
+- When user asks about data that would be better shown visually
+- When no existing dashboard element can answer the question
+- When user asks for a relationship or comparison NOT already displayed on the dashboard
+- When user wants to see correlations, trends, or patterns between different data fields
+- When user asks to analyze or explore data in a way that existing charts don't cover
+
+### VEGA-LITE CHART CREATION RULES:
+1. ALWAYS use {"data": {"url": "data_file_path"}} format. The "url" must be set to a valid dataset path from the list of datasets provided.
+2. For HR data: Use {"data": {"url": "/dataset/HR-Employee-Attrition.csv"}}.
+3. For London data: Use the exact file path of the selected or most relevant dataset from the list above (e.g., {"data": {"url": "/dataset/london/schools-colleges/2022-2023_england_school_information.csv"}}).
+5. Always use the correct dataset paths provided in the AVAILABLE DATASETS section.
+6. ALWAYS select column names from the selected dataset (the one chosen by the user, or the most relevant from the list above). Do not invent or guess column names; use only those listed for the selected dataset.
+7. Choose appropriate encoding types for each column based on its type in the selected dataset:
+  - Quantitative: for numbers (population, age, counts, etc.)
+  - Nominal: for categories (borough names, crime types, etc.)
+  - Ordinal: for ordered categories (ratings, levels, etc.)
+  - Temporal: for dates/times
+8. Include tooltips for interactivity: "tooltip": [{"field": "*", "type": "nominal"}]
+9. Use appropriate mark types: bar, line, point, area, arc, rect, etc.
+10. Consider the panel width (${actualWidth}px) when designing charts.
+11. Make sure the JSON is complete and valid.
+
+### EXAMPLE VEGA SPEC FORMAT:
+FOR SINGLE DATASET: {
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "width": ...,
+  "height": ...,
+  "background": ...,
+  "data": {"url": "DATASET_URL.csv"},
+  "params": [
+    {
+      "name": "hover",
+      "select": {"type": "point", "on": "pointerover"}
+    },
+    {"name": "select", "select": "..."}
+  ],
+  "mark": {
+    "type": "...",
+    "fill": "...",
+    "stroke": "...",
+    "cursor": "..."
+  },
+  "encoding": {
+    "x": {"field": "category", "type": "ordinal"},
+    "y": {"field": "count", "type": "quantitative"},
+    "fillOpacity": {...},
+    "strokeWidth": {...}
+  },
+  "config": {...},
+  "tooltip": [{"field": "*", "type": "nominal"}, ...]
+}
+
+FOR MULTIPLE DATASETS:
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Multi-layer chart with two separate data sources",
+  "width": ...,
+  "height": ...,
+  "background": ...,
+  "layer": [
+    {
+      "data": {
+        "url": "FIRST_DATASET_URL.csv"
+      },
+      "mark": "...",
+      "encoding": {
+        "x": {
+          "field": "x_field_1",
+          "type": "quantitative",
+          "title": "X Axis (Dataset 1)"
+        },
+        "y": {
+          "field": "y_field_1",
+          "type": "quantitative",
+          "title": "Y Axis (Dataset 1)"
+        },
+        "color": {
+          "field": "category_field_1",
+          "type": "nominal",
+          "title": "Category (Dataset 1)"
+        },
+        "tooltip": [
+          {"field": "category_field_1", "type": "nominal", "title": "Category"},
+          {"field": "x_field_1", "type": "quantitative", "title": "X Value"},
+          {"field": "y_field_1", "type": "quantitative", "title": "Y Value"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "SECOND_DATASET_URL.csv"
+      },
+      "mark": "line",
+      "encoding": {
+        "x": {
+          "field": "x_field_2",
+          "type": "quantitative",
+          "title": "X Axis (Dataset 2)"
+        },
+        "y": {
+          "field": "y_field_2",
+          "type": "quantitative",
+          "title": "Y Axis (Dataset 2)"
+        },
+        "color": {
+          "field": "category_field_2",
+          "type": "nominal",
+          "title": "Category (Dataset 2)"
+        },
+        "tooltip": [
+          {"field": "category_field_2", "type": "nominal", "title": "Category"},
+          {"field": "x_field_2", "type": "quantitative", "title": "X Value"},
+          {"field": "y_field_2", "type": "quantitative", "title": "Y Value"}
+        ]
+      }
+    }
+  ]
+}
+
+# VERY IMPORTANT INSTRUCTIONS:
+1. ALWAYS check the AVAILABLE DASHBOARD ELEMENTS first to see if the user's question is already addressed
+2. If existing elements fully answer the question, provide GUIDANCE to direct the user to them
+3. If existing elements can answer the question with filtering, provide FILTER_GUIDANCE with specific filter commands
+4. ONLY create new visualizations if:
+   - No existing element or filter can answer the question
+   - The user asks for a new insight, comparison, or unexplored relationship
+5. All new visualizations must:
+   - Be tagged with type "chart"
+   - Include a complete and valid vega Spec
+   - Use the correct dataset csv path from the AVAILABLE DATASETS section
+6. Try to apply filters when users mention:
+   - Specific locations (e.g., boroughs)
+   - Categories (e.g., crime types)
+   - Time periods (e.g., years, quarters)
+7. Prioritize creating new visualizations for unexplored data relationships that uncover new patterns, correlations, or trends over restating known metrics
+8. The dataset file paths must be exactly as provided in the AVAILABLE DATASETS section, do not modify anything.
+9. The field names must match the column names in the dataset.
+10. RESPOND ONLY with the following JSON format: 
+{
+  TYPE: "guidance/filter/chart",
+  TITLE: "[Brief title for the response/Brief title for the chart]",
+  DESCRIPTION: "[Detailed explanation of the response type]",
+  APPLY_FILTERS: null or { /* JSON object with filter values, e.g. { borough: "Camden" } */ },
+  VEGA_SPEC: null or { /* Complete Vega-Lite specification for the chart */ }
+}
+`;
+
+      console.log('System prompt:', systemPrompt);
       // Call OpenAI API
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -785,6 +1034,7 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
       const assistantMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant' as const,
+        title: data.title,
         content: data.content,
         timestamp: Date.now(),
         vegaSpec: data.vegaSpec,
@@ -793,9 +1043,6 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
         pendingFilters: data.filterCommands,
         filtersApplied: false
       };
-
-      console.log('Assistant message with vegaSpec:', assistantMessage.vegaSpec);
-      console.log('Filter commands:', assistantMessage.filterCommands);
 
       // Store filters as pending instead of applying them immediately
       if (data.filterCommands) {
@@ -1051,7 +1298,7 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
           )}
         </div>
         
-        <span className="text-slate-400 text-xs pr-12">Drag to move</span>
+        <span className="text-slate-400 text-xs pr-4">Drag to move</span>
         
         <div className="flex items-center space-x-1">
           <button
@@ -1233,7 +1480,7 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
                 </div>
               )}
 
-              {/* Dashboard Elements Section */}
+              {/* Playground Elements Section */}
               <div className="pb-2">
                 <button
                   onClick={() => setShowElementsDropdown(!showElementsDropdown)}
@@ -1241,7 +1488,7 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
                 >
                   {showElementsDropdown ? <FiChevronDown size={12} /> : <FiChevronRight size={12} />}
                   <FiBarChart size={12} className="text-blue-400" />
-                  <span className="font-medium">Dashboard Elements</span>
+                  <span className="font-medium">Playground Elements</span>
                   <span className="text-slate-400 ml-auto">
                     ({(droppedElements?.length || 0) + (stickyNotes?.length || 0)})
                   </span>
@@ -1470,6 +1717,12 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
                 {pendingFilters.showOnlyAttrition !== undefined && (
                   <div>• Show Only Attrition: {pendingFilters.showOnlyAttrition ? 'Yes' : 'No'}</div>
                 )}
+                {/* London dashboard filters */}
+                {pendingFilters.borough && <div>• Borough: {pendingFilters.borough}</div>}
+                {pendingFilters.crimeCategory && <div>• Crime Category: {pendingFilters.crimeCategory}</div>}
+                {pendingFilters.baseYear && <div>• Base Year: {pendingFilters.baseYear}</div>}
+                {pendingFilters.birthYear && <div>• Birth Year: {pendingFilters.birthYear}</div>}
+                {pendingFilters.lsoa && <div>• LSOA: {pendingFilters.lsoa}</div>}
               </div>
               <div className="flex gap-2">
                 <button
@@ -1537,6 +1790,22 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
                       {message.filterCommands.showOnlyAttrition !== undefined && (
                         <div>• Show Only Attrition: {message.filterCommands.showOnlyAttrition ? 'Yes' : 'No'}</div>
                       )}
+                      {/* London dashboard filters */}
+                      {message.filterCommands.borough && (
+                        <div>• Borough: {message.filterCommands.borough}</div>
+                      )}
+                      {message.filterCommands.crimeCategory && (
+                        <div>• Crime Category: {message.filterCommands.crimeCategory}</div>
+                      )}
+                      {message.filterCommands.baseYear && (
+                        <div>• Base Year: {message.filterCommands.baseYear}</div>
+                      )}
+                      {message.filterCommands.birthYear && (
+                        <div>• Birth Year: {message.filterCommands.birthYear}</div>
+                      )}
+                      {message.filterCommands.lsoa && (
+                        <div>• LSOA: {message.filterCommands.lsoa}</div>
+                      )}
                     </div>
                     
                     {/* Filter Permission Buttons - only show if filters haven't been applied yet */}
@@ -1570,9 +1839,13 @@ ${JSON.stringify(context.hrDataSample.slice(0, 3), null, 2)}`;
                   </div>
                 )}
                 {message.vegaSpec && (
-                  <div className="mt-2">
-                    <div className="bg-white rounded p-2 overflow-hidden" style={{ maxWidth: '100%' }}>
-                      <VegaLite spec={message.vegaSpec} />
+                  <div className="mt-2 flex flex-col items-center">
+                    <div className="bg-white rounded p-2 overflow-hidden">
+                      <VegaLite 
+                        spec={message.vegaSpec}
+                        actions={false}
+                        renderer="svg"
+                      />
                     </div>
                     {/* Convert to Element Button */}
                     {onCreateElement && (

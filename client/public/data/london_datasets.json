@@ -1,0 +1,220 @@
+{
+  "categories": [
+    {
+      "name": "crime-rates",
+      "description": "Crime statistics and safety data across London boroughs",
+      "files": [
+        {
+          "id": "london-crime-data-2022-2023",
+          "name": "London Crime Data 2022-2023",
+          "path": "/dataset/london/crime-rates/london_crime_data_2022_2023.csv",
+          "description": "Crime statistics for London 2022-2023"
+        }
+      ]
+    },
+    {
+      "name": "ethnicity",
+      "description": "Ethnic group distribution and diversity statistics",
+      "files": [
+        {
+          "id": "ethnic-group",
+          "name": "Ethnic Group Distribution",
+          "path": "/dataset/london/ethnicity/Ethnic group.csv",
+          "description": "Ethnic group distribution across London boroughs"
+        }
+      ]
+    },
+    {
+      "name": "country-of-births",
+      "description": "Population demographics by country of birth",
+      "files": [
+        {
+          "id": "cob-borough",
+          "name": "Country of Birth by Borough",
+          "path": "/dataset/london/country-of-births/cob-borough.csv",
+          "description": "Population by country of birth across London boroughs"
+        }
+      ]
+    },
+    {
+      "name": "population",
+      "description": "Population counts, density, and demographic information",
+      "files": [
+        {
+          "id": "population-1801-2021",
+          "name": "Population 1801 to 2021",
+          "path": "/dataset/london/population/population 1801 to 2021.csv",
+          "description": "Historical population data from 1801 to 2021"
+        },
+        {
+          "id": "housing-density-borough",
+          "name": "Housing Density by Borough",
+          "path": "/dataset/london/population/housing-density-borough.csv",
+          "description": "Housing density statistics by borough"
+        }
+      ]
+    },
+    {
+      "name": "income",
+      "description": "Income statistics, wages, and economic indicators",
+      "files": [
+        {
+          "id": "income-of-tax-payers",
+          "name": "Income of Tax Payers",
+          "path": "/dataset/london/income/income-of-tax-payers.csv",
+          "description": "Income statistics for tax payers"
+        }
+      ]
+    },
+    {
+      "name": "house-prices",
+      "description": "Property prices, housing market data",
+      "files": [
+        {
+          "id": "land-registry-house-prices-borough",
+          "name": "Land Registry House Prices by Borough",
+          "path": "/dataset/london/house-prices/land-registry-house-prices-borough.csv",
+          "description": "Land registry house price statistics by borough"
+        }
+      ]
+    },
+    {
+      "name": "schools-colleges",
+      "description": "Educational institutions and performance data",
+      "files": [
+        {
+          "id": "school-information-2022-2023",
+          "name": "School Information 2022-2023",
+          "path": "/dataset/london/schools-colleges/2022-2023_england_school_information.csv",
+          "description": "School information for England 2022-2023"
+        },
+        {
+          "id": "school-information-2021-2022",
+          "name": "School Information 2021-2022",
+          "path": "/dataset/london/schools-colleges/2021-2022_england_school_information.csv",
+          "description": "School information for England 2021-2022"
+        },
+        {
+          "id": "england-spine-2010-2011",
+          "name": "England Spine 2010-2011",
+          "path": "/dataset/london/schools-colleges/2010-2011_england_spine.csv",
+          "description": "England spine data for 2010-2011"
+        }
+      ]
+    },
+    {
+      "name": "vehicles",
+      "description": "Vehicle registration and transportation statistics",
+      "files": [
+        {
+          "id": "vehicles-licensed-2023",
+          "name": "Licensed Vehicles 2023",
+          "path": "/dataset/london/vehicles/vehicles-licensed-type-borough_2023.csv",
+          "description": "Licensed vehicles by type and borough for 2023"
+        },
+        {
+          "id": "vehicles-licensed-2022",
+          "name": "Licensed Vehicles 2022",
+          "path": "/dataset/london/vehicles/vehicles-licensed-type-borough_2022.csv",
+          "description": "Licensed vehicles by type and borough for 2022"
+        },
+        {
+          "id": "vehicles-licensed-2021",
+          "name": "Licensed Vehicles 2021",
+          "path": "/dataset/london/vehicles/vehicles-licensed-type-borough_2021.csv",
+          "description": "Licensed vehicles by type and borough for 2021"
+        },
+        {
+          "id": "vehicles-licensed-2020",
+          "name": "Licensed Vehicles 2020",
+          "path": "/dataset/london/vehicles/vehicles-licensed-type-borough_2020.csv",
+          "description": "Licensed vehicles by type and borough for 2020"
+        },
+        {
+          "id": "vehicles-licensed-2019",
+          "name": "Licensed Vehicles 2019",
+          "path": "/dataset/london/vehicles/vehicles-licensed-type-borough_2019.csv",
+          "description": "Licensed vehicles by type and borough for 2019"
+        }
+      ]
+    },
+    {
+      "name": "restaurants",
+      "description": "Food service establishments and employment data",
+      "files": [
+        {
+          "id": "licensed-restaurants-units",
+          "name": "Licensed Restaurants Units",
+          "path": "/dataset/london/restaurants/licensed-restaurants-cafes-borough_Restaurants-units.csv",
+          "description": "Licensed restaurants and cafes units by borough"
+        },
+        {
+          "id": "licensed-restaurants-employment",
+          "name": "Licensed Restaurants Employment",
+          "path": "/dataset/london/restaurants/licensed-restaurants-cafes-borough_Restaurants-employment.csv",
+          "description": "Licensed restaurants and cafes employment by borough"
+        },
+        {
+          "id": "unlicensed-restaurants-units",
+          "name": "Unlicensed Restaurants Units",
+          "path": "/dataset/london/restaurants/unlicensed-restaurants-cafes-borough_Unlicensed-Restaurants-units.csv",
+          "description": "Unlicensed restaurants and cafes units by borough"
+        },
+        {
+          "id": "unlicensed-restaurants-emp",
+          "name": "Unlicensed Restaurants Employment",
+          "path": "/dataset/london/restaurants/unlicensed-restaurants-cafes-borough_Unlicensed-Restaurants-emp.csv",
+          "description": "Unlicensed restaurants and cafes employment by borough"
+        }
+      ]
+    },
+    {
+      "name": "private-rent",
+      "description": "Private rental market statistics",
+      "files": [
+        {
+          "id": "voa-average-rent-summary",
+          "name": "VOA Average Rent Summary",
+          "path": "/dataset/london/private-rent/voa-average-rent-borough_Summary.csv",
+          "description": "VOA average rent summary by borough"
+        },
+        {
+          "id": "voa-average-rent-raw-data",
+          "name": "VOA Average Rent Raw Data",
+          "path": "/dataset/london/private-rent/voa-average-rent-borough_Raw-data.csv",
+          "description": "VOA average rent raw data by borough"
+        },
+        {
+          "id": "voa-average-rent-pivot-table",
+          "name": "VOA Average Rent Pivot Table",
+          "path": "/dataset/london/private-rent/voa-average-rent-borough_Pivot-Table.csv",
+          "description": "VOA average rent pivot table by borough"
+        }
+      ]
+    },
+    {
+      "name": "gyms",
+      "description": "Fitness facilities and health infrastructure",
+      "files": [
+        {
+          "id": "london-gym-facilities-2024",
+          "name": "London Gym Facilities 2024",
+          "path": "/dataset/london/gyms/london_gym_facilities_2024.csv",
+          "description": "London gym facilities data for 2024"
+        }
+      ]
+    },
+    {
+      "name": "libraries",
+      "description": "Library services and public facilities",
+      "files": [
+        {
+          "id": "libraries-by-areas-chart",
+          "name": "Libraries by Areas Chart",
+          "path": "/dataset/london/libraries/libraries-by-areas-chart.csv",
+          "description": "Libraries by areas chart data"
+        }
+      ]
+    }
+  ]
+} 
