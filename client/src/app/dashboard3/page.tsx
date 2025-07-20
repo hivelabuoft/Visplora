@@ -5,7 +5,8 @@ import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
 import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec, lsoaMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec, housePriceTimelineChartSpec, ethnicityMinorityGroupsBarChartSpec } from './vegaSpecs';
+import { boroughMapSpec, smallBoroughMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec, housePriceTimelineChartSpec, ethnicityMinorityGroupsBarChartSpec } from './vegaSpecs';
+import LSOAMap from './LSOAMap';
 import { 
   loadPopulationData, 
   processPopulationData, 
@@ -116,7 +117,7 @@ const Dashboard3: React.FC = () => {
   const updateDashboardFilter = (key: string, value: any) => {
     setDashboardFilters(prev => ({ ...prev, [key]: value }));
   };
-  const [lsoaDataAvailable, setLsoaDataAvailable] = useState<boolean>(false);
+
   const [populationMetrics, setPopulationMetrics] = useState<Map<string, BoroughPopulationMetrics>>(new Map());
   const [populationRawData, setPopulationRawData] = useState<PopulationData[]>([]);
   const [isLoadingPopulation, setIsLoadingPopulation] = useState<boolean>(true);
@@ -243,23 +244,6 @@ const Dashboard3: React.FC = () => {
     
     loadData();
   }, []);
-
-  // Check if LSOA data is available for the selected borough
-  useEffect(() => {
-    const checkLsoaData = async () => {
-      try {
-        // Don't URL encode - use the exact borough name as it appears in file names
-        const url = `/data/lsoa-london/${selectedBorough}.json`;
-        const response = await fetch(url);
-        setLsoaDataAvailable(response.ok);
-      } catch (error) {
-        console.error('Error checking LSOA data:', error);
-        setLsoaDataAvailable(false);
-      }
-    };
-    
-    checkLsoaData();
-  }, [selectedBorough]);
 
   // Load income data when selected borough changes
   useEffect(() => {
@@ -795,51 +779,29 @@ const Dashboard3: React.FC = () => {
             elementType="map"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="absolute top-4 left-5 text-sm font-semibold text-white">
-              LSOA LEVEL BOROUGH MAP | {selectedBorough.toUpperCase()}
-            </div>
-            <div className="absolute top-4 right-5 text-xs text-gray-400">
-              (Click LSOA to filter)
+            <div className="absolute top-4 left-5 right-5 flex items-center justify-between">
+              <div className=" text-sm font-semibold text-white">
+                LSOA LEVEL BOROUGH MAP | {selectedBorough.toUpperCase()}
+              </div>
+              <div className="text-xs text-gray-400">
+                (Click LSOA to filter)
+              </div>
             </div>
             
             {/* Map Content */}
-            <div className="absolute top-10 left-10">
-              {lsoaDataAvailable ? (
-                <VegaLite 
-                  spec={lsoaMapSpec(selectedBorough)} 
-                  actions={false}
-                  signalListeners={{
-                    lsoa_click: (name: string, value: any) => {
-                      // Handle LSOA selection
-                      if (value && value.datum && value.datum.properties) {
-                        const lsoaCode = value.datum.properties.lsoa21cd;
-                        const lsoaName = value.datum.properties.lsoa21nm;
-                        updateDashboardFilter('selectedLSOA', lsoaCode);
-                        console.log('Selected LSOA:', lsoaName, lsoaCode);
-                      }
-                    }
-                  }}
-                />
-              ) : (
-                /* Fallback content when LSOA data is not available */
-                <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm" 
-                     style={{ 
-                       background: 'linear-gradient(135deg, #1e1e2e 0%, #2d1b69 50%, #8B5CF6 100%)'
-                     }}>
-                  <div className="text-center">
-                    <div className="mb-2">📍</div>
-                    <div>LSOA data for {selectedBorough}</div>
-                    <div className="text-xs mt-1">Run conversion script to load data</div>
-                    <div className="text-xs mt-2 opacity-75">
-                      /public/data/lsoa-london/convert_shapefiles_to_geojson.py
-                    </div>
-                  </div>
-                </div>
-              )}
+            <div className="absolute top-10 left-4 right-4 bottom-4">
+              <LSOAMap
+                selectedBorough={selectedBorough}
+                selectedLSOA={selectedLSOA}
+                onLSOASelect={(lsoaCode, lsoaName) => {
+                  updateDashboardFilter('selectedLSOA', lsoaCode);
+                  console.log('Selected LSOA:', lsoaName, lsoaCode);
+                }}
+              />
             </div>
             
             {/* LSOA Info */}
-            <div className="absolute bottom-4 left-4 text-gray-400">
+            <div className="absolute bottom-0 left-4 text-gray-400 z-1000 flex">
               { selectedLSOA ? ( 
               <>
               <div className="text-xs text-gray-400">Selected LSOA</div>
