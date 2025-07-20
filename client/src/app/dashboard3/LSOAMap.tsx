@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { parseCSV } from '../../utils/londonDataLoader';
 
 // Fix for default markers in Leaflet with React
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -63,7 +64,7 @@ const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, select
     // Initialize map
     const map = L.map(mapRef.current, {
       center: [51.5074, -0.1278], // London center
-      zoom: 10, // Start with a wider view
+      zoom: 14, // Start with a wider view
       zoomControl: false,
       closePopupOnClick: true,
       attributionControl: true,
@@ -127,37 +128,81 @@ const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, select
         if (!response.ok) {
           throw new Error(`Failed to load LSOA data for ${selectedBorough}`);
         }
-
         const geoJSONData: LSOAGeoJSON = await response.json();
+
+        // --- Load and process population data ---
+        const popResponse = await fetch('/dataset/london/lsoa/land-area-population-density-lsoa11.csv');
+        if (!popResponse.ok) throw new Error('Failed to load LSOA population CSV');
+        const popCSV = await popResponse.text();
+        const { data: popRows } = parseCSV(popCSV);
+        // Map: LSOA code -> estimated 2023 population
+        const popMap: Record<string, number> = {};
+        let minPop = Infinity, maxPop = -Infinity;
+        for (const row of popRows) {
+          const code = row['LSOA11 Code'];
+          let pop2014 = row['Mid-2014 population'].replace(/,/g, '');
+          let pop2023 = Math.round(parseInt(pop2014, 10) * 1.05);
+          popMap[code] = pop2023;
+          if (!isNaN(pop2023)) {
+            minPop = Math.min(minPop, pop2023);
+            maxPop = Math.max(maxPop, pop2023);
+          }
+        }
+        // --- Compute min/max for this borough only ---
+        // Get all LSOA codes in the current borough
+        const boroughLSOACodes = geoJSONData.features.map(f => f.properties.lsoa21cd);
+        // Get populations for these codes (filter out N/A)
+        const boroughPops = boroughLSOACodes
+          .map(code => popMap[code])
+          .filter(pop => typeof pop === 'number' && !isNaN(pop));
+        let boroughMinPop = Math.min(...boroughPops);
+        let boroughMaxPop = Math.max(...boroughPops);
+        // If all values are N/A, fallback to global min/max
+        if (!isFinite(boroughMinPop) || !isFinite(boroughMaxPop)) {
+          boroughMinPop = minPop;
+          boroughMaxPop = maxPop;
+        }
+        // Color scale: interpolate between #a599e9 (light) and #120c2b (dark)
+        function getPurpleShade(pop: number) {
+          if (isNaN(pop)) return '#bbb'; // White for N/A
+          if (boroughMinPop === boroughMaxPop) return '#a599e9';
+          const t = (pop - boroughMinPop) / (boroughMaxPop - boroughMinPop);
+          const lerp = (a: number, b: number) => Math.round(a + (b - a) * t);
+          const r = lerp(165, 18);
+          const g = lerp(153, 12);
+          const b = lerp(233, 43);
+          return `rgb(${r},${g},${b})`;
+        }
+        // --- End borough-specific min/max ---
 
         // Create GeoJSON layer with custom styling
         const geoJSONLayer = L.geoJSON(geoJSONData, {
           style: (feature) => {
-            const isSelected = selectedLSOA === feature?.properties?.lsoa21cd;
+            const lsoaCode = feature?.properties?.lsoa21cd;
+            const pop = popMap[lsoaCode] ?? NaN;
+            const isSelected = selectedLSOA === lsoaCode;
             const hasAnySelection = selectedLSOA !== '';
             return {
-              fillColor: isSelected ? '#8B5CF6' : '#4338CA',
+              fillColor: isSelected ? '#8B5CF6' : getPurpleShade(pop),
               weight: isSelected ? 2 : 0.5,
               opacity: isSelected ? 1 : (hasAnySelection ? 0.2 : 0.6),
               color: isSelected ? '#ffffff' : '#ffffff',
-              fillOpacity: isSelected ? 1 : (hasAnySelection ? 0.1 : 0.6),
+              fillOpacity: isNaN(pop) ? 0.4 : (isSelected ? 1 : (hasAnySelection ? 0.1 : 0.7)),
             };
           },
           onEachFeature: (feature, layer) => {
             const lsoaCode = feature.properties.lsoa21cd;
             const lsoaName = feature.properties.lsoa21nm;
-
+            const pop = popMap[lsoaCode];
             // Add hover effects
             layer.on({
               mouseover: (e) => {
                 const layer = e.target;
                 const isSelected = selectedLSOA === lsoaCode;
                 const hasAnySelection = selectedLSOA !== '';
-                
-                // Only show hover effect if not already selected
                 if (!isSelected) {
                   layer.setStyle({
-                    fillColor: hasAnySelection ? '#52525b' : '#A855F7', // Subtle hover when others are dimmed
+                    fillColor: hasAnySelection ? '#52525b' : '#A855F7',
                     weight: 1.5,
                     opacity: hasAnySelection ? 0.4 : 1,
                     color: '#ffffff',
@@ -171,17 +216,16 @@ const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, select
                 const isSelected = selectedLSOA === lsoaCode;
                 const hasAnySelection = selectedLSOA !== '';
                 layer.setStyle({
-                  fillColor: isSelected ? '#8B5CF6' : '#4338CA',
+                  fillColor: isSelected ? '#8B5CF6' : getPurpleShade(pop),
                   weight: isSelected ? 2 : 0.5,
                   opacity: isSelected ? 1 : (hasAnySelection ? 0.2 : 0.6),
                   color: '#ffffff',
-                  fillOpacity: isSelected ? 0.8 : (hasAnySelection ? 0.1 : 0.6),
+                  fillOpacity: isSelected ? 0.8 : (hasAnySelection ? 0.1 : 0.8),
                 });
               },
               click: () => {
-                // Toggle selection: if clicking the same LSOA, deselect it
                 if (selectedLSOA === lsoaCode) {
-                  onLSOASelect('', ''); // Deselect by passing empty strings
+                  onLSOASelect('', '');
                   console.log('Deselected LSOA:', lsoaName, lsoaCode);
                 } else {
                   onLSOASelect(lsoaCode, lsoaName);
@@ -189,14 +233,16 @@ const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, select
                 }
               },
             });
-
-            // Add tooltip
-            layer.bindTooltip(lsoaName, {
-              permanent: false,
-              direction: 'top',
-              className: 'lsoa-tooltip',
-              offset: [0, -10],
-            });
+            // Add tooltip with population
+            layer.bindTooltip(
+              `<div class='flex flex-col gap-0 items-center'><span class='mb-1'>${lsoaName}</span><strong>${pop ? pop.toLocaleString() : 'N/A'}</strong>Total Population</div>`,
+              {
+                permanent: false,
+                direction: 'top',
+                className: 'lsoa-tooltip',
+                offset: [0, -10],
+              }
+            );
           },
         });
 
@@ -206,8 +252,8 @@ const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, select
         // Fit map to the LSOA boundaries
         if (geoJSONData.features.length > 0) {
           mapInstanceRef.current.fitBounds(geoJSONLayer.getBounds(), {
-            padding: [10, 10],
-            maxZoom: 14,
+            padding: [5, 5],
+            maxZoom: 15,
           });
         }
 

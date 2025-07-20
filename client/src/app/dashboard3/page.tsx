@@ -82,7 +82,8 @@ const Dashboard3: React.FC = () => {
     selectedCrimeCategory: 'Anti-social behaviour',
     selectedBirthYear: 2023,
     selectedBaseYear: 2004,
-    selectedLSOA: ''
+    selectedLSOA: '',
+    selectedLSOAName: ''
   });
 
   // Update individual filter states when dashboardFilters changes
@@ -161,6 +162,7 @@ const Dashboard3: React.FC = () => {
   const selectedBirthYear = dashboardFilters.selectedBirthYear;
   const selectedBaseYear = dashboardFilters.selectedBaseYear;
   const selectedLSOA = dashboardFilters.selectedLSOA;
+  const selectedLSOAName = dashboardFilters.selectedLSOAName;
 
   // Load population data on component mount
   useEffect(() => {
@@ -779,38 +781,45 @@ const Dashboard3: React.FC = () => {
             elementType="map"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="absolute top-4 left-5 right-5 flex items-center justify-between">
-              <div className=" text-sm font-semibold text-white">
-                LSOA LEVEL BOROUGH MAP | {selectedBorough.toUpperCase()}
+            <div className="absolute top-4 left-5 right-5 flex flex-col justify-between">
+              <div className="text-sm font-semibold text-white">
+                LSOA LEVEL BOROUGH MAP | {selectedLSOAName ? selectedLSOAName : selectedBorough}
               </div>
-              <div className="text-xs text-gray-400">
+              <div className="flex justify-between text-xs text-gray-400">
                 (Click LSOA to filter)
-              </div>
+                <div className="flex items-center gap-0.5">
+                  <span className="text-xs text-gray-400 pr-1">High</span>
+                  {[0, 0.2, 0.4, 0.6, 0.8, 1].map((t, i) => {
+                    // Use the same color interpolation as getPurpleShade
+                    const lerp = (a: number, b: number) => Math.round(a + (b - a) * t);
+                    const r = lerp(18, 165);
+                    const g = lerp(12, 153);
+                    const b = lerp(43, 233);
+                    const color = `rgb(${r},${g},${b})`;
+                    return (
+                      <span
+                        key={i}
+                        className="inline-block w-2 h-2 rounded-full"
+                        style={{ background: color, border: '1px solid #222' }}
+                      />
+                    );
+                  })}
+                  <span className="text-xs text-gray-400 pl-1">Low</span>
+                </div>
+              </div>              
             </div>
             
             {/* Map Content */}
-            <div className="absolute top-10 left-4 right-4 bottom-4">
+            <div className="absolute top-14 left-3 right-3 bottom-3">
               <LSOAMap
                 selectedBorough={selectedBorough}
                 selectedLSOA={selectedLSOA}
                 onLSOASelect={(lsoaCode, lsoaName) => {
                   updateDashboardFilter('selectedLSOA', lsoaCode);
+                  updateDashboardFilter('selectedLSOAName', lsoaName);
                   console.log('Selected LSOA:', lsoaName, lsoaCode);
                 }}
               />
-            </div>
-            
-            {/* LSOA Info */}
-            <div className="absolute bottom-0 left-4 text-gray-400 z-1000 flex">
-              { selectedLSOA ? ( 
-              <>
-              <div className="text-xs text-gray-400">Selected LSOA</div>
-              <div className="text-sm font-semibold text-purple-500">
-                {selectedLSOA}
-              </div>
-              </> ) : (
-                <></>
-              )}
             </div>
           </LinkableCard>
 
