@@ -226,10 +226,8 @@ const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, select
               click: () => {
                 if (selectedLSOA === lsoaCode) {
                   onLSOASelect('', '');
-                  console.log('Deselected LSOA:', lsoaName, lsoaCode);
                 } else {
                   onLSOASelect(lsoaCode, lsoaName);
-                  console.log('Selected LSOA:', lsoaName, lsoaCode);
                 }
               },
             });

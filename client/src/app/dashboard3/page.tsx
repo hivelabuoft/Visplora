@@ -5,7 +5,7 @@ import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
 import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec, housePriceTimelineChartSpec, ethnicityMinorityGroupsBarChartSpec } from './vegaSpecs';
+import { boroughMapSpec, smallBoroughMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec, housePriceTimelineChartSpec, ethnicityMinorityGroupsBarChartSpec, gymPieChartSpec, libraryLineChartSpec } from './vegaSpecs';
 import LSOAMap from './LSOAMap';
 import { 
   loadPopulationData, 
@@ -56,7 +56,8 @@ import {
   SchoolData,
   BoroughSchoolStats,
   loadSchoolData,
-  getBoroughSchoolStats
+  getBoroughSchoolStats,
+  generateMockSchoolStats
 } from './schoolData';
 import { 
   HousePriceData,
@@ -73,6 +74,7 @@ import {
   formatPercentage as formatEthnicityPercentage,
   formatNumber as formatEthnicityNumber
 } from './ethnicityData';
+import { generateMockLibrariesData } from './libraryData';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
@@ -118,6 +120,13 @@ const Dashboard3: React.FC = () => {
   const updateDashboardFilter = (key: string, value: any) => {
     setDashboardFilters(prev => ({ ...prev, [key]: value }));
   };
+
+  // State for mock data
+  const [mockGyms, setMockGyms] = useState<any[]>([]);
+  const [mockLibraries, setMockLibraries] = useState<any[]>([]);
+  const [mockSchoolStats, setMockSchoolStats] = useState<BoroughSchoolStats | null>(null);
+  
+  const [lsoaEthnicityStats, setLsoaEthnicityStats] = useState<BoroughEthnicityStats | null>(null);
 
   const [populationMetrics, setPopulationMetrics] = useState<Map<string, BoroughPopulationMetrics>>(new Map());
   const [populationRawData, setPopulationRawData] = useState<PopulationData[]>([]);
@@ -432,6 +441,48 @@ const Dashboard3: React.FC = () => {
   
   const populationTimelineData = getPopulationTimelineData();
 
+  const isLSOASelected = !!selectedLSOA;
+
+  // --- LSOA SELECTION HANDLER ---
+  const handleLSOASelect = (lsoaCode: string, lsoaName: string) => {
+    updateDashboardFilter('selectedLSOA', lsoaCode);
+    updateDashboardFilter('selectedLSOAName', lsoaName);
+    setMockLibraries(generateMockLibrariesData());
+    setMockSchoolStats(generateMockSchoolStats(lsoaName));
+    // Filter ethnicity data for LSOA
+    if (ethnicityData.length > 0) {
+      const lsoaEthnicity = ethnicityData.find(e => e.lsoaCode === lsoaCode);
+      if (lsoaEthnicity) {
+        setLsoaEthnicityStats({
+          boroughName: lsoaName,
+          year: 2023,
+          totalPopulation: lsoaEthnicity.allUsualResidents,
+          whiteTotal: lsoaEthnicity.whiteBritish + lsoaEthnicity.whiteIrish + lsoaEthnicity.whiteGypsyIrishTraveller + lsoaEthnicity.whiteRoma + lsoaEthnicity.whiteOther,
+          whitePercentage: ((lsoaEthnicity.whiteBritish + lsoaEthnicity.whiteIrish + lsoaEthnicity.whiteGypsyIrishTraveller + lsoaEthnicity.whiteRoma + lsoaEthnicity.whiteOther) / lsoaEthnicity.allUsualResidents) * 100,
+          bameTotal: lsoaEthnicity.allUsualResidents - (lsoaEthnicity.whiteBritish + lsoaEthnicity.whiteIrish + lsoaEthnicity.whiteGypsyIrishTraveller + lsoaEthnicity.whiteRoma + lsoaEthnicity.whiteOther),
+          bamePercentage: 100 - (((lsoaEthnicity.whiteBritish + lsoaEthnicity.whiteIrish + lsoaEthnicity.whiteGypsyIrishTraveller + lsoaEthnicity.whiteRoma + lsoaEthnicity.whiteOther) / lsoaEthnicity.allUsualResidents) * 100),
+          minorityGroups: [
+            { name: 'Asian', count: lsoaEthnicity.asianBangladeshi + lsoaEthnicity.asianChinese + lsoaEthnicity.asianIndian + lsoaEthnicity.asianPakistani + lsoaEthnicity.asianOther, percentage: ((lsoaEthnicity.asianBangladeshi + lsoaEthnicity.asianChinese + lsoaEthnicity.asianIndian + lsoaEthnicity.asianPakistani + lsoaEthnicity.asianOther) / lsoaEthnicity.allUsualResidents) * 100 },
+            { name: 'Black', count: lsoaEthnicity.blackAfrican + lsoaEthnicity.blackCaribbean + lsoaEthnicity.blackOther, percentage: ((lsoaEthnicity.blackAfrican + lsoaEthnicity.blackCaribbean + lsoaEthnicity.blackOther) / lsoaEthnicity.allUsualResidents) * 100 },
+            { name: 'Mixed', count: lsoaEthnicity.mixedWhiteAndAsian + lsoaEthnicity.mixedWhiteAndBlackAfrican + lsoaEthnicity.mixedWhiteAndBlackCaribbean + lsoaEthnicity.mixedOther, percentage: ((lsoaEthnicity.mixedWhiteAndAsian + lsoaEthnicity.mixedWhiteAndBlackAfrican + lsoaEthnicity.mixedWhiteAndBlackCaribbean + lsoaEthnicity.mixedOther) / lsoaEthnicity.allUsualResidents) * 100 },
+            { name: 'Other', count: lsoaEthnicity.otherArab + lsoaEthnicity.otherAnyOther, percentage: ((lsoaEthnicity.otherArab + lsoaEthnicity.otherAnyOther) / lsoaEthnicity.allUsualResidents) * 100 }
+          ]
+        });
+      } else {
+        setLsoaEthnicityStats(null);
+      }
+    }
+  };
+
+  // --- CLEAR LSOA SELECTION ---
+  const handleClearLSOA = () => {
+    updateDashboardFilter('selectedLSOA', '');
+    updateDashboardFilter('selectedLSOAName', '');
+    setMockLibraries([]);
+    setMockSchoolStats(null);
+    setLsoaEthnicityStats(null);
+  };
+
   // Define all dashboard elements for AI assistant
   const dashboardElements = [
     {
@@ -563,6 +614,41 @@ const Dashboard3: React.FC = () => {
       dataFields: ['country_of_birth', 'population_count', 'percentage']
     }
   ];
+
+  const GYM_COLOR_RANGE = ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#1E40AF", "#F59E42", "#F472B6", "#F87171"];
+
+  function useGymFacilities({ lsoa, borough, viewLevel }: { lsoa: string, borough: string, viewLevel: 'lsoa' | 'borough' }) {
+    const [data, setData] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+      setLoading(true);
+      let url = '';
+      if (viewLevel === 'lsoa' && lsoa) {
+        url = `/api/gym-facilities?lsoa=${encodeURIComponent(lsoa)}`;
+      } else if (viewLevel === 'borough' && borough) {
+        url = `/api/gym-facilities?borough=${encodeURIComponent(borough)}`;
+      }
+      if (!url) {
+        setData([]);
+        setLoading(false);
+        return;
+      }
+      fetch(url)
+        .then(res => res.json())
+        .then(setData)
+        .finally(() => setLoading(false));
+    }, [lsoa, borough, viewLevel]);
+
+    return { data, loading };
+  }
+
+  const [gymViewLevel, setGymViewLevel] = useState<'lsoa' | 'borough'>('lsoa');
+  const { data: gymFacilities, loading: gymLoading } = useGymFacilities({
+    lsoa: selectedLSOAName,
+    borough: selectedBorough,
+    viewLevel: gymViewLevel
+  });
 
   return (
     <DashboardPlayground
@@ -814,13 +900,12 @@ const Dashboard3: React.FC = () => {
               <LSOAMap
                 selectedBorough={selectedBorough}
                 selectedLSOA={selectedLSOA}
-                onLSOASelect={(lsoaCode, lsoaName) => {
-                  updateDashboardFilter('selectedLSOA', lsoaCode);
-                  updateDashboardFilter('selectedLSOAName', lsoaName);
-                  console.log('Selected LSOA:', lsoaName, lsoaCode);
-                }}
+                onLSOASelect={handleLSOASelect}
               />
             </div>
+            {isLSOASelected && (
+              <button onClick={handleClearLSOA} className="absolute bottom-4 right-50 left-50 z-1000 bg-purple-600 hover:bg-purple-700 text-white px-2 py-1 rounded text-xs">Clear Selection</button>
+            )}
           </LinkableCard>
 
           {/* Middle: Borough Map */}
@@ -874,45 +959,87 @@ const Dashboard3: React.FC = () => {
             </div>
           </LinkableCard>
 
-          {/* Bottom Left: Population Growth & Projections */}
-          <LinkableCard 
-            className="col-start-3 col-end-5 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative overflow-hidden"
-            styles={{}}
-            elementId="population-growth-projections"
-            elementName="Population Growth & Projections"
-            elementType="chart"
-            onAddToSidebar={handleAddToSidebar}
-          >
-            <div className="text-xs font-semibold text-white">
-              POPULATION GROWTH & PROJECTIONS
-            </div>
-            <div className="text-xs text-gray-400">
-              Historical and projected population data for {selectedBorough}
-            </div>
-            
-            {/* Vega-Lite Bar Chart */}
-            <div className="absolute bottom-0 left-4 right-4">
-              {isLoadingPopulation ? (
-                <div className="flex items-center justify-center h-full text-gray-400">
-                  Loading chart data...
+          {/* Bottom Left: Population Growth & Projections and Gyms in LSOA */}
+          {!isLSOASelected ? (
+            <LinkableCard 
+              className="col-start-3 col-end-5 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative overflow-hidden"
+              styles={{}}
+              elementId="population-growth-projections"
+              elementName="Population Growth & Projections"
+              elementType="chart"
+              onAddToSidebar={handleAddToSidebar}
+            >
+              <div className="text-xs font-semibold text-white">
+                POPULATION GROWTH & PROJECTIONS
+              </div>
+              <div className="text-xs text-gray-400">
+                Historical and projected population data for {selectedBorough}
+              </div>
+              
+              {/* Vega-Lite Bar Chart */}
+              <div className="absolute bottom-0 left-4 right-4">
+                {isLoadingPopulation ? (
+                  <div className="flex items-center justify-center h-full text-gray-400">
+                    Loading chart data...
+                  </div>
+                ) : populationTimelineData.length > 0 ? (
+                  <VegaLite
+                    spec={populationTimelineChartSpec(populationTimelineData)}
+                    actions={false}
+                    style={{
+                      width: '100%',
+                      height: '100%'
+                    }}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-gray-400">
+                    No data available
+                  </div>
+                )}
+              </div>
+            </LinkableCard>
+          ) : (
+            <LinkableCard 
+              className="col-start-3 col-end-5 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+              styles={{}}
+              elementId="lsoa-gyms"
+              elementName="Gyms in LSOA"
+              elementType="chart"
+              onAddToSidebar={handleAddToSidebar}
+            >
+              <div className="text-xs font-semibold text-white">SPORTS AND RECREATION FACILITIES</div>
+              <div className="text-xs text-gray-400">Counts of facilities in {gymViewLevel === 'lsoa' ? selectedLSOAName : selectedBorough}</div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-400">Select to filter:</span>
+                <button onClick={() => setGymViewLevel('lsoa')} className={`px-2 py-0.5 rounded text-xs ${gymViewLevel === 'lsoa' ? 'bg-purple-600 text-white hover:bg-purple-700 font-semibold' : 'bg-gray-600 text-gray-200 hover:bg-gray-700'}`}>LSOA</button>
+                <button onClick={() => setGymViewLevel('borough')} className={`px-2 py-0.5 rounded text-xs ${gymViewLevel === 'borough' ? 'bg-purple-600 text-white hover:bg-purple-700 font-semibold' : 'bg-gray-600 text-gray-200 hover:bg-gray-500'}`}>Borough</button>
+              </div>
+              { gymLoading ? (
+                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">Loading...</div>
+              ) : gymFacilities && gymFacilities.length > 0 ? (
+                <div className={`absolute bottom-2 left-3 flex items-center ${gymViewLevel == "lsoa" ? 'gap-1' : 'gap-4'} flex-wrap`}>
+                  <VegaLite spec={gymPieChartSpec(gymFacilities, GYM_COLOR_RANGE)} actions={false} />
+                  <div className="">
+                    {gymFacilities.slice(0, 10).map((f: { facility_type: string; count: number }, i: number) => (
+                      <div key={f.facility_type} className={`flex items-center gap-1 ${gymViewLevel == "lsoa" ? 'text-xs' : 'text-[9px]'} text-gray-300`}>
+                        <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: GYM_COLOR_RANGE[i % GYM_COLOR_RANGE.length] }}></span>
+                        <span>{f.facility_type}</span>
+                      </div>
+                    ))}
+                    {gymFacilities.length > 10 && (
+                      <div className={`text-xs ${gymViewLevel == "lsoa" ? 'text-gray-300' : 'text-[9px] text-gray-500'}`}>
+                        +{gymFacilities.length - 10} more...
+                      </div>
+                    )}
+                  </div>
                 </div>
-              ) : populationTimelineData.length > 0 ? (
-                <VegaLite
-                  spec={populationTimelineChartSpec(populationTimelineData)}
-                  actions={false}
-                  style={{
-                    width: '100%',
-                    height: '100%'
-                  }}
-                />
               ) : (
-                <div className="flex items-center justify-center h-full text-gray-400">
-                  No data available
+                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
+                  No such facilities exist in { selectedLSOAName }
                 </div>
               )}
-            </div>
-          </LinkableCard>
-
+            </LinkableCard>
+          )}
           {/* Top Far Right: Borough Crime Stats */}
           <LinkableCard 
             className="col-start-7 col-end-9 row-start-2 row-end-5 bg-zinc-800 rounded-lg p-4 border border-gray-600 flex flex-col"
@@ -1087,41 +1214,36 @@ const Dashboard3: React.FC = () => {
               SCHOOL EDUCATION FACILITIES
             </div>
             <div className="text-xs text-gray-400">
-              Types of schools in {selectedBorough}
+              Types of schools in {isLSOASelected ? selectedLSOAName : selectedBorough}
             </div>
             
             {/* School Type Summary */}
             <div className="flex justify-between text-[11px] text-gray-400 mb-2">
               <div>
-                Primary: {boroughSchoolStats?.primarySchools || 0}
+                Primary: {isLSOASelected ? mockSchoolStats?.primarySchools || 0 : boroughSchoolStats?.primarySchools || 0}
               </div>
               <div>
-                Secondary: {boroughSchoolStats?.secondarySchools || 0}
+                Secondary: {isLSOASelected ? mockSchoolStats?.secondarySchools || 0 : boroughSchoolStats?.secondarySchools || 0}
               </div>
               <div>
-                Total: {boroughSchoolStats?.totalSchools || 0}
+                Total: {isLSOASelected ? mockSchoolStats?.totalSchools || 0 : boroughSchoolStats?.totalSchools || 0}
               </div>
             </div>
             
             {/* Vega-Lite School Bar Chart */}
             <div className="absolute bottom-2 left-4 right-4">
-              {isLoadingSchool ? (
-                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
-                  Loading school data...
-                </div>
-              ) : boroughSchoolStats ? (
-                <VegaLite
-                  spec={schoolEducationFacilitiesSpec(boroughSchoolStats)}
-                  actions={false}
-                  style={{
-                    width: '100%',
-                    height: '100%'
-                  }}
-                />
+              {isLSOASelected ? (
+                mockSchoolStats ? (
+                  <VegaLite spec={schoolEducationFacilitiesSpec(mockSchoolStats)} actions={false} style={{ width: '100%', height: '100%' }} />
+                ) : (
+                  <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No school data available</div>
+                )
               ) : (
-                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
-                  No school data available
-                </div>
+                boroughSchoolStats ? (
+                  <VegaLite spec={schoolEducationFacilitiesSpec(boroughSchoolStats)} actions={false} style={{ width: '100%', height: '100%' }} />
+                ) : (
+                  <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No school data available</div>
+                )
               )}
             </div>
           </LinkableCard>
@@ -1190,33 +1312,31 @@ const Dashboard3: React.FC = () => {
               ETHNICITY MINORITY GROUPS
             </div>
             <div className="text-xs text-gray-400">
-              Ethnic minority breakdown for {selectedBorough} (2023)
+              Breakdown for {isLSOASelected ? selectedLSOAName : selectedBorough}
             </div>
             
             {/* BAME Statistics */}
             <div className="flex justify-between text-[11px] text-gray-400 mb-2">
               <div>
-                BAME Population: {boroughEthnicityStats ? formatEthnicityNumber(boroughEthnicityStats.bameTotal) : 'N/A'} ({boroughEthnicityStats ? formatEthnicityPercentage(boroughEthnicityStats.bamePercentage) : 'N/A'} of total)
+                BAME Population: {isLSOASelected ? (lsoaEthnicityStats ? formatEthnicityNumber(lsoaEthnicityStats.bameTotal) : 'N/A') : (boroughEthnicityStats ? formatEthnicityNumber(boroughEthnicityStats.bameTotal) : 'N/A')} ({isLSOASelected ? (lsoaEthnicityStats ? formatEthnicityPercentage(lsoaEthnicityStats.bamePercentage) : 'N/A') : (boroughEthnicityStats ? formatEthnicityPercentage(boroughEthnicityStats.bamePercentage) : 'N/A')} of total)
               </div>
-              <div>
-              </div>
+              <div></div>
             </div>
             
             {/* Vega-Lite Ethnicity Bar Chart */}
             <div className="absolute bottom-2 left-4 right-4">
-              {isLoadingEthnicity ? (
-                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
-                  Loading ethnicity data...
-                </div>
-              ) : boroughEthnicityStats && boroughEthnicityStats.minorityGroups.length > 0 ? (
-                <VegaLite
-                  spec={ethnicityMinorityGroupsBarChartSpec(boroughEthnicityStats)}
-                  actions={false}
-                />
+              {isLSOASelected ? (
+                lsoaEthnicityStats && lsoaEthnicityStats.minorityGroups.length > 0 ? (
+                  <VegaLite spec={ethnicityMinorityGroupsBarChartSpec(lsoaEthnicityStats)} actions={false} />
+                ) : (
+                  <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No ethnicity data available</div>
+                )
               ) : (
-                <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
-                  No ethnicity data available
-                </div>
+                boroughEthnicityStats && boroughEthnicityStats.minorityGroups.length > 0 ? (
+                  <VegaLite spec={ethnicityMinorityGroupsBarChartSpec(boroughEthnicityStats)} actions={false} />
+                ) : (
+                  <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No ethnicity data available</div>
+                )
               )}
             </div>
             
@@ -1225,80 +1345,94 @@ const Dashboard3: React.FC = () => {
             </div>
           </LinkableCard>
 
-          {/* Bottom Far Left: Country of Birth */}
-          <LinkableCard 
-            className="col-start-1 col-end-3 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
-            styles={{}}
-            elementId="country-of-birth"
-            elementName="Country of Birth"
-            elementType="chart"
-            onAddToSidebar={handleAddToSidebar}
-          >
-            <div className="text-xs font-semibold text-white">
-              COUNTRY OF BIRTH
-            </div>
-            <div className="text-xs text-gray-400 mb-1">
-              London population by place of birth
-            </div>
-            
-            {/* Year selector circles */}
-            <div className="flex justify-between items-center">
-              {birthYears.map((year) => (
-                <button
-                  key={year}
-                  onClick={() => updateDashboardFilter('selectedBirthYear', year)}
-                  className={`flex justify-center items-center p-1 text-[8px] transition-colors ${
-                    selectedBirthYear === year
-                      ? 'bg-purple-500 text-white font-bold hover:bg-purple-600'
-                      : 'bg-gray-600 text-gray-300 font-regular hover:bg-gray-500'
-                  }`}
-                >
-                  20{year.toString().slice(-2)}
-                </button>
-              ))}
-            </div>
-            
-            {/* Chart and Legend Container */}
-            <div className="absolute flex justify-between items-start h-full">
-              {/* Pie Chart */}
-              <div className="flex-1 flex items-center justify-center">
-                {isLoadingBirthData ? (
-                  <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
-                    Loading...
-                  </div>
-                ) : countryOfBirthStats ? (
-                  <VegaLite
-                    spec={countryOfBirthPieChartSpec(countryOfBirthStats, countryOfBirthComparison || undefined)}
-                    actions={false}
-                    style={{}}
-                  />
-                ) : (
-                  <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
-                    No data
-                  </div>
-                )}
+          {/* Bottom Far Left: Library Chart (LSOA) or Country of Birth (borough) */}
+          {!isLSOASelected ? (
+            <LinkableCard 
+              className="col-start-1 col-end-3 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+              styles={{}}
+              elementId="country-of-birth"
+              elementName="Country of Birth"
+              elementType="chart"
+              onAddToSidebar={handleAddToSidebar}
+            >
+              <div className="text-xs font-semibold text-white">
+                COUNTRY OF BIRTH
               </div>
-              
-              {/* Legend and Comparison - fixed at bottom */}
-              <div className="flex flex-col justify-center space-y-1 pt-4 h-32">
-                {/* Legend */}
-                {countryOfBirthStats?.regions.map((region, index) => {
-                  const colors = ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#1E40AF"];
-                  return (
-                    <div key={region.region} className="flex items-center gap-1">
-                      <div 
-                        className="w-2 h-2 rounded-sm" 
-                        style={{ backgroundColor: colors[index] }}
-                      ></div>
-                      <span className="text-[11px] text-gray-300">
-                        {region.region}: {region.percentage.toFixed(1)}%
-                      </span>
+              <div className="text-xs text-gray-400 mb-1">
+                London population by place of birth
+              </div>
+              {/* Year selector circles */}
+              <div className="flex justify-between items-center">
+                {birthYears.map((year) => (
+                  <button
+                    key={year}
+                    onClick={() => updateDashboardFilter('selectedBirthYear', year)}
+                    className={`flex justify-center items-center p-1 text-[8px] transition-colors ${
+                      selectedBirthYear === year
+                        ? 'bg-purple-500 text-white font-bold hover:bg-purple-600'
+                        : 'bg-gray-600 text-gray-300 font-regular hover:bg-gray-500'
+                    }`}
+                  >
+                    20{year.toString().slice(-2)}
+                  </button>
+                ))}
+              </div>
+              {/* Chart and Legend Container */}
+              <div className="absolute flex justify-between items-start h-full">
+                {/* Pie Chart */}
+                <div className="flex-1 flex items-center justify-center">
+                  {isLoadingBirthData ? (
+                    <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
+                      Loading...
                     </div>
-                  );
-                })}
+                  ) : countryOfBirthStats ? (
+                    <VegaLite
+                      spec={countryOfBirthPieChartSpec(countryOfBirthStats, countryOfBirthComparison || undefined)}
+                      actions={false}
+                      style={{}}
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
+                      No data
+                    </div>
+                  )}
+                </div>
+                {/* Legend and Comparison - fixed at bottom */}
+                <div className="flex flex-col justify-center space-y-1 pt-4 h-32">
+                  {/* Legend */}
+                  {countryOfBirthStats?.regions.map((region, index) => {
+                    const colors = ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#1E40AF"];
+                    return (
+                      <div key={region.region} className="flex items-center gap-1">
+                        <div 
+                          className="w-2 h-2 rounded-sm" 
+                          style={{ backgroundColor: colors[index] }}
+                        ></div>
+                        <span className="text-[11px] text-gray-300">
+                          {region.region}: {region.percentage.toFixed(1)}%
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          </LinkableCard>
+            </LinkableCard>
+          ) : (
+            <LinkableCard 
+              className="col-start-1 col-end-3 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+              styles={{}}
+              elementId="lsoa-libraries"
+              elementName="Libraries in LSOA"
+              elementType="chart"
+              onAddToSidebar={handleAddToSidebar}
+            >
+              <div className="text-xs font-semibold text-white">LIBRARY VISITS</div>
+              <div className="text-xs text-gray-400 mb-1">Visits per 1,000 people | {selectedLSOAName}</div>
+              <div className="absolute bottom-0 left-4 right-4">
+                <VegaLite spec={libraryLineChartSpec(mockLibraries)} actions={false} />
+              </div>
+            </LinkableCard>
+          )}
         </div>
       </div>
     </DashboardPlayground>

@@ -1,0 +1,40 @@
+{
+  "Brent": [
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 32
+    },
+    {
+      "facility_type": "Shooting Range",
+      "count": 35
+    },
+    {
+      "facility_type": "Boutique Fitness",
+      "count": 27
+    },
+    {
+      "facility_type": "Badminton Court",
+      "count": 18
+    },
+    {
+      "facility_type": "Cricket Nets",
+      "count": 28
+    },
+    {
+      "facility_type": "Skate Park",
+      "count": 40
+    },
+    {
+      "facility_type": "Sailing Club",
+      "count": 25
+    },
+    {
+      "facility_type": "Budget Gym",
+      "count": 40
+    },
+    {
+      "facility_type": "Martial Arts Dojo",
+      "count": 31
+    }
+  ]
+}
