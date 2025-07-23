@@ -70,7 +70,7 @@ export async function GET(req: NextRequest) {
     if (allBoroughData[borough]) {
       data = allBoroughData[borough];
     } else {
-      data = generateMockBoroughGymsData(getRandomInt(8, 16));
+      data = generateMockBoroughGymsData(getRandomInt(8, 32));
       allBoroughData[borough] = data;
       fs.writeFileSync(BOROUGH_GYM_FILE, JSON.stringify(allBoroughData, null, 2), 'utf-8');
     }
