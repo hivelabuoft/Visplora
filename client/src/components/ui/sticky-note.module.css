@@ -1,0 +1,74 @@
+.stickyNoteButton {
+  background: none !important; /* Use !important to override inline styles */
+  border: none !important;
+  cursor: pointer !important;
+  padding: 4px !important; /* Increase padding for a larger hit area */
+  border-radius: 4px !important;
+  font-size: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background-color 0.2s, transform 0.1s, color 0.2s !important;
+}
+
+.stickyNoteButton:hover {
+  background-color: rgba(0, 0, 0, 0.15) !important; /* More visible background */
+  transform: scale(1.15) !important; /* Slightly larger scale effect */
+}
+
+.darkModeButton {
+  color: #9ca3af !important;
+}
+
+.darkModeButton:hover {
+  background-color: rgba(255, 255, 255, 0.25) !important; /* More visible for dark mode */
+  color: #ffffff !important; /* Brighter text on hover */
+}
+
+.lightModeButton {
+  color: #6b7280 !important;
+}
+
+.lightModeButton:hover {
+  color: #000000 !important; /* Darker text on hover */
+}
+
+.moveButton {
+  cursor: grab !important;
+}
+
+.moveButton:hover {
+  background-color: rgba(59, 130, 246, 0.2) !important; /* Light blue for move */
+  color: #3b82f6 !important;
+}
+
+.deleteButton:hover {
+  background-color: rgba(239, 68, 68, 0.2) !important; /* Light red background on hover */
+  color: rgb(220, 38, 38) !important;
+}
+
+.darkModeDeleteButton:hover {
+  background-color: rgba(239, 68, 68, 0.3) !important; /* Slightly brighter for dark mode */
+  color: rgb(248, 113, 113) !important;
+}
+
+/* Content area hover effect */
+.noteContent {
+  flex: 1;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1.3;
+  word-wrap: break-word;
+  overflow: hidden;
+  transition: background-color 0.2s;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.noteContent:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.darkModeContent:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

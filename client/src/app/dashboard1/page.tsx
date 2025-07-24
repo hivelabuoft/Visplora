@@ -8,6 +8,7 @@ import {
   CardHeader, 
   CardTitle 
 } from '@/components/ui/card';
+import { LinkableCard } from '@/components/ui/card-linkable';
 import { 
   Tabs, 
   TabsContent, 
@@ -21,6 +22,7 @@ import {
   SelectTrigger, 
   SelectValue 
 } from '@/components/ui/select';
+import DashboardPlayground from '../components/DashboardPlayground';
 
 // Sample data - in a real application, you would fetch this from an API
 const sampleData = {
@@ -223,6 +225,8 @@ const pieChartSpec = {
 
 export default function Dashboard1() {
   const [activeRegion, setActiveRegion] = useState<string>('all');
+  const [dashboardHeight, setDashboardHeight] = useState<number>(0);
+  const dashboardContentRef = React.useRef<HTMLDivElement>(null);
   
   // Filter data based on selected region
   const filteredData = {
@@ -236,11 +240,17 @@ export default function Dashboard1() {
     totalValue: filteredData.values.reduce((sum, d) => sum + d.value, 0),
     averageValue: Math.round(filteredData.values.reduce((sum, d) => sum + d.value, 0) / filteredData.values.length),
     maxValue: Math.max(...filteredData.values.map(d => d.value)),
-    categories: new Set(filteredData.values.map(d => d.category)).size
-  };
+    categories: new Set(filteredData.values.map(d => d.category)).size  };
+  // Measure dashboard height when content changes
+  React.useEffect(() => {
+    if (dashboardContentRef.current) {
+      const height = dashboardContentRef.current.scrollHeight;
+      setDashboardHeight(height);
+    }
+  }, [activeRegion]);
 
-  return (
-    <div className="p-6 space-y-6 bg-[#f8f9fa]">
+  const dashboardContent = (
+    <div ref={dashboardContentRef} className="p-6 space-y-6 bg-[#f8f9fa]">
       <div className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold">Performance Analytics Dashboard</h1>
         <p className="text-gray-600 max-w-3xl">
@@ -264,73 +274,82 @@ export default function Dashboard1() {
             </SelectContent>
           </Select>
         </div>
-      </div>
-
-      {/* KPI summary cards */}
+      </div>      {/* KPI summary cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Total Value</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{kpiData.totalValue.toLocaleString()}</div>
-            <p className="text-xs text-gray-500 mt-1">Across all categories</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Average Value</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{kpiData.averageValue.toLocaleString()}</div>
-            <p className="text-xs text-gray-500 mt-1">Per data point</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Maximum Value</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{kpiData.maxValue.toLocaleString()}</div>
-            <p className="text-xs text-gray-500 mt-1">Highest recorded value</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Categories</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{kpiData.categories}</div>
-            <p className="text-xs text-gray-500 mt-1">Distinct categories</p>
-          </CardContent>
-        </Card>
+        <LinkableCard elementId="kpi-total-value">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-500">Total Value</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{kpiData.totalValue.toLocaleString()}</div>
+              <p className="text-xs text-gray-500 mt-1">Across all categories</p>
+            </CardContent>
+          </Card>
+        </LinkableCard>
+        <LinkableCard elementId="kpi-average-value">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-500">Average Value</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{kpiData.averageValue.toLocaleString()}</div>
+              <p className="text-xs text-gray-500 mt-1">Per data point</p>
+            </CardContent>
+          </Card>
+        </LinkableCard>
+        <LinkableCard elementId="kpi-max-value">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-500">Maximum Value</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{kpiData.maxValue.toLocaleString()}</div>
+              <p className="text-xs text-gray-500 mt-1">Highest recorded value</p>
+            </CardContent>
+          </Card>
+        </LinkableCard>
+        <LinkableCard elementId="kpi-categories">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-500">Categories</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{kpiData.categories}</div>
+              <p className="text-xs text-gray-500 mt-1">Distinct categories</p>
+            </CardContent>
+          </Card>
+        </LinkableCard>
       </div>
-      
-      {/* Main visualization area */}
+        {/* Main visualization area */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <Card className="col-span-1">
-          <CardHeader>
-            <CardTitle>Value by Category</CardTitle>
-            <p className="text-sm text-gray-500">
-              Distribution of values across different categories
-            </p>
-          </CardHeader>
-          <CardContent>
-            <VegaLite spec={barChartSpec} data={filteredData} />
-          </CardContent>
-        </Card>
+        <LinkableCard elementId="chart-bar-category">
+          <Card className="col-span-1">
+            <CardHeader>
+              <CardTitle>Value by Category</CardTitle>
+              <p className="text-sm text-gray-500">
+                Distribution of values across different categories
+              </p>
+            </CardHeader>
+            <CardContent>
+              <VegaLite spec={barChartSpec} data={filteredData} />
+            </CardContent>
+          </Card>
+        </LinkableCard>
         
-        <Card className="col-span-1">
-          <CardHeader>
-            <CardTitle>Regional Distribution</CardTitle>
-            <p className="text-sm text-gray-500">
-              Value distribution by region
-            </p>
-          </CardHeader>
-          <CardContent>
-            <VegaLite spec={pieChartSpec} data={filteredData} />
-          </CardContent>
-        </Card>
+        <LinkableCard elementId="chart-pie-regional">
+          <Card className="col-span-1">
+            <CardHeader>
+              <CardTitle>Regional Distribution</CardTitle>
+              <p className="text-sm text-gray-500">
+                Value distribution by region
+              </p>
+            </CardHeader>
+            <CardContent>
+              <VegaLite spec={pieChartSpec} data={filteredData} />
+            </CardContent>
+          </Card>
+        </LinkableCard>
       </div>
       
       {/* Additional visualizations */}
@@ -338,32 +357,35 @@ export default function Dashboard1() {
         <TabsList>
           <TabsTrigger value="trend">Historical Trend</TabsTrigger>
           <TabsTrigger value="heatmap">Category Heatmap</TabsTrigger>
-        </TabsList>
-        <TabsContent value="trend">
-          <Card>
-            <CardHeader>
-              <CardTitle>Historical Performance</CardTitle>
-              <p className="text-sm text-gray-500">
-                Trends and forecasts over time
-              </p>
-            </CardHeader>
-            <CardContent>
-              <VegaLite spec={lineChartSpec} data={timeSeriesData} />
-            </CardContent>
-          </Card>
+        </TabsList>        <TabsContent value="trend">
+          <LinkableCard elementId="chart-line-trend">
+            <Card>
+              <CardHeader>
+                <CardTitle>Historical Performance</CardTitle>
+                <p className="text-sm text-gray-500">
+                  Trends and forecasts over time
+                </p>
+              </CardHeader>
+              <CardContent>
+                <VegaLite spec={lineChartSpec} data={timeSeriesData} />
+              </CardContent>
+            </Card>
+          </LinkableCard>
         </TabsContent>
         <TabsContent value="heatmap">
-          <Card>
-            <CardHeader>
-              <CardTitle>Category-Region Heat Map</CardTitle>
-              <p className="text-sm text-gray-500">
-                Value intensity across categories and regions
-              </p>
-            </CardHeader>
-            <CardContent>
-              <VegaLite spec={heatmapSpec} data={sampleData} />
-            </CardContent>
-          </Card>
+          <LinkableCard elementId="chart-heatmap-category">
+            <Card>
+              <CardHeader>
+                <CardTitle>Category-Region Heat Map</CardTitle>
+                <p className="text-sm text-gray-500">
+                  Value intensity across categories and regions
+                </p>
+              </CardHeader>
+              <CardContent>
+                <VegaLite spec={heatmapSpec} data={sampleData} />
+              </CardContent>
+            </Card>
+          </LinkableCard>
         </TabsContent>
       </Tabs>
 
@@ -380,5 +402,16 @@ export default function Dashboard1() {
         </p>
       </div>
     </div>
+  );  return (    
+  <DashboardPlayground
+      isActive={true}
+      dashboardTitle="Analytics Dashboard"
+      dashboardType="analytics"
+      onAddToCanvas={() => {
+        console.log('Dashboard added to canvas from playground');
+      }}
+    >
+      {dashboardContent}
+    </DashboardPlayground>
   );
 }
