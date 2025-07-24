@@ -665,80 +665,30 @@ const Dashboard3: React.FC = () => {
         baseYears: birthYears
       }}
     >
-      <div className="london-dashboard p-6 rounded-lg text-white" style={{
+      <div className="london-dashboard p-6 rounded-lg text-[#1A3C4A]" style={{
         width: '100%',
-        backgroundColor: '#0a0a0a',
+        backgroundColor: '#E3F2FA',
         fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
       }}>
         
         {/* Header */}
-        <div className='flex items-center justify-between mb-4' style={{ borderBottom: '1px solid #333' }}>
+        <div className='flex items-center justify-between mb-4' style={{ borderBottom: '1px solid #888' }}>
           <div>
-            <h1 style={{
-              fontSize: '32px',
-              fontWeight: '300',
-              letterSpacing: '0.1em',
-              margin: 0,
-              color: '#fff'
-            }}>
-              LONDON IN <span style={{ 
-                background: 'linear-gradient(45deg, #8B5CF6, #A855F7)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                fontWeight: '600'
-              }}>NUMBERS
-              </span>
+            <h1 className="relative text-[32px] font-light tracking-widest mb-2 p-0 text-[#2B7A9B]">
+              LONDON IN <span className="bg-[#2B7A9B] font-semibold bg-clip-text text-transparent">NUMBERS</span>
             </h1>
-            <p style={{
-              fontSize: '14px',
-              color: '#888',
-              margin: '5px 0 0 0',
-              fontWeight: '300'
-            }}>
+            <p className="absolute top-17 left-8 text-[14px] text-[#4A6A7B] font-light">
               Data Driven Insights for the Capital City - One Borough at a Time
             </p>
           </div>
-          
-          <div style={{
-            display: 'flex',
-            gap: '10px',
-            alignItems: 'center'
-          }}>
-            <div style={{
-              fontSize: '12px',
-              color: '#666',
-              textAlign: 'right'
-            }}>
+          <div className="flex gap-4 items-center">
+            <div className="text-[12px] text-[#4A6A7B] text-right">
               Charts based on data from the<br />
               <strong>2023</strong> census, where applicable
             </div>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              backgroundColor: '#333',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>💬</div>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              backgroundColor: '#333',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>📄</div>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              backgroundColor: '#333',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>❓</div>
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">💬</div>
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">📄</div>
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">❓</div>
           </div>
         </div>
 
@@ -748,7 +698,7 @@ const Dashboard3: React.FC = () => {
           <div className="col-span-8 row-span-1 grid grid-cols-6 gap-4">
             {/* Borough Details */}
             <LinkableCard 
-              className='text-center p-2 col-span-1 row-span-1 bg-zinc-800 border border-gray-600'
+              className='text-center p-2 col-span-1 row-span-1 bg-white border border-[#BFD9EA] text-[#1A3C4A]'
               styles={{}}
               elementId="borough-details"
               elementName="Borough Details"
@@ -756,7 +706,7 @@ const Dashboard3: React.FC = () => {
               onAddToSidebar={handleAddToSidebar}
             >
               <div className='flex items-center justify-center gap-2 h-full'>
-                <div className='text-md font-semibold text-white'>
+                <div className='text-md font-semibold text-[#2B7A9B]'>
                   {selectedBorough}
                 </div>
                 <div className='w-[50px] h-[50px]'>
@@ -770,23 +720,23 @@ const Dashboard3: React.FC = () => {
 
             {/* Total Population */}
             <LinkableCard 
-              className="col-span-1 row-span-1 bg-zinc-800 rounded-lg p-4 flex flex-col items-center justify-center border border-gray-600"
+              className="col-span-1 row-span-1 bg-white rounded-lg p-4 flex flex-col items-center justify-center border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
               elementId="total-population"
               elementName="Total Population"
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-lg font-bold text-white">
+              <div className="text-lg font-bold text-[#2B7A9B]">
                 {isLoadingPopulation ? 'Loading...' : 
                  currentMetrics ? formatNumber(currentMetrics.population2023) : 'N/A'}
               </div>
-              <div className="text-xs text-gray-400">Borough Total Population</div>
+              <div className="text-xs text-[#4A6A7B]">Borough Total Population</div>
             </LinkableCard>
 
             {/* Population Change */}
             <LinkableCard 
-              className="col-span-1 row-span-1 bg-zinc-800 rounded-lg p-4 flex flex-col items-center justify-center border border-gray-600"
+              className="col-span-1 row-span-1 bg-white rounded-lg p-4 flex flex-col items-center justify-center border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
               elementId="population-change"
               elementName="Population Change"
@@ -795,7 +745,7 @@ const Dashboard3: React.FC = () => {
             >
               <div className="flex items-center gap-1">
                 {isLoadingPopulation ? (
-                  <span className="text-lg font-semibold text-white">Loading...</span>
+                  <span className="text-lg font-semibold text-[#2B7A9B]">Loading...</span>
                 ) : currentMetrics ? (
                   <>
                     <span className={`text-lg ${currentMetrics.populationChangeFromPrevYearPercent >= 0 ? 'text-green-500' : 'text-red-500'}`}>
@@ -806,61 +756,61 @@ const Dashboard3: React.FC = () => {
                     </span>
                   </>
                 ) : (
-                  <span className="text-lg font-semibold text-white">N/A</span>
+                  <span className="text-lg font-semibold text-[#2B7A9B]">N/A</span>
                 )}
               </div>
-              <div className="text-center text-xs text-gray-400">Population Difference from 2022</div>
+              <div className="text-center text-xs text-[#4A6A7B]">Population Difference from 2022</div>
             </LinkableCard>
 
             {/* Population Density */}
             <LinkableCard 
-              className="col-span-1 row-span-1 bg-zinc-800 rounded-lg p-4 flex flex-col items-center justify-center border border-gray-600"
+              className="col-span-1 row-span-1 bg-white rounded-lg p-4 flex flex-col items-center justify-center border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
               elementId="population-density"
               elementName="Population Density"
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-lg font-bold text-white">
+              <div className="text-lg font-bold text-[#2B7A9B]">
                 {isLoadingPopulation ? 'Loading...' : 
                  currentMetrics ? formatDensity(currentMetrics.populationDensityPer10000) : 'N/A'}
               </div>
-              <div className="text-center text-xs text-gray-400">Population Density <br />(persons per 10,000m²)</div>
+              <div className="text-center text-xs text-[#4A6A7B]">Population Density <br />(persons per 10,000m²)</div>
             </LinkableCard>
 
             {/* Mean House Price */}
             <LinkableCard 
-              className="col-span-1 row-span-1 bg-zinc-800 rounded-lg p-4 flex flex-col items-center justify-center border border-gray-600"
+              className="col-span-1 row-span-1 bg-white rounded-lg p-4 flex flex-col items-center justify-center border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
               elementId="mean-house-price"
               elementName="Mean House Price"
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-lg font-bold text-white">{formatPrice(housePriceTimelineData[housePriceTimelineData.length - 1]?.mean || 0)}</div>
-              <div className="text-xs text-gray-400">Mean House Price</div>
+              <div className="text-lg font-bold text-[#2B7A9B]">{formatPrice(housePriceTimelineData[housePriceTimelineData.length - 1]?.mean || 0)}</div>
+              <div className="text-xs text-[#4A6A7B]">Mean House Price</div>
             </LinkableCard>
 
             {/* Mean Household Income */}
             <LinkableCard 
-              className="col-span-1 row-span-1 bg-zinc-800 rounded-lg p-4 flex flex-col items-center justify-center border border-gray-600"
+              className="col-span-1 row-span-1 bg-white rounded-lg p-4 flex flex-col items-center justify-center border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
               elementId="mean-household-income"
               elementName="Mean Household Income"
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-lg font-bold text-white">
+              <div className="text-lg font-bold text-[#2B7A9B]">
                 {formatIncome(getCurrentMeanIncome(selectedBorough))}
               </div>
-              <div className="text-xs text-gray-400">Mean Household Income</div>
+              <div className="text-xs text-[#4A6A7B]">Mean Household Income</div>
             </LinkableCard>
           </div>
 
           {/* Row 2: Large Map (4x4) + Right Side Charts (2x2 each) */}
           {/* LSOA Level Borough Map */}
           <LinkableCard 
-            className="col-start-1 col-end-4 row-start-2 row-end-5 bg-zinc-800 rounded-lg p-5 border border-gray-600 relative"
+            className="col-start-1 col-end-4 row-start-2 row-end-5 bg-white rounded-lg p-5 border border-[#BFD9EA] relative text-[#1A3C4A]"
             styles={{}}
             elementId="lsoa-map"
             elementName="LSOA Level Borough Map"
@@ -868,7 +818,7 @@ const Dashboard3: React.FC = () => {
             onAddToSidebar={handleAddToSidebar}
           >
             <div className="absolute top-4 left-5 right-5 flex flex-col justify-between">
-              <div className="text-sm font-semibold text-white">
+              <div className="text-sm font-semibold" style={{color: '#2B7A9B'}}>
                 LSOA LEVEL BOROUGH MAP | {selectedLSOAName ? selectedLSOAName : selectedBorough}
               </div>
               <div className="flex justify-between text-xs text-gray-400">
@@ -886,7 +836,7 @@ const Dashboard3: React.FC = () => {
                       <span
                         key={i}
                         className="inline-block w-2 h-2 rounded-full"
-                        style={{ background: color, border: '1px solid #222' }}
+                        style={{ background: color }}
                       />
                     );
                   })}
@@ -910,14 +860,14 @@ const Dashboard3: React.FC = () => {
 
           {/* Middle: Borough Map */}
           <LinkableCard 
-            className="col-start-4 col-end-7 row-start-2 row-end-5 bg-zinc-800 rounded-lg p-5 border border-gray-600 relative"
+            className="col-start-4 col-end-7 row-start-2 row-end-5 bg-white rounded-lg p-5 border border-[#BFD9EA] relative text-[#1A3C4A]"
             styles={{}}
             elementId="borough-map"
             elementName="Borough Map"
             elementType="map"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="absolute top-4 left-5 text-sm font-semibold text-white">
+            <div className="absolute top-4 left-5 text-sm font-semibold" style={{color: '#2B7A9B'}}>
               LONDON BOROUGH MAP
             </div>
             <div className="absolute top-4 right-5 text-xs text-gray-400">
@@ -930,7 +880,7 @@ const Dashboard3: React.FC = () => {
                 spec={boroughMapSpec} 
                 actions={false}
                 signalListeners={{
-                  borough_click: (name: string, value: any) => {                    
+                  select: (name: string, value: any) => {
                     // Extract the borough ID from the _vgsid_ InternSet
                     if (value && value._vgsid_) {
                       const vgsidArray = Array.from(value._vgsid_);
@@ -950,7 +900,7 @@ const Dashboard3: React.FC = () => {
             {/* Borough Filter */}
             <div className="absolute bottom-4 left-4 text-gray-400">
               <div className="text-xs text-gray-400">Total Population</div>
-              <div className="text-xl font-bold text-purple-500">
+              <div className="text-xl font-bold text-[#2B7A9B]">
                 {isLoadingPopulation ? 'Loading...' : 
                  totalLondonPopulation > 0 ? 
                    (totalLondonPopulation / 1000000).toFixed(2) + 'M' : 
@@ -962,14 +912,14 @@ const Dashboard3: React.FC = () => {
           {/* Bottom Left: Population Growth & Projections and Gyms in LSOA */}
           {!isLSOASelected ? (
             <LinkableCard 
-              className="col-start-3 col-end-5 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative overflow-hidden"
+              className="col-start-3 col-end-5 row-start-7 row-end-9 bg-white rounded-lg p-4 border border-[#BFD9EA] relative overflow-hidden text-[#1A3C4A]"
               styles={{}}
               elementId="population-growth-projections"
               elementName="Population Growth & Projections"
               elementType="chart"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-xs font-semibold text-white">
+              <div className="text-xs font-semibold" style={{color: '#2B7A9B'}}>
                 POPULATION GROWTH & PROJECTIONS
               </div>
               <div className="text-xs text-gray-400">
@@ -1000,14 +950,14 @@ const Dashboard3: React.FC = () => {
             </LinkableCard>
           ) : (
             <LinkableCard 
-              className="col-start-3 col-end-5 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+              className="col-start-3 col-end-5 row-start-7 row-end-9 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
               elementId="lsoa-gyms"
               elementName="Gyms in LSOA"
               elementType="chart"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-xs font-semibold text-white">SPORTS AND RECREATION FACILITIES</div>
+              <div className="text-xs font-semibold" style={{color: '#2B7A9B'}}>SPORTS AND RECREATION FACILITIES</div>
               <div className="text-xs text-gray-400">Counts of facilities in {gymViewLevel === 'lsoa' ? selectedLSOAName : selectedBorough}</div>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-gray-400">Select to filter:</span>
@@ -1042,14 +992,14 @@ const Dashboard3: React.FC = () => {
           )}
           {/* Top Far Right: Borough Crime Stats */}
           <LinkableCard 
-            className="col-start-7 col-end-9 row-start-2 row-end-5 bg-zinc-800 rounded-lg p-4 border border-gray-600 flex flex-col"
+            className="col-start-7 col-end-9 row-start-2 row-end-5 bg-white rounded-lg p-4 border border-[#BFD9EA] flex flex-col text-[#1A3C4A]"
             styles={{ position: 'relative', zIndex: 1 }}
             elementId="borough-crime-stats"
             elementName="Borough Crime Stats"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-sm font-semibold text-white">
+            <div className="text-sm font-semibold" style={{color: '#2B7A9B'}}>
               BOROUGHS WITH MOST CRIME
             </div>
             
@@ -1070,7 +1020,7 @@ const Dashboard3: React.FC = () => {
                     className={`w-[17px] h-[17px] rounded-full cursor-pointer transition-all duration-200 mb-1 ${
                       isSelected 
                         ? 'bg-purple-600 text-white font-bold text-[11px]' 
-                        : 'bg-gray-600 text-gray-300 font-medium text-[9px] hover:bg-gray-500'
+                        : 'bg-gray-200 text-gray-700 font-medium text-[9px] hover:bg-gray-300'
                     }`}
                     title={category}
                   >
@@ -1101,14 +1051,14 @@ const Dashboard3: React.FC = () => {
 
           {/* Bottom Middle: Mean Income Timeline */}
           <LinkableCard 
-            className="col-start-4 col-end-7 row-start-5 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            className="col-start-4 col-end-7 row-start-5 row-end-7 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
             styles={{}}
             elementId="mean-income-timeline"
             elementName="Mean Income Timeline"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-sm font-semibold text-white">
+            <div className="text-sm font-semibold" style={{color: '#2B7A9B'}}>
               INCOME TRENDS OVER TIME
             </div>
             <div className="text-xs text-gray-400 mb-1">
@@ -1119,11 +1069,11 @@ const Dashboard3: React.FC = () => {
             <div className="flex justify-center items-center gap-4 text-[10px] text-gray-300 mb-2">
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-purple-500"></div>
-                <span>Mean Income</span>
+                <span className='text-gray-500'>Mean Income</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-blue-500"></div>
-                <span>Median Income</span>
+                <span className='text-gray-500'>Median Income</span>
               </div>
             </div>
             
@@ -1144,14 +1094,14 @@ const Dashboard3: React.FC = () => {
           
           {/* Bottom Right: Crime Categories for Selected Borough */}
           <LinkableCard 
-            className="col-start-7 col-end-9 row-start-5 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            className="col-start-7 col-end-9 row-start-5 row-end-7 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
             styles={{}}
             elementId="borough-crime-categories"
             elementName="Borough Crime Categories"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-sm font-semibold text-white">
+            <div className="text-sm font-semibold" style={{color: '#2B7A9B'}}>
               CRIME CATEGORIES
             </div>
             <div className="flex flex-col justify-between text-[11px] text-gray-400">
@@ -1203,14 +1153,14 @@ const Dashboard3: React.FC = () => {
           {/* Row 3: Bottom Charts (2x2 each) */}
           {/* School Education Facilities */}
           <LinkableCard 
-            className="col-start-7 col-end-9 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600 relative"
+            className="col-start-7 col-end-9 row-start-7 row-end-9 bg-white rounded-lg p-4 border border-[#BFD9EA] relative text-[#1A3C4A]"
             styles={{}}
             elementId="school-education-facilities"
             elementName="School Education Facilities"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-xs font-semibold text-white">
+            <div className="text-xs font-semibold" style={{color: '#2B7A9B'}}>
               SCHOOL EDUCATION FACILITIES
             </div>
             <div className="text-xs text-gray-400">
@@ -1250,14 +1200,14 @@ const Dashboard3: React.FC = () => {
 
           {/* House Price Timeline Chart */}
           <LinkableCard 
-            className="col-start-1 col-end-4 row-start-5 row-end-7 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            className="col-start-1 col-end-4 row-start-5 row-end-7 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
             styles={{}}
             elementId="house-price-timeline"
             elementName="House Price Timeline"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-sm font-semibold text-white">
+            <div className="text-sm font-semibold" style={{color: '#2B7A9B'}}>
               HOUSE PRICE TRENDS
             </div>
             <div className="text-xs text-gray-400 mb-1">
@@ -1268,15 +1218,15 @@ const Dashboard3: React.FC = () => {
             <div className="flex justify-center items-center gap-4 text-[10px] text-gray-300">
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-purple-500"></div>
-                <span>Mean Price</span>
+                <span className='text-gray-500'>Mean Price</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-blue-500"></div>
-                <span>Median Price</span>
+                <span className='text-gray-500'>Median Price</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-cyan-500"></div>
-                <span>Sales Volume</span>
+                <span className='text-gray-500'>Sales Volume</span>
               </div>
             </div>
             
@@ -1301,14 +1251,14 @@ const Dashboard3: React.FC = () => {
 
           {/* Ethnicity Minority Groups */}
           <LinkableCard 
-            className="col-start-5 col-end-7 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+            className="col-start-5 col-end-7 row-start-7 row-end-9 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
             styles={{}}
             elementId="ethnicity-minority-groups"
             elementName="Ethnicity Minority Groups"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
           >
-            <div className="text-xs font-semibold text-white">
+            <div className="text-xs font-semibold" style={{color: '#2B7A9B'}}>
               ETHNICITY MINORITY GROUPS
             </div>
             <div className="text-xs text-gray-400">
@@ -1348,14 +1298,14 @@ const Dashboard3: React.FC = () => {
           {/* Bottom Far Left: Library Chart (LSOA) or Country of Birth (borough) */}
           {!isLSOASelected ? (
             <LinkableCard 
-              className="col-start-1 col-end-3 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+              className="col-start-1 col-end-3 row-start-7 row-end-9 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
               elementId="country-of-birth"
               elementName="Country of Birth"
               elementType="chart"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-xs font-semibold text-white">
+              <div className="text-xs font-semibold" style={{color: '#2B7A9B'}}>
                 COUNTRY OF BIRTH
               </div>
               <div className="text-xs text-gray-400 mb-1">
@@ -1370,7 +1320,7 @@ const Dashboard3: React.FC = () => {
                     className={`flex justify-center items-center p-1 text-[8px] transition-colors ${
                       selectedBirthYear === year
                         ? 'bg-purple-500 text-white font-bold hover:bg-purple-600'
-                        : 'bg-gray-600 text-gray-300 font-regular hover:bg-gray-500'
+                        : 'bg-gray-200 text-gray-600 font-regular hover:bg-gray-300'
                     }`}
                   >
                     20{year.toString().slice(-2)}
@@ -1408,7 +1358,7 @@ const Dashboard3: React.FC = () => {
                           className="w-2 h-2 rounded-sm" 
                           style={{ backgroundColor: colors[index] }}
                         ></div>
-                        <span className="text-[11px] text-gray-300">
+                        <span className="text-[11px] text-gray-500">
                           {region.region}: {region.percentage.toFixed(1)}%
                         </span>
                       </div>
@@ -1419,14 +1369,14 @@ const Dashboard3: React.FC = () => {
             </LinkableCard>
           ) : (
             <LinkableCard 
-              className="col-start-1 col-end-3 row-start-7 row-end-9 bg-zinc-800 rounded-lg p-4 border border-gray-600"
+              className="col-start-1 col-end-3 row-start-7 row-end-9 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
               elementId="lsoa-libraries"
               elementName="Libraries in LSOA"
               elementType="chart"
               onAddToSidebar={handleAddToSidebar}
             >
-              <div className="text-xs font-semibold text-white">LIBRARY VISITS</div>
+              <div className="text-xs font-semibold" style={{color: '#2B7A9B'}}>LIBRARY VISITS</div>
               <div className="text-xs text-gray-400 mb-1">Visits per 1,000 people | {selectedLSOAName}</div>
               <div className="absolute bottom-0 left-4 right-4">
                 <VegaLite spec={libraryLineChartSpec(mockLibraries)} actions={false} />

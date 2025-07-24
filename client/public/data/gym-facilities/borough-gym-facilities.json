@@ -344,5 +344,539 @@
       "facility_type": "Archery Range",
       "count": 34
     }
+  ],
+  "Lewisham": [
+    {
+      "facility_type": "Skate Park",
+      "count": 25
+    },
+    {
+      "facility_type": "Football Pitch",
+      "count": 20
+    },
+    {
+      "facility_type": "Rugby Pitch",
+      "count": 22
+    },
+    {
+      "facility_type": "Playground",
+      "count": 25
+    },
+    {
+      "facility_type": "Archery Range",
+      "count": 23
+    },
+    {
+      "facility_type": "Tennis Court",
+      "count": 35
+    },
+    {
+      "facility_type": "Boxing Gym",
+      "count": 20
+    },
+    {
+      "facility_type": "Sports Hall",
+      "count": 17
+    },
+    {
+      "facility_type": "Squash Court",
+      "count": 15
+    },
+    {
+      "facility_type": "Volleyball Court",
+      "count": 32
+    },
+    {
+      "facility_type": "Chain Gym",
+      "count": 27
+    },
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 39
+    },
+    {
+      "facility_type": "Independent Gym",
+      "count": 38
+    },
+    {
+      "facility_type": "Recreation Ground",
+      "count": 27
+    },
+    {
+      "facility_type": "Wrestling Gym",
+      "count": 33
+    },
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 30
+    },
+    {
+      "facility_type": "Rowing Club",
+      "count": 35
+    },
+    {
+      "facility_type": "Cricket Nets",
+      "count": 35
+    }
+  ],
+  "Barnet": [
+    {
+      "facility_type": "Golf Course",
+      "count": 22
+    },
+    {
+      "facility_type": "Budget Gym",
+      "count": 26
+    },
+    {
+      "facility_type": "Chain Gym",
+      "count": 28
+    },
+    {
+      "facility_type": "Cricket Nets",
+      "count": 35
+    },
+    {
+      "facility_type": "Athletics Track",
+      "count": 26
+    },
+    {
+      "facility_type": "Archery Range",
+      "count": 22
+    },
+    {
+      "facility_type": "Badminton Court",
+      "count": 20
+    },
+    {
+      "facility_type": "Boxing Gym",
+      "count": 23
+    },
+    {
+      "facility_type": "Playground",
+      "count": 34
+    },
+    {
+      "facility_type": "Esports Arena",
+      "count": 40
+    },
+    {
+      "facility_type": "Table Football Club",
+      "count": 24
+    },
+    {
+      "facility_type": "Premium Gym",
+      "count": 26
+    },
+    {
+      "facility_type": "Bowling Alley",
+      "count": 19
+    },
+    {
+      "facility_type": "Martial Arts Dojo",
+      "count": 31
+    },
+    {
+      "facility_type": "Dance Studio",
+      "count": 18
+    },
+    {
+      "facility_type": "Rowing Club",
+      "count": 26
+    },
+    {
+      "facility_type": "Rugby Pitch",
+      "count": 27
+    },
+    {
+      "facility_type": "Equestrian Centre",
+      "count": 22
+    },
+    {
+      "facility_type": "Skate Park",
+      "count": 17
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 30
+    },
+    {
+      "facility_type": "Community Sports Centre",
+      "count": 31
+    },
+    {
+      "facility_type": "Fencing Salle",
+      "count": 25
+    },
+    {
+      "facility_type": "Boutique Fitness",
+      "count": 18
+    },
+    {
+      "facility_type": "Ice Rink",
+      "count": 19
+    },
+    {
+      "facility_type": "Football Pitch",
+      "count": 24
+    },
+    {
+      "facility_type": "Swimming Pool",
+      "count": 19
+    },
+    {
+      "facility_type": "Shooting Range",
+      "count": 35
+    },
+    {
+      "facility_type": "Squash Court",
+      "count": 33
+    },
+    {
+      "facility_type": "Yoga Studio",
+      "count": 24
+    },
+    {
+      "facility_type": "Volleyball Court",
+      "count": 15
+    }
+  ],
+  "Enfield": [
+    {
+      "facility_type": "Bowling Alley",
+      "count": 21
+    },
+    {
+      "facility_type": "Boutique Fitness",
+      "count": 22
+    },
+    {
+      "facility_type": "Wrestling Gym",
+      "count": 16
+    },
+    {
+      "facility_type": "Yoga Studio",
+      "count": 19
+    },
+    {
+      "facility_type": "Independent Gym",
+      "count": 37
+    },
+    {
+      "facility_type": "Rugby Pitch",
+      "count": 35
+    },
+    {
+      "facility_type": "Premium Gym",
+      "count": 17
+    },
+    {
+      "facility_type": "Squash Court",
+      "count": 16
+    },
+    {
+      "facility_type": "Chain Gym",
+      "count": 15
+    },
+    {
+      "facility_type": "Athletics Track",
+      "count": 26
+    },
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 18
+    },
+    {
+      "facility_type": "Multi-sport Centre",
+      "count": 39
+    },
+    {
+      "facility_type": "Cricket Nets",
+      "count": 33
+    },
+    {
+      "facility_type": "Shooting Range",
+      "count": 38
+    },
+    {
+      "facility_type": "Sports Hall",
+      "count": 21
+    },
+    {
+      "facility_type": "Tennis Court",
+      "count": 29
+    },
+    {
+      "facility_type": "Skate Park",
+      "count": 40
+    },
+    {
+      "facility_type": "Parkour Park",
+      "count": 34
+    },
+    {
+      "facility_type": "Ice Rink",
+      "count": 22
+    },
+    {
+      "facility_type": "Water Sports Centre",
+      "count": 17
+    },
+    {
+      "facility_type": "Martial Arts Dojo",
+      "count": 24
+    },
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 23
+    },
+    {
+      "facility_type": "Football Pitch",
+      "count": 39
+    },
+    {
+      "facility_type": "Equestrian Centre",
+      "count": 39
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 23
+    }
+  ],
+  "Redbridge": [
+    {
+      "facility_type": "Swimming Pool",
+      "count": 21
+    },
+    {
+      "facility_type": "Martial Arts Dojo",
+      "count": 17
+    },
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 33
+    },
+    {
+      "facility_type": "Boutique Fitness",
+      "count": 24
+    },
+    {
+      "facility_type": "Badminton Court",
+      "count": 20
+    },
+    {
+      "facility_type": "Independent Gym",
+      "count": 22
+    },
+    {
+      "facility_type": "Parkour Park",
+      "count": 28
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 32
+    },
+    {
+      "facility_type": "Equestrian Centre",
+      "count": 16
+    },
+    {
+      "facility_type": "Tennis Court",
+      "count": 39
+    },
+    {
+      "facility_type": "Cricket Nets",
+      "count": 17
+    },
+    {
+      "facility_type": "Budget Gym",
+      "count": 15
+    },
+    {
+      "facility_type": "Boxing Gym",
+      "count": 28
+    }
+  ],
+  "Harrow": [
+    {
+      "facility_type": "Parkour Park",
+      "count": 26
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 19
+    },
+    {
+      "facility_type": "Tennis Court",
+      "count": 32
+    },
+    {
+      "facility_type": "Ice Rink",
+      "count": 26
+    },
+    {
+      "facility_type": "Wrestling Gym",
+      "count": 23
+    },
+    {
+      "facility_type": "Badminton Court",
+      "count": 38
+    },
+    {
+      "facility_type": "Community Sports Centre",
+      "count": 29
+    },
+    {
+      "facility_type": "Esports Arena",
+      "count": 36
+    },
+    {
+      "facility_type": "Athletics Track",
+      "count": 20
+    },
+    {
+      "facility_type": "Rowing Club",
+      "count": 24
+    },
+    {
+      "facility_type": "Golf Course",
+      "count": 38
+    },
+    {
+      "facility_type": "Equestrian Centre",
+      "count": 15
+    },
+    {
+      "facility_type": "Shooting Range",
+      "count": 39
+    },
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 31
+    },
+    {
+      "facility_type": "Playground",
+      "count": 20
+    },
+    {
+      "facility_type": "Water Sports Centre",
+      "count": 16
+    },
+    {
+      "facility_type": "Rugby Pitch",
+      "count": 16
+    },
+    {
+      "facility_type": "Fencing Salle",
+      "count": 25
+    },
+    {
+      "facility_type": "Boxing Gym",
+      "count": 39
+    }
+  ],
+  "Haringey": [
+    {
+      "facility_type": "Table Tennis Centre",
+      "count": 22
+    },
+    {
+      "facility_type": "Sailing Club",
+      "count": 17
+    },
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 28
+    },
+    {
+      "facility_type": "Recreation Ground",
+      "count": 23
+    },
+    {
+      "facility_type": "Basketball Court",
+      "count": 27
+    },
+    {
+      "facility_type": "Swimming Pool",
+      "count": 24
+    },
+    {
+      "facility_type": "Chain Gym",
+      "count": 23
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 22
+    },
+    {
+      "facility_type": "Archery Range",
+      "count": 15
+    },
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 17
+    },
+    {
+      "facility_type": "Football Pitch",
+      "count": 26
+    },
+    {
+      "facility_type": "Independent Gym",
+      "count": 23
+    }
+  ],
+  "Merton": [
+    {
+      "facility_type": "Table Football Club",
+      "count": 29
+    },
+    {
+      "facility_type": "Badminton Court",
+      "count": 17
+    },
+    {
+      "facility_type": "Esports Arena",
+      "count": 33
+    },
+    {
+      "facility_type": "Chain Gym",
+      "count": 25
+    },
+    {
+      "facility_type": "Archery Range",
+      "count": 40
+    },
+    {
+      "facility_type": "Sports Hall",
+      "count": 34
+    },
+    {
+      "facility_type": "Tennis Court",
+      "count": 19
+    },
+    {
+      "facility_type": "Premium Gym",
+      "count": 26
+    },
+    {
+      "facility_type": "Playground",
+      "count": 20
+    },
+    {
+      "facility_type": "Boutique Fitness",
+      "count": 30
+    },
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 37
+    },
+    {
+      "facility_type": "Sailing Club",
+      "count": 35
+    },
+    {
+      "facility_type": "Rowing Club",
+      "count": 16
+    }
   ]
 }

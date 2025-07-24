@@ -280,5 +280,81 @@
       "facility_type": "Squash Court",
       "count": 1
     }
+  ],
+  "Brent 027A": [
+    {
+      "facility_type": "Multi-sport Centre",
+      "count": 2
+    },
+    {
+      "facility_type": "Ice Rink",
+      "count": 4
+    },
+    {
+      "facility_type": "Sports Hall",
+      "count": 2
+    },
+    {
+      "facility_type": "Skate Park",
+      "count": 4
+    },
+    {
+      "facility_type": "Rowing Club",
+      "count": 1
+    },
+    {
+      "facility_type": "Budget Gym",
+      "count": 1
+    }
+  ],
+  "Brent 021B": [
+    {
+      "facility_type": "Sports Hall",
+      "count": 4
+    },
+    {
+      "facility_type": "Fencing Salle",
+      "count": 2
+    },
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 3
+    }
+  ],
+  "Ealing 035A": [
+    {
+      "facility_type": "Community Sports Centre",
+      "count": 2
+    },
+    {
+      "facility_type": "Chain Gym",
+      "count": 4
+    },
+    {
+      "facility_type": "Wrestling Gym",
+      "count": 3
+    },
+    {
+      "facility_type": "Table Tennis Centre",
+      "count": 4
+    },
+    {
+      "facility_type": "Swimming Pool",
+      "count": 1
+    }
+  ],
+  "Lewisham 026A": [
+    {
+      "facility_type": "Boutique Fitness",
+      "count": 2
+    },
+    {
+      "facility_type": "Budget Gym",
+      "count": 1
+    },
+    {
+      "facility_type": "Volleyball Court",
+      "count": 4
+    }
   ]
 }
