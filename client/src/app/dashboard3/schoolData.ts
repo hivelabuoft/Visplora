@@ -282,3 +282,33 @@ export const loadSchoolData = async (): Promise<SchoolData[]> => {
     return [];
   }
 };
+
+function getRandomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function generateMockSchoolStats(lsoaName: string): BoroughSchoolStats {
+  // Generate random school stats for the LSOA
+  const primary = getRandomInt(1, 4);
+  const secondary = getRandomInt(0, 2);
+  const post16 = getRandomInt(0, 1);
+  const total = primary + secondary + post16;
+  return {
+    borough: lsoaName,
+    totalSchools: total,
+    primarySchools: primary,
+    secondarySchools: secondary,
+    post16Schools: post16,
+    schoolTypes: [
+      { type: 'Primary', count: primary, percentage: (primary/total)*100, primaryCount: primary, secondaryCount: 0, post16Count: 0, dominantLevel: 'Primary' },
+      { type: 'Secondary', count: secondary, percentage: (secondary/total)*100, primaryCount: 0, secondaryCount: secondary, post16Count: 0, dominantLevel: 'Secondary' },
+      { type: 'Post-16', count: post16, percentage: (post16/total)*100, primaryCount: 0, secondaryCount: 0, post16Count: post16, dominantLevel: 'Post-16' }
+    ],
+    ofstedRatings: [
+      { rating: 'Outstanding', count: getRandomInt(0, total), percentage: getRandomInt(0, 100) },
+      { rating: 'Good', count: getRandomInt(0, total), percentage: getRandomInt(0, 100) },
+      { rating: 'Requires Improvement', count: getRandomInt(0, total), percentage: getRandomInt(0, 100) },
+      { rating: 'Inadequate', count: getRandomInt(0, total), percentage: getRandomInt(0, 100) }
+    ]
+  };
+} 

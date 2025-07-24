@@ -1,0 +1,348 @@
+{
+  "Brent": [
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 32
+    },
+    {
+      "facility_type": "Shooting Range",
+      "count": 35
+    },
+    {
+      "facility_type": "Boutique Fitness",
+      "count": 27
+    },
+    {
+      "facility_type": "Badminton Court",
+      "count": 18
+    },
+    {
+      "facility_type": "Cricket Nets",
+      "count": 28
+    },
+    {
+      "facility_type": "Skate Park",
+      "count": 40
+    },
+    {
+      "facility_type": "Sailing Club",
+      "count": 25
+    },
+    {
+      "facility_type": "Budget Gym",
+      "count": 40
+    },
+    {
+      "facility_type": "Martial Arts Dojo",
+      "count": 31
+    }
+  ],
+  "Southwark": [
+    {
+      "facility_type": "Independent Gym",
+      "count": 15
+    },
+    {
+      "facility_type": "Volleyball Court",
+      "count": 32
+    },
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 30
+    },
+    {
+      "facility_type": "Football Pitch",
+      "count": 30
+    },
+    {
+      "facility_type": "Dance Studio",
+      "count": 21
+    },
+    {
+      "facility_type": "Budget Gym",
+      "count": 23
+    },
+    {
+      "facility_type": "Boxing Gym",
+      "count": 28
+    },
+    {
+      "facility_type": "Shooting Range",
+      "count": 38
+    }
+  ],
+  "Ealing": [
+    {
+      "facility_type": "Martial Arts Dojo",
+      "count": 21
+    },
+    {
+      "facility_type": "Table Tennis Centre",
+      "count": 29
+    },
+    {
+      "facility_type": "Badminton Court",
+      "count": 20
+    },
+    {
+      "facility_type": "Archery Range",
+      "count": 38
+    },
+    {
+      "facility_type": "Esports Arena",
+      "count": 17
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 33
+    },
+    {
+      "facility_type": "Chain Gym",
+      "count": 38
+    },
+    {
+      "facility_type": "Premium Gym",
+      "count": 37
+    },
+    {
+      "facility_type": "Sailing Club",
+      "count": 32
+    },
+    {
+      "facility_type": "Community Sports Centre",
+      "count": 31
+    },
+    {
+      "facility_type": "Rowing Club",
+      "count": 29
+    },
+    {
+      "facility_type": "Ice Rink",
+      "count": 32
+    },
+    {
+      "facility_type": "Recreation Ground",
+      "count": 31
+    },
+    {
+      "facility_type": "Multi-sport Centre",
+      "count": 22
+    },
+    {
+      "facility_type": "Budget Gym",
+      "count": 27
+    },
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 25
+    },
+    {
+      "facility_type": "Skate Park",
+      "count": 28
+    },
+    {
+      "facility_type": "Equestrian Centre",
+      "count": 15
+    },
+    {
+      "facility_type": "Basketball Court",
+      "count": 27
+    },
+    {
+      "facility_type": "Water Sports Centre",
+      "count": 39
+    }
+  ],
+  "City of London": [
+    {
+      "facility_type": "Boxing Gym",
+      "count": 28
+    },
+    {
+      "facility_type": "Athletics Track",
+      "count": 26
+    },
+    {
+      "facility_type": "Golf Course",
+      "count": 15
+    },
+    {
+      "facility_type": "Community Sports Centre",
+      "count": 36
+    },
+    {
+      "facility_type": "Chain Gym",
+      "count": 34
+    },
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 32
+    },
+    {
+      "facility_type": "Independent Gym",
+      "count": 20
+    },
+    {
+      "facility_type": "Ice Rink",
+      "count": 22
+    },
+    {
+      "facility_type": "Parkour Park",
+      "count": 27
+    },
+    {
+      "facility_type": "Swimming Pool",
+      "count": 30
+    },
+    {
+      "facility_type": "Wrestling Gym",
+      "count": 22
+    },
+    {
+      "facility_type": "Sailing Club",
+      "count": 24
+    },
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 18
+    },
+    {
+      "facility_type": "Yoga Studio",
+      "count": 19
+    },
+    {
+      "facility_type": "Rugby Pitch",
+      "count": 25
+    }
+  ],
+  "Greenwich": [
+    {
+      "facility_type": "Sports Hall",
+      "count": 19
+    },
+    {
+      "facility_type": "Basketball Court",
+      "count": 33
+    },
+    {
+      "facility_type": "Water Sports Centre",
+      "count": 31
+    },
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 22
+    },
+    {
+      "facility_type": "Sailing Club",
+      "count": 16
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 20
+    },
+    {
+      "facility_type": "Athletics Track",
+      "count": 27
+    },
+    {
+      "facility_type": "Dance Studio",
+      "count": 17
+    },
+    {
+      "facility_type": "Wrestling Gym",
+      "count": 16
+    }
+  ],
+  "Bromley": [
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 29
+    },
+    {
+      "facility_type": "Volleyball Court",
+      "count": 33
+    },
+    {
+      "facility_type": "Independent Gym",
+      "count": 31
+    },
+    {
+      "facility_type": "Shooting Range",
+      "count": 39
+    },
+    {
+      "facility_type": "Sailing Club",
+      "count": 16
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 20
+    },
+    {
+      "facility_type": "Swimming Pool",
+      "count": 32
+    },
+    {
+      "facility_type": "Water Sports Centre",
+      "count": 24
+    },
+    {
+      "facility_type": "Budget Gym",
+      "count": 37
+    }
+  ],
+  "Croydon": [
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 24
+    },
+    {
+      "facility_type": "Martial Arts Dojo",
+      "count": 34
+    },
+    {
+      "facility_type": "Multi-sport Centre",
+      "count": 19
+    },
+    {
+      "facility_type": "Swimming Pool",
+      "count": 24
+    },
+    {
+      "facility_type": "Tennis Court",
+      "count": 37
+    },
+    {
+      "facility_type": "Squash Court",
+      "count": 40
+    },
+    {
+      "facility_type": "Dance Studio",
+      "count": 17
+    },
+    {
+      "facility_type": "Budget Gym",
+      "count": 33
+    },
+    {
+      "facility_type": "Wrestling Gym",
+      "count": 23
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 31
+    },
+    {
+      "facility_type": "Athletics Track",
+      "count": 17
+    },
+    {
+      "facility_type": "Volleyball Court",
+      "count": 38
+    },
+    {
+      "facility_type": "Archery Range",
+      "count": 34
+    }
+  ]
+}

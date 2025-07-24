@@ -1229,7 +1229,7 @@ export const housePriceTimelineChartSpec = (data: HousePriceTimelineData[]) => {
 export const ethnicityMinorityGroupsBarChartSpec = (ethnicityStats: BoroughEthnicityStats): any => {
   return {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
-    "width": 200,
+    "width": 240,
     "height": 130,
     "background": "transparent",
     "data": {
@@ -1322,5 +1322,118 @@ export const ethnicityMinorityGroupsBarChartSpec = (ethnicityStats: BoroughEthni
         "stroke": null
       }
     }
+  };
+};
+
+// Library Line Chart Spec (replaces bar chart)
+export const libraryLineChartSpec = (libraries: Array<{ year: number; visits_per_1000: number }>) => ({
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
+  width: 250,
+  height: 130,
+  background: "transparent",
+  data: { values: libraries },
+  mark: { type: 'line' as const, interpolate: 'monotone' as const, point: true },
+  encoding: {
+    x: { 
+      field: 'year', 
+      type: 'ordinal' as const, 
+      axis: { labelColor: '#888', title: null, labelFontSize: 8, labelAngle: -45 } },
+    y: { 
+      field: 'visits_per_1000',
+      type: 'quantitative' as const, 
+      axis: { labelColor: '#888', title: null, labelFontSize: 8, "gridDash": [2, 2], "gridColor": "#888" } },
+    color: { value: '#8B5CF6' },
+    tooltip: [
+      { field: 'year', type: 'ordinal' as const, title: 'Year' },
+      { field: 'visits_per_1000', type: 'quantitative' as const, title: 'Visits per 1000' }
+    ]
+  },
+  params: [
+    {
+      name: 'hover',
+      select: { type: 'point' as const, on: 'pointerover' as const, clear: 'pointerout' as const }
+    }
+  ],
+  config: { background: 'transparent', view: { stroke: null } }
+});
+
+// Gym/Sports & Recreation Pie Chart Spec (styled like crime pie chart, legend external)
+export const gymPieChartSpec = (
+  facilities: Array<{ facility_type: string; count: number }>,
+  colorRange: string[] = ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#1E40AF", "#F59E42", "#F472B6", "#F87171"]
+) => {
+  const total = facilities.reduce((sum, f) => sum + f.count, 0);
+  return {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+    width: 150,
+    height: 150,
+    background: "transparent",
+    layer: [
+      {
+        data: { values: facilities },
+        params: [
+          {
+            name: "hover_gym_pie",
+            select: { type: "point", on: "mouseover", clear: "mouseout" }
+          }
+        ],
+        mark: { type: "arc" as const, innerRadius: 50, outerRadius: 70, cursor: "pointer" as const },
+        encoding: {
+          theta: { field: "count", type: "quantitative" as const },
+          color: {
+            field: "facility_type",
+            type: "nominal" as const,
+            scale: { range: colorRange },
+            legend: null
+          },
+          stroke: {
+            condition: { param: "hover_gym_pie", value: "#272729" },
+            value: "#272729"
+          },
+          strokeWidth: {
+            condition: { param: "hover_gym_pie", value: 1 },
+            value: 0.5
+          },
+          opacity: {
+            condition: { param: "hover_gym_pie", value: 1 },
+            value: 0.6
+          },
+          tooltip: [
+            { field: "facility_type", type: "nominal" as const, title: "Facility Type" },
+            { field: "count", type: "quantitative" as const, title: "Count" }
+          ]
+        }
+      },
+      {
+        data: { values: [{ total }] },
+        mark: {
+          type: "text",
+          align: "center",
+          baseline: "middle",
+          fontSize: 18,
+          fontWeight: "bold",
+          color: "#fff",
+          dy: -8
+        },
+        encoding: {
+          text: { field: "total", type: "quantitative" }
+        }
+      },
+      {
+        data: { values: [{ text: "Total Facilities" }] },
+        mark: {
+          type: "text",
+          align: "center",
+          baseline: "middle",
+          fontSize: 10,
+          color: "#d1d5db",
+          dy: 10
+        },
+        encoding: {
+          text: { field: "text", type: "nominal" }
+        }
+      }
+    ],
+    config: { background: "transparent", view: { stroke: null } }
   };
 };
