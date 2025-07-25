@@ -8,6 +8,7 @@ import NarrativeLayer from '../components/NarrativeLayer';
 import { EmptyCanvas, EmptyTimeline, AnalyzingState } from '../components/EmptyStates';
 import ReactFlowCanvas from '../components/ReactFlowCanvas';
 import LondonDashboard from '../dashboard3/page'; //this should be a different input after you have the right component for dashboard
+import { interactionLogger } from '../../lib/interactionLogger';
 import '../../styles/dataExplorer.css';
 import '../../styles/narrativeLayer.css';
 
@@ -47,6 +48,14 @@ export default function NarrativePage() {
           
           if (userStr && token) {
             const user = JSON.parse(userStr);
+            console.log('🔧 Loaded user from localStorage:', user);
+            
+            // Ensure userId is set - fallback to username or create one
+            if (!user.userId) {
+              user.userId = user.username || `user_${user.participantId || Date.now()}`;
+              console.log('🔧 Set fallback userId:', user.userId);
+            }
+            
             setUserSession(user);
           } else {
             router.push('/narrative-login');
@@ -54,13 +63,15 @@ export default function NarrativePage() {
           }
         } else {
           // Demo mode
-          setUserSession({
+          const demoUser = {
             userId: 'demo_user',
             participantId: 'DEMO',
             firstName: 'Demo',
             lastName: 'User',
             username: 'demo_user'
-          });
+          };
+          console.log('🔧 Using demo user:', demoUser);
+          setUserSession(demoUser);
         }
       } catch (error) {
         console.error('Auth check error:', error);
@@ -76,10 +87,46 @@ export default function NarrativePage() {
     checkAuth();
   }, [router]);
 
+  // Initialize interaction logger when userSession is available
+  useEffect(() => {
+    if (userSession) {
+      console.log('🔧 Initializing interaction logger with user session:', userSession);
+      
+      // Ensure we have all required fields
+      const userId = userSession.userId || userSession.username || `user_${userSession.participantId}`;
+      const participantId = userSession.participantId;
+      const sessionId = userSession.sessionId || `session_${userSession.participantId}_${Date.now()}`;
+      
+      console.log('🔧 User context for logger:', { userId, participantId, sessionId });
+      
+      interactionLogger.initialize({
+        userId,
+        participantId,
+        sessionId
+      }, isStudyMode);
+    }
+  }, [userSession, isStudyMode]);
+
   // Handle analysis request
   const handleAnalysisRequest = async (prompt: string) => {
+    console.log('🚀 Starting analysis for prompt:', prompt);
+    
     setCurrentPrompt(prompt);
     setIsAnalyzing(true);
+    
+    // Log the generate dashboard interaction manually
+    try {
+      console.log('📊 Logging dashboard generation with:', {
+        prompt,
+        userContext: interactionLogger.userContext,
+        isStudyMode: interactionLogger.isStudyMode
+      });
+      
+      await interactionLogger.logDashboardGeneration(prompt);
+      console.log('✅ Dashboard generation logged successfully');
+    } catch (error) {
+      console.error('❌ Failed to log dashboard generation:', error);
+    }
     
     // Simulate analysis time (4 seconds)
     const analysisTime = 4000;
@@ -124,7 +171,10 @@ export default function NarrativePage() {
             </span>
             <button
               className="px-3 py-1 bg-cyan-800 hover:bg-cyan-900 rounded text-xs transition-colors"
-              onClick={() => {
+              onClick={async () => {
+                // Log the session end interaction manually
+                await interactionLogger.logButtonClick('end_session_button', 'End Session');
+                
                 localStorage.removeItem('narrativeUser');
                 localStorage.removeItem('narrativeToken');
                 router.push('/narrative-login');
@@ -178,25 +228,7 @@ export default function NarrativePage() {
           {/* Timeline Div - 25% */}
           <div className="timeline-div h-1/4 bg-gray-100 border-t border-gray-200 p-4">
             <div className="h-full bg-white rounded-lg shadow-sm">
-              {showDashboard ? (
-                <div className="p-4">
-                  <h3 className="text-sm font-medium text-gray-700 mb-3">Analysis Timeline</h3>
-                  <div className="flex items-center gap-2 h-8">
-                    <div className="w-3 h-3 bg-cyan-400 rounded-full"></div>
-                    <div className="flex-1 h-1 bg-cyan-200 rounded"></div>
-                    <div className="w-3 h-3 bg-cyan-400 rounded-full"></div>
-                    <div className="flex-1 h-1 bg-cyan-200 rounded"></div>
-                    <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
-                  </div>
-                  <div className="flex justify-between text-xs text-gray-500 mt-2">
-                    <span>Data Loading</span>
-                    <span>Processing</span>
-                    <span>Visualization</span>
-                  </div>
-                </div>
-              ) : (
-                <EmptyTimeline />
-              )}
+              <EmptyTimeline />
             </div>
           </div>
         </div>
