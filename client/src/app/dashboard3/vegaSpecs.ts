@@ -14,18 +14,18 @@ export const boroughMapSpec = {
   },
   "params": [
     {
-      "name": "borough_click",
-      "select": {
-        "type": "point",
-        "on": "click"
-      }
-    },
-    {
-      "name": "borough_hover",
+      "name": "highlight",
       "select": {
         "type": "point",
         "on": "mouseover",
         "clear": "mouseout"
+      }
+    },
+    {
+      "name": "select",
+      "select": {
+        "type": "point",
+        "on": "click"
       }
     }
   ],
@@ -48,42 +48,53 @@ export const boroughMapSpec = {
         "color": {
           "condition": [
             {
-              "param": "borough_click",
+              "param": "select",
+              "empty": false,
               "value": "#8B5CF6"
+            },
+            {
+              "param": "highlight",
+              "empty": false,
+              "value": "#A855F7"
             }
           ],
-          "value": "#333"
+          "value": "#cacacaff"
         },
         "strokeWidth": {
           "condition": [
             {
-              "param": "borough_hover",
-              "value": 2
+              "param": "highlight",
+              "empty": false,
+              "value": 1.5
             },
             {
-              "param": "borough_click",
-              "value": 2
+              "param": "select",
+              "empty": false,
+              "value": 1
             }
           ],
-          "value": 1
+          "value": 0.5
         },
         "stroke": {
           "condition": [
             {
-              "param": "borough_hover",
-              "value": "#ffffff"
+              "param": "highlight",
+              "empty": false,
+              "value": "black"
             }
           ],
-          "value": "white"
+          "value": "black"
         },
         "opacity": {
           "condition": [
             {
-              "param": "borough_hover",
+              "param": "highlight",
+              "empty": false,
               "value": 0.9
             },
             {
-              "param": "borough_click",
+              "param": "select",
+              "empty": false,
               "value": 1
             }
           ],
@@ -267,7 +278,7 @@ export const populationTimelineChartSpec = (data: Array<{year: number, populatio
   ],
   "mark": {
     "type": "bar" as const,
-    "width": 7,
+    "width": 5,
     "cursor": "pointer" as const
   },
   "encoding": {
@@ -554,8 +565,8 @@ export const crimeBarChartComparisonSpec = (
           "legend": {
             "title": null,
             "orient": "top" as const,
-            "titleColor": "#fff",
-            "labelColor": "#fff",
+            "titleColor": "#333",
+            "labelColor": "#333",
             "titleFontSize": 10,
             "labelFontSize": 9,
             "symbolSize": 80,
@@ -688,9 +699,9 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
           "stroke": {
             "condition": {
               "param": "hover_crime_pie",
-              "value": "#272729"
+              "value": "white"
             },
-            "value": "#272729"
+            "value": "white"
           },
           "strokeWidth": {
             "condition": {
@@ -744,7 +755,7 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
           "align": "center",
           "baseline": "middle",
           "fontSize": 10,
-          "color": "#d1d5db",
+          "color": "#888",
           "dy": 4
         },
         "encoding": {
@@ -763,7 +774,7 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
           "align": "center",
           "baseline": "middle",
           "fontSize": 10,
-          "color": "#d1d5db",
+          "color": "#888",
           "dy": 16
         },
         "encoding": {
@@ -831,9 +842,9 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
         "stroke": {
           "condition": {
             "param": "hover_birth_pie",
-            "value": "#272729"
+            "value": "white"
           },
-          "value": "#272729"
+          "value": "white"
         },
         "strokeWidth": {
           "condition": {
@@ -910,7 +921,7 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
         "baseline": "middle",
         "fontSize": 10,
         "dy": 0,
-        "color": "#d1d5db"
+        "color": "#888"
       },
       "encoding": {
         "text": {
@@ -934,7 +945,7 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
         "baseline": "middle",
         "fontSize": 10,
         "dy": 11,
-        "color": "#d1d5db"
+        "color": "#888"
       },
       "encoding": {
         "text": {
@@ -958,7 +969,7 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
         "baseline": "middle",
         "fontSize": 10,
         "dy": 22,
-        "color": "#d1d5db"
+        "color": "#888"
       },
       "encoding": {
         "text": {
@@ -1189,7 +1200,7 @@ export const housePriceTimelineChartSpec = (data: HousePriceTimelineData[]) => {
               {
                 "mark": {
                   "type": "text" as const,
-                  "stroke": "#0a0a0a",
+                  "stroke": "transparent",
                   "strokeWidth": 3,
                   "align": "left" as const,
                   "dx": 8,
@@ -1387,8 +1398,8 @@ export const gymPieChartSpec = (
             legend: null
           },
           stroke: {
-            condition: { param: "hover_gym_pie", value: "#272729" },
-            value: "#272729"
+            condition: { param: "hover_gym_pie", value: "white" },
+            value: "white"
           },
           strokeWidth: {
             condition: { param: "hover_gym_pie", value: 1 },
@@ -1412,7 +1423,7 @@ export const gymPieChartSpec = (
           baseline: "middle",
           fontSize: 18,
           fontWeight: "bold",
-          color: "#fff",
+          color: "#000",
           dy: -8
         },
         encoding: {
@@ -1426,7 +1437,7 @@ export const gymPieChartSpec = (
           align: "center",
           baseline: "middle",
           fontSize: 10,
-          color: "#d1d5db",
+          color: "#888",
           dy: 10
         },
         encoding: {
