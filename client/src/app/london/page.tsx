@@ -1,11 +1,27 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { LinkableCard } from '@/components/ui/card-linkable';
-import { VegaLite } from 'react-vega';
 import { boroughIdToName } from '../dashboard3/boroughMapping';
 import { boroughMapSpec, smallBoroughMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec, housePriceTimelineChartSpec, ethnicityMinorityGroupsBarChartSpec, gymPieChartSpec, libraryLineChartSpec } from '../dashboard3/vegaSpecs';
-import LSOAMap from '../dashboard3/LSOAMap';
+
+// Dynamically import LSOAMap with SSR disabled
+const LSOAMap = dynamic(() => import('../dashboard3/LSOAMap'), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center h-full text-gray-400">Loading map...</div>
+});
+
+// Dynamically import VegaLite to avoid SSR issues with Set objects
+const VegaLite = dynamic(() => import('react-vega').then(mod => ({ default: mod.VegaLite })), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center h-full text-gray-400">Loading chart...</div>
+});
+
+// Memoized VegaLite wrapper to prevent Set serialization issues
+const MemoizedVegaLite = React.memo(({ spec, actions = false, signalListeners, style }: any) => {
+  return <VegaLite spec={spec} actions={actions} signalListeners={signalListeners} style={style} />;
+});
 import { 
   loadPopulationData, 
   processPopulationData, 
@@ -522,7 +538,7 @@ const Dashboard3: React.FC = () => {
       fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
     }}>
       {/* Header */}
-      <div className='flex items-center justify-between mb-4' style={{ borderBottom: '1px solid #888' }}>
+      {/* <div className='flex items-center justify-between mb-4' style={{ borderBottom: '1px solid #888' }}>
         <div>
           <h1 className="relative text-[32px] font-light tracking-widest mb-2 p-0 text-[#2B7A9B]">
             LONDON IN <span className="bg-[#2B7A9B] font-semibold bg-clip-text text-transparent">NUMBERS</span>
@@ -540,7 +556,7 @@ const Dashboard3: React.FC = () => {
           <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">📄</div>
           <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">❓</div>
         </div>
-      </div>
+      </div> */}
       {/* Grid Container */}
       <div className="grid grid-cols-8 grid-rows-8 gap-4" style={{ gridTemplateRows: '100px repeat(7, 110px)'}}>
         {/* Row 1: KPI Indicators (1x1 each) */}
@@ -559,7 +575,7 @@ const Dashboard3: React.FC = () => {
                   {selectedBorough}
                 </div>
                 <div className='w-[50px] h-[50px]'>
-                  <VegaLite 
+                  <MemoizedVegaLite 
                     spec={smallBoroughMapSpec(selectedBorough)}
                     actions={false}
                   />
@@ -725,21 +741,27 @@ const Dashboard3: React.FC = () => {
             
             {/* Map Content */}
             <div className="absolute top-2 left-12 right-5 bottom-5" title='Click outside to reset selection'>
-              <VegaLite 
+              <MemoizedVegaLite 
                 spec={boroughMapSpec} 
                 actions={false}
                 signalListeners={{
                   select: (name: string, value: any) => {
-                    // Extract the borough ID from the _vgsid_ InternSet
-                    if (value && value._vgsid_) {
-                      const vgsidArray = Array.from(value._vgsid_);
-                      if (vgsidArray.length > 0) {
-                        const boroughIndex = vgsidArray[0] as number;
-                        const boroughName = boroughIdToName[boroughIndex - 1];
-                        if (boroughName) {
-                          updateDashboardFilter('selectedBorough', boroughName);
+                    try {
+                      // Extract the borough ID from the _vgsid_ InternSet
+                      if (value && value._vgsid_) {
+                        // Convert Set to Array safely
+                        const vgsidSet = value._vgsid_;
+                        const vgsidArray = Array.isArray(vgsidSet) ? vgsidSet : Array.from(vgsidSet);
+                        if (vgsidArray.length > 0) {
+                          const boroughIndex = vgsidArray[0] as number;
+                          const boroughName = boroughIdToName[boroughIndex - 1];
+                          if (boroughName) {
+                            updateDashboardFilter('selectedBorough', boroughName);
+                          }
                         }
                       }
+                    } catch (error) {
+                      console.error('Error handling borough selection:', error);
                     }
                   }
                 }}
@@ -782,7 +804,7 @@ const Dashboard3: React.FC = () => {
                     Loading chart data...
                   </div>
                 ) : populationTimelineData.length > 0 ? (
-                  <VegaLite
+                  <MemoizedVegaLite
                     spec={populationTimelineChartSpec(populationTimelineData)}
                     actions={false}
                     style={{
@@ -817,7 +839,7 @@ const Dashboard3: React.FC = () => {
                 <div className="flex items-center justify-center h-32 text-gray-400 text-xs">Loading...</div>
               ) : gymFacilities && gymFacilities.length > 0 ? (
                 <div className={`absolute bottom-2 left-3 flex items-center ${gymViewLevel == "lsoa" ? 'gap-1' : 'gap-4'} flex-wrap`}>
-                  <VegaLite spec={gymPieChartSpec(gymFacilities, GYM_COLOR_RANGE)} actions={false} />
+                  <MemoizedVegaLite spec={gymPieChartSpec(gymFacilities, GYM_COLOR_RANGE)} actions={false} />
                   <div className="">
                     {gymFacilities.slice(0, 10).map((f: { facility_type: string; count: number }, i: number) => (
                       <div key={f.facility_type} className={`flex items-center gap-1 ${gymViewLevel == "lsoa" ? 'text-xs' : 'text-[9px]'} text-gray-500`}>
@@ -886,7 +908,7 @@ const Dashboard3: React.FC = () => {
                   Loading crime data...
                 </div>
               ) : crimeBarDataComparison.length > 0 ? (
-                <VegaLite
+                <MemoizedVegaLite
                   spec={crimeBarChartComparisonSpec(crimeBarDataComparison, selectedCrimeCategory)}
                   actions={false}
                 />
@@ -929,7 +951,7 @@ const Dashboard3: React.FC = () => {
             {/* Vega-Lite Line Chart */}
             <div className="absolute -bottom-1 left-4 right-4">
               {incomeTimelineData.length > 0 ? (
-                <VegaLite
+                <MemoizedVegaLite
                   spec={incomeTimelineChartSpec(incomeTimelineData)}
                   actions={false}
                 />
@@ -965,7 +987,7 @@ const Dashboard3: React.FC = () => {
                   Loading...
                 </div>
               ) : crimePieDataComparison.length > 0 ? (
-                <VegaLite
+                <MemoizedVegaLite
                   spec={crimePieChartComparisonSpec(crimePieDataComparison, 2023)}
                   actions={false}
                   style={{}}
@@ -1033,13 +1055,13 @@ const Dashboard3: React.FC = () => {
             <div className="absolute bottom-2 left-4 right-4">
               {isLSOASelected ? (
                 mockSchoolStats ? (
-                  <VegaLite spec={schoolEducationFacilitiesSpec(mockSchoolStats)} actions={false} style={{ width: '100%', height: '100%' }} />
+                  <MemoizedVegaLite spec={schoolEducationFacilitiesSpec(mockSchoolStats)} actions={false} style={{ width: '100%', height: '100%' }} />
                 ) : (
                   <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No school data available</div>
                 )
               ) : (
                 boroughSchoolStats ? (
-                  <VegaLite spec={schoolEducationFacilitiesSpec(boroughSchoolStats)} actions={false} style={{ width: '100%', height: '100%' }} />
+                  <MemoizedVegaLite spec={schoolEducationFacilitiesSpec(boroughSchoolStats)} actions={false} style={{ width: '100%', height: '100%' }} />
                 ) : (
                   <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No school data available</div>
                 )
@@ -1086,7 +1108,7 @@ const Dashboard3: React.FC = () => {
                   Loading house price data...
                 </div>
               ) : housePriceTimelineData.length > 0 ? (
-                <VegaLite
+                <MemoizedVegaLite
                   spec={housePriceTimelineChartSpec(housePriceTimelineData)}
                   actions={false}
                 />
@@ -1126,13 +1148,13 @@ const Dashboard3: React.FC = () => {
             <div className="absolute bottom-2 left-4 right-4">
               {isLSOASelected ? (
                 lsoaEthnicityStats && lsoaEthnicityStats.minorityGroups.length > 0 ? (
-                  <VegaLite spec={ethnicityMinorityGroupsBarChartSpec(lsoaEthnicityStats)} actions={false} />
+                  <MemoizedVegaLite spec={ethnicityMinorityGroupsBarChartSpec(lsoaEthnicityStats)} actions={false} />
                 ) : (
                   <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No ethnicity data available</div>
                 )
               ) : (
                 boroughEthnicityStats && boroughEthnicityStats.minorityGroups.length > 0 ? (
-                  <VegaLite spec={ethnicityMinorityGroupsBarChartSpec(boroughEthnicityStats)} actions={false} />
+                  <MemoizedVegaLite spec={ethnicityMinorityGroupsBarChartSpec(boroughEthnicityStats)} actions={false} />
                 ) : (
                   <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No ethnicity data available</div>
                 )
@@ -1185,7 +1207,7 @@ const Dashboard3: React.FC = () => {
                       Loading...
                     </div>
                   ) : countryOfBirthStats ? (
-                    <VegaLite
+                    <MemoizedVegaLite
                       spec={countryOfBirthPieChartSpec(countryOfBirthStats, countryOfBirthComparison || undefined)}
                       actions={false}
                       style={{}}
@@ -1228,7 +1250,7 @@ const Dashboard3: React.FC = () => {
               <div className="text-xs font-semibold" style={{color: '#2B7A9B'}}>LIBRARY VISITS</div>
               <div className="text-xs text-gray-400 mb-1">Visits per 1,000 people | {selectedLSOAName}</div>
               <div className="absolute bottom-0 left-4 right-4">
-                <VegaLite spec={libraryLineChartSpec(mockLibraries)} actions={false} />
+                <MemoizedVegaLite spec={libraryLineChartSpec(mockLibraries)} actions={false} />
               </div>
             </LinkableCard>
           )}

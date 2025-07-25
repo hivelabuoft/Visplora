@@ -1,23 +1,213 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
+import { IoSaveSharp } from "react-icons/io5";
 import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
 import Bold from '@tiptap/extension-bold';
 import Italic from '@tiptap/extension-italic';
 import History from '@tiptap/extension-history';
+import Placeholder from '@tiptap/extension-placeholder';
+import { CompletedSentence } from '../extensions/CompletedSentence';
+import { detectSentenceEndWithTiming, getCurrentSentence } from '../utils/sentenceDetector';
 import '../../styles/narrativeLayer.css';
 
 interface NarrativeLayerProps {
   prompt: string;
   onSentenceSelect?: (sentence: string, index: number) => void;
+  onSentenceEnd?: (sentence: string, confidence: number) => void; // New callback for sentence end detection
 }
 
-const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelect }) => {
+const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelect, onSentenceEnd }) => {
   const [wordCount, setWordCount] = useState(0);
   const [sentenceCount, setSentenceCount] = useState(0);
+  const lastKeystrokeTimeRef = useRef<number>(Date.now());
+  const [previousText, setPreviousText] = useState<string>('');
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [detectionStatus, setDetectionStatus] = useState<string>('');
+  const processedSentencesRef = useRef<Set<string>>(new Set()); // Track processed sentences
+  const isEditingRef = useRef<boolean>(false); // Track if user is editing a sentence
+  const [isEditingState, setIsEditingState] = useState<boolean>(false); // State for UI reactivity
+  const editingTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Track editing timeout
+  const [editingPosition, setEditingPosition] = useState<{from: number, to: number} | null>(null); // Track editing position for save button
+  const saveButtonRef = useRef<HTMLButtonElement>(null); // Ref for positioning save button
+
+  // Function to proactively mark completed sentences as the user types
+  const markCompletedSentencesProactively = useCallback((editorInstance: any) => {
+    if (!editorInstance || !editorInstance.commands.markAsCompletedSentence) {
+      return;
+    }
+
+    // Don't mark sentences if user is actively editing
+    if (isEditingRef.current) {
+      console.log('🚫 Skipping proactive marking - user is editing');
+      return;
+    }
+
+    try {
+      const fullText = editorInstance.getText();
+      if (fullText.trim().length === 0) return;
+
+      // Store current cursor position to restore it later
+      const currentCursorPos = editorInstance.state.selection.from;
+      const currentCursorEnd = editorInstance.state.selection.to;
+
+      // Split text into sentences based on punctuation
+      const sentences = fullText.split(/([.!?]+\s*)/);
+      let currentPos = 0;
+      
+      console.log('🔍 Proactive marking - found sentence parts:', sentences);
+      
+      for (let i = 0; i < sentences.length; i += 2) {
+        const sentence = sentences[i];
+        const punctuation = sentences[i + 1] || '';
+        
+        // If this part has content and is followed by punctuation, it's a complete sentence
+        if (sentence.trim().length > 0 && punctuation.match(/[.!?]/)) {
+          const sentenceWithPunctuation = sentence + punctuation.replace(/\s+$/, ''); // Remove trailing spaces from punctuation
+          const from = currentPos;
+          const to = currentPos + sentenceWithPunctuation.length;
+          
+          console.log(`🔍 Found complete sentence: "${sentenceWithPunctuation}" at position ${from}-${to}`);
+          
+          // Check if this range is already marked
+          const marks = editorInstance.state.doc.resolve(from).marks();
+          const alreadyMarked = marks.some((mark: any) => mark.type.name === 'completedSentence');
+          
+          if (!alreadyMarked) {
+            console.log(`✨ Marking sentence: "${sentenceWithPunctuation}"`);
+            
+            // Temporarily select this sentence to apply marking
+            editorInstance.commands.setTextSelection({ from, to });
+            
+            // Apply the completed sentence mark
+            editorInstance.commands.markAsCompletedSentence();
+          } else {
+            console.log(`⏭️ Sentence already marked: "${sentenceWithPunctuation}"`);
+          }
+        }
+        
+        // Move position forward
+        currentPos += sentence.length + (punctuation ? punctuation.length : 0);
+      }
+      
+      // ALWAYS restore the original cursor position - don't move to end!
+      console.log(`🔄 Restoring cursor to original position: ${currentCursorPos}-${currentCursorEnd}`);
+      editorInstance.commands.setTextSelection({ from: currentCursorPos, to: currentCursorEnd });
+      
+    } catch (error) {
+      console.error('❌ Error in proactive marking:', error);
+    }
+  }, []);
+
+  // Sentence end detection and LLM trigger function
+  const checkSentenceEnd = useCallback(async (text: string, editorInstance?: any) => {
+    const result = detectSentenceEndWithTiming(text, lastKeystrokeTimeRef.current, 2000);
+    
+    // Enhanced debug logging with timing information (keep for console)
+    const timeSinceKeystroke = Date.now() - lastKeystrokeTimeRef.current;
+    const debugInfo = `${result.reason} (${(result.confidence * 100).toFixed(0)}%, ${Math.round(timeSinceKeystroke/1000)}s since keystroke)`;
+    // console.log('Detection status:', debugInfo);
+    
+    // Simple user-friendly status messages
+    if (result.isSentenceEnd && result.confidence > 0.6) {
+      setDetectionStatus('Thoughts received');
+    } else if (text.trim()) {
+      setDetectionStatus('Listening…');
+    } else {
+      setDetectionStatus('');
+    }
+    
+    if (result.isSentenceEnd && result.confidence > 0.6) {
+      let currentSentence = getCurrentSentence(text);
+      // console.log('Current sentence from getCurrentSentence:', currentSentence);
+      // console.log('Full text being analyzed:', text);
+      
+      let sentenceForAnalysis = currentSentence.trim();
+      
+      // Check if sentence doesn't end with punctuation or if user might be typing punctuation
+      const endsWithPartialPunctuation = /\.$/.test(sentenceForAnalysis) || /\.{1,2}$/.test(sentenceForAnalysis);
+      const needsPunctuation = sentenceForAnalysis && 
+        !/[.!?…]$/.test(sentenceForAnalysis) && 
+        !sentenceForAnalysis.endsWith('...') &&
+        !endsWithPartialPunctuation;
+      
+      // console.log('Needs punctuation:', needsPunctuation);
+      
+      // Store original sentence before modification for marking
+      const originalSentence = sentenceForAnalysis;
+      
+      // Auto-append period for analysis
+      if (needsPunctuation) {
+        sentenceForAnalysis += '.';
+        // console.log('Sentence after adding punctuation:', sentenceForAnalysis);
+        
+        // Also add the period to the UI if editor is available and this is from pause detection
+        // Only add period if user hasn't recently typed any punctuation
+        if (editorInstance && (result.reason.includes('pause') || result.reason.includes('complete_thought') || result.reason.includes('emotional') || result.reason.includes('negative'))) {
+          const currentText = editorInstance.getText();
+          const timeSinceKeystroke = Date.now() - lastKeystrokeTimeRef.current;
+          
+          // Only auto-add period if:
+          // 1. Text doesn't end with punctuation
+          // 2. User has paused for at least 1 second (to avoid interfering with typing)
+          // 3. Text doesn't end with partial punctuation that user might be expanding
+          if (!currentText.endsWith('.') && 
+              !currentText.endsWith('!') && 
+              !currentText.endsWith('?') && 
+              !currentText.endsWith('…') && 
+              !currentText.endsWith('...') &&
+              !currentText.endsWith('..') &&
+              timeSinceKeystroke > 1000) {
+            editorInstance.commands.insertContent('.');
+            console.log('Auto-inserted period in UI');
+          }
+        }
+      }
+      
+      // Create a unique key for this sentence (normalized)
+      // Remove punctuation for duplicate detection, but keep original for analysis
+      const sentenceKey = sentenceForAnalysis
+        .toLowerCase()
+        .replace(/[.!?]+$/, '') // Remove ending punctuation for deduplication
+        .replace(/\s+/g, ' ')
+        .trim();
+      
+      // Check if we've already processed this sentence
+      if (processedSentencesRef.current.has(sentenceKey)) {
+        console.log('Sentence already processed, skipping:', sentenceKey);
+        return;
+      }
+      
+      // console.log(`Sentence detected (${result.reason}, confidence: ${result.confidence}):`, sentenceForAnalysis);
+      
+      if (sentenceForAnalysis.length > 5 && onSentenceEnd) {
+        // Mark this sentence as processed
+        processedSentencesRef.current.add(sentenceKey);
+        
+        // Mark the sentence as completed in the editor proactively
+        setTimeout(() => {
+          if (editorInstance && !isEditingRef.current) {
+            console.log('🔍 Proactively marking completed sentences');
+            markCompletedSentencesProactively(editorInstance);
+          } else if (isEditingRef.current) {
+            console.log('🚫 Skipping delayed marking - user is editing');
+          }
+        }, 200); // Slightly longer delay to ensure text is updated
+        
+        setIsAnalyzing(true);
+        setDetectionStatus('Analyzing…');
+        try {
+          await onSentenceEnd(sentenceForAnalysis, result.confidence);
+        } finally {
+          setIsAnalyzing(false);
+          setDetectionStatus('');
+        }
+      }
+    }
+  }, [onSentenceEnd]);
 
   const editor = useEditor({
     extensions: [
@@ -31,8 +221,12 @@ const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelec
       Bold,
       Italic,
       History,
+      CompletedSentence,
+      Placeholder.configure({
+        placeholder: 'Start with a hunch, goal, or observation…',
+      }),
     ],
-    content: prompt || '<p>Start writing here...</p>',
+    content: '<p></p>',
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
       const text = editor.getText();
@@ -40,32 +234,299 @@ const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelec
       const sentences = text.split(/[.!?]+/).filter(line => line.trim().length > 0).length;
       setWordCount(words);
       setSentenceCount(sentences);
+      
+      // Log cursor position during updates when editing
+      if (isEditingRef.current) {
+        const cursorPos = editor.state.selection.from;
+        console.log(`🔍 onUpdate while editing - cursor at position: ${cursorPos}`);
+      }
+      
+      // Clear processed sentences if text was significantly reduced (user deleted content)
+      if (text.length < previousText.length - 10) {
+        processedSentencesRef.current.clear();
+        console.log('Text reduced significantly, clearing processed sentences');
+      }
+      
+      // Proactively mark completed sentences on every update (but don't move cursor)
+      if (!isEditingRef.current) {
+        markCompletedSentencesProactively(editor);
+      }
+      
+      // Check for sentence end and trigger LLM if needed
+      checkSentenceEnd(text, editor);
+      
+      // Update previous text for comparison
+      setPreviousText(text);
     },
     editorProps: {
       attributes: {
         class: 'narrative-editor-content',
+        'data-gramm': 'false',
+        'data-gramm_editor': 'false',
+        'data-enable-grammarly': 'false',
+        spellcheck: 'false',
+        autocomplete: 'off',
+        autocorrect: 'off',
+        autocapitalize: 'off',
       },
       handleKeyDown: (view, event) => {
+        // Update keystroke timing for pause detection
+        lastKeystrokeTimeRef.current = Date.now();
+        
+        // Check if cursor is inside a completed sentence
+        const cursorPos = view.state.selection.from;
+        const marks = view.state.doc.resolve(cursorPos).marks();
+        const isInCompletedSentence = marks.some((mark: any) => mark.type.name === 'completedSentence');
+        
+        // If cursor is in a completed sentence and we're not in editing mode, block typing
+        if (isInCompletedSentence && !isEditingRef.current) {
+          console.log('🚫 Blocking keystroke in completed sentence - double-click to edit');
+          event.preventDefault();
+          return true; // Block the keystroke
+        }
+        
+        // Log cursor position when in editing mode for debugging
+        if (isEditingRef.current) {
+          const cursorPos = view.state.selection.from;
+          console.log(`🔍 Keystroke while editing - cursor at position: ${cursorPos}, key: ${event.key}`);
+          
+          // Reset the editing timeout on every keystroke to keep editing mode active
+          if (editingTimeoutRef.current) {
+            clearTimeout(editingTimeoutRef.current);
+          }
+          editingTimeoutRef.current = setTimeout(() => {
+            if (isEditingRef.current) {
+              isEditingRef.current = false;
+              setIsEditingState(false);
+              setEditingPosition(null);
+              editingTimeoutRef.current = null;
+              console.log('🔓 Editing timeout after keystroke inactivity - clearing editing mode');
+            }
+          }, 3000); // 3 seconds after last keystroke
+        }
+        
+        // If user was editing and presses Enter or Escape, handle accordingly
+        if (isEditingRef.current) {
+          if (event.key === 'Enter') {
+            console.log('💾 Enter pressed - saving sentence and clearing editing mode');
+            event.preventDefault(); // Prevent default Enter behavior (line break)
+            finishEditingSentence(); // Save the sentence
+            return true; // Block the keystroke to prevent line break
+          } else if (event.key === 'Escape') {
+            console.log('🔓 Escape pressed - clearing editing mode without saving');
+            isEditingRef.current = false;
+            setIsEditingState(false);
+            setEditingPosition(null);
+            if (editingTimeoutRef.current) {
+              clearTimeout(editingTimeoutRef.current);
+              editingTimeoutRef.current = null;
+            }
+          }
+        }
+        
         // Debug log to see what keys are being pressed
-        console.log('Key pressed:', event.key, event.code);
+        // console.log('Key pressed:', event.key, event.code);
         
         // Let all keys work normally except for specific overrides
         if (event.key === ' ') {
-          console.log('Space key - should add space, not new line');
+          // console.log('Space key - should add space, not new line');
           return false; // Let default behavior handle space
         }
         
         return false; // Let default behavior handle all other keys
       },
+      handleClick: (view, pos, event) => {
+        const target = event.target as HTMLElement;
+        
+        // Check if clicked on a completed sentence
+        if (target.closest('.completed-sentence')) {
+          const sentenceElement = target.closest('.completed-sentence') as HTMLElement;
+          console.log('🖱️ Clicked on completed sentence (read-only):', sentenceElement.textContent);
+          
+          // Move cursor to the end of the document instead of inside the completed sentence
+          const documentEnd = view.state.doc.content.size;
+          editor?.commands.setTextSelection(documentEnd);
+          
+          event.preventDefault();
+          return true;
+        } else {
+          // Only clear editing mode if clicked outside the editor content area
+          if (isEditingRef.current) {
+            const isInsideEditor = (event.target as HTMLElement)?.closest('.narrative-editor');
+            if (!isInsideEditor) {
+              console.log('🔓 Clicked outside editor - clearing editing mode');
+              isEditingRef.current = false;
+              setIsEditingState(false);
+              setEditingPosition(null);
+              if (editingTimeoutRef.current) {
+                clearTimeout(editingTimeoutRef.current);
+                editingTimeoutRef.current = null;
+              }
+            } else {
+              console.log('🛑 Clicked inside editor - keeping editing mode');
+            }
+          }
+        }
+        
+        return false;
+      },
+      handleDoubleClick: (view, pos, event) => {
+        const target = event.target as HTMLElement;
+        
+        // Check if double-clicked on a completed sentence
+        if (target.closest('.completed-sentence')) {
+          const sentenceElement = target.closest('.completed-sentence') as HTMLElement;
+          console.log('✏️ Double-clicked to edit sentence:', sentenceElement.textContent);
+          
+          // Clear any existing timeout
+          if (editingTimeoutRef.current) {
+            clearTimeout(editingTimeoutRef.current);
+          }
+          
+          // Set editing flag to prevent re-marking during editing
+          isEditingRef.current = true;
+          setIsEditingState(true);
+          console.log('🔒 Editing mode enabled - proactive marking disabled');
+          
+          // Get the position of the clicked element
+          const position = view.posAtDOM(sentenceElement, 0);
+          const endPosition = view.posAtDOM(sentenceElement, sentenceElement.childNodes.length);
+          
+          // Store the editing position for the save button
+          setEditingPosition({ from: position, to: endPosition });
+          
+          console.log(`📝 Editing sentence range: ${position}-${endPosition}`);
+          
+          // Select the sentence text using setTextSelection
+          editor?.commands.setTextSelection({ from: position, to: endPosition });
+          
+          // Remove the completed sentence mark to allow editing
+          editor?.commands.unmarkCompletedSentence();
+          
+          console.log('Removed completed sentence mark for editing');
+          
+          // Set a timeout to disable editing mode after 10 seconds of inactivity
+          editingTimeoutRef.current = setTimeout(() => {
+            if (isEditingRef.current) {
+              isEditingRef.current = false;
+              setIsEditingState(false);
+              setEditingPosition(null);
+              editingTimeoutRef.current = null;
+              console.log('🔓 Editing timeout - clearing editing mode');
+            }
+          }, 10000); // 10 seconds timeout
+          
+          event.preventDefault();
+          return true;
+        }
+        
+        return false;
+      },
+      handleDOMEvents: {
+        mouseover: (view, event) => {
+          const target = event.target as HTMLElement;
+          
+          // Check if hovering over a completed sentence
+          if (target.closest('.completed-sentence')) {
+            const sentenceElement = target.closest('.completed-sentence') as HTMLElement;
+            console.log('👆 Hovering over completed sentence:', sentenceElement.textContent);
+          }
+          
+          return false;
+        },
+        mouseout: (view, event) => {
+          const target = event.target as HTMLElement;
+          
+          // Check if leaving a completed sentence
+          if (target.closest('.completed-sentence')) {
+            const sentenceElement = target.closest('.completed-sentence') as HTMLElement;
+            console.log('👋 Left completed sentence:', sentenceElement.textContent);
+          }
+          
+          return false;
+        },
+      },
     },
   });
   
-  // Initialize with prompt
-  useEffect(() => {
-    if (prompt && editor && editor.getText().trim() === '') {
-      editor.commands.setContent(prompt);
+  // Function to save/finish editing a sentence
+  const finishEditingSentence = useCallback(() => {
+    if (isEditingRef.current && editor && editingPosition) {
+      console.log('💾 Finishing sentence editing and re-marking as completed');
+      
+      // Clear editing state
+      isEditingRef.current = false;
+      setIsEditingState(false);
+      setEditingPosition(null);
+      
+      // Clear timeout
+      if (editingTimeoutRef.current) {
+        clearTimeout(editingTimeoutRef.current);
+        editingTimeoutRef.current = null;
+      }
+      
+      // Re-mark completed sentences after a brief delay
+      setTimeout(() => {
+        markCompletedSentencesProactively(editor);
+      }, 100);
     }
-  }, [prompt, editor]);
+  }, [editor, editingPosition, markCompletedSentencesProactively]);
+
+  // Function to position save button next to the editing sentence
+  const positionSaveButton = useCallback(() => {
+    if (!saveButtonRef.current || !editingPosition || !editor) return;
+
+    // Find the sentence element being edited
+    const editorElement = document.querySelector('.narrative-editor-content');
+    if (!editorElement) return;
+
+    // Get the DOM position of the editing range
+    const view = editor.view;
+    const { from } = editingPosition;
+    
+    try {
+      const coords = view.coordsAtPos(from);
+      const editorRect = editorElement.getBoundingClientRect();
+      
+      // Position the button to the right of the sentence, aligned with its top
+      const buttonElement = saveButtonRef.current;
+      buttonElement.style.left = `${coords.right + 8}px`; // 8px gap from sentence
+      buttonElement.style.top = `${coords.top - 10}px`; // Moved up by 36px from previous position (-2px)
+      
+      console.log(`📍 Positioned save button at (${coords.right + 8}, ${coords.top - 38})`);
+    } catch (error) {
+      console.error('❌ Error positioning save button:', error);
+    }
+  }, [editingPosition, editor]);
+  
+  // Periodically check for sentence endings when user has paused
+  useEffect(() => {
+    if (!editor) return;
+    
+    const interval = setInterval(() => {
+      const currentText = editor.getText();
+      // Always check if there's text, regardless of whether it changed
+      // This is important for detecting pauses
+      if (currentText.trim()) {
+        checkSentenceEnd(currentText, editor);
+      }
+    }, 500); // Check every 500ms
+
+    return () => clearInterval(interval);
+  }, [editor, checkSentenceEnd]);
+
+  // Position save button when editing position changes
+  useEffect(() => {
+    if (editingPosition && isEditingState) {
+      // Small delay to ensure DOM is updated
+      setTimeout(() => {
+        positionSaveButton();
+      }, 50);
+    }
+  }, [editingPosition, isEditingState, positionSaveButton]);
+  
+  // Remove the useEffect that was setting prompt content
+  // The editor will now always start empty and show the CSS placeholder
 
   const handleClick = () => {
     if (onSentenceSelect && editor) {
@@ -86,12 +547,28 @@ const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelec
           editor={editor} 
           onClick={handleClick}
         />
+        
+        {/* Save button for editing mode */}
+        {editingPosition && isEditingState && (
+          <button
+            ref={saveButtonRef}
+            className="sentence-save-button"
+            onClick={finishEditingSentence}
+            title="Save changes"
+          >
+            <IoSaveSharp />
+          </button>
+        )}
       </div>
       
       <div className="narrative-footer">
         <div className="narrative-stats">
           <span>{sentenceCount} sentences</span>
           <span>{wordCount} words</span>
+          {isAnalyzing && <span className="ai-analyzing">Analyzing…</span>}
+          {detectionStatus && !isAnalyzing && (
+            <span className="detection-status">{detectionStatus}</span>
+          )}
         </div>
       </div>
     </div>

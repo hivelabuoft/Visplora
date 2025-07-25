@@ -7,7 +7,7 @@ import DatasetExplorer from '../components/DatasetExplorer';
 import NarrativeLayer from '../components/NarrativeLayer';
 import { EmptyCanvas, EmptyTimeline, AnalyzingState } from '../components/EmptyStates';
 import ReactFlowCanvas from '../components/ReactFlowCanvas';
-import LondonDashboard from '../dashboard3/page'; //this should be a different input after you have the right component for dashboard
+import LondonDashboard from '../london/page'; //this should be a different input after you have the right component for dashboard
 import { interactionLogger } from '../../lib/interactionLogger';
 import '../../styles/dataExplorer.css';
 import '../../styles/narrativeLayer.css';
@@ -209,6 +209,15 @@ export default function NarrativePage() {
             {showDashboard && shouldShowLondonDashboard ? (
               <ReactFlowCanvas 
                 showDashboard={true}
+                dashboardConfig={{
+                  name: 'London Housing Dashboard',
+                  width: 1500,
+                  height: 1200,
+                  minWidth: 800,
+                  minHeight: 600,
+                  maxWidth: 1500,
+                  maxHeight: 1200,
+                }}
               >
                 <LondonDashboard />
               </ReactFlowCanvas>
