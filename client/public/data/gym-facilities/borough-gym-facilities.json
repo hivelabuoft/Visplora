@@ -878,5 +878,87 @@
       "facility_type": "Rowing Club",
       "count": 16
     }
+  ],
+  "Tower Hamlets": [
+    {
+      "facility_type": "Yoga Studio",
+      "count": 20
+    },
+    {
+      "facility_type": "Swimming Pool",
+      "count": 29
+    },
+    {
+      "facility_type": "Community Sports Centre",
+      "count": 18
+    },
+    {
+      "facility_type": "Shooting Range",
+      "count": 40
+    },
+    {
+      "facility_type": "Table Football Club",
+      "count": 38
+    },
+    {
+      "facility_type": "Sports Hall",
+      "count": 19
+    },
+    {
+      "facility_type": "Chain Gym",
+      "count": 37
+    },
+    {
+      "facility_type": "Premium Gym",
+      "count": 19
+    },
+    {
+      "facility_type": "Tennis Court",
+      "count": 31
+    },
+    {
+      "facility_type": "Squash Court",
+      "count": 32
+    },
+    {
+      "facility_type": "Equestrian Centre",
+      "count": 23
+    },
+    {
+      "facility_type": "Multi-sport Centre",
+      "count": 15
+    },
+    {
+      "facility_type": "Recreation Ground",
+      "count": 36
+    },
+    {
+      "facility_type": "Climbing Wall",
+      "count": 37
+    },
+    {
+      "facility_type": "Water Sports Centre",
+      "count": 22
+    },
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 36
+    },
+    {
+      "facility_type": "Golf Course",
+      "count": 25
+    },
+    {
+      "facility_type": "Dance Studio",
+      "count": 33
+    },
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 31
+    },
+    {
+      "facility_type": "Skate Park",
+      "count": 15
+    }
   ]
 }

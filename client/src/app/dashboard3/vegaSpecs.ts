@@ -1398,8 +1398,8 @@ export const gymPieChartSpec = (
             legend: null
           },
           stroke: {
-            condition: { param: "hover_gym_pie", value: "#272729" },
-            value: "#272729"
+            condition: { param: "hover_gym_pie", value: "white" },
+            value: "white"
           },
           strokeWidth: {
             condition: { param: "hover_gym_pie", value: 1 },
@@ -1423,7 +1423,7 @@ export const gymPieChartSpec = (
           baseline: "middle",
           fontSize: 18,
           fontWeight: "bold",
-          color: "#fff",
+          color: "#000",
           dy: -8
         },
         encoding: {
@@ -1437,7 +1437,7 @@ export const gymPieChartSpec = (
           align: "center",
           baseline: "middle",
           fontSize: 10,
-          color: "#d1d5db",
+          color: "#888",
           dy: 10
         },
         encoding: {

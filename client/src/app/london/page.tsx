@@ -1,12 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import DashboardPlayground from '../components/DashboardPlayground';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { VegaLite } from 'react-vega';
-import { boroughIdToName } from './boroughMapping';
-import { boroughMapSpec, smallBoroughMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec, housePriceTimelineChartSpec, ethnicityMinorityGroupsBarChartSpec, gymPieChartSpec, libraryLineChartSpec } from './vegaSpecs';
-import LSOAMap from './LSOAMap';
+import { boroughIdToName } from '../dashboard3/boroughMapping';
+import { boroughMapSpec, smallBoroughMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec, housePriceTimelineChartSpec, ethnicityMinorityGroupsBarChartSpec, gymPieChartSpec, libraryLineChartSpec } from '../dashboard3/vegaSpecs';
+import LSOAMap from '../dashboard3/LSOAMap';
 import { 
   loadPopulationData, 
   processPopulationData, 
@@ -17,7 +16,7 @@ import {
   BoroughPopulationMetrics,
   PopulationData,
   PopulationTimelineData
-} from './populationData';
+} from '../dashboard3/populationData';
 import { 
   getIncomeTimelineDataForBorough,
   getCurrentMeanIncome,
@@ -25,7 +24,7 @@ import {
   formatIncome,
   getIncomeChangePercentage,
   IncomeTimelineData
-} from './incomeData';
+} from '../dashboard3/incomeData';
 import { 
   loadCrimeData,
   processBoroughCrimeStats,
@@ -40,9 +39,8 @@ import {
   getBoroughCrimeCategories,
   getBoroughCrimeCategoriesComparison,
   CRIME_CATEGORY_MAPPING,
-  CRIME_CATEGORY_COLORS,
-  SAMPLE_BOROUGH_CRIME_DATA_COMPARISON
-} from './crimeData';
+  CRIME_CATEGORY_COLORS
+} from '../dashboard3/crimeData';
 import { 
   CountryOfBirthData,
   CountryOfBirthStats,
@@ -51,21 +49,21 @@ import {
   getCountryOfBirthStats,
   getCountryOfBirthComparison,
   getAvailableYears
-} from './countryOfBirthData';
+} from '../dashboard3/countryOfBirthData';
 import { 
   SchoolData,
   BoroughSchoolStats,
   loadSchoolData,
   getBoroughSchoolStats,
   generateMockSchoolStats
-} from './schoolData';
+} from '../dashboard3/schoolData';
 import { 
   HousePriceData,
   HousePriceTimelineData,
   loadHousePriceData,
   getHousePriceTimelineForBorough,
   formatPrice
-} from './housePriceData';
+} from '../dashboard3/housePriceData';
 import { 
   EthnicityData,
   BoroughEthnicityStats,
@@ -73,8 +71,8 @@ import {
   processBoroughEthnicityStats,
   formatPercentage as formatEthnicityPercentage,
   formatNumber as formatEthnicityNumber
-} from './ethnicityData';
-import { generateMockLibrariesData } from './libraryData';
+} from '../dashboard3/ethnicityData';
+import { generateMockLibrariesData } from '../dashboard3/libraryData';
 
 // Dashboard 3 - London Numbers Style Dashboard
 const Dashboard3: React.FC = () => {
@@ -482,139 +480,6 @@ const Dashboard3: React.FC = () => {
     setMockSchoolStats(null);
     setLsoaEthnicityStats(null);
   };
-
-  // Define all dashboard elements for AI assistant
-  const dashboardElements = [
-    {
-      id: 'borough-details',
-      name: 'Borough Details',
-      type: 'kpi',
-      description: 'Shows the currently selected borough name and basic information',
-      category: 'selector',
-      dataFields: ['borough_name']
-    },
-    {
-      id: 'total-population',
-      name: 'Total Population',
-      type: 'kpi',
-      description: 'Shows the total population count for the selected borough',
-      category: 'population',
-      dataFields: ['population_count']
-    },
-    {
-      id: 'population-change',
-      name: 'Population Change',
-      type: 'kpi',
-      description: 'Shows the percentage change in population over time',
-      category: 'population',
-      dataFields: ['population_change_percentage']
-    },
-    {
-      id: 'population-density',
-      name: 'Population Density',
-      type: 'kpi',
-      description: 'Shows the population density per square kilometer',
-      category: 'population',
-      dataFields: ['population_density']
-    },
-    {
-      id: 'mean-house-price',
-      name: 'Mean House Price',
-      type: 'kpi',
-      description: 'Shows the average house price for the selected borough',
-      category: 'housing',
-      dataFields: ['mean_house_price']
-    },
-    {
-      id: 'mean-household-income',
-      name: 'Mean Household Income',
-      type: 'kpi',
-      description: 'Shows the average household income for the selected borough',
-      category: 'income',
-      dataFields: ['mean_household_income']
-    },
-    {
-      id: 'lsoa-map',
-      name: 'LSOA Level Borough Map',
-      type: 'interactive map',
-      description: 'Interactive map showing Lower Super Output Area (LSOA) boundaries within the selected borough',
-      category: 'geography',
-      dataFields: ['lsoa_boundaries', 'geographic_data']
-    },
-    {
-      id: 'borough-map',
-      name: 'Borough Map',
-      type: 'interactive map',
-      description: 'Interactive map showing the selected borough within London context',
-      category: 'geography',
-      dataFields: ['borough_boundaries', 'london_context']
-    },
-    {
-      id: 'population-growth-projections',
-      name: 'Population Growth & Projections',
-      type: 'multi series line chart',
-      description: 'Line chart showing population growth over time with projections',
-      category: 'population',
-      dataFields: ['year', 'population_count', 'projected_population']
-    },
-    {
-      id: 'borough-crime-stats',
-      name: 'Borough Crime Stats',
-      type: 'modified bar chart',
-      description: 'Bar chart comparing crime statistics across different boroughs',
-      category: 'crime',
-      dataFields: ['borough_name', 'crime_count', 'crime_rate']
-    },
-    {
-      id: 'mean-income-timeline',
-      name: 'Mean Income Timeline',
-      type: 'multi series line chart',
-      description: 'Line chart showing mean and medianhousehold income changes over time',
-      category: 'income',
-      dataFields: ['year', 'mean_income', 'income_change']
-    },
-    {
-      id: 'borough-crime-categories',
-      name: 'Borough Crime Categories',
-      type: 'pie chart',
-      description: 'Pie chart showing breakdown of different crime categories in the selected borough',
-      category: 'crime',
-      dataFields: ['crime_category', 'crime_count', 'crime_percentage']
-    },
-    {
-      id: 'school-education-facilities',
-      name: 'School Education Facilities',
-      type: 'bar chart',
-      description: 'Bar chart showing relationship between education facilities and other metrics',
-      category: 'education',
-      dataFields: ['education_facilities', 'population', 'quality_metrics']
-    },
-    {
-      id: 'house-price-timeline',
-      name: 'House Price Timeline',
-      type: 'multi series line chart',
-      description: 'Line chart showing house price changes over time for the selected borough',
-      category: 'housing',
-      dataFields: ['year', 'house_price', 'price_change']
-    },
-    {
-      id: 'ethnicity-minority-groups',
-      name: 'Ethnicity Minority Groups',
-      type: 'bar chart',
-      description: 'Bar chart showing ethnic diversity and minority group distributions',
-      category: 'demographics',
-      dataFields: ['ethnicity', 'population_count', 'percentage']
-    },
-    {
-      id: 'country-of-birth',
-      name: 'Country of Birth',
-      type: 'pie chart',
-      description: 'Pie chart showing distribution of residents by country of birth',
-      category: 'demographics',
-      dataFields: ['country_of_birth', 'population_count', 'percentage']
-    }
-  ];
-
   const GYM_COLOR_RANGE = ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#1E40AF", "#F59E42", "#F472B6", "#F87171"];
 
   function useGymFacilities({ lsoa, borough, viewLevel }: { lsoa: string, borough: string, viewLevel: 'lsoa' | 'borough' }) {
@@ -651,51 +516,35 @@ const Dashboard3: React.FC = () => {
   });
 
   return (
-    <DashboardPlayground
-      isActive={true}
-      dashboardTitle="London Numbers Dashboard"
-      dashboardType="london-style"
-      onApplyFilters={handleAIFilters}
-      dashboardFilters={dashboardFilters}
-      dashboardElements={dashboardElements}
-      availableFilters={{
-        boroughs: ['Brent', 'Camden', 'Westminster', 'Kensington and Chelsea', 'Hammersmith and Fulham', 'Wandsworth', 'Lambeth', 'Southwark', 'Tower Hamlets', 'Hackney', 'Islington', 'Haringey', 'Enfield', 'Barnet', 'Harrow', 'Hillingdon', 'Ealing', 'Hounslow', 'Richmond upon Thames', 'Kingston upon Thames', 'Merton', 'Sutton', 'Croydon', 'Bromley', 'Lewisham', 'Greenwich', 'Bexley', 'Havering', 'Redbridge', 'Newham', 'Waltham Forest', 'Barking and Dagenham', 'City of London'],
-        crimeCategories: Object.values(CRIME_CATEGORY_MAPPING),
-        birthYears: birthYears,
-        baseYears: birthYears
-      }}
-    >
-      <div className="london-dashboard p-6 rounded-lg text-[#1A3C4A]" style={{
-        width: '100%',
-        backgroundColor: '#E3F2FA',
-        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
-      }}>
-        
-        {/* Header */}
-        <div className='flex items-center justify-between mb-4' style={{ borderBottom: '1px solid #888' }}>
-          <div>
-            <h1 className="relative text-[32px] font-light tracking-widest mb-2 p-0 text-[#2B7A9B]">
-              LONDON IN <span className="bg-[#2B7A9B] font-semibold bg-clip-text text-transparent">NUMBERS</span>
-            </h1>
-            <p className="absolute top-17 left-8 text-[14px] text-[#4A6A7B] font-light">
-              Data Driven Insights for the Capital City - One Borough at a Time
-            </p>
-          </div>
-          <div className="flex gap-4 items-center">
-            <div className="text-[12px] text-[#4A6A7B] text-right">
-              Charts based on data from the<br />
-              <strong>2023</strong> census, where applicable
-            </div>
-            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">💬</div>
-            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">📄</div>
-            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">❓</div>
-          </div>
+    <div className="london-dashboard p-6 rounded-lg text-[#1A3C4A]" style={{
+      width: '100%',
+      backgroundColor: '#E3F2FA',
+      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+    }}>
+      {/* Header */}
+      <div className='flex items-center justify-between mb-4' style={{ borderBottom: '1px solid #888' }}>
+        <div>
+          <h1 className="relative text-[32px] font-light tracking-widest mb-2 p-0 text-[#2B7A9B]">
+            LONDON IN <span className="bg-[#2B7A9B] font-semibold bg-clip-text text-transparent">NUMBERS</span>
+          </h1>
+          <p className="absolute top-15 left-6 text-[14px] text-[#4A6A7B] font-light">
+            Data Driven Insights for the Capital City - One Borough at a Time
+          </p>
         </div>
-
-        {/* Grid Container */}
-        <div className="grid grid-cols-8 grid-rows-8 gap-4" style={{ gridTemplateRows: '100px repeat(7, 110px)'}}>
-          {/* Row 1: KPI Indicators (1x1 each) */}
-          <div className="col-span-8 row-span-1 grid grid-cols-6 gap-4">
+        <div className="flex gap-4 items-center">
+          <div className="text-[12px] text-[#4A6A7B] text-right">
+            Charts based on data from the<br />
+            <strong>2023</strong> census, where applicable
+          </div>
+          <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">💬</div>
+          <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">📄</div>
+          <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">❓</div>
+        </div>
+      </div>
+      {/* Grid Container */}
+      <div className="grid grid-cols-8 grid-rows-8 gap-4" style={{ gridTemplateRows: '100px repeat(7, 110px)'}}>
+        {/* Row 1: KPI Indicators (1x1 each) */}
+        <div className="col-span-8 row-span-1 grid grid-cols-6 gap-4">
             {/* Borough Details */}
             <LinkableCard 
               className='text-center p-2 col-span-1 row-span-1 bg-white border border-[#BFD9EA] text-[#1A3C4A]'
@@ -1385,7 +1234,6 @@ const Dashboard3: React.FC = () => {
           )}
         </div>
       </div>
-    </DashboardPlayground>
   );
 };
 
