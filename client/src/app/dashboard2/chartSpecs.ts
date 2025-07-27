@@ -5,7 +5,7 @@ import { VegaLiteSpec } from '../types/interfaces';
  */
 
 export const createDepartmentRetentionChart = (): VegaLiteSpec => ({
-  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
   width: 100,
   height: 70,
   padding: 0,
@@ -29,7 +29,7 @@ export const createDepartmentRetentionChart = (): VegaLiteSpec => ({
 });
 
 export const createGenderAttritionDonutChart = (): VegaLiteSpec => ({
-  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
   width: 100,
   height: 120,
   padding: 0,
@@ -53,7 +53,7 @@ export const createGenderAttritionDonutChart = (): VegaLiteSpec => ({
 });
 
 export const createAgeGroupBarChart = (): VegaLiteSpec => ({
-  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
   width: 200,
   height: 150,
   padding: 0,
@@ -87,7 +87,7 @@ export const createAgeGroupBarChart = (): VegaLiteSpec => ({
 });
 
 export const createDistanceFromHomeChart = (): VegaLiteSpec => ({
-  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
   height: 250,
   width: 300,
   padding: 0,

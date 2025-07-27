@@ -100,34 +100,41 @@ const ReactFlowCanvas: React.FC<ReactFlowCanvasProps> = ({
     [setEdges],
   );
 
-  // Add dashboard node when showDashboard becomes true
+  // Add dashboard node when showDashboard becomes true (only for initial creation)
   useEffect(() => {
-    if (showDashboard && children) {
-      const dashboardNode: Node = {
-        id: 'london-dashboard',
-        position: { x: 50, y: 50 },
-        data: { 
-          label: 'London Dashboard',
-          dashboardComponent: children 
-        },
-        type: 'dashboardNode',
-        style: {
-          width: '1200px',
-          height: '1000px',
-          border: '2px solid #0891b2',
-          borderRadius: '8px',
-          background: 'white',
-          overflow: 'hidden',
-        },
-        draggable: true,
-        selected: true, // Auto-select the node so resize handles appear
-        selectable: true,
-      };
-
+    if (showDashboard) {
       setNodes((nds) => {
-        // Remove both placeholder and any existing dashboard nodes to prevent duplicates
-        const filtered = nds.filter(node => node.id !== 'placeholder' && node.id !== 'london-dashboard');
-        return [...filtered, dashboardNode];
+        const existingDashboard = nds.find(node => node.id === 'london-dashboard');
+        
+        if (!existingDashboard) {
+          // Create new dashboard node only if it doesn't exist
+          const dashboardNode: Node = {
+            id: 'london-dashboard',
+            position: { x: 50, y: 50 },
+            data: { 
+              label: 'London Dashboard',
+              dashboardComponent: children,
+              config: dashboardConfig
+            },
+            type: 'dashboardNode',
+            style: {
+              width: dashboardConfig?.width ? `${dashboardConfig.width}px` : '1200px',
+              height: dashboardConfig?.height ? `${dashboardConfig.height}px` : '1000px',
+              border: '2px solid #0891b2',
+              borderRadius: '8px',
+              background: 'white',
+              overflow: 'hidden',
+            },
+            draggable: true,
+            selected: true, // Auto-select the node so resize handles appear
+            selectable: true,
+          };
+
+          // Remove placeholder and add new dashboard node
+          const filtered = nds.filter(node => node.id !== 'placeholder');
+          return [...filtered, dashboardNode];
+        }
+        return nds; // No change if dashboard already exists
       });
     } else {
       // Remove dashboard node and show placeholder
@@ -140,7 +147,26 @@ const ReactFlowCanvas: React.FC<ReactFlowCanvasProps> = ({
         return filtered;
       });
     }
-  }, [showDashboard, children, setNodes]);
+  }, [showDashboard, setNodes, dashboardConfig]);
+
+  // Separate effect to update dashboard content without recreating the node
+  useEffect(() => {
+    if (showDashboard && children) {
+      setNodes((nds) => 
+        nds.map(node => 
+          node.id === 'london-dashboard' 
+            ? { 
+                ...node, 
+                data: { 
+                  ...node.data, 
+                  dashboardComponent: children 
+                } 
+              }
+            : node
+        )
+      );
+    }
+  }, [children, showDashboard, setNodes]);
 
   return (
     <div className="w-full h-full">

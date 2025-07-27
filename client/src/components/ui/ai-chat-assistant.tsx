@@ -911,7 +911,7 @@ FOR SINGLE DATASET: {
 
 FOR MULTIPLE DATASETS:
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
   "description": "Multi-layer chart with two separate data sources",
   "width": ...,
   "height": ...,

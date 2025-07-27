@@ -67,7 +67,7 @@ const timeSeriesData = {
 
 // Vega-Lite specs for different chart types - fixed for TypeScript compatibility
 const barChartSpec = {
-  $schema: 'https://vega.github.io/schema/vega-lite/v5.json' as const,
+  $schema: 'https://vega.github.io/schema/vega-lite/v6.json' as const,
   width: 500,
   height: 300,
   mark: { type: 'bar' as const },
@@ -92,7 +92,7 @@ const barChartSpec = {
 };
 
 const lineChartSpec = {
-  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
   width: 500,
   height: 300,
   mark: {
@@ -150,7 +150,7 @@ const lineChartSpec = {
 };
 
 const heatmapSpec = {
-  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
   width: 500,
   height: 300,
   mark: 'rect' as const,
@@ -183,7 +183,7 @@ const heatmapSpec = {
 };
 
 const pieChartSpec = {
-  $schema: 'https://vega.github.io/schema/vega-lite/v5.json' as const,
+  $schema: 'https://vega.github.io/schema/vega-lite/v6.json' as const,
   width: 400,
   height: 400,
   transform: [

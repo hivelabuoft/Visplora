@@ -389,7 +389,7 @@ export default function NarrativePage() {
                 dashboardConfig={{
                   name: 'London Housing Dashboard',
                   width: 1500,
-                  height: 1200,
+                  height: 1000,
                   minWidth: 800,
                   minHeight: 600,
                   maxWidth: 1500,
