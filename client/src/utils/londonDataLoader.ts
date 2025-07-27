@@ -211,3 +211,332 @@ export const generateLondonDataContext = (categories: LondonDataCategory[]): str
   });
   return context;
 };
+
+// File Summary Interfaces
+export interface ColumnSummary {
+  name: string;
+  type: 'numeric' | 'categorical' | 'date' | 'text';
+  uniqueValues: number;
+  nullCount: number;
+  nullPercentage: number;
+  // Numeric specific
+  min?: number;
+  max?: number;
+  mean?: number;
+  median?: number;
+  stdDev?: number;
+  // Categorical specific
+  topValues?: { value: string; count: number; percentage: number }[];
+  // Date specific
+  minDate?: string;
+  maxDate?: string;
+  dateRange?: string;
+}
+
+export interface FileSummary {
+  file: LondonDataFile;
+  totalRows: number;
+  totalColumns: number;
+  fileSize: number;
+  lastAnalyzed: string;
+  completeness: number; // percentage of non-null values
+  columns: ColumnSummary[];
+  dataQuality: {
+    missingDataPercentage: number;
+    duplicateRows: number;
+    outlierCount: number;
+  };
+  preview: any[]; // sample rows
+  insights: string[];
+}
+
+// Statistical helper functions - optimized for large datasets
+const calculateNumericStats = (values: number[]) => {
+  if (values.length === 0) return {};
+  
+  // Use a more memory-efficient approach for large datasets
+  let min = Infinity;
+  let max = -Infinity;
+  let sum = 0;
+  
+  // Single pass for min, max, sum
+  for (let i = 0; i < values.length; i++) {
+    const val = values[i];
+    if (val < min) min = val;
+    if (val > max) max = val;
+    sum += val;
+  }
+  
+  const mean = sum / values.length;
+  
+  // Calculate variance in single pass
+  let varianceSum = 0;
+  for (let i = 0; i < values.length; i++) {
+    const diff = values[i] - mean;
+    varianceSum += diff * diff;
+  }
+  const variance = varianceSum / values.length;
+  const stdDev = Math.sqrt(variance);
+  
+  // For median, use sampling for very large datasets
+  let median;
+  if (values.length > 10000) {
+    // Sample-based median estimation for large datasets
+    const sampleSize = Math.min(1000, values.length);
+    const sample = [];
+    const step = Math.floor(values.length / sampleSize);
+    for (let i = 0; i < values.length; i += step) {
+      sample.push(values[i]);
+    }
+    sample.sort((a, b) => a - b);
+    median = sample.length % 2 === 0 
+      ? (sample[sample.length / 2 - 1] + sample[sample.length / 2]) / 2
+      : sample[Math.floor(sample.length / 2)];
+  } else {
+    const sorted = [...values].sort((a, b) => a - b);
+    median = sorted.length % 2 === 0 
+      ? (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2
+      : sorted[Math.floor(sorted.length / 2)];
+  }
+
+  return {
+    min: Math.round(min * 100) / 100,
+    max: Math.round(max * 100) / 100,
+    mean: Math.round(mean * 100) / 100,
+    median: Math.round(median * 100) / 100,
+    stdDev: Math.round(stdDev * 100) / 100
+  };
+};
+
+const determineColumnType = (values: any[]): 'numeric' | 'categorical' | 'date' | 'text' => {
+  const sampleSize = Math.min(100, values.length);
+  const sample = values.slice(0, sampleSize).filter(v => v !== '' && v != null);
+  
+  if (sample.length === 0) return 'text';
+  
+  // Check if numeric
+  const numericCount = sample.filter(v => !isNaN(Number(v)) && v !== '').length;
+  if (numericCount / sample.length > 0.8) return 'numeric';
+  
+  // Check if date
+  const dateCount = sample.filter(v => {
+    const date = new Date(v);
+    return !isNaN(date.getTime()) && v.toString().match(/\d{4}|\d{2}\/\d{2}|\d{2}-\d{2}/);
+  }).length;
+  if (dateCount / sample.length > 0.8) return 'date';
+  
+  // Check if categorical (low unique values relative to total)
+  const uniqueValues = new Set(sample).size;
+  if (uniqueValues / sample.length < 0.3 && uniqueValues < 20) return 'categorical';
+  
+  return 'text';
+};
+
+const getTopValues = (values: any[], limit = 5) => {
+  const counts = new Map<string, number>();
+  
+  // For very large datasets, use sampling to avoid memory issues
+  const sampleValues = values.length > 50000 ? 
+    values.filter((_, i) => i % Math.ceil(values.length / 10000) === 0) : 
+    values;
+  
+  sampleValues.forEach(v => {
+    if (v !== '' && v != null) {
+      const key = String(v);
+      counts.set(key, (counts.get(key) || 0) + 1);
+    }
+  });
+  
+  return Array.from(counts.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit)
+    .map(([value, count]) => ({
+      value,
+      count: Math.round(count * (values.length / sampleValues.length)), // Extrapolate to full dataset
+      percentage: Math.round((count / sampleValues.length) * 100 * 100) / 100
+    }));
+};
+
+// Generate comprehensive file summary
+export const generateFileSummary = async (file: LondonDataFile): Promise<FileSummary> => {
+  try {
+    // Load full data
+    const fullData = await getFullCSVData(file);
+    const loadedFile = await loadCSVFile(file);
+    
+    if (!loadedFile.isLoaded || fullData.length === 0) {
+      throw new Error(`Failed to load data for ${file.name}`);
+    }
+    
+    const columns = loadedFile.columns;
+    const columnSummaries: ColumnSummary[] = [];
+    const isLargeDataset = fullData.length > 100000;
+    
+    // For very large datasets, use sampling for analysis but full count for totals
+    const analysisData = isLargeDataset ? 
+      fullData.filter((_, i) => i % Math.ceil(fullData.length / 50000) === 0) : 
+      fullData;
+    
+    console.log(`Analyzing ${file.name}: ${fullData.length} rows, using ${analysisData.length} rows for analysis`);
+    
+    // Analyze each column with chunked processing
+    for (const columnName of columns) {
+      const columnValues = fullData.map(row => row[columnName]);
+      const analysisValues = analysisData.map(row => row[columnName]);
+      const nonNullValues = analysisValues.filter(v => v !== '' && v != null);
+      
+      // Count nulls from full dataset for accuracy
+      const nullCount = columnValues.filter(v => v === '' || v == null).length;
+      
+      const columnType = determineColumnType(nonNullValues);
+      
+      // Calculate unique values more efficiently for large datasets
+      let uniqueValues;
+      if (isLargeDataset) {
+        // Sample-based unique count estimation
+        const sampleSize = Math.min(10000, nonNullValues.length);
+        const sample = nonNullValues.slice(0, sampleSize);
+        const sampleUnique = new Set(sample).size;
+        uniqueValues = Math.round(sampleUnique * (nonNullValues.length / sampleSize));
+      } else {
+        uniqueValues = new Set(nonNullValues).size;
+      }
+      
+      const summary: ColumnSummary = {
+        name: columnName,
+        type: columnType,
+        uniqueValues,
+        nullCount,
+        nullPercentage: Math.round((nullCount / columnValues.length) * 100 * 100) / 100
+      };
+      
+      // Add type-specific analysis using sampled data
+      if (columnType === 'numeric') {
+        const numericValues = nonNullValues.map(v => parseFloat(v)).filter(v => !isNaN(v));
+        if (numericValues.length > 0) {
+          Object.assign(summary, calculateNumericStats(numericValues));
+        }
+      } else if (columnType === 'categorical') {
+        summary.topValues = getTopValues(nonNullValues);
+      } else if (columnType === 'date') {
+        const sampleDates = nonNullValues.slice(0, 1000); // Sample for date analysis
+        const dates = sampleDates.map(v => new Date(v)).filter(d => !isNaN(d.getTime()));
+        if (dates.length > 0) {
+          const sortedDates = dates.sort((a, b) => a.getTime() - b.getTime());
+          summary.minDate = sortedDates[0].toISOString().split('T')[0];
+          summary.maxDate = sortedDates[sortedDates.length - 1].toISOString().split('T')[0];
+          summary.dateRange = `${summary.minDate} to ${summary.maxDate}`;
+        }
+      }
+      
+      columnSummaries.push(summary);
+    }
+    
+    // Calculate overall statistics
+    const totalCells = fullData.length * columns.length;
+    const nullCells = columnSummaries.reduce((sum, col) => sum + col.nullCount, 0);
+    const completeness = Math.round(((totalCells - nullCells) / totalCells) * 100 * 100) / 100;
+    
+    // Detect duplicates with sampling for large datasets
+    let duplicateRows = 0;
+    if (isLargeDataset) {
+      // Sample-based duplicate detection
+      const sampleSize = Math.min(10000, fullData.length);
+      const sample = fullData.slice(0, sampleSize);
+      const sampleStrings = sample.map(row => JSON.stringify(row));
+      const uniqueSample = new Set(sampleStrings).size;
+      const sampleDuplicates = sampleSize - uniqueSample;
+      duplicateRows = Math.round(sampleDuplicates * (fullData.length / sampleSize));
+    } else {
+      const rowStrings = fullData.map(row => JSON.stringify(row));
+      const uniqueRows = new Set(rowStrings).size;
+      duplicateRows = fullData.length - uniqueRows;
+    }
+    
+    // Generate insights
+    const insights: string[] = [];
+    
+    if (isLargeDataset) {
+      insights.push(`Large dataset (${fullData.length.toLocaleString()} rows) - analysis based on statistical sampling`);
+    }
+    
+    if (completeness < 90) {
+      insights.push(`Data has ${100 - completeness}% missing values - consider data cleaning`);
+    }
+    
+    if (duplicateRows > 0) {
+      insights.push(`Found ~${duplicateRows.toLocaleString()} duplicate rows (${Math.round((duplicateRows / fullData.length) * 100)}%)`);
+    }
+    
+    const numericColumns = columnSummaries.filter(c => c.type === 'numeric').length;
+    const categoricalColumns = columnSummaries.filter(c => c.type === 'categorical').length;
+    
+    if (numericColumns > 0 && categoricalColumns > 0) {
+      insights.push(`Mixed data types: ${numericColumns} numeric and ${categoricalColumns} categorical columns - good for correlation analysis`);
+    }
+    
+    const highCardinalityColumns = columnSummaries.filter(c => c.uniqueValues > fullData.length * 0.8);
+    if (highCardinalityColumns.length > 0) {
+      insights.push(`High cardinality columns detected: ${highCardinalityColumns.map(c => c.name).join(', ')} - potential ID fields`);
+    }
+    
+    return {
+      file: loadedFile,
+      totalRows: fullData.length,
+      totalColumns: columns.length,
+      fileSize: loadedFile.size,
+      lastAnalyzed: new Date().toISOString(),
+      completeness,
+      columns: columnSummaries,
+      dataQuality: {
+        missingDataPercentage: Math.round(((nullCells / totalCells) * 100) * 100) / 100,
+        duplicateRows,
+        outlierCount: 0 // TODO: implement outlier detection
+      },
+      preview: fullData.slice(0, 10), // Show more preview rows
+      insights
+    };
+    
+  } catch (error) {
+    throw new Error(`Failed to generate summary for ${file.name}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+};
+
+// Process multiple files with progress tracking
+export const generateMultipleFileSummaries = async (
+  files: LondonDataFile[],
+  onProgress?: (current: number, total: number, fileName: string) => void
+): Promise<FileSummary[]> => {
+  const summaries: FileSummary[] = [];
+  
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    
+    try {
+      onProgress?.(i + 1, files.length, file.name);
+      const summary = await generateFileSummary(file);
+      summaries.push(summary);
+    } catch (error) {
+      console.error(`Failed to generate summary for ${file.name}:`, error);
+      // Create a basic error summary
+      summaries.push({
+        file,
+        totalRows: 0,
+        totalColumns: 0,
+        fileSize: 0,
+        lastAnalyzed: new Date().toISOString(),
+        completeness: 0,
+        columns: [],
+        dataQuality: {
+          missingDataPercentage: 100,
+          duplicateRows: 0,
+          outlierCount: 0
+        },
+        preview: [],
+        insights: [`Error loading file: ${error instanceof Error ? error.message : 'Unknown error'}`]
+      });
+    }
+  }
+  
+  return summaries;
+};

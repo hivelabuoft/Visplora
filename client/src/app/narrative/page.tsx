@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation';
 import NarrativeCanva from '../components/NarrativeCanva';
 import DatasetExplorer from '../components/DatasetExplorer';
 import NarrativeLayer from '../components/NarrativeLayer';
+import FileSummaryCanvas from '../components/FileSummaryCanvas';
 import { EmptyCanvas, EmptyTimeline, AnalyzingState } from '../components/EmptyStates';
 import ReactFlowCanvas from '../components/ReactFlowCanvas';
 import LondonDashboard from '../london/page'; //this should be a different input after you have the right component for dashboard
+import { generateMultipleFileSummaries, FileSummary } from '../../utils/londonDataLoader';
 import { interactionLogger } from '../../lib/interactionLogger';
 import '../../styles/dataExplorer.css';
 import '../../styles/narrativeLayer.css';
@@ -21,6 +23,14 @@ interface UserSession {
   sessionId?: string;
 }
 
+interface DatasetFile {
+  id: string;
+  name: string;
+  path: string;
+  description: string;
+  category?: string;
+}
+
 export default function NarrativePage() {
   const router = useRouter();
   const [userSession, setUserSession] = useState<UserSession | null>(null);
@@ -28,8 +38,13 @@ export default function NarrativePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
+  const [showNarrativeLayer, setShowNarrativeLayer] = useState(false);
   const [currentPrompt, setCurrentPrompt] = useState('');
   const [shouldShowLondonDashboard, setShouldShowLondonDashboard] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<DatasetFile[]>([]);
+  const [fileSummaries, setFileSummaries] = useState<FileSummary[]>([]);
+  const [summaryLoading, setSummaryLoading] = useState(false);
+  const [summaryError, setSummaryError] = useState<string>('');
 
   // Check authentication on mount
   useEffect(() => {
@@ -133,6 +148,7 @@ export default function NarrativePage() {
     
     setTimeout(() => {
       setIsAnalyzing(false);
+      setShowNarrativeLayer(true);
       
       // Show dashboard based on environment setting
       if (shouldShowLondonDashboard) {
@@ -195,6 +211,43 @@ export default function NarrativePage() {
     setIsAnalyzing(false);
   };
 
+  // Handle file selection from DatasetExplorer
+  const handleFileSelection = async (files: DatasetFile[]) => {
+    setSelectedFiles(files);
+    setSummaryError('');
+    
+    if (files.length === 0) {
+      setFileSummaries([]);
+      return;
+    }
+
+    setSummaryLoading(true);
+    try {
+      // Convert DatasetFile to LondonDataFile format for the utility
+      const londonDataFiles = files.map(file => ({
+        id: file.id,
+        name: file.name,
+        path: file.path,
+        category: file.category || 'uncategorized',
+        description: file.description,
+        size: 0,
+        columns: [],
+        sampleData: [],
+        totalRecords: 0,
+        isLoaded: false
+      }));
+
+      const summaries = await generateMultipleFileSummaries(londonDataFiles);
+      setFileSummaries(summaries);
+    } catch (error) {
+      console.error('Error generating file summaries:', error);
+      setSummaryError(error instanceof Error ? error.message : 'Failed to analyze selected files');
+      setFileSummaries([]);
+    } finally {
+      setSummaryLoading(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center">
@@ -239,7 +292,7 @@ export default function NarrativePage() {
       <div className="flex h-screen" style={{ height: isStudyMode ? 'calc(100vh - 40px)' : '100vh' }}>
         {/* Left Section - 40% (Data Explorer or Narrative Layer) */}
         <div className="w-2/5">
-          {showDashboard ? (
+          {showNarrativeLayer ? (
             <NarrativeLayer 
               prompt={currentPrompt}
               onSentenceEnd={handleSentenceEnd}
@@ -248,7 +301,8 @@ export default function NarrativePage() {
           ) : (
             <DatasetExplorer 
               onAnalysisRequest={handleAnalysisRequest}
-              isAnalyzing={isAnalyzing}
+              onFileSelection={handleFileSelection}
+              isAnalyzing={isAnalyzing || summaryLoading}
             />
           )}
         </div>
@@ -259,6 +313,7 @@ export default function NarrativePage() {
           <div className="view-canvas h-3/4 bg-white relative overflow-hidden">
             {showDashboard && shouldShowLondonDashboard ? (
               <ReactFlowCanvas 
+                key="london-flow-canvas"
                 showDashboard={true}
                 dashboardConfig={{
                   name: 'London Housing Dashboard',
@@ -272,7 +327,7 @@ export default function NarrativePage() {
               >
                 <LondonDashboard />
               </ReactFlowCanvas>
-            ) : (
+            ) : isAnalyzing ? (
               <div className="relative w-full h-full">
                 <EmptyCanvas />
                 {isAnalyzing && (
@@ -282,6 +337,14 @@ export default function NarrativePage() {
                   />
                 )}
               </div>
+            ) : selectedFiles.length > 0 ? (
+              <FileSummaryCanvas 
+                summaries={fileSummaries}
+                isLoading={summaryLoading}
+                error={summaryError}
+              />
+            ) : (
+              <EmptyCanvas />
             )}
           </div>
 

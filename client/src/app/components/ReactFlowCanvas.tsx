@@ -125,8 +125,8 @@ const ReactFlowCanvas: React.FC<ReactFlowCanvasProps> = ({
       };
 
       setNodes((nds) => {
-        // Remove placeholder and add dashboard node
-        const filtered = nds.filter(node => node.id !== 'placeholder');
+        // Remove both placeholder and any existing dashboard nodes to prevent duplicates
+        const filtered = nds.filter(node => node.id !== 'placeholder' && node.id !== 'london-dashboard');
         return [...filtered, dashboardNode];
       });
     } else {

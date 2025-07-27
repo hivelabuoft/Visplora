@@ -18,14 +18,16 @@ interface DatasetCategory {
 
 interface DatasetExplorerProps {
   onAnalysisRequest: (prompt: string) => void;
+  onFileSelection: (selectedFiles: DatasetFile[]) => void;
   isAnalyzing: boolean;
 }
 
-const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, isAnalyzing }) => {
+const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, onFileSelection, isAnalyzing }) => {
   const [datasets, setDatasets] = useState<DatasetCategory[]>([]);
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [expandedCategories, setExpandedCategories] = useState<{[key: string]: boolean}>({});
+  const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set());
 
   // Load dataset information
   useEffect(() => {
@@ -70,6 +72,38 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, is
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSubmit(e);
+    }
+  };
+
+  const handleFileSelection = (fileId: string, file: DatasetFile) => {
+    const newSelectedFiles = new Set(selectedFiles);
+    if (newSelectedFiles.has(fileId)) {
+      newSelectedFiles.delete(fileId);
+    } else {
+      newSelectedFiles.add(fileId);
+    }
+    setSelectedFiles(newSelectedFiles);
+    
+    // Get all selected file objects
+    const selectedFileObjects: DatasetFile[] = [];
+    datasets.forEach(category => {
+      category.files.forEach(f => {
+        if (newSelectedFiles.has(f.id)) {
+          selectedFileObjects.push(f);
+        }
+      });
+    });
+    
+    onFileSelection(selectedFileObjects);
+  };
+
+  const handleAnalyzeSelectedFiles = () => {
+    if (selectedFiles.size > 0) {
+      const fileNames = Array.from(selectedFiles).map(id => {
+        const file = datasets.flatMap(cat => cat.files).find(f => f.id === id);
+        return file?.name || id;
+      }).join(', ');
+      onAnalysisRequest(`Analyze the following selected files: ${fileNames}`);
     }
   };
 
@@ -133,7 +167,13 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, is
                   </button>
                   <div className={`dataset-files ${isExpanded ? 'expanded' : ''}`}>
                     {category.files.map((file) => (
-                      <div key={file.id} className="dataset-file">
+                      <div key={file.id} className={`dataset-file ${selectedFiles.has(file.id) ? 'selected' : ''}`}>
+                        <input
+                          type="checkbox"
+                          checked={selectedFiles.has(file.id)}
+                          onChange={() => handleFileSelection(file.id, file)}
+                          className="dataset-file-checkbox"
+                        />
                         <svg className="dataset-file-icon" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M3 4a1 1 0 011-1h4.586a1 1 0 01.707.293L12 6h4a1 1 0 110 2H4v8a1 1 0 001 1h10a1 1 0 001-1V9a1 1 0 112 0v7a3 3 0 01-3 3H5a3 3 0 01-3-3V4z" clipRule="evenodd" />
                         </svg>
@@ -150,6 +190,22 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, is
           );
         })()}
       </div>
+
+      {/* Selected Files Section */}
+      {/* {selectedFiles.size > 0 && (
+        <div className="selected-files-section">
+          <div className="selected-files-header">
+            <h3>Selected Files ({selectedFiles.size})</h3>
+            <button 
+              className="analyze-selected-button"
+              onClick={handleAnalyzeSelectedFiles}
+              disabled={isAnalyzing}
+            >
+              {isAnalyzing ? 'Analyzing...' : 'Analyze Selected Files'}
+            </button>
+          </div>
+        </div>
+      )} */}
 
       {/* Upload Section */}
       <div className="upload-section">
@@ -172,13 +228,13 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, is
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask me anything about London data... 
+            placeholder={`Ask me anything about London data... 
 
 Examples:
 • Show me crime rates across different boroughs
 • Compare housing prices with population density
 • Analyze the relationship between income and education
-• What areas have the highest gym-to-population ratio?"
+• What areas have the highest gym-to-population ratio?`}
             disabled={isAnalyzing}
           />
           <button
