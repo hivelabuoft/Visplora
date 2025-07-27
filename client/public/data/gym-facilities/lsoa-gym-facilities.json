@@ -654,6 +654,37 @@
     },
     {
       "facility_type": "Parkour Park",
+  "Brent 014F": [
+    {
+      "facility_type": "Ice Rink",
+      "count": 1
+    },
+    {
+      "facility_type": "Badminton Court",
+      "count": 2
+    },
+    {
+      "facility_type": "Multi-sport Centre",
+      "count": 2
+    },
+    {
+      "facility_type": "Fencing Salle",
+      "count": 1
+    },
+    {
+      "facility_type": "Independent Gym",
+      "count": 2
+    },
+    {
+      "facility_type": "Boutique Fitness",
+      "count": 2
+    },
+    {
+      "facility_type": "Archery Range",
+      "count": 3
+    },
+    {
+      "facility_type": "Squash Court",
       "count": 1
     }
   ]

@@ -1,5 +1,3 @@
-import connectToDatabase from '@/lib/mongodb';
-
 export interface UserStudyContext {
   userId: string;
   participantId: string;
@@ -30,11 +28,16 @@ export class UserStudyTracker {
           'Authorization': `Bearer ${localStorage.getItem('narrativeToken')}`
         },
         body: JSON.stringify({
-          sessionId: context.sessionId,
           userId: context.userId,
           participantId: context.participantId,
+          sessionId: context.sessionId,
           studyPhase: context.studyPhase,
           startTime: new Date(),
+          progress: {
+            tasksCompleted: 0,
+            totalTasks: 0
+          },
+          metadata: {}
         })
       });
       
@@ -101,7 +104,8 @@ export class UserStudyTracker {
       });
       
       if (!response.ok) {
-        console.warn('Failed to log interaction via API');
+        const errorText = await response.text();
+        console.warn('Failed to log interaction via API:', errorText);
       }
     } catch (error) {
       console.error('Failed to log interaction:', error);
@@ -168,20 +172,27 @@ export class UserStudyTracker {
     }
 
     try {
-      await connectToDatabase();
+      // Use API endpoint instead of direct DB connection
+      const response = await fetch('/api/study/session', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('narrativeToken')}`
+        },
+        body: JSON.stringify({
+          sessionId: this.context.sessionId,
+          progress: {
+            tasksCompleted,
+            totalTasks,
+            currentView
+          },
+          currentTask
+        })
+      });
       
-      // Dynamic import to avoid SSR issues
-      const { UserSession } = await import('@/models');
-      
-      await UserSession.findOneAndUpdate(
-        { sessionId: this.context.sessionId },
-        {
-          'progress.tasksCompleted': tasksCompleted,
-          'progress.totalTasks': totalTasks,
-          'progress.currentView': currentView,
-          currentTask,
-        }
-      );
+      if (!response.ok) {
+        console.warn('Failed to update session progress via API');
+      }
     } catch (error) {
       console.error('Failed to update progress:', error);
     }
@@ -197,18 +208,23 @@ export class UserStudyTracker {
     }
 
     try {
-      await connectToDatabase();
-      
-      // Dynamic import to avoid SSR issues
-      const { UserSession } = await import('@/models');
-      
-      await UserSession.findOneAndUpdate(
-        { sessionId: this.context.sessionId },
-        {
+      // Use API endpoint to update session
+      const response = await fetch('/api/study/session', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('narrativeToken')}`
+        },
+        body: JSON.stringify({
+          sessionId: this.context.sessionId,
           endTime: new Date(),
-          studyPhase: 'completed',
-        }
-      );
+          studyPhase: 'completed'
+        })
+      });
+      
+      if (!response.ok) {
+        console.warn('Failed to end session via API');
+      }
 
       // Log session end
       await this.logInteraction(

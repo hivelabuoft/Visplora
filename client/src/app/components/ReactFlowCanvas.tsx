@@ -20,24 +20,23 @@ import '@xyflow/react/dist/style.css';
 
 // Custom node component for the dashboard
 const DashboardNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected }) => {
+  const config = data.config || {};
+  
   return (
     <div className="dashboard-node-wrapper" style={{ position: 'relative' }}>
       {selected && (
         <NodeResizer 
           color="#0891b2" 
           isVisible={true} 
-          minWidth={300} 
-          minHeight={200}
-          maxWidth={1200}
-          maxHeight={800}
+          minWidth={config.minWidth || 400} 
+          minHeight={config.minHeight || 300}
+          maxWidth={config.maxWidth || 1500}
+          maxHeight={config.maxHeight || 1200}
           handleStyle={{ width: '12px', height: '12px' }}
           lineStyle={{ borderWidth: 2 }}
         />
       )}
       <div className="dashboard-node">
-        <div className="dashboard-node-header">
-          📊 London Dashboard
-        </div>
         <div className="dashboard-node-content">
           {data.dashboardComponent}
         </div>
@@ -72,12 +71,27 @@ const initialNodes: Node[] = [
 
 const initialEdges: Edge[] = [];
 
+interface DashboardConfig {
+  name: string;
+  width: number;
+  height: number;
+  minWidth?: number;
+  minHeight?: number;
+  maxWidth?: number;
+  maxHeight?: number;
+}
+
 interface ReactFlowCanvasProps {
   showDashboard?: boolean;
   children?: React.ReactNode;
+  dashboardConfig?: DashboardConfig;
 }
 
-const ReactFlowCanvas: React.FC<ReactFlowCanvasProps> = ({ showDashboard, children }) => {
+const ReactFlowCanvas: React.FC<ReactFlowCanvasProps> = ({ 
+  showDashboard, 
+  children, 
+  dashboardConfig 
+}) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
@@ -98,8 +112,8 @@ const ReactFlowCanvas: React.FC<ReactFlowCanvasProps> = ({ showDashboard, childr
         },
         type: 'dashboardNode',
         style: {
-          width: '650px',
-          height: '450px',
+          width: '1200px',
+          height: '1000px',
           border: '2px solid #0891b2',
           borderRadius: '8px',
           background: 'white',
@@ -141,9 +155,9 @@ const ReactFlowCanvas: React.FC<ReactFlowCanvasProps> = ({ showDashboard, childr
         className="react-flow-canvas"
         snapToGrid={true}
         snapGrid={[10, 10]}
-        minZoom={0.2}
+        minZoom={0.1}
         maxZoom={4}
-        defaultViewport={{ x: 0, y: 0, zoom: 1 }}
+        defaultViewport={{ x: 0, y: 0, zoom: 0.5 }}
         nodesDraggable={true}
         elementsSelectable={true}
         selectNodesOnDrag={false}

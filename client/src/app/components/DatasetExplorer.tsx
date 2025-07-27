@@ -136,7 +136,6 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, on
             </div>
           ) : (
             datasets.map((category, index) => {
-              console.log('Rendering category:', category);
               const isExpanded = expandedCategories[category.name] || false;
               
               return (

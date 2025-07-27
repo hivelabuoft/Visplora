@@ -750,11 +750,18 @@
 }
 
 .dashboard-node-content {
-  height: calc(100% - 40px);
+  height: calc(100%);
   overflow: auto;
   background: white;
   position: relative;
   z-index: 1;
+}
+
+/* Scale the London dashboard to fit within the node */
+.dashboard-node-content .london-dashboard {
+  transform-origin: top left;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* React Flow Node Overrides for Resizing */
@@ -808,4 +815,11 @@
 .react-flow__minimap {
   border: 1px solid #e2e8f0;
   border-radius: 4px;
+  transform: scale(0.6);
+  transform-origin: bottom right;
+}
+
+.react-flow__minimap-svg {
+  transform: scale(0.6);
+  transform-origin: bottom right;
 }
