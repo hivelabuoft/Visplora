@@ -305,8 +305,24 @@ export function isWordComplete(text: string): boolean {
  */
 export function getCurrentSentence(text: string): string {
   const trimmed = text.trim();
-  const sentences = trimmed.split(/[.!?\n]/);
-  return sentences[sentences.length - 1]?.trim() ?? '';
+  
+  // If text is empty, return empty string
+  if (!trimmed) return '';
+  
+  // Split on sentence endings but preserve the punctuation info
+  const sentences = trimmed.split(/([.!?\n])/);
+  
+  // Find the last meaningful sentence
+  for (let i = sentences.length - 1; i >= 0; i--) {
+    const sentence = sentences[i]?.trim();
+    if (sentence && sentence.length > 0 && !/^[.!?\n]+$/.test(sentence)) {
+      return sentence;
+    }
+  }
+  
+  // Fallback: if no meaningful sentence found, return the whole text
+  // This happens when text doesn't contain sentence endings
+  return trimmed;
 }
 
 /**

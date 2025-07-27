@@ -10,7 +10,7 @@ const SentenceHighlightingExample: React.FC = () => {
   };
 
   const handleSentenceSelect = (sentence: string, index: number) => {
-    console.log('Sentence selected:', sentence, 'Index:', index);
+    // console.log('Sentence selected:', sentence, 'Index:', index);
   };
 
   return (

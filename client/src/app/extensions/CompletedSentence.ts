@@ -56,12 +56,8 @@ export const CompletedSentence = Mark.create<CompletedSentenceOptions>({
       markAsCompletedSentence:
         () =>
         ({ commands, state, dispatch }) => {
-          console.log('🔍 CompletedSentence: markAsCompletedSentence command called');
-          console.log('🔍 Selection:', state.selection.from, 'to', state.selection.to);
-          console.log('🔍 Selected text:', state.doc.textBetween(state.selection.from, state.selection.to));
           
           const result = commands.setMark(this.name);
-          console.log('🔍 CompletedSentence: setMark result:', result);
           
           // Force a re-render to see the changes
           if (dispatch) {
@@ -73,9 +69,9 @@ export const CompletedSentence = Mark.create<CompletedSentenceOptions>({
       unmarkCompletedSentence:
         () =>
         ({ commands }) => {
-          console.log('🔍 CompletedSentence: unmarkCompletedSentence command called');
+        //   console.log('🔍 CompletedSentence: unmarkCompletedSentence command called');
           const result = commands.unsetMark(this.name);
-          console.log('🔍 CompletedSentence: unsetMark result:', result);
+        //   console.log('🔍 CompletedSentence: unsetMark result:', result);
           return result;
         },
     };
