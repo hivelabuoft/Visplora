@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { LinkableCard } from '@/components/ui/card-linkable';
 import { boroughIdToName } from '../dashboard3/boroughMapping';
+import { logInteractionWithConfig } from '../utils/dashboardConfig';
+import { useChartExplorationHover, logInteractiveHover } from '../utils/hoverTracking';
 import { boroughMapSpec, smallBoroughMapSpec, populationTimelineChartSpec, incomeTimelineChartSpec, crimeBarChartComparisonSpec, crimePieChartComparisonSpec, countryOfBirthPieChartSpec, schoolEducationFacilitiesSpec, housePriceTimelineChartSpec, ethnicityMinorityGroupsBarChartSpec, gymPieChartSpec, libraryLineChartSpec } from '../dashboard3/vegaSpecs';
 
 // Dynamically import LSOAMap with SSR disabled
@@ -91,7 +93,11 @@ import {
 import { generateMockLibrariesData } from '../dashboard3/libraryData';
 
 // Dashboard 3 - London Numbers Style Dashboard
-const Dashboard3: React.FC = () => {
+interface Dashboard3Props {
+  onInteraction?: (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => void;
+}
+
+const Dashboard3: React.FC<Dashboard3Props> = ({ onInteraction }) => {
   // Dashboard filter state that AI can control
   const [dashboardFilters, setDashboardFilters] = useState({
     selectedBorough: 'Brent',
@@ -132,7 +138,84 @@ const Dashboard3: React.FC = () => {
 
   // Update dashboardFilters when individual states change (for manual controls)
   const updateDashboardFilter = (key: string, value: any) => {
+    const previousValue = (dashboardFilters as any)[key];
     setDashboardFilters(prev => ({ ...prev, [key]: value }));
+    
+    // Enhanced logging with dashboard configuration lookup
+    const filterInteractionMap: Record<string, { elementId: string, elementName: string, elementType: string }> = {
+      'selectedBorough': { elementId: 'london-map-1', elementName: 'London Map', elementType: 'map' },
+      'selectedLSOA': { elementId: 'lsoa-map-2', elementName: 'LSOA Map', elementType: 'map' },
+      'selectedLSOAName': { elementId: 'lsoa-map-2', elementName: 'LSOA Map', elementType: 'map' },
+      'selectedCrimeCategory': { elementId: 'borough-crime-stats-8', elementName: 'Borough Crime Stats', elementType: 'chart' },
+      'selectedBirthYear': { elementId: 'country-of-birth-15', elementName: 'Country of Birth', elementType: 'chart' },
+      'selectedBaseYear': { elementId: 'country-of-birth-15', elementName: 'Country of Birth', elementType: 'chart' }
+    };
+
+    const filterInfo = filterInteractionMap[key];
+    if (filterInfo) {
+      // Create context-specific data based on the filter type
+      let contextData: any = {
+        previousValue,
+        newValue: value,
+        allFilters: dashboardFilters
+      };
+
+      switch(key) {
+        case 'selectedBorough':
+          contextData = {
+            ...contextData,
+            boroughName: value,
+            populationData: populationTimelineData,
+            incomeData: incomeTimelineData,
+            crimeData: crimeBarDataComparison
+          };
+          break;
+        case 'selectedCrimeCategory':
+          contextData = {
+            ...contextData,
+            categoryName: value,
+            crimeBarData: crimeBarDataComparison,
+            crimePieData: crimePieDataComparison,
+            availableCategories: Object.values(CRIME_CATEGORY_MAPPING)
+          };
+          break;
+        case 'selectedBirthYear':
+          contextData = {
+            ...contextData,
+            year: value,
+            countryData: countryOfBirthStats,
+            comparisonData: countryOfBirthComparison,
+            availableYears: birthYears
+          };
+          break;
+        case 'selectedLSOA':
+        case 'selectedLSOAName':
+          contextData = {
+            ...contextData,
+            lsoaCode: selectedLSOA,
+            lsoaName: selectedLSOAName,
+            schoolData: mockSchoolStats,
+            ethnicityData: lsoaEthnicityStats
+          };
+          break;
+      }
+
+      // Enhanced logging with dashboard configuration lookup AND context data
+      const interactionLog = logInteractionWithConfig(filterInfo.elementId, filterInfo.elementName, filterInfo.elementType, 'filter_change', {
+        filterKey: key,
+        filterValue: value,
+        description: `Changed ${key} to ${value}`
+      }, contextData);
+      
+      // Also call the original onInteraction callback if provided
+      if (onInteraction) {
+        onInteraction(filterInfo.elementId, filterInfo.elementName, filterInfo.elementType, 'filter_change', {
+          filterKey: key,
+          filterValue: value,
+          description: `Changed ${key} to ${value}`
+        });
+      }
+    }
   };
 
   // State for mock data
@@ -410,11 +493,113 @@ const Dashboard3: React.FC = () => {
   }, [countryOfBirthData, selectedBirthYear, selectedBaseYear]);
 
   function handleAddToSidebar(elementId: string, elementName: string, elementType: string): void {
-    throw new Error('Not implemented.');
+    // Create context-specific chart data based on the element
+    let chartData: any = null;
+    
+    switch(elementId) {
+      case 'mean-income-timeline-10':
+        chartData = {
+          incomeTimelineData,
+          currentMeanIncome: getCurrentMeanIncome(selectedBorough),
+          currentMedianIncome: getCurrentMedianIncome(selectedBorough),
+          selectedBorough
+        };
+        break;
+      case 'borough-crime-stats-8':
+        chartData = {
+          crimeBarData: crimeBarDataComparison,
+          selectedCrimeCategory,
+          availableCategories: Object.values(CRIME_CATEGORY_MAPPING)
+        };
+        break;
+      case 'borough-crime-categories-11':
+        chartData = {
+          crimePieData: crimePieDataComparison,
+          selectedBorough,
+          totalCases2022: crimePieDataComparison.reduce((sum, cat) => sum + cat.count2022, 0),
+          totalCases2023: crimePieDataComparison.reduce((sum, cat) => sum + cat.count2023, 0)
+        };
+        break;
+      case 'house-price-timeline-12':
+        chartData = {
+          housePriceTimelineData,
+          selectedBorough
+        };
+        break;
+      case 'country-of-birth-15':
+        chartData = {
+          countryOfBirthStats,
+          countryOfBirthComparison,
+          selectedBirthYear,
+          availableYears: birthYears
+        };
+        break;
+      case 'population-growth-projections-9':
+        chartData = {
+          populationTimelineData,
+          selectedBorough
+        };
+        break;
+      case 'school-education-facilities-13':
+        chartData = {
+          boroughData: boroughSchoolStats,
+          lsoaData: mockSchoolStats,
+          selectedLevel: isLSOASelected ? 'lsoa' : 'borough',
+          selectedBorough,
+          selectedLSOA: selectedLSOAName
+        };
+        break;
+      case 'ethnicity-minority-groups-14':
+        chartData = {
+          boroughData: boroughEthnicityStats,
+          lsoaData: lsoaEthnicityStats,
+          selectedLevel: isLSOASelected ? 'lsoa' : 'borough',
+          selectedBorough,
+          selectedLSOA: selectedLSOAName
+        };
+        break;
+      default:
+        chartData = {
+          selectedBorough,
+          selectedLSOA: selectedLSOAName,
+          dashboardState: 'general'
+        };
+    }
+
+    // Enhanced logging with dashboard configuration lookup AND chart data
+    const interactionLog = logInteractionWithConfig(elementId, elementName, elementType, 'add_to_sidebar', {
+      description: `Added ${elementName} to sidebar`
+    }, chartData);
+    
+    // Also call the original onInteraction callback if provided
+    if (onInteraction) {
+      onInteraction(elementId, elementName, elementType, 'add_to_sidebar', {
+        description: `Added ${elementName} to sidebar`
+      });
+    }
+    
+    // TODO: Implement actual sidebar functionality
+    console.log(`Added to sidebar: ${elementName} (${elementId}) with data:`, chartData);
   }
 
   const handleBoroughClick = (name: string, value: any) => {
     if (value && value.datum && value.datum.id) {
+      // Enhanced logging with dashboard configuration lookup
+      const interactionLog = logInteractionWithConfig('london-map-1', 'London Map', 'map', 'borough_select', {
+        selectedBorough: value.datum.id,
+        boroughName: value.datum.properties?.NAME || value.datum.id,
+        description: `Selected borough: ${value.datum.properties?.NAME || value.datum.id}`
+      });
+      
+      // Also call the original onInteraction callback if provided
+      if (onInteraction) {
+        onInteraction('london-map-1', 'London Map', 'map', 'borough_select', {
+          selectedBorough: value.datum.id,
+          boroughName: value.datum.properties?.NAME || value.datum.id,
+          description: `Selected borough: ${value.datum.properties?.NAME || value.datum.id}`
+        });
+      }
+      
       updateDashboardFilter('selectedBorough', value.datum.id);
     }
   };
@@ -459,6 +644,22 @@ const Dashboard3: React.FC = () => {
 
   // --- LSOA SELECTION HANDLER ---
   const handleLSOASelect = (lsoaCode: string, lsoaName: string) => {
+    // Enhanced logging with dashboard configuration lookup
+    const interactionLog = logInteractionWithConfig('lsoa-map-2', 'LSOA Map', 'map', 'lsoa_select', {
+      selectedLSOA: lsoaCode,
+      selectedLSOAName: lsoaName,
+      description: `Selected LSOA: ${lsoaName} (${lsoaCode})`
+    });
+    
+    // Also call the original onInteraction callback if provided
+    if (onInteraction) {
+      onInteraction('lsoa-map-2', 'LSOA Map', 'map', 'lsoa_select', {
+        selectedLSOA: lsoaCode,
+        selectedLSOAName: lsoaName,
+        description: `Selected LSOA: ${lsoaName} (${lsoaCode})`
+      });
+    }
+    
     updateDashboardFilter('selectedLSOA', lsoaCode);
     updateDashboardFilter('selectedLSOAName', lsoaName);
     setMockLibraries(generateMockLibrariesData());
@@ -490,6 +691,18 @@ const Dashboard3: React.FC = () => {
 
   // --- CLEAR LSOA SELECTION ---
   const handleClearLSOA = () => {
+    // Enhanced logging with dashboard configuration lookup
+    const interactionLog = logInteractionWithConfig('lsoa-map-2', 'LSOA Map', 'map', 'lsoa_clear', {
+      description: 'Cleared LSOA selection'
+    });
+    
+    // Also call the original onInteraction callback if provided
+    if (onInteraction) {
+      onInteraction('lsoa-map-2', 'LSOA Map', 'map', 'lsoa_clear', {
+        description: 'Cleared LSOA selection'
+      });
+    }
+    
     updateDashboardFilter('selectedLSOA', '');
     updateDashboardFilter('selectedLSOAName', '');
     setMockLibraries([]);
@@ -531,6 +744,23 @@ const Dashboard3: React.FC = () => {
     viewLevel: gymViewLevel
   });
 
+  // Only track meaningful chart exploration hovers (for tooltips and data exploration)
+  const incomeTimelineHover = useChartExplorationHover('mean-income-timeline-10', 'Mean Income Timeline', 'chart', incomeTimelineData);
+  const crimeCategoriesHover = useChartExplorationHover('borough-crime-categories-11', 'Borough Crime Categories', 'chart', crimePieDataComparison);
+  const housePriceTimelineHover = useChartExplorationHover('house-price-timeline-12', 'House Price Timeline', 'chart', housePriceTimelineData);
+  const countryOfBirthHover = useChartExplorationHover('country-of-birth-15', 'Country of Birth', 'chart', countryOfBirthStats);
+  const populationProjectionsHover = useChartExplorationHover('population-growth-projections-9', 'Population Growth & Projections', 'chart', populationTimelineData);
+  const schoolFacilitiesHover = useChartExplorationHover('school-education-facilities-13', 'School Education Facilities', 'chart', {
+    borough: boroughSchoolStats,
+    lsoa: mockSchoolStats,
+    selected: isLSOASelected ? 'lsoa' : 'borough'
+  });
+  const ethnicityGroupsHover = useChartExplorationHover('ethnicity-minority-groups-14', 'Ethnicity Minority Groups', 'chart', {
+    borough: boroughEthnicityStats,
+    lsoa: lsoaEthnicityStats,
+    selected: isLSOASelected ? 'lsoa' : 'borough'
+  });
+
   return (
     <div className="london-dashboard p-6 rounded-lg text-[#1A3C4A]" style={{
       width: '100%',
@@ -559,13 +789,14 @@ const Dashboard3: React.FC = () => {
       </div> */}
       {/* Grid Container */}
       <div className="grid grid-cols-8 grid-rows-8 gap-4" style={{ gridTemplateRows: '100px repeat(7, 110px)'}}>
+        
         {/* Row 1: KPI Indicators (1x1 each) */}
         <div className="col-span-8 row-span-1 grid grid-cols-6 gap-4">
             {/* Borough Details */}
             <LinkableCard 
               className='text-center p-2 col-span-1 row-span-1 bg-white border border-[#BFD9EA] text-[#1A3C4A]'
               styles={{}}
-              elementId="borough-details"
+              elementId="borough-details-1"
               elementName="Borough Details"
               elementType="borough"
               onAddToSidebar={handleAddToSidebar}
@@ -587,7 +818,7 @@ const Dashboard3: React.FC = () => {
             <LinkableCard 
               className="col-span-1 row-span-1 bg-white rounded-lg p-4 flex flex-col items-center justify-center border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
-              elementId="total-population"
+              elementId="total-population-3"
               elementName="Total Population"
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
@@ -603,7 +834,7 @@ const Dashboard3: React.FC = () => {
             <LinkableCard 
               className="col-span-1 row-span-1 bg-white rounded-lg p-4 flex flex-col items-center justify-center border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
-              elementId="population-change"
+              elementId="population-change-4"
               elementName="Population Change"
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
@@ -631,7 +862,7 @@ const Dashboard3: React.FC = () => {
             <LinkableCard 
               className="col-span-1 row-span-1 bg-white rounded-lg p-4 flex flex-col items-center justify-center border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
-              elementId="population-density"
+              elementId="population-density-5"
               elementName="Population Density"
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
@@ -647,7 +878,7 @@ const Dashboard3: React.FC = () => {
             <LinkableCard 
               className="col-span-1 row-span-1 bg-white rounded-lg p-4 flex flex-col items-center justify-center border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
-              elementId="mean-house-price"
+              elementId="mean-house-price-6"
               elementName="Mean House Price"
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
@@ -660,7 +891,7 @@ const Dashboard3: React.FC = () => {
             <LinkableCard 
               className="col-span-1 row-span-1 bg-white rounded-lg p-4 flex flex-col items-center justify-center border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
-              elementId="mean-household-income"
+              elementId="mean-household-income-7"
               elementName="Mean Household Income"
               elementType="kpi"
               onAddToSidebar={handleAddToSidebar}
@@ -677,7 +908,7 @@ const Dashboard3: React.FC = () => {
           <LinkableCard 
             className="col-start-1 col-end-4 row-start-2 row-end-5 bg-white rounded-lg p-5 border border-[#BFD9EA] relative text-[#1A3C4A]"
             styles={{}}
-            elementId="lsoa-map"
+            elementId="lsoa-map-2"
             elementName="LSOA Level Borough Map"
             elementType="map"
             onAddToSidebar={handleAddToSidebar}
@@ -727,7 +958,7 @@ const Dashboard3: React.FC = () => {
           <LinkableCard 
             className="col-start-4 col-end-7 row-start-2 row-end-5 bg-white rounded-lg p-5 border border-[#BFD9EA] relative text-[#1A3C4A]"
             styles={{}}
-            elementId="borough-map"
+            elementId="london-map-1"
             elementName="Borough Map"
             elementType="map"
             onAddToSidebar={handleAddToSidebar}
@@ -740,7 +971,10 @@ const Dashboard3: React.FC = () => {
             </div>
             
             {/* Map Content */}
-            <div className="absolute top-2 left-12 right-5 bottom-5" title='Click outside to reset selection'>
+            <div 
+              className="absolute top-2 left-12 right-5 bottom-5" 
+              title='Click outside to reset selection'
+            >
               <MemoizedVegaLite 
                 spec={boroughMapSpec} 
                 actions={false}
@@ -785,7 +1019,7 @@ const Dashboard3: React.FC = () => {
             <LinkableCard 
               className="col-start-3 col-end-5 row-start-7 row-end-9 bg-white rounded-lg p-4 border border-[#BFD9EA] relative overflow-hidden text-[#1A3C4A]"
               styles={{}}
-              elementId="population-growth-projections"
+              elementId="population-growth-projections-9"
               elementName="Population Growth & Projections"
               elementType="chart"
               onAddToSidebar={handleAddToSidebar}
@@ -798,7 +1032,7 @@ const Dashboard3: React.FC = () => {
               </div>
               
               {/* Vega-Lite Bar Chart */}
-              <div className="absolute bottom-0 left-4 right-4">
+              <div className="absolute bottom-0 left-4 right-4" {...populationProjectionsHover}>
                 {isLoadingPopulation ? (
                   <div className="flex items-center justify-center h-full text-gray-400">
                     Loading chart data...
@@ -865,7 +1099,7 @@ const Dashboard3: React.FC = () => {
           <LinkableCard 
             className="col-start-7 col-end-9 row-start-2 row-end-5 bg-white rounded-lg p-4 border border-[#BFD9EA] flex flex-col text-[#1A3C4A]"
             styles={{ position: 'relative', zIndex: 1 }}
-            elementId="borough-crime-stats"
+            elementId="borough-crime-stats-8"
             elementName="Borough Crime Stats"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
@@ -887,6 +1121,27 @@ const Dashboard3: React.FC = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                       updateDashboardFilter('selectedCrimeCategory', category);
+                      logInteractionWithConfig('borough-crime-stats-8', 'Borough Crime Stats', 'chart', 'crime_category_selection', {
+                        selectedCategory: category,
+                        previousCategory: selectedCrimeCategory,
+                        description: `Selected crime category: ${category}`
+                      }, {
+                        availableCategories: Object.values(CRIME_CATEGORY_MAPPING),
+                        crimeBarData: crimeBarDataComparison,
+                        crimePieData: crimePieDataComparison,
+                        selectedBorough
+                      });
+                    }}
+                    onMouseEnter={() => {
+                      logInteractiveHover('borough-crime-stats-8', 'Borough Crime Stats', 'chart', {
+                        crimeCategory: category,
+                        interactionSubtype: 'crime_category_button_hover',
+                        description: `Hovered over crime category button: ${category}`
+                      }, {
+                        hoveredCategory: category,
+                        allCategoriesData: crimeBarDataComparison,
+                        currentSelection: selectedCrimeCategory
+                      });
                     }}
                     className={`w-[17px] h-[17px] rounded-full cursor-pointer transition-all duration-200 mb-1 ${
                       isSelected 
@@ -924,7 +1179,7 @@ const Dashboard3: React.FC = () => {
           <LinkableCard 
             className="col-start-4 col-end-7 row-start-5 row-end-7 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
             styles={{}}
-            elementId="mean-income-timeline"
+            elementId="mean-income-timeline-10"
             elementName="Mean Income Timeline"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
@@ -949,7 +1204,7 @@ const Dashboard3: React.FC = () => {
             </div>
             
             {/* Vega-Lite Line Chart */}
-            <div className="absolute -bottom-1 left-4 right-4">
+            <div className="absolute -bottom-1 left-4 right-4" {...incomeTimelineHover}>
               {incomeTimelineData.length > 0 ? (
                 <MemoizedVegaLite
                   spec={incomeTimelineChartSpec(incomeTimelineData)}
@@ -967,7 +1222,7 @@ const Dashboard3: React.FC = () => {
           <LinkableCard 
             className="col-start-7 col-end-9 row-start-5 row-end-7 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
             styles={{}}
-            elementId="borough-crime-categories"
+            elementId="borough-crime-categories-11"
             elementName="Borough Crime Categories"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
@@ -981,7 +1236,7 @@ const Dashboard3: React.FC = () => {
             </div>
             
             {/* Vega-Lite Crime Pie Chart with Comparison */}
-            <div className="absolute bottom-0 left-3 flex-shrink-0">
+            <div className="absolute bottom-0 left-3 flex-shrink-0" {...crimeCategoriesHover}>
               {isLoadingCrime ? (
                 <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
                   Loading...
@@ -1026,7 +1281,7 @@ const Dashboard3: React.FC = () => {
           <LinkableCard 
             className="col-start-7 col-end-9 row-start-7 row-end-9 bg-white rounded-lg p-4 border border-[#BFD9EA] relative text-[#1A3C4A]"
             styles={{}}
-            elementId="school-education-facilities"
+            elementId="school-education-facilities-13"
             elementName="School Education Facilities"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
@@ -1052,7 +1307,7 @@ const Dashboard3: React.FC = () => {
             </div>
             
             {/* Vega-Lite School Bar Chart */}
-            <div className="absolute bottom-2 left-4 right-4">
+            <div className="absolute bottom-2 left-4 right-4" {...schoolFacilitiesHover}>
               {isLSOASelected ? (
                 mockSchoolStats ? (
                   <MemoizedVegaLite spec={schoolEducationFacilitiesSpec(mockSchoolStats)} actions={false} style={{ width: '100%', height: '100%' }} />
@@ -1073,7 +1328,7 @@ const Dashboard3: React.FC = () => {
           <LinkableCard 
             className="col-start-1 col-end-4 row-start-5 row-end-7 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
             styles={{}}
-            elementId="house-price-timeline"
+            elementId="house-price-timeline-12"
             elementName="House Price Timeline"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
@@ -1102,7 +1357,7 @@ const Dashboard3: React.FC = () => {
             </div>
             
             {/* Vega-Lite House Price Timeline Chart */}
-            <div className="absolute -bottom-1 left-4 right-4">
+            <div className="absolute -bottom-1 left-4 right-4" {...housePriceTimelineHover}>
               {isLoadingHousePrice ? (
                 <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
                   Loading house price data...
@@ -1124,7 +1379,7 @@ const Dashboard3: React.FC = () => {
           <LinkableCard 
             className="col-start-5 col-end-7 row-start-7 row-end-9 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
             styles={{}}
-            elementId="ethnicity-minority-groups"
+            elementId="ethnicity-minority-groups-14"
             elementName="Ethnicity Minority Groups"
             elementType="chart"
             onAddToSidebar={handleAddToSidebar}
@@ -1145,7 +1400,7 @@ const Dashboard3: React.FC = () => {
             </div>
             
             {/* Vega-Lite Ethnicity Bar Chart */}
-            <div className="absolute bottom-2 left-4 right-4">
+            <div className="absolute bottom-2 left-4 right-4" {...ethnicityGroupsHover}>
               {isLSOASelected ? (
                 lsoaEthnicityStats && lsoaEthnicityStats.minorityGroups.length > 0 ? (
                   <MemoizedVegaLite spec={ethnicityMinorityGroupsBarChartSpec(lsoaEthnicityStats)} actions={false} />
@@ -1171,7 +1426,7 @@ const Dashboard3: React.FC = () => {
             <LinkableCard 
               className="col-start-1 col-end-3 row-start-7 row-end-9 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
-              elementId="country-of-birth"
+              elementId="country-of-birth-15"
               elementName="Country of Birth"
               elementType="chart"
               onAddToSidebar={handleAddToSidebar}
@@ -1187,7 +1442,29 @@ const Dashboard3: React.FC = () => {
                 {birthYears.map((year) => (
                   <button
                     key={year}
-                    onClick={() => updateDashboardFilter('selectedBirthYear', year)}
+                    onClick={() => {
+                      updateDashboardFilter('selectedBirthYear', year);
+                      logInteractionWithConfig('country-of-birth-15', 'Country of Birth', 'chart', 'birth_year_selection', {
+                        selectedYear: year,
+                        previousYear: selectedBirthYear,
+                        description: `Selected birth year: ${year}`
+                      }, {
+                        availableYears: birthYears,
+                        countryOfBirthStats,
+                        countryOfBirthComparison
+                      });
+                    }}
+                    onMouseEnter={() => {
+                      logInteractiveHover('country-of-birth-15', 'Country of Birth', 'chart', {
+                        birthYear: year,
+                        interactionSubtype: 'birth_year_button_hover',
+                        description: `Hovered over birth year button: ${year}`
+                      }, {
+                        hoveredYear: year,
+                        currentSelection: selectedBirthYear,
+                        availableData: countryOfBirthStats
+                      });
+                    }}
                     className={`flex justify-center items-center p-1 text-[8px] transition-colors ${
                       selectedBirthYear === year
                         ? 'bg-purple-500 text-white font-bold hover:bg-purple-600'
@@ -1201,7 +1478,7 @@ const Dashboard3: React.FC = () => {
               {/* Chart and Legend Container */}
               <div className="absolute flex justify-between items-start h-full">
                 {/* Pie Chart */}
-                <div className="flex-1 flex items-center justify-center">
+                <div className="flex-1 flex items-center justify-center" {...countryOfBirthHover}>
                   {isLoadingBirthData ? (
                     <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
                       Loading...
@@ -1242,7 +1519,7 @@ const Dashboard3: React.FC = () => {
             <LinkableCard 
               className="col-start-1 col-end-3 row-start-7 row-end-9 bg-white rounded-lg p-4 border border-[#BFD9EA] text-[#1A3C4A]"
               styles={{}}
-              elementId="lsoa-libraries"
+              elementId="lsoa-libraries-16"
               elementName="Libraries in LSOA"
               elementType="chart"
               onAddToSidebar={handleAddToSidebar}
@@ -1260,3 +1537,4 @@ const Dashboard3: React.FC = () => {
 };
 
 export default Dashboard3;
+

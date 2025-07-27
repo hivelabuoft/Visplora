@@ -11,6 +11,7 @@ import ReactFlowCanvas from '../components/ReactFlowCanvas';
 import LondonDashboard from '../london/page'; //this should be a different input after you have the right component for dashboard
 import { generateMultipleFileSummaries, FileSummary } from '../../utils/londonDataLoader';
 import { interactionLogger } from '../../lib/interactionLogger';
+import { captureAndLogInteractions } from '../utils/dashboardConfig';
 import '../../styles/dataExplorer.css';
 import '../../styles/narrativeLayer.css';
 
@@ -46,6 +47,36 @@ export default function NarrativePage() {
   const [summaryLoading, setSummaryLoading] = useState(false);
   const [summaryError, setSummaryError] = useState<string>('');
 
+  // Local interaction tracking
+  const [dashboardInteractions, setDashboardInteractions] = useState<Array<{
+    id: number;
+    elementId: string;
+    elementName: string;
+    elementType: string;
+    action: string;
+    timestamp: number;
+    userId: string;
+    sessionId: string;
+    metadata?: any;
+  }>>([]);
+
+  // Function to log dashboard interactions locally
+  const logDashboardInteraction = (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => {
+    const interaction = {
+      id: dashboardInteractions.length + 1,
+      elementId,
+      elementName,
+      elementType,
+      action,
+      timestamp: Date.now(),
+      userId: userSession?.userId || 'unknown',
+      sessionId: userSession?.sessionId || 'unknown',
+      metadata
+    };
+    
+    setDashboardInteractions(prev => [...prev, interaction]);
+  };
+  
   // Check authentication on mount
   useEffect(() => {
     const checkAuth = () => {
@@ -311,6 +342,46 @@ export default function NarrativePage() {
         <div className="right-sec w-3/5 flex flex-col">
           {/* View Canvas - 75% */}
           <div className="view-canvas h-3/4 bg-white relative overflow-hidden">
+            {/* Canvas Action Buttons */}
+            <div className="absolute top-4 right-4 z-50 flex gap-2">
+              <button
+                onClick={() => captureAndLogInteractions()}
+                className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border"
+                style={{ 
+                  backgroundColor: '#c5cea180', 
+                  color: '#5a6635',
+                  borderColor: '#c5cea1'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#c5cea1b3';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#c5cea180';
+                }}
+                title="Capture current view"
+              >
+                Capture
+              </button>
+              <button
+                onClick={() => console.log('Inquiries button clicked')}
+                className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border"
+                style={{ 
+                  backgroundColor: '#f5bc7880', 
+                  color: '#8b5a2b',
+                  borderColor: '#f5bc78'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f5bc78b3';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f5bc7880';
+                }}
+                title="View inquiries and questions"
+              >
+                Inquiries
+              </button>
+            </div>
+            
             {showDashboard && shouldShowLondonDashboard ? (
               <ReactFlowCanvas 
                 key="london-flow-canvas"
@@ -325,7 +396,7 @@ export default function NarrativePage() {
                   maxHeight: 1200,
                 }}
               >
-                <LondonDashboard />
+                <LondonDashboard onInteraction={logDashboardInteraction} />
               </ReactFlowCanvas>
             ) : isAnalyzing ? (
               <div className="relative w-full h-full">
@@ -359,3 +430,5 @@ export default function NarrativePage() {
     </div>
   );
 }
+
+

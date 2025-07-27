@@ -556,10 +556,25 @@ const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelec
           }
         }
         
-        // Check if clicked on a completed sentence
+        // Check if clicked on a completed sentence (with reduced sensitivity - 10px margin from left/right)
         if (target.closest('.completed-sentence')) {
           const sentenceElement = target.closest('.completed-sentence') as HTMLElement;
-          console.log('🖱️ Clicked on completed sentence:', sentenceElement.textContent);
+          const sentenceRect = sentenceElement.getBoundingClientRect();
+          const clickX = event.clientX;
+          const clickY = event.clientY;
+          
+          // Check if click is within the sentence bounds but excluding 10px margin from left and right
+          const isWithinReducedArea = clickX >= sentenceRect.left + 10 && 
+                                     clickX <= sentenceRect.right - 10 && 
+                                     clickY >= sentenceRect.top && 
+                                     clickY <= sentenceRect.bottom;
+          
+          if (!isWithinReducedArea) {
+            // Click is in the margin area, don't handle it as a sentence click
+            return false;
+          }
+          
+          console.log('🖱️ Clicked on completed sentence (within active area):', sentenceElement.textContent);
           
           // Clear any existing click timeout
           if (clickTimeoutRef.current) {
@@ -627,10 +642,25 @@ const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelec
       handleDoubleClick: (view, pos, event) => {
         const target = event.target as HTMLElement;
         
-        // Check if double-clicked on a completed sentence
+        // Check if double-clicked on a completed sentence (with reduced sensitivity - 10px margin from left/right)
         if (target.closest('.completed-sentence')) {
           const sentenceElement = target.closest('.completed-sentence') as HTMLElement;
-          console.log('✏️ Double-clicked to edit sentence:', sentenceElement.textContent);
+          const sentenceRect = sentenceElement.getBoundingClientRect();
+          const clickX = event.clientX;
+          const clickY = event.clientY;
+          
+          // Check if double-click is within the sentence bounds but excluding 10px margin from left and right
+          const isWithinReducedArea = clickX >= sentenceRect.left + 20 && 
+                                     clickX <= sentenceRect.right - 20 && 
+                                     clickY >= sentenceRect.top && 
+                                     clickY <= sentenceRect.bottom;
+          
+          if (!isWithinReducedArea) {
+            // Double-click is in the margin area, don't handle it as a sentence double-click
+            return false;
+          }
+          
+          console.log('✏️ Double-clicked to edit sentence (within active area):', sentenceElement.textContent);
           
           // Cancel any pending click timeout to prevent dropdown from showing
           if (clickTimeoutRef.current) {
@@ -851,14 +881,33 @@ const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelec
     const handleGlobalClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       
-      // Don't clear if clicking on completed sentence or dropdown
-      if (target.closest('.completed-sentence') || target.closest('.sentence-dropdown')) {
+      // Check if clicking on completed sentence with reduced sensitivity (10px margin from left/right)
+      if (target.closest('.completed-sentence')) {
+        const sentenceElement = target.closest('.completed-sentence') as HTMLElement;
+        const sentenceRect = sentenceElement.getBoundingClientRect();
+        const clickX = event.clientX;
+        const clickY = event.clientY;
+        
+        // Check if click is within the sentence bounds but excluding 10px margin from left and right
+        const isWithinReducedArea = clickX >= sentenceRect.left + 10 && 
+                                   clickX <= sentenceRect.right - 10 && 
+                                   clickY >= sentenceRect.top && 
+                                   clickY <= sentenceRect.bottom;
+        
+        if (isWithinReducedArea) {
+          // Click is within the active area, don't clear selection
+          return;
+        }
+      }
+      
+      // Don't clear if clicking on dropdown
+      if (target.closest('.sentence-dropdown')) {
         return;
       }
       
-      // Clear dropdown and selection if clicked anywhere else
+      // Clear dropdown and selection if clicked anywhere else (including sentence margins)
       if (selectedSentence) {
-        console.log('🔄 Global click outside sentence/dropdown - clearing selection');
+        console.log('🔄 Global click outside sentence active area/dropdown - clearing selection');
         selectedSentence.element.removeAttribute('data-selected');
         setSelectedSentence(null);
         setDropdownPosition(null);
@@ -1043,13 +1092,6 @@ const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelec
               title="Fork from this sentence to explore an alternative framing or direction"
             >
               Branches
-            </button>
-            <button
-              className="dropdown-item"
-              onClick={(e) => handleDropdownAction('add-next', e)}
-              title="Continue the narrative from this sentence"
-            >
-              Add next
             </button>
           </div>
         )}

@@ -167,13 +167,12 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, on
                   </button>
                   <div className={`dataset-files ${isExpanded ? 'expanded' : ''}`}>
                     {category.files.map((file) => (
-                      <div key={file.id} className={`dataset-file ${selectedFiles.has(file.id) ? 'selected' : ''}`}>
-                        <input
-                          type="checkbox"
-                          checked={selectedFiles.has(file.id)}
-                          onChange={() => handleFileSelection(file.id, file)}
-                          className="dataset-file-checkbox"
-                        />
+                      <div 
+                        key={file.id} 
+                        className={`dataset-file ${selectedFiles.has(file.id) ? 'selected' : ''}`}
+                        onClick={() => handleFileSelection(file.id, file)}
+                        style={{ cursor: 'pointer' }}
+                      >
                         <svg className="dataset-file-icon" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M3 4a1 1 0 011-1h4.586a1 1 0 01.707.293L12 6h4a1 1 0 110 2H4v8a1 1 0 001 1h10a1 1 0 001-1V9a1 1 0 112 0v7a3 3 0 01-3 3H5a3 3 0 01-3-3V4z" clipRule="evenodd" />
                         </svg>
