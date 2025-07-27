@@ -127,6 +127,21 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+.dataset-file.selected {
+  background: #e0f2fe;
+  border-color: #0891b2;
+  box-shadow: 0 2px 8px rgba(8, 145, 178, 0.15);
+}
+
+.dataset-file-checkbox {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: #0891b2;
+  cursor: pointer;
+}
+
 .dataset-file-icon {
   width: 20px;
   height: 20px;
@@ -161,6 +176,54 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Selected Files Section */
+.selected-files-section {
+  flex-shrink: 0;
+  padding: 16px 20px;
+  border-top: 1px solid #0891b2;
+  background-color: #f0f9ff;
+}
+
+.selected-files-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selected-files-header h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0e7490;
+  margin: 0;
+}
+
+.analyze-selected-button {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(8, 145, 178, 0.2);
+}
+
+.analyze-selected-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0e7490 0%, #155e75 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(8, 145, 178, 0.3);
+}
+
+.analyze-selected-button:disabled {
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+  transform: none;
 }
 
 .upload-section {

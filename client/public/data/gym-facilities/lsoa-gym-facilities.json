@@ -526,5 +526,135 @@
       "facility_type": "Equestrian Centre",
       "count": 2
     }
+  ],
+  "Brent 021A": [
+    {
+      "facility_type": "Budget Gym",
+      "count": 1
+    },
+    {
+      "facility_type": "Rugby Pitch",
+      "count": 1
+    },
+    {
+      "facility_type": "Yoga Studio",
+      "count": 1
+    }
+  ],
+  "Wandsworth 027B": [
+    {
+      "facility_type": "Bowling Alley",
+      "count": 1
+    },
+    {
+      "facility_type": "Cricket Nets",
+      "count": 4
+    },
+    {
+      "facility_type": "Water Sports Centre",
+      "count": 1
+    }
+  ],
+  "Ealing 029D": [
+    {
+      "facility_type": "Independent Gym",
+      "count": 3
+    },
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 1
+    },
+    {
+      "facility_type": "Martial Arts Dojo",
+      "count": 1
+    }
+  ],
+  "Ealing 001A": [
+    {
+      "facility_type": "Tennis Court",
+      "count": 4
+    },
+    {
+      "facility_type": "Playground",
+      "count": 3
+    },
+    {
+      "facility_type": "Esports Arena",
+      "count": 4
+    }
+  ],
+  "Ealing 011B": [
+    {
+      "facility_type": "Independent Gym",
+      "count": 3
+    },
+    {
+      "facility_type": "Multi-sport Centre",
+      "count": 4
+    },
+    {
+      "facility_type": "Equestrian Centre",
+      "count": 4
+    },
+    {
+      "facility_type": "Martial Arts Dojo",
+      "count": 2
+    },
+    {
+      "facility_type": "Skate Park",
+      "count": 4
+    }
+  ],
+  "Ealing 009A": [
+    {
+      "facility_type": "Yoga Studio",
+      "count": 1
+    },
+    {
+      "facility_type": "Esports Arena",
+      "count": 4
+    },
+    {
+      "facility_type": "Skate Park",
+      "count": 3
+    },
+    {
+      "facility_type": "Table Tennis Centre",
+      "count": 4
+    },
+    {
+      "facility_type": "Golf Course",
+      "count": 1
+    },
+    {
+      "facility_type": "Swimming Pool",
+      "count": 4
+    },
+    {
+      "facility_type": "Wrestling Gym",
+      "count": 2
+    }
+  ],
+  "Ealing 025D": [
+    {
+      "facility_type": "Sports Hall",
+      "count": 4
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 4
+    },
+    {
+      "facility_type": "Equestrian Centre",
+      "count": 1
+    },
+    {
+      "facility_type": "Fencing Salle",
+      "count": 2
+    },
+    {
+      "facility_type": "Parkour Park",
+      "count": 1
+    }
   ]
 }
