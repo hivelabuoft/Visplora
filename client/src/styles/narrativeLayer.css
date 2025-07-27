@@ -2,7 +2,8 @@
 .narrative-layer {
   width: 100%;
   height: 100%;
-  padding: 2rem;
+  padding: 1.5rem;
+  padding-top: 0rem !important;
   padding-right: 0rem;
   display: flex;
   flex-direction: column;
@@ -10,14 +11,87 @@
   font-family: 'Kalam', 'Comic Sans MS', 'Courier New', cursive;
 }
 
+/* Action buttons bar */
+.narrative-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0rem;
+  border-bottom: 1px solid #e2e8f0;
+  border-bottom: none;
+}
+
+.action-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #374151;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  border-color: #9ca3af;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.08);
+  color: #1f2937;
+}
+
+.action-button:active:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  color: #9ca3af;
+  transform: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.save-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-color: #10b981;
+  color: #047857;
+}
+
+.save-button:hover:not(:disabled) svg {
+  color: #059669;
+}
+
+.reset-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-color: #ef4444;
+  color: #dc2626;
+}
+
+.reset-button:hover:not(:disabled) svg {
+  color: #dc2626;
+}
+
 .ProseMirror{
-    padding-left: 1rem;
+    padding-left: 1rem !important;
 }
 
 .narrative-editor {
   flex: 1;
   overflow-y: auto;
   padding: 1rem 0;
+  padding-top: 0.2rem !important;
+  position: relative; /* Add relative positioning for save button */
 }
 
 /* Tiptap Editor Content Styles */
@@ -43,6 +117,162 @@
   );
   background-attachment: local;
   min-height: 100%;
+}
+
+/* Completed sentence styling */
+.completed-sentence {
+  background-color: rgba(255, 244, 204, 0.3); /* More subtle yellow background */
+  padding: 1px 3px; /* Reduced padding for less height */
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline;
+  position: relative;
+  margin: 0; /* No margin by default */
+  border: 1px solid rgba(255, 193, 7, 0.2); /* More subtle border */
+  user-select: none; /* Prevent text selection to indicate read-only */
+  line-height: 1.2; /* Reduced line height */
+}
+
+/* Only second and subsequent sentences get left margin */
+.completed-sentence:not(:first-child) {
+  margin-left: 8px; /* Only left margin for non-first sentences */
+}
+
+/* Make the left margin space clickable for insertion */
+.completed-sentence:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  left: -8px; /* Position in the left margin space */
+  top: 0;
+  bottom: 0;
+  width: 8px; /* Cover the 8px left margin space */
+  cursor: text; /* Text cursor to indicate typing area */
+  z-index: 1;
+  transition: background-color 0.2s ease;
+  background: transparent;
+}
+
+.completed-sentence:not(:first-child)::before:hover {
+  background-color: rgba(59, 130, 246, 0.1); /* Subtle blue hover to indicate clickable */
+  border-radius: 2px;
+}
+
+.completed-sentence:hover {
+  background-color: rgba(255, 244, 204, 0.5); /* Slightly more visible on hover */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Very subtle shadow */
+  transform: none; /* Remove the jump effect */
+  border-color: rgba(255, 193, 7, 0.4);
+}
+
+.completed-sentence:hover::after {
+  content: "Double-click to edit";
+  position: absolute;
+  bottom: -18px; /* Moved closer to the sentence */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.completed-sentence:active {
+  background-color: rgba(255, 244, 204, 0.6);
+  transform: none; /* Remove the active transform */
+}
+
+.completed-sentence[data-editing="true"] {
+  background-color: rgba(255, 255, 255, 0.9);
+  outline: 2px solid #ffd700;
+  outline-offset: 1px;
+  user-select: text; /* Allow text selection when editing */
+}
+
+.completed-sentence[data-selected="true"] {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Sentence dropdown menu */
+.sentence-dropdown {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  min-width: 120px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #374151;
+  transition: all 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
+}
+
+/* Save button for sentence editing */
+.sentence-save-button {
+  position: fixed;
+  width: 20px; /* Smaller, less intrusive */
+  height: 20px;
+  border: none;
+  border-radius: 4px;
+  background: rgba(34, 197, 94, 0.85); /* Slightly more transparent green */
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(34, 197, 94, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  transition: all 0.2s ease;
+  z-index: 1000;
+  opacity: 0.8;
+  /* Will be positioned dynamically via JavaScript */
+}
+
+.sentence-save-button:hover {
+  opacity: 1;
+  transform: scale(1.05); /* Less dramatic scale */
+  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.3), 0 1px 3px rgba(0, 0, 0, 0.15);
+  background: rgba(34, 197, 94, 0.95);
+}
+
+.sentence-save-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 3px rgba(34, 197, 94, 0.2), 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.sentence-save-button svg {
+  width: 11px; /* Smaller icon */
+  height: 11px;
+  color: white; /* Ensure icon is white, not black */
 }
 
 .narrative-editor-content:focus {
@@ -71,10 +301,50 @@
   width: 100%;
 }
 
-.narrative-editor-content p:empty::before {
-  content: "Start writing here...";
-  color: #aaa;
+.narrative-editor-content p:empty::before,
+.narrative-editor-content .tiptap-paragraph:empty::before {
+  content: "Start with a hunch, goal, or observation…";
+  color: #999;
   font-style: italic;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* TipTap Placeholder styling */
+.narrative-editor-content .is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.narrative-editor-content .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+/* Additional TipTap placeholder selectors */
+.narrative-editor-content .ProseMirror .is-empty::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  pointer-events: none;
+}
+
+.narrative-editor-content [data-placeholder]::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
   pointer-events: none;
 }
 
@@ -118,19 +388,41 @@
 
 .narrative-footer {
   border-top: 1px solid #e0e0e0;
-  padding: 1rem 0;
+  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-shrink: 0;
-  font-size: 14px;
+  background-color: #f8f9fa;
+  font-size: 0.8rem;
   color: #666;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .narrative-stats {
   display: flex;
   gap: 1rem;
+}
+
+.narrative-stats span {
+  display: flex;
+  align-items: center;
+}
+
+.ai-analyzing {
+  color: #007acc !important;
+  font-weight: 500;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.detection-status {
+  color: #666 !important;
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .narrative-hint {

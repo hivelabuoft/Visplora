@@ -54,77 +54,77 @@ class InteractionLogger {
 
   // Main function to log interactions manually
   async logInteraction(data: InteractionData) {
-    console.log('🎯 Attempting to log interaction:', {
-      action: data.action,
-      isStudyMode: this.isStudyMode,
-      hasUserContext: !!this.userContext,
-      userContext: this.userContext
-    });
+    // console.log('🎯 Attempting to log interaction:', {
+    //   action: data.action,
+    //   isStudyMode: this.isStudyMode,
+    //   hasUserContext: !!this.userContext,
+    //   userContext: this.userContext
+    // });
 
-    // Only log if in study mode and context is available
-    if (!this.isStudyMode || !this.userContext) {
-      console.log('❌ Interaction not logged - study mode disabled or no user context', {
-        isStudyMode: this.isStudyMode,
-        userContext: this.userContext
-      });
-      return;
-    }
+    // // Only log if in study mode and context is available
+    // if (!this.isStudyMode || !this.userContext) {
+    //   console.log('❌ Interaction not logged - study mode disabled or no user context', {
+    //     isStudyMode: this.isStudyMode,
+    //     userContext: this.userContext
+    //   });
+    //   return;
+    // }
 
-    // Validate user context has required fields
-    if (!this.userContext.userId || !this.userContext.participantId || !this.userContext.sessionId) {
-      console.error('❌ Interaction not logged - missing required user context fields:', {
-        userId: this.userContext.userId,
-        participantId: this.userContext.participantId,
-        sessionId: this.userContext.sessionId
-      });
-      return;
-    }
+    // // Validate user context has required fields
+    // if (!this.userContext.userId || !this.userContext.participantId || !this.userContext.sessionId) {
+    //   console.error('❌ Interaction not logged - missing required user context fields:', {
+    //     userId: this.userContext.userId,
+    //     participantId: this.userContext.participantId,
+    //     sessionId: this.userContext.sessionId
+    //   });
+    //   return;
+    // }
 
-    // Only run on client side
-    if (typeof window === 'undefined') {
-      console.log('❌ Interaction not logged - server side');
-      return;
-    }
+    // // Only run on client side
+    // if (typeof window === 'undefined') {
+    //   console.log('❌ Interaction not logged - server side');
+    //   return;
+    // }
 
-    try {
-      const payload = {
-        userId: this.userContext.userId,
-        participantId: this.userContext.participantId,
-        sessionId: this.userContext.sessionId,
-        eventType: data.eventType,
-        action: data.action,
-        target: data.target,
-        context: data.context || {},
-        timing: data.timing || {},
-        metadata: {
-          ...data.metadata,
-          timestamp: new Date().toISOString()
-        },
-      };
+    // try {
+    //   const payload = {
+    //     userId: this.userContext.userId,
+    //     participantId: this.userContext.participantId,
+    //     sessionId: this.userContext.sessionId,
+    //     eventType: data.eventType,
+    //     action: data.action,
+    //     target: data.target,
+    //     context: data.context || {},
+    //     timing: data.timing || {},
+    //     metadata: {
+    //       ...data.metadata,
+    //       timestamp: new Date().toISOString()
+    //     },
+    //   };
 
-      console.log('📤 Sending interaction payload:', payload);
+    //   console.log('📤 Sending interaction payload:', payload);
 
-      const response = await fetch('/api/study/interaction', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('narrativeToken')}`
-        },
-        body: JSON.stringify(payload)
-      });
+    //   const response = await fetch('/api/study/interaction', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Authorization': `Bearer ${localStorage.getItem('narrativeToken')}`
+    //     },
+    //     body: JSON.stringify(payload)
+    //   });
       
-      console.log('📥 Response status:', response.status);
+    //   console.log('📥 Response status:', response.status);
       
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.warn('❌ Failed to log interaction:', errorText);
-      } else {
-        const result = await response.json();
-        console.log(`✅ Logged interaction successfully:`, result);
-      }
-    } catch (error) {
-      console.error('❌ Failed to log interaction:', error);
-    }
+    //   if (!response.ok) {
+    //     const errorText = await response.text();
+    //     console.warn('❌ Failed to log interaction:', errorText);
+    //   } else {
+    //     const result = await response.json();
+    //     console.log(`✅ Logged interaction successfully:`, result);
+    //   }
+    // } catch (error) {
+    //   console.error('❌ Failed to log interaction:', error);
+    // }
   }
 
   // Convenience methods for common interactions

@@ -7,7 +7,7 @@ import DatasetExplorer from '../components/DatasetExplorer';
 import NarrativeLayer from '../components/NarrativeLayer';
 import { EmptyCanvas, EmptyTimeline, AnalyzingState } from '../components/EmptyStates';
 import ReactFlowCanvas from '../components/ReactFlowCanvas';
-import LondonDashboard from '../dashboard3/page'; //this should be a different input after you have the right component for dashboard
+import LondonDashboard from '../london/page'; //this should be a different input after you have the right component for dashboard
 import { interactionLogger } from '../../lib/interactionLogger';
 import '../../styles/dataExplorer.css';
 import '../../styles/narrativeLayer.css';
@@ -141,6 +141,55 @@ export default function NarrativePage() {
     }, analysisTime);
   };
 
+  // Handle sentence end detection for narrative layer
+  const handleSentenceEnd = async (sentence: string, confidence: number) => {
+    // console.log(`🧠 Sentence completed for analysis: "${sentence}" (Confidence: ${confidence})`);
+    
+    // Here you can add your LLM API call or other analysis logic
+    try {
+      // Simulate analysis time
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      // console.log(`✅ Analysis complete for: "${sentence}"`);
+      
+      // Log the sentence completion interaction
+      await interactionLogger.logInteraction({
+        eventType: 'view_change',
+        action: 'sentence_completion',
+        target: {
+          type: 'ui_element',
+          name: 'narrative_layer'
+        },
+        metadata: {
+          sentence,
+          confidence,
+          timestamp: Date.now()
+        }
+      });
+    } catch (error) {
+      console.error('❌ Error analyzing sentence:', error);
+    }
+  };
+
+  // Handle sentence selection for narrative layer
+  const handleSentenceSelect = (sentence: string, index: number) => {
+    // console.log(`📝 Sentence selected: "${sentence}" (Index: ${index})`);
+    
+    // Log the sentence selection interaction
+    interactionLogger.logInteraction({
+      eventType: 'click',
+      action: 'sentence_selection',
+      target: {
+        type: 'ui_element',
+        name: 'narrative_layer'
+      },
+      metadata: {
+        sentence,
+        index,
+        timestamp: Date.now()
+      }
+    });
+  };
+
   // Handle stopping analysis
   const handleStopAnalysis = () => {
     setIsAnalyzing(false);
@@ -193,6 +242,8 @@ export default function NarrativePage() {
           {showDashboard ? (
             <NarrativeLayer 
               prompt={currentPrompt}
+              onSentenceEnd={handleSentenceEnd}
+              onSentenceSelect={handleSentenceSelect}
             />
           ) : (
             <DatasetExplorer 
@@ -209,6 +260,15 @@ export default function NarrativePage() {
             {showDashboard && shouldShowLondonDashboard ? (
               <ReactFlowCanvas 
                 showDashboard={true}
+                dashboardConfig={{
+                  name: 'London Housing Dashboard',
+                  width: 1500,
+                  height: 1200,
+                  minWidth: 800,
+                  minHeight: 600,
+                  maxWidth: 1500,
+                  maxHeight: 1200,
+                }}
               >
                 <LondonDashboard />
               </ReactFlowCanvas>
