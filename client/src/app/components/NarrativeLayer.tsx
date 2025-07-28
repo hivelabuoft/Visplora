@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useImperativeHandle, forwardRef } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import { IoSaveSharp, IoArrowUndo } from "react-icons/io5";
 import { FaSave } from "react-icons/fa";
@@ -23,7 +23,13 @@ interface NarrativeLayerProps {
   onSentenceEnd?: (sentence: string, confidence: number) => void; // New callback for sentence end detection
 }
 
-const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelect, onSentenceEnd }) => {
+// Expose methods for parent components to access editor content
+export interface NarrativeLayerRef {
+  getFullText: () => string;
+  getCurrentSentence: () => string;
+}
+
+const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ prompt, onSentenceSelect, onSentenceEnd }, ref) => {
   const [wordCount, setWordCount] = useState(0);
   const [sentenceCount, setSentenceCount] = useState(0);
   const lastKeystrokeTimeRef = useRef<number>(Date.now());
@@ -747,6 +753,42 @@ const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelec
     },
   });
   
+  // Expose methods to parent component
+  useImperativeHandle(ref, () => ({
+    getFullText: () => {
+      return editor?.getText() || '';
+    },
+    getCurrentSentence: () => {
+      if (!editor) return '';
+      
+      const cursorPos = editor.state.selection.from;
+      const fullText = editor.getText();
+      
+      // Find the sentence boundaries around the cursor position
+      let sentenceStart = 0;
+      let sentenceEnd = fullText.length;
+      
+      // Look backwards from cursor to find sentence start (after previous sentence ending)
+      for (let i = cursorPos - 1; i >= 0; i--) {
+        if (/[.!?]/.test(fullText[i])) {
+          sentenceStart = i + 1;
+          break;
+        }
+      }
+      
+      // Look forwards from cursor to find sentence end (before next sentence ending)
+      for (let i = cursorPos; i < fullText.length; i++) {
+        if (/[.!?]/.test(fullText[i])) {
+          sentenceEnd = i;
+          break;
+        }
+      }
+      
+      // Extract the sentence around the cursor
+      return fullText.substring(sentenceStart, sentenceEnd).trim();
+    }
+  }), [editor]);
+  
   // Function to save/finish editing a sentence
   const finishEditingSentence = useCallback(() => {
     if (isEditingRef.current && editor && editingPosition) {
@@ -1109,6 +1151,9 @@ const NarrativeLayer: React.FC<NarrativeLayerProps> = ({ prompt, onSentenceSelec
       </div>
     </div>
   );
-};
+});
+
+// Add display name for debugging
+NarrativeLayer.displayName = 'NarrativeLayer';
 
 export default NarrativeLayer;

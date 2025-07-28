@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import NarrativeCanva from '../components/NarrativeCanva';
 import DatasetExplorer from '../components/DatasetExplorer';
-import NarrativeLayer from '../components/NarrativeLayer';
+import NarrativeLayer, { NarrativeLayerRef } from '../components/NarrativeLayer';
 import FileSummaryCanvas from '../components/FileSummaryCanvas';
 import { EmptyCanvas, EmptyTimeline, AnalyzingState } from '../components/EmptyStates';
 import ReactFlowCanvas from '../components/ReactFlowCanvas';
@@ -12,6 +12,9 @@ import LondonDashboard from '../london/page'; //this should be a different input
 import { generateMultipleFileSummaries, FileSummary } from '../../utils/londonDataLoader';
 import { interactionLogger } from '../../lib/interactionLogger';
 import { captureAndLogInteractions } from '../utils/dashboardConfig';
+import { captureInsights } from '../LLMs/suggestion_from_interaction';
+import '../../styles/dataExplorer.css';
+import '../../styles/narrativeLayer.css';
 import '../../styles/dataExplorer.css';
 import '../../styles/narrativeLayer.css';
 
@@ -34,6 +37,7 @@ interface DatasetFile {
 
 export default function NarrativePage() {
   const router = useRouter();
+  const narrativeLayerRef = useRef<NarrativeLayerRef>(null);
   const [userSession, setUserSession] = useState<UserSession | null>(null);
   const [isStudyMode, setIsStudyMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -325,6 +329,7 @@ export default function NarrativePage() {
         <div className="w-2/5">
           {showNarrativeLayer ? (
             <NarrativeLayer 
+              ref={narrativeLayerRef}
               prompt={currentPrompt}
               onSentenceEnd={handleSentenceEnd}
               onSentenceSelect={handleSentenceSelect}
@@ -342,45 +347,86 @@ export default function NarrativePage() {
         <div className="right-sec w-3/5 flex flex-col">
           {/* View Canvas - 75% */}
           <div className="view-canvas h-3/4 bg-white relative overflow-hidden">
-            {/* Canvas Action Buttons */}
-            <div className="absolute top-4 right-4 z-50 flex gap-2">
-              <button
-                onClick={() => captureAndLogInteractions()}
-                className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border"
-                style={{ 
-                  backgroundColor: '#c5cea180', 
-                  color: '#5a6635',
-                  borderColor: '#c5cea1'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#c5cea1b3';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#c5cea180';
-                }}
-                title="Capture current view"
-              >
-                Capture
-              </button>
-              <button
-                onClick={() => console.log('Inquiries button clicked')}
-                className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border"
-                style={{ 
-                  backgroundColor: '#f5bc7880', 
-                  color: '#8b5a2b',
-                  borderColor: '#f5bc78'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#f5bc78b3';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#f5bc7880';
-                }}
-                title="View inquiries and questions"
-              >
-                Inquiries
-              </button>
-            </div>
+            {/* Canvas Action Buttons - Only show when dashboard is visible */}
+            {showDashboard && (
+              <div className="absolute top-4 right-4 z-50 flex gap-2">
+                <div className="relative group">
+                  <button
+                    onClick={async () => {
+                      // Capture interactions and get the last 5
+                      const capturedInteractions = captureAndLogInteractions();
+                      
+                      // Also clear the local dashboard interactions state
+                      setDashboardInteractions([]);
+                      console.log('🧹 Local dashboard interactions cleared');
+                      
+                      // Get narrative content and current sentence from the narrative layer
+                      const narrativeContext = narrativeLayerRef.current?.getFullText() || '';
+                      const currentSentence = narrativeLayerRef.current?.getCurrentSentence() || '';
+                      
+                      console.log('📝 Captured narrative context:', narrativeContext);
+                      console.log('📍 Current sentence at cursor:', currentSentence);
+                      
+                      // Call OpenAI to capture insights with the interaction data
+                      try {
+                        console.log('🤖 Calling OpenAI to capture insights...');
+                        const response = await captureInsights(
+                          capturedInteractions,
+                          narrativeContext, // Use actual narrative content
+                          currentSentence // Use current sentence where cursor is positioned
+                        );
+                        console.log('✅ OpenAI insights captured successfully:', response);
+                      } catch (error) {
+                        console.error('❌ Failed to capture insights:', error);
+                      }
+                    }}
+                    className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border"
+                    style={{ 
+                      backgroundColor: '#c5cea180', 
+                      color: '#5a6635',
+                      borderColor: '#c5cea1'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#c5cea1b3';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#c5cea180';
+                    }}
+                  >
+                    Capture
+                  </button>
+                  {/* Custom tooltip */}
+                  <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-gray-800 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-60">
+                    Capture insight for recent interactions
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-800"></div>
+                  </div>
+                </div>
+                <div className="relative group">
+                  <button
+                    onClick={() => console.log('Inquiries button clicked')}
+                    className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border"
+                    style={{ 
+                      backgroundColor: '#f5bc7880', 
+                      color: '#8b5a2b',
+                      borderColor: '#f5bc78'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#f5bc78b3';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#f5bc7880';
+                    }}
+                  >
+                    Inquiries
+                  </button>
+                  {/* Custom tooltip */}
+                  <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-gray-800 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-60">
+                    View questions about this view
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-800"></div>
+                  </div>
+                </div>
+              </div>
+            )}
             
             {showDashboard && shouldShowLondonDashboard ? (
               <ReactFlowCanvas 

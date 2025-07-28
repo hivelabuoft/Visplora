@@ -100,16 +100,19 @@ export function getLayoutGroups(): string[] {
 }
 
 /**
- * Capture and log all accumulated interactions, then clear the array
+ * Capture and log the last 5 interactions, then clear all interactions
  */
 export function captureAndLogInteractions(): CaptureInteractionLog[] {
-  const snapshot = [...captureInteractions];
+  // Get only the last 5 interactions
+  const last5Interactions = captureInteractions.slice(-5);
+  const snapshot = [...last5Interactions];
 
-  console.log('🎯 Captured Interactions:', snapshot);
-  console.groupEnd();
+  // console.log(`🎯 Captured Last 5 Interactions (out of ${captureInteractions.length} total):`, snapshot);
+  // console.groupEnd();
   
-  // Clear the array after capture
+  // Clear all interactions after capture
   captureInteractions.length = 0;
+  // console.log('🧹 All interaction logs cleared after capture');
   
   return snapshot;
 }
@@ -119,7 +122,7 @@ export function captureAndLogInteractions(): CaptureInteractionLog[] {
  */
 export function clearCapturedInteractions(): void {
   captureInteractions.length = 0;
-  console.log('🧹 Cleared captured interactions');
+  // console.log('🧹 Cleared captured interactions');
 }
 
 /**
