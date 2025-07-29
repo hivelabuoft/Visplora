@@ -509,10 +509,11 @@ export const crimeBarChartComparisonSpec = (
     {
       "params": [
         {
-          "name": "highlight",
+          "name": "hover_crime_bar",
           "select": {
             "type": "point" as const,
-            "on": "pointerover" as const
+            "on": "pointerover" as const,
+            "clear": "pointerout" as const
           }
         },
         {
@@ -584,7 +585,7 @@ export const crimeBarChartComparisonSpec = (
               "value": 1
             },
             {
-              "param": "highlight",
+              "param": "hover_crime_bar",
               "empty": false,
               "value": 1
             }
@@ -592,10 +593,18 @@ export const crimeBarChartComparisonSpec = (
           "value": 0
         },
         "opacity": {
-          "condition": {
-            "param": "select",
-            "value": 1
-          },
+          "condition": [
+            {
+              "param": "select",
+              "empty": false,
+              "value": 1
+            },
+            {
+              "param": "hover_crime_bar",
+              "empty": false,
+              "value": 0.8
+            }
+          ],
           "value": 0.6
         },
         "tooltip": [
@@ -1001,8 +1010,8 @@ export const schoolEducationFacilitiesSpec = (schoolStats: BoroughSchoolStats) =
       "name": "hover_school_bar",
       "select": {
         "type": "point" as const,
-        "on": "mouseover" as const,
-        "clear": "mouseout" as const
+        "on": "pointerover" as const,
+        "clear": "pointerout" as const
       }
     }
   ],
@@ -1251,8 +1260,8 @@ export const ethnicityMinorityGroupsBarChartSpec = (ethnicityStats: BoroughEthni
         "name": "hover_ethnicity_bar",
         "select": {
           "type": "point" as const,
-          "on": "mouseover" as const,
-          "clear": "mouseout" as const
+          "on": "pointerover" as const,
+          "clear": "pointerout" as const
         }
       }
     ],

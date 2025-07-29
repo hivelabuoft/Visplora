@@ -38,45 +38,71 @@ const LSOA_GYM_FILE = path.join(GYM_FACILITIES_DIR, 'lsoa-gym-facilities.json');
 const BOROUGH_GYM_FILE = path.join(GYM_FACILITIES_DIR, 'borough-gym-facilities.json');
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const lsoa = searchParams.get('lsoa');
-  const borough = searchParams.get('borough');
-  let filePath = '';
-  let data = null;
+  try {
+    const { searchParams } = new URL(req.url);
+    const lsoa = searchParams.get('lsoa');
+    const borough = searchParams.get('borough');
+    let data = null;
 
-  if (lsoa) {
-    if (!fs.existsSync(GYM_FACILITIES_DIR)) {
-      fs.mkdirSync(GYM_FACILITIES_DIR, { recursive: true });
-    }
-    let allLsoaData: Record<string, any> = {};
-    if (fs.existsSync(LSOA_GYM_FILE)) {
-      allLsoaData = JSON.parse(fs.readFileSync(LSOA_GYM_FILE, 'utf-8'));
-    }
-    if (allLsoaData[lsoa]) {
-      data = allLsoaData[lsoa];
+    if (lsoa) {
+      if (!fs.existsSync(GYM_FACILITIES_DIR)) {
+        fs.mkdirSync(GYM_FACILITIES_DIR, { recursive: true });
+      }
+      let allLsoaData: Record<string, any> = {};
+      if (fs.existsSync(LSOA_GYM_FILE)) {
+        try {
+          const fileContent = fs.readFileSync(LSOA_GYM_FILE, 'utf-8');
+          allLsoaData = JSON.parse(fileContent);
+        } catch (parseError) {
+          console.error('Error parsing LSOA gym file:', parseError);
+          allLsoaData = {};
+        }
+      }
+      if (allLsoaData[lsoa]) {
+        data = allLsoaData[lsoa];
+      } else {
+        data = generateMockGymsData(getRandomInt(3, 8), 1, 4);
+        allLsoaData[lsoa] = data;
+        try {
+          fs.writeFileSync(LSOA_GYM_FILE, JSON.stringify(allLsoaData, null, 2), 'utf-8');
+        } catch (writeError) {
+          console.error('Error writing LSOA gym file:', writeError);
+          // Continue without writing to file
+        }
+      }
+    } else if (borough) {
+      if (!fs.existsSync(GYM_FACILITIES_DIR)) {
+        fs.mkdirSync(GYM_FACILITIES_DIR, { recursive: true });
+      }
+      let allBoroughData: Record<string, any> = {};
+      if (fs.existsSync(BOROUGH_GYM_FILE)) {
+        try {
+          const fileContent = fs.readFileSync(BOROUGH_GYM_FILE, 'utf-8');
+          allBoroughData = JSON.parse(fileContent);
+        } catch (parseError) {
+          console.error('Error parsing borough gym file:', parseError);
+          allBoroughData = {};
+        }
+      }
+      if (allBoroughData[borough]) {
+        data = allBoroughData[borough];
+      } else {
+        data = generateMockBoroughGymsData(getRandomInt(8, 32));
+        allBoroughData[borough] = data;
+        try {
+          fs.writeFileSync(BOROUGH_GYM_FILE, JSON.stringify(allBoroughData, null, 2), 'utf-8');
+        } catch (writeError) {
+          console.error('Error writing borough gym file:', writeError);
+          // Continue without writing to file
+        }
+      }
     } else {
-      data = generateMockGymsData(getRandomInt(3, 8), 1, 4);
-      allLsoaData[lsoa] = data;
-      fs.writeFileSync(LSOA_GYM_FILE, JSON.stringify(allLsoaData, null, 2), 'utf-8');
+      return NextResponse.json({ error: 'Missing lsoa or borough parameter' }, { status: 400 });
     }
-  } else if (borough) {
-    if (!fs.existsSync(GYM_FACILITIES_DIR)) {
-      fs.mkdirSync(GYM_FACILITIES_DIR, { recursive: true });
-    }
-    let allBoroughData: Record<string, any> = {};
-    if (fs.existsSync(BOROUGH_GYM_FILE)) {
-      allBoroughData = JSON.parse(fs.readFileSync(BOROUGH_GYM_FILE, 'utf-8'));
-    }
-    if (allBoroughData[borough]) {
-      data = allBoroughData[borough];
-    } else {
-      data = generateMockBoroughGymsData(getRandomInt(8, 32));
-      allBoroughData[borough] = data;
-      fs.writeFileSync(BOROUGH_GYM_FILE, JSON.stringify(allBoroughData, null, 2), 'utf-8');
-    }
-  } else {
-    return NextResponse.json({ error: 'Missing lsoa or borough parameter' }, { status: 400 });
+
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error('Error in gym facilities API:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-
-  return NextResponse.json(data);
 } 

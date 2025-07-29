@@ -43,3 +43,6 @@ next-env.d.ts
 # Excel files
 *.xls
 *.xlsx
+
+# Gym facilities directory
+/public/data/gym-facilities

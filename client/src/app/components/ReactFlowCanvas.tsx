@@ -260,7 +260,7 @@ const DashboardNode: React.FC<{ data: any; selected?: boolean }> = ({ data, sele
         transition: 'opacity 0.3s ease',
         pointerEvents: data.isGreyedOut ? 'none' : 'auto',
       }}>
-        <div className="dashboard-node-content">
+        <div className="dashboard-node-content" style={{pointerEvents: 'auto'}}>
           {data.dashboardComponent}
         </div>
       </div>
