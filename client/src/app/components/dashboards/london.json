@@ -1,0 +1,169 @@
+[
+  {
+    "view_id": "london-map-1",
+    "title": "London Borough Map",
+    "view_type": "choropleth_map",
+    "variable_map": {
+      "geography": "borough",
+      "color": "population_density",
+      "selection": "borough_name"
+    },
+    "layout_group": "geography"
+  },
+  {
+    "view_id": "lsoa-map-2",
+    "title": "LSOA Detail Map",
+    "view_type": "choropleth_map",
+    "variable_map": {
+      "geography": "lsoa",
+      "color": "ethnicity_data",
+      "selection": "lsoa_code"
+    },
+    "layout_group": "geography"
+  },
+  {
+    "view_id": "total-population-3",
+    "title": "Total Population",
+    "view_type": "metric_card",
+    "variable_map": {
+      "value": "total_population",
+      "format": "number"
+    },
+    "layout_group": "demographics"
+  },
+  {
+    "view_id": "population-change-4",
+    "title": "Population Change",
+    "view_type": "metric_card",
+    "variable_map": {
+      "value": "population_change_percent",
+      "format": "percentage"
+    },
+    "layout_group": "demographics"
+  },
+  {
+    "view_id": "population-density-5",
+    "title": "Population Density",
+    "view_type": "metric_card",
+    "variable_map": {
+      "value": "population_per_km2",
+      "format": "number"
+    },
+    "layout_group": "demographics"
+  },
+  {
+    "view_id": "mean-house-price-6",
+    "title": "Mean House Price",
+    "view_type": "metric_card",
+    "variable_map": {
+      "value": "mean_house_price",
+      "format": "currency"
+    },
+    "layout_group": "economy"
+  },
+  {
+    "view_id": "mean-household-income-7",
+    "title": "Mean Household Income",
+    "view_type": "metric_card",
+    "variable_map": {
+      "value": "mean_household_income",
+      "format": "currency"
+    },
+    "layout_group": "economy"
+  },
+  {
+    "view_id": "borough-crime-stats-8",
+    "title": "Borough Crime Statistics",
+    "view_type": "bar_chart",
+    "variable_map": {
+      "x": "borough_name",
+      "y": "crime_count",
+      "category": "crime_type"
+    },
+    "layout_group": "safety"
+  },
+  {
+    "view_id": "population-growth-projections-9",
+    "title": "Population Growth Timeline",
+    "view_type": "line_chart",
+    "variable_map": {
+      "x": "year",
+      "y": "population_count"
+    },
+    "layout_group": "demographics"
+  },
+  {
+    "view_id": "mean-income-timeline-10",
+    "title": "Mean Income Timeline",
+    "view_type": "line_chart",
+    "variable_map": {
+      "x": "year",
+      "y": "mean_income"
+    },
+    "layout_group": "economy"
+  },
+  {
+    "view_id": "borough-crime-categories-11",
+    "title": "Crime Categories Distribution",
+    "view_type": "pie_chart",
+    "variable_map": {
+      "category": "crime_category",
+      "value": "crime_count"
+    },
+    "layout_group": "safety"
+  },
+  {
+    "view_id": "house-price-timeline-12",
+    "title": "House Price Timeline",
+    "view_type": "line_chart",
+    "variable_map": {
+      "x": "year",
+      "y": "house_price"
+    },
+    "layout_group": "economy"
+  },
+  {
+    "view_id": "school-education-facilities-13",
+    "title": "School & Education Facilities",
+    "view_type": "scatter_plot",
+    "variable_map": {
+      "x": "facility_type",
+      "y": "facility_count",
+      "size": "enrollment"
+    },
+    "layout_group": "education"
+  },
+  {
+    "view_id": "ethnicity-minority-groups-14",
+    "title": "Ethnicity & Minority Groups",
+    "view_type": "stacked_bar_chart",
+    "variable_map": {
+      "category": "ethnicity_group",
+      "y": "population_count",
+      "stack": "minority_status"
+    },
+    "layout_group": "demographics"
+  },
+  {
+    "view_id": "country-of-birth-15",
+    "title": "Country of Birth Distribution",
+    "view_type": "pie_chart",
+    "variable_map": {
+      "category": "country_of_birth",
+      "value": "population_count",
+      "filter": "birth_year"
+    },
+    "layout_group": "demographics"
+  },
+  {
+    "view_id": "lsoa-libraries-16",
+    "title": "Libraries in LSOA",
+    "view_type": "line_chart",
+    "variable_map": {
+      "x": "year",
+      "y": "library_count",
+      "category": "library_type"
+    },
+    "layout_group": "education"
+  }
+]

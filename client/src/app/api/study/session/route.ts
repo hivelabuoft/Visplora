@@ -7,26 +7,38 @@ export async function POST(request: NextRequest) {
     await connectMongoDB();
     
     const body = await request.json();
+    console.log('Session POST body:', body);
+    
     const { 
       userId, 
-      username, 
-      sessionStartTime, 
-      userAgent, 
-      screenResolution, 
-      viewport,
-      referrer 
+      participantId,
+      sessionId,
+      studyPhase,
+      startTime,
+      progress,
+      metadata
     } = body;
+
+    // Validate required fields
+    if (!userId || !participantId || !sessionId) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Missing required fields',
+          details: { userId: !!userId, participantId: !!participantId, sessionId: !!sessionId }
+        },
+        { status: 400 }
+      );
+    }
 
     const session = new StudySession({
       userId,
-      username,
-      sessionStartTime,
-      userAgent,
-      screenResolution,
-      viewport,
-      referrer,
-      interactions: [],
-      snapshots: []
+      participantId,
+      sessionId,
+      studyPhase: studyPhase || 'main_task',
+      startTime: startTime || new Date(),
+      progress: progress || { tasksCompleted: 0, totalTasks: 0 },
+      metadata: metadata || {}
     });
 
     const savedSession = await session.save();
@@ -38,7 +50,11 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error creating study session:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to create study session' },
+      { 
+        success: false, 
+        error: 'Failed to create study session', 
+        details: error instanceof Error ? error.message : String(error)
+      },
       { status: 500 }
     );
   }
@@ -51,8 +67,8 @@ export async function PUT(request: NextRequest) {
     const body = await request.json();
     const { sessionId, ...updateData } = body;
 
-    const session = await StudySession.findByIdAndUpdate(
-      sessionId,
+    const session = await StudySession.findOneAndUpdate(
+      { sessionId: sessionId },  // Find by sessionId field, not _id
       updateData,
       { new: true }
     );

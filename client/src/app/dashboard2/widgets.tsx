@@ -64,7 +64,7 @@ export function getWidgetDataForSidebar(elementId: string, data: HRData[], filte
 
       return {
         vegaSpec: {
-          $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+          $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
           width: 280,
           height: 180,
           mark: 'bar',
@@ -160,7 +160,7 @@ export function getWidgetDataForSidebar(elementId: string, data: HRData[], filte
 
       return {
         vegaSpec: {
-          $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+          $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
           width: 280,
           height: 200,
           mark: 'bar',
@@ -186,7 +186,7 @@ export function getWidgetDataForSidebar(elementId: string, data: HRData[], filte
       const attritionEmployees = data.filter(emp => emp.Attrition === 'Yes').slice(0, 50);
       return {
         vegaSpec: {
-          $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+          $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
           width: 280,
           height: 160,
           mark: 'point',
@@ -212,7 +212,7 @@ export function getWidgetDataForSidebar(elementId: string, data: HRData[], filte
       if (elementId === 'attrition-rate-kpi') {
         return {
           vegaSpec: {
-            $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+            $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
             width: 120, height: 120,
             mark: { type: 'arc', innerRadius: 20, outerRadius: 50 },
             encoding: {
@@ -230,7 +230,7 @@ export function getWidgetDataForSidebar(elementId: string, data: HRData[], filte
       if (elementId === 'total-attrition-kpi') {
         return {
           vegaSpec: {
-            $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+            $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
             width: 150, height: 100, mark: 'bar',
             encoding: {
               x: { field: 'category', type: 'nominal', axis: { labelAngle: -45 } },
@@ -250,7 +250,7 @@ export function getWidgetDataForSidebar(elementId: string, data: HRData[], filte
         if (elementId === 'current-employees-kpi') {
           return {
           vegaSpec: {
-            $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+            $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
             width: 120, height: 120, mark: { type: 'arc' },
             encoding: {
               theta: { field: 'count', type: 'quantitative' },

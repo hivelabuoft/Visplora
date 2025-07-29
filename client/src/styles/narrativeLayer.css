@@ -2,96 +2,427 @@
 .narrative-layer {
   width: 100%;
   height: 100%;
-  padding: 2rem;
+  padding: 1.5rem;
+  padding-top: 0rem !important;
+  padding-right: 0rem;
   display: flex;
   flex-direction: column;
   background: #fff;
   font-family: 'Kalam', 'Comic Sans MS', 'Courier New', cursive;
 }
 
+/* Action buttons bar */
+.narrative-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0rem;
+  border-bottom: 1px solid #e2e8f0;
+  border-bottom: none;
+}
+
+.action-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #374151;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  border-color: #9ca3af;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.08);
+  color: #1f2937;
+}
+
+.action-button:active:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  color: #9ca3af;
+  transform: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.save-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-color: #10b981;
+  color: #047857;
+}
+
+.save-button:hover:not(:disabled) svg {
+  color: #059669;
+}
+
+.reset-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-color: #ef4444;
+  color: #dc2626;
+}
+
+.reset-button:hover:not(:disabled) svg {
+  color: #dc2626;
+}
+
+.ProseMirror{
+    padding-left: 1rem !important;
+}
+
 .narrative-editor {
   flex: 1;
   overflow-y: auto;
   padding: 1rem 0;
+  padding-top: 0.2rem !important;
+  position: relative; /* Add relative positioning for save button */
 }
 
-.lines-container {
-  width: 100%;
-  padding: 0.5rem 1rem;
-}
-
-.line-wrapper {
-  position: relative;
-  margin-bottom: 0;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-}
-
-.line-input {
+/* Tiptap Editor Content Styles */
+.narrative-editor-content {
   width: 100%;
   height: 100%;
   border: none;
   outline: none;
   background: transparent;
   font-size: 20px;
-  line-height: 2.5;
+  line-height: 1.6;
   color: #333;
   font-family: 'Kalam', 'Comic Sans MS', 'Courier New', cursive;
-  padding: 0;
+  padding: 0.5rem 0rem;
   margin: 0;
+  
+  /* Create line effect with background */
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 1.9rem,
+    #e0e0e0 1.9rem,
+    #e0e0e0 2.0rem
+  );
+  background-attachment: local;
+  min-height: 100%;
 }
 
-.line-input::placeholder {
-  color: #aaa;
+/* Completed sentence styling */
+.completed-sentence {
+  background-color: rgba(255, 244, 204, 0.3); /* More subtle yellow background */
+  padding: 1px 3px; /* Reduced padding for less height */
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline;
+  position: relative;
+  margin: 0; /* No margin by default */
+  border: 1px solid rgba(255, 193, 7, 0.2); /* More subtle border */
+  user-select: none; /* Prevent text selection to indicate read-only */
+  line-height: 1.2; /* Reduced line height */
+}
+
+/* Only second and subsequent sentences get left margin */
+.completed-sentence:not(:first-child) {
+  margin-left: 8px; /* Only left margin for non-first sentences */
+}
+
+/* Make the left margin space clickable for insertion */
+.completed-sentence:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  left: -8px; /* Position in the left margin space */
+  top: 0;
+  bottom: 0;
+  width: 8px; /* Cover the 8px left margin space */
+  cursor: text; /* Text cursor to indicate typing area */
+  z-index: 1;
+  transition: background-color 0.2s ease;
+  background: transparent;
+}
+
+.completed-sentence:not(:first-child)::before:hover {
+  background-color: rgba(59, 130, 246, 0.1); /* Subtle blue hover to indicate clickable */
+  border-radius: 2px;
+}
+
+.completed-sentence:hover {
+  background-color: rgba(255, 244, 204, 0.5); /* Slightly more visible on hover */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Very subtle shadow */
+  transform: none; /* Remove the jump effect */
+  border-color: rgba(255, 193, 7, 0.4);
+}
+
+.completed-sentence:hover::after {
+  content: "Double-click to edit";
+  position: absolute;
+  bottom: -18px; /* Moved closer to the sentence */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.completed-sentence:active {
+  background-color: rgba(255, 244, 204, 0.6);
+  transform: none; /* Remove the active transform */
+}
+
+.completed-sentence[data-editing="true"] {
+  background-color: rgba(255, 255, 255, 0.9);
+  outline: 2px solid #ffd700;
+  outline-offset: 1px;
+  user-select: text; /* Allow text selection when editing */
+}
+
+.completed-sentence[data-selected="true"] {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Sentence dropdown menu */
+.sentence-dropdown {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  min-width: 120px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #374151;
+  transition: all 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
+}
+
+/* Save button for sentence editing */
+.sentence-save-button {
+  position: fixed;
+  width: 20px; /* Smaller, less intrusive */
+  height: 20px;
+  border: none;
+  border-radius: 4px;
+  background: rgba(34, 197, 94, 0.85); /* Slightly more transparent green */
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(34, 197, 94, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  transition: all 0.2s ease;
+  z-index: 1000;
+  opacity: 0.8;
+  /* Will be positioned dynamically via JavaScript */
+}
+
+.sentence-save-button:hover {
+  opacity: 1;
+  transform: scale(1.05); /* Less dramatic scale */
+  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.3), 0 1px 3px rgba(0, 0, 0, 0.15);
+  background: rgba(34, 197, 94, 0.95);
+}
+
+.sentence-save-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 3px rgba(34, 197, 94, 0.2), 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.sentence-save-button svg {
+  width: 11px; /* Smaller icon */
+  height: 11px;
+  color: white; /* Ensure icon is white, not black */
+}
+
+.narrative-editor-content:focus {
+  background-color: rgba(255, 244, 204, 0.1);
+  background-image: repeating-linear-gradient(
+    rgba(255, 244, 204, 0.1),
+    rgba(255, 244, 204, 0.1) 1.9rem,
+    #e0e0e0 1.9rem,
+    #e0e0e0 2.0rem
+  );
+}
+
+.narrative-editor-content p {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+  line-height: 1.6;
+  display: inline-block;
+  width: 100%;
+}
+
+.narrative-editor-content .tiptap-paragraph {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+  line-height: 1.6;
+  display: inline-block;
+  width: 100%;
+}
+
+.narrative-editor-content p:empty::before,
+.narrative-editor-content .tiptap-paragraph:empty::before {
+  content: "Start with a hunch, goal, or observation…";
+  color: #999;
+  font-style: italic;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* TipTap Placeholder styling */
+.narrative-editor-content .is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.narrative-editor-content .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+/* Additional TipTap placeholder selectors */
+.narrative-editor-content .ProseMirror .is-empty::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  pointer-events: none;
+}
+
+.narrative-editor-content [data-placeholder]::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  pointer-events: none;
+}
+
+/* Rich text formatting */
+.narrative-editor-content strong {
+  font-weight: bold;
+}
+
+.narrative-editor-content em {
   font-style: italic;
 }
 
-.line-input:focus {
-  background-color: rgba(255, 244, 204, 0.1);
+.narrative-editor-content ul,
+.narrative-editor-content ol {
+  padding-left: 2rem;
+  margin: 0.5rem 0;
 }
 
-.line-border {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: #e0e0e0;
+.narrative-editor-content li {
+  margin: 0.25rem 0;
 }
 
-/* For selected line */
-.line-input:focus,
-.line-wrapper.selected {
-  background-color: rgba(255, 244, 204, 0.5);
+.narrative-editor-content h1,
+.narrative-editor-content h2,
+.narrative-editor-content h3 {
+  font-weight: bold;
+  margin: 1rem 0 0.5rem 0;
 }
 
-/* Animation for line click */
-.line-wrapper.clicked {
-  animation: line-pulse 0.3s ease;
+.narrative-editor-content h1 {
+  font-size: 1.5em;
 }
 
-@keyframes line-pulse {
-  0% { background-color: rgba(255, 244, 204, 0.2); }
-  50% { background-color: rgba(255, 244, 204, 0.7); }
-  100% { background-color: rgba(255, 244, 204, 0.5); }
+.narrative-editor-content h2 {
+  font-size: 1.3em;
+}
+
+.narrative-editor-content h3 {
+  font-size: 1.1em;
 }
 
 .narrative-footer {
   border-top: 1px solid #e0e0e0;
-  padding: 1rem 0;
+  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-shrink: 0;
-  font-size: 14px;
+  background-color: #f8f9fa;
+  font-size: 0.8rem;
   color: #666;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .narrative-stats {
   display: flex;
   gap: 1rem;
+}
+
+.narrative-stats span {
+  display: flex;
+  align-items: center;
+}
+
+.ai-analyzing {
+  color: #007acc !important;
+  font-weight: 500;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.detection-status {
+  color: #666 !important;
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .narrative-hint {
@@ -128,16 +459,242 @@
   display: block;
 }
 
-.suggestion-item {
-  padding: 0.5rem 0.75rem;
+/* Focus styles for better accessibility */
+.narrative-editor-content:focus-within {
+  outline: 2px solid rgba(59, 130, 246, 0.3);
+  outline-offset: -2px;
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .narrative-layer {
+    padding: 1rem;
+  }
+  
+  .narrative-editor-content {
+    font-size: 18px;
+    line-height: 1.5;
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 1.7rem,
+      #e0e0e0 1.7rem,
+      #e0e0e0 1.8rem
+    );
+  }
+  
+  .narrative-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+}
+
+/* Canvas Action Buttons */
+.canvas-action-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   cursor: pointer;
-  border-bottom: 1px solid #f1f5f9;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  user-select: none;
 }
 
-.suggestion-item:hover {
-  background-color: #f8fafc;
+.canvas-action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.suggestion-item:last-child {
-  border-bottom: none;
+.canvas-action-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.capture-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+}
+
+.capture-button:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.inquiries-button {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.inquiries-button:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+/* Responsive canvas buttons */
+@media (max-width: 768px) {
+  .canvas-action-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 13px;
+    gap: 0.3rem;
+  }
+}
+
+/* Narrative Suggestion Box Styles */
+.narrative-suggestion-box {
+  margin: 0.5rem 0;
+  border: 1px dashed #c1c7cd;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  opacity: 0.85;
+  transition: all 0.3s ease;
+  position: relative;
+  max-width: 100%;
+}
+
+.narrative-suggestion-box:hover {
+  opacity: 1;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15);
+}
+
+.suggestion-content {
+  padding: 1rem;
+}
+
+.suggestion-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #374151;
+  margin-bottom: 0.75rem;
+  font-style: italic;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  border-left: 3px solid #3b82f6;
+}
+
+.suggestion-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.suggestion-btn {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.accept-btn {
+  background: #10b981;
+  border-color: #059669;
+  color: white;
+}
+
+.accept-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.deny-btn {
+  background: #ef4444;
+  border-color: #dc2626;
+  color: white;
+}
+
+.deny-btn:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.explain-btn {
+  background: #6b7280;
+  border-color: #4b5563;
+  color: white;
+}
+
+.explain-btn:hover {
+  background: #4b5563;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
+}
+
+.suggestion-explanation {
+  border-top: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.9);
+  margin: 0 -1rem -1rem -1rem;
+  border-radius: 0 0 8px 8px;
+  animation: expandExplanation 0.2s ease-out;
+}
+
+@keyframes expandExplanation {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 200px;
+  }
+}
+
+.explanation-content {
+  padding: 0.75rem 1rem;
+}
+
+.explanation-section {
+  margin-bottom: 0.5rem;
+}
+
+.explanation-section:last-child {
+  margin-bottom: 0;
+}
+
+.explanation-section strong {
+  color: #374151;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.explanation-section p {
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Ghost/draft styling when suggestion appears */
+.narrative-suggestion-box.ghost-style {
+  opacity: 0.6;
+  border-style: dotted;
+  animation: fadeInSuggestion 0.4s ease-out;
+}
+
+@keyframes fadeInSuggestion {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 0.6;
+    transform: translateY(0);
+  }
 }

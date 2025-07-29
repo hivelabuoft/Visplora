@@ -8,7 +8,7 @@ export const chartTemplates: ChartTemplate[] = [
     category: "bar",
     thumbnailUrl: "",
     spec: {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      $schema: "https://vega.github.io/schema/vega-lite/v6.json",
       description: "A simple bar chart with categorical data",
       data: {
         values: [
@@ -36,7 +36,7 @@ export const chartTemplates: ChartTemplate[] = [
     category: "line",
     thumbnailUrl: "",
     spec: {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      $schema: "https://vega.github.io/schema/vega-lite/v6.json",
       description: "A simple line chart with time series data",
       data: {
         values: [
@@ -64,7 +64,7 @@ export const chartTemplates: ChartTemplate[] = [
     category: "scatter",
     thumbnailUrl: "",
     spec: {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      $schema: "https://vega.github.io/schema/vega-lite/v6.json",
       description: "A scatter plot showing the relationship between two variables",
       data: {
         values: [
@@ -93,7 +93,7 @@ export const chartTemplates: ChartTemplate[] = [
     category: "area",
     thumbnailUrl: "",
     spec: {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      $schema: "https://vega.github.io/schema/vega-lite/v6.json",
       description: "A simple area chart with time series data",
       data: {
         values: [
@@ -120,7 +120,7 @@ export const chartTemplates: ChartTemplate[] = [
     category: "pie",
     thumbnailUrl: "",
     spec: {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      $schema: "https://vega.github.io/schema/vega-lite/v6.json",
       description: "A simple pie chart with categorical data",
       data: {
         values: [
@@ -145,7 +145,7 @@ export const chartTemplates: ChartTemplate[] = [
     category: "other",
     thumbnailUrl: "",
     spec: {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      $schema: "https://vega.github.io/schema/vega-lite/v6.json",
       description: "A heatmap showing values across two dimensions",
       data: {
         values: [

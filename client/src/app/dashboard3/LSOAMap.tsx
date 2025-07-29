@@ -1,17 +1,32 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import { parseCSV } from '../../utils/londonDataLoader';
 
-// Fix for default markers in Leaflet with React
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-});
+// Dynamic import for Leaflet to avoid SSR issues
+let L: any = null;
+
+const initializeLeaflet = async () => {
+  if (typeof window !== 'undefined' && !L) {
+    const leaflet = await import('leaflet');
+    L = leaflet.default;
+    
+    // Import CSS separately
+    const style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
+    document.head.appendChild(style);
+    
+    // Fix for default markers in Leaflet with React
+    delete (L.Icon.Default.prototype as any)._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+      iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+    });
+  }
+  return L;
+};
 
 interface LSOAMapProps {
   selectedBorough: string;
@@ -44,63 +59,71 @@ interface LSOAGeoJSON {
 
 const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, selectedLSOA }) => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<L.Map | null>(null);
-  const layersRef = useRef<L.GeoJSON | null>(null);
+  const mapInstanceRef = useRef<any>(null);
+  const layersRef = useRef<any>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!mapRef.current) return;
+    const initializeMap = async () => {
+      if (!mapRef.current) return;
 
-    if (selectedLSOA) {
-        onLSOASelect('', '');
-    }
+      // Initialize Leaflet first
+      const leaflet = await initializeLeaflet();
+      if (!leaflet) return;
 
-    // Clean up existing map if it exists
-    if (mapInstanceRef.current) {
-      mapInstanceRef.current.remove();
-      mapInstanceRef.current = null;
-    }
-
-    // Initialize map
-    const map = L.map(mapRef.current, {
-      center: [51.5074, -0.1278], // London center
-      zoom: 14, // Start with a wider view
-      zoomControl: false,
-      closePopupOnClick: true,
-      attributionControl: true,
-      dragging: true,
-      touchZoom: false,
-      scrollWheelZoom: true,
-      doubleClickZoom: false,
-      boxZoom: false,
-      keyboard: false,
-    });
-
-    // Prevent map events from propagating to parent elements
-    map.on('mousedown', (e: any) => {
-      if (e.originalEvent) {
-        e.originalEvent.stopPropagation();
+      if (selectedLSOA) {
+          onLSOASelect('', '');
       }
-    });
-    
-    map.on('touchstart', (e: any) => {
-      if (e.originalEvent) {
-        e.originalEvent.stopPropagation();
-      }
-    });
-    
-    map.on('wheel', (e: any) => {
-      if (e.originalEvent) {
-        e.originalEvent.stopPropagation();
-      }
-    });
 
-    mapInstanceRef.current = map;
+      // Clean up existing map if it exists
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
 
-    // Add a simple tile layer (you can customize this)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 30,
-    }).addTo(map);
+      // Initialize map
+      const map = leaflet.map(mapRef.current, {
+        center: [51.5074, -0.1278], // London center
+        zoom: 14, // Start with a wider view
+        zoomControl: false,
+        closePopupOnClick: true,
+        attributionControl: true,
+        dragging: true,
+        touchZoom: false,
+        scrollWheelZoom: true,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+      });
+
+      // Prevent map events from propagating to parent elements
+      map.on('mousedown', (e: any) => {
+        if (e.originalEvent) {
+          e.originalEvent.stopPropagation();
+        }
+      });
+      
+      map.on('touchstart', (e: any) => {
+        if (e.originalEvent) {
+          e.originalEvent.stopPropagation();
+        }
+      });
+      
+      map.on('wheel', (e: any) => {
+        if (e.originalEvent) {
+          e.originalEvent.stopPropagation();
+        }
+      });
+
+      mapInstanceRef.current = map;
+
+      // Add a simple tile layer (you can customize this)
+      leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 30,
+      }).addTo(map);
+    };
+
+    initializeMap();
 
     return () => {
       if (mapInstanceRef.current) {
@@ -113,6 +136,10 @@ const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, select
   useEffect(() => {
     const loadLSOAData = async () => {
       if (!mapInstanceRef.current) return;
+
+      // Ensure Leaflet is initialized
+      const leaflet = await initializeLeaflet();
+      if (!leaflet) return;
 
       setError(null);
 
@@ -176,8 +203,8 @@ const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, select
         // --- End borough-specific min/max ---
 
         // Create GeoJSON layer with custom styling
-        const geoJSONLayer = L.geoJSON(geoJSONData, {
-          style: (feature) => {
+        const geoJSONLayer = leaflet.geoJSON(geoJSONData, {
+          style: (feature: any) => {
             const lsoaCode = feature?.properties?.lsoa21cd;
             const pop = popMap[lsoaCode] ?? NaN;
             const isSelected = selectedLSOA === lsoaCode;
@@ -190,13 +217,13 @@ const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, select
               fillOpacity: isNaN(pop) ? 0.4 : (isSelected ? 1 : (hasAnySelection ? 0.1 : 0.7)),
             };
           },
-          onEachFeature: (feature, layer) => {
+          onEachFeature: (feature: any, layer: any) => {
             const lsoaCode = feature.properties.lsoa21cd;
             const lsoaName = feature.properties.lsoa21nm;
             const pop = popMap[lsoaCode];
             // Add hover effects
             layer.on({
-              mouseover: (e) => {
+              mouseover: (e: any) => {
                 const layer = e.target;
                 const isSelected = selectedLSOA === lsoaCode;
                 const hasAnySelection = selectedLSOA !== '';
@@ -211,7 +238,7 @@ const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, select
                   layer.bringToFront();
                 }
               },
-              mouseout: (e) => {
+              mouseout: (e: any) => {
                 const layer = e.target;
                 const isSelected = selectedLSOA === lsoaCode;
                 const hasAnySelection = selectedLSOA !== '';

@@ -256,7 +256,7 @@ export const lsoaMapSpec = (selectedBorough: string) => {
 
 // Population Growth & Projections Chart specification
 export const populationTimelineChartSpec = (data: Array<{year: number, population: number, type: string}>) => ({
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
   "width": 250,
   "height": 130,
   "background": "transparent",
@@ -363,7 +363,7 @@ export const populationTimelineChartSpec = (data: Array<{year: number, populatio
 
 // Income Timeline Chart specification
 export const incomeTimelineChartSpec = (data: Array<{year: string, meanIncome: number, medianIncome: number, borough: string}>) => ({
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
   "width": 420,
   "height": 130,
   "background": "transparent",
@@ -494,7 +494,7 @@ export const crimeBarChartComparisonSpec = (
     .map((d, index) => ({ ...d, sortIndex: index }));
   
   return {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
   "width": 280,
   "height": 230,
   "background": "transparent",
@@ -662,7 +662,7 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
   const totalChange = data.reduce((sum, d) => sum + d.change, 0) / data.length;
   
   return {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
     "width": 150,
     "height": 150,
     "background": "transparent",
@@ -805,7 +805,7 @@ export const crimePieChartComparisonSpec = (data: CrimeCategoryComparison[], sel
 
 // Country of Birth Pie Chart Specification
 export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, comparison?: CountryOfBirthComparison) => ({
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
   "width": 140,
   "height": 140,
   "background": "transparent",
@@ -998,7 +998,7 @@ export const countryOfBirthPieChartSpec = (stats: CountryOfBirthStats, compariso
 
 // School Education Facilities Bar Chart Specification
 export const schoolEducationFacilitiesSpec = (schoolStats: BoroughSchoolStats) => ({
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
   "width": 200,
   "height": 130,
   "background": "transparent",
@@ -1248,7 +1248,7 @@ export const housePriceTimelineChartSpec = (data: HousePriceTimelineData[]) => {
 // Vega-Lite specification for ethnicity minority groups bar chart
 export const ethnicityMinorityGroupsBarChartSpec = (ethnicityStats: BoroughEthnicityStats): any => {
   return {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
     "width": 240,
     "height": 130,
     "background": "transparent",
@@ -1384,7 +1384,7 @@ export const gymPieChartSpec = (
 ) => {
   const total = facilities.reduce((sum, f) => sum + f.count, 0);
   return {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json" as const,
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
     width: 150,
     height: 150,
     background: "transparent",

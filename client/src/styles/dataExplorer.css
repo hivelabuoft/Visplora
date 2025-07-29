@@ -297,6 +297,28 @@
   margin-bottom: 8px;
 }
 
+.validation-message {
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.validation-message.error {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+.validation-message.warning {
+  background-color: #fffbeb;
+  border-color: #fed7aa;
+  color: #d97706;
+}
+
 .prompt-input {
   width: 100%;
   min-height: 150px;
@@ -750,11 +772,18 @@
 }
 
 .dashboard-node-content {
-  height: calc(100% - 40px);
+  height: calc(100%);
   overflow: auto;
   background: white;
   position: relative;
   z-index: 1;
+}
+
+/* Scale the London dashboard to fit within the node */
+.dashboard-node-content .london-dashboard {
+  transform-origin: top left;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* React Flow Node Overrides for Resizing */
@@ -808,4 +837,11 @@
 .react-flow__minimap {
   border: 1px solid #e2e8f0;
   border-radius: 4px;
+  transform: scale(0.6);
+  transform-origin: bottom right;
+}
+
+.react-flow__minimap-svg {
+  transform: scale(0.6);
+  transform-origin: bottom right;
 }

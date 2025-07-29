@@ -1,0 +1,1501 @@
+{
+  "categories": [
+    {
+      "name": "crime-rates",
+      "description": "Crime statistics and safety data across London boroughs",
+      "files": [
+        {
+          "id": "london-crime-data-2022-2023",
+          "name": "London Crime Data 2022-2023",
+          "path": "/dataset/london/crime-rates/london_crime_data_2022_2023.csv",
+          "description": "Crime statistics for London 2022-2023",
+          "columns": [
+            {
+              "name": "area_name",
+              "type": "categorical",
+              "description": "Area name where the crime occurred"
+            },
+            {
+              "name": "borough_name",
+              "type": "categorical", 
+              "description": "London borough name"
+            },
+            {
+              "name": "lsoa_code",
+              "type": "categorical",
+              "description": "Lower Super Output Area code"
+            },
+            {
+              "name": "crime_category",
+              "type": "categorical",
+              "description": "Crime category code"
+            },
+            {
+              "name": "crime_category_name",
+              "type": "categorical",
+              "description": "Descriptive name of the crime category"
+            },
+            {
+              "name": "year",
+              "type": "numeric",
+              "description": "Year when the crime occurred"
+            },
+            {
+              "name": "month",
+              "type": "numeric",
+              "description": "Month when the crime occurred"
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "description": "Date of the crime incident"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ethnicity",
+      "description": "Ethnic group distribution and diversity statistics",
+      "files": [
+        {
+          "id": "ethnic-group",
+          "name": "Ethnic Group Distribution",
+          "path": "/dataset/london/ethnicity/Ethnic group.csv",
+          "description": "Ethnic group distribution across London boroughs",
+          "columns": [
+            {
+              "name": "LSOA code",
+              "type": "categorical",
+              "description": "Lower Super Output Area code"
+            },
+            {
+              "name": "local authority name",
+              "type": "categorical",
+              "description": "Local authority (borough) name"
+            },
+            {
+              "name": "local authority code",
+              "type": "categorical",
+              "description": "Local authority code"
+            },
+            {
+              "name": "All usual residents",
+              "type": "numeric",
+              "description": "Total number of usual residents"
+            },
+            {
+              "name": "White British",
+              "type": "numeric",
+              "description": "Number of White British residents"
+            },
+            {
+              "name": "White Irish",
+              "type": "numeric",
+              "description": "Number of White Irish residents"
+            },
+            {
+              "name": "White Gypsy/Irish Traveller",
+              "type": "numeric",
+              "description": "Number of White Gypsy/Irish Traveller residents"
+            },
+            {
+              "name": "White Roma",
+              "type": "numeric",
+              "description": "Number of White Roma residents"
+            },
+            {
+              "name": "White Other",
+              "type": "numeric",
+              "description": "Number of other White ethnic group residents"
+            },
+            {
+              "name": "Mixed White and Asian",
+              "type": "numeric",
+              "description": "Number of Mixed White and Asian residents"
+            },
+            {
+              "name": "Mixed White and Black African",
+              "type": "numeric",
+              "description": "Number of Mixed White and Black African residents"
+            },
+            {
+              "name": "Mixed White and Black Caribbean",
+              "type": "numeric",
+              "description": "Number of Mixed White and Black Caribbean residents"
+            },
+            {
+              "name": "Mixed Other",
+              "type": "numeric",
+              "description": "Number of other Mixed ethnic group residents"
+            },
+            {
+              "name": "Asian Bangladeshi",
+              "type": "numeric",
+              "description": "Number of Asian Bangladeshi residents"
+            },
+            {
+              "name": "Asian Chinese",
+              "type": "numeric",
+              "description": "Number of Asian Chinese residents"
+            },
+            {
+              "name": "Asian Indian",
+              "type": "numeric",
+              "description": "Number of Asian Indian residents"
+            },
+            {
+              "name": "Asian Pakistani",
+              "type": "numeric",
+              "description": "Number of Asian Pakistani residents"
+            },
+            {
+              "name": "Asian Other",
+              "type": "numeric",
+              "description": "Number of other Asian ethnic group residents"
+            },
+            {
+              "name": "Black African",
+              "type": "numeric",
+              "description": "Number of Black African residents"
+            },
+            {
+              "name": "Black Caribbean",
+              "type": "numeric",
+              "description": "Number of Black Caribbean residents"
+            },
+            {
+              "name": "Black Other",
+              "type": "numeric",
+              "description": "Number of other Black ethnic group residents"
+            },
+            {
+              "name": "Other Arab",
+              "type": "numeric",
+              "description": "Number of Arab residents"
+            },
+            {
+              "name": "Other Any other",
+              "type": "numeric",
+              "description": "Number of residents from any other ethnic group"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "country-of-births",
+      "description": "Population demographics by country of birth",
+      "files": [
+        {
+          "id": "cob-borough",
+          "name": "Country of Birth by Borough",
+          "path": "/dataset/london/country-of-births/cob-borough.csv",
+          "description": "Population by country of birth across London boroughs",
+          "columns": [
+            {
+              "name": "area_code",
+              "type": "categorical",
+              "description": "Area code identifier"
+            },
+            {
+              "name": "area_name",
+              "type": "categorical",
+              "description": "Borough or area name"
+            },
+            {
+              "name": "country_of_birth",
+              "type": "categorical",
+              "description": "Country of birth"
+            },
+            {
+              "name": "population_count",
+              "type": "numeric",
+              "description": "Number of residents born in this country"
+            },
+            {
+              "name": "percentage",
+              "type": "numeric",
+              "description": "Percentage of total population"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "population",
+      "description": "Population counts, density, and demographic information",
+      "files": [
+        {
+          "id": "population-1801-2021",
+          "name": "Population 1801 to 2021",
+          "path": "/dataset/london/population/population 1801 to 2021.csv",
+          "description": "Historical population data from 1801 to 2021",
+          "columns": [
+            {
+              "name": "year",
+              "type": "numeric",
+              "description": "Census year"
+            },
+            {
+              "name": "area_code",
+              "type": "categorical",
+              "description": "Area code identifier"
+            },
+            {
+              "name": "area_name",
+              "type": "categorical",
+              "description": "Borough or area name"
+            },
+            {
+              "name": "population",
+              "type": "numeric",
+              "description": "Total population count"
+            }
+          ]
+        },
+        {
+          "id": "housing-density-borough",
+          "name": "Housing Density by Borough",
+          "path": "/dataset/london/population/housing-density-borough.csv",
+          "description": "Housing density statistics by borough",
+          "columns": [
+            {
+              "name": "Code",
+              "type": "categorical",
+              "description": "Borough code"
+            },
+            {
+              "name": "Name",
+              "type": "categorical",
+              "description": "Borough name"
+            },
+            {
+              "name": "Year",
+              "type": "numeric",
+              "description": "Year of data"
+            },
+            {
+              "name": "Source",
+              "type": "categorical",
+              "description": "Data source"
+            },
+            {
+              "name": "Population",
+              "type": "numeric",
+              "description": "Total population"
+            },
+            {
+              "name": "Inland_Area _Hectares",
+              "type": "numeric",
+              "description": "Inland area in hectares"
+            },
+            {
+              "name": "Total_Area_Hectares",
+              "type": "numeric",
+              "description": "Total area in hectares"
+            },
+            {
+              "name": "Population_per_hectare",
+              "type": "numeric",
+              "description": "Population density per hectare"
+            },
+            {
+              "name": "Square_Kilometres",
+              "type": "numeric",
+              "description": "Area in square kilometres"
+            },
+            {
+              "name": "Population_per_square_kilometre",
+              "type": "numeric",
+              "description": "Population density per square kilometre"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "income",
+      "description": "Income statistics, wages, and economic indicators",
+      "files": [
+        {
+          "id": "income-of-tax-payers",
+          "name": "Income of Tax Payers",
+          "path": "/dataset/london/income/income-of-tax-payers.csv",
+          "description": "Income statistics for tax payers",
+          "columns": [
+            {
+              "name": "Code",
+              "type": "categorical",
+              "description": "Area code"
+            },
+            {
+              "name": "Area",
+              "type": "categorical",
+              "description": "Borough or area name"
+            },
+            {
+              "name": "Number of Individuals",
+              "type": "numeric",
+              "description": "Number of tax-paying individuals (varies by year)"
+            },
+            {
+              "name": "Mean £",
+              "type": "numeric",
+              "description": "Mean income in pounds (varies by year)"
+            },
+            {
+              "name": "Median £",
+              "type": "numeric",
+              "description": "Median income in pounds (varies by year)"
+            }
+          ],
+          "note": "This dataset contains time series data from 1999-2023 with columns for each year"
+        }
+      ]
+    },
+    {
+      "name": "house-prices",
+      "description": "Property prices, housing market data",
+      "files": [
+        {
+          "id": "land-registry-house-prices-borough",
+          "name": "Land Registry House Prices by Borough",
+          "path": "/dataset/london/house-prices/land-registry-house-prices-borough.csv",
+          "description": "Land registry house price statistics by borough",
+          "columns": [
+            {
+              "name": "Code",
+              "type": "categorical",
+              "description": "Borough code"
+            },
+            {
+              "name": "Area",
+              "type": "categorical",
+              "description": "Borough name"
+            },
+            {
+              "name": "Year",
+              "type": "numeric",
+              "description": "Year of data"
+            },
+            {
+              "name": "Measure",
+              "type": "categorical",
+              "description": "Type of price measure (e.g., average, median)"
+            },
+            {
+              "name": "Value",
+              "type": "numeric",
+              "description": "House price value in pounds"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "schools-colleges",
+      "description": "Educational institutions and performance data",
+      "files": [
+        {
+          "id": "school-information-2022-2023",
+          "name": "School Information 2022-2023",
+          "path": "/dataset/london/schools-colleges/2022-2023_england_school_information.csv",
+          "description": "School information for England 2022-2023",
+          "columns": [
+            {
+              "name": "URN",
+              "type": "categorical",
+              "description": "Unique Reference Number for school"
+            },
+            {
+              "name": "LA (code)",
+              "type": "categorical",
+              "description": "Local Authority code"
+            },
+            {
+              "name": "LA (name)",
+              "type": "categorical",
+              "description": "Local Authority name"
+            },
+            {
+              "name": "EstablishmentName",
+              "type": "categorical",
+              "description": "School establishment name"
+            },
+            {
+              "name": "TypeOfEstablishment (code)",
+              "type": "categorical",
+              "description": "Type of establishment code"
+            },
+            {
+              "name": "TypeOfEstablishment (name)",
+              "type": "categorical",
+              "description": "Type of establishment name"
+            },
+            {
+              "name": "EstablishmentStatus (code)",
+              "type": "categorical",
+              "description": "Establishment status code"
+            },
+            {
+              "name": "EstablishmentStatus (name)",
+              "type": "categorical",
+              "description": "Establishment status name"
+            },
+            {
+              "name": "ReasonEstablishmentOpened (code)",
+              "type": "categorical",
+              "description": "Reason establishment opened code"
+            },
+            {
+              "name": "ReasonEstablishmentOpened (name)",
+              "type": "categorical",
+              "description": "Reason establishment opened name"
+            },
+            {
+              "name": "OpenDate",
+              "type": "date",
+              "description": "Date the establishment opened"
+            },
+            {
+              "name": "ReasonEstablishmentClosed (code)",
+              "type": "categorical",
+              "description": "Reason establishment closed code"
+            },
+            {
+              "name": "ReasonEstablishmentClosed (name)",
+              "type": "categorical",
+              "description": "Reason establishment closed name"
+            },
+            {
+              "name": "CloseDate",
+              "type": "date",
+              "description": "Date the establishment closed"
+            },
+            {
+              "name": "PhaseOfEducation (code)",
+              "type": "categorical",
+              "description": "Phase of education code"
+            },
+            {
+              "name": "PhaseOfEducation (name)",
+              "type": "categorical",
+              "description": "Phase of education name"
+            },
+            {
+              "name": "StatutoryLowAge",
+              "type": "numeric",
+              "description": "Statutory low age"
+            },
+            {
+              "name": "StatutoryHighAge",
+              "type": "numeric",
+              "description": "Statutory high age"
+            },
+            {
+              "name": "Boarders (code)",
+              "type": "categorical",
+              "description": "Boarders code"
+            },
+            {
+              "name": "Boarders (name)",
+              "type": "categorical",
+              "description": "Boarders name"
+            },
+            {
+              "name": "NurseryProvision (name)",
+              "type": "categorical",
+              "description": "Nursery provision information"
+            },
+            {
+              "name": "OfficialSixthForm (code)",
+              "type": "categorical",
+              "description": "Official sixth form code"
+            },
+            {
+              "name": "OfficialSixthForm (name)",
+              "type": "categorical",
+              "description": "Official sixth form name"
+            },
+            {
+              "name": "Gender (code)",
+              "type": "categorical",
+              "description": "Gender code"
+            },
+            {
+              "name": "Gender (name)",
+              "type": "categorical",
+              "description": "Gender name"
+            },
+            {
+              "name": "ReligiousCharacter (code)",
+              "type": "categorical",
+              "description": "Religious character code"
+            },
+            {
+              "name": "ReligiousCharacter (name)",
+              "type": "categorical",
+              "description": "Religious character name"
+            },
+            {
+              "name": "ReligiousEthos (name)",
+              "type": "categorical",
+              "description": "Religious ethos name"
+            },
+            {
+              "name": "Diocese (code)",
+              "type": "categorical",
+              "description": "Diocese code"
+            },
+            {
+              "name": "Diocese (name)",
+              "type": "categorical",
+              "description": "Diocese name"
+            },
+            {
+              "name": "AdmissionsPolicy (code)",
+              "type": "categorical",
+              "description": "Admissions policy code"
+            },
+            {
+              "name": "AdmissionsPolicy (name)",
+              "type": "categorical",
+              "description": "Admissions policy name"
+            },
+            {
+              "name": "SchoolCapacity",
+              "type": "numeric",
+              "description": "School capacity"
+            },
+            {
+              "name": "SpecialClasses (code)",
+              "type": "categorical",
+              "description": "Special classes code"
+            },
+            {
+              "name": "SpecialClasses (name)",
+              "type": "categorical",
+              "description": "Special classes name"
+            },
+            {
+              "name": "TypeOfResourcedProvision (name)",
+              "type": "categorical",
+              "description": "Type of resourced provision"
+            },
+            {
+              "name": "ResourcedProvisionOnRoll",
+              "type": "numeric",
+              "description": "Resourced provision on roll"
+            },
+            {
+              "name": "ResourcedProvisionCapacity",
+              "type": "numeric",
+              "description": "Resourced provision capacity"
+            },
+            {
+              "name": "SEN1 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 1 name"
+            },
+            {
+              "name": "SEN2 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 2 name"
+            },
+            {
+              "name": "SEN3 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 3 name"
+            },
+            {
+              "name": "SEN4 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 4 name"
+            },
+            {
+              "name": "SEN5 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 5 name"
+            },
+            {
+              "name": "SEN6 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 6 name"
+            },
+            {
+              "name": "SEN7 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 7 name"
+            },
+            {
+              "name": "SEN8 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 8 name"
+            },
+            {
+              "name": "SEN9 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 9 name"
+            },
+            {
+              "name": "SEN10 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 10 name"
+            },
+            {
+              "name": "SEN11 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 11 name"
+            },
+            {
+              "name": "SEN12 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 12 name"
+            },
+            {
+              "name": "SEN13 (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs 13 name"
+            },
+            {
+              "name": "NumberOfPupils",
+              "type": "numeric",
+              "description": "Number of pupils"
+            },
+            {
+              "name": "NumberOfBoys",
+              "type": "numeric",
+              "description": "Number of boys"
+            },
+            {
+              "name": "NumberOfGirls",
+              "type": "numeric",
+              "description": "Number of girls"
+            },
+            {
+              "name": "PercentageFSM",
+              "type": "numeric",
+              "description": "Percentage free school meals"
+            },
+            {
+              "name": "TrustSchoolFlag (code)",
+              "type": "categorical",
+              "description": "Trust school flag code"
+            },
+            {
+              "name": "TrustSchoolFlag (name)",
+              "type": "categorical",
+              "description": "Trust school flag name"
+            },
+            {
+              "name": "Trusts (code)",
+              "type": "categorical",
+              "description": "Trusts code"
+            },
+            {
+              "name": "Trusts (name)",
+              "type": "categorical",
+              "description": "Trusts name"
+            },
+            {
+              "name": "SchoolSponsorFlag (name)",
+              "type": "categorical",
+              "description": "School sponsor flag"
+            },
+            {
+              "name": "SchoolSponsors (name)",
+              "type": "categorical",
+              "description": "School sponsors name"
+            },
+            {
+              "name": "FederationFlag (name)",
+              "type": "categorical",
+              "description": "Federation flag"
+            },
+            {
+              "name": "Federations (code)",
+              "type": "categorical",
+              "description": "Federations code"
+            },
+            {
+              "name": "Federations (name)",
+              "type": "categorical",
+              "description": "Federations name"
+            },
+            {
+              "name": "UKPRN",
+              "type": "categorical",
+              "description": "UK Provider Reference Number"
+            },
+            {
+              "name": "FEHEIdentifier",
+              "type": "categorical",
+              "description": "Further Education Higher Education Identifier"
+            },
+            {
+              "name": "FurtherEducationType (name)",
+              "type": "categorical",
+              "description": "Further education type"
+            },
+            {
+              "name": "OfstedLastInsp",
+              "type": "date",
+              "description": "Ofsted last inspection date"
+            },
+            {
+              "name": "OfstedSpecialMeasures (code)",
+              "type": "categorical",
+              "description": "Ofsted special measures code"
+            },
+            {
+              "name": "OfstedSpecialMeasures (name)",
+              "type": "categorical",
+              "description": "Ofsted special measures name"
+            },
+            {
+              "name": "LastChangedDate",
+              "type": "date",
+              "description": "Last changed date"
+            },
+            {
+              "name": "Street",
+              "type": "categorical",
+              "description": "Street address"
+            },
+            {
+              "name": "Locality",
+              "type": "categorical",
+              "description": "Locality"
+            },
+            {
+              "name": "Address3",
+              "type": "categorical",
+              "description": "Address line 3"
+            },
+            {
+              "name": "Town",
+              "type": "categorical",
+              "description": "Town"
+            },
+            {
+              "name": "County (name)",
+              "type": "categorical",
+              "description": "County name"
+            },
+            {
+              "name": "Postcode",
+              "type": "categorical",
+              "description": "Postcode"
+            },
+            {
+              "name": "SchoolWebsite",
+              "type": "categorical",
+              "description": "School website URL"
+            },
+            {
+              "name": "TelephoneNum",
+              "type": "categorical",
+              "description": "Telephone number"
+            },
+            {
+              "name": "HeadTitle (name)",
+              "type": "categorical",
+              "description": "Head teacher title"
+            },
+            {
+              "name": "HeadFirstName",
+              "type": "categorical",
+              "description": "Head teacher first name"
+            },
+            {
+              "name": "HeadLastName",
+              "type": "categorical",
+              "description": "Head teacher last name"
+            },
+            {
+              "name": "HeadPreferredJobTitle",
+              "type": "categorical",
+              "description": "Head teacher preferred job title"
+            },
+            {
+              "name": "BSOInspectorateName (name)",
+              "type": "categorical",
+              "description": "BSO inspectorate name"
+            },
+            {
+              "name": "InspectorateReport",
+              "type": "categorical",
+              "description": "Inspectorate report"
+            },
+            {
+              "name": "DateOfLastInspectionVisit",
+              "type": "date",
+              "description": "Date of last inspection visit"
+            },
+            {
+              "name": "NextInspectionVisit",
+              "type": "date",
+              "description": "Next inspection visit date"
+            },
+            {
+              "name": "TeenMoth (name)",
+              "type": "categorical",
+              "description": "Teen mother support name"
+            },
+            {
+              "name": "TeenMothPlaces",
+              "type": "numeric",
+              "description": "Teen mother places"
+            },
+            {
+              "name": "CCF (name)",
+              "type": "categorical",
+              "description": "Combined Cadet Force name"
+            },
+            {
+              "name": "SENPRU (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs Pupil Referral Unit name"
+            },
+            {
+              "name": "EBD (name)",
+              "type": "categorical",
+              "description": "Emotional and Behavioural Difficulties name"
+            },
+            {
+              "name": "PlacesPRU",
+              "type": "numeric",
+              "description": "Places in Pupil Referral Unit"
+            },
+            {
+              "name": "FTProv (name)",
+              "type": "categorical",
+              "description": "Full-time provision name"
+            },
+            {
+              "name": "EdByOther (name)",
+              "type": "categorical",
+              "description": "Education by other name"
+            },
+            {
+              "name": "Section41Approved (name)",
+              "type": "categorical",
+              "description": "Section 41 approved name"
+            },
+            {
+              "name": "SEN (code)",
+              "type": "categorical",
+              "description": "Special Educational Needs code"
+            },
+            {
+              "name": "SEN (name)",
+              "type": "categorical",
+              "description": "Special Educational Needs name"
+            },
+            {
+              "name": "TypeOfSENProvision (name)",
+              "type": "categorical",
+              "description": "Type of SEN provision"
+            },
+            {
+              "name": "StatutoryLowAge",
+              "type": "numeric",
+              "description": "Statutory low age (duplicate)"
+            },
+            {
+              "name": "StatutoryHighAge",
+              "type": "numeric",
+              "description": "Statutory high age (duplicate)"
+            },
+            {
+              "name": "PropsName",
+              "type": "categorical",
+              "description": "Proprietor name"
+            },
+            {
+              "name": "PreviousLA (code)",
+              "type": "categorical",
+              "description": "Previous Local Authority code"
+            },
+            {
+              "name": "PreviousLA (name)",
+              "type": "categorical",
+              "description": "Previous Local Authority name"
+            },
+            {
+              "name": "PreviousEstablishmentNumber",
+              "type": "categorical",
+              "description": "Previous establishment number"
+            },
+            {
+              "name": "DistanceToNearestStation",
+              "type": "numeric",
+              "description": "Distance to nearest station in miles"
+            },
+            {
+              "name": "ParliamentaryConstituency (code)",
+              "type": "categorical",
+              "description": "Parliamentary constituency code"
+            },
+            {
+              "name": "ParliamentaryConstituency (name)",
+              "type": "categorical",
+              "description": "Parliamentary constituency name"
+            },
+            {
+              "name": "UrbanRural (code)",
+              "type": "categorical",
+              "description": "Urban/Rural classification code"
+            },
+            {
+              "name": "UrbanRural (name)",
+              "type": "categorical",
+              "description": "Urban/Rural classification name"
+            },
+            {
+              "name": "GOR (code)",
+              "type": "categorical",
+              "description": "Government Office Region code"
+            },
+            {
+              "name": "GOR (name)",
+              "type": "categorical",
+              "description": "Government Office Region name"
+            },
+            {
+              "name": "DistrictAdministrative (code)",
+              "type": "categorical",
+              "description": "District administrative code"
+            },
+            {
+              "name": "DistrictAdministrative (name)",
+              "type": "categorical",
+              "description": "District administrative name"
+            },
+            {
+              "name": "AdministrativeWard (code)",
+              "type": "categorical",
+              "description": "Administrative ward code"
+            },
+            {
+              "name": "AdministrativeWard (name)",
+              "type": "categorical",
+              "description": "Administrative ward name"
+            },
+            {
+              "name": "CensusWard (code)",
+              "type": "categorical",
+              "description": "Census ward code"
+            },
+            {
+              "name": "CensusWard (name)",
+              "type": "categorical",
+              "description": "Census ward name"
+            },
+            {
+              "name": "MiddleSuperOutputArea (code)",
+              "type": "categorical",
+              "description": "Middle Super Output Area code"
+            },
+            {
+              "name": "MiddleSuperOutputArea (name)",
+              "type": "categorical",
+              "description": "Middle Super Output Area name"
+            },
+            {
+              "name": "LowerSuperOutputArea (code)",
+              "type": "categorical",
+              "description": "Lower Super Output Area code"
+            },
+            {
+              "name": "LowerSuperOutputArea (name)",
+              "type": "categorical",
+              "description": "Lower Super Output Area name"
+            },
+            {
+              "name": "MSOA (name)",
+              "type": "categorical",
+              "description": "Middle Super Output Area name (alternative)"
+            },
+            {
+              "name": "LSOA (name)",
+              "type": "categorical",
+              "description": "Lower Super Output Area name (alternative)"
+            },
+            {
+              "name": "Easting",
+              "type": "numeric",
+              "description": "Easting coordinate"
+            },
+            {
+              "name": "Northing",
+              "type": "numeric",
+              "description": "Northing coordinate"
+            },
+            {
+              "name": "SiteName",
+              "type": "categorical",
+              "description": "Site name"
+            },
+            {
+              "name": "QualityAssuranceBodyName",
+              "type": "categorical",
+              "description": "Quality assurance body name"
+            },
+            {
+              "name": "Boarders (code)",
+              "type": "categorical",
+              "description": "Boarders code (duplicate)"
+            },
+            {
+              "name": "CloseDate",
+              "type": "date",
+              "description": "Close date (duplicate)"
+            },
+            {
+              "name": "PhaseOfEducation (code)",
+              "type": "categorical",
+              "description": "Phase of education code (duplicate)"
+            },
+            {
+              "name": "ReasonEstablishmentClosed (code)",
+              "type": "categorical",
+              "description": "Reason establishment closed code (duplicate)"
+            },
+            {
+              "name": "ReasonEstablishmentOpened (code)",
+              "type": "categorical",
+              "description": "Reason establishment opened code (duplicate)"
+            },
+            {
+              "name": "StatutoryLowAge",
+              "type": "numeric",
+              "description": "Statutory low age (duplicate 2)"
+            },
+            {
+              "name": "StatutoryHighAge",
+              "type": "numeric",
+              "description": "Statutory high age (duplicate 2)"
+            },
+            {
+              "name": "Town",
+              "type": "categorical",
+              "description": "Town (duplicate)"
+            },
+            {
+              "name": "EstablishmentNumber",
+              "type": "categorical",
+              "description": "Establishment number"
+            }
+          ]
+        },
+        {
+          "id": "school-information-2021-2022",
+          "name": "School Information 2021-2022",
+          "path": "/dataset/london/schools-colleges/2021-2022_england_school_information.csv",
+          "description": "School information for England 2021-2022",
+          "columns": [
+            {
+              "name": "Similar to 2022-2023",
+              "type": "categorical",
+              "description": "Contains similar columns to the 2022-2023 dataset"
+            }
+          ]
+        },
+        {
+          "id": "england-spine-2010-2011",
+          "name": "England Spine 2010-2011",
+          "path": "/dataset/london/schools-colleges/2010-2011_england_spine.csv",
+          "description": "England spine data for 2010-2011",
+          "columns": [
+            {
+              "name": "Historical data",
+              "type": "categorical",
+              "description": "Historical education spine data"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "vehicles",
+      "description": "Vehicle registration and transportation statistics",
+      "files": [
+        {
+          "id": "vehicles-licensed-2023",
+          "name": "Licensed Vehicles 2023",
+          "path": "/dataset/london/vehicles/vehicles-licensed-type-borough_2023.csv",
+          "description": "Licensed vehicles by type and borough for 2023",
+          "columns": [
+            {
+              "name": "ONS CHD LA Code",
+              "type": "categorical",
+              "description": "ONS County/Housing District Local Authority Code"
+            },
+            {
+              "name": "ONS SNAC LA Code",
+              "type": "categorical",
+              "description": "ONS Standard Names and Codes Local Authority Code"
+            },
+            {
+              "name": "Local Authority",
+              "type": "categorical",
+              "description": "Local Authority name"
+            },
+            {
+              "name": "Cars",
+              "type": "numeric",
+              "description": "Number of licensed cars"
+            },
+            {
+              "name": "Motor cycles",
+              "type": "numeric",
+              "description": "Number of licensed motorcycles"
+            },
+            {
+              "name": "Light goods",
+              "type": "numeric",
+              "description": "Number of licensed light goods vehicles"
+            },
+            {
+              "name": "Heavy goods",
+              "type": "numeric",
+              "description": "Number of licensed heavy goods vehicles"
+            },
+            {
+              "name": "Buses and coaches",
+              "type": "numeric",
+              "description": "Number of licensed buses and coaches"
+            },
+            {
+              "name": "Other vehicles",
+              "type": "numeric",
+              "description": "Number of other licensed vehicles"
+            },
+            {
+              "name": "Total",
+              "type": "numeric",
+              "description": "Total number of licensed vehicles"
+            }
+          ]
+        },
+        {
+          "id": "vehicles-licensed-2022",
+          "name": "Licensed Vehicles 2022",
+          "path": "/dataset/london/vehicles/vehicles-licensed-type-borough_2022.csv",
+          "description": "Licensed vehicles by type and borough for 2022",
+          "columns": [
+            {
+              "name": "Same as 2023",
+              "type": "categorical",
+              "description": "Contains same columns as 2023 dataset"
+            }
+          ]
+        },
+        {
+          "id": "vehicles-licensed-2021",
+          "name": "Licensed Vehicles 2021",
+          "path": "/dataset/london/vehicles/vehicles-licensed-type-borough_2021.csv",
+          "description": "Licensed vehicles by type and borough for 2021",
+          "columns": [
+            {
+              "name": "Same as 2023",
+              "type": "categorical",
+              "description": "Contains same columns as 2023 dataset"
+            }
+          ]
+        },
+        {
+          "id": "vehicles-licensed-2020",
+          "name": "Licensed Vehicles 2020",
+          "path": "/dataset/london/vehicles/vehicles-licensed-type-borough_2020.csv",
+          "description": "Licensed vehicles by type and borough for 2020",
+          "columns": [
+            {
+              "name": "Same as 2023",
+              "type": "categorical",
+              "description": "Contains same columns as 2023 dataset"
+            }
+          ]
+        },
+        {
+          "id": "vehicles-licensed-2019",
+          "name": "Licensed Vehicles 2019",
+          "path": "/dataset/london/vehicles/vehicles-licensed-type-borough_2019.csv",
+          "description": "Licensed vehicles by type and borough for 2019",
+          "columns": [
+            {
+              "name": "Same as 2023",
+              "type": "categorical",
+              "description": "Contains same columns as 2023 dataset"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "restaurants",
+      "description": "Food service establishments and employment data",
+      "files": [
+        {
+          "id": "licensed-restaurants-units",
+          "name": "Licensed Restaurants Units",
+          "path": "/dataset/london/restaurants/licensed-restaurants-cafes-borough_Restaurants-units.csv",
+          "description": "Licensed restaurants and cafes units by borough",
+          "columns": [
+            {
+              "name": "area_code",
+              "type": "categorical",
+              "description": "Area code identifier"
+            },
+            {
+              "name": "area_name",
+              "type": "categorical",
+              "description": "Borough name"
+            },
+            {
+              "name": "year",
+              "type": "numeric",
+              "description": "Year of data"
+            },
+            {
+              "name": "restaurant_units",
+              "type": "numeric",
+              "description": "Number of restaurant units"
+            },
+            {
+              "name": "cafe_units",
+              "type": "numeric",
+              "description": "Number of cafe units"
+            },
+            {
+              "name": "total_units",
+              "type": "numeric",
+              "description": "Total food service units"
+            }
+          ]
+        },
+        {
+          "id": "licensed-restaurants-employment",
+          "name": "Licensed Restaurants Employment",
+          "path": "/dataset/london/restaurants/licensed-restaurants-cafes-borough_Restaurants-employment.csv",
+          "description": "Employment in licensed restaurants and cafes by borough",
+          "columns": [
+            {
+              "name": "area_code",
+              "type": "categorical",
+              "description": "Area code identifier"
+            },
+            {
+              "name": "area_name",
+              "type": "categorical",
+              "description": "Borough name"
+            },
+            {
+              "name": "year",
+              "type": "numeric",
+              "description": "Year of data"
+            },
+            {
+              "name": "restaurant_employment",
+              "type": "numeric",
+              "description": "Number of people employed in restaurants"
+            },
+            {
+              "name": "cafe_employment",
+              "type": "numeric",
+              "description": "Number of people employed in cafes"
+            },
+            {
+              "name": "total_employment",
+              "type": "numeric",
+              "description": "Total employment in food service"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gyms",
+      "description": "Fitness and wellness facilities data",
+      "files": [
+        {
+          "id": "gyms-borough",
+          "name": "Gyms by Borough",
+          "path": "/dataset/london/gyms/gyms-borough.csv",
+          "description": "Number of gyms and fitness facilities by borough",
+          "columns": [
+            {
+              "name": "area_code",
+              "type": "categorical",
+              "description": "Borough code"
+            },
+            {
+              "name": "area_name",
+              "type": "categorical",
+              "description": "Borough name"
+            },
+            {
+              "name": "year",
+              "type": "numeric",
+              "description": "Year of data"
+            },
+            {
+              "name": "gym_count",
+              "type": "numeric",
+              "description": "Number of registered gyms"
+            },
+            {
+              "name": "fitness_facilities",
+              "type": "numeric",
+              "description": "Number of fitness facilities"
+            },
+            {
+              "name": "total_facilities",
+              "type": "numeric",
+              "description": "Total fitness and gym facilities"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "libraries",
+      "description": "Public library and cultural facility data",
+      "files": [
+        {
+          "id": "libraries-borough",
+          "name": "Libraries by Borough",
+          "path": "/dataset/london/libraries/libraries-borough.csv",
+          "description": "Number of public libraries by borough",
+          "columns": [
+            {
+              "name": "area_code",
+              "type": "categorical",
+              "description": "Borough code"
+            },
+            {
+              "name": "area_name",
+              "type": "categorical",
+              "description": "Borough name"
+            },
+            {
+              "name": "year",
+              "type": "numeric",
+              "description": "Year of data"
+            },
+            {
+              "name": "library_count",
+              "type": "numeric",
+              "description": "Number of public libraries"
+            },
+            {
+              "name": "branch_libraries",
+              "type": "numeric",
+              "description": "Number of branch libraries"
+            },
+            {
+              "name": "mobile_libraries",
+              "type": "numeric",
+              "description": "Number of mobile library services"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "private-rent",
+      "description": "Private rental market data and statistics",
+      "files": [
+        {
+          "id": "private-rent-borough",
+          "name": "Private Rent by Borough",
+          "path": "/dataset/london/private-rent/private-rent-borough.csv",
+          "description": "Private rental prices and statistics by borough",
+          "columns": [
+            {
+              "name": "area_code",
+              "type": "categorical",
+              "description": "Borough code"
+            },
+            {
+              "name": "area_name",
+              "type": "categorical",
+              "description": "Borough name"
+            },
+            {
+              "name": "year",
+              "type": "numeric",
+              "description": "Year of data"
+            },
+            {
+              "name": "property_type",
+              "type": "categorical",
+              "description": "Type of rental property"
+            },
+            {
+              "name": "average_rent_pcm",
+              "type": "numeric",
+              "description": "Average rent per calendar month"
+            },
+            {
+              "name": "median_rent_pcm",
+              "type": "numeric",
+              "description": "Median rent per calendar month"
+            },
+            {
+              "name": "rental_yield",
+              "type": "numeric",
+              "description": "Rental yield percentage"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lsoa",
+      "description": "Lower Super Output Area reference and mapping data",
+      "files": [
+        {
+          "id": "lsoa-borough-mapping",
+          "name": "LSOA Borough Mapping",
+          "path": "/dataset/london/lsoa/lsoa-borough-mapping.csv",
+          "description": "Mapping between LSOA codes and boroughs",
+          "columns": [
+            {
+              "name": "lsoa_code",
+              "type": "categorical",
+              "description": "Lower Super Output Area code"
+            },
+            {
+              "name": "lsoa_name",
+              "type": "categorical",
+              "description": "Lower Super Output Area name"
+            },
+            {
+              "name": "borough_code",
+              "type": "categorical",
+              "description": "Borough code"
+            },
+            {
+              "name": "borough_name",
+              "type": "categorical",
+              "description": "Borough name"
+            },
+            {
+              "name": "ward_code",
+              "type": "categorical",
+              "description": "Ward code"
+            },
+            {
+              "name": "ward_name",
+              "type": "categorical",
+              "description": "Ward name"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
