@@ -332,7 +332,7 @@ export default function Dashboard1() {
               </p>
             </CardHeader>
             <CardContent>
-              <VegaLite spec={barChartSpec} data={filteredData} />
+              <VegaLite spec={barChartSpec} data={filteredData} renderer="svg" />
             </CardContent>
           </Card>
         </LinkableCard>
@@ -346,7 +346,7 @@ export default function Dashboard1() {
               </p>
             </CardHeader>
             <CardContent>
-              <VegaLite spec={pieChartSpec} data={filteredData} />
+              <VegaLite spec={pieChartSpec} data={filteredData} renderer="svg" />
             </CardContent>
           </Card>
         </LinkableCard>
@@ -367,7 +367,7 @@ export default function Dashboard1() {
                 </p>
               </CardHeader>
               <CardContent>
-                <VegaLite spec={lineChartSpec} data={timeSeriesData} />
+                <VegaLite spec={lineChartSpec} data={timeSeriesData} renderer="svg" />
               </CardContent>
             </Card>
           </LinkableCard>
@@ -382,7 +382,7 @@ export default function Dashboard1() {
                 </p>
               </CardHeader>
               <CardContent>
-                <VegaLite spec={heatmapSpec} data={sampleData} />
+                <VegaLite spec={heatmapSpec} data={sampleData} renderer="svg" />
               </CardContent>
             </Card>
           </LinkableCard>
