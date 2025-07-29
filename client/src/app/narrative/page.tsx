@@ -170,7 +170,8 @@ export default function NarrativePage() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Study Header - only show if in study mode */}
-      {isStudyMode && (        <div className="bg-gradient-to-r from-cyan-600 to-cyan-700 text-white px-4 py-2 text-sm">
+      {isStudyMode && (
+        <div className="bg-gradient-to-r from-cyan-600 to-cyan-700 text-white px-4 py-2 text-sm">
           <div className="flex justify-between items-center">
             <span>
               📊 User Study Session • Participant: {userSession.participantId} • Welcome, {userSession.firstName} {userSession.lastName}

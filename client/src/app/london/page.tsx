@@ -562,6 +562,7 @@ const Dashboard3: React.FC = () => {
                   <VegaLite 
                     spec={smallBoroughMapSpec(selectedBorough)}
                     actions={false}
+                    renderer='svg'
                   />
                 </div>
               </div>
@@ -727,6 +728,7 @@ const Dashboard3: React.FC = () => {
             <div className="absolute top-2 left-12 right-5 bottom-5" title='Click outside to reset selection'>
               <VegaLite 
                 spec={boroughMapSpec} 
+                renderer='svg'
                 actions={false}
                 signalListeners={{
                   select: (name: string, value: any) => {
@@ -789,6 +791,7 @@ const Dashboard3: React.FC = () => {
                       width: '100%',
                       height: '100%'
                     }}
+                    renderer='svg'
                   />
                 ) : (
                   <div className="flex items-center justify-center h-full text-gray-400">
@@ -817,7 +820,7 @@ const Dashboard3: React.FC = () => {
                 <div className="flex items-center justify-center h-32 text-gray-400 text-xs">Loading...</div>
               ) : gymFacilities && gymFacilities.length > 0 ? (
                 <div className={`absolute bottom-2 left-3 flex items-center ${gymViewLevel == "lsoa" ? 'gap-1' : 'gap-4'} flex-wrap`}>
-                  <VegaLite spec={gymPieChartSpec(gymFacilities, GYM_COLOR_RANGE)} actions={false} />
+                  <VegaLite spec={gymPieChartSpec(gymFacilities, GYM_COLOR_RANGE)} actions={false} renderer='svg'/>
                   <div className="">
                     {gymFacilities.slice(0, 10).map((f: { facility_type: string; count: number }, i: number) => (
                       <div key={f.facility_type} className={`flex items-center gap-1 ${gymViewLevel == "lsoa" ? 'text-xs' : 'text-[9px]'} text-gray-500`}>
@@ -889,6 +892,7 @@ const Dashboard3: React.FC = () => {
                 <VegaLite
                   spec={crimeBarChartComparisonSpec(crimeBarDataComparison, selectedCrimeCategory)}
                   actions={false}
+                  renderer='svg'
                 />
               ) : (
                 <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
@@ -932,6 +936,7 @@ const Dashboard3: React.FC = () => {
                 <VegaLite
                   spec={incomeTimelineChartSpec(incomeTimelineData)}
                   actions={false}
+                  renderer='svg'
                 />
               ) : (
                 <div className="flex items-center justify-center h-full text-gray-400">
@@ -968,7 +973,7 @@ const Dashboard3: React.FC = () => {
                 <VegaLite
                   spec={crimePieChartComparisonSpec(crimePieDataComparison, 2023)}
                   actions={false}
-                  style={{}}
+                  renderer='svg'
                 />
               ) : (
                 <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
@@ -1033,13 +1038,13 @@ const Dashboard3: React.FC = () => {
             <div className="absolute bottom-2 left-4 right-4">
               {isLSOASelected ? (
                 mockSchoolStats ? (
-                  <VegaLite spec={schoolEducationFacilitiesSpec(mockSchoolStats)} actions={false} style={{ width: '100%', height: '100%' }} />
+                  <VegaLite spec={schoolEducationFacilitiesSpec(mockSchoolStats)} actions={false} style={{ width: '100%', height: '100%' }} renderer='svg' />
                 ) : (
                   <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No school data available</div>
                 )
               ) : (
                 boroughSchoolStats ? (
-                  <VegaLite spec={schoolEducationFacilitiesSpec(boroughSchoolStats)} actions={false} style={{ width: '100%', height: '100%' }} />
+                  <VegaLite spec={schoolEducationFacilitiesSpec(boroughSchoolStats)} actions={false} style={{ width: '100%', height: '100%' }} renderer='svg'/>
                 ) : (
                   <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No school data available</div>
                 )
@@ -1089,6 +1094,7 @@ const Dashboard3: React.FC = () => {
                 <VegaLite
                   spec={housePriceTimelineChartSpec(housePriceTimelineData)}
                   actions={false}
+                  renderer='svg'
                 />
               ) : (
                 <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
@@ -1126,13 +1132,13 @@ const Dashboard3: React.FC = () => {
             <div className="absolute bottom-2 left-4 right-4">
               {isLSOASelected ? (
                 lsoaEthnicityStats && lsoaEthnicityStats.minorityGroups.length > 0 ? (
-                  <VegaLite spec={ethnicityMinorityGroupsBarChartSpec(lsoaEthnicityStats)} actions={false} />
+                  <VegaLite spec={ethnicityMinorityGroupsBarChartSpec(lsoaEthnicityStats)} actions={false} renderer='svg'/>
                 ) : (
                   <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No ethnicity data available</div>
                 )
               ) : (
                 boroughEthnicityStats && boroughEthnicityStats.minorityGroups.length > 0 ? (
-                  <VegaLite spec={ethnicityMinorityGroupsBarChartSpec(boroughEthnicityStats)} actions={false} />
+                  <VegaLite spec={ethnicityMinorityGroupsBarChartSpec(boroughEthnicityStats)} actions={false} renderer='svg'/>
                 ) : (
                   <div className="flex items-center justify-center h-32 text-gray-400 text-xs">No ethnicity data available</div>
                 )
@@ -1188,7 +1194,7 @@ const Dashboard3: React.FC = () => {
                     <VegaLite
                       spec={countryOfBirthPieChartSpec(countryOfBirthStats, countryOfBirthComparison || undefined)}
                       actions={false}
-                      style={{}}
+                      renderer='svg'
                     />
                   ) : (
                     <div className="flex items-center justify-center h-32 w-32 text-gray-400 text-xs">
@@ -1228,7 +1234,7 @@ const Dashboard3: React.FC = () => {
               <div className="text-xs font-semibold" style={{color: '#2B7A9B'}}>LIBRARY VISITS</div>
               <div className="text-xs text-gray-400 mb-1">Visits per 1,000 people | {selectedLSOAName}</div>
               <div className="absolute bottom-0 left-4 right-4">
-                <VegaLite spec={libraryLineChartSpec(mockLibraries)} actions={false} />
+                <VegaLite spec={libraryLineChartSpec(mockLibraries)} actions={false} renderer='svg'/>
               </div>
             </LinkableCard>
           )}

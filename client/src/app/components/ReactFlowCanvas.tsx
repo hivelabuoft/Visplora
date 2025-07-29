@@ -38,7 +38,7 @@ const DashboardNode: React.FC<{ data: any; selected?: boolean }> = ({ data, sele
         <div className="dashboard-node-header">
           📊 London Dashboard
         </div>
-        <div className="dashboard-node-content">
+        <div className="dashboard-node-content" style={{ pointerEvents: 'auto' }}>
           {data.dashboardComponent}
         </div>
       </div>
@@ -98,8 +98,8 @@ const ReactFlowCanvas: React.FC<ReactFlowCanvasProps> = ({ showDashboard, childr
         },
         type: 'dashboardNode',
         style: {
-          width: '650px',
-          height: '450px',
+          width: '1440px',
+          height: '100vh',
           border: '2px solid #0891b2',
           borderRadius: '8px',
           background: 'white',

@@ -656,5 +656,223 @@
       "facility_type": "Parkour Park",
       "count": 1
     }
+  ],
+  "Brent 014A": [
+    {
+      "facility_type": "Wrestling Gym",
+      "count": 1
+    },
+    {
+      "facility_type": "Rugby Pitch",
+      "count": 1
+    },
+    {
+      "facility_type": "Rowing Club",
+      "count": 2
+    },
+    {
+      "facility_type": "Climbing Wall",
+      "count": 1
+    },
+    {
+      "facility_type": "Cricket Nets",
+      "count": 2
+    },
+    {
+      "facility_type": "Shooting Range",
+      "count": 3
+    },
+    {
+      "facility_type": "Athletics Track",
+      "count": 1
+    },
+    {
+      "facility_type": "Boutique Fitness",
+      "count": 2
+    }
+  ],
+  "Brent 031G": [
+    {
+      "facility_type": "Chain Gym",
+      "count": 3
+    },
+    {
+      "facility_type": "Tennis Court",
+      "count": 3
+    },
+    {
+      "facility_type": "Wrestling Gym",
+      "count": 4
+    },
+    {
+      "facility_type": "Esports Arena",
+      "count": 4
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 1
+    },
+    {
+      "facility_type": "Table Football Club",
+      "count": 1
+    },
+    {
+      "facility_type": "Football Pitch",
+      "count": 4
+    },
+    {
+      "facility_type": "Sailing Club",
+      "count": 3
+    }
+  ],
+  "Croydon 031E": [
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 2
+    },
+    {
+      "facility_type": "Cycling Track",
+      "count": 1
+    },
+    {
+      "facility_type": "Archery Range",
+      "count": 2
+    },
+    {
+      "facility_type": "Basketball Court",
+      "count": 4
+    }
+  ],
+  "Southwark 032C": [
+    {
+      "facility_type": "Council Leisure Centre",
+      "count": 2
+    },
+    {
+      "facility_type": "Premium Gym",
+      "count": 4
+    },
+    {
+      "facility_type": "Rowing Club",
+      "count": 2
+    },
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 2
+    },
+    {
+      "facility_type": "Swimming Pool",
+      "count": 2
+    }
+  ],
+  "Bromley 031B": [
+    {
+      "facility_type": "Chain Gym",
+      "count": 2
+    },
+    {
+      "facility_type": "Squash Court",
+      "count": 3
+    },
+    {
+      "facility_type": "Swimming Pool",
+      "count": 2
+    }
+  ],
+  "Greenwich 042C": [
+    {
+      "facility_type": "Table Tennis Centre",
+      "count": 2
+    },
+    {
+      "facility_type": "Basketball Court",
+      "count": 4
+    },
+    {
+      "facility_type": "Water Sports Centre",
+      "count": 1
+    },
+    {
+      "facility_type": "Shooting Range",
+      "count": 4
+    },
+    {
+      "facility_type": "Fencing Salle",
+      "count": 1
+    },
+    {
+      "facility_type": "Chain Gym",
+      "count": 4
+    },
+    {
+      "facility_type": "Premium Gym",
+      "count": 4
+    },
+    {
+      "facility_type": "Playground",
+      "count": 2
+    }
+  ],
+  "Richmond upon Thames 001G": [
+    {
+      "facility_type": "Chain Gym",
+      "count": 4
+    },
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 3
+    },
+    {
+      "facility_type": "Esports Arena",
+      "count": 4
+    },
+    {
+      "facility_type": "Ice Rink",
+      "count": 2
+    },
+    {
+      "facility_type": "Climbing Wall",
+      "count": 4
+    }
+  ],
+  "Brent 014F": [
+    {
+      "facility_type": "Premium Gym",
+      "count": 4
+    },
+    {
+      "facility_type": "Outdoor Gym",
+      "count": 3
+    },
+    {
+      "facility_type": "Swimming Pool",
+      "count": 2
+    },
+    {
+      "facility_type": "Water Sports Centre",
+      "count": 4
+    },
+    {
+      "facility_type": "Bowling Alley",
+      "count": 2
+    },
+    {
+      "facility_type": "Equestrian Centre",
+      "count": 4
+    }
+  ],
+  "Brent 024D": [
+    {
+      "facility_type": "Boxing Gym",
+      "count": 4
+    },
+    {
+      "facility_type": "Squash Court",
+      "count": 4
+    },
+    {
+      "facility_type": "Basketball Court",
+      "count": 2
+    }
   ]
 }
