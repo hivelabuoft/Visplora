@@ -297,6 +297,28 @@
   margin-bottom: 8px;
 }
 
+.validation-message {
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.validation-message.error {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+.validation-message.warning {
+  background-color: #fffbeb;
+  border-color: #fed7aa;
+  color: #d97706;
+}
+
 .prompt-input {
   width: 100%;
   min-height: 150px;

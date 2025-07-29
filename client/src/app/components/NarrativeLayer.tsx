@@ -14,22 +14,35 @@ import History from '@tiptap/extension-history';
 import Placeholder from '@tiptap/extension-placeholder';
 import { CompletedSentence } from '../extensions/CompletedSentence';
 import { detectSentenceEndWithTiming, getCurrentSentence } from '../utils/sentenceDetector';
+import { detectNumbers } from '../utils/numberDetector';
 import { testAnalysis } from '../LLMs/testAnalysis';
+import { validateDomain } from '../LLMs/domainValidation';
+import { NarrativeSuggestion } from '../LLMs/suggestion_from_interaction';
+import NarrativeSuggestionBox from './NarrativeSuggestion';
 import '../../styles/narrativeLayer.css';
 
 interface NarrativeLayerProps {
   prompt: string;
   onSentenceSelect?: (sentence: string, index: number) => void;
   onSentenceEnd?: (sentence: string, confidence: number) => void; // New callback for sentence end detection
+  onSuggestionReceived?: (suggestion: NarrativeSuggestion) => void; // New callback for when suggestions are received
+  onSuggestionResolved?: () => void; // New callback for when suggestions are accepted or denied
+  onGenerateVisualization?: (sentence: string, validation: any) => void; // New callback for visualization generation
+  disableInteractions?: boolean; // New prop to disable interactions when info nodes are active
 }
 
 // Expose methods for parent components to access editor content
 export interface NarrativeLayerRef {
   getFullText: () => string;
   getCurrentSentence: () => string;
+  showSuggestion: (suggestion: NarrativeSuggestion) => void;
+  clearSuggestion: () => void;
+  showLoadingSuggestion: () => void;
+  hideLoadingSuggestion: () => void;
+  hasPendingSuggestion: () => boolean;
 }
 
-const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ prompt, onSentenceSelect, onSentenceEnd }, ref) => {
+const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ prompt, onSentenceSelect, onSentenceEnd, onSuggestionReceived, onSuggestionResolved, onGenerateVisualization, disableInteractions = false }, ref) => {
   const [wordCount, setWordCount] = useState(0);
   const [sentenceCount, setSentenceCount] = useState(0);
   const lastKeystrokeTimeRef = useRef<number>(Date.now());
@@ -48,6 +61,11 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
   const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Track click timeout to prevent click on double-click
   const [editorHistory, setEditorHistory] = useState<string[]>([]); // Track editor history for undo/redo
   const [historyIndex, setHistoryIndex] = useState<number>(-1); // Track current position in history
+  
+  // Suggestion state
+  const [currentSuggestion, setCurrentSuggestion] = useState<NarrativeSuggestion | null>(null);
+  const [suggestionPosition, setSuggestionPosition] = useState<{top: number, left: number} | null>(null);
+  const [isLoadingSuggestion, setIsLoadingSuggestion] = useState(false);
 
   // Simple function to enhance click detection (no DOM manipulation needed)
   const addInsertionAreasBetweenSentences = useCallback((editorInstance: any) => {
@@ -78,43 +96,74 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
       const currentCursorPos = editorInstance.state.selection.from;
       const currentCursorEnd = editorInstance.state.selection.to;
 
-      // Split text into sentences based on punctuation
-      const sentences = fullText.split(/([.!?]+\s*)/);
+      // Use smart sentence splitting that considers decimal numbers
+      const sentences = [];
       let currentPos = 0;
+      let sentenceStart = 0;
       
-      // console.log('🔍 Proactive marking - found sentence parts:', sentences);
-      
-      for (let i = 0; i < sentences.length; i += 2) {
-        const sentence = sentences[i];
-        const punctuation = sentences[i + 1] || '';
+      for (let i = 0; i < fullText.length; i++) {
+        const char = fullText[i];
         
-        // If this part has content and is followed by punctuation, it's a complete sentence
-        if (sentence.trim().length > 0 && punctuation.match(/[.!?]/)) {
-          const sentenceWithPunctuation = sentence + punctuation.replace(/\s+$/, ''); // Remove trailing spaces from punctuation
-          const from = currentPos;
-          const to = currentPos + sentenceWithPunctuation.length;
+        if (/[.!?]/.test(char)) {
+          // Check if this period is part of a decimal number
+          const beforePeriod = fullText.substring(Math.max(0, i - 10), i);
+          const afterPeriod = fullText.substring(i + 1, Math.min(fullText.length, i + 10));
           
-          // console.log(`🔍 Found complete sentence: "${sentenceWithPunctuation}" at position ${from}-${to}`);
-          
-          // Check if this range is already marked
-          const marks = editorInstance.state.doc.resolve(from).marks();
-          const alreadyMarked = marks.some((mark: any) => mark.type.name === 'completedSentence');
-          
-          if (!alreadyMarked) {
-            // console.log(`✨ Marking sentence: "${sentenceWithPunctuation}"`);
+          // For periods, be more specific about decimal detection
+          if (char === '.') {
+            // Check if this is truly part of a decimal number:
+            // 1. Must have a digit immediately before
+            // 2. Must have a digit immediately after (not just whitespace or end of text)
+            const hasDigitBefore = /\d$/.test(beforePeriod);
+            const hasDigitAfter = /^\d/.test(afterPeriod);
             
-            // Temporarily select this sentence to apply marking
-            editorInstance.commands.setTextSelection({ from, to });
-            
-            // Apply the completed sentence mark
-            editorInstance.commands.markAsCompletedSentence();
-          } else {
-            // console.log(`⏭️ Sentence already marked: "${sentenceWithPunctuation}"`);
+            // If it has digit before but NOT digit after, it's likely sentence punctuation after a decimal
+            // If it has both digits before and after, it's part of a decimal number
+            if (hasDigitBefore && hasDigitAfter) {
+              continue; // Skip this period, it's part of a decimal
+            }
+            // If it has digit before but no digit after, treat it as sentence punctuation
           }
+          
+          // This is a real sentence ending punctuation
+          const sentenceText = fullText.substring(sentenceStart, i + 1).trim();
+          
+          if (sentenceText.length > 0) {
+            sentences.push({
+              text: sentenceText,
+              start: sentenceStart,
+              end: i + 1
+            });
+          }
+          
+          // Move to start of next sentence (skip any whitespace)
+          let nextStart = i + 1;
+          while (nextStart < fullText.length && /\s/.test(fullText[nextStart])) {
+            nextStart++;
+          }
+          sentenceStart = nextStart;
         }
+      }
+      
+      // console.log('🔍 Proactive marking - found sentences:', sentences);
+      
+      // Mark each detected sentence
+      for (const sentence of sentences) {
+        // Check if this range is already marked
+        const marks = editorInstance.state.doc.resolve(sentence.start).marks();
+        const alreadyMarked = marks.some((mark: any) => mark.type.name === 'completedSentence');
         
-        // Move position forward
-        currentPos += sentence.length + (punctuation ? punctuation.length : 0);
+        if (!alreadyMarked) {
+          // console.log(`✨ Marking sentence: "${sentence.text}"`);
+          
+          // Temporarily select this sentence to apply marking
+          editorInstance.commands.setTextSelection({ from: sentence.start, to: sentence.end });
+          
+          // Apply the completed sentence mark
+          editorInstance.commands.markAsCompletedSentence();
+        } else {
+          // console.log(`⏭️ Sentence already marked: "${sentence.text}"`);
+        }
       }
       
       // ALWAYS restore the original cursor position - don't move to end!
@@ -157,6 +206,33 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
 
   // Sentence end detection and LLM trigger function
   const checkSentenceEnd = useCallback(async (text: string, editorInstance?: any) => {
+    // First, check for decimal numbers in the text to avoid false sentence detection
+    const numberDetectionResult = detectNumbers(text);
+    
+    // Check if the text ends with an incomplete decimal number
+    const trimmedText = text.trim();
+    const endsWithIncompleteDecimal = /\b\d+\.$/.test(trimmedText);
+    
+    // If text ends with incomplete decimal (e.g., "70."), don't trigger sentence detection
+    if (endsWithIncompleteDecimal) {
+      setDetectionStatus('Listening…');
+      return;
+    }
+    
+    // Check if text ends with complete decimal but no sentence punctuation (e.g., "70.46")
+    // Only block sentence detection if the decimal is truly at the end with no punctuation
+    const endsWithCompleteDecimalOnly = /\b\d+\.\d+$/.test(trimmedText);
+    
+    if (endsWithCompleteDecimalOnly) {
+      // Check if this decimal is at the very end and might be part of ongoing input
+      const lastNumber = numberDetectionResult.numbers[numberDetectionResult.numbers.length - 1];
+      if (lastNumber && lastNumber.end === trimmedText.length) {
+        // The decimal number is at the very end with no punctuation - be cautious
+        setDetectionStatus('Listening…');
+        return;
+      }
+    }
+    
     const result = detectSentenceEndWithTiming(text, lastKeystrokeTimeRef.current, 2000);
     
     // Enhanced debug logging with timing information (keep for console)
@@ -185,16 +261,46 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
         let sentenceEnd = fullText.length;
         
         // Look backwards from cursor to find sentence start (after previous sentence ending)
+        // But be careful not to split on periods that are part of decimal numbers
         for (let i = cursorPos - 1; i >= 0; i--) {
           if (/[.!?]/.test(fullText[i])) {
+            // For periods, check if this is part of a decimal number
+            if (fullText[i] === '.') {
+              const beforePeriod = fullText.substring(Math.max(0, i - 10), i);
+              const afterPeriod = fullText.substring(i + 1, Math.min(fullText.length, i + 10));
+              
+              // Only skip if it has digits immediately before AND after
+              const hasDigitBefore = /\d$/.test(beforePeriod);
+              const hasDigitAfter = /^\d/.test(afterPeriod);
+              
+              if (hasDigitBefore && hasDigitAfter) {
+                continue; // Skip this period, it's part of a decimal
+              }
+            }
+            
             sentenceStart = i + 1;
             break;
           }
         }
         
         // Look forwards from cursor to find sentence end (before next sentence ending)
+        // Again, be careful about decimal numbers
         for (let i = cursorPos; i < fullText.length; i++) {
           if (/[.!?]/.test(fullText[i])) {
+            // For periods, check if this is part of a decimal number
+            if (fullText[i] === '.') {
+              const beforePeriod = fullText.substring(Math.max(0, i - 10), i);
+              const afterPeriod = fullText.substring(i + 1, Math.min(fullText.length, i + 10));
+              
+              // Only skip if it has digits immediately before AND after
+              const hasDigitBefore = /\d$/.test(beforePeriod);
+              const hasDigitAfter = /^\d/.test(afterPeriod);
+              
+              if (hasDigitBefore && hasDigitAfter) {
+                continue; // Skip this period, it's part of a decimal
+              }
+            }
+            
             sentenceEnd = i;
             break;
           }
@@ -231,11 +337,14 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
       }
       
       // Check if sentence doesn't end with punctuation or if user might be typing punctuation
-      const endsWithPartialPunctuation = /\.$/.test(sentenceForAnalysis) || /\.{1,2}$/.test(sentenceForAnalysis);
+      // But be careful about decimal numbers
+      const endsWithDecimalNumber = /\b\d+\.\d*$/.test(sentenceForAnalysis);
+      const endsWithPartialPunctuation = !endsWithDecimalNumber && (/\.$/.test(sentenceForAnalysis) || /\.{1,2}$/.test(sentenceForAnalysis));
       const needsPunctuation = sentenceForAnalysis && 
         !/[.!?…]$/.test(sentenceForAnalysis) && 
         !sentenceForAnalysis.endsWith('...') &&
-        !endsWithPartialPunctuation;
+        !endsWithPartialPunctuation &&
+        !endsWithDecimalNumber; // Don't add punctuation if it ends with a decimal number
       
       // Store original sentence before modification for marking
       const originalSentence = sentenceForAnalysis;
@@ -291,7 +400,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
         
         // Get completed sentences
         const completedSentences = getCompletedSentences(editorInstance);
-        
+
         try {
           const testResult = await testAnalysis(
             sentenceForAnalysis,
@@ -528,6 +637,11 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
         return false; // Let default behavior handle all other keys
       },
       handleClick: (view, pos, event) => {
+        // Don't handle clicks if interactions are disabled
+        if (disableInteractions) {
+          return false;
+        }
+        
         const target = event.target as HTMLElement;
         
         // Check if clicked in the left margin area of sentences (8px space before sentences)
@@ -786,8 +900,30 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
       
       // Extract the sentence around the cursor
       return fullText.substring(sentenceStart, sentenceEnd).trim();
+    },
+    showSuggestion: (suggestion: NarrativeSuggestion) => {
+      setCurrentSuggestion(suggestion);
+      setIsLoadingSuggestion(false);
+      if (onSuggestionReceived) {
+        onSuggestionReceived(suggestion);
+      }
+    },
+    clearSuggestion: () => {
+      setCurrentSuggestion(null);
+      setSuggestionPosition(null);
+      setIsLoadingSuggestion(false);
+    },
+    showLoadingSuggestion: () => {
+      setIsLoadingSuggestion(true);
+      setCurrentSuggestion(null);
+    },
+    hideLoadingSuggestion: () => {
+      setIsLoadingSuggestion(false);
+    },
+    hasPendingSuggestion: () => {
+      return isLoadingSuggestion || (currentSuggestion !== null && currentSuggestion.narrative_suggestion !== null);
     }
-  }), [editor]);
+  }), [editor, onSuggestionReceived, isLoadingSuggestion, currentSuggestion]);
   
   // Function to save/finish editing a sentence
   const finishEditingSentence = useCallback(() => {
@@ -844,7 +980,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
   }, [editingPosition, editor]);
 
   // Function to handle dropdown actions
-  const handleDropdownAction = useCallback((action: string, event?: React.MouseEvent) => {
+  const handleDropdownAction = useCallback(async (action: string, event?: React.MouseEvent) => {
     // Prevent event bubbling to avoid clearing the dropdown
     if (event) {
       event.stopPropagation();
@@ -863,8 +999,50 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
     // Handle different actions
     switch (action) {
       case 'show-view':
-        console.log('📊 Showing view for sentence...');
-        // TODO: Implement show view functionality
+        console.log('📊 Showing view for sentence:', selectedSentence.element.textContent);
+        
+        // Validate domain scope for the selected sentence
+        const sentenceText = selectedSentence.element.textContent?.trim() || '';
+        console.log('🔍 Validating domain for sentence:', sentenceText);
+        
+        validateDomain(sentenceText)
+          .then(domainValidationResult => {
+            if (domainValidationResult.success && domainValidationResult.validation) {
+              const validation = domainValidationResult.validation;
+              console.log('✅ Domain validation result:', validation);
+              
+              // Use the callback to show validation in view canvas instead
+              if (onGenerateVisualization) {
+                onGenerateVisualization(sentenceText, validation);
+              }
+              
+            } else {
+              console.warn('⚠️ Domain validation failed:', domainValidationResult.error);
+              // Show error through callback
+              if (onGenerateVisualization) {
+                onGenerateVisualization(sentenceText, {
+                  is_data_driven_question: false,
+                  inquiry_supported: false,
+                  matched_dataset: [],
+                  matched_columns: {},
+                  explanation: 'Unable to validate this sentence. Please try again.'
+                });
+              }
+            }
+          })
+          .catch(error => {
+            console.error('❌ Domain validation error:', error);
+            // Show error through callback
+            if (onGenerateVisualization) {
+              onGenerateVisualization(sentenceText, {
+                is_data_driven_question: false,
+                inquiry_supported: false,
+                matched_dataset: [],
+                matched_columns: {},
+                explanation: 'Error validating sentence. Please try again.'
+              });
+            }
+          });
         break;
       case 'branch':
         console.log('🌿 Creating branch from sentence...');
@@ -917,6 +1095,40 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
         break;
     }
   }, [selectedSentence, editor]);
+  
+  // Handle suggestion acceptance
+  const handleAcceptSuggestion = useCallback((suggestionText: string) => {
+    if (!editor || !currentSuggestion) return;
+    
+    console.log('✅ Accepting suggestion:', suggestionText);
+    
+    // Get current cursor position
+    const cursorPos = editor.state.selection.from;
+    
+    // Insert the suggestion text at the cursor position
+    editor.commands.focus();
+    editor.commands.insertContent(' ' + suggestionText);
+    
+    // Clear the suggestion
+    setCurrentSuggestion(null);
+    setSuggestionPosition(null);
+    
+    // Notify parent that suggestion was resolved
+    onSuggestionResolved?.();
+    
+    // Log the acceptance
+    console.log('📝 Suggestion accepted and inserted into narrative');
+  }, [editor, currentSuggestion, onSuggestionResolved]);
+  
+  // Handle suggestion denial
+  const handleDenySuggestion = useCallback(() => {
+    console.log('❌ Denying suggestion');
+    setCurrentSuggestion(null);
+    setSuggestionPosition(null);
+    
+    // Notify parent that suggestion was resolved
+    onSuggestionResolved?.();
+  }, [onSuggestionResolved]);
   
   // Add global click listener to handle clicks outside the editor
   useEffect(() => {
@@ -1123,20 +1335,44 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ pro
           >
             <button
               className="dropdown-item"
-              onClick={(e) => handleDropdownAction('show-view', e)}
-              title="See the data or view that supported this sentence"
+              onClick={(e) => !disableInteractions && handleDropdownAction('show-view', e)}
+              title={disableInteractions ? "Close info nodes before using this feature" : "See the data or view that supported this sentence"}
+              disabled={disableInteractions}
+              style={{
+                opacity: disableInteractions ? 0.5 : 1,
+                cursor: disableInteractions ? 'not-allowed' : 'pointer',
+                backgroundColor: disableInteractions ? '#f3f4f6' : undefined
+              }}
             >
               Show view
             </button>
             <button
               className="dropdown-item"
-              onClick={(e) => handleDropdownAction('branch', e)}
-              title="Fork from this sentence to explore an alternative framing or direction"
+              onClick={(e) => !disableInteractions && handleDropdownAction('branch', e)}
+              title={disableInteractions ? "Close info nodes before using this feature" : "Fork from this sentence to explore an alternative framing or direction"}
+              disabled={disableInteractions}
+              style={{
+                opacity: disableInteractions ? 0.5 : 1,
+                cursor: disableInteractions ? 'not-allowed' : 'pointer',
+                backgroundColor: disableInteractions ? '#f3f4f6' : undefined
+              }}
             >
               Branches
             </button>
           </div>
         )}
+        
+        {/* Narrative suggestion box */}
+        {(currentSuggestion || isLoadingSuggestion) && (
+          <NarrativeSuggestionBox
+            suggestion={currentSuggestion || { narrative_suggestion: '', source_elementId: '', source_view_title: '', explanation: '' }}
+            onAccept={handleAcceptSuggestion}
+            onDeny={handleDenySuggestion}
+            position={suggestionPosition || undefined}
+            isLoading={isLoadingSuggestion}
+          />
+        )}
+
       </div>
       
       <div className="narrative-footer">

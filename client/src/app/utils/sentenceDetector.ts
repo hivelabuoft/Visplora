@@ -68,8 +68,28 @@ export function detectSentenceEnd(text: string): SentenceEndResult {
   // Normalize contractions for better detection
   const normalizedText = normalizeContractions(trimmed);
 
-  // 1. Ends with sentence punctuation
+  // 1. Ends with sentence punctuation (but check for decimal numbers first)
   if (/[.!?]$/.test(trimmed)) {
+    // Check if this might be a decimal number in progress
+    // Look for pattern: text ending with "number." where there's no digit after the period
+    const decimalInProgressPattern = /\b\d+\.$/.test(trimmed);
+    
+    if (decimalInProgressPattern) {
+      // This looks like the start of a decimal number (e.g., "70.")
+      // Don't treat this as a sentence end - wait for potential decimal digits
+      return { isSentenceEnd: false, reason: 'potential_decimal', confidence: 0.85 };
+    }
+    
+    // Check if this is a sentence ending with a completed decimal number followed by punctuation
+    // Pattern: "text number.digits." - the second period is sentence punctuation
+    const decimalWithPunctuationPattern = /\b\d+\.\d+\.$/.test(trimmed);
+    
+    if (decimalWithPunctuationPattern) {
+      // This is a sentence ending with a decimal number followed by a period
+      // e.g., "The value is 70.46." - treat as sentence end
+      return { isSentenceEnd: true, reason: 'punctuation_after_decimal', confidence: 0.95 };
+    }
+    
     return { isSentenceEnd: true, reason: 'punctuation', confidence: 0.95 };
   }
 

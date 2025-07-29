@@ -1,0 +1,200 @@
+/* Domain Validation React Flow Node Styles */
+.domain-validation-node {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 320px;
+  max-width: 450px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+  cursor: move;
+}
+
+.domain-validation-node:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Close button */
+.domain-validation-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #6b7280;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.domain-validation-close:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* Header */
+.domain-validation-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-right: 32px; /* Space for close button */
+}
+
+.domain-validation-icon {
+  font-size: 20px;
+  min-width: 24px;
+}
+
+.domain-validation-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #374151;
+}
+
+/* Content */
+.domain-validation-content {
+  margin-bottom: 16px;
+}
+
+.domain-validation-sentence {
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: #f9fafb;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.domain-validation-sentence strong {
+  color: #374151;
+  font-weight: 600;
+}
+
+.domain-validation-status {
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.domain-validation-explanation {
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #4b5563;
+}
+
+.domain-validation-datasets {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.domain-validation-datasets ul {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+
+.domain-validation-datasets li {
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.domain-validation-columns {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.dataset-columns {
+  margin: 4px 0;
+  color: #6b7280;
+}
+
+.dataset-columns em {
+  color: #374151;
+  font-weight: 500;
+}
+
+/* Actions */
+.domain-validation-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.domain-validation-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.domain-validation-button.generate {
+  background: #10b981;
+  color: white;
+}
+
+.domain-validation-button.generate:hover {
+  background: #059669;
+}
+
+.domain-validation-button.acknowledge {
+  background: #6b7280;
+  color: white;
+}
+
+.domain-validation-button.acknowledge:hover {
+  background: #4b5563;
+}
+
+/* Status-based styling */
+.domain-validation-node.supported-question {
+  border-color: #10b981;
+}
+
+.domain-validation-node.supported-question .domain-validation-icon {
+  color: #10b981;
+}
+
+.domain-validation-node.unsupported-question {
+  border-color: #f59e0b;
+}
+
+.domain-validation-node.unsupported-question .domain-validation-icon {
+  color: #f59e0b;
+}
+
+.domain-validation-node.non-data-question {
+  border-color: #6b7280;
+}
+
+.domain-validation-node.non-data-question .domain-validation-icon {
+  color: #6b7280;
+}
+
+/* React Flow handles */
+.domain-validation-node .react-flow__handle {
+  width: 8px;
+  height: 8px;
+  background: #6b7280;
+  border: 2px solid white;
+}
+
+.domain-validation-node .react-flow__handle-top {
+  top: -4px;
+}
+
+.domain-validation-node .react-flow__handle-bottom {
+  bottom: -4px;
+}

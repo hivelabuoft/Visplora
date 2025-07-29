@@ -544,3 +544,157 @@
     gap: 0.3rem;
   }
 }
+
+/* Narrative Suggestion Box Styles */
+.narrative-suggestion-box {
+  margin: 0.5rem 0;
+  border: 1px dashed #c1c7cd;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  opacity: 0.85;
+  transition: all 0.3s ease;
+  position: relative;
+  max-width: 100%;
+}
+
+.narrative-suggestion-box:hover {
+  opacity: 1;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15);
+}
+
+.suggestion-content {
+  padding: 1rem;
+}
+
+.suggestion-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #374151;
+  margin-bottom: 0.75rem;
+  font-style: italic;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  border-left: 3px solid #3b82f6;
+}
+
+.suggestion-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.suggestion-btn {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.accept-btn {
+  background: #10b981;
+  border-color: #059669;
+  color: white;
+}
+
+.accept-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.deny-btn {
+  background: #ef4444;
+  border-color: #dc2626;
+  color: white;
+}
+
+.deny-btn:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.explain-btn {
+  background: #6b7280;
+  border-color: #4b5563;
+  color: white;
+}
+
+.explain-btn:hover {
+  background: #4b5563;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
+}
+
+.suggestion-explanation {
+  border-top: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.9);
+  margin: 0 -1rem -1rem -1rem;
+  border-radius: 0 0 8px 8px;
+  animation: expandExplanation 0.2s ease-out;
+}
+
+@keyframes expandExplanation {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 200px;
+  }
+}
+
+.explanation-content {
+  padding: 0.75rem 1rem;
+}
+
+.explanation-section {
+  margin-bottom: 0.5rem;
+}
+
+.explanation-section:last-child {
+  margin-bottom: 0;
+}
+
+.explanation-section strong {
+  color: #374151;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.explanation-section p {
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Ghost/draft styling when suggestion appears */
+.narrative-suggestion-box.ghost-style {
+  opacity: 0.6;
+  border-style: dotted;
+  animation: fadeInSuggestion 0.4s ease-out;
+}
+
+@keyframes fadeInSuggestion {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 0.6;
+    transform: translateY(0);
+  }
+}

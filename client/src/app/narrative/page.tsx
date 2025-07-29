@@ -2,17 +2,16 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import NarrativeCanva from '../components/NarrativeCanva';
 import DatasetExplorer from '../components/DatasetExplorer';
 import NarrativeLayer, { NarrativeLayerRef } from '../components/NarrativeLayer';
 import FileSummaryCanvas from '../components/FileSummaryCanvas';
 import { EmptyCanvas, EmptyTimeline, AnalyzingState } from '../components/EmptyStates';
-import ReactFlowCanvas from '../components/ReactFlowCanvas';
+import ReactFlowCanvas, { ReactFlowCanvasRef } from '../components/ReactFlowCanvas';
 import LondonDashboard from '../london/page'; //this should be a different input after you have the right component for dashboard
 import { generateMultipleFileSummaries, FileSummary } from '../../utils/londonDataLoader';
 import { interactionLogger } from '../../lib/interactionLogger';
-import { captureAndLogInteractions } from '../utils/dashboardConfig';
-import { captureInsights } from '../LLMs/suggestion_from_interaction';
+import { captureAndLogInteractions, getCapturedInteractionCount } from '../utils/dashboardConfig';
+import { captureInsights, NarrativeSuggestion } from '../LLMs/suggestion_from_interaction';
 import '../../styles/dataExplorer.css';
 import '../../styles/narrativeLayer.css';
 import '../../styles/dataExplorer.css';
@@ -38,6 +37,7 @@ interface DatasetFile {
 export default function NarrativePage() {
   const router = useRouter();
   const narrativeLayerRef = useRef<NarrativeLayerRef>(null);
+  const reactFlowCanvasRef = useRef<ReactFlowCanvasRef>(null);
   const [userSession, setUserSession] = useState<UserSession | null>(null);
   const [isStudyMode, setIsStudyMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -50,6 +50,10 @@ export default function NarrativePage() {
   const [fileSummaries, setFileSummaries] = useState<FileSummary[]>([]);
   const [summaryLoading, setSummaryLoading] = useState(false);
   const [summaryError, setSummaryError] = useState<string>('');
+  const [isCapturingInsights, setIsCapturingInsights] = useState(false);
+  const [hasPendingSuggestion, setHasPendingSuggestion] = useState(false);
+  const [interactionCount, setInteractionCount] = useState(0);
+  const [hasActiveInfoNodes, setHasActiveInfoNodes] = useState(false);
 
   // Local interaction tracking
   const [dashboardInteractions, setDashboardInteractions] = useState<Array<{
@@ -157,6 +161,24 @@ export default function NarrativePage() {
     }
   }, [userSession, isStudyMode]);
 
+  // Track info node status from ReactFlow canvas
+  useEffect(() => {
+    const checkInfoNodes = () => {
+      if (reactFlowCanvasRef.current) {
+        const hasActive = reactFlowCanvasRef.current.hasActiveInfoNode();
+        setHasActiveInfoNodes(hasActive);
+      }
+    };
+
+    // Check immediately
+    checkInfoNodes();
+
+    // Set up an interval to check periodically
+    const interval = setInterval(checkInfoNodes, 500);
+
+    return () => clearInterval(interval);
+  }, [showDashboard]); // Re-run when dashboard visibility changes
+
   // Handle analysis request
   const handleAnalysisRequest = async (prompt: string) => {
     console.log('🚀 Starting analysis for prompt:', prompt);
@@ -246,6 +268,58 @@ export default function NarrativePage() {
     setIsAnalyzing(false);
   };
 
+  // Handle suggestion state changes
+  const handleSuggestionReceived = (suggestion: NarrativeSuggestion) => {
+    setHasPendingSuggestion(true);
+  };
+
+  // Handle suggestion accepted/denied
+  const handleSuggestionResolved = () => {
+    setHasPendingSuggestion(false);
+  };
+
+  // Use effect to check and update suggestion state periodically when needed
+  useEffect(() => {
+    if (narrativeLayerRef.current) {
+      const hasActiveSuggestion = narrativeLayerRef.current.hasPendingSuggestion();
+      if (hasActiveSuggestion !== hasPendingSuggestion) {
+        setHasPendingSuggestion(hasActiveSuggestion);
+      }
+    }
+  });
+
+  // Use effect to track interaction count changes
+  useEffect(() => {
+    const updateInteractionCount = () => {
+      const currentCount = getCapturedInteractionCount();
+      setInteractionCount(currentCount);
+    };
+
+    // Update immediately
+    updateInteractionCount();
+
+    // Reset count to 0 after 2 seconds of page load
+    const resetTimer = setTimeout(() => {
+      setInteractionCount(0);
+      // Also clear any existing captured interactions to ensure clean state
+      // This ensures the global interaction array is also reset
+      const existingCount = getCapturedInteractionCount();
+      if (existingCount > 0) {
+        // Clear the global interactions by calling captureAndLogInteractions
+        // which returns and clears the current interactions
+        captureAndLogInteractions();
+      }
+    }, 2000);
+
+    // Set up an interval to check for changes (since we can't directly observe the global array)
+    const interval = setInterval(updateInteractionCount, 100);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(resetTimer);
+    };
+  }, []);
+
   // Handle file selection from DatasetExplorer
   const handleFileSelection = async (files: DatasetFile[]) => {
     setSelectedFiles(files);
@@ -333,6 +407,19 @@ export default function NarrativePage() {
               prompt={currentPrompt}
               onSentenceEnd={handleSentenceEnd}
               onSentenceSelect={handleSentenceSelect}
+              onSuggestionReceived={handleSuggestionReceived}
+              onSuggestionResolved={handleSuggestionResolved}
+              disableInteractions={hasActiveInfoNodes}
+              onGenerateVisualization={(sentence: string, validation: any) => {
+                // When NarrativeLayer wants to generate visualization, 
+                // Add info node to canvas
+                if (reactFlowCanvasRef.current) {
+                  reactFlowCanvasRef.current.addInfoNode({
+                    title: 'Analysis Result',
+                    content: `Sentence: "${sentence}"\n\nSupported: ${validation.inquiry_supported ? 'Yes' : 'No'}\n\nExplanation: ${validation.explanation || 'No explanation provided'}`
+                  });
+                }
+              }}
             />
           ) : (
             <DatasetExplorer 
@@ -353,51 +440,117 @@ export default function NarrativePage() {
                 <div className="relative group">
                   <button
                     onClick={async () => {
-                      // Capture interactions and get the last 5
-                      const capturedInteractions = captureAndLogInteractions();
+                      // Check conditions for disabling the capture button
+                      const hasInteractions = interactionCount > 0;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions;
                       
-                      // Also clear the local dashboard interactions state
-                      setDashboardInteractions([]);
-                      console.log('🧹 Local dashboard interactions cleared');
+                      // Prevent clicks if capturing, has pending suggestion, or no interactions made yet
+                      if (isDisabled) return;
                       
-                      // Get narrative content and current sentence from the narrative layer
-                      const narrativeContext = narrativeLayerRef.current?.getFullText() || '';
-                      const currentSentence = narrativeLayerRef.current?.getCurrentSentence() || '';
+                      setIsCapturingInsights(true);
+                      narrativeLayerRef.current?.showLoadingSuggestion();
                       
-                      console.log('📝 Captured narrative context:', narrativeContext);
-                      console.log('📍 Current sentence at cursor:', currentSentence);
-                      
-                      // Call OpenAI to capture insights with the interaction data
                       try {
-                        console.log('🤖 Calling OpenAI to capture insights...');
-                        const response = await captureInsights(
+                        // Capture interactions and get the last 5
+                        const capturedInteractions = captureAndLogInteractions();
+                        
+                        // Also clear the local dashboard interactions state
+                        setDashboardInteractions([]);
+                        console.log('🧹 Local dashboard interactions cleared');
+                        
+                        // Get narrative content and current sentence from the narrative layer
+                        const narrativeContext = narrativeLayerRef.current?.getFullText() || '';
+                        const currentSentence = narrativeLayerRef.current?.getCurrentSentence() || '';
+                        
+                        // console.log('📝 Captured narrative context:', narrativeContext);
+                        // console.log('📍 Current sentence at cursor:', currentSentence);
+                        
+                        // Call OpenAI to capture insights with the interaction data
+                        // console.log('🤖 Calling OpenAI to capture insights...');
+                        const suggestion = await captureInsights(
                           capturedInteractions,
                           narrativeContext, // Use actual narrative content
                           currentSentence // Use current sentence where cursor is positioned
                         );
-                        console.log('✅ OpenAI insights captured successfully:', response);
+                        
+                        if (suggestion && suggestion.narrative_suggestion) {
+                          // console.log('✅ OpenAI suggestion received:', suggestion);
+                          // Show the suggestion in the narrative layer
+                          narrativeLayerRef.current?.showSuggestion(suggestion);
+                        } else {
+                          // console.log('ℹ️ No suggestion generated from current interactions');
+                          narrativeLayerRef.current?.hideLoadingSuggestion();
+                        }
                       } catch (error) {
-                        console.error('❌ Failed to capture insights:', error);
+                        // console.error('❌ Failed to capture insights:', error);
+                        narrativeLayerRef.current?.hideLoadingSuggestion();
+                      } finally {
+                        setIsCapturingInsights(false);
                       }
                     }}
-                    className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border"
-                    style={{ 
-                      backgroundColor: '#c5cea180', 
-                      color: '#5a6635',
-                      borderColor: '#c5cea1'
-                    }}
+                    disabled={(() => {
+                      const hasInteractions = interactionCount > 0;
+                      return isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
+                    })()}
+                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border ${
+                      (() => {
+                        const hasInteractions = interactionCount > 0;
+                        const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
+                        return isDisabled ? 'opacity-60 cursor-not-allowed' : '';
+                      })()
+                    }`}
+                    style={(() => {
+                      const hasInteractions = interactionCount > 0;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
+                      return {
+                        backgroundColor: isDisabled ? '#e5e7eb' : '#c5cea180', 
+                        color: isDisabled ? '#6b7280' : '#5a6635',
+                        borderColor: isDisabled ? '#d1d5db' : '#c5cea1'
+                      };
+                    })()}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#c5cea1b3';
+                      const hasInteractions = interactionCount > 0;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
+                      if (!isDisabled) {
+                        e.currentTarget.style.backgroundColor = '#c5cea1b3';
+                      }
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = '#c5cea180';
+                      const hasInteractions = interactionCount > 0;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
+                      if (!isDisabled) {
+                        e.currentTarget.style.backgroundColor = '#c5cea180';
+                      }
                     }}
                   >
-                    Capture
+                    {isCapturingInsights ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-current inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Capturing...
+                      </>
+                    ) : (
+                      'Capture'
+                    )}
                   </button>
                   {/* Custom tooltip */}
                   <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-gray-800 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-60">
-                    Capture insight for recent interactions
+                    {(() => {
+                      const hasInteractions = interactionCount > 0;
+                      if (!hasInteractions) {
+                        return 'Interact with the dashboard first to capture insights';
+                      } else if (hasActiveInfoNodes) {
+                        return 'Close info nodes before capturing insights';
+                      } else if (hasPendingSuggestion) {
+                        return 'Accept or deny the current suggestion first';
+                      } else if (isCapturingInsights) {
+                        return 'Generating insight...';
+                      } else {
+                        return 'Capture insight for recent interactions';
+                      }
+                    })()}
                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-800"></div>
                   </div>
                 </div>
@@ -430,6 +583,7 @@ export default function NarrativePage() {
             
             {showDashboard && shouldShowLondonDashboard ? (
               <ReactFlowCanvas 
+                ref={reactFlowCanvasRef}
                 key="london-flow-canvas"
                 showDashboard={true}
                 dashboardConfig={{

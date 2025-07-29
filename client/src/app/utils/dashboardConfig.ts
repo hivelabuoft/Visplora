@@ -17,6 +17,8 @@ export interface InteractionLog {
   metadata?: any;
   dashboardConfig?: DashboardElement;
   chartData?: any; // New field for chart data
+  currBorough?: string; // Current selected borough (dashboard=1 only)
+  currLSOA?: string; // Current selected LSOA (dashboard=1 only)
 }
 
 // Lightweight interaction log for capture (without timestamp/metadata)
@@ -27,6 +29,8 @@ export interface CaptureInteractionLog {
   action: string;
   dashboardConfig?: DashboardElement;
   chartData?: any;
+  currBorough?: string; // Current selected borough (dashboard=1 only)
+  currLSOA?: string; // Current selected LSOA (dashboard=1 only)
 }
 
 // Global array to store interactions for capture
@@ -49,8 +53,13 @@ export function logInteractionWithConfig(
   elementType: string,
   action: string,
   metadata?: any,
-  chartData?: any // New parameter for chart data
+  chartData?: any, // Chart data parameter
+  currBorough?: string, // Current borough context (dashboard=1 only)
+  currLSOA?: string // Current LSOA context (dashboard=1 only)
 ): InteractionLog {
+  // Check if we should include borough/LSOA context
+  const isDashboard1 = process.env.NEXT_PUBLIC_DEFAULT_DASHBOARD === '1';
+  
   // Find the corresponding dashboard configuration
   const dashboardConfig = findDashboardElement(elementId);
   
@@ -65,6 +74,16 @@ export function logInteractionWithConfig(
     chartData: chartData || undefined // Include chart data
   };
 
+  // Add borough/LSOA context only for dashboard=1
+  if (isDashboard1) {
+    if (currBorough) {
+      interactionLog.currBorough = currBorough;
+    }
+    if (currLSOA) {
+      interactionLog.currLSOA = currLSOA;
+    }
+  }
+
   // Store lightweight version for capture (without timestamp and metadata)
   const captureLog: CaptureInteractionLog = {
     elementId,
@@ -75,11 +94,22 @@ export function logInteractionWithConfig(
     chartData: chartData || undefined
   };
   
+  // Add borough/LSOA context to capture log only for dashboard=1
+  if (isDashboard1) {
+    if (currBorough) {
+      captureLog.currBorough = currBorough;
+    }
+    if (currLSOA) {
+      captureLog.currLSOA = currLSOA;
+    }
+  }
+  
   // Add to capture array
   captureInteractions.push(captureLog);
 
   // Only log the basic interaction details to console (no verbose logging)
-  console.log(`🎯 ${elementName} - ${action}`, { elementId, chartData: chartData ? 'included' : 'none' });
+  const contextInfo = isDashboard1 ? ` [Borough: ${currBorough || 'none'}, LSOA: ${currLSOA || 'none'}]` : '';
+  console.log(`🎯 ${elementName} - ${action}${contextInfo}`, { elementId, chartData: chartData ? 'included' : 'none' });
 
   return interactionLog;
 }

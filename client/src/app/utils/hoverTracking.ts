@@ -28,18 +28,18 @@ class HoverTracker {
   /**
    * Log an immediate interactive hover (for buttons, selectors, etc.)
    */
-  logInteractiveHover(elementId: string, elementName: string, elementType: string, interactionDetails: any, chartData?: any): void {
+  logInteractiveHover(elementId: string, elementName: string, elementType: string, interactionDetails: any, chartData?: any, currBorough?: string, currLSOA?: string): void {
     logInteractionWithConfig(elementId, elementName, elementType, 'interactive_hover', {
       description: `Interactive hover on ${elementName}`,
       interactionType: 'immediate',
       ...interactionDetails
-    }, chartData);
+    }, chartData, currBorough, currLSOA);
   }
 
   /**
    * Start tracking meaningful hover for chart elements that may show tooltips
    */
-  startMeaningfulHover(elementId: string, elementName: string, elementType: string, metadata?: any, chartData?: any): void {
+  startMeaningfulHover(elementId: string, elementName: string, elementType: string, metadata?: any, chartData?: any, currBorough?: string, currLSOA?: string): void {
     // Clear any existing hover state for this element
     this.endHover(elementId);
 
@@ -50,7 +50,7 @@ class HoverTracker {
         hoverDuration: this.HOVER_THRESHOLD,
         interactionType: 'exploration',
         ...metadata
-      }, chartData);
+      }, chartData, currBorough, currLSOA);
 
       // Mark as captured
       const state = this.hoverStates.get(elementId);
@@ -106,9 +106,9 @@ export const hoverTracker = new HoverTracker();
  * React hook for meaningful chart exploration hovers
  * Use this for charts where users hover to explore data (show tooltips, etc.)
  */
-export function useChartExplorationHover(elementId: string, elementName: string, elementType: string, chartData?: any) {
+export function useChartExplorationHover(elementId: string, elementName: string, elementType: string, chartData?: any, currBorough?: string, currLSOA?: string) {
   const handleMouseEnter = (metadata?: any) => {
-    hoverTracker.startMeaningfulHover(elementId, elementName, elementType, metadata, chartData);
+    hoverTracker.startMeaningfulHover(elementId, elementName, elementType, metadata, chartData, currBorough, currLSOA);
   };
 
   const handleMouseLeave = () => {
@@ -124,6 +124,6 @@ export function useChartExplorationHover(elementId: string, elementName: string,
 /**
  * Function to log interactive hovers immediately (for buttons, selectors, etc.)
  */
-export function logInteractiveHover(elementId: string, elementName: string, elementType: string, interactionDetails: any, chartData?: any) {
-  hoverTracker.logInteractiveHover(elementId, elementName, elementType, interactionDetails, chartData);
+export function logInteractiveHover(elementId: string, elementName: string, elementType: string, interactionDetails: any, chartData?: any, currBorough?: string, currLSOA?: string) {
+  hoverTracker.logInteractiveHover(elementId, elementName, elementType, interactionDetails, chartData, currBorough, currLSOA);
 }

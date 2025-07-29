@@ -205,7 +205,7 @@ const Dashboard3: React.FC<Dashboard3Props> = ({ onInteraction }) => {
         filterKey: key,
         filterValue: value,
         description: `Changed ${key} to ${value}`
-      }, contextData);
+      }, contextData, selectedBorough, selectedLSOA);
       
       // Also call the original onInteraction callback if provided
       if (onInteraction) {
@@ -569,7 +569,7 @@ const Dashboard3: React.FC<Dashboard3Props> = ({ onInteraction }) => {
     // Enhanced logging with dashboard configuration lookup AND chart data
     const interactionLog = logInteractionWithConfig(elementId, elementName, elementType, 'add_to_sidebar', {
       description: `Added ${elementName} to sidebar`
-    }, chartData);
+    }, chartData, selectedBorough, selectedLSOA);
     
     // Also call the original onInteraction callback if provided
     if (onInteraction) {
@@ -589,7 +589,7 @@ const Dashboard3: React.FC<Dashboard3Props> = ({ onInteraction }) => {
         selectedBorough: value.datum.id,
         boroughName: value.datum.properties?.NAME || value.datum.id,
         description: `Selected borough: ${value.datum.properties?.NAME || value.datum.id}`
-      });
+      }, undefined, value.datum.id, selectedLSOA);
       
       // Also call the original onInteraction callback if provided
       if (onInteraction) {
@@ -649,7 +649,7 @@ const Dashboard3: React.FC<Dashboard3Props> = ({ onInteraction }) => {
       selectedLSOA: lsoaCode,
       selectedLSOAName: lsoaName,
       description: `Selected LSOA: ${lsoaName} (${lsoaCode})`
-    });
+    }, undefined, selectedBorough, lsoaCode);
     
     // Also call the original onInteraction callback if provided
     if (onInteraction) {
@@ -694,7 +694,7 @@ const Dashboard3: React.FC<Dashboard3Props> = ({ onInteraction }) => {
     // Enhanced logging with dashboard configuration lookup
     const interactionLog = logInteractionWithConfig('lsoa-map-2', 'LSOA Map', 'map', 'lsoa_clear', {
       description: 'Cleared LSOA selection'
-    });
+    }, undefined, selectedBorough, selectedLSOA);
     
     // Also call the original onInteraction callback if provided
     if (onInteraction) {
@@ -745,21 +745,21 @@ const Dashboard3: React.FC<Dashboard3Props> = ({ onInteraction }) => {
   });
 
   // Only track meaningful chart exploration hovers (for tooltips and data exploration)
-  const incomeTimelineHover = useChartExplorationHover('mean-income-timeline-10', 'Mean Income Timeline', 'chart', incomeTimelineData);
-  const crimeCategoriesHover = useChartExplorationHover('borough-crime-categories-11', 'Borough Crime Categories', 'chart', crimePieDataComparison);
-  const housePriceTimelineHover = useChartExplorationHover('house-price-timeline-12', 'House Price Timeline', 'chart', housePriceTimelineData);
-  const countryOfBirthHover = useChartExplorationHover('country-of-birth-15', 'Country of Birth', 'chart', countryOfBirthStats);
-  const populationProjectionsHover = useChartExplorationHover('population-growth-projections-9', 'Population Growth & Projections', 'chart', populationTimelineData);
+  const incomeTimelineHover = useChartExplorationHover('mean-income-timeline-10', 'Mean Income Timeline', 'chart', incomeTimelineData, selectedBorough, selectedLSOA);
+  const crimeCategoriesHover = useChartExplorationHover('borough-crime-categories-11', 'Borough Crime Categories', 'chart', crimePieDataComparison, selectedBorough, selectedLSOA);
+  const housePriceTimelineHover = useChartExplorationHover('house-price-timeline-12', 'House Price Timeline', 'chart', housePriceTimelineData, selectedBorough, selectedLSOA);
+  const countryOfBirthHover = useChartExplorationHover('country-of-birth-15', 'Country of Birth', 'chart', countryOfBirthStats, selectedBorough, selectedLSOA);
+  const populationProjectionsHover = useChartExplorationHover('population-growth-projections-9', 'Population Growth & Projections', 'chart', populationTimelineData, selectedBorough, selectedLSOA);
   const schoolFacilitiesHover = useChartExplorationHover('school-education-facilities-13', 'School Education Facilities', 'chart', {
     borough: boroughSchoolStats,
     lsoa: mockSchoolStats,
     selected: isLSOASelected ? 'lsoa' : 'borough'
-  });
+  }, selectedBorough, selectedLSOA);
   const ethnicityGroupsHover = useChartExplorationHover('ethnicity-minority-groups-14', 'Ethnicity Minority Groups', 'chart', {
     borough: boroughEthnicityStats,
     lsoa: lsoaEthnicityStats,
     selected: isLSOASelected ? 'lsoa' : 'borough'
-  });
+  }, selectedBorough, selectedLSOA);
 
   return (
     <div className="london-dashboard p-6 rounded-lg text-[#1A3C4A]" style={{
@@ -1130,7 +1130,7 @@ const Dashboard3: React.FC<Dashboard3Props> = ({ onInteraction }) => {
                         crimeBarData: crimeBarDataComparison,
                         crimePieData: crimePieDataComparison,
                         selectedBorough
-                      });
+                      }, selectedBorough, selectedLSOA);
                     }}
                     onMouseEnter={() => {
                       logInteractiveHover('borough-crime-stats-8', 'Borough Crime Stats', 'chart', {
@@ -1141,7 +1141,7 @@ const Dashboard3: React.FC<Dashboard3Props> = ({ onInteraction }) => {
                         hoveredCategory: category,
                         allCategoriesData: crimeBarDataComparison,
                         currentSelection: selectedCrimeCategory
-                      });
+                      }, selectedBorough, selectedLSOA);
                     }}
                     className={`w-[17px] h-[17px] rounded-full cursor-pointer transition-all duration-200 mb-1 ${
                       isSelected 
@@ -1452,7 +1452,7 @@ const Dashboard3: React.FC<Dashboard3Props> = ({ onInteraction }) => {
                         availableYears: birthYears,
                         countryOfBirthStats,
                         countryOfBirthComparison
-                      });
+                      }, selectedBorough, selectedLSOA);
                     }}
                     onMouseEnter={() => {
                       logInteractiveHover('country-of-birth-15', 'Country of Birth', 'chart', {
@@ -1463,7 +1463,7 @@ const Dashboard3: React.FC<Dashboard3Props> = ({ onInteraction }) => {
                         hoveredYear: year,
                         currentSelection: selectedBirthYear,
                         availableData: countryOfBirthStats
-                      });
+                      }, selectedBorough, selectedLSOA);
                     }}
                     className={`flex justify-center items-center p-1 text-[8px] transition-colors ${
                       selectedBirthYear === year

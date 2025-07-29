@@ -72,6 +72,8 @@ INPUT JSON
         "variable_map": { ... }
       },
       "chartData": { ... } or [ ... ]     // numbers or categorical values revealed
+      "currBorough": <string>,            // current selected borough context (dashboard=1 only)
+      "currLSOA": <string>                // current selected LSOA context (dashboard=1 only)
     },
     ...
     /* 5 objects total */
@@ -103,7 +105,7 @@ Return a JSON object:
 *No additional keys, no markdown.*`;
 
     const userPrompt = JSON.stringify({
-      narrative_context: requestBody.narrative_context || 'No narrative context provided',
+      narrative_context: requestBody.narrative_context || 'No narrative context provided, you may start your own narration',
       current_sentence: requestBody.current_sentence || 'No current sentence - use the last sentence from the current narration',
       interaction_log: requestBody.interaction_log
     });

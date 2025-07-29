@@ -61,11 +61,14 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, on
     loadDatasets();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (prompt.trim() && !isAnalyzing) {
-      onAnalysisRequest(prompt.trim());
+    if (!prompt.trim() || isAnalyzing) {
+      return;
     }
+
+    const trimmedPrompt = prompt.trim();
+    onAnalysisRequest(trimmedPrompt);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -222,6 +225,7 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, on
           <label className="prompt-label">
             What would you like to explore?
           </label>
+          
           <textarea
             className="prompt-input"
             value={prompt}
