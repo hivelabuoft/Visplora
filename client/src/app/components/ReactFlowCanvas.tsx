@@ -16,13 +16,43 @@ import {
   NodeResizer,
   ReactFlowInstance,
 } from '@xyflow/react';
+import { VegaLite } from 'react-vega';
 
 import '@xyflow/react/dist/style.css';
+
+// Data interfaces for AI-generated chart nodes
+export interface VegaChartData {
+  title: string;
+  vegaLiteSpec: object;
+  chartData?: any;
+  dataSource?: string;
+  onInteraction?: (name: string, value: any) => void;
+  isGreyedOut?: boolean;
+}
+
+export interface VegaDashboardData {
+  dashboardTitle: string;
+  views: Array<{
+    description: string;
+    vegaLiteSpec: object;
+    chartData?: any;
+  }>;
+  insightPanels?: string[];
+  datasetRecommendations?: string[];
+  onInteraction?: (chartIndex: number, name: string, value: any) => void;
+  isGreyedOut?: boolean;
+}
 
 // Expose methods for parent components to interact with the canvas
 export interface ReactFlowCanvasRef {
   addInfoNode: (data: { title: string; content: string }) => void;
   hasActiveInfoNode: () => boolean;
+  showLoadingState: (message?: string) => void;
+  clearAllNodes: () => void;
+  hideLoadingState: () => void;
+  // NEW: AI-generated chart support
+  addVegaChartNode: (data: VegaChartData) => void;
+  addVegaDashboardNode: (data: VegaDashboardData) => void;
 }
 
 // Custom node component for info nodes
@@ -39,6 +69,11 @@ const InfoNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected 
     }
   };
 
+  // Determine if this is a detailed visualization plan
+  const isVisualizationPlan = data.title === 'Visualization Plan';
+  const nodeWidth = isVisualizationPlan ? '520px' : '420px';
+  const nodeHeight = isVisualizationPlan ? '400px' : '320px';
+
   return (
     <div className="info-node-wrapper" style={{ position: 'relative', zIndex: 1000 }}>
       <div className="info-node" style={{
@@ -46,8 +81,8 @@ const InfoNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected 
         border: '1px solid rgba(148, 163, 184, 0.3)',
         borderRadius: '12px',
         padding: '0',
-        width: '420px',
-        height: '320px',
+        width: nodeWidth,
+        height: nodeHeight,
         boxShadow: '0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.04)',
         position: 'relative',
         zIndex: 1000,
@@ -73,35 +108,40 @@ const InfoNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected 
             position: 'absolute',
             top: '8px',
             right: '8px',
-            width: '24px',
-            height: '24px',
-            borderRadius: '50%',
+            width: 'auto',
+            height: '28px',
+            padding: '0 12px',
+            borderRadius: '14px',
             border: 'none',
-            background: '#64748b',
+            background: 'linear-gradient(135deg, #dc2626, #b91c1c)',
             color: 'white',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '14px',
+            fontSize: '11px',
             fontWeight: '600',
             zIndex: 1001,
             transition: 'all 0.2s ease',
-            boxShadow: '0 2px 4px rgba(100, 116, 139, 0.3)',
+            boxShadow: '0 2px 8px rgba(220, 38, 38, 0.3)',
+            textTransform: 'uppercase' as const,
+            letterSpacing: '0.5px',
           }}
           onMouseOver={(e) => {
             const target = e.target as HTMLButtonElement;
             target.style.transform = 'scale(1.05)';
-            target.style.background = '#475569';
+            target.style.background = 'linear-gradient(135deg, #b91c1c, #991b1b)';
+            target.style.boxShadow = '0 4px 12px rgba(220, 38, 38, 0.4)';
           }}
           onMouseOut={(e) => {
             const target = e.target as HTMLButtonElement;
             target.style.transform = 'scale(1)';
-            target.style.background = '#64748b';
+            target.style.background = 'linear-gradient(135deg, #dc2626, #b91c1c)';
+            target.style.boxShadow = '0 2px 8px rgba(220, 38, 38, 0.3)';
           }}
-          title="Close"
+          title="Close info panel"
         >
-          ×
+          Close
         </button>
 
         {/* Compact Header */}
@@ -136,18 +176,37 @@ const InfoNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected 
           </span>
         </div>
 
-        {/* Content - No scroll, fixed height */}
+        {/* Content - Conditional scrolling for detailed plans */}
         <div className="info-node-content" style={{
           fontSize: '13px',
           color: '#64748b',
           lineHeight: '1.5',
           flex: 1,
-          overflow: 'hidden', // Remove scrolling
+          overflow: isVisualizationPlan ? 'auto' : 'hidden', // Allow scrolling for detailed plans
           whiteSpace: 'pre-wrap',
           wordBreak: 'break-word',
           padding: '16px',
           fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
         }}>
+          {/* Custom scrollbar styles for detailed plans */}
+          {isVisualizationPlan && (
+            <style>{`
+              .info-node-content::-webkit-scrollbar {
+                width: 6px;
+              }
+              .info-node-content::-webkit-scrollbar-track {
+                background: rgba(241, 245, 249, 0.5);
+                border-radius: 3px;
+              }
+              .info-node-content::-webkit-scrollbar-thumb {
+                background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+                border-radius: 3px;
+              }
+              .info-node-content::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(135deg, #94a3b8, #64748b);
+              }
+            `}</style>
+          )}
           {data.content ? (
             <div style={{ 
               letterSpacing: '0.01em',
@@ -157,7 +216,7 @@ const InfoNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected 
               flexDirection: 'column',
               gap: '12px',
             }}>
-              {data.content.split('\n\n').slice(0, 3).map((paragraph: string, index: number) => ( // Limit to 3 paragraphs
+              {data.content.split('\n\n').slice(0, isVisualizationPlan ? undefined : 3).map((paragraph: string, index: number) => ( // No limit for visualization plans
                 <div key={index}>
                   {paragraph.split('\n').map((line: string, lineIndex: number) => {
                     // Style different types of content with muted colors
@@ -190,6 +249,53 @@ const InfoNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected 
                           fontSize: '12px',
                         }}>
                           {isSupported ? '✓ ' : '✗ '}{line}
+                        </div>
+                      );
+                    } else if (line.startsWith('📊 VISUALIZATION STRATEGY:') || line.startsWith('📈 RECOMMENDED VIEWS') || line.startsWith('💾 DATASETS NEEDED:')) {
+                      return (
+                        <div key={lineIndex} style={{
+                          fontWeight: '700',
+                          color: '#1e293b',
+                          marginTop: '8px',
+                          marginBottom: '4px',
+                          fontSize: '12px',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px',
+                        }}>
+                          {line}
+                        </div>
+                      );
+                    } else if (line.match(/^\d+\.\s+[A-Z\s]+$/)) {
+                      // Chart type headers (e.g., "1. BAR CHART")
+                      return (
+                        <div key={lineIndex} style={{
+                          fontWeight: '600',
+                          color: '#3b82f6',
+                          marginTop: '6px',
+                          marginBottom: '3px',
+                          fontSize: '12px',
+                          borderBottom: '1px solid rgba(59, 130, 246, 0.2)',
+                          paddingBottom: '2px',
+                        }}>
+                          {line}
+                        </div>
+                      );
+                    } else if (line.trim().startsWith('Description:') || line.trim().startsWith('Data:') || line.trim().startsWith('Analysis:') || line.trim().startsWith('Interactions:') || line.trim().startsWith('Purpose:')) {
+                      // View details
+                      return (
+                        <div key={lineIndex} style={{
+                          fontSize: '11px',
+                          color: '#64748b',
+                          marginLeft: '8px',
+                          marginBottom: '2px',
+                          lineHeight: '1.4',
+                        }}>
+                          <span style={{ fontWeight: '600', color: '#475569' }}>
+                            {line.split(':')[0]}:
+                          </span>
+                          <span style={{ marginLeft: '4px' }}>
+                            {line.split(':').slice(1).join(':').trim()}
+                          </span>
                         </div>
                       );
                     } else if (line.startsWith('Explanation:')) {
@@ -268,9 +374,350 @@ const DashboardNode: React.FC<{ data: any; selected?: boolean }> = ({ data, sele
   );
 };
 
+// Custom node component for AI-generated single Vega-Lite charts
+const VegaChartNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected }) => {
+  const [error, setError] = useState<string | null>(null);
+
+  const handleExport = () => {
+    // TODO: Implement chart export functionality
+    console.log('Exporting chart:', data.title);
+  };
+
+  const handleInteraction = (name: string, value: any) => {
+    // Handle Vega-Lite interactions (selections, filters, etc.)
+    console.log('Chart interaction:', name, value);
+    if (data.onInteraction) {
+      data.onInteraction(name, value);
+    }
+  };
+
+  return (
+    <div
+      className="vega-chart-node"
+      style={{
+        position: 'relative',
+        background: 'white',
+        borderRadius: '12px',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        border: selected ? '2px solid #0891b2' : '2px solid #e2e8f0',
+        minWidth: '400px',
+        minHeight: '300px',
+        opacity: data.isGreyedOut ? 0.3 : 1,
+        transition: 'opacity 0.3s ease',
+        pointerEvents: data.isGreyedOut ? 'none' : 'auto',
+        zIndex: 2, // Ensure chart is above overlays
+      }}
+    >
+      {selected && (
+        <NodeResizer
+          color="#0891b2"
+          isVisible={true}
+          minWidth={400}
+          minHeight={300}
+          maxWidth={800}
+          maxHeight={600}
+          handleStyle={{ width: '12px', height: '12px', pointerEvents: 'none' }}
+          lineStyle={{ borderWidth: 2, pointerEvents: 'none' }}
+        />
+      )}
+
+      {/* Chart Header */}
+      <div className="chart-header" style={{
+        padding: '12px 16px',
+        borderBottom: '1px solid #e2e8f0',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        background: 'linear-gradient(90deg, #f8fafc, #f1f5f9)',
+        borderRadius: '12px 12px 0 0',
+      }}>
+        <h3 style={{
+          margin: 0,
+          fontSize: '16px',
+          fontWeight: '600',
+          color: '#334155',
+        }}>
+          {data.title || 'AI-Generated Chart'}
+        </h3>
+        <button
+          onClick={handleExport}
+          style={{
+            background: '#0891b2',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            padding: '6px 12px',
+            fontSize: '12px',
+            cursor: 'pointer',
+            fontWeight: '500',
+          }}
+        >
+          Export
+        </button>
+      </div>
+
+      {/* Chart Container */}
+      <div
+        className="chart-container"
+        style={{
+          padding: '16px',
+          height: 'calc(100% - 80px)',
+          overflow: 'hidden',
+          pointerEvents: 'auto', // Always allow pointer events for chart
+          zIndex: 3, // Above overlays
+        }}
+      >
+        {error ? (
+          <div style={{
+            color: '#dc2626',
+            textAlign: 'center',
+            padding: '20px',
+            fontSize: '14px',
+          }}>
+            ⚠️ Error rendering chart: {error}
+          </div>
+        ) : data.vegaLiteSpec ? (
+          <VegaLite
+            spec={data.vegaLiteSpec}
+            data={data.chartData}
+            actions={false}
+            onNewView={(view: any) => {
+              // Handle Vega view interactions
+              if (view && view.addSignalListener) {
+                view.addSignalListener('*', handleInteraction);
+              }
+            }}
+            style={{ width: '100%', height: '100%' }}
+          />
+        ) : (
+          <div style={{
+            color: '#64748b',
+            textAlign: 'center',
+            padding: '40px 20px',
+            fontSize: '14px',
+          }}>
+            📊 Chart specification not available
+          </div>
+        )}
+      </div>
+
+      {/* Chart Footer */}
+      <div className="chart-footer" style={{
+        padding: '8px 16px',
+        borderTop: '1px solid #e2e8f0',
+        background: '#f8fafc',
+        borderRadius: '0 0 12px 12px',
+        fontSize: '12px',
+        color: '#64748b',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
+        <span>📁 {data.dataSource || 'Unknown dataset'}</span>
+        <span>🤖 AI Generated</span>
+      </div>
+    </div>
+  );
+};
+
+// Custom node component for AI-generated multi-chart dashboards
+const VegaDashboardNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected }) => {
+  const [errors, setErrors] = useState<{ [key: number]: string }>({});
+
+  const handleChartError = (index: number, error: string) => {
+    setErrors(prev => ({ ...prev, [index]: error }));
+  };
+
+  const handleChartInteraction = (index: number, name: string, value: any) => {
+    console.log('Dashboard chart interaction:', index, name, value);
+    if (data.onInteraction) {
+      data.onInteraction(index, name, value);
+    }
+  };
+
+  const gridColumns = data.views?.length <= 2 ? 1 : 2;
+  const gridRows = Math.ceil((data.views?.length || 0) / gridColumns);
+
+  return (
+    <div
+      className="vega-dashboard-node"
+      style={{
+        position: 'relative',
+        background: 'white',
+        borderRadius: '12px',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        border: selected ? '2px solid #0891b2' : '2px solid #e2e8f0',
+        minWidth: '600px',
+        minHeight: '500px',
+        opacity: data.isGreyedOut ? 0.3 : 1,
+        transition: 'opacity 0.3s ease',
+        pointerEvents: data.isGreyedOut ? 'none' : 'auto',
+        zIndex: 2, // Ensure dashboard is above overlays
+      }}
+    >
+      {selected && (
+        <NodeResizer
+          color="#0891b2"
+          isVisible={true}
+          minWidth={600}
+          minHeight={500}
+          maxWidth={1200}
+          maxHeight={1000}
+          handleStyle={{ width: '12px', height: '12px', pointerEvents: 'none' }}
+          lineStyle={{ borderWidth: 2, pointerEvents: 'none' }}
+        />
+      )}
+
+      {/* Dashboard Header */}
+      <div className="dashboard-header" style={{
+        padding: '16px 20px',
+        borderBottom: '1px solid #e2e8f0',
+        background: 'linear-gradient(90deg, #f8fafc, #f1f5f9)',
+        borderRadius: '12px 12px 0 0',
+      }}>
+        <h2 style={{
+          margin: '0 0 8px 0',
+          fontSize: '20px',
+          fontWeight: '700',
+          color: '#1e293b',
+        }}>
+          {data.dashboardTitle || 'AI-Generated Dashboard'}
+        </h2>
+
+        {/* Insight Panels */}
+        {data.insightPanels && data.insightPanels.length > 0 && (
+          <div className="insight-panels" style={{
+            display: 'flex',
+            gap: '8px',
+            flexWrap: 'wrap',
+            marginTop: '8px',
+          }}>
+            {data.insightPanels.map((insight: string, index: number) => (
+              <div key={index} style={{
+                background: 'rgba(8, 145, 178, 0.1)',
+                color: '#0891b2',
+                padding: '4px 8px',
+                borderRadius: '6px',
+                fontSize: '11px',
+                fontWeight: '500',
+                border: '1px solid rgba(8, 145, 178, 0.2)',
+              }}>
+                💡 {insight}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Charts Grid */}
+      <div
+        className="charts-grid"
+        style={{
+          padding: '16px',
+          height: 'calc(100% - 100px)',
+          display: 'grid',
+          gridTemplateColumns: `repeat(${gridColumns}, 1fr)`,
+          gridTemplateRows: `repeat(${gridRows}, 1fr)`,
+          gap: '12px',
+          overflow: 'auto',
+          pointerEvents: 'auto', // Always allow pointer events for charts
+          zIndex: 3, // Above overlays
+        }}
+      >
+        {data.views && data.views.length > 0 ? (
+          data.views.map((view: any, index: number) => (
+            <div key={index} className="chart-cell" style={{
+              background: '#fafafa',
+              borderRadius: '8px',
+              border: '1px solid #e2e8f0',
+              padding: '12px',
+              display: 'flex',
+              flexDirection: 'column',
+            }}>
+              <h4 style={{
+                margin: '0 0 8px 0',
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#475569',
+              }}>
+                {view.description || `Chart ${index + 1}`}
+              </h4>
+
+              <div style={{ flex: 1, minHeight: '150px' }}>
+                {errors[index] ? (
+                  <div style={{
+                    color: '#dc2626',
+                    textAlign: 'center',
+                    padding: '20px',
+                    fontSize: '12px',
+                  }}>
+                    ⚠️ {errors[index]}
+                  </div>
+                ) : view.vegaLiteSpec ? (
+                  <VegaLite
+                    spec={view.vegaLiteSpec}
+                    data={view.chartData}
+                    actions={false}
+                    onNewView={(vegaView: any) => {
+                      // Handle Vega view interactions for this specific chart
+                      if (vegaView && vegaView.addSignalListener) {
+                        vegaView.addSignalListener('*', (name: string, value: any) =>
+                          handleChartInteraction(index, name, value)
+                        );
+                      }
+                    }}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                ) : (
+                  <div style={{
+                    color: '#64748b',
+                    textAlign: 'center',
+                    padding: '20px',
+                    fontSize: '12px',
+                  }}>
+                    📊 Chart not available
+                  </div>
+                )}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div style={{
+            gridColumn: '1 / -1',
+            color: '#64748b',
+            textAlign: 'center',
+            padding: '40px',
+            fontSize: '14px',
+          }}>
+            📊 No charts available in this dashboard
+          </div>
+        )}
+      </div>
+
+      {/* Dashboard Footer */}
+      <div className="dashboard-footer" style={{
+        padding: '8px 20px',
+        borderTop: '1px solid #e2e8f0',
+        background: '#f8fafc',
+        borderRadius: '0 0 12px 12px',
+        fontSize: '12px',
+        color: '#64748b',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
+        <span>📊 {data.views?.length || 0} charts • {data.datasetRecommendations?.join(', ') || 'Multiple datasets'}</span>
+        <span>🤖 AI Generated Dashboard</span>
+      </div>
+    </div>
+  );
+};
+
 const nodeTypes = {
   dashboardNode: DashboardNode,
   infoNode: InfoNode,
+  vegaChartNode: VegaChartNode,
+  vegaDashboardNode: VegaDashboardNode,
 };
 
 const initialNodes: Node[] = [
@@ -320,6 +767,10 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const reactFlowInstance = useRef<ReactFlowInstance | null>(null);
   const [hasActiveInfoNode, setHasActiveInfoNode] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState('Loading...');
+  const [backupNodes, setBackupNodes] = useState<Node[]>([]);
+  const [backupEdges, setBackupEdges] = useState<Edge[]>([]);
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -370,11 +821,162 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
     }, 100);
   }, [setNodes]);
 
+  // Function to show loading state
+  const showLoadingState = useCallback((message: string = 'Generating visualization recommendations...') => {
+    // Backup current nodes and edges
+    setBackupNodes(nodes);
+    setBackupEdges(edges);
+    
+    // Clear all nodes and show loading
+    setNodes([]);
+    setEdges([]);
+    setIsLoading(true);
+    setLoadingMessage(message);
+    setHasActiveInfoNode(false);
+  }, [nodes, edges, setNodes, setEdges]);
+
+  // Function to clear all nodes
+  const clearAllNodes = useCallback(() => {
+    setNodes([]);
+    setEdges([]);
+    setHasActiveInfoNode(false);
+  }, [setNodes, setEdges]);
+
+  // Function to hide loading state
+  const hideLoadingState = useCallback(() => {
+    setIsLoading(false);
+    // Don't restore backup nodes - they should stay cleared for the info node
+  }, []);
+
+  // Function to add Vega chart node
+  const addVegaChartNode = useCallback((data: VegaChartData) => {
+    const nodeId = `vega-chart-${Date.now()}`;
+    const newNode: Node = {
+      id: nodeId,
+      position: { 
+        x: Math.random() * 400 + 100, 
+        y: Math.random() * 300 + 100 
+      },
+      data: {
+        ...data,
+        nodeId: nodeId
+      },
+      type: 'vegaChartNode',
+      draggable: true,
+      selectable: true,
+      zIndex: 1000,
+    };
+
+    setNodes((nds) => {
+      // Separate nodes by type to ensure chart nodes always come last (on top)
+      const chartNodes = nds.filter(node => node.type === 'vegaChartNode' || node.type === 'vegaDashboardNode');
+      const otherNodes = nds.filter(node => node.type !== 'vegaChartNode' && node.type !== 'vegaDashboardNode');
+      
+      return [...otherNodes, ...chartNodes, newNode];
+    });
+
+    // Auto-zoom to the new chart node
+    setTimeout(() => {
+      if (reactFlowInstance.current) {
+        reactFlowInstance.current.fitView({
+          nodes: [{ id: nodeId }],
+          duration: 800,
+          padding: 0.3,
+        });
+      }
+    }, 100);
+  }, [setNodes]);
+
+  // Function to add Vega dashboard node
+  const addVegaDashboardNode = useCallback((data: VegaDashboardData) => {
+    const nodeId = `vega-dashboard-${Date.now()}`;
+    const newNode: Node = {
+      id: nodeId,
+      position: { 
+        x: Math.random() * 400 + 100, 
+        y: Math.random() * 300 + 100 
+      },
+      data: {
+        ...data,
+        nodeId: nodeId
+      },
+      type: 'vegaDashboardNode',
+      draggable: true,
+      selectable: true,
+      zIndex: 1000,
+    };
+
+    setNodes((nds) => {
+      // Separate nodes by type to ensure dashboard nodes always come last (on top)
+      const chartNodes = nds.filter(node => node.type === 'vegaChartNode' || node.type === 'vegaDashboardNode');
+      const otherNodes = nds.filter(node => node.type !== 'vegaChartNode' && node.type !== 'vegaDashboardNode');
+      
+      return [...otherNodes, ...chartNodes, newNode];
+    });
+
+    // Auto-zoom to the new dashboard node
+    setTimeout(() => {
+      if (reactFlowInstance.current) {
+        reactFlowInstance.current.fitView({
+          nodes: [{ id: nodeId }],
+          duration: 800,
+          padding: 0.3,
+        });
+      }
+    }, 100);
+  }, [setNodes]);
+
+  // Test functions to load simulated data
+  const loadSimulatedDashboard = useCallback(async () => {
+    try {
+      const response = await fetch('/test_simulation/dashboard_example.json');
+      const dashboardData = await response.json();
+      
+      // Transform the new format to match VegaDashboardData interface
+      const transformedData: VegaDashboardData = {
+        dashboardTitle: dashboardData.title,
+        views: dashboardData.charts.map((chart: any) => ({
+          description: chart.title,
+          vegaLiteSpec: chart.spec,
+        })),
+        insightPanels: dashboardData.insights || [],
+        datasetRecommendations: ['London Crime Statistics', 'Housing Price Data', 'Safety Index Reports'],
+      };
+      
+      addVegaDashboardNode(transformedData);
+    } catch (error) {
+      console.error('Error loading simulated dashboard:', error);
+    }
+  }, [addVegaDashboardNode]);
+
+  const loadSimulatedChart = useCallback(async () => {
+    try {
+      const response = await fetch('/test_simulation/chart_example.json');
+      const chartData = await response.json();
+      
+      // Transform the new format to match VegaChartData interface
+      const transformedData: VegaChartData = {
+        title: chartData.title,
+        vegaLiteSpec: chartData.spec,
+        dataSource: 'London Housing Data',
+      };
+      
+      addVegaChartNode(transformedData);
+    } catch (error) {
+      console.error('Error loading simulated chart:', error);
+    }
+  }, [addVegaChartNode]);
+
   // Expose methods to parent component
   useImperativeHandle(ref, () => ({
     addInfoNode,
-    hasActiveInfoNode: () => hasActiveInfoNode
-  }), [addInfoNode, hasActiveInfoNode]);
+    hasActiveInfoNode: () => hasActiveInfoNode,
+    showLoadingState,
+    clearAllNodes,
+    hideLoadingState,
+    addVegaChartNode,
+    addVegaDashboardNode
+  }), [addInfoNode, hasActiveInfoNode, showLoadingState, clearAllNodes, hideLoadingState, addVegaChartNode, addVegaDashboardNode]);
 
   // Handle close info node event
   useEffect(() => {
@@ -496,6 +1098,88 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
 
   return (
     <div className="w-full h-full relative">
+      {/* Test Buttons */}
+      <div style={{
+        position: 'absolute',
+        top: '10px',
+        left: '10px',
+        zIndex: 1000,
+        display: 'flex',
+        gap: '8px',
+      }}>
+        <button
+          onClick={loadSimulatedDashboard}
+          disabled={hasActiveInfoNode || isLoading}
+          style={{
+            background: hasActiveInfoNode || isLoading ? '#94a3b8' : 'linear-gradient(135deg, #0891b2, #0e7490)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            padding: '10px 16px',
+            fontSize: '12px',
+            fontWeight: '600',
+            cursor: hasActiveInfoNode || isLoading ? 'not-allowed' : 'pointer',
+            boxShadow: '0 2px 8px rgba(8, 145, 178, 0.3)',
+            transition: 'all 0.2s ease',
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+          }}
+          onMouseOver={(e) => {
+            if (!hasActiveInfoNode && !isLoading) {
+              const target = e.target as HTMLButtonElement;
+              target.style.transform = 'scale(1.05)';
+              target.style.boxShadow = '0 4px 12px rgba(8, 145, 178, 0.4)';
+            }
+          }}
+          onMouseOut={(e) => {
+            if (!hasActiveInfoNode && !isLoading) {
+              const target = e.target as HTMLButtonElement;
+              target.style.transform = 'scale(1)';
+              target.style.boxShadow = '0 2px 8px rgba(8, 145, 178, 0.3)';
+            }
+          }}
+          title={hasActiveInfoNode ? 'Close info panel first' : 'Load test dashboard with multiple charts'}
+        >
+          📊 Dashboard
+        </button>
+        
+        <button
+          onClick={loadSimulatedChart}
+          disabled={hasActiveInfoNode || isLoading}
+          style={{
+            background: hasActiveInfoNode || isLoading ? '#94a3b8' : 'linear-gradient(135deg, #059669, #047857)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            padding: '10px 16px',
+            fontSize: '12px',
+            fontWeight: '600',
+            cursor: hasActiveInfoNode || isLoading ? 'not-allowed' : 'pointer',
+            boxShadow: '0 2px 8px rgba(5, 150, 105, 0.3)',
+            transition: 'all 0.2s ease',
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+          }}
+          onMouseOver={(e) => {
+            if (!hasActiveInfoNode && !isLoading) {
+              const target = e.target as HTMLButtonElement;
+              target.style.transform = 'scale(1.05)';
+              target.style.boxShadow = '0 4px 12px rgba(5, 150, 105, 0.4)';
+            }
+          }}
+          onMouseOut={(e) => {
+            if (!hasActiveInfoNode && !isLoading) {
+              const target = e.target as HTMLButtonElement;
+              target.style.transform = 'scale(1)';
+              target.style.boxShadow = '0 2px 8px rgba(5, 150, 105, 0.3)';
+            }
+          }}
+          title={hasActiveInfoNode ? 'Close info panel first' : 'Load test single chart'}
+        >
+          📈 Chart
+        </button>
+      </div>
+
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -563,6 +1247,57 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
           color="#0891b2"
         />
       </ReactFlow>
+      
+      {/* Loading Overlay */}
+      {isLoading && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'rgba(255, 255, 255, 0.95)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 2000,
+          backdropFilter: 'blur(4px)',
+        }}>
+          {/* Spinner */}
+          <div 
+            style={{
+              width: '48px',
+              height: '48px',
+              border: '4px solid #e2e8f0',
+              borderTop: '4px solid #0891b2',
+              borderRadius: '50%',
+              marginBottom: '16px',
+            }}
+            className="animate-spin"
+          />
+          
+          {/* Loading Message */}
+          <div style={{
+            fontSize: '16px',
+            fontWeight: '600',
+            color: '#334155',
+            marginBottom: '8px',
+            textAlign: 'center',
+          }}>
+            {loadingMessage}
+          </div>
+          
+          <div style={{
+            fontSize: '14px',
+            color: '#64748b',
+            textAlign: 'center',
+            maxWidth: '300px',
+          }}>
+            Please wait while we analyze your narrative and generate visualization recommendations...
+          </div>
+        </div>
+      )}
     </div>
   );
 });

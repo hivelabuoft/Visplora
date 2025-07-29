@@ -1,0 +1,159 @@
+{
+  "id": "housing-trends-chart",
+  "title": "London Housing Price Trends Over Time",
+  "spec": {
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+    "title": {
+      "text": "London Housing Price Trends (2015-2024)",
+      "fontSize": 18,
+      "fontWeight": "bold",
+      "color": "#1e293b",
+      "anchor": "start",
+      "offset": 10
+    },
+    "width": 500,
+    "height": 350,
+    "data": {
+      "values": [
+        {"year": "2015-01-01", "borough": "Westminster", "average_price": 950000, "price_change": 0.05},
+        {"year": "2016-01-01", "borough": "Westminster", "average_price": 1020000, "price_change": 0.074},
+        {"year": "2017-01-01", "borough": "Westminster", "average_price": 1100000, "price_change": 0.078},
+        {"year": "2018-01-01", "borough": "Westminster", "average_price": 1180000, "price_change": 0.073},
+        {"year": "2019-01-01", "borough": "Westminster", "average_price": 1220000, "price_change": 0.034},
+        {"year": "2020-01-01", "borough": "Westminster", "average_price": 1190000, "price_change": -0.025},
+        {"year": "2021-01-01", "borough": "Westminster", "average_price": 1240000, "price_change": 0.042},
+        {"year": "2022-01-01", "borough": "Westminster", "average_price": 1280000, "price_change": 0.032},
+        {"year": "2023-01-01", "borough": "Westminster", "average_price": 1310000, "price_change": 0.023},
+        {"year": "2024-01-01", "borough": "Westminster", "average_price": 1340000, "price_change": 0.023},
+        
+        {"year": "2015-01-01", "borough": "Tower Hamlets", "average_price": 350000, "price_change": 0.08},
+        {"year": "2016-01-01", "borough": "Tower Hamlets", "average_price": 385000, "price_change": 0.10},
+        {"year": "2017-01-01", "borough": "Tower Hamlets", "average_price": 420000, "price_change": 0.091},
+        {"year": "2018-01-01", "borough": "Tower Hamlets", "average_price": 445000, "price_change": 0.060},
+        {"year": "2019-01-01", "borough": "Tower Hamlets", "average_price": 460000, "price_change": 0.034},
+        {"year": "2020-01-01", "borough": "Tower Hamlets", "average_price": 440000, "price_change": -0.043},
+        {"year": "2021-01-01", "borough": "Tower Hamlets", "average_price": 465000, "price_change": 0.057},
+        {"year": "2022-01-01", "borough": "Tower Hamlets", "average_price": 485000, "price_change": 0.043},
+        {"year": "2023-01-01", "borough": "Tower Hamlets", "average_price": 500000, "price_change": 0.031},
+        {"year": "2024-01-01", "borough": "Tower Hamlets", "average_price": 515000, "price_change": 0.030},
+        
+        {"year": "2015-01-01", "borough": "Richmond", "average_price": 580000, "price_change": 0.06},
+        {"year": "2016-01-01", "borough": "Richmond", "average_price": 620000, "price_change": 0.069},
+        {"year": "2017-01-01", "borough": "Richmond", "average_price": 660000, "price_change": 0.065},
+        {"year": "2018-01-01", "borough": "Richmond", "average_price": 690000, "price_change": 0.045},
+        {"year": "2019-01-01", "borough": "Richmond", "average_price": 710000, "price_change": 0.029},
+        {"year": "2020-01-01", "borough": "Richmond", "average_price": 695000, "price_change": -0.021},
+        {"year": "2021-01-01", "borough": "Richmond", "average_price": 725000, "price_change": 0.043},
+        {"year": "2022-01-01", "borough": "Richmond", "average_price": 750000, "price_change": 0.034},
+        {"year": "2023-01-01", "borough": "Richmond", "average_price": 770000, "price_change": 0.027},
+        {"year": "2024-01-01", "borough": "Richmond", "average_price": 785000, "price_change": 0.019},
+        
+        {"year": "2015-01-01", "borough": "Croydon", "average_price": 310000, "price_change": 0.07},
+        {"year": "2016-01-01", "borough": "Croydon", "average_price": 340000, "price_change": 0.097},
+        {"year": "2017-01-01", "borough": "Croydon", "average_price": 370000, "price_change": 0.088},
+        {"year": "2018-01-01", "borough": "Croydon", "average_price": 390000, "price_change": 0.054},
+        {"year": "2019-01-01", "borough": "Croydon", "average_price": 405000, "price_change": 0.038},
+        {"year": "2020-01-01", "borough": "Croydon", "average_price": 390000, "price_change": -0.037},
+        {"year": "2021-01-01", "borough": "Croydon", "average_price": 410000, "price_change": 0.051},
+        {"year": "2022-01-01", "borough": "Croydon", "average_price": 425000, "price_change": 0.037},
+        {"year": "2023-01-01", "borough": "Croydon", "average_price": 440000, "price_change": 0.035},
+        {"year": "2024-01-01", "borough": "Croydon", "average_price": 450000, "price_change": 0.023}
+      ]
+    },
+    "mark": {
+      "type": "line",
+      "point": {
+        "filled": true,
+        "size": 80
+      },
+      "strokeWidth": 3,
+      "interpolate": "monotone"
+    },
+    "encoding": {
+      "x": {
+        "field": "year",
+        "type": "temporal",
+        "title": "Year",
+        "axis": {
+          "format": "%Y",
+          "labelAngle": 0,
+          "labelFontSize": 11,
+          "titleFontSize": 12,
+          "titleFontWeight": "bold",
+      "titleColor": "#4A6A7B",
+      "labelColor": "#888",
+      "grid": true,
+      "gridColor": "#e2e8f0",
+      "gridOpacity": 0.5,
+      "tickColor": "#e2e8f0",
+      "domainColor": "#e2e8f0"
+        }
+      },
+      "y": {
+        "field": "average_price",
+        "type": "quantitative",
+        "title": "Average Price (£)",
+        "scale": {"zero": false, "nice": true},
+        "axis": {
+          "format": "£,.0f",
+          "labelFontSize": 11,
+          "titleFontSize": 12,
+          "titleFontWeight": "bold",
+      "titleColor": "#4A6A7B",
+      "labelColor": "#888",
+      "grid": true,
+      "gridColor": "#e2e8f0",
+      "gridOpacity": 0.5,
+      "tickColor": "#e2e8f0",
+      "domainColor": "#e2e8f0"
+        }
+      },
+      "color": {
+        "field": "borough",
+        "type": "nominal",
+        "title": "Borough",
+        "scale": {
+          "range": ["#2B7A9B", "#8B5CF6", "#3B82F6", "#06B6D4"]
+        },
+        "legend": {
+          "title": "Borough",
+          "titleFontSize": 12,
+          "titleFontWeight": "bold",
+          "titleColor": "#4A6A7B",
+          "labelFontSize": 10,
+          "labelColor": "#888",
+          "orient": "top-right",
+          "direction": "vertical"
+        }
+      },
+      "tooltip": [
+        {"field": "borough", "type": "nominal", "title": "Borough"},
+        {"field": "year", "type": "temporal", "title": "Year", "format": "%Y"},
+        {"field": "average_price", "type": "quantitative", "title": "Avg Price", "format": "£,.0f"},
+        {"field": "price_change", "type": "quantitative", "title": "YoY Change", "format": "+.1%"}
+      ]
+    },
+    "selection": {
+      "borough_legend": {
+        "type": "multi",
+        "fields": ["borough"],
+        "bind": "legend"
+      },
+      "time_brush": {
+        "type": "interval",
+        "encodings": ["x"]
+      }
+    },
+    "transform": [
+      {
+        "filter": {"selection": "borough_legend"}
+      }
+    ],
+    "config": {
+      "background": "#ffffff",
+      "view": {"stroke": "transparent"},
+      "font": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    }
+      }
+    }
+

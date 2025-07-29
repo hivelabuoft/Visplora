@@ -12,6 +12,7 @@ import { generateMultipleFileSummaries, FileSummary } from '../../utils/londonDa
 import { interactionLogger } from '../../lib/interactionLogger';
 import { captureAndLogInteractions, getCapturedInteractionCount } from '../utils/dashboardConfig';
 import { captureInsights, NarrativeSuggestion } from '../LLMs/suggestion_from_interaction';
+import { getVisualizationRecommendation, VisualizationRecommendation, isDashboardRecommendation } from '../LLMs/visualizationRecommendation';
 import '../../styles/dataExplorer.css';
 import '../../styles/narrativeLayer.css';
 import '../../styles/dataExplorer.css';
@@ -410,13 +411,80 @@ export default function NarrativePage() {
               onSuggestionReceived={handleSuggestionReceived}
               onSuggestionResolved={handleSuggestionResolved}
               disableInteractions={hasActiveInfoNodes}
-              onGenerateVisualization={(sentence: string, validation: any) => {
+              onGenerateVisualization={async (sentence: string, validation: any) => {
                 // When NarrativeLayer wants to generate visualization, 
                 // Add info node to canvas
                 if (reactFlowCanvasRef.current) {
+                  let content = `Sentence: "${sentence}"\n\nSupported: ${validation.inquiry_supported ? 'Yes' : 'No'}\n\nExplanation: ${validation.explanation || 'No explanation provided'}`;
+                  
+                  // If supported, get detailed visualization recommendations
+                  if (validation.inquiry_supported) {
+                    try {
+                      // Show loading state and clear existing nodes
+                      reactFlowCanvasRef.current.showLoadingState('Generating AI-powered visualization recommendations...');
+                      
+                      console.log('🎯 Getting detailed visualization recommendations...');
+                      const recommendation = await getVisualizationRecommendation(
+                        sentence,
+                        'London demographic, transport, housing, and crime data',
+                        ['London Demographics', 'Transport Data', 'Housing Statistics', 'Crime Reports']
+                      );
+                      
+                      // Hide loading state
+                      reactFlowCanvasRef.current.hideLoadingState();
+                      
+                      // Format the enhanced content based on response type
+                      if (isDashboardRecommendation(recommendation)) {
+                        // Dashboard format
+                        content += `\n\n📊 DASHBOARD: ${recommendation.dashboardTitle}\n`;
+                        content += `📋 NARRATIVE: ${recommendation.overallNarrative}\n\n`;
+                        
+                        content += `💡 KEY INSIGHTS:\n`;
+                        recommendation.insightPanels.forEach((insight, index) => {
+                          content += `   • ${insight}\n`;
+                        });
+                        content += `\n`;
+                        
+                        content += `📈 DASHBOARD VIEWS (${recommendation.views.length}):\n\n`;
+                        recommendation.views.forEach((view, index) => {
+                          content += `${index + 1}. ${view.viewType.toUpperCase()}\n`;
+                          content += `   Description: ${view.description}\n`;
+                          content += `   Data: ${view.dataColumns.join(', ')}\n`;
+                          content += `   Analysis: ${view.aggregations.join(', ')}\n`;
+                          content += `   Interactions: ${view.interactions.join(', ')}\n`;
+                          content += `   Purpose: ${view.purpose}\n\n`;
+                        });
+                        
+                        content += `💾 DATASETS NEEDED:\n${recommendation.datasetRecommendations.join(', ')}`;
+                        
+                      } else {
+                        // Charts-only format
+                        content += `\n\n📊 VISUALIZATION STRATEGY:\n${recommendation.overallStrategy}\n\n`;
+                        content += `📈 RECOMMENDED VIEWS (${recommendation.totalViews}):\n\n`;
+                        
+                        recommendation.views.forEach((view, index) => {
+                          content += `${index + 1}. ${view.viewType.toUpperCase()}\n`;
+                          content += `   Description: ${view.description}\n`;
+                          content += `   Data: ${view.dataColumns.join(', ')}\n`;
+                          content += `   Analysis: ${view.aggregations.join(', ')}\n`;
+                          content += `   Interactions: ${view.interactions.join(', ')}\n`;
+                          content += `   Purpose: ${view.purpose}\n\n`;
+                        });
+                        
+                        content += `💾 DATASETS NEEDED:\n${recommendation.datasetRecommendations.join(', ')}`;
+                      }
+                      
+                    } catch (error) {
+                      console.error('❌ Failed to get visualization recommendations:', error);
+                      // Hide loading state even on error
+                      reactFlowCanvasRef.current.hideLoadingState();
+                      content += '\n\n⚠️ Unable to generate detailed recommendations at this time.';
+                    }
+                  }
+                  
                   reactFlowCanvasRef.current.addInfoNode({
-                    title: 'Analysis Result',
-                    content: `Sentence: "${sentence}"\n\nSupported: ${validation.inquiry_supported ? 'Yes' : 'No'}\n\nExplanation: ${validation.explanation || 'No explanation provided'}`
+                    title: validation.inquiry_supported ? 'Visualization Plan' : 'Analysis Result',
+                    content: content
                   });
                 }
               }}

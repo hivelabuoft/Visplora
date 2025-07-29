@@ -6,13 +6,6 @@ export interface DomainValidationResult {
   matched_dataset: string[];
   matched_columns: { [dataset: string]: string[] };
   explanation: string;
-  // Legacy properties for backward compatibility
-  is_in_scope?: boolean;
-  confidence?: number;
-  relevant_categories?: string[];
-  specific_columns?: string[];
-  feedback?: string;
-  suggested_rephrase?: string | null;
 }
 
 export interface DomainValidationResponse {
