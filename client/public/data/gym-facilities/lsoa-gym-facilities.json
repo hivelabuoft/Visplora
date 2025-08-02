@@ -320,5 +320,27 @@
       "facility_type": "Sports Hall",
       "count": 1
     }
+  ],
+  "Brent 025D": [
+    {
+      "facility_type": "Squash Court",
+      "count": 3
+    },
+    {
+      "facility_type": "Premium Gym",
+      "count": 3
+    },
+    {
+      "facility_type": "Rowing Club",
+      "count": 2
+    },
+    {
+      "facility_type": "Fencing Salle",
+      "count": 4
+    },
+    {
+      "facility_type": "Bowling Alley",
+      "count": 1
+    }
   ]
 }
