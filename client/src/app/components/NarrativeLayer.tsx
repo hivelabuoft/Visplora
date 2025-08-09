@@ -1684,15 +1684,6 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
               </div>
             ))}
             
-            {/* Add new alternative button */}
-            <div className="add-alternative">
-              <button 
-                className="branch-action-btn add-btn"
-                onClick={handleAddNewAlternative}
-              >
-                ➕ Add Another Alternative
-              </button>
-            </div>
           </div>
         )}
         {/* Save button for editing mode */}

@@ -97,6 +97,7 @@ export default function NarrativePage() {
     content: string; // the actual sentence text
     parent: string | null; // parent sentence id (previous sentence in linear flow)
     children: string[]; // array of child sentence ids (next sentences - usually 1, multiple when branching)
+    activeChild: string | null; // currently active child node id (null if no child, or if multiple children with no active selection)
     createdTime: number; // system timestamp when first created
     revisedTime: number; // system timestamp when last modified
     editCount: number; // number of times this sentence has been edited
@@ -372,6 +373,7 @@ export default function NarrativePage() {
       content: content.trim(),
       parent,
       children: [],
+      activeChild: null,
       createdTime: now,
       revisedTime: now,
       editCount: 0,
@@ -381,6 +383,12 @@ export default function NarrativePage() {
   };
 
   const updateSentenceContent = (nodeId: string, newContent: string) => {
+    // STRICT PROTECTION: Only allow content updates for nodes explicitly in edit mode
+    if (!editableNodes.has(nodeId)) {
+      console.warn(`🚫 BLOCKED: Cannot update content for node ${nodeId} - not in edit mode.`);
+      return;
+    }
+    
     setSentenceNodes(prev => {
       const newMap = new Map(prev);
       const node = newMap.get(nodeId);
@@ -392,6 +400,7 @@ export default function NarrativePage() {
           editCount: node.editCount + 1
         };
         newMap.set(nodeId, updatedNode);
+        console.log(`✅ Updated content for editable node ${nodeId}: "${newContent}"`);
       }
       return newMap;
     });
@@ -424,7 +433,9 @@ export default function NarrativePage() {
         // Update parent's children (add the new child)
         const updatedParent = {
           ...parent,
-          children: [...parent.children, childId]
+          children: [...parent.children, childId],
+          // Set as active child: if parent has no active child, or only one child, this becomes active
+          activeChild: parent.children.length === 0 ? childId : parent.activeChild
         };
         
         // Update child's parent
@@ -558,7 +569,9 @@ export default function NarrativePage() {
             if (prevNode) {
               const updatedPrevNode = {
                 ...prevNode,
-                children: [...prevNode.children, newNode.id]
+                children: [...prevNode.children, newNode.id],
+                // Set as active child: if parent has no active child, or only one child, this becomes active
+                activeChild: prevNode.children.length === 0 ? newNode.id : prevNode.activeChild
               };
               newMap.set(previousNodeId, updatedPrevNode);
             }
@@ -570,6 +583,25 @@ export default function NarrativePage() {
       
       // Update active path
       setActivePath(newActivePath);
+      
+      // Debug: Log the tree structure to understand activeChild relationships
+      console.log('🌳 Tree structure after sentence processing:');
+      for (const [id, node] of newMap.entries()) {
+        if (node.children.length > 1) {
+          console.log(`🌿 BRANCH DETECTED: "${node.content}" has ${node.children.length} children (activeChild: ${node.activeChild ? newMap.get(node.activeChild)?.content : 'none'}):`);
+          node.children.forEach(childId => {
+            const child = newMap.get(childId);
+            const isActive = childId === node.activeChild ? ' ⭐' : '';
+            console.log(`  └── "${child?.content}"${isActive}`);
+          });
+        } else if (node.children.length === 1) {
+          const child = newMap.get(node.children[0]);
+          const isActive = node.children[0] === node.activeChild ? ' ⭐' : '';
+          console.log(`📝 "${node.content}" → "${child?.content}"${isActive}`);
+        } else {
+          console.log(`🔚 "${node.content}" (end node)`);
+        }
+      }
       
       // console.log('📝 Updated sentence nodes:', newMap.size, 'nodes');
       // console.log('🛤️ New active path:', newActivePath);
@@ -652,12 +684,14 @@ export default function NarrativePage() {
     const completedNodes = nodes.filter(n => n.isCompleted);
     const branchedNodes = nodes.filter(n => n.children.length > 1);
     const rootNodes = nodes.filter(n => !n.parent);
+    const nodesWithActiveChild = nodes.filter(n => n.activeChild !== null);
     
     return {
       totalNodes: nodes.length,
       completedNodes: completedNodes.length,
       branchedNodes: branchedNodes.length,
       rootNodes: rootNodes.length,
+      nodesWithActiveChild: nodesWithActiveChild.length,
       averageEditCount: nodes.reduce((sum, n) => sum + n.editCount, 0) / nodes.length || 0,
       activePath: activePath.length
     };
@@ -701,6 +735,85 @@ export default function NarrativePage() {
     }
     
     return children;
+  };
+
+  // Helper function to get the active path following activeChild relationships
+  const getActivePathFromRoot = (): string[] => {
+    const path: string[] = [];
+    
+    // Find the root node (no parent)
+    const rootNodes = Array.from(sentenceNodes.values()).filter(n => !n.parent);
+    if (rootNodes.length === 0) return path;
+    
+    // Start from the first root node
+    let currentNodeId: string | null = rootNodes[0].id;
+    
+    while (currentNodeId) {
+      path.push(currentNodeId);
+      const currentNode = sentenceNodes.get(currentNodeId);
+      
+      // Follow the activeChild path
+      if (currentNode && currentNode.activeChild) {
+        currentNodeId = currentNode.activeChild;
+      } else {
+        // No active child, end the path
+        currentNodeId = null;
+      }
+    }
+    
+    return path;
+  };
+
+  // Helper function to validate tree structure consistency
+  const validateTreeStructure = (): { isValid: boolean; issues: string[] } => {
+    const issues: string[] = [];
+    const nodes = Array.from(sentenceNodes.values());
+    
+    for (const node of nodes) {
+      // Check if activeChild exists in children array
+      if (node.activeChild && !node.children.includes(node.activeChild)) {
+        issues.push(`Node "${node.content}" has activeChild "${node.activeChild}" not in children array`);
+      }
+      
+      // Check if activeChild is null when there are children
+      if (node.children.length > 0 && !node.activeChild) {
+        issues.push(`Node "${node.content}" has children but no activeChild`);
+      }
+      
+      // Check for orphaned nodes
+      if (node.parent) {
+        const parentNode = sentenceNodes.get(node.parent);
+        if (!parentNode) {
+          issues.push(`Node "${node.content}" has invalid parent reference "${node.parent}"`);
+        } else if (!parentNode.children.includes(node.id)) {
+          issues.push(`Node "${node.content}" parent "${parentNode.content}" doesn't include it in children`);
+        }
+      }
+    }
+    
+    return { isValid: issues.length === 0, issues };
+  };
+
+  // Helper function to find the correct branch ID that should be edited
+  const getCurrentEditableBranchId = (sentenceContent: string): string | null => {
+    // Find the node that has this content and is part of the current active path
+    for (const nodeId of activePath) {
+      const node = sentenceNodes.get(nodeId);
+      if (node && node.content === sentenceContent) {
+        return nodeId;
+      }
+    }
+    
+    // If not found in active path, look for any node with this content
+    for (const [nodeId, node] of sentenceNodes.entries()) {
+      if (node.content === sentenceContent) {
+        console.warn(`⚠️ Node with content "${sentenceContent}" found but not in active path. This might cause content update issues.`);
+        return nodeId;
+      }
+    }
+    
+    console.error(`❌ No node found with content: "${sentenceContent}"`);
+    return null;
   };
 
   // Helper function to get branches for a specific sentence (simplified)
@@ -769,6 +882,29 @@ export default function NarrativePage() {
     
     console.log(`🔄 Switching to branch ${branchId}, updating main editor`);
     
+    // Update active child relationships along the path
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      // Update activeChild for each parent in the path
+      for (let i = 0; i < newPath.length - 1; i++) {
+        const currentNodeId = newPath[i];
+        const nextNodeId = newPath[i + 1];
+        const currentNode = newMap.get(currentNodeId);
+        
+        if (currentNode && currentNode.children.includes(nextNodeId)) {
+          const updatedNode = {
+            ...currentNode,
+            activeChild: nextNodeId
+          };
+          newMap.set(currentNodeId, updatedNode);
+          console.log(`🎯 Set activeChild for "${currentNode.content}" to "${newMap.get(nextNodeId)?.content}"`);
+        }
+      }
+      
+      return newMap;
+    });
+    
     // Reconstruct the narrative from the new active path
     setTimeout(() => {
       const narrativeText = newPath
@@ -794,23 +930,66 @@ export default function NarrativePage() {
   }, [sentenceNodes, findSentencePath]);
   
   // Helper function to update branch content
+  // Track recently created nodes to prevent immediate content updates
+  const [recentlyCreatedNodes, setRecentlyCreatedNodes] = useState<Set<string>>(new Set());
+  // Track if we're currently creating a branch to prevent unwanted content updates
+  const [isCreatingBranch, setIsCreatingBranch] = useState(false);
+
+  // Track nodes that are currently in edit mode (user double-clicked)
+  const [editableNodes, setEditableNodes] = useState<Set<string>>(new Set());
+
   const handleUpdateBranchContent = useCallback((branchId: string, newContent: string) => {
-    console.log(`📝 Updating branch content for ${branchId}: "${newContent}"`);
+    console.log(`📝 Attempting to update branch content for ${branchId}: "${newContent}"`);
+    
+    // STRICT PROTECTION: Only allow content updates for nodes explicitly in edit mode
+    if (!editableNodes.has(branchId)) {
+      console.warn(`🚫 BLOCKED: Cannot update content for node ${branchId} - not in edit mode. Content updates are only allowed when user explicitly enters edit mode.`);
+      return;
+    }
+    
+    // Prevent content updates during branch creation
+    if (isCreatingBranch) {
+      console.warn(`⚠️ Ignoring content update during branch creation for ${branchId}`);
+      return;
+    }
+    
+    // Prevent immediate content updates to recently created nodes
+    if (recentlyCreatedNodes.has(branchId)) {
+      console.warn(`⚠️ Ignoring content update to recently created node ${branchId}. Content should be set during creation.`);
+      return;
+    }
+    
+    // First, validate that this branch actually exists and should be updated
+    const branchNode = sentenceNodes.get(branchId);
+    if (!branchNode) {
+      console.error(`❌ Cannot update branch: node ${branchId} not found`);
+      return;
+    }
+    
+    // Check if the content is actually different
+    if (branchNode.content === newContent) {
+      console.log(`📝 Content unchanged for ${branchId}, skipping update`);
+      return;
+    }
+    
+    console.log(`📝 AUTHORIZED content change for ${branchId}: "${branchNode.content}" → "${newContent}"`);
     
     // Update the sentence node content
     setSentenceNodes(prev => {
       const newMap = new Map(prev);
-      const branchNode = newMap.get(branchId);
+      const existingNode = newMap.get(branchId);
       
-      if (branchNode) {
+      if (existingNode) {
         const updatedNode = {
-          ...branchNode,
-          content: newContent
+          ...existingNode,
+          content: newContent,
+          revisedTime: typeof window !== 'undefined' ? Date.now() : 0,
+          editCount: existingNode.editCount + 1
         };
         newMap.set(branchId, updatedNode);
-        console.log(`✅ Updated branch content for ${branchId}`);
+        console.log(`✅ Updated content for editable node ${branchId}: "${newContent}"`);
         
-        // If this is part of the current active path, update the main editor
+        // If this node is part of the current active path, update the main editor
         if (activePath.includes(branchId)) {
           console.log(`🔄 Updated node is in active path, refreshing main editor`);
           
@@ -831,23 +1010,47 @@ export default function NarrativePage() {
             
             // Update the main editor content
             if (narrativeLayerRef.current) {
-              console.log(`📝 Updating main editor with new narrative: "${narrativeText}"`);
+              console.log(`📝 Updating main editor with updated narrative: "${narrativeText}"`);
               narrativeLayerRef.current.updateContent(narrativeText);
             }
           }, 100);
+        } else {
+          console.log(`📝 Updated node ${branchId} is not in active path, main editor unchanged`);
         }
       } else {
-        console.error(`❌ Cannot update branch: node ${branchId} not found`);
+        console.error(`❌ Cannot update branch: node ${branchId} not found in map`);
       }
       
       return newMap;
     });
-  }, [sentenceNodes, activePath]);
+  }, [sentenceNodes, activePath, isCreatingBranch, recentlyCreatedNodes, editableNodes]);
   
+  // Functions to manage edit mode for nodes
+  const enterEditMode = useCallback((nodeId: string) => {
+    console.log(`📝 Entering edit mode for node ${nodeId}`);
+    setEditableNodes(prev => new Set([...prev, nodeId]));
+  }, []);
+
+  const exitEditMode = useCallback((nodeId: string) => {
+    console.log(`📝 Exiting edit mode for node ${nodeId}`);
+    setEditableNodes(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(nodeId);
+      return newSet;
+    });
+  }, []);
+
+  const exitAllEditMode = useCallback(() => {
+    console.log(`📝 Exiting edit mode for all nodes`);
+    setEditableNodes(new Set());
+  }, []);
+
   // Helper function to create a new branch
   const handleCreateBranch = useCallback((fromSentenceContent: string, branchContent: string) => {
-    // For now, just log the request - full implementation would create the branch in the tree
-    // console.log(`🌿 Request to create branch from: "${fromSentenceContent}" with content: "${branchContent}"`);
+    console.log(`🌿 Creating branch from: "${fromSentenceContent}" with content: "${branchContent}"`);
+    
+    // Set flag to prevent content updates during branch creation
+    setIsCreatingBranch(true);
     
     // Find the parent sentence node
     let parentNodeId: string | null = null;
@@ -859,7 +1062,8 @@ export default function NarrativePage() {
     }
     
     if (!parentNodeId) {
-      // console.error('❌ Cannot create branch: parent sentence not found');
+      console.error('❌ Cannot create branch: parent sentence not found');
+      setIsCreatingBranch(false);
       return;
     }
     
@@ -867,20 +1071,39 @@ export default function NarrativePage() {
     const defaultContent = branchContent || `Alternative continuation from: "${fromSentenceContent.substring(0, 30)}..."`;
     const branchNode = createSentenceNode(defaultContent, parentNodeId);
     
+    console.log(`🌿 Creating new branch node with ID: ${branchNode.id} and content: "${defaultContent}"`);
+    
     setSentenceNodes(prev => {
       const newMap = new Map(prev);
       
       // Add the new branch node
       newMap.set(branchNode.id, { ...branchNode, isCompleted: true });
+      console.log(`✅ Added new branch node ${branchNode.id} to tree`);
+      
+      // Track this as a recently created node
+      setRecentlyCreatedNodes(prev => new Set([...prev, branchNode.id]));
+      
+      // Clear the recently created flag after a short delay
+      setTimeout(() => {
+        setRecentlyCreatedNodes(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(branchNode.id);
+          return newSet;
+        });
+      }, 500);
       
       // Update parent to include this branch as a child
       const parentNode = newMap.get(parentNodeId!);
       if (parentNode) {
+        const oldActiveChild = parentNode.activeChild;
         const updatedParent = {
           ...parentNode,
-          children: [...parentNode.children, branchNode.id]
+          children: [...parentNode.children, branchNode.id],
+          // Always set the new branch as the active child when creating a branch
+          activeChild: branchNode.id
         };
         newMap.set(parentNodeId!, updatedParent);
+        console.log(`🎯 Updated parent "${parentNode.content}" activeChild from ${oldActiveChild} to ${branchNode.id} (new branch)`);
       }
       
       // Find the path to the new branch using the updated map
@@ -899,7 +1122,23 @@ export default function NarrativePage() {
       
       const newPath = findPathInMap(branchNode.id, newMap);
       
-      // Update active path
+      // Update activeChild for each parent in the new path to ensure consistency
+      for (let i = 0; i < newPath.length - 1; i++) {
+        const currentNodeId = newPath[i];
+        const nextNodeId = newPath[i + 1];
+        const currentNode = newMap.get(currentNodeId);
+        
+        if (currentNode && currentNode.children.includes(nextNodeId)) {
+          const updatedNode = {
+            ...currentNode,
+            activeChild: nextNodeId
+          };
+          newMap.set(currentNodeId, updatedNode);
+          console.log(`🎯 Set activeChild for "${currentNode.content}" to "${newMap.get(nextNodeId)?.content}" in new branch path`);
+        }
+      }
+      
+      // Update active path and main editor content
       setTimeout(() => {
         setActivePath(newPath);
         
@@ -921,6 +1160,9 @@ export default function NarrativePage() {
           console.log(`📝 Updating main editor with new branch narrative: "${narrativeText}"`);
           narrativeLayerRef.current.updateContent(narrativeText);
         }
+        
+        // Clear the flag after branch creation is complete
+        setIsCreatingBranch(false);
       }, 100);
       
       return newMap;
@@ -929,39 +1171,48 @@ export default function NarrativePage() {
     console.log(`✅ Created branch "${branchContent}" from sentence "${fromSentenceContent}"`);
   }, [sentenceNodes, createSentenceNode]);
 
-  // Handle content changes in the editor
+  // Handle content changes in the editor - DISABLED to prevent unwanted updates
   const handleContentChange = useCallback((oldContent: string, newContent: string) => {
     if (oldContent === newContent) return;
     
+    console.warn(`🚫 BLOCKED: Content change detected but ignored. Old: "${oldContent.substring(0, 50)}..." New: "${newContent.substring(0, 50)}..."`);
+    console.warn(`🚫 Content updates to existing sentences are not allowed. Only new sentence creation and explicit edit mode are permitted.`);
+    
+    // COMPLETELY DISABLED - we never want to update existing sentence content automatically
+    // If content needs to be updated, it must be done through explicit edit mode (double-click)
+    
+    return; // Early return - no content updates allowed
+    
+    // OLD CODE BELOW - KEPT FOR REFERENCE BUT NEVER EXECUTED
     // console.log(`📝 Content changed from: "${oldContent.substring(0, 50)}..." to: "${newContent.substring(0, 50)}..."`);
     
     // Find all sentences in old content and new content
-    const oldSentences = oldContent.split(/[.!?]+/).filter(s => s.trim().length > 0).map(s => s.trim());
-    const newSentences = newContent.split(/[.!?]+/).filter(s => s.trim().length > 0).map(s => s.trim());
+    // const oldSentences = oldContent.split(/[.!?]+/).filter(s => s.trim().length > 0).map(s => s.trim());
+    // const newSentences = newContent.split(/[.!?]+/).filter(s => s.trim().length > 0).map(s => s.trim());
     
     // Update sentence nodes for changed content
-    setSentenceNodes(prev => {
-      const newMap = new Map(prev);
-      
-      // Find nodes that need content updates
-      for (let i = 0; i < Math.max(oldSentences.length, newSentences.length); i++) {
-        const oldSentence = oldSentences[i];
-        const newSentence = newSentences[i];
-        
-        if (oldSentence && newSentence && oldSentence !== newSentence) {
-          // Find the node with old content and update it
-          for (const [nodeId, node] of newMap.entries()) {
-            if (node.content === oldSentence) {
-              newMap.set(nodeId, { ...node, content: newSentence });
-              console.log(`🔄 Updated node ${nodeId} content from "${oldSentence}" to "${newSentence}"`);
-              break;
-            }
-          }
-        }
-      }
-      
-      return newMap;
-    });
+    // setSentenceNodes(prev => {
+    //   const newMap = new Map(prev);
+    //   
+    //   // Find nodes that need content updates
+    //   for (let i = 0; i < Math.max(oldSentences.length, newSentences.length); i++) {
+    //     const oldSentence = oldSentences[i];
+    //     const newSentence = newSentences[i];
+    //     
+    //     if (oldSentence && newSentence && oldSentence !== newSentence) {
+    //       // Find the node with old content and update it
+    //       for (const [nodeId, node] of newMap.entries()) {
+    //         if (node.content === oldSentence) {
+    //           newMap.set(nodeId, { ...node, content: newSentence });
+    //           console.log(`🔄 Updated node ${nodeId} content from "${oldSentence}" to "${newSentence}"`);
+    //           break;
+    //         }
+    //       }
+    //     }
+    //   }
+    //   
+    //   return newMap;
+    // });
   }, []);
 
 
@@ -982,6 +1233,13 @@ export default function NarrativePage() {
         switchToBranch: handleSwitchToBranch,
         findPath: findSentencePath,
         getChildren: getSentenceChildren,
+        getActivePathFromRoot,
+        validateTree: validateTreeStructure,
+        getCurrentEditableBranchId,
+        enterEditMode,
+        exitEditMode,
+        exitAllEditMode,
+        editableNodes,
         nodes: sentenceNodes,
         activePath,
         completedSentences, // Add this for easy access
