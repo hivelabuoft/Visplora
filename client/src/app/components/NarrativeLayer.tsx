@@ -36,6 +36,7 @@ interface NarrativeLayerProps {
   getBranchesForSentence?: (sentenceContent: string) => Array<{
     id: string;
     content: string;
+    fullPathContent: string; // Full content following this branch
     type: 'branch' | 'original_continuation';
   }>;
   onSwitchToBranch?: (branchId: string) => void;
@@ -1055,7 +1056,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   }, [editingPosition, editor]);
 
   // Enhanced branching functions
-  const createBranchEditor = useCallback((content: string, elementId: string) => {
+  const createBranchEditor = useCallback((content: string, elementId: string, isReadOnly: boolean = false) => {
     const branchEditor = new Editor({
       element: document.getElementById(elementId),
       extensions: [
@@ -1070,14 +1071,15 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         Italic,
         History,
         Placeholder.configure({
-          placeholder: 'Type your alternative...',
+          placeholder: isReadOnly ? 'This shows the full path content...' : 'Type your alternative...',
         }),
       ],
       content: content ? `<p>${content}</p>` : '<p></p>', // Use empty content if none provided
+      editable: !isReadOnly, // Make read-only if specified
       // Removed onUpdate - no real-time tracking, only check when save button is clicked
       editorProps: {
         attributes: {
-          class: 'branch-editor-content',
+          class: `branch-editor-content ${isReadOnly ? 'read-only' : ''}`,
           'data-gramm': 'false',
           'data-gramm_editor': 'false',
           'data-enable-grammarly': 'false',
@@ -1091,16 +1093,15 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   const handleSelectBranch = useCallback((selectedBranch: any) => {
     console.log('🎯 Selected branch:', selectedBranch);
     
-    // Get the content from the selected branch editor
-    const branchContent = selectedBranch.editor.getText().trim();
-    
-    // Check if content is empty or just placeholder text
-    const hasActualContent = branchContent && 
-      branchContent !== 'Type your alternative...' && 
-      branchContent.length > 0;
-    
     if (selectedBranch.isNew) {
-      // This is a new draft branch - create it in the tree structure first
+      // This is a new draft branch - get content from editor and create it
+      const branchContent = selectedBranch.editor.getText().trim();
+      
+      // Check if content is empty or just placeholder text
+      const hasActualContent = branchContent && 
+        branchContent !== 'Type your alternative...' && 
+        branchContent.length > 0;
+      
       if (onCreateBranch && hasActualContent) {
         console.log('💾 Committing new branch to tree structure:', branchContent);
         onCreateBranch(branchingMode.parentSentence, branchContent);
@@ -1109,22 +1110,9 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         console.warn('⚠️ Cannot save empty branch content');
         return; // Don't proceed if content is empty or placeholder
       }
-    } else if (selectedBranch.type === 'original') {
-      // For original path, check if content has actually changed by comparing with original
-      const hasChanged = branchContent !== selectedBranch.originalContent;
-      
-      if (hasChanged && onUpdateBranchContent && hasActualContent) {
-        console.log('💾 Saving changes to original path:', branchContent);
-        onUpdateBranchContent(selectedBranch.id, branchContent);
-      } else if (!hasChanged) {
-        console.log('ℹ️ No changes detected in original path, just switching');
-        // No changes, just switch to this path
-        if (onSwitchToBranch) {
-          onSwitchToBranch(selectedBranch.id);
-        }
-      }
     } else {
-      // This is an existing branch - just switch to it
+      // This is an existing branch with full path content - just switch to it
+      console.log('🔄 Switching to existing branch:', selectedBranch.id);
       if (onSwitchToBranch) {
         onSwitchToBranch(selectedBranch.id);
       }
@@ -1144,7 +1132,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       setSelectedSentence(null);
       setDropdownPosition(null);
     }
-  }, [onCreateBranch, onSwitchToBranch, branchingMode.parentSentence, getBranchesForSentence, selectedSentence]);
+  }, [onCreateBranch, onSwitchToBranch, branchingMode.parentSentence, selectedSentence]);
 
   const handleAddNewAlternative = useCallback(() => {
     const newBranchId = `draft-branch-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -1169,7 +1157,8 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     setTimeout(() => {
       const editorElement = document.getElementById(`branch-editor-${newBranchId}`);
       if (editorElement) {
-        const newEditor = createBranchEditor('', `branch-editor-${newBranchId}`); // Empty content, placeholder will show
+        // New alternatives should be editable, not read-only
+        const newEditor = createBranchEditor('', `branch-editor-${newBranchId}`, false); // false = editable
         setBranchingMode(prev => ({
           ...prev,
           branches: prev.branches.map(branch => 
@@ -1186,8 +1175,8 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     
     const branches = availableBranches.map((branch, index) => ({
       id: branch.id,
-      content: branch.content,
-      originalContent: branch.content, // Store original content for comparison when saving
+      content: branch.fullPathContent, // Use full path content instead of just immediate content
+      originalContent: branch.fullPathContent, // Store original full path content for comparison when saving
       type: (branch.type === 'original_continuation' ? 'original' : 'alternative') as 'original' | 'alternative',
       editor: null, // Will be created after DOM update
       isNew: false // Existing branches are not new
@@ -1206,7 +1195,9 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       branches.forEach(branch => {
         const editorElement = document.getElementById(`branch-editor-${branch.id}`);
         if (editorElement) {
-          const branchEditor = createBranchEditor(branch.content, `branch-editor-${branch.id}`);
+          // Existing branches with full path content should be read-only for preview
+          const isReadOnly = !branch.isNew;
+          const branchEditor = createBranchEditor(branch.content, `branch-editor-${branch.id}`, isReadOnly);
           setBranchingMode(prev => ({
             ...prev,
             branches: prev.branches.map(b => 
@@ -1298,8 +1289,8 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           const draftBranches = [
             ...existingBranches.map(branch => ({
               id: branch.id,
-              content: branch.content,
-              originalContent: branch.content,
+              content: branch.fullPathContent || branch.content, // Use full path content for existing branches
+              originalContent: branch.fullPathContent || branch.content,
               type: (branch.type === 'original_continuation' ? 'original' : 'alternative') as 'original' | 'alternative',
               editor: null,
               isNew: false
@@ -1328,7 +1319,9 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
             draftBranches.forEach(branch => {
               const editorElement = document.getElementById(`branch-editor-${branch.id}`);
               if (editorElement) {
-                const branchEditor = createBranchEditor(branch.content, `branch-editor-${branch.id}`);
+                // Existing branches are read-only, new branches are editable
+                const isReadOnly = !branch.isNew;
+                const branchEditor = createBranchEditor(branch.content, `branch-editor-${branch.id}`, isReadOnly);
                 setBranchingMode(prev => ({
                   ...prev,
                   branches: prev.branches.map(b => 
@@ -1680,11 +1673,9 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                       className="branch-action-btn select-btn"
                       onClick={() => handleSelectBranch(branch)}
                     >
-                      {branch.type === 'original' && !branch.isNew 
-                        ? 'Save Changes' 
-                        : branch.isNew 
-                          ? 'Save & Select This Path' 
-                          : 'Select This Path'
+                      {branch.isNew 
+                        ? 'Save & Select This Path' 
+                        : 'Switch to This Path'
                       }
                     </button>
                   </div>
@@ -1772,8 +1763,18 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                           e.stopPropagation();
                           e.preventDefault();
                           
-                          // Initialize branching mode to show all alternatives
-                          initializeBranchingMode(sentenceText, availableBranches);
+                          console.log('🎯 Clicked dropdown alternative:', {
+                            branchId: branch.id,
+                            immediateContent: branch.content,
+                            fullPathContent: branch.fullPathContent,
+                            type: branch.type
+                          });
+                          
+                          // Directly switch to this branch instead of showing branch-section
+                          if (onSwitchToBranch) {
+                            console.log('🔄 Switching directly to branch:', branch.id);
+                            onSwitchToBranch(branch.id);
+                          }
                           
                           // Clear selection
                           selectedSentence.element.removeAttribute('data-selected');
@@ -1800,7 +1801,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                           {branch.type === 'original_continuation' ? 'Active Path' : `Alternative ${alternativeNumber}`}
                         </div>
                         <div style={{ fontSize: '12px', opacity: 0.8 }}>
-                          "{branch.content.length > 40 ? branch.content.substring(0, 40) + '...' : branch.content}"
+                          "{(branch.fullPathContent || branch.content).length > 40 ? (branch.fullPathContent || branch.content).substring(0, 40) + '...' : (branch.fullPathContent || branch.content)}"
                         </div>
                       </button>
                     );

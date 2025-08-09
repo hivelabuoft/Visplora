@@ -126,6 +126,73 @@ export default function NarrativePage() {
     return sentences;
   }, [sentenceNodes, activePath]);
 
+  // Automatically rebuild main editor content from activeChild path
+  useEffect(() => {
+    // Get the current active path following activeChild relationships (inline implementation)
+    const getCurrentActivePath = (): string[] => {
+      const path: string[] = [];
+      
+      // Find the root node (no parent)
+      const rootNodes = Array.from(sentenceNodes.values()).filter(n => !n.parent);
+      if (rootNodes.length === 0) return path;
+      
+      // Start from the first root node
+      let currentNodeId: string | null = rootNodes[0].id;
+      
+      while (currentNodeId) {
+        path.push(currentNodeId);
+        const currentNode = sentenceNodes.get(currentNodeId);
+        
+        // Follow the activeChild path
+        if (currentNode && currentNode.activeChild) {
+          currentNodeId = currentNode.activeChild;
+        } else {
+          // No active child, end the path
+          currentNodeId = null;
+        }
+      }
+      
+      return path;
+    };
+    
+    const currentActivePath = getCurrentActivePath();
+    
+    // Only update if the path has changed or if we have content
+    if (currentActivePath.length > 0) {
+      console.log('🔄 Auto-updating editor content from activeChild path:', currentActivePath);
+      
+      const narrativeText = currentActivePath
+        .map(nodeId => {
+          const node = sentenceNodes.get(nodeId);
+          let content = node ? node.content.trim() : '';
+          if (content && !/[.!?]$/.test(content)) {
+            content += '.';
+          }
+          return content;
+        })
+        .filter(content => content.length > 0)
+        .join(' ');
+      
+      console.log('📝 Auto-rebuilt narrative:', narrativeText);
+      
+      // Update the main editor content if it has changed
+      if (narrativeLayerRef.current && narrativeText) {
+        // Only update if content is different to avoid infinite loops
+        const currentEditorText = narrativeLayerRef.current.getFullText();
+        if (currentEditorText.trim() !== narrativeText.trim()) {
+          console.log('✏️ Updating main editor with activeChild path content');
+          narrativeLayerRef.current.updateContent(narrativeText);
+        }
+      }
+      
+      // Sync the activePath state with the current active path
+      if (JSON.stringify(activePath) !== JSON.stringify(currentActivePath)) {
+        console.log('🛤️ Syncing activePath state');
+        setActivePath(currentActivePath);
+      }
+    }
+  }, [sentenceNodes, activePath]);
+
   // Local interaction tracking
   const [dashboardInteractions, setDashboardInteractions] = useState<Array<{
     id: number;
@@ -737,6 +804,25 @@ export default function NarrativePage() {
     return children;
   };
 
+  // Helper function to get the full content path following activeChild from a specific node
+  const getFullPathContentFromNode = (startNodeId: string): string => {
+    const contentParts: string[] = [];
+    let currentNodeId: string | null = startNodeId;
+    
+    while (currentNodeId) {
+      const currentNode = sentenceNodes.get(currentNodeId);
+      if (currentNode) {
+        contentParts.push(currentNode.content);
+        // Follow the activeChild path
+        currentNodeId = currentNode.activeChild;
+      } else {
+        break;
+      }
+    }
+    
+    return contentParts.join(' ');
+  };
+
   // Helper function to get the active path following activeChild relationships
   const getActivePathFromRoot = (): string[] => {
     const path: string[] = [];
@@ -820,6 +906,7 @@ export default function NarrativePage() {
   const getBranchesForSentence = useCallback((sentenceContent: string): Array<{
     id: string;
     content: string;
+    fullPathContent: string; // Full content following this branch
     type: 'branch' | 'original_continuation';
   }> => {
     // Find the sentence node by content
@@ -846,6 +933,7 @@ export default function NarrativePage() {
     const branches: Array<{
       id: string;
       content: string;
+      fullPathContent: string;
       type: 'branch' | 'original_continuation';
     }> = [];
     
@@ -858,9 +946,13 @@ export default function NarrativePage() {
         // Use activeChild to determine which is the active path vs alternatives
         const isActivePath = childId === activeChildId;
         
+        // Get the full content path following this branch
+        const fullPathContent = getFullPathContentFromNode(childId);
+        
         branches.push({
           id: childId,
           content: childNode.content,
+          fullPathContent: fullPathContent,
           type: isActivePath ? 'original_continuation' : 'branch'
         });
       }
@@ -874,10 +966,10 @@ export default function NarrativePage() {
     });
     
     console.log(`🌿 Found ${branches.length} branches for "${sentenceContent}":`, 
-      branches.map(b => `${b.type === 'original_continuation' ? 'Active' : 'Alt'}: "${b.content}"`));
+      branches.map(b => `${b.type === 'original_continuation' ? 'Active' : 'Alt'}: "${b.content}" (Full: "${b.fullPathContent}")`));
     
     return branches;
-  }, [sentenceNodes]);
+  }, [sentenceNodes, getFullPathContentFromNode]);
   
   // Helper function to switch to a specific branch
   const handleSwitchToBranch = useCallback((branchId: string) => {
@@ -887,8 +979,16 @@ export default function NarrativePage() {
       return;
     }
     
+    console.log(`🎯 SWITCHING TO BRANCH: ${branchId}`);
+    console.log(`📊 Branch content: "${branchNode.content}"`);
+    
     // Find the path from root to this branch
     const newPath = findSentencePath(branchId);
+    console.log(`🛤️ New active path:`, newPath.map(id => {
+      const node = sentenceNodes.get(id);
+      return `${id}: "${node?.content}"`;
+    }));
+    
     setActivePath(newPath);
     
     console.log(`🔄 Switching to branch ${branchId}, updating main editor`);
@@ -918,10 +1018,13 @@ export default function NarrativePage() {
     
     // Reconstruct the narrative from the new active path
     setTimeout(() => {
+      console.log(`🔧 Reconstructing narrative from path:`, newPath);
+      
       const narrativeText = newPath
         .map(nodeId => {
           const node = sentenceNodes.get(nodeId);
           let content = node ? node.content.trim() : '';
+          console.log(`📝 Processing node ${nodeId}: "${content}"`);
           // Ensure each sentence ends with proper punctuation
           if (content && !/[.!?]$/.test(content)) {
             content += '.';
@@ -931,10 +1034,14 @@ export default function NarrativePage() {
         .filter(content => content.length > 0)
         .join(' ');
       
+      console.log(`📋 Final narrative text: "${narrativeText}"`);
+      
       // Update the main editor content
       if (narrativeLayerRef.current) {
         console.log(`📝 Updating main editor with branch narrative: "${narrativeText}"`);
         narrativeLayerRef.current.updateContent(narrativeText);
+      } else {
+        console.warn('⚠️ narrativeLayerRef.current is null, cannot update editor content');
       }
     }, 100);
     

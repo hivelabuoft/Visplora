@@ -1407,3 +1407,33 @@
     );
   }
 }
+
+/* Read-only branch editor styles */
+.branch-editor-content.read-only .ProseMirror {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  cursor: default;
+  color: #6c757d;
+}
+
+.branch-editor-content.read-only .ProseMirror:hover {
+  border-color: #ced4da;
+}
+
+.branch-editor-content.read-only .ProseMirror p {
+  color: #6c757d;
+}
+
+.branch-editor-content.read-only .ProseMirror .is-editor-empty:first-child::before {
+  color: #adb5bd;
+  font-style: italic;
+}
+
+/* Add a visual indicator that this is a preview */
+.branch-option:has(.branch-editor-content.read-only) .branch-label::after {
+  content: " (Preview)";
+  font-size: 10px;
+  color: #6c757d;
+  font-weight: normal;
+  font-style: italic;
+}
