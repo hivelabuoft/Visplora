@@ -518,6 +518,162 @@ export default function NarrativePage() {
     });
   };
 
+  // Helper function to get the active path from a specific node map
+  const getActivePathFromCleanedMap = (nodeMap: Map<string, SentenceNode>): string[] => {
+    const path: string[] = [];
+    
+    // Find the root node (no parent)
+    const rootNodes = Array.from(nodeMap.values()).filter(n => !n.parent);
+    if (rootNodes.length === 0) return path;
+    
+    // Start from the first root node
+    let currentNodeId: string | null = rootNodes[0].id;
+    
+    while (currentNodeId) {
+      path.push(currentNodeId);
+      const currentNode = nodeMap.get(currentNodeId);
+      
+      // Follow the activeChild path
+      if (currentNode && currentNode.activeChild) {
+        currentNodeId = currentNode.activeChild;
+      } else {
+        // No active child, end the path
+        currentNodeId = null;
+      }
+    }
+    
+    return path;
+  };
+
+  // Safety check function to remove duplicate sentence nodes with identical content
+  const removeDuplicateSentenceNodes = (nodeMap: Map<string, SentenceNode>): Map<string, SentenceNode> => {
+    console.log('🧹 Starting duplicate node removal safety check...');
+    
+    const cleanedMap = new Map(nodeMap);
+    const contentToNodes = new Map<string, string[]>(); // content -> array of node IDs
+    const nodesToRemove = new Set<string>();
+    
+    // Group nodes by content
+    for (const [nodeId, node] of cleanedMap.entries()) {
+      const content = node.content.trim();
+      if (!contentToNodes.has(content)) {
+        contentToNodes.set(content, []);
+      }
+      contentToNodes.get(content)!.push(nodeId);
+    }
+    
+    // Process each group of nodes with identical content
+    for (const [content, nodeIds] of contentToNodes.entries()) {
+      if (nodeIds.length > 1) {
+        console.log(`🔍 Found ${nodeIds.length} nodes with identical content: "${content}"`);
+        
+        // Analyze each duplicate node to decide which to keep
+        const nodeAnalysis = nodeIds.map(nodeId => {
+          const node = cleanedMap.get(nodeId)!;
+          const hasChildren = node.children.length > 0;
+          const isActiveChild = Array.from(cleanedMap.values()).some(n => n.activeChild === nodeId);
+          const isReferencedAsParent = Array.from(cleanedMap.values()).some(n => n.parent === nodeId);
+          
+          return {
+            nodeId,
+            node,
+            hasChildren,
+            isActiveChild,
+            isReferencedAsParent,
+            priority: (hasChildren ? 2 : 0) + (isActiveChild ? 4 : 0) + (isReferencedAsParent ? 1 : 0)
+          };
+        });
+        
+        // Sort by priority (higher priority nodes are more important to keep)
+        nodeAnalysis.sort((a, b) => b.priority - a.priority);
+        
+        console.log(`📊 Node analysis for "${content}":`, nodeAnalysis.map(a => 
+          `${a.nodeId}: priority=${a.priority} (children=${a.hasChildren}, activeChild=${a.isActiveChild}, referenced=${a.isReferencedAsParent})`
+        ));
+        
+        // Keep the highest priority node, mark others for removal
+        const nodeToKeep = nodeAnalysis[0];
+        const nodesToRemoveFromGroup = nodeAnalysis.slice(1);
+        
+        console.log(`✅ Keeping node ${nodeToKeep.nodeId} with priority ${nodeToKeep.priority}`);
+        
+        nodesToRemoveFromGroup.forEach(analysis => {
+          console.log(`❌ Marking node ${analysis.nodeId} for removal (priority ${analysis.priority})`);
+          nodesToRemove.add(analysis.nodeId);
+          
+          // If the node being removed is someone's activeChild, update to point to the kept node
+          for (const [parentId, parentNode] of cleanedMap.entries()) {
+            if (parentNode.activeChild === analysis.nodeId) {
+              const updatedParent = {
+                ...parentNode,
+                activeChild: nodeToKeep.nodeId,
+                children: parentNode.children.map(childId => 
+                  childId === analysis.nodeId ? nodeToKeep.nodeId : childId
+                ).filter((value, index, self) => self.indexOf(value) === index) // Remove duplicates
+              };
+              cleanedMap.set(parentId, updatedParent);
+              console.log(`🔄 Updated parent "${parentNode.content}" activeChild from ${analysis.nodeId} to ${nodeToKeep.nodeId}`);
+            }
+            
+            // Update children arrays to point to the kept node
+            if (parentNode.children.includes(analysis.nodeId)) {
+              const updatedParent = {
+                ...parentNode,
+                children: parentNode.children.map(childId => 
+                  childId === analysis.nodeId ? nodeToKeep.nodeId : childId
+                ).filter((value, index, self) => self.indexOf(value) === index) // Remove duplicates
+              };
+              cleanedMap.set(parentId, updatedParent);
+              console.log(`🔄 Updated parent "${parentNode.content}" children array to reference kept node`);
+            }
+          }
+          
+          // If the node being removed has children, transfer them to the kept node
+          if (analysis.node.children.length > 0) {
+            const keptNode = cleanedMap.get(nodeToKeep.nodeId)!;
+            const mergedChildren = [...keptNode.children, ...analysis.node.children]
+              .filter((value, index, self) => self.indexOf(value) === index); // Remove duplicates
+            
+            const updatedKeptNode = {
+              ...keptNode,
+              children: mergedChildren,
+              // If the kept node doesn't have an activeChild but the removed node does, inherit it
+              activeChild: keptNode.activeChild || analysis.node.activeChild
+            };
+            cleanedMap.set(nodeToKeep.nodeId, updatedKeptNode);
+            console.log(`🔄 Transferred ${analysis.node.children.length} children from removed node to kept node`);
+            
+            // Update parent references of transferred children
+            analysis.node.children.forEach(childId => {
+              const child = cleanedMap.get(childId);
+              if (child) {
+                const updatedChild = {
+                  ...child,
+                  parent: nodeToKeep.nodeId
+                };
+                cleanedMap.set(childId, updatedChild);
+              }
+            });
+          }
+        });
+      }
+    }
+    
+    // Remove marked nodes
+    nodesToRemove.forEach(nodeId => {
+      console.log(`🗑️ Removing duplicate node: ${nodeId}`);
+      cleanedMap.delete(nodeId);
+    });
+    
+    if (nodesToRemove.size > 0) {
+      console.log(`🧹 Removed ${nodesToRemove.size} duplicate nodes from tree structure`);
+    } else {
+      console.log(`✅ No duplicate nodes found - tree structure is clean`);
+    }
+    
+    return cleanedMap;
+  };
+
   // Function to get completed sentences from DOM (simplified)
   const getCompletedSentencesFromDOM = (): { content: string; index: number }[] => {
     const editorElement = document.querySelector('.narrative-editor-content');
@@ -541,6 +697,22 @@ export default function NarrativePage() {
 
   // Handle sentence end detection for narrative layer - now with tree structure
   const handleSentenceEnd = async (sentence: string, confidence: number) => {
+    // CRITICAL PROTECTION: Skip if any nodes are currently being edited
+    if (editableNodes.size > 0) {
+      console.log(`🚫 BLOCKED: Skipping sentence processing - nodes currently being edited: ${Array.from(editableNodes).join(', ')}`);
+      console.log(`🚫 Sentence that would be processed: "${sentence}"`);
+      return;
+    }
+    
+    // Additional protection: Check if this sentence content matches any existing node
+    // This prevents creating duplicates of existing content
+    for (const [nodeId, node] of sentenceNodes.entries()) {
+      if (node.content === sentence) {
+        console.log(`🚫 BLOCKED: Sentence "${sentence}" already exists as node ${nodeId} - preventing duplicate`);
+        return;
+      }
+    }
+    
     // Handle branch creation messages
     if (sentence.startsWith('BRANCH_CREATED:')) {
       const originalSentence = sentence.replace('BRANCH_CREATED:', '');
@@ -580,6 +752,12 @@ export default function NarrativePage() {
       let previousNodeId: string | null = null;
       
       currentCompletedSentences.forEach((sentenceData, index) => {
+        // FINAL PROTECTION: Skip processing if any nodes are in edit mode
+        if (editableNodes.size > 0) {
+          console.log(`🚫 FINAL BLOCK: Skipping sentence processing in forEach loop - edit mode active`);
+          return; // Skip this iteration
+        }
+        
         // Look for existing node with this content
         let existingNode: SentenceNode | undefined;
         for (const [id, node] of newMap.entries()) {
@@ -692,17 +870,33 @@ export default function NarrativePage() {
           // console.log('🎉 All sentences in narrative are completed!');
           console.log('📊 Final completed sentences array (in correct order):', finalSentences);
           
-          // Create the export data with the updated map (not the old state)
+          // SAFETY CHECK: Remove duplicate sentence nodes with identical content
+          const cleanedNodeMap = removeDuplicateSentenceNodes(newMap);
+          
+          // Update the sentence nodes with the cleaned map if changes were made
+          if (cleanedNodeMap.size !== newMap.size) {
+            console.log('🧹 Tree structure cleaned - duplicate nodes removed');
+            setSentenceNodes(cleanedNodeMap);
+            
+            // Recalculate active path with cleaned structure
+            const updatedActivePath = getActivePathFromCleanedMap(cleanedNodeMap);
+            setActivePath(updatedActivePath);
+          }
+          
+          // Create the export data with the cleaned map
+          const finalNodeMap = cleanedNodeMap.size !== newMap.size ? cleanedNodeMap : newMap;
+          const finalActivePath = cleanedNodeMap.size !== newMap.size ? getActivePathFromCleanedMap(cleanedNodeMap) : newActivePath;
+          
           const exportData = {
-            nodes: Array.from(newMap.entries()).map(([nodeId, node]) => ({ nodeId, ...node })),
-            activePath: newActivePath,
+            nodes: Array.from(finalNodeMap.entries()).map(([nodeId, node]) => ({ nodeId, ...node })),
+            activePath: finalActivePath,
             stats: {
-              totalNodes: newMap.size,
-              completedNodes: Array.from(newMap.values()).filter(n => n.isCompleted).length,
-              branchedNodes: Array.from(newMap.values()).filter(n => n.children.length > 1).length,
-              rootNodes: Array.from(newMap.values()).filter(n => !n.parent).length,
-              averageEditCount: Array.from(newMap.values()).reduce((sum, n) => sum + n.editCount, 0) / newMap.size || 0,
-              activePath: newActivePath.length
+              totalNodes: finalNodeMap.size,
+              completedNodes: Array.from(finalNodeMap.values()).filter((n: SentenceNode) => n.isCompleted).length,
+              branchedNodes: Array.from(finalNodeMap.values()).filter((n: SentenceNode) => n.children.length > 1).length,
+              rootNodes: Array.from(finalNodeMap.values()).filter((n: SentenceNode) => !n.parent).length,
+              averageEditCount: Array.from(finalNodeMap.values()).reduce((sum: number, n: SentenceNode) => sum + n.editCount, 0) / finalNodeMap.size || 0,
+              activePath: finalActivePath.length
             },
             exportedAt: typeof window !== 'undefined' ? Date.now() : 0
           };
@@ -849,6 +1043,25 @@ export default function NarrativePage() {
     
     return path;
   };
+
+  // Helper function to find node ID by content
+  const findNodeIdByContent = useCallback((content: string): string | null => {
+    console.log(`🔍 Searching for node with content: "${content}"`);
+    console.log(`🔍 Current sentence nodes:`, Array.from(sentenceNodes.entries()).map(([id, node]) => ({
+      id: id,
+      content: node.content,
+      isMatch: node.content === content
+    })));
+    
+    for (const [nodeId, node] of sentenceNodes.entries()) {
+      if (node.content === content) {
+        console.log(`✅ Found matching node: ${nodeId} with content: "${node.content}"`);
+        return nodeId;
+      }
+    }
+    console.error(`❌ No node found with exact content: "${content}"`);
+    return null;
+  }, [sentenceNodes]);
 
   // Helper function to validate tree structure consistency
   const validateTreeStructure = (): { isValid: boolean; issues: string[] } => {
@@ -1057,11 +1270,17 @@ export default function NarrativePage() {
   const [editableNodes, setEditableNodes] = useState<Set<string>>(new Set());
 
   const handleUpdateBranchContent = useCallback((branchId: string, newContent: string) => {
-    console.log(`📝 Attempting to update branch content for ${branchId}: "${newContent}"`);
+    console.log(`📝 🎯 ATTEMPTING TO UPDATE BRANCH CONTENT:`);
+    console.log(`📝 Branch ID: ${branchId}`);
+    console.log(`📝 New Content: "${newContent}"`);
+    console.log(`📝 EditableNodes state:`, Array.from(editableNodes));
+    console.log(`📝 IsCreatingBranch:`, isCreatingBranch);
+    console.log(`📝 RecentlyCreatedNodes:`, Array.from(recentlyCreatedNodes));
     
     // STRICT PROTECTION: Only allow content updates for nodes explicitly in edit mode
     if (!editableNodes.has(branchId)) {
       console.warn(`🚫 BLOCKED: Cannot update content for node ${branchId} - not in edit mode. Content updates are only allowed when user explicitly enters edit mode.`);
+      console.warn(`🚫 Available editable nodes:`, Array.from(editableNodes));
       return;
     }
     
@@ -1081,6 +1300,7 @@ export default function NarrativePage() {
     const branchNode = sentenceNodes.get(branchId);
     if (!branchNode) {
       console.error(`❌ Cannot update branch: node ${branchId} not found`);
+      console.error(`❌ Available nodes:`, Array.from(sentenceNodes.keys()));
       return;
     }
     
@@ -1090,7 +1310,8 @@ export default function NarrativePage() {
       return;
     }
     
-    console.log(`📝 AUTHORIZED content change for ${branchId}: "${branchNode.content}" → "${newContent}"`);
+    console.log(`📝 ✅ AUTHORIZED CONTENT UPDATE:`);
+    console.log(`📝 Node ${branchId}: "${branchNode.content}" → "${newContent}"`);
     
     // Update the sentence node content
     setSentenceNodes(prev => {
@@ -1105,7 +1326,8 @@ export default function NarrativePage() {
           editCount: existingNode.editCount + 1
         };
         newMap.set(branchId, updatedNode);
-        console.log(`✅ Updated content for editable node ${branchId}: "${newContent}"`);
+        console.log(`✅ ✅ SUCCESSFULLY UPDATED NODE ${branchId}: "${newContent}"`);
+        console.log(`✅ Edit count incremented to: ${updatedNode.editCount}`);
         
         // If this node is part of the current active path, update the main editor
         if (activePath.includes(branchId)) {
@@ -1134,6 +1356,7 @@ export default function NarrativePage() {
           }, 100);
         } else {
           console.log(`📝 Updated node ${branchId} is not in active path, main editor unchanged`);
+          console.log(`📝 Active path:`, activePath);
         }
       } else {
         console.error(`❌ Cannot update branch: node ${branchId} not found in map`);
@@ -1162,6 +1385,49 @@ export default function NarrativePage() {
     console.log(`📝 Exiting edit mode for all nodes`);
     setEditableNodes(new Set());
   }, []);
+
+  // Handlers for NarrativeLayer edit mode integration
+  const handleEnterEditMode = useCallback((content: string) => {
+    console.log(`📝 NarrativeLayer requesting edit mode for content: "${content}"`);
+    
+    // Find the node with this content in the active path
+    let nodeId: string | null = null;
+    for (const pathNodeId of activePath) {
+      const node = sentenceNodes.get(pathNodeId);
+      if (node && node.content === content) {
+        nodeId = pathNodeId;
+        break;
+      }
+    }
+    
+    if (nodeId) {
+      console.log(`📝 Found node ${nodeId} for edit mode`);
+      enterEditMode(nodeId);
+    } else {
+      console.warn(`⚠️ Could not find node for content: "${content}"`);
+    }
+  }, [activePath, sentenceNodes, enterEditMode]);
+
+  const handleExitEditMode = useCallback((content: string) => {
+    console.log(`📝 NarrativeLayer exiting edit mode for content: "${content}"`);
+    
+    // Find the node with this content in the active path
+    let nodeId: string | null = null;
+    for (const pathNodeId of activePath) {
+      const node = sentenceNodes.get(pathNodeId);
+      if (node && node.content === content) {
+        nodeId = pathNodeId;
+        break;
+      }
+    }
+    
+    if (nodeId) {
+      console.log(`📝 Exiting edit mode for node ${nodeId}`);
+      exitEditMode(nodeId);
+    } else {
+      console.warn(`⚠️ Could not find node for content: "${content}"`);
+    }
+  }, [activePath, sentenceNodes, exitEditMode]);
 
   // Helper function to create a new branch
   const handleCreateBranch = useCallback((fromSentenceContent: string, branchContent: string) => {
@@ -1357,6 +1623,20 @@ export default function NarrativePage() {
         enterEditMode,
         exitEditMode,
         exitAllEditMode,
+        removeDuplicates: () => {
+          console.log('🧹 Running manual duplicate removal...');
+          const currentMap = sentenceNodes;
+          const cleanedMap = removeDuplicateSentenceNodes(currentMap);
+          if (cleanedMap.size !== currentMap.size) {
+            setSentenceNodes(cleanedMap);
+            const newActivePath = getActivePathFromCleanedMap(cleanedMap);
+            setActivePath(newActivePath);
+            console.log('✅ Duplicates removed and state updated');
+          } else {
+            console.log('✅ No duplicates found');
+          }
+          return cleanedMap;
+        },
         editableNodes,
         nodes: sentenceNodes,
         activePath,
@@ -1543,6 +1823,9 @@ export default function NarrativePage() {
               onSwitchToBranch={handleSwitchToBranch}
               onCreateBranch={handleCreateBranch}
               onUpdateBranchContent={handleUpdateBranchContent}
+              onEnterEditMode={handleEnterEditMode}
+              onExitEditMode={handleExitEditMode}
+              findNodeIdByContent={findNodeIdByContent}
               onGenerateVisualization={async (sentence: string, validation: any) => {
                 // When NarrativeLayer wants to generate visualization, 
                 // Add info node to canvas

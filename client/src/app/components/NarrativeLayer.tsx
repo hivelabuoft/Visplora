@@ -42,6 +42,9 @@ interface NarrativeLayerProps {
   onSwitchToBranch?: (branchId: string) => void;
   onCreateBranch?: (fromSentenceContent: string, branchContent: string) => void;
   onUpdateBranchContent?: (branchId: string, newContent: string) => void; // New callback for updating branch content
+  onEnterEditMode?: (sentenceContent: string) => void; // New callback for entering edit mode
+  onExitEditMode?: (sentenceContent: string) => void; // New callback for exiting edit mode
+  findNodeIdByContent?: (content: string) => string | null; // Helper to find node ID by content
 }
 
 // Expose methods for parent components to access editor content
@@ -68,7 +71,10 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   getBranchesForSentence,
   onSwitchToBranch,
   onCreateBranch,
-  onUpdateBranchContent
+  onUpdateBranchContent,
+  onEnterEditMode,
+  onExitEditMode,
+  findNodeIdByContent
 }, ref) => {
   const [wordCount, setWordCount] = useState(0);
   const [sentenceCount, setSentenceCount] = useState(0);
@@ -81,7 +87,9 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   const isEditingRef = useRef<boolean>(false); // Track if user is editing a sentence
   const [isEditingState, setIsEditingState] = useState<boolean>(false); // State for UI reactivity
   const editingTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Track editing timeout
+  const recentlyEditedContentRef = useRef<Set<string>>(new Set()); // Track recently edited content to prevent duplicate processing
   const [editingPosition, setEditingPosition] = useState<{from: number, to: number} | null>(null); // Track editing position for save button
+  const [originalEditingContent, setOriginalEditingContent] = useState<string | null>(null); // Store original content when edit mode starts
   const saveButtonRef = useRef<HTMLButtonElement>(null); // Ref for positioning save button
   const [selectedSentence, setSelectedSentence] = useState<{element: HTMLElement, position: {from: number, to: number}} | null>(null); // Track selected sentence for dropdown
   const [dropdownPosition, setDropdownPosition] = useState<{left: number, top: number} | null>(null); // Track dropdown position
@@ -219,10 +227,12 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       // console.log(`🔄 Restoring cursor to original position: ${currentCursorPos}-${currentCursorEnd}`);
       editorInstance.commands.setTextSelection({ from: currentCursorPos, to: currentCursorEnd });
       
-      // Add insertion areas between completed sentences after a brief delay
-      setTimeout(() => {
-        addInsertionAreasBetweenSentences(editorInstance);
-      }, 100);
+      // Add insertion areas between completed sentences after a brief delay - but not when editing
+      if (!isEditingRef.current) {
+        setTimeout(() => {
+          addInsertionAreasBetweenSentences(editorInstance);
+        }, 100);
+      }
       
     } catch (error) {
       // console.error('❌ Error in proactive marking:', error);
@@ -255,6 +265,18 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
 
   // Sentence end detection and LLM trigger function
   const checkSentenceEnd = useCallback(async (text: string, editorInstance?: any) => {
+    // Skip sentence detection if user is actively editing
+    if (isEditingRef.current) {
+      return;
+    }
+    
+    // Also skip if this content was recently edited to prevent duplicate processing
+    const currentText = text.trim();
+    if (recentlyEditedContentRef.current.has(currentText)) {
+      console.log(`🚫 Skipping sentence detection for recently edited content: "${currentText}"`);
+      return;
+    }
+    
     // First, check for decimal numbers in the text to avoid false sentence detection
     const numberDetectionResult = detectNumbers(text);
     
@@ -512,8 +534,8 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       setWordCount(words);
       setSentenceCount(sentences);
       
-      // Notify parent of content changes
-      if (text !== previousText && onContentChange) {
+      // Notify parent of content changes - but NOT when user is editing
+      if (text !== previousText && onContentChange && !isEditingRef.current) {
         onContentChange(previousText, text);
       }
       
@@ -889,6 +911,16 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           // Store the editing position for the save button
           setEditingPosition({ from: position, to: endPosition });
           
+          // Get the sentence content and store it as the original content
+          const sentenceContent = sentenceElement.textContent?.trim() || '';
+          setOriginalEditingContent(sentenceContent); // Store original content for later comparison
+          
+          // Notify parent to enter edit mode
+          if (onEnterEditMode && sentenceContent) {
+            console.log(`📝 Entering edit mode for sentence: "${sentenceContent}"`);
+            onEnterEditMode(sentenceContent);
+          }
+          
           
           // Select the sentence text using setTextSelection
           editor?.commands.setTextSelection({ from: position, to: endPosition });
@@ -975,6 +1007,12 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       return fullText.substring(sentenceStart, sentenceEnd).trim();
     },
     updateContent: (newContent: string) => {
+      // Don't update content if user is actively editing
+      if (isEditingRef.current) {
+        console.log('🚫 Skipping content update - user is editing');
+        return;
+      }
+      
       if (editor) {
         console.log('📝 Updating main editor content:', newContent);
         editor.commands.setContent(`<p>${newContent}</p>`);
@@ -1006,12 +1044,69 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   
   // Function to save/finish editing a sentence
   const finishEditingSentence = useCallback(() => {
-    if (isEditingRef.current && editor && editingPosition) {
+    if (isEditingRef.current && editor && editingPosition && originalEditingContent) {
       
-      // Clear editing state
-      isEditingRef.current = false;
-      setIsEditingState(false);
+      // Get the edited content from the editor
+      const editedContent = editor.state.doc.textBetween(editingPosition.from, editingPosition.to).trim();
+      console.log(`📝 Finishing edit with content: "${editedContent}"`);
+      console.log(`📝 Original content was: "${originalEditingContent}"`);
+      
+      // If content changed, notify parent to update the branch content
+      if (editedContent !== originalEditingContent && onUpdateBranchContent) {
+        console.log(`📝 Content changed from "${originalEditingContent}" to "${editedContent}"`);
+        
+        // Try to find the exact node ID for the original content
+        let targetNodeId: string | null = null;
+        
+        if (findNodeIdByContent) {
+          targetNodeId = findNodeIdByContent(originalEditingContent);
+          console.log(`📝 Direct lookup - Found node ID for original content "${originalEditingContent}": ${targetNodeId}`);
+        } else {
+          console.warn(`⚠️ findNodeIdByContent not available, using fallback method`);
+          // Fallback to the old method if findNodeIdByContent is not available
+          if (getBranchesForSentence) {
+            const branches = getBranchesForSentence(originalEditingContent);
+            console.log(`📝 Fallback - Available branches for "${originalEditingContent}":`, branches.map(b => ({ id: b.id, content: b.content })));
+            const matchingBranch = branches.find(b => b.content === originalEditingContent);
+            if (matchingBranch) {
+              targetNodeId = matchingBranch.id;
+              console.log(`📝 Fallback - Found matching branch ID: ${targetNodeId}`);
+            } else {
+              console.error(`❌ Fallback - No matching branch found for content: "${originalEditingContent}"`);
+            }
+          }
+        }
+        
+        if (targetNodeId) {
+          console.log(`📝 🎯 UPDATING NODE ${targetNodeId} with new content: "${editedContent}"`);
+          onUpdateBranchContent(targetNodeId, editedContent);
+          
+          // Track this content as recently edited to prevent it from being processed as a new sentence
+          recentlyEditedContentRef.current.add(editedContent);
+          setTimeout(() => {
+            recentlyEditedContentRef.current.delete(editedContent);
+          }, 2000); // Remove from tracking after 2 seconds
+        } else {
+          console.error(`❌ 🚨 CRITICAL: Could not find node ID for original content: "${originalEditingContent}"`);
+          console.error(`❌ This will likely cause duplicate nodes to be created!`);
+        }
+        
+        // Notify parent to exit edit mode for the original content
+        if (onExitEditMode) {
+          onExitEditMode(originalEditingContent);
+        }
+      } else {
+        console.log(`📝 No content change detected or onUpdateBranchContent not available`);
+        
+        // Still notify parent to exit edit mode for the original content
+        if (onExitEditMode && originalEditingContent) {
+          onExitEditMode(originalEditingContent);
+        }
+      }
+      
+      // Clear editing position and original content
       setEditingPosition(null);
+      setOriginalEditingContent(null);
       
       // Clear timeout
       if (editingTimeoutRef.current) {
@@ -1019,16 +1114,21 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         editingTimeoutRef.current = null;
       }
       
-      // Re-mark completed sentences after a brief delay
+      // Re-mark completed sentences after a brief delay, but AFTER clearing editing state
       setTimeout(() => {
+        // NOW clear the editing state after content update is complete
+        isEditingRef.current = false;
+        setIsEditingState(false);
+        
+        // Then do the re-marking
         markCompletedSentencesProactively(editor);
         // Also add insertion areas after re-marking
         setTimeout(() => {
           addInsertionAreasBetweenSentences(editor);
         }, 100);
-      }, 100);
+      }, 200); // Longer delay to ensure content update is processed
     }
-  }, [editor, editingPosition, markCompletedSentencesProactively, addInsertionAreasBetweenSentences]);
+  }, [editor, editingPosition, originalEditingContent, markCompletedSentencesProactively, addInsertionAreasBetweenSentences, onUpdateBranchContent, onExitEditMode, getBranchesForSentence, findNodeIdByContent]);
 
   // Function to position save button next to the editing sentence
   const positionSaveButton = useCallback(() => {
@@ -1489,6 +1589,11 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     if (!editor) return;
     
     const interval = setInterval(() => {
+      // Skip periodic checks if user is actively editing
+      if (isEditingRef.current) {
+        return;
+      }
+      
       const currentText = editor.getText();
       // Always check if there's text, regardless of whether it changed
       // This is important for detecting pauses
