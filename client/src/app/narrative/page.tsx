@@ -816,7 +816,7 @@ export default function NarrativePage() {
     return null;
   };
 
-  // Helper function to get branches for a specific sentence (simplified)
+  // Helper function to get branches for a specific sentence (using activeChild system)
   const getBranchesForSentence = useCallback((sentenceContent: string): Array<{
     id: string;
     content: string;
@@ -849,21 +849,32 @@ export default function NarrativePage() {
       type: 'branch' | 'original_continuation';
     }> = [];
     
+    // The activeChild is the current "active path" - all others are alternatives
+    const activeChildId = targetNode.activeChild;
+    
     targetNode.children.forEach(childId => {
       const childNode = sentenceNodes.get(childId);
       if (childNode) {
-        // Determine if this is the original continuation or a branch
-        // The first child is likely the original continuation if it was created in sequence
-        const isOriginalContinuation = targetNode.children[0] === childId && 
-          !childNode.content.includes('Alternative continuation from:');
+        // Use activeChild to determine which is the active path vs alternatives
+        const isActivePath = childId === activeChildId;
         
         branches.push({
           id: childId,
           content: childNode.content,
-          type: isOriginalContinuation ? 'original_continuation' : 'branch'
+          type: isActivePath ? 'original_continuation' : 'branch'
         });
       }
     });
+    
+    // Sort so active path comes first, then alternatives
+    branches.sort((a, b) => {
+      if (a.type === 'original_continuation' && b.type === 'branch') return -1;
+      if (a.type === 'branch' && b.type === 'original_continuation') return 1;
+      return 0;
+    });
+    
+    console.log(`🌿 Found ${branches.length} branches for "${sentenceContent}":`, 
+      branches.map(b => `${b.type === 'original_continuation' ? 'Active' : 'Alt'}: "${b.content}"`));
     
     return branches;
   }, [sentenceNodes]);

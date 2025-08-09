@@ -1656,33 +1656,41 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
               </div>
             </div>
             
-            {branchingMode.branches.map((branch, index) => (
-              <div key={branch.id} className="branch-option">
-                <div className="branch-label">
-                  {branch.type === 'original' ? 'Original Path' : `Alternative ${index}`}
-                  {branch.isNew && <span className="draft-indicator"> (Draft)</span>}
+            {branchingMode.branches.map((branch, index) => {
+              // Calculate alternative number for non-active branches
+              const activeCount = branchingMode.branches.filter(b => b.type === 'original').length;
+              const alternativeNumber = branch.type === 'alternative' 
+                ? branchingMode.branches.slice(0, index).filter(b => b.type === 'alternative').length + 1
+                : null;
+              
+              return (
+                <div key={branch.id} className="branch-option">
+                  <div className="branch-label">
+                    {branch.type === 'original' ? 'Active Path' : `Alternative ${alternativeNumber}`}
+                    {branch.isNew && <span className="draft-indicator"> (Draft)</span>}
+                  </div>
+                  <div className="branch-editor-wrapper">
+                    <div 
+                      id={`branch-editor-${branch.id}`}
+                      className="branch-editor"
+                    />
+                  </div>
+                  <div className="branch-actions">
+                    <button 
+                      className="branch-action-btn select-btn"
+                      onClick={() => handleSelectBranch(branch)}
+                    >
+                      {branch.type === 'original' && !branch.isNew 
+                        ? 'Save Changes' 
+                        : branch.isNew 
+                          ? 'Save & Select This Path' 
+                          : 'Select This Path'
+                      }
+                    </button>
+                  </div>
                 </div>
-                <div className="branch-editor-wrapper">
-                  <div 
-                    id={`branch-editor-${branch.id}`}
-                    className="branch-editor"
-                  />
-                </div>
-                <div className="branch-actions">
-                  <button 
-                    className="branch-action-btn select-btn"
-                    onClick={() => handleSelectBranch(branch)}
-                  >
-                    {branch.type === 'original' && !branch.isNew 
-                      ? 'Save Changes' 
-                      : branch.isNew 
-                        ? 'Save & Select This Path' 
-                        : 'Select This Path'
-                    }
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
             
           </div>
         )}
@@ -1750,46 +1758,53 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                   <div className="dropdown-section-header">
                     Existing Alternatives ({availableBranches.length}):
                   </div>
-                  {availableBranches.map((branch, index) => (
-                    <button
-                      key={branch.id}
-                      className={`dropdown-item ${branch.type === 'original_continuation' ? 'original-continuation' : 'branch-option'}`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        
-                        // Initialize branching mode to show all alternatives
-                        initializeBranchingMode(sentenceText, availableBranches);
-                        
-                        // Clear selection
-                        selectedSentence.element.removeAttribute('data-selected');
-                        setSelectedSentence(null);
-                        setDropdownPosition(null);
-                      }}
-                      title={`View and choose between ${availableBranches.length} alternatives for this sentence`}
-                      style={{
-                        ...(branch.type === 'original_continuation' ? {
-                          backgroundColor: 'rgba(168, 85, 247, 0.1)',
-                          color: '#7c3aed',
-                          fontStyle: 'italic'
-                        } : {
-                          backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                          color: '#2563eb'
-                        }),
-                        textAlign: 'left',
-                        padding: '8px 12px',
-                        display: 'block',
-                        width: '100%'
-                      }}
-                    >
-                      <div style={{ fontWeight: 'bold', fontSize: '11px', marginBottom: '2px' }}>
-                        {branch.type === 'original_continuation' ? 'Original Path' : `Alternative ${index + 1}`}
-                      </div>
-                      <div style={{ fontSize: '12px', opacity: 0.8 }}>
-                        "{branch.content.length > 40 ? branch.content.substring(0, 40) + '...' : branch.content}"
-                      </div>
-                    </button>
-                  ))}
+                  {availableBranches.map((branch, index) => {
+                    // Calculate alternative number for non-active branches
+                    const alternativeNumber = branch.type === 'branch' 
+                      ? availableBranches.filter((b, i) => i < index && b.type === 'branch').length + 1
+                      : null;
+                    
+                    return (
+                      <button
+                        key={branch.id}
+                        className={`dropdown-item ${branch.type === 'original_continuation' ? 'original-continuation' : 'branch-option'}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          
+                          // Initialize branching mode to show all alternatives
+                          initializeBranchingMode(sentenceText, availableBranches);
+                          
+                          // Clear selection
+                          selectedSentence.element.removeAttribute('data-selected');
+                          setSelectedSentence(null);
+                          setDropdownPosition(null);
+                        }}
+                        title={`View and choose between ${availableBranches.length} alternatives for this sentence`}
+                        style={{
+                          ...(branch.type === 'original_continuation' ? {
+                            backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                            color: '#7c3aed',
+                            fontStyle: 'italic'
+                          } : {
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            color: '#2563eb'
+                          }),
+                          textAlign: 'left',
+                          padding: '8px 12px',
+                          display: 'block',
+                          width: '100%'
+                        }}
+                      >
+                        <div style={{ fontWeight: 'bold', fontSize: '11px', marginBottom: '2px' }}>
+                          {branch.type === 'original_continuation' ? 'Active Path' : `Alternative ${alternativeNumber}`}
+                        </div>
+                        <div style={{ fontSize: '12px', opacity: 0.8 }}>
+                          "{branch.content.length > 40 ? branch.content.substring(0, 40) + '...' : branch.content}"
+                        </div>
+                      </button>
+                    );
+                  })}
                 </>
               )}
               
