@@ -655,7 +655,16 @@ const VegaDashboardNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
                   </div>
                 ) : view.vegaLiteSpec ? (
                   <VegaLite
-                    spec={view.vegaLiteSpec}
+                    spec={{
+                      ...view.vegaLiteSpec,
+                      // Override width and height to make charts responsive within their grid cells
+                      width: 'container',
+                      height: 'container',
+                      autosize: {
+                        type: 'fit',
+                        contains: 'padding'
+                      }
+                    }}
                     data={view.chartData}
                     actions={false}
                     onNewView={(vegaView: any) => {

@@ -236,6 +236,80 @@
   color: #1d4ed8;
 }
 
+.dropdown-divider {
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 4px 0;
+}
+
+.dropdown-section-header {
+  font-size: 10px;
+  font-weight: 600;
+  color: #64748b;
+  padding: 4px 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: #f8fafc;
+  border-radius: 3px;
+  margin: 2px 0;
+}
+
+.dropdown-item.branch-option {
+  font-size: 12px;
+  color: #059669;
+  background-color: rgba(16, 185, 129, 0.05);
+  margin: 1px 0;
+}
+
+.dropdown-item.branch-option:hover {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #047857;
+}
+
+/* Original continuation option styling */
+.dropdown-item.branch-option[style*="rgba(168, 85, 247"] {
+  background-color: rgba(168, 85, 247, 0.1) !important;
+  color: #7c3aed !important;
+  font-style: italic;
+  border-left: 3px solid #a855f7;
+  padding-left: 9px;
+}
+
+.dropdown-item.branch-option[style*="rgba(168, 85, 247"]:hover {
+  background-color: rgba(168, 85, 247, 0.2) !important;
+  color: #6d28d9 !important;
+}
+
+/* Branch input section styling */
+.branch-input-section {
+  margin: 4px;
+}
+
+.branch-input {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.branch-input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.branch-input:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+}
+
+/* Enhanced branch option styling */
+.dropdown-item.branch-option {
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.dropdown-item.branch-option:hover {
+  border-left-color: #3b82f6;
+  transform: translateX(2px);
+}
+
 /* Save button for sentence editing */
 .sentence-save-button {
   position: fixed;
@@ -264,6 +338,133 @@
   background: rgba(34, 197, 94, 0.95);
 }
 
+/* Enhanced branch section styling */
+.branch-section {
+  background: rgba(59, 130, 246, 0.05);
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  margin: 16px 0;
+  padding: 16px;
+  position: relative;
+}
+
+.branch-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.branch-section-header h4 {
+  margin: 0;
+  color: #1e40af;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.branch-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.branch-action-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.cancel-btn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.cancel-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.select-btn {
+  background: rgba(34, 197, 94, 0.1);
+  color: #059669;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.select-btn:hover {
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.add-btn {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.add-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.branch-option {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 12px 0;
+  padding: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.branch-label {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+.draft-indicator {
+  font-size: 11px;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.branch-editor-wrapper {
+  margin: 8px 0;
+}
+
+.branch-editor {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  min-height: 60px;
+  position: relative;
+}
+
+.branch-editor-content {
+  padding: 12px;
+  min-height: 40px;
+  outline: none;
+  line-height: 1.5;
+}
+
+.branch-editor-content:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.add-alternative {
+  text-align: center;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(59, 130, 246, 0.3);
+}
+
 .sentence-save-button:active {
   transform: scale(0.98);
   box-shadow: 0 1px 3px rgba(34, 197, 94, 0.2), 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -289,7 +490,7 @@
   margin: 0 0 0.5rem 0;
   padding: 0;
   line-height: 1.6;
-  display: inline-block;
+  display: block;
   width: 100%;
 }
 
@@ -297,20 +498,27 @@
   margin: 0 0 0.5rem 0;
   padding: 0;
   line-height: 1.6;
-  display: inline-block;
+  display: block;
   width: 100%;
 }
 
-.narrative-editor-content p:empty::before,
-.narrative-editor-content .tiptap-paragraph:empty::before {
-  content: "Start with a hunch, goal, or observation…";
-  color: #999;
-  font-style: italic;
-  pointer-events: none;
-  opacity: 0.7;
+/* Hard break styling for line breaks */
+.narrative-editor-content .tiptap-hard-break {
+  display: block;
+  height: 0;
+  line-height: 1.6;
 }
 
-/* TipTap Placeholder styling */
+.narrative-editor-content br {
+  display: block;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Only show placeholder when the entire editor is empty, not for each empty paragraph */
+/* Remove the old rules that showed placeholder for every empty paragraph */
+
+/* TipTap Placeholder styling - only for truly empty editor */
 .narrative-editor-content .is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   color: #999 !important;
@@ -321,6 +529,7 @@
   height: 0;
 }
 
+/* Only show placeholder for the first paragraph when the entire editor is empty */
 .narrative-editor-content .ProseMirror p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   color: #999 !important;
@@ -331,7 +540,8 @@
   height: 0;
 }
 
-/* Additional TipTap placeholder selectors */
+/* Remove overly broad placeholder rules that show on every empty element */
+/* Commented out to prevent placeholder showing on every new line:
 .narrative-editor-content .ProseMirror .is-empty::before {
   content: attr(data-placeholder);
   color: #999 !important;
@@ -347,6 +557,7 @@
   font-style: italic !important;
   pointer-events: none;
 }
+*/
 
 /* Rich text formatting */
 .narrative-editor-content strong {
@@ -696,5 +907,503 @@
   to {
     opacity: 0.6;
     transform: translateY(0);
+  }
+}
+
+/* Main editor wrapper and disabled state */
+.main-editor-wrapper {
+  transition: opacity 0.3s ease;
+}
+
+.main-editor-wrapper.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.main-editor-wrapper.disabled .narrative-editor-content {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Branch Section Styles */
+.branch-section {
+  margin: 1rem 0;
+  font-family: 'Kalam', 'Comic Sans MS', 'Courier New', cursive;
+  animation: branchFadeIn 0.3s ease-out;
+}
+
+.branch-section[data-type="branch"] {
+  /* Indent branch blocks to 20% from left */
+  margin-left: 20%;
+  margin-right: 5%;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+  position: relative;
+}
+
+.branch-section[data-type="branch"]::before {
+  /* Add arrow pointing to branch */
+  content: "↳";
+  position: absolute;
+  left: -30px;
+  top: 20px;
+  font-size: 20px;
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+/* Continuation Section Styles - matches main editor */
+.continuation-section {
+  margin: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: 'Kalam', 'Comic Sans MS', 'Courier New', cursive;
+}
+
+/* Continuation editor wrapper - matches main editor exactly */
+.continuation-editor-wrapper {
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+.continuation-editor-wrapper .ProseMirror {
+  /* Match main editor exactly */
+  width: 100%;
+  height: auto;
+  min-height: auto;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #333;
+  font-family: 'Kalam', 'Comic Sans MS', 'Courier New', cursive;
+  padding: 0.5rem 0rem; /* Match main editor padding */
+  margin: 0;
+  transition: opacity 0.3s ease;
+  
+  /* Same line effect as main editor */
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 1.9rem,
+    #e0e0e0 1.9rem,
+    #e0e0e0 2.0rem
+  );
+  background-attachment: local;
+}
+
+/* Disabled state for continuation editor */
+.continuation-editor-wrapper .ProseMirror[contenteditable="false"] {
+  opacity: 0.5;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.continuation-editor-wrapper .ProseMirror:focus {
+  background-color: rgba(255, 244, 204, 0.1);
+  background-image: repeating-linear-gradient(
+    rgba(255, 244, 204, 0.1),
+    rgba(255, 244, 204, 0.1) 1.9rem,
+    #e0e0e0 1.9rem,
+    #e0e0e0 2.0rem
+  );
+}
+
+.continuation-editor-wrapper .ProseMirror p {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+  line-height: 1.6;
+  display: block;
+  width: 100%;
+}
+
+.continuation-editor-wrapper .ProseMirror .tiptap-paragraph {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+  line-height: 1.6;
+  display: block;
+  width: 100%;
+}
+
+.continuation-editor-wrapper .ProseMirror .is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.continuation-editor-wrapper .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.continuation-editor-wrapper .completed-sentence {
+  /* Match main editor completed sentence styling */
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(21, 128, 61, 0.12) 100%);
+  border-radius: 4px;
+  padding: 2px 6px 2px 4px;
+  margin: 0 2px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  display: inline;
+  position: relative;
+}
+
+.continuation-editor-wrapper .completed-sentence[data-branched="true"] {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.25) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.continuation-editor-wrapper .completed-sentence[data-branched="true"]::after {
+  position: absolute;
+  right: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.branch-section[data-type="continuation"] {
+  /* Remove the old styles completely */
+  margin: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@keyframes branchFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.branch-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 7px 7px 0 0;
+}
+
+/* Hide header for continuation sections */
+.branch-section[data-type="continuation"] .branch-header {
+  display: none;
+}
+
+.branch-label {
+  font-size: 12px;
+  color: #475569;
+  font-weight: 500;
+  font-style: italic;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.branch-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.branch-save {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  font-size: 11px;
+  color: white;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.branch-save:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+.branch-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #64748b;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.branch-close:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+/* Continuation header styles */
+.continuation-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-bottom: 1px solid #f59e0b;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+}
+
+.continuation-label {
+  font-size: 11px;
+  color: #92400e;
+  font-weight: 500;
+  font-style: italic;
+  text-align: center;
+}
+
+.branch-editor-wrapper {
+  /* Remove any positioning - let it flow naturally */
+  position: relative;
+}
+
+/* Hide wrapper styling for continuation sections */
+.branch-section[data-type="continuation"] .branch-editor-wrapper {
+  padding: 0;
+  margin: 0;
+}
+
+/* Make branch editors look exactly like the main narrative editor */
+.branch-editor-wrapper .ProseMirror {
+  width: 100%;
+  height: auto;
+  min-height: 100px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #333;
+  font-family: 'Kalam', 'Comic Sans MS', 'Courier New', cursive;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  
+  /* Create line effect with background - same as main editor */
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 1.9rem,
+    #e0e0e0 1.9rem,
+    #e0e0e0 2.0rem
+  );
+  background-attachment: local;
+}
+
+/* Continuation sections get full editor styling */
+.branch-section[data-type="continuation"] .branch-editor-wrapper .ProseMirror {
+  /* Same styling as main narrative editor */
+  padding: 0.5rem 0rem; /* Match main editor padding */
+  min-height: auto; /* Allow natural height */
+}
+
+.branch-editor-wrapper .ProseMirror:focus {
+  background-color: rgba(255, 244, 204, 0.1);
+  background-image: repeating-linear-gradient(
+    rgba(255, 244, 204, 0.1),
+    rgba(255, 244, 204, 0.1) 1.9rem,
+    #e0e0e0 1.9rem,
+    #e0e0e0 2.0rem
+  );
+}
+
+.branch-editor-wrapper .ProseMirror p {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+  line-height: 1.6;
+  display: block;
+  width: 100%;
+}
+
+.branch-editor-wrapper .ProseMirror .tiptap-paragraph {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+  line-height: 1.6;
+  display: block;
+  width: 100%;
+}
+
+/* Branch placeholder styling - same as main editor */
+.branch-editor-wrapper .ProseMirror .is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.branch-editor-wrapper .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #999 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+/* Branch completed sentences - similar styling but distinguishable */
+.branch-editor-wrapper .completed-sentence {
+  background-color: rgba(147, 197, 253, 0.3);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  padding: 1px 3px;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline;
+  position: relative;
+  margin: 0;
+  user-select: none;
+  line-height: 1.2;
+}
+
+/* Continuation sections use main editor sentence styling */
+.branch-section[data-type="continuation"] .branch-editor-wrapper .completed-sentence {
+  /* Use same styling as main editor */
+  background-color: rgba(255, 244, 204, 0.3);
+  border: 1px solid rgba(255, 193, 7, 0.2);
+  padding: 1px 3px;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline;
+  position: relative;
+  margin: 0;
+  user-select: none;
+  line-height: 1.2;
+}
+
+.branch-section[data-type="continuation"] .branch-editor-wrapper .completed-sentence:hover {
+  background-color: rgba(255, 244, 204, 0.5);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-color: rgba(255, 193, 7, 0.4);
+}
+
+/* Parent sentence highlighting - sentence that was branched from */
+.completed-sentence[data-branched="true"] {
+  background-color: rgba(251, 191, 36, 0.4) !important; /* Amber background */
+  border: 1px solid rgba(245, 158, 11, 0.5) !important; /* Amber border */
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2) !important; /* Amber glow */
+  position: relative;
+}
+
+.completed-sentence[data-branched="true"]::after {
+  position: absolute;
+  right: -20px;
+  top: -2px;
+  font-size: 12px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.branch-editor-wrapper .completed-sentence:hover {
+  background-color: rgba(147, 197, 253, 0.5);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.branch-editor-wrapper .completed-sentence:hover::after {
+  content: "Double-click to edit";
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Hard break styling for branch editors */
+.branch-editor-wrapper .tiptap-hard-break {
+  display: block;
+  height: 0;
+  line-height: 1.6;
+}
+
+.branch-editor-wrapper br {
+  display: block;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Rich text formatting for branch editors */
+.branch-editor-wrapper strong {
+  font-weight: bold;
+}
+
+.branch-editor-wrapper em {
+  font-style: italic;
+}
+
+/* Responsive branch styles */
+@media (max-width: 768px) {
+  .branch-section {
+    margin: 0.5rem 0;
+  }
+  
+  .branch-label {
+    max-width: 200px;
+    font-size: 11px;
+  }
+  
+  .branch-editor-wrapper .ProseMirror {
+    font-size: 18px;
+    line-height: 1.5;
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 1.7rem,
+      #e0e0e0 1.7rem,
+      #e0e0e0 1.8rem
+    );
+  }
+  
+  .branch-editor-wrapper .ProseMirror:focus {
+    background-color: rgba(255, 244, 204, 0.1);
+    background-image: repeating-linear-gradient(
+      rgba(255, 244, 204, 0.1),
+      rgba(255, 244, 204, 0.1) 1.7rem,
+      #e0e0e0 1.7rem,
+      #e0e0e0 1.8rem
+    );
   }
 }

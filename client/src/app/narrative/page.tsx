@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import DatasetExplorer from '../components/DatasetExplorer';
 import NarrativeLayer, { NarrativeLayerRef } from '../components/NarrativeLayer';
@@ -39,6 +39,10 @@ export default function NarrativePage() {
   const router = useRouter();
   const narrativeLayerRef = useRef<NarrativeLayerRef>(null);
   const reactFlowCanvasRef = useRef<ReactFlowCanvasRef>(null);
+  
+  // Add client-side only state to prevent hydration mismatches
+  const [isClient, setIsClient] = useState(false);
+  
   const [userSession, setUserSession] = useState<UserSession | null>(null);
   const [isStudyMode, setIsStudyMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,6 +59,71 @@ export default function NarrativePage() {
   const [hasPendingSuggestion, setHasPendingSuggestion] = useState(false);
   const [interactionCount, setInteractionCount] = useState(0);
   const [hasActiveInfoNodes, setHasActiveInfoNodes] = useState(false);
+
+  // Set client-side flag after hydration
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Insight timeline state - initially empty
+  const [insightTimeline, setInsightTimeline] = useState<{
+    groups: Array<{
+      group_id: number;
+      sentence_indices: number[];
+      parent_id: string;
+      child_ids: string[];
+      hover: {
+        title: string;
+        source: {
+          dataset: string | string[];
+          geo: string | string[];
+          time: string | string[];
+          measure: string | string[];
+          unit: string;
+        };
+        changed_from_previous: {
+          drift_types: string[];
+          severity: string;
+          dimensions: Record<string, string>;
+        } | null;
+        reflect: string[];
+      };
+    }>
+  }>({ groups: [] });
+
+  // Define simplified sentence node structure for linear narratives with branching
+  interface SentenceNode {
+    id: string; // unique identifier
+    content: string; // the actual sentence text
+    parent: string | null; // parent sentence id (previous sentence in linear flow)
+    children: string[]; // array of child sentence ids (next sentences - usually 1, multiple when branching)
+    createdTime: number; // system timestamp when first created
+    revisedTime: number; // system timestamp when last modified
+    editCount: number; // number of times this sentence has been edited
+    isCompleted: boolean; // whether this sentence is marked as completed
+    metadata?: {
+      confidence?: number;
+      analysisResult?: any;
+      [key: string]: any;
+    };
+  }
+
+  // Track completed sentences with full branching structure
+  const [sentenceNodes, setSentenceNodes] = useState<Map<string, SentenceNode>>(new Map());
+  
+  // Track the current "active path" through the sentence tree
+  const [activePath, setActivePath] = useState<string[]>([]);
+  
+  // Legacy compatibility - computed from sentenceNodes
+  const completedSentences = React.useMemo(() => {
+    const sentences = activePath
+      .map(id => sentenceNodes.get(id))
+      .filter(node => node && node.isCompleted)
+      .map(node => node!.content);
+    
+    
+    return sentences;
+  }, [sentenceNodes, activePath]);
 
   // Local interaction tracking
   const [dashboardInteractions, setDashboardInteractions] = useState<Array<{
@@ -215,9 +284,342 @@ export default function NarrativePage() {
     }, analysisTime);
   };
 
-  // Handle sentence end detection for narrative layer
+  // Function to check if all sentences in the narrative are completed
+  const checkAllSentencesCompleted = () => {
+    if (!narrativeLayerRef.current) {
+      return false;
+    }
+    
+    // Get the DOM elements from the narrative editor
+    const editorElement = document.querySelector('.narrative-editor-content');
+    if (!editorElement) {
+      return false;
+    }
+    
+    // Get all paragraphs in the editor
+    const paragraphs = editorElement.querySelectorAll('.tiptap-paragraph');
+    
+    if (paragraphs.length === 0) {
+      return false;
+    }
+    
+    let hasAnyContent = false;
+    
+    for (const paragraph of paragraphs) {
+      // Get all completed sentence spans in this paragraph
+      const completedSpans = paragraph.querySelectorAll('.completed-sentence[data-completed-sentence="true"]');
+      
+      // Get all text content in the paragraph
+      const paragraphText = paragraph.textContent || '';
+      
+      
+      // Skip empty paragraphs
+      if (paragraphText.trim().length === 0) continue;
+      
+      hasAnyContent = true;
+      
+      // Get text content from all completed sentence spans
+      let completedText = '';
+      completedSpans.forEach(span => {
+        completedText += span.textContent || '';
+      });
+      
+      // Get text content that's NOT in completed sentence spans
+      // We'll do this by cloning the paragraph and removing all completed sentence spans
+      const paragraphClone = paragraph.cloneNode(true) as HTMLElement;
+      const spansToRemove = paragraphClone.querySelectorAll('.completed-sentence[data-completed-sentence="true"]');
+      spansToRemove.forEach(span => span.remove());
+      
+      const remainingText = paragraphClone.textContent || '';
+      
+      // Check if remaining text contains only punctuation and whitespace
+      const nonPunctuationRemaining = remainingText.replace(/[.!?…\s]/g, '').trim();
+      
+      // If there's non-punctuation text outside completed sentences, not all sentences are completed
+      if (nonPunctuationRemaining.length > 0) {
+        return false;
+      }
+      
+      // Also check if there are any completed sentences at all in this paragraph
+      if (completedSpans.length === 0 && paragraphText.trim().length > 0) {
+        return false;
+      }
+    }
+    
+    // Return true only if we found content and all text (except punctuation) is in completed sentences
+    return hasAnyContent;
+  };
+
+  // Helper functions for managing sentence tree structure
+  const generateSentenceId = () => {
+    // Use a more stable ID generation that won't cause hydration mismatches
+    if (typeof window !== 'undefined') {
+      // Client-side: use timestamp + random
+      return `sentence_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    } else {
+      // Server-side: use a predictable pattern to avoid hydration mismatch
+      return `sentence_ssr_${Math.random().toString(36).substr(2, 9)}`;
+    }
+  };
+
+  const createSentenceNode = (
+    content: string, 
+    parent: string | null = null
+  ): SentenceNode => {
+    const now = typeof window !== 'undefined' ? Date.now() : 0; // Avoid Date.now() during SSR
+    return {
+      id: generateSentenceId(),
+      content: content.trim(),
+      parent,
+      children: [],
+      createdTime: now,
+      revisedTime: now,
+      editCount: 0,
+      isCompleted: false,
+      metadata: {}
+    };
+  };
+
+  const updateSentenceContent = (nodeId: string, newContent: string) => {
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      const node = newMap.get(nodeId);
+      if (node) {
+        const updatedNode = {
+          ...node,
+          content: newContent.trim(),
+          revisedTime: typeof window !== 'undefined' ? Date.now() : 0,
+          editCount: node.editCount + 1
+        };
+        newMap.set(nodeId, updatedNode);
+      }
+      return newMap;
+    });
+  };
+
+  const markSentenceCompleted = (nodeId: string, completed: boolean = true, metadata: any = {}) => {
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      const node = newMap.get(nodeId);
+      if (node) {
+        const updatedNode = {
+          ...node,
+          isCompleted: completed,
+          revisedTime: typeof window !== 'undefined' ? Date.now() : 0,
+          metadata: { ...node.metadata, ...metadata }
+        };
+        newMap.set(nodeId, updatedNode);
+      }
+      return newMap;
+    });
+  };
+
+  const addSentenceRelationship = (parentId: string, childId: string) => {
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      const parent = newMap.get(parentId);
+      const child = newMap.get(childId);
+      
+      if (parent && child) {
+        // Update parent's children (add the new child)
+        const updatedParent = {
+          ...parent,
+          children: [...parent.children, childId]
+        };
+        
+        // Update child's parent
+        const updatedChild = {
+          ...child,
+          parent: parentId
+        };
+        
+        newMap.set(parentId, updatedParent);
+        newMap.set(childId, updatedChild);
+      }
+      return newMap;
+    });
+  };
+
+  // Function to get completed sentences from DOM (simplified)
+  const getCompletedSentencesFromDOM = (): { content: string; index: number }[] => {
+    const editorElement = document.querySelector('.narrative-editor-content');
+    if (!editorElement) return [];
+    
+    const completedSpans = editorElement.querySelectorAll('.completed-sentence[data-completed-sentence="true"]');
+    const sentences: { content: string; index: number }[] = [];
+    
+    completedSpans.forEach((span, index) => {
+      const text = span.textContent?.trim();
+      if (text) {
+        sentences.push({ 
+          content: text, 
+          index: index 
+        });
+      }
+    });
+    
+    return sentences;
+  };
+
+  // Handle sentence end detection for narrative layer - now with tree structure
   const handleSentenceEnd = async (sentence: string, confidence: number) => {
+    // Handle branch creation messages
+    if (sentence.startsWith('BRANCH_CREATED:')) {
+      const originalSentence = sentence.replace('BRANCH_CREATED:', '');
+      
+      // Find the parent sentence node and mark it as having branches
+      setSentenceNodes(prev => {
+        const newMap = new Map(prev);
+        for (const [id, node] of newMap.entries()) {
+          if (node.content === originalSentence) {
+            const updatedNode = {
+              ...node,
+              metadata: {
+                ...node.metadata,
+                hasBranches: true,
+                branchCreatedTime: typeof window !== 'undefined' ? Date.now() : 0
+              }
+            };
+            newMap.set(id, updatedNode);
+            break;
+          }
+        }
+        return newMap;
+      });
+      return;
+    }
+    
     // console.log(`🧠 Sentence completed for analysis: "${sentence}" (Confidence: ${confidence})`);
+    
+    // Get the current completed sentences directly from DOM (in correct order)
+    const currentCompletedSentences = getCompletedSentencesFromDOM();
+    // console.log('📝 Completed sentences array (in DOM order):', currentCompletedSentences);
+    
+    // Update or create sentence nodes based on DOM structure with simplified linear chaining
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      const newActivePath: string[] = [];
+      let previousNodeId: string | null = null;
+      
+      currentCompletedSentences.forEach((sentenceData, index) => {
+        // Look for existing node with this content
+        let existingNode: SentenceNode | undefined;
+        for (const [id, node] of newMap.entries()) {
+          if (node.content === sentenceData.content) {
+            existingNode = node;
+            break;
+          }
+        }
+        
+        if (existingNode) {
+          // Update existing node
+          const updatedNode = {
+            ...existingNode,
+            isCompleted: true,
+            revisedTime: typeof window !== 'undefined' ? Date.now() : 0,
+            metadata: { ...existingNode.metadata, confidence }
+          };
+          newMap.set(existingNode.id, updatedNode);
+          newActivePath.push(existingNode.id);
+          
+          // Link to previous sentence if this is part of linear flow
+          if (previousNodeId && !existingNode.parent) {
+            const prevNode = newMap.get(previousNodeId);
+            if (prevNode && !prevNode.children.includes(existingNode.id)) {
+              // Add this node as child of previous node
+              const updatedPrevNode = {
+                ...prevNode,
+                children: [...prevNode.children, existingNode.id]
+              };
+              newMap.set(previousNodeId, updatedPrevNode);
+              
+              // Set parent relationship
+              updatedNode.parent = previousNodeId;
+              newMap.set(existingNode.id, updatedNode);
+            }
+          }
+          
+          previousNodeId = existingNode.id;
+        } else {
+          // Create new node with linear parent relationship
+          const newNode = createSentenceNode(
+            sentenceData.content, 
+            previousNodeId // Set parent as the previous sentence
+          );
+          newNode.isCompleted = true;
+          newNode.metadata = { confidence };
+          
+          newMap.set(newNode.id, newNode);
+          newActivePath.push(newNode.id);
+          
+          // Link to previous sentence
+          if (previousNodeId) {
+            const prevNode = newMap.get(previousNodeId);
+            if (prevNode) {
+              const updatedPrevNode = {
+                ...prevNode,
+                children: [...prevNode.children, newNode.id]
+              };
+              newMap.set(previousNodeId, updatedPrevNode);
+            }
+          }
+          
+          previousNodeId = newNode.id;
+        }
+      });
+      
+      // Update active path
+      setActivePath(newActivePath);
+      
+      // console.log('📝 Updated sentence nodes:', newMap.size, 'nodes');
+      // console.log('🛤️ New active path:', newActivePath);
+      // console.log('📊 Current sentences:', currentCompletedSentences);
+      
+      // Check completion status with the updated map (not the old state)
+      setTimeout(() => {
+        const allCompleted = checkAllSentencesCompleted();
+        // console.log('🔍 Checking completion status:', {
+        //   allCompleted,
+        //   triggeredBy: sentence,
+        //   confidence,
+        //   treeNodesCount: newMap.size,
+        //   domSentencesCount: currentCompletedSentences.length
+        // });
+        
+        if (allCompleted) {
+          const finalSentences = getCompletedSentencesFromDOM();
+          //call the LLM here
+
+          // console.log('🎉 All sentences in narrative are completed!');
+          console.log('📊 Final completed sentences array (in correct order):', finalSentences);
+          
+          // Create the export data with the updated map (not the old state)
+          const exportData = {
+            nodes: Array.from(newMap.entries()).map(([nodeId, node]) => ({ nodeId, ...node })),
+            activePath: newActivePath,
+            stats: {
+              totalNodes: newMap.size,
+              completedNodes: Array.from(newMap.values()).filter(n => n.isCompleted).length,
+              branchedNodes: Array.from(newMap.values()).filter(n => n.children.length > 1).length,
+              rootNodes: Array.from(newMap.values()).filter(n => !n.parent).length,
+              averageEditCount: Array.from(newMap.values()).reduce((sum, n) => sum + n.editCount, 0) / newMap.size || 0,
+              activePath: newActivePath.length
+            },
+            exportedAt: typeof window !== 'undefined' ? Date.now() : 0
+          };
+          
+          console.log('🌳 Complete Sentence Tree Structure:', exportData);
+          
+          // Also log the computed completedSentences array for compatibility
+          console.log('📝 Computed completed sentences (legacy format):', 
+            finalSentences.map(s => s.content)
+          );
+        } else {
+        }
+      }, 150); // Slightly longer delay to ensure DOM is fully updated
+      
+      return newMap;
+    });
     
     // Here you can add your LLM API call or other analysis logic
     try {
@@ -236,13 +638,361 @@ export default function NarrativePage() {
         metadata: {
           sentence,
           confidence,
-          timestamp: Date.now()
+          timestamp: typeof window !== 'undefined' ? Date.now() : 0
         }
       });
     } catch (error) {
       console.error('❌ Error analyzing sentence:', error);
     }
   };
+
+  // Utility functions for sentence tree analysis
+  const getSentenceTreeStats = () => {
+    const nodes = Array.from(sentenceNodes.values());
+    const completedNodes = nodes.filter(n => n.isCompleted);
+    const branchedNodes = nodes.filter(n => n.children.length > 1);
+    const rootNodes = nodes.filter(n => !n.parent);
+    
+    return {
+      totalNodes: nodes.length,
+      completedNodes: completedNodes.length,
+      branchedNodes: branchedNodes.length,
+      rootNodes: rootNodes.length,
+      averageEditCount: nodes.reduce((sum, n) => sum + n.editCount, 0) / nodes.length || 0,
+      activePath: activePath.length
+    };
+  };
+
+  const exportSentenceTree = () => {
+    const exportData = {
+      nodes: Array.from(sentenceNodes.entries()).map(([nodeId, node]) => ({ nodeId, ...node })),
+      activePath,
+      stats: getSentenceTreeStats(),
+      exportedAt: typeof window !== 'undefined' ? Date.now() : 0
+    };
+    
+    console.log('🌳 Sentence Tree Export:', JSON.stringify(exportData, null, 2));
+    return exportData;
+  };
+
+  const findSentencePath = (targetId: string): string[] => {
+    const path: string[] = [];
+    let currentId: string | null = targetId;
+    
+    while (currentId) {
+      path.unshift(currentId);
+      const node = sentenceNodes.get(currentId);
+      currentId = node?.parent || null;
+    }
+    
+    return path;
+  };
+
+  const getSentenceChildren = (nodeId: string, deep: boolean = false): SentenceNode[] => {
+    const node = sentenceNodes.get(nodeId);
+    if (!node) return [];
+    
+    let children = node.children.map(id => sentenceNodes.get(id)).filter(Boolean) as SentenceNode[];
+    
+    if (deep) {
+      for (const child of [...children]) {
+        children.push(...getSentenceChildren(child.id, true));
+      }
+    }
+    
+    return children;
+  };
+
+  // Helper function to get branches for a specific sentence (simplified)
+  const getBranchesForSentence = useCallback((sentenceContent: string): Array<{
+    id: string;
+    content: string;
+    type: 'branch' | 'original_continuation';
+  }> => {
+    // Find the sentence node by content
+    let targetSentenceId: string | null = null;
+    for (const [id, node] of sentenceNodes.entries()) {
+      if (node.content === sentenceContent) {
+        targetSentenceId = id;
+        break;
+      }
+    }
+    
+    if (!targetSentenceId) {
+      console.log(`🔍 No sentence node found for: "${sentenceContent}"`);
+      return [];
+    }
+    
+    const targetNode = sentenceNodes.get(targetSentenceId);
+    if (!targetNode || targetNode.children.length === 0) {
+      console.log(`🔍 No branches found for sentence: "${sentenceContent}"`);
+      return [];
+    }
+    
+    // Get all children (branches/continuations)
+    const branches: Array<{
+      id: string;
+      content: string;
+      type: 'branch' | 'original_continuation';
+    }> = [];
+    
+    targetNode.children.forEach(childId => {
+      const childNode = sentenceNodes.get(childId);
+      if (childNode) {
+        // Determine if this is the original continuation or a branch
+        // The first child is likely the original continuation if it was created in sequence
+        const isOriginalContinuation = targetNode.children[0] === childId && 
+          !childNode.content.includes('Alternative continuation from:');
+        
+        branches.push({
+          id: childId,
+          content: childNode.content,
+          type: isOriginalContinuation ? 'original_continuation' : 'branch'
+        });
+      }
+    });
+    
+    return branches;
+  }, [sentenceNodes]);
+  
+  // Helper function to switch to a specific branch
+  const handleSwitchToBranch = useCallback((branchId: string) => {
+    const branchNode = sentenceNodes.get(branchId);
+    if (!branchNode) {
+      console.error('❌ Cannot switch to branch: node not found');
+      return;
+    }
+    
+    // Find the path from root to this branch
+    const newPath = findSentencePath(branchId);
+    setActivePath(newPath);
+    
+    console.log(`🔄 Switching to branch ${branchId}, updating main editor`);
+    
+    // Reconstruct the narrative from the new active path
+    setTimeout(() => {
+      const narrativeText = newPath
+        .map(nodeId => {
+          const node = sentenceNodes.get(nodeId);
+          let content = node ? node.content.trim() : '';
+          // Ensure each sentence ends with proper punctuation
+          if (content && !/[.!?]$/.test(content)) {
+            content += '.';
+          }
+          return content;
+        })
+        .filter(content => content.length > 0)
+        .join(' ');
+      
+      // Update the main editor content
+      if (narrativeLayerRef.current) {
+        console.log(`📝 Updating main editor with branch narrative: "${narrativeText}"`);
+        narrativeLayerRef.current.updateContent(narrativeText);
+      }
+    }, 100);
+    
+  }, [sentenceNodes, findSentencePath]);
+  
+  // Helper function to update branch content
+  const handleUpdateBranchContent = useCallback((branchId: string, newContent: string) => {
+    console.log(`📝 Updating branch content for ${branchId}: "${newContent}"`);
+    
+    // Update the sentence node content
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      const branchNode = newMap.get(branchId);
+      
+      if (branchNode) {
+        const updatedNode = {
+          ...branchNode,
+          content: newContent
+        };
+        newMap.set(branchId, updatedNode);
+        console.log(`✅ Updated branch content for ${branchId}`);
+        
+        // If this is part of the current active path, update the main editor
+        if (activePath.includes(branchId)) {
+          console.log(`🔄 Updated node is in active path, refreshing main editor`);
+          
+          // Reconstruct the narrative from the current active path with updated content
+          setTimeout(() => {
+            const narrativeText = activePath
+              .map(nodeId => {
+                const node = newMap.get(nodeId);
+                let content = node ? node.content.trim() : '';
+                // Ensure each sentence ends with proper punctuation
+                if (content && !/[.!?]$/.test(content)) {
+                  content += '.';
+                }
+                return content;
+              })
+              .filter(content => content.length > 0)
+              .join(' ');
+            
+            // Update the main editor content
+            if (narrativeLayerRef.current) {
+              console.log(`📝 Updating main editor with new narrative: "${narrativeText}"`);
+              narrativeLayerRef.current.updateContent(narrativeText);
+            }
+          }, 100);
+        }
+      } else {
+        console.error(`❌ Cannot update branch: node ${branchId} not found`);
+      }
+      
+      return newMap;
+    });
+  }, [sentenceNodes, activePath]);
+  
+  // Helper function to create a new branch
+  const handleCreateBranch = useCallback((fromSentenceContent: string, branchContent: string) => {
+    // For now, just log the request - full implementation would create the branch in the tree
+    // console.log(`🌿 Request to create branch from: "${fromSentenceContent}" with content: "${branchContent}"`);
+    
+    // Find the parent sentence node
+    let parentNodeId: string | null = null;
+    for (const [id, node] of sentenceNodes.entries()) {
+      if (node.content === fromSentenceContent) {
+        parentNodeId = id;
+        break;
+      }
+    }
+    
+    if (!parentNodeId) {
+      // console.error('❌ Cannot create branch: parent sentence not found');
+      return;
+    }
+    
+    // Create new branch node with meaningful default content
+    const defaultContent = branchContent || `Alternative continuation from: "${fromSentenceContent.substring(0, 30)}..."`;
+    const branchNode = createSentenceNode(defaultContent, parentNodeId);
+    
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      // Add the new branch node
+      newMap.set(branchNode.id, { ...branchNode, isCompleted: true });
+      
+      // Update parent to include this branch as a child
+      const parentNode = newMap.get(parentNodeId!);
+      if (parentNode) {
+        const updatedParent = {
+          ...parentNode,
+          children: [...parentNode.children, branchNode.id]
+        };
+        newMap.set(parentNodeId!, updatedParent);
+      }
+      
+      // Find the path to the new branch using the updated map
+      const findPathInMap = (targetId: string, nodeMap: Map<string, SentenceNode>): string[] => {
+        const path: string[] = [];
+        let currentId: string | null = targetId;
+        
+        while (currentId) {
+          path.unshift(currentId);
+          const node = nodeMap.get(currentId);
+          currentId = node?.parent || null;
+        }
+        
+        return path;
+      };
+      
+      const newPath = findPathInMap(branchNode.id, newMap);
+      
+      // Update active path
+      setTimeout(() => {
+        setActivePath(newPath);
+        
+        // Update main editor content with the new path
+        const narrativeText = newPath
+          .map(nodeId => {
+            const node = newMap.get(nodeId);
+            let content = node ? node.content.trim() : '';
+            // Ensure each sentence ends with proper punctuation
+            if (content && !/[.!?]$/.test(content)) {
+              content += '.';
+            }
+            return content;
+          })
+          .filter(content => content.length > 0)
+          .join(' ');
+        
+        if (narrativeLayerRef.current) {
+          console.log(`📝 Updating main editor with new branch narrative: "${narrativeText}"`);
+          narrativeLayerRef.current.updateContent(narrativeText);
+        }
+      }, 100);
+      
+      return newMap;
+    });
+    
+    console.log(`✅ Created branch "${branchContent}" from sentence "${fromSentenceContent}"`);
+  }, [sentenceNodes, createSentenceNode]);
+
+  // Handle content changes in the editor
+  const handleContentChange = useCallback((oldContent: string, newContent: string) => {
+    if (oldContent === newContent) return;
+    
+    // console.log(`📝 Content changed from: "${oldContent.substring(0, 50)}..." to: "${newContent.substring(0, 50)}..."`);
+    
+    // Find all sentences in old content and new content
+    const oldSentences = oldContent.split(/[.!?]+/).filter(s => s.trim().length > 0).map(s => s.trim());
+    const newSentences = newContent.split(/[.!?]+/).filter(s => s.trim().length > 0).map(s => s.trim());
+    
+    // Update sentence nodes for changed content
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      // Find nodes that need content updates
+      for (let i = 0; i < Math.max(oldSentences.length, newSentences.length); i++) {
+        const oldSentence = oldSentences[i];
+        const newSentence = newSentences[i];
+        
+        if (oldSentence && newSentence && oldSentence !== newSentence) {
+          // Find the node with old content and update it
+          for (const [nodeId, node] of newMap.entries()) {
+            if (node.content === oldSentence) {
+              newMap.set(nodeId, { ...node, content: newSentence });
+              console.log(`🔄 Updated node ${nodeId} content from "${oldSentence}" to "${newSentence}"`);
+              break;
+            }
+          }
+        }
+      }
+      
+      return newMap;
+    });
+  }, []);
+
+
+  // Add to useEffect for testing (remove in production)
+  useEffect(() => {
+    // Only run on client side after hydration
+    if (!isClient) return;
+    
+    // Uncomment to test branching structure:
+    // addTestBranchingData();
+    
+    // Add global console commands for testing
+    if (typeof window !== 'undefined') {
+      (window as any).sentenceTreeDebug = {
+        exportTree: exportSentenceTree,
+        getStats: getSentenceTreeStats,
+        createBranch: handleCreateBranch,
+        switchToBranch: handleSwitchToBranch,
+        findPath: findSentencePath,
+        getChildren: getSentenceChildren,
+        nodes: sentenceNodes,
+        activePath,
+        completedSentences, // Add this for easy access
+        forceCompletion: () => {
+          // Helper function to test completion logging
+        }
+      };
+      
+      
+    }
+  }, [isClient, sentenceNodes, activePath, completedSentences]);
 
   // Handle sentence selection for narrative layer
   const handleSentenceSelect = (sentence: string, index: number) => {
@@ -412,6 +1162,11 @@ export default function NarrativePage() {
               onSuggestionReceived={handleSuggestionReceived}
               onSuggestionResolved={handleSuggestionResolved}
               disableInteractions={hasActiveInfoNodes}
+              onContentChange={handleContentChange}
+              getBranchesForSentence={getBranchesForSentence}
+              onSwitchToBranch={handleSwitchToBranch}
+              onCreateBranch={handleCreateBranch}
+              onUpdateBranchContent={handleUpdateBranchContent}
               onGenerateVisualization={async (sentence: string, validation: any) => {
                 // When NarrativeLayer wants to generate visualization, 
                 // Add info node to canvas
@@ -691,7 +1446,53 @@ export default function NarrativePage() {
           {/* Timeline Div - 25% */}
           <div className="timeline-div h-1/4 bg-gray-100 border-t border-gray-200 p-4">
             <div className="h-full bg-white rounded-lg shadow-sm">
-              <EmptyTimeline />
+              {insightTimeline.groups.length > 0 ? (
+                <div className="h-full p-4 overflow-y-auto">
+                  <h3 className="text-sm font-semibold text-gray-700 mb-3">Insight Timeline</h3>
+                  <div className="space-y-2">
+                    {insightTimeline.groups.map((group, index) => (
+                      <div 
+                        key={group.group_id}
+                        className="bg-gray-50 rounded-lg p-3 border border-gray-200"
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-xs font-medium text-gray-500">
+                            Group {group.group_id} • Sentences: {group.sentence_indices.join(', ')}
+                          </span>
+                          {group.hover.changed_from_previous && (
+                            <span className={`text-xs px-2 py-1 rounded ${
+                              group.hover.changed_from_previous.severity === 'critical' 
+                                ? 'bg-red-100 text-red-700' 
+                                : 'bg-yellow-100 text-yellow-700'
+                            }`}>
+                              {group.hover.changed_from_previous.severity}
+                            </span>
+                          )}
+                        </div>
+                        <h4 className="text-sm font-medium text-gray-800 mb-1">
+                          {group.hover.title}
+                        </h4>
+                        <div className="text-xs text-gray-600">
+                          <div className="mb-1">
+                            <strong>Source:</strong> {
+                              Array.isArray(group.hover.source.dataset) 
+                                ? group.hover.source.dataset.join(', ')
+                                : group.hover.source.dataset
+                            }
+                          </div>
+                          {group.hover.changed_from_previous && (
+                            <div className="text-xs text-red-600">
+                              <strong>Changes:</strong> {group.hover.changed_from_previous.drift_types.join(', ')}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <EmptyTimeline />
+              )}
             </div>
           </div>
         </div>
