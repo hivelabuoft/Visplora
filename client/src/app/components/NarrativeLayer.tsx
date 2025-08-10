@@ -6,6 +6,8 @@ import { Editor } from '@tiptap/core';
 import { IoSaveSharp, IoArrowUndo } from "react-icons/io5";
 import { FaSave } from "react-icons/fa";
 import { ImRedo2 } from "react-icons/im";
+import { HiOutlineDocumentDuplicate, HiOutlineTrash } from "react-icons/hi2";
+import { MdCancel } from "react-icons/md";
 import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
@@ -45,6 +47,9 @@ interface NarrativeLayerProps {
   onEnterEditMode?: (sentenceContent: string) => void; // New callback for entering edit mode
   onExitEditMode?: (sentenceContent: string) => void; // New callback for exiting edit mode
   findNodeIdByContent?: (content: string) => string | null; // Helper to find node ID by content
+  onDeleteSentence?: (sentenceIdOrContent: string) => void; // New callback for deleting sentences from tree
+  onDeleteBranch?: (branchId: string) => void; // New callback for deleting entire branches from tree
+  onInsertNodeAfter?: (afterSentenceContent: string, newSentenceContent: string) => void; // New callback for inserting node after a sentence
 }
 
 // Expose methods for parent components to access editor content
@@ -74,7 +79,10 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   onUpdateBranchContent,
   onEnterEditMode,
   onExitEditMode,
-  findNodeIdByContent
+  findNodeIdByContent,
+  onDeleteSentence,
+  onDeleteBranch,
+  onInsertNodeAfter
 }, ref) => {
   const [wordCount, setWordCount] = useState(0);
   const [sentenceCount, setSentenceCount] = useState(0);
@@ -93,9 +101,25 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   const saveButtonRef = useRef<HTMLButtonElement>(null); // Ref for positioning save button
   const [selectedSentence, setSelectedSentence] = useState<{element: HTMLElement, position: {from: number, to: number}} | null>(null); // Track selected sentence for dropdown
   const [dropdownPosition, setDropdownPosition] = useState<{left: number, top: number} | null>(null); // Track dropdown position
+  const [addNextMode, setAddNextMode] = useState<{
+    isActive: boolean;
+    afterSentenceContent: string;
+    position: {left: number, top: number};
+  } | null>(null); // Track "add next" inline editor state
   const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Track click timeout to prevent click on double-click
   const [editorHistory, setEditorHistory] = useState<string[]>([]); // Track editor history for undo/redo
   const [historyIndex, setHistoryIndex] = useState<number>(-1); // Track current position in history
+  
+  // Undo system for deletions
+  const [undoStack, setUndoStack] = useState<Array<{
+    type: 'delete_sentence' | 'delete_branch';
+    timestamp: number;
+    deletedContent: string;
+    deletedBranchId?: string; // For branch deletions
+    context: any; // Store the deletion context for restoration
+  }>>([]);
+  const [showUndoButton, setShowUndoButton] = useState(false);
+  const undoTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   // Enhanced branch state for inline branching interface
   const [branchingMode, setBranchingMode] = useState<{
@@ -231,6 +255,29 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       if (!isEditingRef.current) {
         setTimeout(() => {
           addInsertionAreasBetweenSentences(editorInstance);
+          
+          // IMPORTANT: Restore data-selected attribute after marking is complete
+          // This ensures the selection survives the DOM re-creation from markAsCompletedSentence
+          if (selectedSentence && selectedSentence.element) {
+            const sentenceText = selectedSentence.element.textContent?.trim();
+            if (sentenceText) {
+              // Find the newly created sentence element with the same text
+              const completedSentences = document.querySelectorAll('.completed-sentence');
+              for (const sentence of completedSentences) {
+                if ((sentence as HTMLElement).textContent?.trim() === sentenceText) {
+                  sentence.setAttribute('data-selected', 'true');
+                  console.log(`🔄 Restored data-selected attribute to: "${sentenceText}"`);
+                  
+                  // Update the selectedSentence reference to the new DOM element
+                  setSelectedSentence(prev => prev ? {
+                    ...prev,
+                    element: sentence as HTMLElement
+                  } : null);
+                  break;
+                }
+              }
+            }
+          }
         }, 100);
       }
       
@@ -810,6 +857,24 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
             const position = view.posAtDOM(sentenceElement, 0);
             const endPosition = view.posAtDOM(sentenceElement, sentenceElement.childNodes.length);
             
+          
+            
+            // Check if this is the same sentence that's already selected
+            if (selectedSentence && selectedSentence.element === sentenceElement) {
+              // Same sentence clicked - do nothing, keep it selected
+              return;
+            }
+            
+            // Different sentence clicked - transfer selection
+            if (selectedSentence && selectedSentence.element !== sentenceElement) {
+              // Remove selection from previous sentence
+              const previousSentenceText = selectedSentence.element.textContent?.trim();
+              selectedSentence.element.removeAttribute('data-selected');
+        
+            } else {
+
+            }
+            
             // Set the selected sentence and show dropdown
             setSelectedSentence({ 
               element: sentenceElement, 
@@ -823,14 +888,19 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
               top: sentenceRect.top
             });
             
-            // Add selected styling to the sentence
-            sentenceElement.setAttribute('data-selected', 'true');
+            // Add selected styling to the new sentence AFTER state updates to avoid re-render clearing it
+            setTimeout(() => {
+              // Double-check that this is still the selected sentence before applying styling
+              const currentSelectedText = sentenceElement.textContent?.trim();
+              sentenceElement.setAttribute('data-selected', 'true');
             
+            }, 0); // Set on next tick to ensure all React state updates are processed first
             // console.log('📋 Dropdown shown after click delay');
             clickTimeoutRef.current = null;
           }, 200); // 200ms delay to allow double-click to cancel
           
           event.preventDefault();
+          event.stopPropagation(); // Prevent global click handler from interfering
           return true;
         }
         
@@ -888,12 +958,8 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
             clickTimeoutRef.current = null;
           }
           
-          // Clear any existing dropdown/selection from previous clicks
-          if (selectedSentence) {
-            selectedSentence.element.removeAttribute('data-selected');
-            setSelectedSentence(null);
-            setDropdownPosition(null);
-          }
+          // Clear any existing dropdown/selection from previous clicks using our helper function
+          clearAllSelectedSentences();
           
           // Clear any existing timeout
           if (editingTimeoutRef.current) {
@@ -1009,7 +1075,6 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     updateContent: (newContent: string) => {
       // Don't update content if user is actively editing
       if (isEditingRef.current) {
-        console.log('🚫 Skipping content update - user is editing');
         return;
       }
       
@@ -1048,12 +1113,9 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       
       // Get the edited content from the editor
       const editedContent = editor.state.doc.textBetween(editingPosition.from, editingPosition.to).trim();
-      console.log(`📝 Finishing edit with content: "${editedContent}"`);
-      console.log(`📝 Original content was: "${originalEditingContent}"`);
       
       // If content changed, notify parent to update the branch content
       if (editedContent !== originalEditingContent && onUpdateBranchContent) {
-        console.log(`📝 Content changed from "${originalEditingContent}" to "${editedContent}"`);
         
         // Try to find the exact node ID for the original content
         let targetNodeId: string | null = null;
@@ -1096,8 +1158,6 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           onExitEditMode(originalEditingContent);
         }
       } else {
-        console.log(`📝 No content change detected or onUpdateBranchContent not available`);
-        
         // Still notify parent to exit edit mode for the original content
         if (onExitEditMode && originalEditingContent) {
           onExitEditMode(originalEditingContent);
@@ -1154,6 +1214,70 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     } catch (error) {
     }
   }, [editingPosition, editor]);
+
+  // Helper function to clear all previously selected sentences
+  const clearAllSelectedSentences = useCallback(() => {
+    // Clear any existing selected sentence from state
+    if (selectedSentence) {
+      selectedSentence.element.removeAttribute('data-selected');
+      setSelectedSentence(null);
+      setDropdownPosition(null);
+    }
+    
+    // Also clear any other sentences that might have data-selected="true" in the DOM
+    const editorElement = document.querySelector('.narrative-editor-content');
+    if (editorElement) {
+      const allSelectedSentences = editorElement.querySelectorAll('.completed-sentence[data-selected="true"]');
+      allSelectedSentences.forEach(sentence => {
+        sentence.removeAttribute('data-selected');
+      });
+    }
+    
+    // console.log('🧹 Cleared all selected sentences to ensure only one can be selected at a time');
+  }, [selectedSentence]);
+
+  // Undo system functions
+  const addToUndoStack = useCallback((action: {
+    type: 'delete_sentence' | 'delete_branch';
+    timestamp: number;
+    deletedContent: string;
+    deletedBranchId?: string; // For branch deletions
+    context: any;
+  }) => {
+    setUndoStack(prev => [...prev, action]);
+    setShowUndoButton(true);
+    
+    // Clear any existing timeout
+    if (undoTimeoutRef.current) {
+      clearTimeout(undoTimeoutRef.current);
+    }
+    
+    // Hide undo button after 10 seconds
+    undoTimeoutRef.current = setTimeout(() => {
+      setShowUndoButton(false);
+    }, 10000);
+    
+    console.log(`⏮️ Added to undo stack: ${action.type} for "${action.deletedContent}"`);
+  }, []);
+
+  const handleUndoDeletion = useCallback(() => {
+    if (undoStack.length === 0) return;
+    
+    const lastAction = undoStack[undoStack.length - 1];
+    console.log(`⏮️ Undoing: ${lastAction.type} for "${lastAction.deletedContent}"`);
+    
+    // For now, we'll show an alert. In a full implementation, we'd restore the tree state
+    // This requires collaboration with the parent component to restore sentence nodes
+    alert(`Undo feature will restore: "${lastAction.deletedContent}"\n\nThis feature needs to be implemented with parent component collaboration.`);
+    
+    // Remove the action from stack
+    setUndoStack(prev => prev.slice(0, -1));
+    
+    // Hide undo button if stack is empty
+    if (undoStack.length <= 1) {
+      setShowUndoButton(false);
+    }
+  }, [undoStack]);
 
   // Enhanced branching functions
   const createBranchEditor = useCallback((content: string, elementId: string, isReadOnly: boolean = false) => {
@@ -1228,9 +1352,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     
     // Clear dropdown if open
     if (selectedSentence) {
-      selectedSentence.element.removeAttribute('data-selected');
-      setSelectedSentence(null);
-      setDropdownPosition(null);
+      clearAllSelectedSentences();
     }
   }, [onCreateBranch, onSwitchToBranch, branchingMode.parentSentence, selectedSentence]);
 
@@ -1323,9 +1445,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     
     
     // Clear selection after action
-    selectedSentence.element.removeAttribute('data-selected');
-    setSelectedSentence(null);
-    setDropdownPosition(null);
+    clearAllSelectedSentences();
     
     // Handle different actions
     switch (action) {
@@ -1437,50 +1557,73 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         }
         break;
       case 'add-next':
-        // Position cursor right after this sentence for continuing
-        if (editor) {
-          // Position cursor at the end of the selected sentence
-          const insertionPos = selectedSentence.position.to;
+        // Insert a new sentence node after the selected sentence
+        if (selectedSentence && onInsertNodeAfter) {
+          const selectedSentenceContent = selectedSentence.element.textContent?.trim();
           
-          // Insert a space if there isn't one already
-          const currentText = editor.getText();
-          const charAfterSentence = currentText.charAt(insertionPos);
-          
-          if (charAfterSentence && charAfterSentence !== ' ') {
-            // Insert a space after the sentence
-            editor.commands.setTextSelection(insertionPos);
-            editor.commands.insertContent(' ');
-            // Position cursor after the space we just inserted
-            editor.commands.setTextSelection(insertionPos + 1);
-          } else if (charAfterSentence === ' ') {
-            // There's already a space, position cursor after it
-            editor.commands.setTextSelection(insertionPos + 1);
-          } else {
-            // We're at the end of the text, insert a space and position after it
-            editor.commands.setTextSelection(insertionPos);
-            editor.commands.insertContent(' ');
-            editor.commands.setTextSelection(insertionPos + 1);
+          if (!selectedSentenceContent) {
+            console.error('❌ Cannot add next: no sentence content found');
+            break;
           }
           
-          // Focus the editor so user can start typing immediately
-          editor.commands.focus();
+          // Set up the inline editor state for "add next" instead of immediately inserting
+          setAddNextMode({
+            isActive: true,
+            afterSentenceContent: selectedSentenceContent,
+            position: dropdownPosition || { left: 0, top: 0 }
+          });
           
-          // Double-check that we're not in a completed sentence mark
-          setTimeout(() => {
-            const newCursorPos = editor.state.selection.from;
-            const marks = editor.state.doc.resolve(newCursorPos).marks();
-            const isStillInCompletedSentence = marks.some((mark: any) => mark.type.name === 'completedSentence');
-            
-            if (isStillInCompletedSentence) {
-              editor.commands.insertContent(' ');
+          console.log(`✏️ Showing inline editor to add sentence after "${selectedSentenceContent}"`);
+          
+          // Clear the dropdown
+          clearAllSelectedSentences();
+          
+          // Don't insert into tree yet - wait for user input
+          return; // Exit early so we don't execute the tree insertion below
+          
+          console.log(`🔗 Inserting new sentence node after "${selectedSentenceContent}"`);
+          
+          // Insert the new sentence into the tree structure
+          // This code is now handled by the inline editor above
+          
+          // The tree structure will be updated and the editor will re-render
+          // The user can then double-click the placeholder to edit it
+          console.log(`✅ Inserted placeholder sentence after "${selectedSentenceContent}"`);
+          console.log(`� User can now double-click the placeholder to edit it`);
+        } else {
+          console.error('❌ Cannot add next: missing selectedSentence or onInsertNodeAfter callback');
+        }
+        break;
+      case 'delete':
+        console.log('🗑️ Deleting sentence:', selectedSentence.element.textContent);
+        
+        // Get the sentence content to delete
+        const sentenceToDelete = selectedSentence.element.textContent?.trim();
+        
+        if (sentenceToDelete && onDeleteSentence) {
+          console.log(`🗑️ Deleting sentence: "${sentenceToDelete}"`);
+          
+          // Add to undo stack before deletion
+          addToUndoStack({
+            type: 'delete_sentence',
+            timestamp: Date.now(),
+            deletedContent: sentenceToDelete,
+            context: {
+              // Store any additional context needed for restoration
+              sentencePosition: selectedSentence.position
             }
-            
-            console.log(`📍 Cursor positioned at position ${newCursorPos} for next sentence`);
-          }, 50);
+          });
+          
+          // Call the parent's delete function immediately (no confirmation)
+          onDeleteSentence(sentenceToDelete);
+          
+          console.log('✅ Sentence deletion initiated (undo available)');
+        } else {
+          console.error('❌ Cannot delete sentence: onDeleteSentence not available or no sentence content');
         }
         break;
     }
-  }, [selectedSentence, editor]);
+  }, [selectedSentence, editor, onDeleteSentence]);
   
   // Handle suggestion acceptance
   const handleAcceptSuggestion = useCallback((suggestionText: string) => {
@@ -1513,10 +1656,82 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     onSuggestionResolved?.();
   }, [onSuggestionResolved]);
   
+  // Handle saving the "add next" inline editor content
+  const handleSaveAddNext = useCallback((newSentenceContent: string) => {
+    if (!addNextMode || !onInsertNodeAfter) {
+      console.error('❌ Cannot save add next: missing state or callback');
+      return;
+    }
+    
+    const trimmedContent = newSentenceContent.trim();
+    if (!trimmedContent) {
+      console.error('❌ Cannot save empty sentence content');
+      return;
+    }
+    
+    console.log(`💾 Processing new content: "${trimmedContent}" after "${addNextMode.afterSentenceContent}"`);
+    
+    // Split content into sentences using a more robust approach
+    const sentences: string[] = [];
+    
+    // Use regex to split but keep the delimiters
+    const sentencePattern = /([.!?]+)/g;
+    const parts = trimmedContent.split(sentencePattern);
+    
+    // Reconstruct sentences by combining text with their delimiters
+    for (let i = 0; i < parts.length; i += 2) {
+      const text = parts[i]?.trim();
+      const delimiter = parts[i + 1] || '';
+      
+      if (text) {
+        sentences.push(text + delimiter);
+      }
+    }
+    
+    // If no delimiters were found, treat the entire content as one sentence
+    if (sentences.length === 0) {
+      sentences.push(trimmedContent);
+    }
+    
+    console.log(`🔍 Split into ${sentences.length} sentence(s):`, sentences);
+    
+    if (sentences.length === 0) {
+      console.error('❌ No valid sentences found');
+      return;
+    }
+    
+    // Insert sentences sequentially
+    let currentParent = addNextMode.afterSentenceContent;
+    
+    for (let i = 0; i < sentences.length; i++) {
+      const sentence = sentences[i].trim();
+      console.log(`📝 Inserting sentence ${i + 1}/${sentences.length}: "${sentence}" after "${currentParent}"`);
+      
+      // Insert this sentence after the current parent
+      onInsertNodeAfter(currentParent, sentence);
+      
+      // The next sentence will be inserted after this one
+      currentParent = sentence;
+    }
+    
+    // Clear the add next mode
+    setAddNextMode(null);
+    
+    console.log(`✅ ${sentences.length} sentence(s) saved and inserted into tree`);
+  }, [addNextMode, onInsertNodeAfter]);
+  
+  // Handle canceling the "add next" inline editor
+  const handleCancelAddNext = useCallback(() => {
+    console.log('❌ Canceling add next mode');
+    setAddNextMode(null);
+  }, []);
+  
   // Add global click listener to handle clicks outside the editor
   useEffect(() => {
     const handleGlobalClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
+      
+      console.log('🌍 Global click handler triggered', { target: target.className, closest: target.closest('.completed-sentence') ? 'found sentence' : 'no sentence' });
       
       // Check if clicking on completed sentence with reduced sensitivity (10px margin from left/right)
       if (target.closest('.completed-sentence')) {
@@ -1531,22 +1746,44 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                                    clickY >= sentenceRect.top && 
                                    clickY <= sentenceRect.bottom;
         
+        console.log('🎯 Sentence click detected', { 
+          isWithinReducedArea, 
+          sentenceText: sentenceElement.textContent?.trim(),
+          margins: { left: sentenceRect.left + 10, right: sentenceRect.right - 10 },
+          clickPos: { x: clickX, y: clickY }
+        });
+        
         if (isWithinReducedArea) {
           // Click is within the active area, don't clear selection
+          console.log('✅ Click within sentence area - keeping selection');
           return;
+        } else {
+          console.log('🚫 Click in sentence margin - will clear selection');
         }
       }
       
       // Don't clear if clicking on dropdown
       if (target.closest('.sentence-dropdown')) {
+        console.log('🎯 Click on dropdown - keeping selection');
         return;
+      }
+      
+      // Don't clear if clicking on add-next editor
+      if (target.closest('.add-next-editor')) {
+        console.log('✏️ Click on add-next editor - keeping editor open');
+        return;
+      }
+      
+      // Clear add-next editor if clicking outside
+      if (addNextMode) {
+        console.log('❌ Global click clearing add-next editor');
+        setAddNextMode(null);
       }
       
       // Clear dropdown and selection if clicked anywhere else (including sentence margins)
       if (selectedSentence) {
-        selectedSentence.element.removeAttribute('data-selected');
-        setSelectedSentence(null);
-        setDropdownPosition(null);
+        console.log('🧹 Global click clearing selection');
+        clearAllSelectedSentences();
       }
     };
     
@@ -1562,7 +1799,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         clearTimeout(clickTimeoutRef.current);
       }
     };
-  }, [selectedSentence]);
+  }, [selectedSentence, addNextMode, clearAllSelectedSentences]);
 
   // Cleanup branch editors on unmount
   useEffect(() => {
@@ -1718,54 +1955,70 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         {/* Enhanced branching interface */}
         {branchingMode.isActive && (
           <div className="branch-section">
-            <div className="branch-section-header">
-              <h4>Choose your path from: "{branchingMode.parentSentence}"</h4>
-              <div className="branch-actions">
-                <button 
-                  className="branch-action-btn cancel-btn"
-                  onClick={() => {
-                    
-                    // Destroy any branch editors before clearing
-                    branchingMode.branches.forEach(branch => {
-                      if (branch.editor) {
-                        branch.editor.destroy();
-                      }
-                    });
-                    
-                    // Exit branching mode without saving any draft branches
-                    setBranchingMode({
-                      isActive: false,
-                      isDraft: false,
-                      parentSentence: '',
-                      branches: [],
-                      insertPosition: 0
-                    });
-                    
-                    // Clear dropdown if open
-                    if (selectedSentence) {
-                      selectedSentence.element.removeAttribute('data-selected');
-                      setSelectedSentence(null);
-                      setDropdownPosition(null);
-                    }
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-            
-            {branchingMode.branches.map((branch, index) => {
-              // Calculate alternative number for non-active branches
-              const activeCount = branchingMode.branches.filter(b => b.type === 'original').length;
-              const alternativeNumber = branch.type === 'alternative' 
-                ? branchingMode.branches.slice(0, index).filter(b => b.type === 'alternative').length + 1
-                : null;
+            {branchingMode.branches
+              .filter(branch => branch.type === 'alternative') // Only show alternatives
+              .map((branch, index) => {
+              const alternativeNumber = index + 1; // Simple numbering for alternatives only
               
               return (
                 <div key={branch.id} className="branch-option">
-                  <div className="branch-label">
-                    {branch.type === 'original' ? 'Active Path' : `Alternative ${alternativeNumber}`}
-                    {branch.isNew && <span className="draft-indicator"> (Draft)</span>}
+                  <div className="branch-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                    <div className="branch-label">
+                      Alternative {alternativeNumber}
+                      {branch.isNew && <span className="draft-indicator"> (Draft)</span>}
+                    </div>
+                    {index === branchingMode.branches.filter(b => b.type === 'alternative').length - 1 && (
+                      <button 
+                        className="branch-action-btn cancel-btn"
+                        onClick={() => {
+                          
+                          // Destroy any branch editors before clearing
+                          branchingMode.branches.forEach(branch => {
+                            if (branch.editor) {
+                              branch.editor.destroy();
+                            }
+                          });
+                          
+                          // Exit branching mode without saving any draft branches
+                          setBranchingMode({
+                            isActive: false,
+                            isDraft: false,
+                            parentSentence: '',
+                            branches: [],
+                            insertPosition: 0
+                          });
+                          
+                          // Clear dropdown if open
+                          if (selectedSentence) {
+                            clearAllSelectedSentences();
+                          }
+                        }}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          padding: '4px 8px',
+                          fontSize: '12px',
+                          backgroundColor: '#f3f4f6',
+                          color: '#6b7280',
+                          border: '1px solid #d1d5db',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = '#ef4444';
+                          e.currentTarget.style.color = 'white';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = '#f3f4f6';
+                          e.currentTarget.style.color = '#6b7280';
+                        }}
+                      >
+                        <MdCancel size={14} />
+                        Cancel
+                      </button>
+                    )}
                   </div>
                   <div className="branch-editor-wrapper">
                     <div 
@@ -1861,54 +2114,103 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                       : null;
                     
                     return (
-                      <button
-                        key={branch.id}
-                        className={`dropdown-item ${branch.type === 'original_continuation' ? 'original-continuation' : 'branch-option'}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          
-                          console.log('🎯 Clicked dropdown alternative:', {
-                            branchId: branch.id,
-                            immediateContent: branch.content,
-                            fullPathContent: branch.fullPathContent,
-                            type: branch.type
-                          });
-                          
-                          // Directly switch to this branch instead of showing branch-section
-                          if (onSwitchToBranch) {
-                            console.log('🔄 Switching directly to branch:', branch.id);
-                            onSwitchToBranch(branch.id);
-                          }
-                          
-                          // Clear selection
-                          selectedSentence.element.removeAttribute('data-selected');
-                          setSelectedSentence(null);
-                          setDropdownPosition(null);
-                        }}
-                        title={`View and choose between ${availableBranches.length} alternatives for this sentence`}
-                        style={{
-                          ...(branch.type === 'original_continuation' ? {
-                            backgroundColor: 'rgba(168, 85, 247, 0.1)',
-                            color: '#7c3aed',
-                            fontStyle: 'italic'
-                          } : {
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            color: '#2563eb'
-                          }),
-                          textAlign: 'left',
-                          padding: '8px 12px',
-                          display: 'block',
-                          width: '100%'
-                        }}
-                      >
-                        <div style={{ fontWeight: 'bold', fontSize: '11px', marginBottom: '2px' }}>
-                          {branch.type === 'original_continuation' ? 'Active Path' : `Alternative ${alternativeNumber}`}
-                        </div>
-                        <div style={{ fontSize: '12px', opacity: 0.8 }}>
-                          "{(branch.fullPathContent || branch.content).length > 40 ? (branch.fullPathContent || branch.content).substring(0, 40) + '...' : (branch.fullPathContent || branch.content)}"
-                        </div>
-                      </button>
+                      <div key={branch.id} style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                        <button
+                          className={`dropdown-item ${branch.type === 'original_continuation' ? 'original-continuation' : 'branch-option'}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            
+                            console.log('🎯 Clicked dropdown alternative:', {
+                              branchId: branch.id,
+                              immediateContent: branch.content,
+                              fullPathContent: branch.fullPathContent,
+                              type: branch.type
+                            });
+                            
+                            // Directly switch to this branch instead of showing branch-section
+                            if (onSwitchToBranch) {
+                              console.log('🔄 Switching directly to branch:', branch.id);
+                              onSwitchToBranch(branch.id);
+                            }
+                            
+                            // Clear selection
+                            clearAllSelectedSentences();
+                          }}
+                          title={`View and choose between ${availableBranches.length} alternatives for this sentence`}
+                          style={{
+                            ...(branch.type === 'original_continuation' ? {
+                              backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                              color: '#7c3aed',
+                              fontStyle: 'italic'
+                            } : {
+                              backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                              color: '#2563eb'
+                            }),
+                            textAlign: 'left',
+                            padding: '8px 12px',
+                            display: 'block',
+                            width: 'calc(100% - 30px)', // Make room for delete button
+                            marginRight: '4px'
+                          }}
+                        >
+                          <div style={{ fontWeight: 'bold', fontSize: '11px', marginBottom: '2px' }}>
+                            {branch.type === 'original_continuation' ? 'Active Path' : `Alternative ${alternativeNumber}`}
+                          </div>
+                          <div style={{ fontSize: '12px', opacity: 0.8 }}>
+                            "{(branch.fullPathContent || branch.content).length > 40 ? (branch.fullPathContent || branch.content).substring(0, 40) + '...' : (branch.fullPathContent || branch.content)}"
+                          </div>
+                        </button>
+                        
+                        {/* Delete button for alternatives only (disabled for active branch) */}
+                        {branch.type !== 'original_continuation' && (
+                          <button
+                            className="dropdown-item-delete"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              
+                              console.log('🗑️ Deleting branch:', branch.id);
+                              
+                              // Add to undo stack before deletion
+                              addToUndoStack({
+                                type: 'delete_branch',
+                                timestamp: Date.now(),
+                                deletedBranchId: branch.id,
+                                deletedContent: branch.fullPathContent || branch.content,
+                                context: {
+                                  branchType: branch.type,
+                                  alternativeNumber
+                                }
+                              });
+                              
+                              // TODO: Implement branch deletion in parent component
+                              if (onDeleteBranch) {
+                                onDeleteBranch(branch.id);
+                              } else {
+                                console.warn('⚠️ onDeleteBranch not implemented yet');
+                              }
+                            }}
+                            title="Delete this alternative branch"
+                            style={{
+                              backgroundColor: '#ef4444',
+                              color: 'white',
+                              border: 'none',
+                              borderRadius: '3px',
+                              width: '24px',
+                              height: '24px',
+                              fontSize: '12px',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              marginLeft: '2px'
+                            }}
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
                     );
                   })}
                 </>
@@ -1928,16 +2230,88 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                 style={{
                   opacity: disableInteractions ? 0.5 : 1,
                   cursor: disableInteractions ? 'not-allowed' : 'pointer',
-                  backgroundColor: disableInteractions ? '#f3f4f6' : undefined,
+                  backgroundColor: disableInteractions ? '#f3f4f6' : '#e0f2fe',
+                  color: disableInteractions ? '#9ca3af' : '#0369a1',
                   fontSize: '11px',
-                  color: '#6b7280'
+                  fontWeight: 'bold',
+                  border: '1px solid #bae6fd',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={(e) => {
+                  if (!disableInteractions) {
+                    e.currentTarget.style.backgroundColor = '#0284c7';
+                    e.currentTarget.style.color = 'white';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                    e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!disableInteractions) {
+                    e.currentTarget.style.backgroundColor = '#e0f2fe';
+                    e.currentTarget.style.color = '#0369a1';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }
                 }}
               >
+                <HiOutlineDocumentDuplicate size={14} />
                 Create New Branch
+              </button>
+              
+              {/* Delete Sentence Button */}
+              <button
+                className="dropdown-item"
+                onClick={(e) => !disableInteractions && handleDropdownAction('delete', e)}
+                title={disableInteractions ? "Close info nodes before using this feature" : "Delete this sentence and reconnect the tree structure"}
+                disabled={disableInteractions}
+                style={{
+                  opacity: disableInteractions ? 0.5 : 1,
+                  cursor: disableInteractions ? 'not-allowed' : 'pointer',
+                  backgroundColor: disableInteractions ? '#fef2f2' : '#fef2f2',
+                  color: disableInteractions ? '#9ca3af' : '#dc2626',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  border: '1px solid #fecaca',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={(e) => {
+                  if (!disableInteractions) {
+                    e.currentTarget.style.backgroundColor = '#dc2626';
+                    e.currentTarget.style.color = 'white';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                    e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!disableInteractions) {
+                    e.currentTarget.style.backgroundColor = '#fef2f2';
+                    e.currentTarget.style.color = '#dc2626';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }
+                }}
+              >
+                <HiOutlineTrash size={14} />
+                Delete Sentence
               </button>
             </div>
           );
         })()}
+        
+        {/* Add Next inline editor */}
+        {addNextMode && (
+          <AddNextEditor
+            position={addNextMode.position}
+            onSave={handleSaveAddNext}
+            onCancel={handleCancelAddNext}
+          />
+        )}
         
         {/* Narrative suggestion box */}
         {(currentSuggestion || isLoadingSuggestion) && (
@@ -1965,6 +2339,168 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     </div>
   );
 });
+
+// AddNextEditor component for inline sentence creation
+const AddNextEditor: React.FC<{
+  position: { left: number; top: number };
+  onSave: (content: string) => void;
+  onCancel: () => void;
+}> = ({ position, onSave, onCancel }) => {
+  const [hasContent, setHasContent] = useState(false);
+  
+  const editor = useEditor({
+    extensions: [
+      Document,
+      Paragraph.configure({
+        HTMLAttributes: {
+          class: 'tiptap-paragraph',
+        },
+      }),
+      Text,
+      Bold,
+      Italic,
+      History,
+      HardBreak.configure({
+        keepMarks: false,
+        HTMLAttributes: {
+          class: 'tiptap-hard-break',
+        },
+      }),
+      Placeholder.configure({
+        placeholder: 'Type your next sentence(s) here. Use Shift+Enter for new lines.',
+      }),
+    ],
+    content: '<p></p>',
+    immediatelyRender: false,
+    editable: true,
+    onUpdate: ({ editor }) => {
+      const text = editor.getText().trim();
+      setHasContent(text.length > 0);
+    },
+    editorProps: {
+      attributes: {
+        class: 'add-next-editor-content',
+        'data-gramm': 'false',
+        'data-gramm_editor': 'false',
+        'data-enable-grammarly': 'false',
+        spellcheck: 'false'
+      },
+      handleKeyDown: (view, event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          handleSave();
+          return true;
+        } else if (event.key === 'Escape') {
+          event.preventDefault();
+          onCancel();
+          return true;
+        }
+        return false;
+      },
+    },
+  });
+  
+  // Auto-focus on mount
+  useEffect(() => {
+    if (editor) {
+      editor.commands.focus();
+    }
+  }, [editor]);
+  
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSave();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      onCancel();
+    }
+  };
+  
+  const handleSave = () => {
+    if (!editor) return;
+    
+    const trimmedContent = editor.getText().trim();
+    if (trimmedContent) {
+      onSave(trimmedContent);
+    }
+  };
+  
+  return (
+    <div
+      className="add-next-editor"
+      style={{
+        position: 'fixed',
+        left: `${position.left}px`,
+        top: `${position.top + 10}px`, // Slightly below the dropdown position
+        zIndex: 1001, // Higher than dropdown
+        backgroundColor: 'white',
+        border: '2px solid #3b82f6',
+        borderRadius: '8px',
+        padding: '12px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        minWidth: '300px',
+        maxWidth: '500px'
+      }}
+    >
+      <div style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 'bold', color: '#6b7280' }}>
+        Add Next Sentence:
+      </div>
+      <div style={{ 
+        border: '1px solid #d1d5db', 
+        borderRadius: '4px',
+        minHeight: '60px',
+        padding: '8px'
+      }}>
+        <EditorContent 
+          editor={editor} 
+          style={{
+            fontSize: 'inherit',
+            fontFamily: 'inherit',
+            outline: 'none'
+          }}
+        />
+      </div>
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'flex-end', 
+        gap: '8px', 
+        marginTop: '8px' 
+      }}>
+        <button
+          onClick={onCancel}
+          style={{
+            padding: '6px 12px',
+            fontSize: '12px',
+            backgroundColor: '#f3f4f6',
+            color: '#6b7280',
+            border: '1px solid #d1d5db',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Cancel
+        </button>
+        <button
+          onClick={handleSave}
+          disabled={!hasContent}
+          style={{
+            padding: '6px 12px',
+            fontSize: '12px',
+            backgroundColor: hasContent ? '#3b82f6' : '#e5e7eb',
+            color: hasContent ? 'white' : '#9ca3af',
+            border: '1px solid',
+            borderColor: hasContent ? '#3b82f6' : '#d1d5db',
+            borderRadius: '4px',
+            cursor: hasContent ? 'pointer' : 'not-allowed'
+          }}
+        >
+          Add Sentence
+        </button>
+      </div>
+    </div>
+  );
+};
 
 // Add display name for debugging
 NarrativeLayer.displayName = 'NarrativeLayer';

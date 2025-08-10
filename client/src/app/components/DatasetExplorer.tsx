@@ -131,7 +131,7 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, on
       {/* Datasets Grid */}
       <div className="dataset-grid">
         {(() => {
-          console.log('Rendering datasets:', datasets);
+          // console.log('Rendering datasets:', datasets);
           return datasets.length === 0 ? (
             <div className="text-center p-8">
               <p className="text-gray-500">No datasets found</p>

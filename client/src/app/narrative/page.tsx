@@ -240,7 +240,7 @@ export default function NarrativePage() {
           
           if (userStr && token) {
             const user = JSON.parse(userStr);
-            console.log('🔧 Loaded user from localStorage:', user);
+            // console.log('🔧 Loaded user from localStorage:', user);
             
             // Ensure userId is set - fallback to username or create one
             if (!user.userId) {
@@ -1106,7 +1106,7 @@ export default function NarrativePage() {
     // If not found in active path, look for any node with this content
     for (const [nodeId, node] of sentenceNodes.entries()) {
       if (node.content === sentenceContent) {
-        console.warn(`⚠️ Node with content "${sentenceContent}" found but not in active path. This might cause content update issues.`);
+        // console.warn(`⚠️ Node with content "${sentenceContent}" found but not in active path. This might cause content update issues.`);
         return nodeId;
       }
     }
@@ -1178,22 +1178,335 @@ export default function NarrativePage() {
       return 0;
     });
     
-    console.log(`🌿 Found ${branches.length} branches for "${sentenceContent}":`, 
-      branches.map(b => `${b.type === 'original_continuation' ? 'Active' : 'Alt'}: "${b.content}" (Full: "${b.fullPathContent}")`));
+    // console.log(`🌿 Found ${branches.length} branches for "${sentenceContent}":`, 
+    //   branches.map(b => `${b.type === 'original_continuation' ? 'Active' : 'Alt'}: "${b.content}" (Full: "${b.fullPathContent}")`));
     
     return branches;
   }, [sentenceNodes, getFullPathContentFromNode]);
   
+  // Helper function to insert a new node between existing nodes
+  const insertNodeAfter = useCallback((afterSentenceContent: string, newSentenceContent: string) => {
+    console.log(`🔗 Inserting new node "${newSentenceContent}" after "${afterSentenceContent}"`);
+    
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      // Find the node after which to insert (by content)
+      let afterNode: SentenceNode | null = null;
+      let afterNodeId: string | null = null;
+      
+      for (const [id, node] of newMap.entries()) {
+        if (node.content === afterSentenceContent) {
+          afterNode = node;
+          afterNodeId = id;
+          break;
+        }
+      }
+      
+      if (!afterNode || !afterNodeId) {
+        console.error(`❌ Cannot find node with content: "${afterSentenceContent}"`);
+        return prev;
+      }
+      
+      // Create the new node
+      const newNodeId = `sentence-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const newNode: SentenceNode = {
+        id: newNodeId,
+        content: newSentenceContent,
+        parent: afterNodeId, // The new node's parent is the "after" node
+        children: [...afterNode.children], // The new node inherits all children from the "after" node
+        activeChild: afterNode.activeChild, // The new node inherits the active child from the "after" node
+        createdTime: Date.now(),
+        revisedTime: Date.now(),
+        editCount: 0,
+        isCompleted: true,
+        metadata: {}
+      };
+      
+      // Add the new node to the map
+      newMap.set(newNodeId, newNode);
+      
+      // Update the "after" node to point to the new node as its only child
+      const updatedAfterNode = {
+        ...afterNode,
+        children: [newNodeId], // The "after" node now only has the new node as a child
+        activeChild: newNodeId, // The new node becomes the active child
+        revisedTime: Date.now()
+      };
+      newMap.set(afterNodeId, updatedAfterNode);
+      
+      // Update all former children of the "after" node to point to the new node as their parent
+      for (const childId of afterNode.children) {
+        const childNode = newMap.get(childId);
+        if (childNode) {
+          const updatedChildNode = {
+            ...childNode,
+            parent: newNodeId, // Former children now have the new node as their parent
+            revisedTime: Date.now()
+          };
+          newMap.set(childId, updatedChildNode);
+        }
+      }
+      
+      console.log(`✅ Inserted new node "${newSentenceContent}" between "${afterSentenceContent}" and its children`);
+      console.log(`🔗 Tree structure: ${afterSentenceContent} -> ${newSentenceContent} -> [${afterNode.children.map(id => {
+        const child = newMap.get(id);
+        return child ? child.content : id;
+      }).join(', ')}]`);
+      
+      return newMap;
+    });
+  }, []);
+
+  // Helper function to delete a sentence and reconnect the tree structure
+  const deleteSentenceFromTree = useCallback((sentenceIdOrContent: string) => {
+    console.log(`🗑️ Starting sentence deletion for: "${sentenceIdOrContent}"`);
+    
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      // Find the node to delete (by ID or content)
+      let nodeToDelete: SentenceNode | null = null;
+      let nodeIdToDelete: string | null = null;
+      
+      // First try to find by ID
+      if (newMap.has(sentenceIdOrContent)) {
+        nodeToDelete = newMap.get(sentenceIdOrContent)!;
+        nodeIdToDelete = sentenceIdOrContent;
+      } else {
+        // If not found by ID, search by content
+        for (const [id, node] of newMap.entries()) {
+          if (node.content === sentenceIdOrContent) {
+            nodeToDelete = node;
+            nodeIdToDelete = id;
+            break;
+          }
+        }
+      }
+      
+      if (!nodeToDelete || !nodeIdToDelete) {
+        return prev;
+      }
+      
+      
+      const parentId = nodeToDelete.parent;
+      const childrenIds = [...nodeToDelete.children];
+      
+      // Step 1: Update parent node (if exists)
+      if (parentId) {
+        const parentNode = newMap.get(parentId);
+        if (parentNode) {
+          console.log(`👨‍👦 Updating parent "${parentNode.content}"`);
+          
+          // Remove the deleted node from parent's children
+          const updatedParentChildren = parentNode.children.filter(childId => childId !== nodeIdToDelete);
+          
+          // Add the deleted node's children to the parent's children
+          updatedParentChildren.push(...childrenIds);
+          
+          // Determine new activeChild for parent
+          let newActiveChild: string | null = null;
+          
+          if (childrenIds.length > 0) {
+            // If the deleted node was the activeChild, set first child as new activeChild
+            if (parentNode.activeChild === nodeIdToDelete) {
+              newActiveChild = childrenIds[0];
+              
+            } else {
+              // Keep the existing activeChild if it wasn't the deleted node
+              newActiveChild = parentNode.activeChild;
+            }
+          } else {
+            // No children to inherit, clear activeChild if it was the deleted node
+            newActiveChild = parentNode.activeChild === nodeIdToDelete ? null : parentNode.activeChild;
+          }
+          
+          const updatedParent = {
+            ...parentNode,
+            children: updatedParentChildren,
+            activeChild: newActiveChild,
+            revisedTime: typeof window !== 'undefined' ? Date.now() : 0
+          };
+          
+          newMap.set(parentId, updatedParent);
+          
+        }
+      } else {
+
+      }
+      
+      // Step 2: Update children nodes to point to new parent
+      for (const childId of childrenIds) {
+        const childNode = newMap.get(childId);
+        if (childNode) {
+          const updatedChild = {
+            ...childNode,
+            parent: parentId, // Children inherit the deleted node's parent (could be null for root)
+            revisedTime: typeof window !== 'undefined' ? Date.now() : 0
+          };
+          newMap.set(childId, updatedChild);
+        }
+      }
+      
+      // Step 3: Clean up any references to the deleted node in other nodes
+      for (const [id, node] of newMap.entries()) {
+        if (id === nodeIdToDelete) continue; // Skip the node we're deleting
+        
+        let needsUpdate = false;
+        let updatedNode = { ...node };
+        
+        // Remove from children array if present
+        if (node.children.includes(nodeIdToDelete)) {
+          updatedNode.children = node.children.filter(childId => childId !== nodeIdToDelete);
+          needsUpdate = true;
+        }
+        
+        // Clear activeChild if it points to deleted node
+        if (node.activeChild === nodeIdToDelete) {
+          updatedNode.activeChild = updatedNode.children.length > 0 ? updatedNode.children[0] : null;
+          needsUpdate = true;
+          console.log(`🧹 Cleared activeChild reference in "${node.content}"`);
+        }
+        
+        if (needsUpdate) {
+          updatedNode.revisedTime = typeof window !== 'undefined' ? Date.now() : 0;
+          newMap.set(id, updatedNode);
+        }
+      }
+      
+      // Step 4: Remove the deleted node from the map
+      newMap.delete(nodeIdToDelete);
+      console.log(`🗑️ Removed node "${nodeToDelete.content}" from tree`);
+      
+      // Step 5: Update active path if it included the deleted node
+      const currentActivePath = getActivePathFromRoot();
+      if (currentActivePath.includes(nodeIdToDelete)) {
+      }
+      
+      return newMap;
+    });
+    
+    // The active path will be automatically recalculated by the useEffect that watches sentenceNodes
+    console.log(`🔄 Tree structure updated after deletion`);
+  }, [sentenceNodes, getActivePathFromRoot]);
+
+  // Helper function to delete an entire branch and all its descendants
+  const deleteBranchFromTree = useCallback((branchId: string) => {
+    console.log(`🌿🗑️ Starting branch deletion for: "${branchId}"`);
+    
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      // Find the branch node to delete
+      const branchToDelete = newMap.get(branchId);
+      if (!branchToDelete) {
+        console.error(`❌ Branch not found: ${branchId}`);
+        return prev;
+      }
+      
+      // Helper function to collect all descendants recursively
+      const collectDescendants = (nodeId: string): string[] => {
+        const node = newMap.get(nodeId);
+        if (!node) return [];
+        
+        let descendants: string[] = [nodeId];
+        for (const childId of node.children) {
+          descendants.push(...collectDescendants(childId));
+        }
+        return descendants;
+      };
+      
+      // Collect all nodes to delete (branch + all descendants)
+      const nodesToDelete = collectDescendants(branchId);
+      console.log(`🗑️ Deleting ${nodesToDelete.length} nodes:`, nodesToDelete.map(id => {
+        const node = newMap.get(id);
+        return `${id}: "${node?.content}"`;
+      }));
+      
+      // Step 1: Update parent node to remove this branch
+      const parentId = branchToDelete.parent;
+      if (parentId) {
+        const parentNode = newMap.get(parentId);
+        if (parentNode) {
+          console.log(`👨‍👦 Updating parent "${parentNode.content}"`);
+          
+          // Remove the branch from parent's children
+          const updatedParentChildren = parentNode.children.filter(childId => childId !== branchId);
+          
+          // Determine new activeChild for parent
+          let newActiveChild: string | null = null;
+          if (parentNode.activeChild === branchId) {
+            // If the deleted branch was active, switch to first remaining child
+            newActiveChild = updatedParentChildren.length > 0 ? updatedParentChildren[0] : null;
+          } else {
+            // Keep the existing activeChild if it wasn't the deleted branch
+            newActiveChild = parentNode.activeChild;
+          }
+          
+          const updatedParent = {
+            ...parentNode,
+            children: updatedParentChildren,
+            activeChild: newActiveChild,
+            revisedTime: typeof window !== 'undefined' ? Date.now() : 0
+          };
+          
+          newMap.set(parentId, updatedParent);
+        }
+      }
+      
+      // Step 2: Clean up any references to deleted nodes in remaining nodes
+      for (const [id, node] of newMap.entries()) {
+        if (nodesToDelete.includes(id)) continue; // Skip nodes we're deleting
+        
+        let needsUpdate = false;
+        let updatedNode = { ...node };
+        
+        // Remove deleted nodes from children array
+        const originalChildrenLength = node.children.length;
+        updatedNode.children = node.children.filter(childId => !nodesToDelete.includes(childId));
+        if (updatedNode.children.length !== originalChildrenLength) {
+          needsUpdate = true;
+        }
+        
+        // Clear activeChild if it points to a deleted node
+        if (node.activeChild && nodesToDelete.includes(node.activeChild)) {
+          updatedNode.activeChild = updatedNode.children.length > 0 ? updatedNode.children[0] : null;
+          needsUpdate = true;
+          console.log(`🧹 Cleared activeChild reference in "${node.content}"`);
+        }
+        
+        if (needsUpdate) {
+          updatedNode.revisedTime = typeof window !== 'undefined' ? Date.now() : 0;
+          newMap.set(id, updatedNode);
+        }
+      }
+      
+      // Step 3: Remove all nodes in the branch from the map
+      for (const nodeId of nodesToDelete) {
+        const deletedNode = newMap.get(nodeId);
+        if (deletedNode) {
+          console.log(`🗑️ Removed branch node "${deletedNode.content}" from tree`);
+          newMap.delete(nodeId);
+        }
+      }
+      
+      console.log(`🌿🔄 Branch deletion completed. Deleted ${nodesToDelete.length} nodes.`);
+      return newMap;
+    });
+    
+    console.log(`🔄 Tree structure updated after branch deletion`);
+  }, [sentenceNodes]);
+
   // Helper function to switch to a specific branch
   const handleSwitchToBranch = useCallback((branchId: string) => {
     const branchNode = sentenceNodes.get(branchId);
     if (!branchNode) {
-      console.error('❌ Cannot switch to branch: node not found');
+      // console.error('❌ Cannot switch to branch: node not found');
       return;
     }
     
-    console.log(`🎯 SWITCHING TO BRANCH: ${branchId}`);
-    console.log(`📊 Branch content: "${branchNode.content}"`);
+    // console.log(`🎯 SWITCHING TO BRANCH: ${branchId}`);
+    // console.log(`📊 Branch content: "${branchNode.content}"`);
     
     // Find the path from root to this branch
     const newPath = findSentencePath(branchId);
@@ -1270,17 +1583,17 @@ export default function NarrativePage() {
   const [editableNodes, setEditableNodes] = useState<Set<string>>(new Set());
 
   const handleUpdateBranchContent = useCallback((branchId: string, newContent: string) => {
-    console.log(`📝 🎯 ATTEMPTING TO UPDATE BRANCH CONTENT:`);
-    console.log(`📝 Branch ID: ${branchId}`);
-    console.log(`📝 New Content: "${newContent}"`);
-    console.log(`📝 EditableNodes state:`, Array.from(editableNodes));
-    console.log(`📝 IsCreatingBranch:`, isCreatingBranch);
-    console.log(`📝 RecentlyCreatedNodes:`, Array.from(recentlyCreatedNodes));
+    // console.log(`📝 🎯 ATTEMPTING TO UPDATE BRANCH CONTENT:`);
+    // console.log(`📝 Branch ID: ${branchId}`);
+    // console.log(`📝 New Content: "${newContent}"`);
+    // console.log(`📝 EditableNodes state:`, Array.from(editableNodes));
+    // console.log(`📝 IsCreatingBranch:`, isCreatingBranch);
+    // console.log(`📝 RecentlyCreatedNodes:`, Array.from(recentlyCreatedNodes));
     
     // STRICT PROTECTION: Only allow content updates for nodes explicitly in edit mode
     if (!editableNodes.has(branchId)) {
-      console.warn(`🚫 BLOCKED: Cannot update content for node ${branchId} - not in edit mode. Content updates are only allowed when user explicitly enters edit mode.`);
-      console.warn(`🚫 Available editable nodes:`, Array.from(editableNodes));
+      // console.warn(`🚫 BLOCKED: Cannot update content for node ${branchId} - not in edit mode. Content updates are only allowed when user explicitly enters edit mode.`);
+      // console.warn(`🚫 Available editable nodes:`, Array.from(editableNodes));
       return;
     }
     
@@ -1292,7 +1605,7 @@ export default function NarrativePage() {
     
     // Prevent immediate content updates to recently created nodes
     if (recentlyCreatedNodes.has(branchId)) {
-      console.warn(`⚠️ Ignoring content update to recently created node ${branchId}. Content should be set during creation.`);
+      // console.warn(`⚠️ Ignoring content update to recently created node ${branchId}. Content should be set during creation.`);
       return;
     }
     
@@ -1310,8 +1623,8 @@ export default function NarrativePage() {
       return;
     }
     
-    console.log(`📝 ✅ AUTHORIZED CONTENT UPDATE:`);
-    console.log(`📝 Node ${branchId}: "${branchNode.content}" → "${newContent}"`);
+    // console.log(`📝 ✅ AUTHORIZED CONTENT UPDATE:`);
+    // console.log(`📝 Node ${branchId}: "${branchNode.content}" → "${newContent}"`);
     
     // Update the sentence node content
     setSentenceNodes(prev => {
@@ -1559,8 +1872,6 @@ export default function NarrativePage() {
   const handleContentChange = useCallback((oldContent: string, newContent: string) => {
     if (oldContent === newContent) return;
     
-    console.warn(`🚫 BLOCKED: Content change detected but ignored. Old: "${oldContent.substring(0, 50)}..." New: "${newContent.substring(0, 50)}..."`);
-    console.warn(`🚫 Content updates to existing sentences are not allowed. Only new sentence creation and explicit edit mode are permitted.`);
     
     // COMPLETELY DISABLED - we never want to update existing sentence content automatically
     // If content needs to be updated, it must be done through explicit edit mode (double-click)
@@ -1826,6 +2137,9 @@ export default function NarrativePage() {
               onEnterEditMode={handleEnterEditMode}
               onExitEditMode={handleExitEditMode}
               findNodeIdByContent={findNodeIdByContent}
+              onDeleteSentence={deleteSentenceFromTree}
+              onDeleteBranch={deleteBranchFromTree}
+              onInsertNodeAfter={insertNodeAfter}
               onGenerateVisualization={async (sentence: string, validation: any) => {
                 // When NarrativeLayer wants to generate visualization, 
                 // Add info node to canvas
@@ -2158,6 +2472,23 @@ export default function NarrativePage() {
       </div>
     </div>
   );
+  
+  // Development helper: expose deletion function to window for testing
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as any).deleteSentenceFromTree = deleteSentenceFromTree;
+      (window as any).deleteBranchFromTree = deleteBranchFromTree;
+      (window as any).insertNodeAfter = insertNodeAfter;
+      (window as any).exportSentenceTree = exportSentenceTree;
+      (window as any).sentenceNodes = sentenceNodes;
+      console.log('🧪 Development helpers available:');
+      console.log('  - window.deleteSentenceFromTree(sentenceContentOrId)');
+      console.log('  - window.deleteBranchFromTree(branchId)');
+      console.log('  - window.insertNodeAfter(afterSentenceContent, newSentenceContent)');
+      console.log('  - window.exportSentenceTree()');
+      console.log('  - window.sentenceNodes (current tree state)');
+    }
+  }, [deleteSentenceFromTree, deleteBranchFromTree, insertNodeAfter, exportSentenceTree, sentenceNodes]);
 }
 
 
