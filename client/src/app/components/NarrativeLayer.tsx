@@ -6,7 +6,7 @@ import { Editor } from '@tiptap/core';
 import { IoSaveSharp, IoArrowUndo } from "react-icons/io5";
 import { FaSave } from "react-icons/fa";
 import { ImRedo2 } from "react-icons/im";
-import { HiOutlineDocumentDuplicate, HiOutlineTrash } from "react-icons/hi2";
+import { HiOutlineDocumentDuplicate, HiOutlineTrash, HiOutlineChartBar, HiOutlinePlus } from "react-icons/hi2";
 import { MdCancel } from "react-icons/md";
 import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
@@ -49,7 +49,7 @@ interface NarrativeLayerProps {
   findNodeIdByContent?: (content: string) => string | null; // Helper to find node ID by content
   onDeleteSentence?: (sentenceIdOrContent: string) => void; // New callback for deleting sentences from tree
   onDeleteBranch?: (branchId: string) => void; // New callback for deleting entire branches from tree
-  onInsertNodeAfter?: (afterSentenceContent: string, newSentenceContent: string) => void; // New callback for inserting node after a sentence
+  onInsertNodeAfter?: (afterSentenceContentOrId: string, newSentenceContent: string, useId?: boolean) => void; // New callback for inserting node after a sentence
   updateSentenceNodeContent?: (nodeId: string, newContent: string) => boolean; // New callback for updating specific node content by ID
   currentEditSentenceId?: string | null; // ID of the sentence currently being edited
 }
@@ -104,11 +104,12 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   const [originalEditingContent, setOriginalEditingContent] = useState<string | null>(null); // Store original content when edit mode starts
   const [editingNodeId, setEditingNodeId] = useState<string | null>(null); // Store the actual node ID being edited
   const saveButtonRef = useRef<HTMLButtonElement>(null); // Ref for positioning save button
-  const [selectedSentence, setSelectedSentence] = useState<{element: HTMLElement, position: {from: number, to: number}} | null>(null); // Track selected sentence for dropdown
+  const [selectedSentence, setSelectedSentence] = useState<{element: HTMLElement, position: {from: number, to: number}, sentenceId: string | null} | null>(null); // Track selected sentence for dropdown
   const [dropdownPosition, setDropdownPosition] = useState<{left: number, top: number} | null>(null); // Track dropdown position
   const [addNextMode, setAddNextMode] = useState<{
     isActive: boolean;
     afterSentenceContent: string;
+    afterSentenceId: string | null; // Add the sentence ID
     position: {left: number, top: number};
   } | null>(null); // Track "add next" inline editor state
   const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Track click timeout to prevent click on double-click
@@ -881,14 +882,31 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
               const previousSentenceText = selectedSentence.element.textContent?.trim();
               selectedSentence.element.removeAttribute('data-selected');
         
-            } else {
-
             }
+            
+            // Get sentence content and ID
+            const sentenceContent = sentenceElement.textContent?.trim() || '';
+            let sentenceId: string | null = null;
+            
+            // Find the sentence ID using the same logic as in double-click
+            if (findNodeIdByContent && sentenceContent) {
+              sentenceId = findNodeIdByContent(sentenceContent);
+            }
+            
+            if (!sentenceId && getBranchesForSentence && sentenceContent) {
+              const branches = getBranchesForSentence(sentenceContent);
+              if (branches.length > 0) {
+                sentenceId = branches[0].id; // Use the first branch's ID
+              }
+            }
+            
+            console.log('🔍 Selected sentence ID for dropdown:', { sentenceContent, sentenceId });
             
             // Set the selected sentence and show dropdown
             setSelectedSentence({ 
               element: sentenceElement, 
-              position: { from: position, to: endPosition } 
+              position: { from: position, to: endPosition },
+              sentenceId: sentenceId
             });
             
             // Calculate dropdown position at the end of the sentence
@@ -1663,9 +1681,15 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           }
           
           // Set up the inline editor state for "add next" instead of immediately inserting
+          
+          // Get the sentence ID for the selected sentence
+          const selectedSentenceId = findNodeIdByContent ? findNodeIdByContent(selectedSentenceContent) : null;
+          console.log('🔍 Found sentence ID for add-next:', { selectedSentenceContent, selectedSentenceId });
+          
           setAddNextMode({
             isActive: true,
             afterSentenceContent: selectedSentenceContent,
+            afterSentenceId: selectedSentenceId,
             position: dropdownPosition || { left: 0, top: 0 }
           });
           
@@ -1692,27 +1716,39 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         break;
       case 'delete':
         
-        // Get the sentence content to delete
-        const sentenceToDelete = selectedSentence.element.textContent?.trim();
+        // Use the stored sentence ID instead of content matching
+        const sentenceIdToDelete = selectedSentence.sentenceId;
+        const sentenceContentForUndo = selectedSentence.element.textContent?.trim();
         
-        if (sentenceToDelete && onDeleteSentence) {
+        console.log('🗑️ Delete action triggered with:', { 
+          sentenceIdToDelete, 
+          sentenceContentForUndo,
+          hasOnDeleteSentence: !!onDeleteSentence 
+        });
+        
+        if (sentenceIdToDelete && onDeleteSentence) {
           
           // Add to undo stack before deletion
           addToUndoStack({
             type: 'delete_sentence',
             timestamp: Date.now(),
-            deletedContent: sentenceToDelete,
+            deletedContent: sentenceContentForUndo || '',
             context: {
-              // Store any additional context needed for restoration
-              sentencePosition: selectedSentence.position
+              sentencePosition: selectedSentence.position,
+              sentenceId: sentenceIdToDelete
             }
           });
           
-          // Call the parent's delete function immediately (no confirmation)
-          onDeleteSentence(sentenceToDelete);
+          // Call the parent's delete function with the sentence ID
+          console.log('🔥 Calling onDeleteSentence with ID:', sentenceIdToDelete);
+          onDeleteSentence(sentenceIdToDelete);
           
         } else {
-          console.error('❌ Cannot delete sentence: onDeleteSentence not available or no sentence content');
+          console.error('❌ Cannot delete sentence: missing sentence ID or onDeleteSentence callback', {
+            hasSentenceId: !!sentenceIdToDelete,
+            hasOnDeleteSentence: !!onDeleteSentence,
+            selectedSentence
+          });
         }
         break;
     }
@@ -1751,8 +1787,17 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   
   // Handle saving the "add next" inline editor content
   const handleSaveAddNext = useCallback((newSentenceContent: string) => {
+    console.log('🔍 handleSaveAddNext called with:', { 
+      newSentenceContent, 
+      addNextMode, 
+      hasOnInsertNodeAfter: !!onInsertNodeAfter 
+    });
+    
     if (!addNextMode || !onInsertNodeAfter) {
-      console.error('❌ Cannot save add next: missing state or callback');
+      console.error('❌ Cannot save add next: missing state or callback', {
+        addNextMode: !!addNextMode,
+        onInsertNodeAfter: !!onInsertNodeAfter
+      });
       return;
     }
     
@@ -1762,7 +1807,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       return;
     }
     
-    // console.log(`💾 Processing new content: "${trimmedContent}" after "${addNextMode.afterSentenceContent}"`);
+    console.log(`💾 Processing new content: "${trimmedContent}" after "${addNextMode.afterSentenceContent}"`);
     
     // Split content into sentences using a more robust approach
     const sentences: string[] = [];
@@ -1786,7 +1831,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       sentences.push(trimmedContent);
     }
     
-    // console.log(`🔍 Split into ${sentences.length} sentence(s):`, sentences);
+    console.log(`🔍 Split into ${sentences.length} sentence(s):`, sentences);
     
     if (sentences.length === 0) {
       console.error('❌ No valid sentences found');
@@ -1798,10 +1843,23 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     
     for (let i = 0; i < sentences.length; i++) {
       const sentence = sentences[i].trim();
-      // console.log(`📝 Inserting sentence ${i + 1}/${sentences.length}: "${sentence}" after "${currentParent}"`);
+      console.log(`📝 Inserting sentence ${i + 1}/${sentences.length}: "${sentence}" after "${currentParent}"`);
       
       // Insert this sentence after the current parent
-      onInsertNodeAfter(currentParent, sentence);
+      console.log('🔍 About to call onInsertNodeAfter with:', { currentParent, sentence, afterSentenceId: addNextMode.afterSentenceId });
+      
+      // Use the sentence ID if available, fallback to content matching
+      if (addNextMode.afterSentenceId && i === 0) {
+        // For the first sentence, we have the ID of the original sentence
+        console.log('🔍 Using sentence ID for insertion:', addNextMode.afterSentenceId);
+        onInsertNodeAfter(addNextMode.afterSentenceId, sentence, true); // true indicates ID-based call
+      } else {
+        // For subsequent sentences or if no ID available, use content matching
+        console.log('🔍 Using content matching for insertion');
+        onInsertNodeAfter(currentParent, sentence, false); // false indicates content-based call
+      }
+      
+      console.log('🔍 Called onInsertNodeAfter successfully');
       
       // The next sentence will be inserted after this one
       currentParent = sentence;
@@ -2173,7 +2231,8 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                   backgroundColor: disableInteractions ? '#f3f4f6' : undefined
                 }}
               >
-                📊 Show View
+                <HiOutlineChartBar size={16} style={{ marginRight: '6px' }} />
+                Show View
               </button>
               
               <button
@@ -2187,7 +2246,8 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                   backgroundColor: disableInteractions ? '#f3f4f6' : undefined
                 }}
               >
-                ➕ Add Next
+                <HiOutlinePlus size={16} style={{ marginRight: '6px' }} />
+                Add Next
               </button>
               
               {/* Show existing branches if any */}
@@ -2510,11 +2570,20 @@ const AddNextEditor: React.FC<{
   };
   
   const handleSave = () => {
-    if (!editor) return;
+    console.log('🔍 AddNextEditor handleSave called');
+    if (!editor) {
+      console.error('❌ No editor available in AddNextEditor');
+      return;
+    }
     
     const trimmedContent = editor.getText().trim();
+    console.log('🔍 AddNextEditor content:', trimmedContent);
+    
     if (trimmedContent) {
+      console.log('🔍 Calling onSave with content:', trimmedContent);
       onSave(trimmedContent);
+    } else {
+      console.warn('⚠️ AddNextEditor: No content to save');
     }
   };
   
