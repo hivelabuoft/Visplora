@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import DatasetExplorer from '../components/DatasetExplorer';
-import NarrativeLayer, { NarrativeLayerRef } from '../components/NarrativeLayer';
+import PagedNarrativeSystem, { PagedNarrativeSystemRef } from '../components/PagedNarrativeSystem';
 import FileSummaryCanvas from '../components/FileSummaryCanvas';
 import { EmptyCanvas, EmptyTimeline, AnalyzingState } from '../components/EmptyStates';
 import ReactFlowCanvas, { ReactFlowCanvasRef } from '../components/ReactFlowCanvas';
@@ -37,7 +37,7 @@ interface DatasetFile {
 
 export default function NarrativePage() {
   const router = useRouter();
-  const narrativeLayerRef = useRef<NarrativeLayerRef>(null);
+  const narrativeSystemRef = useRef<PagedNarrativeSystemRef>(null);
   const reactFlowCanvasRef = useRef<ReactFlowCanvasRef>(null);
   
   // Add client-side only state to prevent hydration mismatches
@@ -63,6 +63,40 @@ export default function NarrativePage() {
   // Set client-side flag after hydration
   useEffect(() => {
     setIsClient(true);
+    
+    // Add debug helpers to window for testing
+    if (typeof window !== 'undefined') {
+      (window as any).narrativeDebug = {
+        getCurrentTree: () => {
+          if (narrativeSystemRef.current) {
+            return narrativeSystemRef.current.debugGetCurrentTreeState?.();
+          }
+          return null;
+        },
+        createTestBranches: () => {
+          if (narrativeSystemRef.current) {
+            return narrativeSystemRef.current.debugCreateTestBranches?.();
+          }
+        },
+        getCurrentPageId: () => {
+          if (narrativeSystemRef.current) {
+            return narrativeSystemRef.current.getCurrentPageId();
+          }
+        },
+        getPageContent: (pageId?: string) => {
+          if (narrativeSystemRef.current) {
+            const id = pageId || narrativeSystemRef.current.getCurrentPageId();
+            return narrativeSystemRef.current.getPageContent(id);
+          }
+        }
+      };
+      
+      console.log('🧪 Debug helpers available:');
+      console.log('  - window.narrativeDebug.getCurrentTree()');
+      console.log('  - window.narrativeDebug.createTestBranches()');
+      console.log('  - window.narrativeDebug.getCurrentPageId()');
+      console.log('  - window.narrativeDebug.getPageContent(pageId?)');
+    }
   }, []);
 
   // Insight timeline state - initially empty
@@ -93,6 +127,7 @@ export default function NarrativePage() {
 
   // Define simplified sentence node structure for linear narratives with branching
   interface SentenceNode {
+    pageId: string; // page this node belongs to
     id: string; // unique identifier
     content: string; // the actual sentence text
     parent: string | null; // parent sentence id (previous sentence in linear flow)
@@ -109,6 +144,10 @@ export default function NarrativePage() {
     };
   }
 
+  // OLD SENTENCE TREE MANAGEMENT - Now handled by PagedNarrativeSystem
+  // Keeping for reference but commenting out to avoid conflicts
+  
+  /*
   // Track completed sentences with full branching structure
   const [sentenceNodes, setSentenceNodes] = useState<Map<string, SentenceNode>>(new Map());
   
@@ -125,8 +164,10 @@ export default function NarrativePage() {
     
     return sentences;
   }, [sentenceNodes, activePath]);
+  */
 
-  // Automatically rebuild main editor content from activeChild path
+  /*
+  // OLD: Automatically rebuild main editor content from activeChild path
   useEffect(() => {
     // Get the current active path following activeChild relationships (inline implementation)
     const getCurrentActivePath = (): string[] => {
@@ -176,12 +217,13 @@ export default function NarrativePage() {
       console.log('📝 Auto-rebuilt narrative:', narrativeText);
       
       // Update the main editor content if it has changed
-      if (narrativeLayerRef.current && narrativeText) {
+      if (narrativeSystemRef.current && narrativeText) {
         // Only update if content is different to avoid infinite loops
-        const currentEditorText = narrativeLayerRef.current.getFullText();
+        const currentEditorText = narrativeSystemRef.current.getPageContent(narrativeSystemRef.current.getCurrentPageId());
         if (currentEditorText.trim() !== narrativeText.trim()) {
           console.log('✏️ Updating main editor with activeChild path content');
-          narrativeLayerRef.current.updateContent(narrativeText);
+          // For now, we'll need to implement updateContent in PagedNarrativeSystem
+          // narrativeSystemRef.current.updateContent(narrativeText);
         }
       }
       
@@ -192,6 +234,7 @@ export default function NarrativePage() {
       }
     }
   }, [sentenceNodes, activePath]);
+  */
 
   // Local interaction tracking
   const [dashboardInteractions, setDashboardInteractions] = useState<Array<{
@@ -354,7 +397,7 @@ export default function NarrativePage() {
 
   // Function to check if all sentences in the narrative are completed
   const checkAllSentencesCompleted = () => {
-    if (!narrativeLayerRef.current) {
+    if (!narrativeSystemRef.current) {
       return false;
     }
     
@@ -417,6 +460,10 @@ export default function NarrativePage() {
     // Return true only if we found content and all text (except punctuation) is in completed sentences
     return hasAnyContent;
   };
+
+  /*
+  // OLD SENTENCE TREE HELPER FUNCTIONS - Now handled by PagedNarrativeSystem
+  // Commenting out to avoid conflicts
 
   // Helper functions for managing sentence tree structure
   const generateSentenceId = () => {
@@ -695,230 +742,17 @@ export default function NarrativePage() {
     return sentences;
   };
 
-  // Handle sentence end detection for narrative layer - now with tree structure
-  const handleSentenceEnd = async (sentence: string, confidence: number) => {
-    // CRITICAL PROTECTION: Skip if any nodes are currently being edited
-    if (editableNodes.size > 0) {
-      console.log(`🚫 BLOCKED: Skipping sentence processing - nodes currently being edited: ${Array.from(editableNodes).join(', ')}`);
-      console.log(`🚫 Sentence that would be processed: "${sentence}"`);
-      return;
-    }
+  // Handle sentence end detection for narrative layer - now delegated to PagedNarrativeSystem
+  const handleSentenceEnd = async (sentence: string, confidence: number, pageId: string) => {
+    console.log(`🧠 Sentence completed on page ${pageId}: "${sentence}" (Confidence: ${confidence})`);
     
-    // Additional protection: Check if this sentence content matches any existing node
-    // This prevents creating duplicates of existing content
-    for (const [nodeId, node] of sentenceNodes.entries()) {
-      if (node.content === sentence) {
-        console.log(`🚫 BLOCKED: Sentence "${sentence}" already exists as node ${nodeId} - preventing duplicate`);
-        return;
-      }
-    }
+    // The PagedNarrativeSystem handles the tree structure internally
+    // Here we can focus on the analysis and logging
     
-    // Handle branch creation messages
-    if (sentence.startsWith('BRANCH_CREATED:')) {
-      const originalSentence = sentence.replace('BRANCH_CREATED:', '');
-      
-      // Find the parent sentence node and mark it as having branches
-      setSentenceNodes(prev => {
-        const newMap = new Map(prev);
-        for (const [id, node] of newMap.entries()) {
-          if (node.content === originalSentence) {
-            const updatedNode = {
-              ...node,
-              metadata: {
-                ...node.metadata,
-                hasBranches: true,
-                branchCreatedTime: typeof window !== 'undefined' ? Date.now() : 0
-              }
-            };
-            newMap.set(id, updatedNode);
-            break;
-          }
-        }
-        return newMap;
-      });
-      return;
-    }
-    
-    // console.log(`🧠 Sentence completed for analysis: "${sentence}" (Confidence: ${confidence})`);
-    
-    // Get the current completed sentences directly from DOM (in correct order)
-    const currentCompletedSentences = getCompletedSentencesFromDOM();
-    // console.log('📝 Completed sentences array (in DOM order):', currentCompletedSentences);
-    
-    // Update or create sentence nodes based on DOM structure with simplified linear chaining
-    setSentenceNodes(prev => {
-      const newMap = new Map(prev);
-      const newActivePath: string[] = [];
-      let previousNodeId: string | null = null;
-      
-      currentCompletedSentences.forEach((sentenceData, index) => {
-        // FINAL PROTECTION: Skip processing if any nodes are in edit mode
-        if (editableNodes.size > 0) {
-          console.log(`🚫 FINAL BLOCK: Skipping sentence processing in forEach loop - edit mode active`);
-          return; // Skip this iteration
-        }
-        
-        // Look for existing node with this content
-        let existingNode: SentenceNode | undefined;
-        for (const [id, node] of newMap.entries()) {
-          if (node.content === sentenceData.content) {
-            existingNode = node;
-            break;
-          }
-        }
-        
-        if (existingNode) {
-          // Update existing node
-          const updatedNode = {
-            ...existingNode,
-            isCompleted: true,
-            revisedTime: typeof window !== 'undefined' ? Date.now() : 0,
-            metadata: { ...existingNode.metadata, confidence }
-          };
-          newMap.set(existingNode.id, updatedNode);
-          newActivePath.push(existingNode.id);
-          
-          // Link to previous sentence if this is part of linear flow
-          if (previousNodeId && !existingNode.parent) {
-            const prevNode = newMap.get(previousNodeId);
-            if (prevNode && !prevNode.children.includes(existingNode.id)) {
-              // Add this node as child of previous node
-              const updatedPrevNode = {
-                ...prevNode,
-                children: [...prevNode.children, existingNode.id]
-              };
-              newMap.set(previousNodeId, updatedPrevNode);
-              
-              // Set parent relationship
-              updatedNode.parent = previousNodeId;
-              newMap.set(existingNode.id, updatedNode);
-            }
-          }
-          
-          previousNodeId = existingNode.id;
-        } else {
-          // Create new node with linear parent relationship
-          const newNode = createSentenceNode(
-            sentenceData.content, 
-            previousNodeId // Set parent as the previous sentence
-          );
-          newNode.isCompleted = true;
-          newNode.metadata = { confidence };
-          
-          newMap.set(newNode.id, newNode);
-          newActivePath.push(newNode.id);
-          
-          // Link to previous sentence
-          if (previousNodeId) {
-            const prevNode = newMap.get(previousNodeId);
-            if (prevNode) {
-              const updatedPrevNode = {
-                ...prevNode,
-                children: [...prevNode.children, newNode.id],
-                // Set as active child: if parent has no active child, or only one child, this becomes active
-                activeChild: prevNode.children.length === 0 ? newNode.id : prevNode.activeChild
-              };
-              newMap.set(previousNodeId, updatedPrevNode);
-            }
-          }
-          
-          previousNodeId = newNode.id;
-        }
-      });
-      
-      // Update active path
-      setActivePath(newActivePath);
-      
-      // Debug: Log the tree structure to understand activeChild relationships
-      console.log('🌳 Tree structure after sentence processing:');
-      for (const [id, node] of newMap.entries()) {
-        if (node.children.length > 1) {
-          console.log(`🌿 BRANCH DETECTED: "${node.content}" has ${node.children.length} children (activeChild: ${node.activeChild ? newMap.get(node.activeChild)?.content : 'none'}):`);
-          node.children.forEach(childId => {
-            const child = newMap.get(childId);
-            const isActive = childId === node.activeChild ? ' ⭐' : '';
-            console.log(`  └── "${child?.content}"${isActive}`);
-          });
-        } else if (node.children.length === 1) {
-          const child = newMap.get(node.children[0]);
-          const isActive = node.children[0] === node.activeChild ? ' ⭐' : '';
-          console.log(`📝 "${node.content}" → "${child?.content}"${isActive}`);
-        } else {
-          console.log(`🔚 "${node.content}" (end node)`);
-        }
-      }
-      
-      // console.log('📝 Updated sentence nodes:', newMap.size, 'nodes');
-      // console.log('🛤️ New active path:', newActivePath);
-      // console.log('📊 Current sentences:', currentCompletedSentences);
-      
-      // Check completion status with the updated map (not the old state)
-      setTimeout(() => {
-        const allCompleted = checkAllSentencesCompleted();
-        // console.log('🔍 Checking completion status:', {
-        //   allCompleted,
-        //   triggeredBy: sentence,
-        //   confidence,
-        //   treeNodesCount: newMap.size,
-        //   domSentencesCount: currentCompletedSentences.length
-        // });
-        
-        if (allCompleted) {
-          const finalSentences = getCompletedSentencesFromDOM();
-          //call the LLM here
-
-          // console.log('🎉 All sentences in narrative are completed!');
-          console.log('📊 Final completed sentences array (in correct order):', finalSentences);
-          
-          // SAFETY CHECK: Remove duplicate sentence nodes with identical content
-          const cleanedNodeMap = removeDuplicateSentenceNodes(newMap);
-          
-          // Update the sentence nodes with the cleaned map if changes were made
-          if (cleanedNodeMap.size !== newMap.size) {
-            console.log('🧹 Tree structure cleaned - duplicate nodes removed');
-            setSentenceNodes(cleanedNodeMap);
-            
-            // Recalculate active path with cleaned structure
-            const updatedActivePath = getActivePathFromCleanedMap(cleanedNodeMap);
-            setActivePath(updatedActivePath);
-          }
-          
-          // Create the export data with the cleaned map
-          const finalNodeMap = cleanedNodeMap.size !== newMap.size ? cleanedNodeMap : newMap;
-          const finalActivePath = cleanedNodeMap.size !== newMap.size ? getActivePathFromCleanedMap(cleanedNodeMap) : newActivePath;
-          
-          const exportData = {
-            nodes: Array.from(finalNodeMap.entries()).map(([nodeId, node]) => ({ nodeId, ...node })),
-            activePath: finalActivePath,
-            stats: {
-              totalNodes: finalNodeMap.size,
-              completedNodes: Array.from(finalNodeMap.values()).filter((n: SentenceNode) => n.isCompleted).length,
-              branchedNodes: Array.from(finalNodeMap.values()).filter((n: SentenceNode) => n.children.length > 1).length,
-              rootNodes: Array.from(finalNodeMap.values()).filter((n: SentenceNode) => !n.parent).length,
-              averageEditCount: Array.from(finalNodeMap.values()).reduce((sum: number, n: SentenceNode) => sum + n.editCount, 0) / finalNodeMap.size || 0,
-              activePath: finalActivePath.length
-            },
-            exportedAt: typeof window !== 'undefined' ? Date.now() : 0
-          };
-          
-          console.log('🌳 Complete Sentence Tree Structure:', exportData);
-          
-          // Also log the computed completedSentences array for compatibility
-          console.log('📝 Computed completed sentences (legacy format):', 
-            finalSentences.map(s => s.content)
-          );
-        } else {
-        }
-      }, 150); // Slightly longer delay to ensure DOM is fully updated
-      
-      return newMap;
-    });
-    
-    // Here you can add your LLM API call or other analysis logic
     try {
       // Simulate analysis time
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // console.log(`✅ Analysis complete for: "${sentence}"`);
+      console.log(`✅ Analysis complete for: "${sentence}" on page ${pageId}`);
       
       // Log the sentence completion interaction
       await interactionLogger.logInteraction({
@@ -931,7 +765,8 @@ export default function NarrativePage() {
         metadata: {
           sentence,
           confidence,
-          timestamp: typeof window !== 'undefined' ? Date.now() : 0
+          pageId,
+          timestamp: Date.now()
         }
       });
     } catch (error) {
@@ -1563,11 +1398,11 @@ export default function NarrativePage() {
       console.log(`📋 Final narrative text: "${narrativeText}"`);
       
       // Update the main editor content
-      if (narrativeLayerRef.current) {
+      if (narrativeSystemRef.current) {
         console.log(`📝 Updating main editor with branch narrative: "${narrativeText}"`);
-        narrativeLayerRef.current.updateContent(narrativeText);
+        // narrativeSystemRef.current.updateContent(narrativeText);
       } else {
-        console.warn('⚠️ narrativeLayerRef.current is null, cannot update editor content');
+        console.warn('⚠️ narrativeSystemRef.current is null, cannot update editor content');
       }
     }, 100);
     
@@ -1662,9 +1497,9 @@ export default function NarrativePage() {
               .join(' ');
             
             // Update the main editor content
-            if (narrativeLayerRef.current) {
+            if (narrativeSystemRef.current) {
               console.log(`📝 Updating main editor with updated narrative: "${narrativeText}"`);
-              narrativeLayerRef.current.updateContent(narrativeText);
+              // narrativeSystemRef.current.updateContent(narrativeText);
             }
           }, 100);
         } else {
@@ -1853,9 +1688,9 @@ export default function NarrativePage() {
           .filter(content => content.length > 0)
           .join(' ');
         
-        if (narrativeLayerRef.current) {
+        if (narrativeSystemRef.current) {
           console.log(`📝 Updating main editor with new branch narrative: "${narrativeText}"`);
-          narrativeLayerRef.current.updateContent(narrativeText);
+          // narrativeSystemRef.current.updateContent(narrativeText);
         }
         
         // Clear the flag after branch creation is complete
@@ -1962,8 +1797,8 @@ export default function NarrativePage() {
   }, [isClient, sentenceNodes, activePath, completedSentences]);
 
   // Handle sentence selection for narrative layer
-  const handleSentenceSelect = (sentence: string, index: number) => {
-    // console.log(`📝 Sentence selected: "${sentence}" (Index: ${index})`);
+  const handleSentenceSelect = (sentence: string, index: number, pageId: string) => {
+    console.log(`📝 Sentence selected on page ${pageId}: "${sentence}" (Index: ${index})`);
     
     // Log the sentence selection interaction
     interactionLogger.logInteraction({
@@ -1976,6 +1811,7 @@ export default function NarrativePage() {
       metadata: {
         sentence,
         index,
+        pageId,
         timestamp: Date.now()
       }
     });
@@ -1987,19 +1823,21 @@ export default function NarrativePage() {
   };
 
   // Handle suggestion state changes
-  const handleSuggestionReceived = (suggestion: NarrativeSuggestion) => {
+  const handleSuggestionReceived = (suggestion: NarrativeSuggestion, pageId: string) => {
+    console.log(`📥 Suggestion received for page ${pageId}:`, suggestion);
     setHasPendingSuggestion(true);
   };
 
   // Handle suggestion accepted/denied
-  const handleSuggestionResolved = () => {
+  const handleSuggestionResolved = (pageId: string) => {
+    console.log(`✅ Suggestion resolved for page ${pageId}`);
     setHasPendingSuggestion(false);
   };
 
   // Use effect to check and update suggestion state periodically when needed
   useEffect(() => {
-    if (narrativeLayerRef.current) {
-      const hasActiveSuggestion = narrativeLayerRef.current.hasPendingSuggestion();
+    if (narrativeSystemRef.current) {
+      const hasActiveSuggestion = narrativeSystemRef.current.hasPendingSuggestion();
       if (hasActiveSuggestion !== hasPendingSuggestion) {
         setHasPendingSuggestion(hasActiveSuggestion);
       }
@@ -2075,6 +1913,115 @@ export default function NarrativePage() {
     }
   };
 
+  // END OF OLD SENTENCE TREE MANAGEMENT CODE - Commented out
+  */
+
+  // Essential handlers that are still needed for the PagedNarrativeSystem
+  const handleSentenceEnd = async (sentence: string, confidence: number, pageId: string) => {
+    console.log(`🧠 Sentence completed on page ${pageId}: "${sentence}" (Confidence: ${confidence})`);
+    
+    // The PagedNarrativeSystem handles the tree structure internally
+    // Here we can focus on the analysis and logging
+    
+    try {
+      // Simulate analysis time
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log(`✅ Analysis complete for: "${sentence}" on page ${pageId}`);
+      
+      // Log the sentence completion interaction
+      await interactionLogger.logInteraction({
+        eventType: 'view_change',
+        action: 'sentence_completion',
+        target: {
+          type: 'ui_element',
+          name: 'narrative_layer'
+        },
+        metadata: {
+          sentence,
+          confidence,
+          pageId,
+          timestamp: Date.now()
+        }
+      });
+    } catch (error) {
+      console.error('❌ Error analyzing sentence:', error);
+    }
+  };
+
+  // Handle sentence selection for narrative layer
+  const handleSentenceSelect = (sentence: string, index: number, pageId: string) => {
+    console.log(`📝 Sentence selected on page ${pageId}: "${sentence}" (Index: ${index})`);
+    
+    // Log the sentence selection interaction
+    interactionLogger.logInteraction({
+      eventType: 'click',
+      action: 'sentence_selection',
+      target: {
+        type: 'ui_element',
+        name: 'narrative_layer'
+      },
+      metadata: {
+        sentence,
+        index,
+        pageId,
+        timestamp: Date.now()
+      }
+    });
+  };
+
+  // Handle suggestion state changes
+  const handleSuggestionReceived = (suggestion: NarrativeSuggestion, pageId: string) => {
+    setHasPendingSuggestion(true);
+  };
+
+  // Handle suggestion accepted/denied
+  const handleSuggestionResolved = (pageId: string) => {
+    setHasPendingSuggestion(false);
+  };
+
+  const handleContentChange = (oldContent: string, newContent: string, pageId: string) => {
+    // The PagedNarrativeSystem handles this internally now
+  };
+
+  const handleStopAnalysis = () => {
+    setIsAnalyzing(false);
+  };
+
+  const handleFileSelection = async (files: DatasetFile[]) => {
+    setSelectedFiles(files);
+    setSummaryError('');
+    
+    if (files.length === 0) {
+      setFileSummaries([]);
+      return;
+    }
+
+    setSummaryLoading(true);
+    try {
+      const londonDataFiles = files.map(file => ({
+        id: file.id,
+        name: file.name,
+        path: file.path,
+        category: file.category || 'uncategorized',
+        description: file.description,
+        size: 0,
+        columns: [],
+        sampleData: [],
+        totalRecords: 0,
+        isLoaded: false
+      }));
+
+      const summaries = await generateMultipleFileSummaries(londonDataFiles);
+      setFileSummaries(summaries);
+    } catch (error) {
+      console.error('Error generating file summaries:', error);
+      setSummaryError(error instanceof Error ? error.message : 'Failed to analyze selected files');
+      setFileSummaries([]);
+    } finally {
+      setSummaryLoading(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center">
@@ -2121,8 +2068,8 @@ export default function NarrativePage() {
         {/* Left Section - 40% (Data Explorer or Narrative Layer) */}
         <div className="w-2/5">
           {showNarrativeLayer ? (
-            <NarrativeLayer 
-              ref={narrativeLayerRef}
+            <PagedNarrativeSystem 
+              ref={narrativeSystemRef}
               prompt={currentPrompt}
               onSentenceEnd={handleSentenceEnd}
               onSentenceSelect={handleSentenceSelect}
@@ -2130,17 +2077,10 @@ export default function NarrativePage() {
               onSuggestionResolved={handleSuggestionResolved}
               disableInteractions={hasActiveInfoNodes}
               onContentChange={handleContentChange}
-              getBranchesForSentence={getBranchesForSentence}
-              onSwitchToBranch={handleSwitchToBranch}
-              onCreateBranch={handleCreateBranch}
-              onUpdateBranchContent={handleUpdateBranchContent}
-              onEnterEditMode={handleEnterEditMode}
-              onExitEditMode={handleExitEditMode}
-              findNodeIdByContent={findNodeIdByContent}
-              onDeleteSentence={deleteSentenceFromTree}
-              onDeleteBranch={deleteBranchFromTree}
-              onInsertNodeAfter={insertNodeAfter}
-              onGenerateVisualization={async (sentence: string, validation: any) => {
+              onPageChange={(fromPageId, toPageId) => {
+                // console.log(`📄 Page changed from ${fromPageId} to ${toPageId}`);
+              }}
+              onGenerateVisualization={async (sentence: string, validation: any, pageId: string) => {
                 // When NarrativeLayer wants to generate visualization, 
                 // Add info node to canvas
                 if (reactFlowCanvasRef.current) {
@@ -2245,7 +2185,7 @@ export default function NarrativePage() {
                       if (isDisabled) return;
                       
                       setIsCapturingInsights(true);
-                      narrativeLayerRef.current?.showLoadingSuggestion();
+                      // narrativeSystemRef.current?.showLoadingSuggestion();
                       
                       try {
                         // Capture interactions and get the last 5
@@ -2255,9 +2195,10 @@ export default function NarrativePage() {
                         setDashboardInteractions([]);
                         console.log('🧹 Local dashboard interactions cleared');
                         
-                        // Get narrative content and current sentence from the narrative layer
-                        const narrativeContext = narrativeLayerRef.current?.getFullText() || '';
-                        const currentSentence = narrativeLayerRef.current?.getCurrentSentence() || '';
+                        // Get narrative content from the current page
+                        const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                        const narrativeContext = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                        const currentSentence = ''; // We'll need to implement getCurrentSentence for paged system
                         
                         // console.log('📝 Captured narrative context:', narrativeContext);
                         // console.log('📍 Current sentence at cursor:', currentSentence);
@@ -2272,15 +2213,18 @@ export default function NarrativePage() {
                         
                         if (suggestion && suggestion.narrative_suggestion) {
                           // console.log('✅ OpenAI suggestion received:', suggestion);
-                          // Show the suggestion in the narrative layer
-                          narrativeLayerRef.current?.showSuggestion(suggestion);
+                          // Show the suggestion in the narrative system
+                          const currentPageId = narrativeSystemRef.current?.getCurrentPageId();
+                          if (currentPageId) {
+                            narrativeSystemRef.current?.showSuggestion(suggestion, currentPageId);
+                          }
                         } else {
                           // console.log('ℹ️ No suggestion generated from current interactions');
-                          narrativeLayerRef.current?.hideLoadingSuggestion();
+                          // narrativeSystemRef.current?.hideLoadingSuggestion();
                         }
                       } catch (error) {
                         // console.error('❌ Failed to capture insights:', error);
-                        narrativeLayerRef.current?.hideLoadingSuggestion();
+                        // narrativeSystemRef.current?.hideLoadingSuggestion();
                       } finally {
                         setIsCapturingInsights(false);
                       }
@@ -2473,7 +2417,8 @@ export default function NarrativePage() {
     </div>
   );
   
-  // Development helper: expose deletion function to window for testing
+  /*
+  // OLD: Development helper - now handled by PagedNarrativeSystem
   useEffect(() => {
     if (typeof window !== 'undefined') {
       (window as any).deleteSentenceFromTree = deleteSentenceFromTree;
@@ -2489,6 +2434,7 @@ export default function NarrativePage() {
       console.log('  - window.sentenceNodes (current tree state)');
     }
   }, [deleteSentenceFromTree, deleteBranchFromTree, insertNodeAfter, exportSentenceTree, sentenceNodes]);
+  */
 }
 
 

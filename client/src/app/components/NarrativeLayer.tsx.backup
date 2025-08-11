@@ -761,6 +761,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         
         // If cursor is in a completed sentence and we're not in editing mode, block typing (except Enter)
         if (isInCompletedSentence && !isEditingRef.current) {
+          // console.log('🚫 Blocking keystroke in completed sentence - double-click to edit');
           event.preventDefault();
           return true; // Block the keystroke
         }
@@ -768,7 +769,9 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         // Log cursor position when in editing mode for debugging
         if (isEditingRef.current) {
           const cursorPos = view.state.selection.from;
+          // console.log(`🔍 Keystroke while editing - cursor at position: ${cursorPos}, key: ${event.key}`);
           
+          // Reset the editing timeout on every keystroke to keep editing mode active
           if (editingTimeoutRef.current) {
             clearTimeout(editingTimeoutRef.current);
           }
@@ -778,11 +781,13 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
               setIsEditingState(false);
               setEditingPosition(null);
               editingTimeoutRef.current = null;
+              // console.log('🔓 Editing timeout after keystroke inactivity - clearing editing mode');
             }
           }, 10000); // 10 seconds after last keystroke
           
           // If user was editing and presses Escape, handle it
           if (event.key === 'Escape') {
+            // console.log('🔓 Escape pressed - clearing editing mode without saving');
             isEditingRef.current = false;
             setIsEditingState(false);
             setEditingPosition(null);
@@ -905,6 +910,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
               sentenceElement.setAttribute('data-selected', 'true');
             
             }, 0); // Set on next tick to ensure all React state updates are processed first
+            // console.log('📋 Dropdown shown after click delay');
             clickTimeoutRef.current = null;
           }, 200); // 200ms delay to allow double-click to cancel
           
@@ -916,6 +922,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         // Check if clicked on the dropdown menu
         if (target.closest('.sentence-dropdown')) {
           // Don't clear dropdown if clicking on the dropdown itself
+          // console.log('🖱️ Clicked on dropdown menu - keeping dropdown open');
           return false;
         }
         
@@ -976,26 +983,40 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           
           // Get the sentence content and immediately log the node ID
           const sentenceContent = sentenceElement.textContent?.trim() || '';
+          console.log(`🖱️ Double-clicked sentence: "${sentenceContent}"`);
           
           // Find and log the sentence node ID immediately upon double-click
           let nodeId: string | null = null;
+          console.log(`🔍 DEBUG: Looking for node ID for content: "${sentenceContent}"`);
+          console.log(`🔍 DEBUG: findNodeIdByContent function available:`, !!findNodeIdByContent);
+          console.log(`🔍 DEBUG: getBranchesForSentence function available:`, !!getBranchesForSentence);
           
           if (findNodeIdByContent && sentenceContent) {
             nodeId = findNodeIdByContent(sentenceContent);
+            console.log(`🆔 Sentence Node ID from findNodeIdByContent: ${nodeId} for content: "${sentenceContent}"`);
           } else {
+            console.log(`⚠️ findNodeIdByContent not available or no sentence content`);
           }
           
           if (!nodeId && getBranchesForSentence && sentenceContent) {
             // Fallback method
+            console.log(`🔍 DEBUG: Trying fallback method with getBranchesForSentence...`);
             const branches = getBranchesForSentence(sentenceContent);
+            console.log(`🔍 DEBUG: Found ${branches.length} branches:`, branches.map(b => ({ id: b.id, content: b.content })));
             const matchingBranch = branches.find(b => b.content === sentenceContent);
             if (matchingBranch) {
               nodeId = matchingBranch.id;
+              console.log(`🆔 Sentence Node ID (fallback): ${matchingBranch.id} for content: "${sentenceContent}"`);
             } else {
+              console.log(`❌ No matching branch found for content: "${sentenceContent}"`);
+              console.log(`❌ Available branch contents:`, branches.map(b => `"${b.content}"`));
+              console.log(`❌ Looking for content: "${sentenceContent}"`);
             }
           }
           
           if (!nodeId) {
+            console.error(`❌ CRITICAL: No node ID found for sentence: "${sentenceContent}"`);
+            console.error(`❌ This will cause the editing to fail and create duplicates!`);
           }
           
           // Store the node ID for later use in editing
@@ -1017,6 +1038,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           
           // Notify parent to enter edit mode
           if (onEnterEditMode && sentenceContent) {
+            console.log(`📝 Entering edit mode for sentence: "${sentenceContent}"`);
             onEnterEditMode(sentenceContent);
           }
           
@@ -1051,6 +1073,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           // Check if hovering over a completed sentence
           if (target.closest('.completed-sentence')) {
             const sentenceElement = target.closest('.completed-sentence') as HTMLElement;
+            // console.log('👆 Hovering over completed sentence:', sentenceElement.textContent);
           }
           
           return false;
@@ -1061,6 +1084,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           // Check if leaving a completed sentence
           if (target.closest('.completed-sentence')) {
             const sentenceElement = target.closest('.completed-sentence') as HTMLElement;
+            // console.log('👋 Left completed sentence:', sentenceElement.textContent);
           }
           
           return false;
@@ -1110,6 +1134,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       }
       
       if (editor) {
+        console.log('📝 Updating main editor content:', newContent);
         editor.commands.setContent(`<p>${newContent}</p>`);
       }
     },
@@ -1139,41 +1164,50 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   
   // Helper function to update sentence node on edit
   const updateSentenceNodeOnEdit = useCallback((nodeId: string | null, originalContent: string, editedContent: string) => {
+    console.log(`🔍 updateSentenceNodeOnEdit called with:
+      NodeId parameter: ${nodeId}
+      Original: "${originalContent}"
+      Edited: "${editedContent}"`);
     
     // PRIORITY 1: Use the currentEditSentenceId if available (from double-click)
     let targetNodeId: string | null = currentEditSentenceId || nodeId;
     
     if (currentEditSentenceId) {
+      console.log(`✅ Using currentEditSentenceId from double-click: ${currentEditSentenceId}`);
     } else if (nodeId) {
+      console.log(`✅ Using nodeId parameter: ${nodeId}`);
     } else {
+      console.log(`⚠️ No stored node ID - attempting to find node ID by content...`);
       
       if (findNodeIdByContent) {
       targetNodeId = findNodeIdByContent(originalContent);
+      console.log(`� Found sentence node ID: ${targetNodeId} for content: "${originalContent}"`);
     } else {
-      // console.warn(`⚠️ findNodeIdByContent not available, using fallback method`);
+      console.warn(`⚠️ findNodeIdByContent not available, using fallback method`);
       // Fallback to the old method if findNodeIdByContent is not available
       if (getBranchesForSentence) {
         const branches = getBranchesForSentence(originalContent);
-        // console.log(`📝 Fallback - Available branches for "${originalContent}":`, branches.map(b => ({ id: b.id, content: b.content })));
+        console.log(`📝 Fallback - Available branches for "${originalContent}":`, branches.map(b => ({ id: b.id, content: b.content })));
         const matchingBranch = branches.find(b => b.content === originalContent);
         if (matchingBranch) {
           targetNodeId = matchingBranch.id;
-          // console.log(`📝 Fallback - Found matching branch ID: ${targetNodeId}`);
+          console.log(`📝 Fallback - Found matching branch ID: ${targetNodeId}`);
         } else {
-          // console.error(`❌ Fallback - No matching branch found for content: "${originalContent}"`);
+          console.error(`❌ Fallback - No matching branch found for content: "${originalContent}"`);
         }
       }
     }
     }
     
     if (targetNodeId && updateSentenceNodeContent) {
+      console.log(`🎯 UPDATING EXISTING NODE ${targetNodeId} with new content: "${editedContent}"`);
       
       // Call the new update function
       const success = updateSentenceNodeContent(targetNodeId, editedContent);
       if (success) {
-        
+        console.log(`✅ Successfully updated node ${targetNodeId} with new content`);
       } else {
-
+        console.error(`❌ Failed to update node ${targetNodeId}`);
       }
       
     }
@@ -1191,6 +1225,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       const selection = editor.state.selection;
       if (!selection.empty) {
         editedContent = editor.state.doc.textBetween(selection.from, selection.to).trim();
+        console.log(`📝 Got content from selection: "${editedContent}"`);
       } else {
         // Method 2: If no selection, find the sentence around the cursor
         const cursorPos = editor.state.selection.from;
@@ -1218,9 +1253,14 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         
         // Extract the sentence and clean it
         editedContent = fullText.substring(sentenceStart, sentenceEnd).trim();
+        console.log(`📝 Got content from cursor position ${cursorPos}: "${editedContent}"`);
       }
       
-
+      console.log(`📝 finishEditingSentence called:
+        - Original: "${originalEditingContent}"
+        - Edited: "${editedContent}"
+        - EditingNodeId: ${editingNodeId}
+        - Content changed: ${editedContent !== originalEditingContent}`);
       
       // If content changed, IMMEDIATELY block it from being processed as a new sentence
       if (editedContent !== originalEditingContent) {
@@ -1236,6 +1276,12 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           .trim();
         recentlyEditedContentRef.current.add(normalizedEditedContent);
         
+        console.log(`🚫 PREEMPTIVELY BLOCKED content from sentence detection:
+          - Original: "${originalEditingContent}"
+          - Edited: "${editedContent}"
+          - Normalized: "${normalizedEditedContent}"`);
+        
+        console.log(`🔄 Content changed - calling updateSentenceNodeOnEdit with nodeId: ${editingNodeId}`);
         updateSentenceNodeOnEdit(editingNodeId, originalEditingContent, editedContent);
         
         // Keep tracking the blocked content for a while to ensure no duplicate processing
@@ -1243,6 +1289,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           recentlyEditedContentRef.current.delete(originalEditingContent);
           recentlyEditedContentRef.current.delete(editedContent);
           recentlyEditedContentRef.current.delete(normalizedEditedContent);
+          console.log(`🔓 Released tracking for edited content after 5 seconds`);
         }, 5000);
         
         // Notify parent to exit edit mode for the original content
@@ -1349,13 +1396,15 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     undoTimeoutRef.current = setTimeout(() => {
       setShowUndoButton(false);
     }, 10000);
-
+    
+    console.log(`⏮️ Added to undo stack: ${action.type} for "${action.deletedContent}"`);
   }, []);
 
   const handleUndoDeletion = useCallback(() => {
     if (undoStack.length === 0) return;
     
     const lastAction = undoStack[undoStack.length - 1];
+    console.log(`⏮️ Undoing: ${lastAction.type} for "${lastAction.deletedContent}"`);
     
     // For now, we'll show an alert. In a full implementation, we'd restore the tree state
     // This requires collaboration with the parent component to restore sentence nodes
@@ -1406,6 +1455,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   }, []);
 
   const handleSelectBranch = useCallback((selectedBranch: any) => {
+    console.log('🎯 Selected branch:', selectedBranch);
     
     if (selectedBranch.isNew) {
       // This is a new draft branch - get content from editor and create it
@@ -1417,15 +1467,20 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         branchContent.length > 0;
       
       if (onCreateBranch && hasActualContent) {
-
+        console.log('💾 USER CLICKED "Save & Select This Path" - Committing new branch to tree structure:', branchContent);
+        console.log('💾 Parent sentence:', branchingMode.parentSentence);
+        console.log('💾 About to call onCreateBranch...');
         
         onCreateBranch(branchingMode.parentSentence, branchContent);
         
+        console.log('💾 onCreateBranch called - waiting for tree update...');
         
         // Add a delay to check tree state after branch creation
         setTimeout(() => {
+          console.log('🔍 Checking tree state 500ms after branch creation...');
           if (getBranchesForSentence) {
             const branches = getBranchesForSentence(branchingMode.parentSentence);
+            console.log('🔍 Branches found after creation:', branches.length);
           }
         }, 500);
         
@@ -1436,12 +1491,14 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       }
     } else {
       // This is an existing branch with full path content - just switch to it
+      console.log('🔄 Switching to existing branch:', selectedBranch.id);
       if (onSwitchToBranch) {
         onSwitchToBranch(selectedBranch.id);
       }
     }
     
     // Exit branching mode
+    console.log('🚪 Exiting branching mode...');
     setBranchingMode(prev => ({ 
       ...prev, 
       isActive: false, 
@@ -1451,6 +1508,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     
     // Clear dropdown if open
     if (selectedSentence) {
+      console.log('🧹 Clearing selected sentence after branching...');
       clearAllSelectedSentences();
     }
   }, [onCreateBranch, onSwitchToBranch, branchingMode.parentSentence, selectedSentence]);
@@ -1549,14 +1607,17 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     // Handle different actions
     switch (action) {
       case 'show-view':
+        console.log('📊 Showing view for sentence:', selectedSentence.element.textContent);
         
         // Validate domain scope for the selected sentence
         const validationSentenceText = selectedSentence.element.textContent?.trim() || '';
+        console.log('🔍 Validating domain for sentence:', validationSentenceText);
         
         validateDomain(validationSentenceText)
           .then(domainValidationResult => {
             if (domainValidationResult.success && domainValidationResult.validation) {
               const validation = domainValidationResult.validation;
+              console.log('✅ Domain validation result:', validation);
               
               // Use the callback to show validation in view canvas instead
               if (onGenerateVisualization) {
@@ -1669,7 +1730,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
             position: dropdownPosition || { left: 0, top: 0 }
           });
           
-          // console.log(`✏️ Showing inline editor to add sentence after "${selectedSentenceContent}"`);
+          console.log(`✏️ Showing inline editor to add sentence after "${selectedSentenceContent}"`);
           
           // Clear the dropdown
           clearAllSelectedSentences();
@@ -1691,11 +1752,13 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         }
         break;
       case 'delete':
+        console.log('🗑️ Deleting sentence:', selectedSentence.element.textContent);
         
         // Get the sentence content to delete
         const sentenceToDelete = selectedSentence.element.textContent?.trim();
         
         if (sentenceToDelete && onDeleteSentence) {
+          console.log(`🗑️ Deleting sentence: "${sentenceToDelete}"`);
           
           // Add to undo stack before deletion
           addToUndoStack({
@@ -1711,6 +1774,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           // Call the parent's delete function immediately (no confirmation)
           onDeleteSentence(sentenceToDelete);
           
+          console.log('✅ Sentence deletion initiated (undo available)');
         } else {
           console.error('❌ Cannot delete sentence: onDeleteSentence not available or no sentence content');
         }
@@ -1762,7 +1826,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       return;
     }
     
-    // console.log(`💾 Processing new content: "${trimmedContent}" after "${addNextMode.afterSentenceContent}"`);
+    console.log(`💾 Processing new content: "${trimmedContent}" after "${addNextMode.afterSentenceContent}"`);
     
     // Split content into sentences using a more robust approach
     const sentences: string[] = [];
@@ -1786,7 +1850,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       sentences.push(trimmedContent);
     }
     
-    // console.log(`🔍 Split into ${sentences.length} sentence(s):`, sentences);
+    console.log(`🔍 Split into ${sentences.length} sentence(s):`, sentences);
     
     if (sentences.length === 0) {
       console.error('❌ No valid sentences found');
@@ -1798,7 +1862,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     
     for (let i = 0; i < sentences.length; i++) {
       const sentence = sentences[i].trim();
-      // console.log(`📝 Inserting sentence ${i + 1}/${sentences.length}: "${sentence}" after "${currentParent}"`);
+      console.log(`📝 Inserting sentence ${i + 1}/${sentences.length}: "${sentence}" after "${currentParent}"`);
       
       // Insert this sentence after the current parent
       onInsertNodeAfter(currentParent, sentence);
@@ -1810,10 +1874,12 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     // Clear the add next mode
     setAddNextMode(null);
     
+    console.log(`✅ ${sentences.length} sentence(s) saved and inserted into tree`);
   }, [addNextMode, onInsertNodeAfter]);
   
   // Handle canceling the "add next" inline editor
   const handleCancelAddNext = useCallback(() => {
+    console.log('❌ Canceling add next mode');
     setAddNextMode(null);
   }, []);
   
@@ -1822,7 +1888,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     const handleGlobalClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       
-      // console.log('🌍 Global click handler triggered', { target: target.className, closest: target.closest('.completed-sentence') ? 'found sentence' : 'no sentence' });
+      console.log('🌍 Global click handler triggered', { target: target.className, closest: target.closest('.completed-sentence') ? 'found sentence' : 'no sentence' });
       
       // Check if clicking on completed sentence with reduced sensitivity (10px margin from left/right)
       if (target.closest('.completed-sentence')) {
@@ -1837,35 +1903,43 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                                    clickY >= sentenceRect.top && 
                                    clickY <= sentenceRect.bottom;
         
+        console.log('🎯 Sentence click detected', { 
+          isWithinReducedArea, 
+          sentenceText: sentenceElement.textContent?.trim(),
+          margins: { left: sentenceRect.left + 10, right: sentenceRect.right - 10 },
+          clickPos: { x: clickX, y: clickY }
+        });
         
         if (isWithinReducedArea) {
           // Click is within the active area, don't clear selection
+          console.log('✅ Click within sentence area - keeping selection');
           return;
         } else {
+          console.log('🚫 Click in sentence margin - will clear selection');
         }
       }
       
       // Don't clear if clicking on dropdown
       if (target.closest('.sentence-dropdown')) {
-        // console.log('🎯 Click on dropdown - keeping selection');
+        console.log('🎯 Click on dropdown - keeping selection');
         return;
       }
       
       // Don't clear if clicking on add-next editor
       if (target.closest('.add-next-editor')) {
-        // console.log('✏️ Click on add-next editor - keeping editor open');
+        console.log('✏️ Click on add-next editor - keeping editor open');
         return;
       }
       
       // Clear add-next editor if clicking outside
       if (addNextMode) {
-        // console.log('❌ Global click clearing add-next editor');
+        console.log('❌ Global click clearing add-next editor');
         setAddNextMode(null);
       }
       
       // Clear dropdown and selection if clicked anywhere else (including sentence margins)
       if (selectedSentence) {
-        // console.log('🧹 Global click clearing selection');
+        console.log('🧹 Global click clearing selection');
         clearAllSelectedSentences();
       }
     };
@@ -2145,11 +2219,16 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           // Get branches for this sentence from parent component
           const availableBranches = getBranchesForSentence ? getBranchesForSentence(sentenceText) : [];
           
+          // 🐛 DEBUG: Log the availableBranches to see what we're getting
+          console.log(`🔍 DROPDOWN DEBUG: Sentence clicked: "${sentenceText}"`);
+          console.log(`🔍 DROPDOWN DEBUG: getBranchesForSentence function available:`, !!getBranchesForSentence);
+          console.log(`🔍 DROPDOWN DEBUG: availableBranches count:`, availableBranches.length);
+          console.log(`🔍 DROPDOWN DEBUG: availableBranches content:`, availableBranches);
           
           if (availableBranches.length === 0) {
-            // console.log(`🔍 DROPDOWN DEBUG: No branches found - will not show "Existing Alternatives" section`);
+            console.log(`🔍 DROPDOWN DEBUG: No branches found - will not show "Existing Alternatives" section`);
           } else {
-            // console.log(`🔍 DROPDOWN DEBUG: Found ${availableBranches.length} branches - will show "Existing Alternatives" section`);
+            console.log(`🔍 DROPDOWN DEBUG: Found ${availableBranches.length} branches - will show "Existing Alternatives" section`);
           }
           
           return (
@@ -2219,10 +2298,16 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                             e.stopPropagation();
                             e.preventDefault();
                             
+                            console.log('🎯 Clicked dropdown alternative:', {
+                              branchId: branch.id,
+                              immediateContent: branch.content,
+                              fullPathContent: branch.fullPathContent,
+                              type: branch.type
+                            });
                             
                             // Directly switch to this branch instead of showing branch-section
                             if (onSwitchToBranch) {
-                              // console.log('🔄 Switching directly to branch:', branch.id);
+                              console.log('🔄 Switching directly to branch:', branch.id);
                               onSwitchToBranch(branch.id);
                             }
                             
@@ -2262,7 +2347,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                               e.stopPropagation();
                               e.preventDefault();
                               
-                    
+                              console.log('🗑️ Deleting branch:', branch.id);
                               
                               // Add to undo stack before deletion
                               addToUndoStack({
