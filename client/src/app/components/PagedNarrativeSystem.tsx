@@ -916,15 +916,34 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       return path;
     };
 
-    const newPath = findSentencePath(branchId);
+    const pathToBranch = findSentencePath(branchId);
+    
+    // Continue the path by following activeChild relationships from the branch node
+    const fullPath = [...pathToBranch];
+    let currentNodeId = branchId;
+    
+    while (currentNodeId) {
+      const currentNode = currentPage.sentenceNodes.get(currentNodeId);
+      if (currentNode && currentNode.activeChild) {
+        // Only add if not already in path (avoid infinite loops)
+        if (!fullPath.includes(currentNode.activeChild)) {
+          fullPath.push(currentNode.activeChild);
+          currentNodeId = currentNode.activeChild;
+        } else {
+          break;
+        }
+      } else {
+        break;
+      }
+    }
     
     // Update active child relationships along the path
     updatePageSentenceTree(currentPageId, (sentenceNodes) => {
       const newMap = new Map(sentenceNodes);
       
-      for (let i = 0; i < newPath.length - 1; i++) {
-        const currentNodeId = newPath[i];
-        const nextNodeId = newPath[i + 1];
+      for (let i = 0; i < fullPath.length - 1; i++) {
+        const currentNodeId = fullPath[i];
+        const nextNodeId = fullPath[i + 1];
         const currentNode = newMap.get(currentNodeId);
         
         if (currentNode && currentNode.children.includes(nextNodeId)) {
@@ -946,7 +965,7 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       if (page) {
         const updatedPage = {
           ...page,
-          activePath: newPath,
+          activePath: fullPath,
           lastModified: Date.now()
         };
         newPages.set(currentPageId, updatedPage);
@@ -959,7 +978,7 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
 
     // Update narrative content
     setTimeout(() => {
-      const narrativeText = newPath
+      const narrativeText = fullPath
         .map(nodeId => {
           const node = currentPage.sentenceNodes.get(nodeId);
           let content = node ? node.content.trim() : '';

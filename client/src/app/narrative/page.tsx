@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import DatasetExplorer from '../components/DatasetExplorer';
 import PagedNarrativeSystem, { PagedNarrativeSystemRef } from '../components/PagedNarrativeSystem';
 import FileSummaryCanvas from '../components/FileSummaryCanvas';
-import { EmptyCanvas, EmptyTimeline, AnalyzingState } from '../components/EmptyStates';
+import { EmptyCanvas, EmptyTimeline, AnalyzingState, TimelineVisualization } from '../components/EmptyStates';
 import ReactFlowCanvas, { ReactFlowCanvasRef } from '../components/ReactFlowCanvas';
 import LondonDashboard from '../london/page'; //this should be a different input after you have the right component for dashboard
 import { generateMultipleFileSummaries, FileSummary } from '../../utils/londonDataLoader';
@@ -13,6 +13,7 @@ import { interactionLogger } from '../../lib/interactionLogger';
 import { captureAndLogInteractions, getCapturedInteractionCount } from '../utils/dashboardConfig';
 import { captureInsights, NarrativeSuggestion } from '../LLMs/suggestion_from_interaction';
 import { getVisualizationRecommendation, VisualizationRecommendation, isDashboardRecommendation } from '../LLMs/visualizationRecommendation';
+import { generateInsightTimeline, TimelineGroup } from '../LLMs/insightTimeline';
 import '../../styles/dataExplorer.css';
 import '../../styles/narrativeLayer.css';
 import '../../styles/dataExplorer.css';
@@ -90,40 +91,44 @@ export default function NarrativePage() {
           }
         }
       };
-      
-      console.log('🧪 Debug helpers available:');
-      console.log('  - window.narrativeDebug.getCurrentTree()');
-      console.log('  - window.narrativeDebug.createTestBranches()');
-      console.log('  - window.narrativeDebug.getCurrentPageId()');
-      console.log('  - window.narrativeDebug.getPageContent(pageId?)');
+    
     }
   }, []);
 
-  // Insight timeline state - initially empty
-  const [insightTimeline, setInsightTimeline] = useState<{
-    groups: Array<{
-      group_id: number;
-      sentence_indices: number[];
-      parent_id: string;
-      child_ids: string[];
-      hover: {
-        title: string;
-        source: {
-          dataset: string | string[];
-          geo: string | string[];
-          time: string | string[];
-          measure: string | string[];
-          unit: string;
-        };
-        changed_from_previous: {
-          drift_types: string[];
-          severity: string;
-          dimensions: Record<string, string>;
-        } | null;
-        reflect: string[];
+  // Define timeline group structure
+  interface TimelineGroup {
+    node_id: number;
+    sentence_id: string; // Link to the specific sentence
+    sentence_content: string;
+    parent_id: string;
+    child_ids: string[];
+    changed_from_previous: {
+      drift_types: string[];
+      severity: string;
+      dimensions: Record<string, string>;
+    } | null;
+    hover: {
+      title: string;
+      source: {
+        dataset: string | string[];
+        geo: string | string[];
+        time: string | string[];
+        measure: string | string[];
+        unit: string;
       };
-    }>
-  }>({ groups: [] });
+      reflect: string[];
+    };
+  }
+
+  // Insight timeline state - per page tracking
+  const [insightTimelinesByPage, setInsightTimelinesByPage] = useState<Record<string, { groups: TimelineGroup[] }>>({});
+  
+  // Track the most recently updated sentence for LLM calls
+  const [recentlyUpdatedSentence, setRecentlyUpdatedSentence] = useState<{
+    pageId: string;
+    sentence: string;
+    timestamp: number;
+  } | null>(null);
 
   // Define simplified sentence node structure for linear narratives with branching
   interface SentenceNode {
@@ -264,6 +269,9 @@ export default function NarrativePage() {
     };
     
     setDashboardInteractions(prev => [...prev, interaction]);
+    
+    // Update interaction count to enable the capture button
+    setInteractionCount(prev => prev + 1);
   };
   
   // Check authentication on mount
@@ -342,7 +350,7 @@ export default function NarrativePage() {
     }
   }, [userSession, isStudyMode]);
 
-  // Track info node status from ReactFlow canvas
+  // Track info node status from ReactFlow canvas - optimized
   useEffect(() => {
     const checkInfoNodes = () => {
       if (reactFlowCanvasRef.current) {
@@ -351,32 +359,19 @@ export default function NarrativePage() {
       }
     };
 
-    // Check immediately
+    // Check immediately and when dependencies change only
     checkInfoNodes();
-
-    // Set up an interval to check periodically
-    const interval = setInterval(checkInfoNodes, 500);
-
-    return () => clearInterval(interval);
   }, [showDashboard]); // Re-run when dashboard visibility changes
 
   // Handle analysis request
   const handleAnalysisRequest = async (prompt: string) => {
-    console.log('🚀 Starting analysis for prompt:', prompt);
     
     setCurrentPrompt(prompt);
     setIsAnalyzing(true);
     
     // Log the generate dashboard interaction manually
     try {
-      console.log('📊 Logging dashboard generation with:', {
-        prompt,
-        userContext: interactionLogger.userContext,
-        isStudyMode: interactionLogger.isStudyMode
-      });
-      
       await interactionLogger.logDashboardGeneration(prompt);
-      console.log('✅ Dashboard generation logged successfully');
     } catch (error) {
       console.error('❌ Failed to log dashboard generation:', error);
     }
@@ -514,7 +509,7 @@ export default function NarrativePage() {
           editCount: node.editCount + 1
         };
         newMap.set(nodeId, updatedNode);
-        console.log(`✅ Updated content for editable node ${nodeId}: "${newContent}"`);
+        console.log(`✅ Updated content for editable node ${nodeId}: "${newContent}"`); // Keep this for debugging
       }
       return newMap;
     });
@@ -594,8 +589,6 @@ export default function NarrativePage() {
 
   // Safety check function to remove duplicate sentence nodes with identical content
   const removeDuplicateSentenceNodes = (nodeMap: Map<string, SentenceNode>): Map<string, SentenceNode> => {
-    console.log('🧹 Starting duplicate node removal safety check...');
-    
     const cleanedMap = new Map(nodeMap);
     const contentToNodes = new Map<string, string[]>(); // content -> array of node IDs
     const nodesToRemove = new Set<string>();
@@ -1344,13 +1337,33 @@ export default function NarrativePage() {
     // console.log(`📊 Branch content: "${branchNode.content}"`);
     
     // Find the path from root to this branch
-    const newPath = findSentencePath(branchId);
-    console.log(`🛤️ New active path:`, newPath.map(id => {
+    const pathToBranch = findSentencePath(branchId);
+    
+    // Continue the path by following activeChild relationships from the branch node
+    const fullPath = [...pathToBranch];
+    let currentNodeId = branchId;
+    
+    while (currentNodeId) {
+      const currentNode = sentenceNodes.get(currentNodeId);
+      if (currentNode && currentNode.activeChild) {
+        // Only add if not already in path (avoid infinite loops)
+        if (!fullPath.includes(currentNode.activeChild)) {
+          fullPath.push(currentNode.activeChild);
+          currentNodeId = currentNode.activeChild;
+        } else {
+          break;
+        }
+      } else {
+        break;
+      }
+    }
+    
+    console.log(`🛤️ New active path:`, fullPath.map(id => {
       const node = sentenceNodes.get(id);
       return `${id}: "${node?.content}"`;
     }));
     
-    setActivePath(newPath);
+    setActivePath(fullPath);
     
     console.log(`🔄 Switching to branch ${branchId}, updating main editor`);
     
@@ -1359,9 +1372,9 @@ export default function NarrativePage() {
       const newMap = new Map(prev);
       
       // Update activeChild for each parent in the path
-      for (let i = 0; i < newPath.length - 1; i++) {
-        const currentNodeId = newPath[i];
-        const nextNodeId = newPath[i + 1];
+      for (let i = 0; i < fullPath.length - 1; i++) {
+        const currentNodeId = fullPath[i];
+        const nextNodeId = fullPath[i + 1];
         const currentNode = newMap.get(currentNodeId);
         
         if (currentNode && currentNode.children.includes(nextNodeId)) {
@@ -1379,9 +1392,9 @@ export default function NarrativePage() {
     
     // Reconstruct the narrative from the new active path
     setTimeout(() => {
-      console.log(`🔧 Reconstructing narrative from path:`, newPath);
+      console.log(`🔧 Reconstructing narrative from path:`, fullPath);
       
-      const narrativeText = newPath
+      const narrativeText = fullPath
         .map(nodeId => {
           const node = sentenceNodes.get(nodeId);
           let content = node ? node.content.trim() : '';
@@ -1512,11 +1525,10 @@ export default function NarrativePage() {
       
       return newMap;
     });
-  }, [sentenceNodes, activePath, isCreatingBranch, recentlyCreatedNodes, editableNodes]);
+  }, [sentenceNodes, activePath, isCreatingBranch, recentlyCreatedNodes.size, editableNodes.size]);
   
   // Functions to manage edit mode for nodes
   const enterEditMode = useCallback((nodeId: string) => {
-    console.log(`📝 Entering edit mode for node ${nodeId}`);
     setEditableNodes(prev => new Set([...prev, nodeId]));
   }, []);
 
@@ -1783,7 +1795,7 @@ export default function NarrativePage() {
           }
           return cleanedMap;
         },
-        editableNodes,
+        editableNodes: Array.from(editableNodes), // Convert Set to Array for serialization
         nodes: sentenceNodes,
         activePath,
         completedSentences, // Add this for easy access
@@ -1876,6 +1888,44 @@ export default function NarrativePage() {
     };
   }, []);
 
+  // Add insight timeline debug helpers and track page changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Add insight timeline debug helpers
+      (window as any).insightTimelineDebug = {
+        getTimelinesForAllPages: () => insightTimelinesByPage,
+        getTimelineForPage: (pageId: string) => getCurrentTimelineForPage(pageId),
+        getActiveNarratives: (pageId: string) => getActiveNodesNarratives(pageId),
+        generateSentenceIds: (pageId: string) => {
+          const narratives = getActiveNodesNarratives(pageId);
+          return generateSentenceIds(pageId, narratives);
+        },
+        updateTimelineForPage: (pageId: string) => updateInsightTimelineForPage(pageId),
+        getRecentlyUpdatedSentence: () => recentlyUpdatedSentence
+      };
+      
+      console.log('🔮 Insight Timeline debug helpers available:');
+      console.log('  - window.insightTimelineDebug.getTimelinesForAllPages()');
+      console.log('  - window.insightTimelineDebug.getTimelineForPage(pageId)');
+      console.log('  - window.insightTimelineDebug.getActiveNarratives(pageId)');
+      console.log('  - window.insightTimelineDebug.generateSentenceIds(pageId)');
+      console.log('  - window.insightTimelineDebug.updateTimelineForPage(pageId)');
+      console.log('  - window.insightTimelineDebug.getRecentlyUpdatedSentence()');
+    }
+    
+    // Track page changes and update timeline accordingly
+    const currentPageId = narrativeSystemRef.current?.getCurrentPageId();
+    if (currentPageId && showNarrativeLayer) {
+      console.log('📄 Page changed or narrative layer shown, checking timeline for page:', currentPageId);
+      
+      // If this page doesn't have a timeline yet, create an initial one
+      if (!insightTimelinesByPage[currentPageId] || insightTimelinesByPage[currentPageId].groups.length === 0) {
+        console.log('🆕 Creating initial timeline for new page:', currentPageId);
+        updateInsightTimelineForPage(currentPageId);
+      }
+    }
+  }, [insightTimelinesByPage, recentlyUpdatedSentence, showNarrativeLayer]);
+
   // Handle file selection from DatasetExplorer
   const handleFileSelection = async (files: DatasetFile[]) => {
     setSelectedFiles(files);
@@ -1920,6 +1970,13 @@ export default function NarrativePage() {
   const handleSentenceEnd = async (sentence: string, confidence: number, pageId: string) => {
     console.log(`🧠 Sentence completed on page ${pageId}: "${sentence}" (Confidence: ${confidence})`);
     
+    // Track the recently updated sentence
+    setRecentlyUpdatedSentence({
+      pageId,
+      sentence,
+      timestamp: Date.now()
+    });
+    
     // The PagedNarrativeSystem handles the tree structure internally
     // Here we can focus on the analysis and logging
     
@@ -1927,6 +1984,9 @@ export default function NarrativePage() {
       // Simulate analysis time
       await new Promise(resolve => setTimeout(resolve, 1000));
       console.log(`✅ Analysis complete for: "${sentence}" on page ${pageId}`);
+      
+      // Update insight timeline for this page
+      updateInsightTimelineForPage(pageId);
       
       // Log the sentence completion interaction
       await interactionLogger.logInteraction({
@@ -1980,7 +2040,84 @@ export default function NarrativePage() {
   };
 
   const handleContentChange = (oldContent: string, newContent: string, pageId: string) => {
-    // The PagedNarrativeSystem handles this internally now
+    // Track the recently updated sentence
+    if (newContent !== oldContent) {
+      setRecentlyUpdatedSentence({
+        pageId,
+        sentence: newContent,
+        timestamp: Date.now()
+      });
+      
+      // Trigger insight timeline update
+      updateInsightTimelineForPage(pageId);
+    }
+  };
+
+  // Helper function to get active nodes narratives for a page
+  const getActiveNodesNarratives = (pageId: string): string[] => {
+    if (narrativeSystemRef.current) {
+      const pageContent = narrativeSystemRef.current.getPageContent(pageId);
+      if (pageContent) {
+        // Split content into sentences and filter out empty ones
+        return pageContent
+          .split(/[.!?]+/)
+          .map(sentence => sentence.trim())
+          .filter(sentence => sentence.length > 0);
+      }
+    }
+    return [];
+  };
+
+  // Helper function to generate sentence IDs for each sentence in the narrative
+  const generateSentenceIds = (pageId: string, narratives: string[]): string[] => {
+    return narratives.map((_, index) => `${pageId}-sentence-${index + 1}`);
+  };
+
+  // Helper function to get current insight timeline for a page
+  const getCurrentTimelineForPage = (pageId: string): TimelineGroup[] => {
+    return insightTimelinesByPage[pageId]?.groups || [];
+  };
+
+  // Function to get tree structure for timeline generation
+  const getTreeStructureForPage = (pageId: string) => {
+    if (narrativeSystemRef.current) {
+      return narrativeSystemRef.current.getPageTree(pageId);
+    }
+    return null;
+  };
+
+  // Function to update insight timeline for a specific page
+  const updateInsightTimelineForPage = async (pageId: string) => {
+    try {
+      const currentTimeline = getCurrentTimelineForPage(pageId);
+      const treeStructure = getTreeStructureForPage(pageId);
+      const recentSentence = recentlyUpdatedSentence?.sentence || '';
+
+      if (!treeStructure || treeStructure.nodes.length === 0) {
+        console.log('📝 No tree structure found for page', pageId);
+        return;
+      }
+
+      console.log('🔮 Updating insight timeline for page:', pageId);
+      console.log('🌳 Tree structure:', treeStructure);
+      
+      const updatedTimeline = await generateInsightTimeline(
+        currentTimeline,
+        treeStructure,
+        recentSentence,
+        pageId
+      );
+
+      // Update the timeline for this specific page
+      setInsightTimelinesByPage(prev => ({
+        ...prev,
+        [pageId]: updatedTimeline
+      }));
+
+      console.log('✅ Updated insight timeline for page:', pageId);
+    } catch (error) {
+      console.error('❌ Error updating insight timeline for page:', pageId, error);
+    }
   };
 
   const handleStopAnalysis = () => {
@@ -2179,7 +2316,7 @@ export default function NarrativePage() {
                     onClick={async () => {
                       // Check conditions for disabling the capture button
                       const hasInteractions = interactionCount > 0;
-                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
                       
                       // Prevent clicks if capturing, has pending suggestion, or no interactions made yet
                       if (isDisabled) return;
@@ -2363,53 +2500,22 @@ export default function NarrativePage() {
           {/* Timeline Div - 25% */}
           <div className="timeline-div h-1/4 bg-gray-100 border-t border-gray-200 p-4">
             <div className="h-full bg-white rounded-lg shadow-sm">
-              {insightTimeline.groups.length > 0 ? (
-                <div className="h-full p-4 overflow-y-auto">
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">Insight Timeline</h3>
-                  <div className="space-y-2">
-                    {insightTimeline.groups.map((group, index) => (
-                      <div 
-                        key={group.group_id}
-                        className="bg-gray-50 rounded-lg p-3 border border-gray-200"
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-xs font-medium text-gray-500">
-                            Group {group.group_id} • Sentences: {group.sentence_indices.join(', ')}
-                          </span>
-                          {group.hover.changed_from_previous && (
-                            <span className={`text-xs px-2 py-1 rounded ${
-                              group.hover.changed_from_previous.severity === 'critical' 
-                                ? 'bg-red-100 text-red-700' 
-                                : 'bg-yellow-100 text-yellow-700'
-                            }`}>
-                              {group.hover.changed_from_previous.severity}
-                            </span>
-                          )}
-                        </div>
-                        <h4 className="text-sm font-medium text-gray-800 mb-1">
-                          {group.hover.title}
-                        </h4>
-                        <div className="text-xs text-gray-600">
-                          <div className="mb-1">
-                            <strong>Source:</strong> {
-                              Array.isArray(group.hover.source.dataset) 
-                                ? group.hover.source.dataset.join(', ')
-                                : group.hover.source.dataset
-                            }
-                          </div>
-                          {group.hover.changed_from_previous && (
-                            <div className="text-xs text-red-600">
-                              <strong>Changes:</strong> {group.hover.changed_from_previous.drift_types.join(', ')}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <EmptyTimeline />
-              )}
+              {(() => {
+                const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                const currentTimeline = insightTimelinesByPage[currentPageId]?.groups || [];
+                const currentPageTree = narrativeSystemRef.current?.getCurrentPageTree();
+                const currentActivePath = currentPageTree?.activePath || []; // Get the current active path from the narrative system
+                
+                return currentTimeline.length > 0 ? (
+                  <TimelineVisualization 
+                    nodes={currentTimeline}
+                    pageId={currentPageId}
+                    activePath={currentActivePath}
+                  />
+                ) : (
+                  <EmptyTimeline />
+                );
+              })()}
             </div>
           </div>
         </div>

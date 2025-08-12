@@ -2228,10 +2228,13 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                 style={{
                   opacity: disableInteractions ? 0.5 : 1,
                   cursor: disableInteractions ? 'not-allowed' : 'pointer',
-                  backgroundColor: disableInteractions ? '#f3f4f6' : undefined
+                  backgroundColor: disableInteractions ? '#f3f4f6' : undefined,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
                 }}
               >
-                <HiOutlineChartBar size={16} style={{ marginRight: '6px' }} />
+                <HiOutlineChartBar size={16} />
                 Show View
               </button>
               
@@ -2243,10 +2246,13 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                 style={{
                   opacity: disableInteractions ? 0.5 : 1,
                   cursor: disableInteractions ? 'not-allowed' : 'pointer',
-                  backgroundColor: disableInteractions ? '#f3f4f6' : undefined
+                  backgroundColor: disableInteractions ? '#f3f4f6' : undefined,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
                 }}
               >
-                <HiOutlinePlus size={16} style={{ marginRight: '6px' }} />
+                <HiOutlinePlus size={16} />
                 Add Next
               </button>
               

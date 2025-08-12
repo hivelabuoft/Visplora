@@ -1,0 +1,38 @@
+[
+  {
+    "id": "elaboration",
+    "label": "Elaboration",
+    "icon": "TbTextPlus",
+    "icon_package": "react-icons/tb",
+    "shape": "circle",
+    "color": "#CBD5E0",
+    "description": "Adds detail without changing topic, scope, time, or measure."
+  },
+  {
+    "id": "context_shift",
+    "label": "Context Shift",
+    "icon": "TbRoute",
+    "icon_package": "react-icons/tb",
+    "shape": "hexagon",
+    "color": "#BEE3F8",
+    "description": "Keeps topic but shifts time or geo (the analysis frame)."
+  },
+  {
+    "id": "reframing",
+    "label": "Reframing",
+    "icon": "TbCrop",
+    "icon_package": "react-icons/tb",
+    "shape": "square",
+    "color": "#FEFCBF",
+    "description": "Keeps topic/scope but changes measure, unit, or subgroup."
+  },
+  {
+    "id": "topic_change",
+    "label": "Topic Change",
+    "icon": "TbGitBranch",
+    "icon_package": "react-icons/tb",
+    "shape": "diamond",
+    "color": "#FED7D7",
+    "description": "Switches subject/domain; begins a new branch."
+  }
+]
