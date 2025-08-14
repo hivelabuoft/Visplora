@@ -1,0 +1,18 @@
+{
+  "case_id": "journal_002",
+  "sentences": [
+    "Started with Croydon vehicles: 2021 looks like a peak versus 2020.",
+    "Checked the borough CSV and the totals confirm a clear jump in 2021.",
+    "Citywide, SUVs rose in 2022 while vans were flat; I want the exact counts.",
+    "In Croydon, vans dipped in 2022—curious if that’s a delivery pattern shift after pandemic peaks.",
+    "I’ll park the delivery-angle until I verify the van series across 2020–2023.",
+    "Switching to housing: Camden’s average sale price fell in 2021, but private rent went up.",
+    "I verified both numbers from Land Registry and VOA; the divergence is real for 2021.",
+    "Is Westminster showing the same price‑down, rent‑up combo?",
+    "A quick slice suggests yes, though I didn’t standardize bedroom mix yet.",
+    "For schools, London secondary attendance improved in 2022–23 while England slipped slightly—confirmed in the schools file.",
+    "Hackney looks flat that year; I should check phase consistency before I compare further.",
+    "Libraries in South London seem down ‘last year’; Hackney gyms expanded 10% in 2024.",
+    "Until I pin what ‘last year’ means for libraries, I won’t infer changing leisure habits."
+  ]
+}

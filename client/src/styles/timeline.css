@@ -1,0 +1,202 @@
+/* Timeline React Flow v12 Styles - Minimal Design */
+.react-flow__edge-path {
+  stroke-width: 2px !important;
+}
+
+.react-flow__edge .react-flow__edge-path {
+  stroke-width: 2px !important;
+}
+
+/* Drift Types Legend Panel */
+.drift-legend {
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 80px;
+}
+
+.drift-legend-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 10px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 6px;
+}
+
+.drift-legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.drift-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.drift-shape {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.drift-shape svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Drift Type Colors and Shapes */
+.drift-elaboration {
+  background-color: #CBD5E0; /* Gray */
+  color: #2D3748;
+  border-radius: 50%; /* Circle shape */
+}
+
+.drift-context-shift {
+  background-color: #BEE3F8; /* Light blue */
+  color: #2B6CB0;
+  border-radius: 4px; /* Hexagon shape using clip-path */
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+.drift-reframing {
+  background-color: #FEFCBF; /* Light yellow */
+  color: #B7791F;
+  border-radius: 2px; /* Square shape */
+}
+
+.drift-topic-change {
+  background-color: #FED7D7; /* Light red */
+  color: #C53030;
+  border-radius: 2px; /* Diamond shape using clip-path */
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.drift-label {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Timeline Controls Panel */
+.timeline-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.restore-view-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.restore-view-btn:hover {
+  background: #f8fafc;
+  border-color: #0891b2;
+  color: #0891b2;
+}
+
+.restore-view-btn:active {
+  transform: translateY(1px);
+}
+
+.restore-view-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Timeline Node Styles - Minimal */
+.timeline-node {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hide React Flow handles but keep them functional */
+.react-flow__handle {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Ensure timeline nodes are properly connected */
+.react-flow__node-timelineNode {
+  border-radius: 50% !important;
+}
+
+.react-flow__node-timelineNode {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* Simple arrow markers - no complex effects */
+.react-flow__arrowhead,
+.react-flow__arrowclosed,
+.react-flow__arrowhead-path {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+  opacity: 1 !important;
+  display: block !important;
+  visibility: visible !important;
+}
+
+/* Target all possible arrow marker elements */
+marker {
+  overflow: visible !important;
+  opacity: 1 !important;
+}
+
+marker path,
+marker polygon,
+marker polyline {
+  fill: inherit !important;
+  stroke: inherit !important;
+  opacity: 1 !important;
+  stroke-width: 1 !important;
+}
+
+/* Ensure markers are not hidden */
+defs marker {
+  display: block !important;
+}
+
+/* Specific targeting for React Flow v12 markers */
+marker[id*="react-flow__arrowclosed"] path {
+  fill: inherit !important;
+  stroke: inherit !important;
+}
+
+/* Simple edge styling - no animations */
+.react-flow__edge {
+  z-index: 1 !important;
+}
+
+.react-flow__edge-path {
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+/* Hide attribution */
+.react-flow__attribution {
+  display: none !important;
+}

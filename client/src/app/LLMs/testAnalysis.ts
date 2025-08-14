@@ -25,12 +25,12 @@ export async function testAnalysis(
   // Simulate a small delay like a real API call
   await new Promise(resolve => setTimeout(resolve, 500));
   
-  console.log('🧪 Test Analysis received:', {
-    sentence,
-    fullText,
-    completedSentences,
-    timestamp: new Date().toISOString()
-  });
+  // console.log('🧪 Test Analysis received:', {
+  //   sentence,
+  //   fullText,
+  //   completedSentences,
+  //   timestamp: new Date().toISOString()
+  // });
 
   
   // Simple analysis without actual LLM
@@ -48,7 +48,7 @@ export async function testAnalysis(
     }
   };
   
-  console.log('🧪 Test Analysis result:', result);
+  // console.log('🧪 Test Analysis result:', result);
   
   return result;
 }

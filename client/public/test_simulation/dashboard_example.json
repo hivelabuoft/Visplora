@@ -1,0 +1,310 @@
+{
+  "title": "London Borough Safety vs Housing Insights",
+  "charts": [
+    {
+      "id": "crime-rate-chart",
+      "title": "Crime Rate by Borough",
+      "spec": {
+        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+        "title": {
+          "text": "Crime Rate by London Borough",
+          "fontSize": 16,
+          "fontWeight": "bold",
+          "color": "#2B7A9B",
+          "anchor": "start",
+          "offset": 10
+        },
+        "width": 500,
+        "height": 350,
+        "config": {
+          "font": "Inter",
+          "background": "transparent"
+        },
+        "data": {
+          "values": [
+            {"borough": "Westminster", "crime_rate": 45.2, "total_crimes": 12500},
+            {"borough": "Camden", "crime_rate": 38.7, "total_crimes": 9800},
+            {"borough": "Tower Hamlets", "crime_rate": 35.1, "total_crimes": 11200},
+            {"borough": "Southwark", "crime_rate": 32.8, "total_crimes": 10100},
+            {"borough": "Richmond", "crime_rate": 18.5, "total_crimes": 3600},
+            {"borough": "Kingston", "crime_rate": 20.2, "total_crimes": 3400},
+            {"borough": "Croydon", "crime_rate": 28.9, "total_crimes": 11000}
+          ]
+        },
+        "mark": {
+          "type": "bar",
+          "cornerRadiusTopLeft": 3,
+          "cornerRadiusTopRight": 3,
+          "stroke": "#ffffff",
+          "strokeWidth": 1
+        },
+        "encoding": {
+          "x": {
+            "field": "borough",
+            "type": "nominal",
+            "title": "Borough",
+            "sort": "-y",
+            "axis": {
+              "labelAngle": -45,
+              "labelFontSize": 10,
+              "titleFontSize": 12,
+              "titleFontWeight": "bold",
+              "titleColor": "#4A6A7B",
+              "labelColor": "#888",
+              "grid": false,
+              "tickColor": "#e2e8f0",
+              "domainColor": "#e2e8f0"
+            }
+          },
+          "y": {
+            "field": "crime_rate",
+            "type": "quantitative",
+            "title": "Crime Rate (per 1000 residents)",
+            "axis": {
+              "labelFontSize": 10,
+              "titleFontSize": 12,
+              "titleFontWeight": "bold",
+              "titleColor": "#4A6A7B",
+              "labelColor": "#888",
+              "grid": true,
+              "gridColor": "#e2e8f0",
+              "gridOpacity": 0.5,
+              "tickColor": "#e2e8f0",
+              "domainColor": "#e2e8f0"
+            }
+          },
+          "color": {
+            "field": "crime_rate",
+            "type": "quantitative",
+            "scale": {
+              "range": ["#f0fdfa", "#14b8a6", "#2B7A9B"],
+              "type": "linear"
+            },
+            "legend": null
+          },
+          "tooltip": [
+            {"field": "borough", "type": "nominal", "title": "Borough"},
+            {"field": "crime_rate", "type": "quantitative", "title": "Crime Rate", "format": ".1f"},
+            {"field": "total_crimes", "type": "quantitative", "title": "Total Crimes", "format": ","}
+          ]
+        },
+        "selection": {
+          "borough_filter": {
+            "type": "single",
+            "on": "click"
+          }
+        }
+      }
+    },
+    {
+      "id": "price-crime-scatter",
+      "title": "Housing Price vs Crime Rate Correlation",
+      "spec": {
+        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+        "title": {
+          "text": "Housing Price vs Crime Rate",
+          "fontSize": 16,
+          "fontWeight": "bold",
+          "color": "#2B7A9B",
+          "anchor": "start",
+          "offset": 10
+        },
+        "width": 500,
+        "height": 350,
+        "config": {
+          "font": "Inter",
+          "background": "transparent"
+        },
+        "data": {
+          "values": [
+            {"borough": "Westminster", "crime_rate": 45.2, "average_house_price": 1200},
+            {"borough": "Camden", "crime_rate": 38.7, "average_house_price": 850},
+            {"borough": "Tower Hamlets", "crime_rate": 35.1, "average_house_price": 450},
+            {"borough": "Southwark", "crime_rate": 32.8, "average_house_price": 650},
+            {"borough": "Richmond", "crime_rate": 18.5, "average_house_price": 750},
+            {"borough": "Kingston", "crime_rate": 20.2, "average_house_price": 580},
+            {"borough": "Croydon", "crime_rate": 28.9, "average_house_price": 420}
+          ]
+        },
+        "mark": {
+          "type": "circle",
+          "size": 120,
+          "stroke": "#ffffff",
+          "strokeWidth": 2
+        },
+        "encoding": {
+          "x": {
+            "field": "crime_rate",
+            "type": "quantitative",
+            "title": "Crime Rate (per 1000 residents)",
+            "scale": {"zero": false, "nice": true},
+            "axis": {
+              "labelFontSize": 10,
+              "titleFontSize": 12,
+              "titleFontWeight": "bold",
+              "titleColor": "#4A6A7B",
+              "labelColor": "#888",
+              "grid": true,
+              "gridColor": "#e2e8f0",
+              "gridOpacity": 0.5,
+              "tickColor": "#e2e8f0",
+              "domainColor": "#e2e8f0"
+            }
+          },
+          "y": {
+            "field": "average_house_price",
+            "type": "quantitative",
+            "title": "Average House Price (£000s)",
+            "scale": {"zero": false, "nice": true},
+            "axis": {
+              "labelFontSize": 10,
+              "titleFontSize": 12,
+              "titleFontWeight": "bold",
+              "titleColor": "#4A6A7B",
+              "labelColor": "#888",
+              "grid": true,
+              "gridColor": "#e2e8f0",
+              "gridOpacity": 0.5,
+              "tickColor": "#e2e8f0",
+              "domainColor": "#e2e8f0"
+            }
+          },
+          "color": {
+            "field": "borough",
+            "type": "nominal",
+            "scale": {
+              "range": ["#2B7A9B", "#8B5CF6", "#3B82F6", "#06B6D4", "#ef9f56", "#1E40AF", "#7C3AED"]
+            },
+            "legend": {
+              "title": "Borough",
+              "titleFontSize": 12,
+              "titleFontWeight": "bold",
+              "titleColor": "#4A6A7B",
+              "labelFontSize": 10,
+              "labelColor": "#888",
+              "orient": "none",
+              "legendX": 10,
+              "legendY": 10,
+              "direction": "vertical"
+            }
+          },
+          "tooltip": [
+            {"field": "borough", "type": "nominal", "title": "Borough"},
+            {"field": "crime_rate", "type": "quantitative", "title": "Crime Rate", "format": ".1f"},
+            {"field": "average_house_price", "type": "quantitative", "title": "Avg House Price", "format": "£,.0f"}
+          ]
+        },
+        "selection": {
+          "brush": {
+            "type": "interval"
+          }
+        }
+      }
+    },
+    {
+      "id": "safety-heatmap",
+      "title": "Borough Safety Rating Matrix",
+      "spec": {
+        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+        "title": {
+          "text": "Borough Safety Ratings",
+          "fontSize": 16,
+          "fontWeight": "bold",
+          "color": "#2B7A9B",
+          "anchor": "start",
+          "offset": 10
+        },
+        "width": 500,
+        "height": 350,
+        "config": {
+          "font": "Inter",
+          "background": "transparent"
+        },
+        "data": {
+          "values": [
+            {"borough": "Westminster", "safety_category": "Violent Crime", "score": 25},
+            {"borough": "Westminster", "safety_category": "Property Crime", "score": 30},
+            {"borough": "Westminster", "safety_category": "Night Safety", "score": 40},
+            {"borough": "Camden", "safety_category": "Violent Crime", "score": 55},
+            {"borough": "Camden", "safety_category": "Property Crime", "score": 50},
+            {"borough": "Camden", "safety_category": "Night Safety", "score": 60},
+            {"borough": "Richmond", "safety_category": "Violent Crime", "score": 85},
+            {"borough": "Richmond", "safety_category": "Property Crime", "score": 90},
+            {"borough": "Richmond", "safety_category": "Night Safety", "score": 88},
+            {"borough": "Tower Hamlets", "safety_category": "Violent Crime", "score": 65},
+            {"borough": "Tower Hamlets", "safety_category": "Property Crime", "score": 60},
+            {"borough": "Tower Hamlets", "safety_category": "Night Safety", "score": 58}
+          ]
+        },
+        "mark": {
+          "type": "rect",
+          "stroke": "#ffffff",
+          "strokeWidth": 2
+        },
+        "encoding": {
+          "x": {
+            "field": "borough",
+            "type": "nominal",
+            "title": "Borough",
+            "axis": {
+              "labelAngle": -45,
+              "labelFontSize": 10,
+              "titleFontSize": 12,
+              "titleFontWeight": "bold",
+              "titleColor": "#4A6A7B",
+              "labelColor": "#888",
+              "grid": false,
+              "tickColor": "#e2e8f0",
+              "domainColor": "#e2e8f0"
+            }
+          },
+          "y": {
+            "field": "safety_category",
+            "type": "nominal",
+            "title": "Safety Category",
+            "axis": {
+              "labelFontSize": 10,
+              "titleFontSize": 12,
+              "titleFontWeight": "bold",
+              "titleColor": "#4A6A7B",
+              "labelColor": "#888",
+              "grid": false,
+              "tickColor": "#e2e8f0",
+              "domainColor": "#e2e8f0"
+            }
+          },
+          "color": {
+            "field": "score",
+            "type": "quantitative",
+            "title": "Safety Score",
+            "scale": {
+              "scheme": "redyellowgreen",
+              "domain": [0, 100],
+              "range": ["#dc2626", "#fbbf24", "#22c55e"]
+            },
+            "legend": {
+              "title": "Safety Score",
+              "titleFontSize": 12,
+              "titleFontWeight": "bold",
+              "titleColor": "#4A6A7B",
+              "labelFontSize": 10,
+              "labelColor": "#888",
+              "orient": "right",
+              "gradientLength": 100
+            }
+          },
+          "tooltip": [
+            {"field": "borough", "type": "nominal", "title": "Borough"},
+            {"field": "safety_category", "type": "nominal", "title": "Category"},
+            {"field": "score", "type": "quantitative", "title": "Safety Score", "format": ".0f"}
+          ]
+        }
+      }
+    }
+  ],
+  "insights": [
+    "Richmond has the highest safety score (87.7) with lowest crime rate",
+    "Westminster shows high housing prices (£1.2M) but poor safety ratings",
+    "Tower Hamlets offers affordable housing (£450K) with moderate safety scores"
+  ]
+}

@@ -1,0 +1,298 @@
+[
+    {
+  "qid": "q_claim_croydon_peak_2021",
+  "title": "Did Croydon’s licensed vehicles peak in 2021 vs 2020?",
+  "type": "claim",
+  "status": "resolved",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [0,1]}],
+  "links": [
+    {"qid": "q_data_croydon_totals_2020_2021", "type": "depends_on", "explanation": "Peak requires 2020 and 2021 totals.", "color": "blue"},
+    {"qid": "q_qualifier_vehicle_scope", "type": "refines", "explanation": "Clarify if 'all types' or a subset.", "color": "teal"},
+    {"qid": "q_data_croydon_totals_2020_2021", "type": "supports", "explanation": "Confirmed totals establish the peak.", "color": "green"}
+  ],
+  "resolution": {
+    "answer": "Yes—Croydon’s total vehicles are higher in 2021 than 2020.",
+    "method": "text",
+    "by": "user",
+    "at": "2025-08-08T14:05:00Z"
+  }
+},
+{
+  "qid": "q_data_croydon_totals_2020_2021",
+  "title": "What were Croydon’s total licensed vehicles in 2020 and 2021?",
+  "type": "data",
+  "status": "resolved",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [1]}],
+  "links": [],
+  "resolution": {
+    "answer": "2021 exceeds 2020 (exact figures recorded in worksheet).",
+    "method": "table",
+    "by": "user",
+    "at": "2025-08-08T14:03:00Z"
+  }
+},
+{
+  "qid": "q_qualifier_vehicle_scope",
+  "title": "Are we talking all vehicles or a subset?",
+  "type": "qualifier",
+  "status": "stalled",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [0]}],
+  "links": [
+    {"qid": "q_claim_croydon_peak_2021", "type": "refines", "explanation": "Scope precision increases claim quality.", "color": "teal"}
+  ]
+},
+{
+  "qid": "q_claim_london_suvs_up_vans_flat_2022",
+  "title": "Across London, did SUVs rise in 2022 while vans stayed flat?",
+  "type": "claim",
+  "status": "open",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [2]}],
+  "links": [
+    {"qid": "q_data_london_suvs_2021_2022", "type": "depends_on", "explanation": "SUV counts year-over-year.", "color": "blue"},
+    {"qid": "q_data_london_vans_2021_2022", "type": "depends_on", "explanation": "Van counts year-over-year.", "color": "blue"}
+  ]
+},
+{
+  "qid": "q_claim_croydon_vans_dipped_2022",
+  "title": "Did Croydon’s van registrations dip in 2022?",
+  "type": "claim",
+  "status": "open",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [3]}],
+  "links": [
+    {"qid": "q_data_croydon_vans_2020_2023", "type": "depends_on", "explanation": "Need van series 2020–2023.", "color": "blue"},
+    {"qid": "q_warrant_delivery_shift", "type": "supports", "explanation": "Mechanism to explain dip if present.", "color": "green"}
+  ]
+},
+{
+  "qid": "q_warrant_delivery_shift",
+  "title": "Could post‑pandemic delivery shifts explain Croydon van trends?",
+  "type": "warrant",
+  "status": "stalled",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [3,4]}],
+  "links": [
+    {"qid": "q_claim_croydon_vans_dipped_2022", "type": "depends_on", "explanation": "Causal story needs the dip established.", "color": "blue"},
+    {"qid": "q_data_croydon_vans_2020_2023", "type": "depends_on", "explanation": "Need multi‑year pattern to assess structural change.", "color": "blue"}
+  ]
+},
+{
+  "qid": "q_data_croydon_vans_2020_2023",
+  "title": "What are Croydon’s van counts from 2020 to 2023?",
+  "type": "data",
+  "status": "stalled",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [4]}],
+  "links": []
+},
+{
+  "qid": "q_claim_camden_prices_down_rents_up_2021",
+  "title": "In 2021, did Camden prices fall while rents rose?",
+  "type": "claim",
+  "status": "resolved",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [5,6]}],
+  "links": [
+    {"qid": "q_data_camden_price_change_2021", "type": "depends_on", "explanation": "Land Registry price change.", "color": "blue"},
+    {"qid": "q_data_camden_rent_change_2021", "type": "depends_on", "explanation": "VOA rent change.", "color": "blue"},
+    {"qid": "q_rebuttal_composition_effect", "type": "contradicts", "explanation": "Alternative: composition shift explains divergence.", "color": "red"}
+  ],
+  "resolution": {
+    "answer": "Yes—both series verified; divergence holds in 2021.",
+    "method": "text",
+    "by": "user",
+    "at": "2025-08-08T14:12:00Z"
+  }
+},
+{
+  "qid": "q_data_camden_price_change_2021",
+  "title": "What was Camden’s average sale price change in 2021?",
+  "type": "data",
+  "status": "resolved",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [6]}],
+  "links": [],
+  "resolution": {
+    "answer": "Confirmed a decline (exact % captured in notes).",
+    "method": "text",
+    "by": "user",
+    "at": "2025-08-08T14:10:00Z"
+  }
+},
+{
+  "qid": "q_data_camden_rent_change_2021",
+  "title": "What was Camden’s private rent change in 2021?",
+  "type": "data",
+  "status": "resolved",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [6]}],
+  "links": [],
+  "resolution": {
+    "answer": "Confirmed an increase (exact % captured in notes).",
+    "method": "text",
+    "by": "user",
+    "at": "2025-08-08T14:10:30Z"
+  }
+},
+{
+  "qid": "q_claim_westminster_same_divergence",
+  "title": "Did Westminster also have prices down and rents up in 2021?",
+  "type": "claim",
+  "status": "open",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [7,8]}],
+  "links": [
+    {"qid": "q_data_westminster_price_rent_2021", "type": "depends_on", "explanation": "Need both series for Westminster.", "color": "blue"},
+    {"qid": "q_backing_norm_bedroom_mix", "type": "refines", "explanation": "Adjust for bedroom mix to avoid composition bias.", "color": "teal"}
+  ]
+},
+{
+  "qid": "q_backing_norm_bedroom_mix",
+  "title": "Do we need to standardize by bedroom size before rent comparisons?",
+  "type": "backing",
+  "status": "stalled",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [8]}],
+  "links": []
+},
+{
+  "qid": "q_data_westminster_price_rent_2021",
+  "title": "What were Westminster’s price and rent changes in 2021?",
+  "type": "data",
+  "status": "open",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [9]}],
+  "links": []
+},
+{
+  "qid": "q_claim_london_up_vs_england_down_attendance_2223",
+  "title": "Did London secondary attendance rise in 2022–23 while England fell?",
+  "type": "claim",
+  "status": "resolved",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [9]}],
+  "links": [
+    {"qid": "q_data_london_attendance_2223", "type": "depends_on", "explanation": "London series level/change.", "color": "blue"},
+    {"qid": "q_data_england_attendance_2223", "type": "depends_on", "explanation": "England series change.", "color": "blue"},
+    {"qid": "q_qualifier_phase_alignment", "type": "refines", "explanation": "Ensure both are secondary phase.", "color": "teal"}
+  ],
+  "resolution": {
+    "answer": "Yes—confirmed in the 2022–23 schools file.",
+    "method": "text",
+    "by": "system",
+    "at": "2025-08-08T14:18:00Z"
+  }
+},
+{
+  "qid": "q_data_london_attendance_2223",
+  "title": "What is London’s secondary attendance change 2022–23 vs 2021–22?",
+  "type": "data",
+  "status": "resolved",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [9]}],
+  "links": [],
+  "resolution": {
+    "answer": "Slight increase verified.",
+    "method": "chart",
+    "by": "system",
+    "at": "2025-08-08T14:17:00Z"
+  }
+},
+{
+  "qid": "q_data_england_attendance_2223",
+  "title": "What is England’s secondary attendance change in 2022–23?",
+  "type": "data",
+  "status": "resolved",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [9]}],
+  "links": [],
+  "resolution": {
+    "answer": "Slight decline verified.",
+    "method": "chart",
+    "by": "system",
+    "at": "2025-08-08T14:17:10Z"
+  }
+},
+{
+  "qid": "q_qualifier_phase_alignment",
+  "title": "Are both series strictly secondary phase before we compare?",
+  "type": "qualifier",
+  "status": "open",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [10]}],
+  "links": [
+    {"qid": "q_backing_attendance_def", "type": "depends_on", "explanation": "Confirm phase definitions in dataset docs.", "color": "blue"}
+  ]
+},
+{
+  "qid": "q_backing_attendance_def",
+  "title": "What is the attendance definition used across the files?",
+  "type": "backing",
+  "status": "stalled",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [10]}],
+  "links": []
+},
+{
+  "qid": "q_claim_libs_down_year_unspecified_and_gyms_up_2024",
+  "title": "Were South London library usage scores down ‘last year’ while Hackney gyms grew 10% in 2024?",
+  "type": "claim",
+  "status": "open",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [11]}],
+  "links": [
+    {"qid": "q_qualifier_define_last_year", "type": "refines", "explanation": "Resolve which year ‘last year’ refers to.", "color": "teal"},
+    {"qid": "q_data_hackney_gyms_2024", "type": "depends_on", "explanation": "Gym count change in 2024.", "color": "blue"},
+    {"qid": "q_data_south_libraries_trend_target_year", "type": "depends_on", "explanation": "Libraries usage index for that exact year.", "color": "blue"}
+  ]
+},
+{
+  "qid": "q_qualifier_define_last_year",
+  "title": "Which calendar year does ‘last year’ map to in the libraries note?",
+  "type": "qualifier",
+  "status": "open",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [11,12]}],
+  "links": [
+    {"qid": "q_claim_libs_down_year_unspecified_and_gyms_up_2024", "type": "supports", "explanation": "Pinning the year makes the claim testable.", "color": "green"}
+  ]
+},
+{
+  "qid": "q_rebuttal_leisure_shift_inference",
+  "title": "Should we avoid inferring a leisure shift until both time frames align?",
+  "type": "rebuttal",
+  "status": "resolved",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [12]}],
+  "links": [
+    {"qid": "q_claim_libs_down_year_unspecified_and_gyms_up_2024", "type": "contradicts", "explanation": "Counters premature ‘leisure shift’ inference.", "color": "red"}
+  ],
+  "resolution": {
+    "answer": "Yes—hold off on inference until the library year is resolved.",
+    "method": "text",
+    "by": "system",
+    "at": "2025-08-08T14:22:00Z"
+  }
+},
+{
+  "qid": "q_data_london_suvs_2021_2022",
+  "title": "What are London SUV counts for 2021 and 2022?",
+  "type": "data",
+  "status": "open",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [2]}],
+  "links": []
+},
+{
+  "qid": "q_data_london_vans_2021_2022",
+  "title": "What are London van counts for 2021 and 2022?",
+  "type": "data",
+  "status": "open",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [2]}],
+  "links": []
+},
+{
+  "qid": "q_data_hackney_gyms_2024",
+  "title": "What was Hackney’s gym facility change in 2024?",
+  "type": "data",
+  "status": "resolved",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [11]}],
+  "links": [],
+  "resolution": {
+    "answer": "Increase confirmed at ~10%.",
+    "method": "text",
+    "by": "system",
+    "at": "2025-08-08T14:19:00Z"
+  }
+},
+{
+  "qid": "q_data_south_libraries_trend_target_year",
+  "title": "What was the South London libraries usage index in the specified ‘last year’?",
+  "type": "data",
+  "status": "stalled",
+  "narrative_refs": [{"case_id": "journal_002", "sentence_indices": [11,12]}],
+  "links": []
+}
+]

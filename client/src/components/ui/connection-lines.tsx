@@ -148,12 +148,12 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
     };    
     // Delay initial update to ensure DOM is ready
     setTimeout(initialUpdate, 100);
+    
     // Set up a mutation observer to watch for DOM changes
     const observer = new MutationObserver(() => {
       updateElementPositions();
     });    
-    // Also set up an interval to periodically update positions (in case of transform changes)
-    const interval = setInterval(updateElementPositions, 1000);
+    
     // Observe changes to the dashboard area
     const dashboardElement = document.querySelector('[data-dashboard-container]');
     if (dashboardElement) {
@@ -164,15 +164,23 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({
         attributeFilter: ['style', 'class']
       });
     }    
-    // Also update on resize
+    
+    // Also update on resize and scroll
     const handleResize = () => {
       updateElementPositions();
+    };
+    
+    const handleScroll = () => {
+      updateElementPositions();
     };    
+    
     window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
     return () => {
       observer.disconnect();
-      clearInterval(interval);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [updateElementPositions]);
   

@@ -182,7 +182,7 @@ const Dashboard3: React.FC = () => {
         setPopulationRawData(data);
         const metrics = processPopulationData(data);
         setPopulationMetrics(metrics);
-        console.log(`Loaded ${data.length} population records`);
+        // console.log(`Loaded ${data.length} population records`);
       } catch (error) {
         console.error('Error loading population data:', error);
       } finally {
@@ -207,7 +207,7 @@ const Dashboard3: React.FC = () => {
         
         const statsComparison = processBoroughCrimeStatsComparison(data);
         setBoroughCrimeStatsComparison(statsComparison);
-        console.log(`Loaded ${data.length} crime records`);
+        // console.log(`Loaded ${data.length} crime records`);
       } catch (error) {
         console.error('Error loading crime data:', error);
       } finally {
@@ -225,7 +225,7 @@ const Dashboard3: React.FC = () => {
       try {
         const data = await loadSchoolData();
         setSchoolData(data);
-        console.log(`Loaded ${data.length} schools`);
+        // console.log(`Loaded ${data.length} schools`);
       } catch (error) {
         console.error('Error loading school data:', error);
         setSchoolData([]);
@@ -244,7 +244,7 @@ const Dashboard3: React.FC = () => {
       try {
         const data = await loadHousePriceData();
         setHousePriceData(data);
-        console.log(`Loaded ${data.length} house price records`);
+        // console.log(`Loaded ${data.length} house price records`);
       } catch (error) {
         console.error('Error loading house price data:', error);
         setHousePriceData([]);
@@ -304,7 +304,7 @@ const Dashboard3: React.FC = () => {
       try {
         const data = await loadHousePriceData();
         setHousePriceData(data);
-        console.log(`Loaded ${data.length} house price records`);
+        // console.log(`Loaded ${data.length} house price records`);
       } catch (error) {
         console.error('Error loading house price data:', error);
         setHousePriceData([]);
@@ -333,7 +333,7 @@ const Dashboard3: React.FC = () => {
       try {
         const data = await loadEthnicityData();
         setEthnicityData(data);
-        console.log(`Loaded ${data.length} ethnicity records`);
+        // console.log(`Loaded ${data.length} ethnicity records`);
       } catch (error) {
         console.error('Error loading ethnicity data:', error);
         setEthnicityData([]);
@@ -364,7 +364,7 @@ const Dashboard3: React.FC = () => {
         const csvText = await response.text();
         const data = parseCountryOfBirthCSV(csvText);
         setCountryOfBirthData(data);
-        console.log(`Loaded ${data.length} country of birth records`);
+        // console.log(`Loaded ${data.length} country of birth records`);
 
         const availableYears = getAvailableYears(data);
         setBirthYears(availableYears);

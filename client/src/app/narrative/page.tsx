@@ -1,17 +1,19 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import DatasetExplorer from '../components/DatasetExplorer';
-import NarrativeLayer, { NarrativeLayerRef } from '../components/NarrativeLayer';
+import PagedNarrativeSystem, { PagedNarrativeSystemRef } from '../components/PagedNarrativeSystem';
 import FileSummaryCanvas from '../components/FileSummaryCanvas';
-import { EmptyCanvas, EmptyTimeline, AnalyzingState } from '../components/EmptyStates';
+import { EmptyCanvas, EmptyTimeline, AnalyzingState, TimelineVisualization } from '../components/EmptyStates';
 import ReactFlowCanvas, { ReactFlowCanvasRef } from '../components/ReactFlowCanvas';
 import LondonDashboard from '../london/page'; //this should be a different input after you have the right component for dashboard
 import { generateMultipleFileSummaries, FileSummary } from '../../utils/londonDataLoader';
 import { interactionLogger } from '../../lib/interactionLogger';
 import { captureAndLogInteractions, getCapturedInteractionCount } from '../utils/dashboardConfig';
 import { captureInsights, NarrativeSuggestion } from '../LLMs/suggestion_from_interaction';
+import { getVisualizationRecommendation, VisualizationRecommendation, isDashboardRecommendation } from '../LLMs/visualizationRecommendation';
+import { generateInsightTimeline, TimelineGroup } from '../LLMs/insightTimeline';
 import '../../styles/dataExplorer.css';
 import '../../styles/narrativeLayer.css';
 import '../../styles/dataExplorer.css';
@@ -36,8 +38,12 @@ interface DatasetFile {
 
 export default function NarrativePage() {
   const router = useRouter();
-  const narrativeLayerRef = useRef<NarrativeLayerRef>(null);
+  const narrativeSystemRef = useRef<PagedNarrativeSystemRef>(null);
   const reactFlowCanvasRef = useRef<ReactFlowCanvasRef>(null);
+  
+  // Add client-side only state to prevent hydration mismatches
+  const [isClient, setIsClient] = useState(false);
+  
   const [userSession, setUserSession] = useState<UserSession | null>(null);
   const [isStudyMode, setIsStudyMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,6 +60,186 @@ export default function NarrativePage() {
   const [hasPendingSuggestion, setHasPendingSuggestion] = useState(false);
   const [interactionCount, setInteractionCount] = useState(0);
   const [hasActiveInfoNodes, setHasActiveInfoNodes] = useState(false);
+
+  // Set client-side flag after hydration
+  useEffect(() => {
+    setIsClient(true);
+    
+    // Add debug helpers to window for testing
+    if (typeof window !== 'undefined') {
+      (window as any).narrativeDebug = {
+        getCurrentTree: () => {
+          if (narrativeSystemRef.current) {
+            return narrativeSystemRef.current.debugGetCurrentTreeState?.();
+          }
+          return null;
+        },
+        createTestBranches: () => {
+          if (narrativeSystemRef.current) {
+            return narrativeSystemRef.current.debugCreateTestBranches?.();
+          }
+        },
+        getCurrentPageId: () => {
+          if (narrativeSystemRef.current) {
+            return narrativeSystemRef.current.getCurrentPageId();
+          }
+        },
+        getPageContent: (pageId?: string) => {
+          if (narrativeSystemRef.current) {
+            const id = pageId || narrativeSystemRef.current.getCurrentPageId();
+            return narrativeSystemRef.current.getPageContent(id);
+          }
+        }
+      };
+    
+    }
+  }, []);
+
+  // Define timeline group structure
+  interface TimelineGroup {
+    node_id: number;
+    sentence_id: string; // Link to the specific sentence
+    sentence_content: string;
+    parent_id: string;
+    child_ids: string[];
+    changed_from_previous: {
+      drift_types: string[];
+      severity: string;
+      dimensions: Record<string, string>;
+    } | null;
+    hover: {
+      title: string;
+      source: {
+        dataset: string | string[];
+        geo: string | string[];
+        time: string | string[];
+        measure: string | string[];
+        unit: string;
+      };
+      reflect: string[];
+    };
+  }
+
+  // Insight timeline state - per page tracking
+  const [insightTimelinesByPage, setInsightTimelinesByPage] = useState<Record<string, { groups: TimelineGroup[] }>>({});
+  
+  // Track the most recently updated sentence for LLM calls
+  const [recentlyUpdatedSentence, setRecentlyUpdatedSentence] = useState<{
+    pageId: string;
+    sentence: string;
+    timestamp: number;
+  } | null>(null);
+
+  // Define simplified sentence node structure for linear narratives with branching
+  interface SentenceNode {
+    pageId: string; // page this node belongs to
+    id: string; // unique identifier
+    content: string; // the actual sentence text
+    parent: string | null; // parent sentence id (previous sentence in linear flow)
+    children: string[]; // array of child sentence ids (next sentences - usually 1, multiple when branching)
+    activeChild: string | null; // currently active child node id (null if no child, or if multiple children with no active selection)
+    createdTime: number; // system timestamp when first created
+    revisedTime: number; // system timestamp when last modified
+    editCount: number; // number of times this sentence has been edited
+    isCompleted: boolean; // whether this sentence is marked as completed
+    metadata?: {
+      confidence?: number;
+      analysisResult?: any;
+      [key: string]: any;
+    };
+  }
+
+  // OLD SENTENCE TREE MANAGEMENT - Now handled by PagedNarrativeSystem
+  // Keeping for reference but commenting out to avoid conflicts
+  
+  /*
+  // Track completed sentences with full branching structure
+  const [sentenceNodes, setSentenceNodes] = useState<Map<string, SentenceNode>>(new Map());
+  
+  // Track the current "active path" through the sentence tree
+  const [activePath, setActivePath] = useState<string[]>([]);
+  
+  // Legacy compatibility - computed from sentenceNodes
+  const completedSentences = React.useMemo(() => {
+    const sentences = activePath
+      .map(id => sentenceNodes.get(id))
+      .filter(node => node && node.isCompleted)
+      .map(node => node!.content);
+    
+    
+    return sentences;
+  }, [sentenceNodes, activePath]);
+  */
+
+  /*
+  // OLD: Automatically rebuild main editor content from activeChild path
+  useEffect(() => {
+    // Get the current active path following activeChild relationships (inline implementation)
+    const getCurrentActivePath = (): string[] => {
+      const path: string[] = [];
+      
+      // Find the root node (no parent)
+      const rootNodes = Array.from(sentenceNodes.values()).filter(n => !n.parent);
+      if (rootNodes.length === 0) return path;
+      
+      // Start from the first root node
+      let currentNodeId: string | null = rootNodes[0].id;
+      
+      while (currentNodeId) {
+        path.push(currentNodeId);
+        const currentNode = sentenceNodes.get(currentNodeId);
+        
+        // Follow the activeChild path
+        if (currentNode && currentNode.activeChild) {
+          currentNodeId = currentNode.activeChild;
+        } else {
+          // No active child, end the path
+          currentNodeId = null;
+        }
+      }
+      
+      return path;
+    };
+    
+    const currentActivePath = getCurrentActivePath();
+    
+    // Only update if the path has changed or if we have content
+    if (currentActivePath.length > 0) {
+      console.log('🔄 Auto-updating editor content from activeChild path:', currentActivePath);
+      
+      const narrativeText = currentActivePath
+        .map(nodeId => {
+          const node = sentenceNodes.get(nodeId);
+          let content = node ? node.content.trim() : '';
+          if (content && !/[.!?]$/.test(content)) {
+            content += '.';
+          }
+          return content;
+        })
+        .filter(content => content.length > 0)
+        .join(' ');
+      
+      console.log('📝 Auto-rebuilt narrative:', narrativeText);
+      
+      // Update the main editor content if it has changed
+      if (narrativeSystemRef.current && narrativeText) {
+        // Only update if content is different to avoid infinite loops
+        const currentEditorText = narrativeSystemRef.current.getPageContent(narrativeSystemRef.current.getCurrentPageId());
+        if (currentEditorText.trim() !== narrativeText.trim()) {
+          console.log('✏️ Updating main editor with activeChild path content');
+          // For now, we'll need to implement updateContent in PagedNarrativeSystem
+          // narrativeSystemRef.current.updateContent(narrativeText);
+        }
+      }
+      
+      // Sync the activePath state with the current active path
+      if (JSON.stringify(activePath) !== JSON.stringify(currentActivePath)) {
+        console.log('🛤️ Syncing activePath state');
+        setActivePath(currentActivePath);
+      }
+    }
+  }, [sentenceNodes, activePath]);
+  */
 
   // Local interaction tracking
   const [dashboardInteractions, setDashboardInteractions] = useState<Array<{
@@ -83,6 +269,9 @@ export default function NarrativePage() {
     };
     
     setDashboardInteractions(prev => [...prev, interaction]);
+    
+    // Update interaction count to enable the capture button
+    setInteractionCount(prev => prev + 1);
   };
   
   // Check authentication on mount
@@ -102,7 +291,7 @@ export default function NarrativePage() {
           
           if (userStr && token) {
             const user = JSON.parse(userStr);
-            console.log('🔧 Loaded user from localStorage:', user);
+            // console.log('🔧 Loaded user from localStorage:', user);
             
             // Ensure userId is set - fallback to username or create one
             if (!user.userId) {
@@ -161,7 +350,7 @@ export default function NarrativePage() {
     }
   }, [userSession, isStudyMode]);
 
-  // Track info node status from ReactFlow canvas
+  // Track info node status from ReactFlow canvas - optimized
   useEffect(() => {
     const checkInfoNodes = () => {
       if (reactFlowCanvasRef.current) {
@@ -170,32 +359,19 @@ export default function NarrativePage() {
       }
     };
 
-    // Check immediately
+    // Check immediately and when dependencies change only
     checkInfoNodes();
-
-    // Set up an interval to check periodically
-    const interval = setInterval(checkInfoNodes, 500);
-
-    return () => clearInterval(interval);
   }, [showDashboard]); // Re-run when dashboard visibility changes
 
   // Handle analysis request
   const handleAnalysisRequest = async (prompt: string) => {
-    console.log('🚀 Starting analysis for prompt:', prompt);
     
     setCurrentPrompt(prompt);
     setIsAnalyzing(true);
     
     // Log the generate dashboard interaction manually
     try {
-      console.log('📊 Logging dashboard generation with:', {
-        prompt,
-        userContext: interactionLogger.userContext,
-        isStudyMode: interactionLogger.isStudyMode
-      });
-      
       await interactionLogger.logDashboardGeneration(prompt);
-      console.log('✅ Dashboard generation logged successfully');
     } catch (error) {
       console.error('❌ Failed to log dashboard generation:', error);
     }
@@ -214,15 +390,362 @@ export default function NarrativePage() {
     }, analysisTime);
   };
 
-  // Handle sentence end detection for narrative layer
-  const handleSentenceEnd = async (sentence: string, confidence: number) => {
-    // console.log(`🧠 Sentence completed for analysis: "${sentence}" (Confidence: ${confidence})`);
+  // Function to check if all sentences in the narrative are completed
+  const checkAllSentencesCompleted = () => {
+    if (!narrativeSystemRef.current) {
+      return false;
+    }
     
-    // Here you can add your LLM API call or other analysis logic
+    // Get the DOM elements from the narrative editor
+    const editorElement = document.querySelector('.narrative-editor-content');
+    if (!editorElement) {
+      return false;
+    }
+    
+    // Get all paragraphs in the editor
+    const paragraphs = editorElement.querySelectorAll('.tiptap-paragraph');
+    
+    if (paragraphs.length === 0) {
+      return false;
+    }
+    
+    let hasAnyContent = false;
+    
+    for (const paragraph of paragraphs) {
+      // Get all completed sentence spans in this paragraph
+      const completedSpans = paragraph.querySelectorAll('.completed-sentence[data-completed-sentence="true"]');
+      
+      // Get all text content in the paragraph
+      const paragraphText = paragraph.textContent || '';
+      
+      
+      // Skip empty paragraphs
+      if (paragraphText.trim().length === 0) continue;
+      
+      hasAnyContent = true;
+      
+      // Get text content from all completed sentence spans
+      let completedText = '';
+      completedSpans.forEach(span => {
+        completedText += span.textContent || '';
+      });
+      
+      // Get text content that's NOT in completed sentence spans
+      // We'll do this by cloning the paragraph and removing all completed sentence spans
+      const paragraphClone = paragraph.cloneNode(true) as HTMLElement;
+      const spansToRemove = paragraphClone.querySelectorAll('.completed-sentence[data-completed-sentence="true"]');
+      spansToRemove.forEach(span => span.remove());
+      
+      const remainingText = paragraphClone.textContent || '';
+      
+      // Check if remaining text contains only punctuation and whitespace
+      const nonPunctuationRemaining = remainingText.replace(/[.!?…\s]/g, '').trim();
+      
+      // If there's non-punctuation text outside completed sentences, not all sentences are completed
+      if (nonPunctuationRemaining.length > 0) {
+        return false;
+      }
+      
+      // Also check if there are any completed sentences at all in this paragraph
+      if (completedSpans.length === 0 && paragraphText.trim().length > 0) {
+        return false;
+      }
+    }
+    
+    // Return true only if we found content and all text (except punctuation) is in completed sentences
+    return hasAnyContent;
+  };
+
+  /*
+  // OLD SENTENCE TREE HELPER FUNCTIONS - Now handled by PagedNarrativeSystem
+  // Commenting out to avoid conflicts
+
+  // Helper functions for managing sentence tree structure
+  const generateSentenceId = () => {
+    // Use a more stable ID generation that won't cause hydration mismatches
+    if (typeof window !== 'undefined') {
+      // Client-side: use timestamp + random
+      return `sentence_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    } else {
+      // Server-side: use a predictable pattern to avoid hydration mismatch
+      return `sentence_ssr_${Math.random().toString(36).substr(2, 9)}`;
+    }
+  };
+
+  const createSentenceNode = (
+    content: string, 
+    parent: string | null = null
+  ): SentenceNode => {
+    const now = typeof window !== 'undefined' ? Date.now() : 0; // Avoid Date.now() during SSR
+    return {
+      id: generateSentenceId(),
+      content: content.trim(),
+      parent,
+      children: [],
+      activeChild: null,
+      createdTime: now,
+      revisedTime: now,
+      editCount: 0,
+      isCompleted: false,
+      metadata: {}
+    };
+  };
+
+  const updateSentenceContent = (nodeId: string, newContent: string) => {
+    // STRICT PROTECTION: Only allow content updates for nodes explicitly in edit mode
+    if (!editableNodes.has(nodeId)) {
+      console.warn(`🚫 BLOCKED: Cannot update content for node ${nodeId} - not in edit mode.`);
+      return;
+    }
+    
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      const node = newMap.get(nodeId);
+      if (node) {
+        const updatedNode = {
+          ...node,
+          content: newContent.trim(),
+          revisedTime: typeof window !== 'undefined' ? Date.now() : 0,
+          editCount: node.editCount + 1
+        };
+        newMap.set(nodeId, updatedNode);
+        console.log(`✅ Updated content for editable node ${nodeId}: "${newContent}"`); // Keep this for debugging
+      }
+      return newMap;
+    });
+  };
+
+  const markSentenceCompleted = (nodeId: string, completed: boolean = true, metadata: any = {}) => {
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      const node = newMap.get(nodeId);
+      if (node) {
+        const updatedNode = {
+          ...node,
+          isCompleted: completed,
+          revisedTime: typeof window !== 'undefined' ? Date.now() : 0,
+          metadata: { ...node.metadata, ...metadata }
+        };
+        newMap.set(nodeId, updatedNode);
+      }
+      return newMap;
+    });
+  };
+
+  const addSentenceRelationship = (parentId: string, childId: string) => {
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      const parent = newMap.get(parentId);
+      const child = newMap.get(childId);
+      
+      if (parent && child) {
+        // Update parent's children (add the new child)
+        const updatedParent = {
+          ...parent,
+          children: [...parent.children, childId],
+          // Set as active child: if parent has no active child, or only one child, this becomes active
+          activeChild: parent.children.length === 0 ? childId : parent.activeChild
+        };
+        
+        // Update child's parent
+        const updatedChild = {
+          ...child,
+          parent: parentId
+        };
+        
+        newMap.set(parentId, updatedParent);
+        newMap.set(childId, updatedChild);
+      }
+      return newMap;
+    });
+  };
+
+  // Helper function to get the active path from a specific node map
+  const getActivePathFromCleanedMap = (nodeMap: Map<string, SentenceNode>): string[] => {
+    const path: string[] = [];
+    
+    // Find the root node (no parent)
+    const rootNodes = Array.from(nodeMap.values()).filter(n => !n.parent);
+    if (rootNodes.length === 0) return path;
+    
+    // Start from the first root node
+    let currentNodeId: string | null = rootNodes[0].id;
+    
+    while (currentNodeId) {
+      path.push(currentNodeId);
+      const currentNode = nodeMap.get(currentNodeId);
+      
+      // Follow the activeChild path
+      if (currentNode && currentNode.activeChild) {
+        currentNodeId = currentNode.activeChild;
+      } else {
+        // No active child, end the path
+        currentNodeId = null;
+      }
+    }
+    
+    return path;
+  };
+
+  // Safety check function to remove duplicate sentence nodes with identical content
+  const removeDuplicateSentenceNodes = (nodeMap: Map<string, SentenceNode>): Map<string, SentenceNode> => {
+    const cleanedMap = new Map(nodeMap);
+    const contentToNodes = new Map<string, string[]>(); // content -> array of node IDs
+    const nodesToRemove = new Set<string>();
+    
+    // Group nodes by content
+    for (const [nodeId, node] of cleanedMap.entries()) {
+      const content = node.content.trim();
+      if (!contentToNodes.has(content)) {
+        contentToNodes.set(content, []);
+      }
+      contentToNodes.get(content)!.push(nodeId);
+    }
+    
+    // Process each group of nodes with identical content
+    for (const [content, nodeIds] of contentToNodes.entries()) {
+      if (nodeIds.length > 1) {
+        console.log(`🔍 Found ${nodeIds.length} nodes with identical content: "${content}"`);
+        
+        // Analyze each duplicate node to decide which to keep
+        const nodeAnalysis = nodeIds.map(nodeId => {
+          const node = cleanedMap.get(nodeId)!;
+          const hasChildren = node.children.length > 0;
+          const isActiveChild = Array.from(cleanedMap.values()).some(n => n.activeChild === nodeId);
+          const isReferencedAsParent = Array.from(cleanedMap.values()).some(n => n.parent === nodeId);
+          
+          return {
+            nodeId,
+            node,
+            hasChildren,
+            isActiveChild,
+            isReferencedAsParent,
+            priority: (hasChildren ? 2 : 0) + (isActiveChild ? 4 : 0) + (isReferencedAsParent ? 1 : 0)
+          };
+        });
+        
+        // Sort by priority (higher priority nodes are more important to keep)
+        nodeAnalysis.sort((a, b) => b.priority - a.priority);
+        
+        console.log(`📊 Node analysis for "${content}":`, nodeAnalysis.map(a => 
+          `${a.nodeId}: priority=${a.priority} (children=${a.hasChildren}, activeChild=${a.isActiveChild}, referenced=${a.isReferencedAsParent})`
+        ));
+        
+        // Keep the highest priority node, mark others for removal
+        const nodeToKeep = nodeAnalysis[0];
+        const nodesToRemoveFromGroup = nodeAnalysis.slice(1);
+        
+        console.log(`✅ Keeping node ${nodeToKeep.nodeId} with priority ${nodeToKeep.priority}`);
+        
+        nodesToRemoveFromGroup.forEach(analysis => {
+          console.log(`❌ Marking node ${analysis.nodeId} for removal (priority ${analysis.priority})`);
+          nodesToRemove.add(analysis.nodeId);
+          
+          // If the node being removed is someone's activeChild, update to point to the kept node
+          for (const [parentId, parentNode] of cleanedMap.entries()) {
+            if (parentNode.activeChild === analysis.nodeId) {
+              const updatedParent = {
+                ...parentNode,
+                activeChild: nodeToKeep.nodeId,
+                children: parentNode.children.map(childId => 
+                  childId === analysis.nodeId ? nodeToKeep.nodeId : childId
+                ).filter((value, index, self) => self.indexOf(value) === index) // Remove duplicates
+              };
+              cleanedMap.set(parentId, updatedParent);
+              console.log(`🔄 Updated parent "${parentNode.content}" activeChild from ${analysis.nodeId} to ${nodeToKeep.nodeId}`);
+            }
+            
+            // Update children arrays to point to the kept node
+            if (parentNode.children.includes(analysis.nodeId)) {
+              const updatedParent = {
+                ...parentNode,
+                children: parentNode.children.map(childId => 
+                  childId === analysis.nodeId ? nodeToKeep.nodeId : childId
+                ).filter((value, index, self) => self.indexOf(value) === index) // Remove duplicates
+              };
+              cleanedMap.set(parentId, updatedParent);
+              console.log(`🔄 Updated parent "${parentNode.content}" children array to reference kept node`);
+            }
+          }
+          
+          // If the node being removed has children, transfer them to the kept node
+          if (analysis.node.children.length > 0) {
+            const keptNode = cleanedMap.get(nodeToKeep.nodeId)!;
+            const mergedChildren = [...keptNode.children, ...analysis.node.children]
+              .filter((value, index, self) => self.indexOf(value) === index); // Remove duplicates
+            
+            const updatedKeptNode = {
+              ...keptNode,
+              children: mergedChildren,
+              // If the kept node doesn't have an activeChild but the removed node does, inherit it
+              activeChild: keptNode.activeChild || analysis.node.activeChild
+            };
+            cleanedMap.set(nodeToKeep.nodeId, updatedKeptNode);
+            console.log(`🔄 Transferred ${analysis.node.children.length} children from removed node to kept node`);
+            
+            // Update parent references of transferred children
+            analysis.node.children.forEach(childId => {
+              const child = cleanedMap.get(childId);
+              if (child) {
+                const updatedChild = {
+                  ...child,
+                  parent: nodeToKeep.nodeId
+                };
+                cleanedMap.set(childId, updatedChild);
+              }
+            });
+          }
+        });
+      }
+    }
+    
+    // Remove marked nodes
+    nodesToRemove.forEach(nodeId => {
+      console.log(`🗑️ Removing duplicate node: ${nodeId}`);
+      cleanedMap.delete(nodeId);
+    });
+    
+    if (nodesToRemove.size > 0) {
+      console.log(`🧹 Removed ${nodesToRemove.size} duplicate nodes from tree structure`);
+    } else {
+      console.log(`✅ No duplicate nodes found - tree structure is clean`);
+    }
+    
+    return cleanedMap;
+  };
+
+  // Function to get completed sentences from DOM (simplified)
+  const getCompletedSentencesFromDOM = (): { content: string; index: number }[] => {
+    const editorElement = document.querySelector('.narrative-editor-content');
+    if (!editorElement) return [];
+    
+    const completedSpans = editorElement.querySelectorAll('.completed-sentence[data-completed-sentence="true"]');
+    const sentences: { content: string; index: number }[] = [];
+    
+    completedSpans.forEach((span, index) => {
+      const text = span.textContent?.trim();
+      if (text) {
+        sentences.push({ 
+          content: text, 
+          index: index 
+        });
+      }
+    });
+    
+    return sentences;
+  };
+
+  // Handle sentence end detection for narrative layer - now delegated to PagedNarrativeSystem
+  const handleSentenceEnd = async (sentence: string, confidence: number, pageId: string) => {
+    console.log(`🧠 Sentence completed on page ${pageId}: "${sentence}" (Confidence: ${confidence})`);
+    
+    // The PagedNarrativeSystem handles the tree structure internally
+    // Here we can focus on the analysis and logging
+    
     try {
       // Simulate analysis time
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // console.log(`✅ Analysis complete for: "${sentence}"`);
+      console.log(`✅ Analysis complete for: "${sentence}" on page ${pageId}`);
       
       // Log the sentence completion interaction
       await interactionLogger.logInteraction({
@@ -235,6 +758,7 @@ export default function NarrativePage() {
         metadata: {
           sentence,
           confidence,
+          pageId,
           timestamp: Date.now()
         }
       });
@@ -243,9 +767,1050 @@ export default function NarrativePage() {
     }
   };
 
+  // Utility functions for sentence tree analysis
+  const getSentenceTreeStats = () => {
+    const nodes = Array.from(sentenceNodes.values());
+    const completedNodes = nodes.filter(n => n.isCompleted);
+    const branchedNodes = nodes.filter(n => n.children.length > 1);
+    const rootNodes = nodes.filter(n => !n.parent);
+    const nodesWithActiveChild = nodes.filter(n => n.activeChild !== null);
+    
+    return {
+      totalNodes: nodes.length,
+      completedNodes: completedNodes.length,
+      branchedNodes: branchedNodes.length,
+      rootNodes: rootNodes.length,
+      nodesWithActiveChild: nodesWithActiveChild.length,
+      averageEditCount: nodes.reduce((sum, n) => sum + n.editCount, 0) / nodes.length || 0,
+      activePath: activePath.length
+    };
+  };
+
+  const exportSentenceTree = () => {
+    const exportData = {
+      nodes: Array.from(sentenceNodes.entries()).map(([nodeId, node]) => ({ nodeId, ...node })),
+      activePath,
+      stats: getSentenceTreeStats(),
+      exportedAt: typeof window !== 'undefined' ? Date.now() : 0
+    };
+    
+    console.log('🌳 Sentence Tree Export:', JSON.stringify(exportData, null, 2));
+    return exportData;
+  };
+
+  const findSentencePath = (targetId: string): string[] => {
+    const path: string[] = [];
+    let currentId: string | null = targetId;
+    
+    while (currentId) {
+      path.unshift(currentId);
+      const node = sentenceNodes.get(currentId);
+      currentId = node?.parent || null;
+    }
+    
+    return path;
+  };
+
+  const getSentenceChildren = (nodeId: string, deep: boolean = false): SentenceNode[] => {
+    const node = sentenceNodes.get(nodeId);
+    if (!node) return [];
+    
+    let children = node.children.map(id => sentenceNodes.get(id)).filter(Boolean) as SentenceNode[];
+    
+    if (deep) {
+      for (const child of [...children]) {
+        children.push(...getSentenceChildren(child.id, true));
+      }
+    }
+    
+    return children;
+  };
+
+  // Helper function to get the full content path following activeChild from a specific node
+  const getFullPathContentFromNode = (startNodeId: string): string => {
+    const contentParts: string[] = [];
+    let currentNodeId: string | null = startNodeId;
+    
+    while (currentNodeId) {
+      const currentNode = sentenceNodes.get(currentNodeId);
+      if (currentNode) {
+        contentParts.push(currentNode.content);
+        // Follow the activeChild path
+        currentNodeId = currentNode.activeChild;
+      } else {
+        break;
+      }
+    }
+    
+    return contentParts.join(' ');
+  };
+
+  // Helper function to get the active path following activeChild relationships
+  const getActivePathFromRoot = (): string[] => {
+    const path: string[] = [];
+    
+    // Find the root node (no parent)
+    const rootNodes = Array.from(sentenceNodes.values()).filter(n => !n.parent);
+    if (rootNodes.length === 0) return path;
+    
+    // Start from the first root node
+    let currentNodeId: string | null = rootNodes[0].id;
+    
+    while (currentNodeId) {
+      path.push(currentNodeId);
+      const currentNode = sentenceNodes.get(currentNodeId);
+      
+      // Follow the activeChild path
+      if (currentNode && currentNode.activeChild) {
+        currentNodeId = currentNode.activeChild;
+      } else {
+        // No active child, end the path
+        currentNodeId = null;
+      }
+    }
+    
+    return path;
+  };
+
+  // Helper function to find node ID by content
+  const findNodeIdByContent = useCallback((content: string): string | null => {
+    console.log(`🔍 Searching for node with content: "${content}"`);
+    console.log(`🔍 Current sentence nodes:`, Array.from(sentenceNodes.entries()).map(([id, node]) => ({
+      id: id,
+      content: node.content,
+      isMatch: node.content === content
+    })));
+    
+    for (const [nodeId, node] of sentenceNodes.entries()) {
+      if (node.content === content) {
+        console.log(`✅ Found matching node: ${nodeId} with content: "${node.content}"`);
+        return nodeId;
+      }
+    }
+    console.error(`❌ No node found with exact content: "${content}"`);
+    return null;
+  }, [sentenceNodes]);
+
+  // Helper function to validate tree structure consistency
+  const validateTreeStructure = (): { isValid: boolean; issues: string[] } => {
+    const issues: string[] = [];
+    const nodes = Array.from(sentenceNodes.values());
+    
+    for (const node of nodes) {
+      // Check if activeChild exists in children array
+      if (node.activeChild && !node.children.includes(node.activeChild)) {
+        issues.push(`Node "${node.content}" has activeChild "${node.activeChild}" not in children array`);
+      }
+      
+      // Check if activeChild is null when there are children
+      if (node.children.length > 0 && !node.activeChild) {
+        issues.push(`Node "${node.content}" has children but no activeChild`);
+      }
+      
+      // Check for orphaned nodes
+      if (node.parent) {
+        const parentNode = sentenceNodes.get(node.parent);
+        if (!parentNode) {
+          issues.push(`Node "${node.content}" has invalid parent reference "${node.parent}"`);
+        } else if (!parentNode.children.includes(node.id)) {
+          issues.push(`Node "${node.content}" parent "${parentNode.content}" doesn't include it in children`);
+        }
+      }
+    }
+    
+    return { isValid: issues.length === 0, issues };
+  };
+
+  // Helper function to find the correct branch ID that should be edited
+  const getCurrentEditableBranchId = (sentenceContent: string): string | null => {
+    // Find the node that has this content and is part of the current active path
+    for (const nodeId of activePath) {
+      const node = sentenceNodes.get(nodeId);
+      if (node && node.content === sentenceContent) {
+        return nodeId;
+      }
+    }
+    
+    // If not found in active path, look for any node with this content
+    for (const [nodeId, node] of sentenceNodes.entries()) {
+      if (node.content === sentenceContent) {
+        // console.warn(`⚠️ Node with content "${sentenceContent}" found but not in active path. This might cause content update issues.`);
+        return nodeId;
+      }
+    }
+    
+    console.error(`❌ No node found with content: "${sentenceContent}"`);
+    return null;
+  };
+
+  // Helper function to get branches for a specific sentence (using activeChild system)
+  const getBranchesForSentence = useCallback((sentenceContent: string): Array<{
+    id: string;
+    content: string;
+    fullPathContent: string; // Full content following this branch
+    type: 'branch' | 'original_continuation';
+  }> => {
+    // Find the sentence node by content
+    let targetSentenceId: string | null = null;
+    for (const [id, node] of sentenceNodes.entries()) {
+      if (node.content === sentenceContent) {
+        targetSentenceId = id;
+        break;
+      }
+    }
+    
+    if (!targetSentenceId) {
+      console.log(`🔍 No sentence node found for: "${sentenceContent}"`);
+      return [];
+    }
+    
+    const targetNode = sentenceNodes.get(targetSentenceId);
+    if (!targetNode || targetNode.children.length === 0) {
+      console.log(`🔍 No branches found for sentence: "${sentenceContent}"`);
+      return [];
+    }
+    
+    // Get all children (branches/continuations)
+    const branches: Array<{
+      id: string;
+      content: string;
+      fullPathContent: string;
+      type: 'branch' | 'original_continuation';
+    }> = [];
+    
+    // The activeChild is the current "active path" - all others are alternatives
+    const activeChildId = targetNode.activeChild;
+    
+    targetNode.children.forEach(childId => {
+      const childNode = sentenceNodes.get(childId);
+      if (childNode) {
+        // Use activeChild to determine which is the active path vs alternatives
+        const isActivePath = childId === activeChildId;
+        
+        // Get the full content path following this branch
+        const fullPathContent = getFullPathContentFromNode(childId);
+        
+        branches.push({
+          id: childId,
+          content: childNode.content,
+          fullPathContent: fullPathContent,
+          type: isActivePath ? 'original_continuation' : 'branch'
+        });
+      }
+    });
+    
+    // Sort so active path comes first, then alternatives
+    branches.sort((a, b) => {
+      if (a.type === 'original_continuation' && b.type === 'branch') return -1;
+      if (a.type === 'branch' && b.type === 'original_continuation') return 1;
+      return 0;
+    });
+    
+    // console.log(`🌿 Found ${branches.length} branches for "${sentenceContent}":`, 
+    //   branches.map(b => `${b.type === 'original_continuation' ? 'Active' : 'Alt'}: "${b.content}" (Full: "${b.fullPathContent}")`));
+    
+    return branches;
+  }, [sentenceNodes, getFullPathContentFromNode]);
+  
+  // Helper function to insert a new node between existing nodes
+  const insertNodeAfter = useCallback((afterSentenceContent: string, newSentenceContent: string) => {
+    console.log(`🔗 Inserting new node "${newSentenceContent}" after "${afterSentenceContent}"`);
+    
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      // Find the node after which to insert (by content)
+      let afterNode: SentenceNode | null = null;
+      let afterNodeId: string | null = null;
+      
+      for (const [id, node] of newMap.entries()) {
+        if (node.content === afterSentenceContent) {
+          afterNode = node;
+          afterNodeId = id;
+          break;
+        }
+      }
+      
+      if (!afterNode || !afterNodeId) {
+        console.error(`❌ Cannot find node with content: "${afterSentenceContent}"`);
+        return prev;
+      }
+      
+      // Create the new node
+      const newNodeId = `sentence-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const newNode: SentenceNode = {
+        id: newNodeId,
+        content: newSentenceContent,
+        parent: afterNodeId, // The new node's parent is the "after" node
+        children: [...afterNode.children], // The new node inherits all children from the "after" node
+        activeChild: afterNode.activeChild, // The new node inherits the active child from the "after" node
+        createdTime: Date.now(),
+        revisedTime: Date.now(),
+        editCount: 0,
+        isCompleted: true,
+        metadata: {}
+      };
+      
+      // Add the new node to the map
+      newMap.set(newNodeId, newNode);
+      
+      // Update the "after" node to point to the new node as its only child
+      const updatedAfterNode = {
+        ...afterNode,
+        children: [newNodeId], // The "after" node now only has the new node as a child
+        activeChild: newNodeId, // The new node becomes the active child
+        revisedTime: Date.now()
+      };
+      newMap.set(afterNodeId, updatedAfterNode);
+      
+      // Update all former children of the "after" node to point to the new node as their parent
+      for (const childId of afterNode.children) {
+        const childNode = newMap.get(childId);
+        if (childNode) {
+          const updatedChildNode = {
+            ...childNode,
+            parent: newNodeId, // Former children now have the new node as their parent
+            revisedTime: Date.now()
+          };
+          newMap.set(childId, updatedChildNode);
+        }
+      }
+      
+      console.log(`✅ Inserted new node "${newSentenceContent}" between "${afterSentenceContent}" and its children`);
+      console.log(`🔗 Tree structure: ${afterSentenceContent} -> ${newSentenceContent} -> [${afterNode.children.map(id => {
+        const child = newMap.get(id);
+        return child ? child.content : id;
+      }).join(', ')}]`);
+      
+      return newMap;
+    });
+  }, []);
+
+  // Helper function to delete a sentence and reconnect the tree structure
+  const deleteSentenceFromTree = useCallback((sentenceIdOrContent: string) => {
+    console.log(`🗑️ Starting sentence deletion for: "${sentenceIdOrContent}"`);
+    
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      // Find the node to delete (by ID or content)
+      let nodeToDelete: SentenceNode | null = null;
+      let nodeIdToDelete: string | null = null;
+      
+      // First try to find by ID
+      if (newMap.has(sentenceIdOrContent)) {
+        nodeToDelete = newMap.get(sentenceIdOrContent)!;
+        nodeIdToDelete = sentenceIdOrContent;
+      } else {
+        // If not found by ID, search by content
+        for (const [id, node] of newMap.entries()) {
+          if (node.content === sentenceIdOrContent) {
+            nodeToDelete = node;
+            nodeIdToDelete = id;
+            break;
+          }
+        }
+      }
+      
+      if (!nodeToDelete || !nodeIdToDelete) {
+        return prev;
+      }
+      
+      
+      const parentId = nodeToDelete.parent;
+      const childrenIds = [...nodeToDelete.children];
+      
+      // Step 1: Update parent node (if exists)
+      if (parentId) {
+        const parentNode = newMap.get(parentId);
+        if (parentNode) {
+          console.log(`👨‍👦 Updating parent "${parentNode.content}"`);
+          
+          // Remove the deleted node from parent's children
+          const updatedParentChildren = parentNode.children.filter(childId => childId !== nodeIdToDelete);
+          
+          // Add the deleted node's children to the parent's children
+          updatedParentChildren.push(...childrenIds);
+          
+          // Determine new activeChild for parent
+          let newActiveChild: string | null = null;
+          
+          if (childrenIds.length > 0) {
+            // If the deleted node was the activeChild, set first child as new activeChild
+            if (parentNode.activeChild === nodeIdToDelete) {
+              newActiveChild = childrenIds[0];
+              
+            } else {
+              // Keep the existing activeChild if it wasn't the deleted node
+              newActiveChild = parentNode.activeChild;
+            }
+          } else {
+            // No children to inherit, clear activeChild if it was the deleted node
+            newActiveChild = parentNode.activeChild === nodeIdToDelete ? null : parentNode.activeChild;
+          }
+          
+          const updatedParent = {
+            ...parentNode,
+            children: updatedParentChildren,
+            activeChild: newActiveChild,
+            revisedTime: typeof window !== 'undefined' ? Date.now() : 0
+          };
+          
+          newMap.set(parentId, updatedParent);
+          
+        }
+      } else {
+
+      }
+      
+      // Step 2: Update children nodes to point to new parent
+      for (const childId of childrenIds) {
+        const childNode = newMap.get(childId);
+        if (childNode) {
+          const updatedChild = {
+            ...childNode,
+            parent: parentId, // Children inherit the deleted node's parent (could be null for root)
+            revisedTime: typeof window !== 'undefined' ? Date.now() : 0
+          };
+          newMap.set(childId, updatedChild);
+        }
+      }
+      
+      // Step 3: Clean up any references to the deleted node in other nodes
+      for (const [id, node] of newMap.entries()) {
+        if (id === nodeIdToDelete) continue; // Skip the node we're deleting
+        
+        let needsUpdate = false;
+        let updatedNode = { ...node };
+        
+        // Remove from children array if present
+        if (node.children.includes(nodeIdToDelete)) {
+          updatedNode.children = node.children.filter(childId => childId !== nodeIdToDelete);
+          needsUpdate = true;
+        }
+        
+        // Clear activeChild if it points to deleted node
+        if (node.activeChild === nodeIdToDelete) {
+          updatedNode.activeChild = updatedNode.children.length > 0 ? updatedNode.children[0] : null;
+          needsUpdate = true;
+          console.log(`🧹 Cleared activeChild reference in "${node.content}"`);
+        }
+        
+        if (needsUpdate) {
+          updatedNode.revisedTime = typeof window !== 'undefined' ? Date.now() : 0;
+          newMap.set(id, updatedNode);
+        }
+      }
+      
+      // Step 4: Remove the deleted node from the map
+      newMap.delete(nodeIdToDelete);
+      console.log(`🗑️ Removed node "${nodeToDelete.content}" from tree`);
+      
+      // Step 5: Update active path if it included the deleted node
+      const currentActivePath = getActivePathFromRoot();
+      if (currentActivePath.includes(nodeIdToDelete)) {
+      }
+      
+      return newMap;
+    });
+    
+    // The active path will be automatically recalculated by the useEffect that watches sentenceNodes
+    console.log(`🔄 Tree structure updated after deletion`);
+  }, [sentenceNodes, getActivePathFromRoot]);
+
+  // Helper function to delete an entire branch and all its descendants
+  const deleteBranchFromTree = useCallback((branchId: string) => {
+    console.log(`🌿🗑️ Starting branch deletion for: "${branchId}"`);
+    
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      // Find the branch node to delete
+      const branchToDelete = newMap.get(branchId);
+      if (!branchToDelete) {
+        console.error(`❌ Branch not found: ${branchId}`);
+        return prev;
+      }
+      
+      // Helper function to collect all descendants recursively
+      const collectDescendants = (nodeId: string): string[] => {
+        const node = newMap.get(nodeId);
+        if (!node) return [];
+        
+        let descendants: string[] = [nodeId];
+        for (const childId of node.children) {
+          descendants.push(...collectDescendants(childId));
+        }
+        return descendants;
+      };
+      
+      // Collect all nodes to delete (branch + all descendants)
+      const nodesToDelete = collectDescendants(branchId);
+      console.log(`🗑️ Deleting ${nodesToDelete.length} nodes:`, nodesToDelete.map(id => {
+        const node = newMap.get(id);
+        return `${id}: "${node?.content}"`;
+      }));
+      
+      // Step 1: Update parent node to remove this branch
+      const parentId = branchToDelete.parent;
+      if (parentId) {
+        const parentNode = newMap.get(parentId);
+        if (parentNode) {
+          console.log(`👨‍👦 Updating parent "${parentNode.content}"`);
+          
+          // Remove the branch from parent's children
+          const updatedParentChildren = parentNode.children.filter(childId => childId !== branchId);
+          
+          // Determine new activeChild for parent
+          let newActiveChild: string | null = null;
+          if (parentNode.activeChild === branchId) {
+            // If the deleted branch was active, switch to first remaining child
+            newActiveChild = updatedParentChildren.length > 0 ? updatedParentChildren[0] : null;
+          } else {
+            // Keep the existing activeChild if it wasn't the deleted branch
+            newActiveChild = parentNode.activeChild;
+          }
+          
+          const updatedParent = {
+            ...parentNode,
+            children: updatedParentChildren,
+            activeChild: newActiveChild,
+            revisedTime: typeof window !== 'undefined' ? Date.now() : 0
+          };
+          
+          newMap.set(parentId, updatedParent);
+        }
+      }
+      
+      // Step 2: Clean up any references to deleted nodes in remaining nodes
+      for (const [id, node] of newMap.entries()) {
+        if (nodesToDelete.includes(id)) continue; // Skip nodes we're deleting
+        
+        let needsUpdate = false;
+        let updatedNode = { ...node };
+        
+        // Remove deleted nodes from children array
+        const originalChildrenLength = node.children.length;
+        updatedNode.children = node.children.filter(childId => !nodesToDelete.includes(childId));
+        if (updatedNode.children.length !== originalChildrenLength) {
+          needsUpdate = true;
+        }
+        
+        // Clear activeChild if it points to a deleted node
+        if (node.activeChild && nodesToDelete.includes(node.activeChild)) {
+          updatedNode.activeChild = updatedNode.children.length > 0 ? updatedNode.children[0] : null;
+          needsUpdate = true;
+          console.log(`🧹 Cleared activeChild reference in "${node.content}"`);
+        }
+        
+        if (needsUpdate) {
+          updatedNode.revisedTime = typeof window !== 'undefined' ? Date.now() : 0;
+          newMap.set(id, updatedNode);
+        }
+      }
+      
+      // Step 3: Remove all nodes in the branch from the map
+      for (const nodeId of nodesToDelete) {
+        const deletedNode = newMap.get(nodeId);
+        if (deletedNode) {
+          console.log(`🗑️ Removed branch node "${deletedNode.content}" from tree`);
+          newMap.delete(nodeId);
+        }
+      }
+      
+      console.log(`🌿🔄 Branch deletion completed. Deleted ${nodesToDelete.length} nodes.`);
+      return newMap;
+    });
+    
+    console.log(`🔄 Tree structure updated after branch deletion`);
+  }, [sentenceNodes]);
+
+  // Helper function to switch to a specific branch
+  const handleSwitchToBranch = useCallback((branchId: string) => {
+    const branchNode = sentenceNodes.get(branchId);
+    if (!branchNode) {
+      // console.error('❌ Cannot switch to branch: node not found');
+      return;
+    }
+    
+    // console.log(`🎯 SWITCHING TO BRANCH: ${branchId}`);
+    // console.log(`📊 Branch content: "${branchNode.content}"`);
+    
+    // Find the path from root to this branch
+    const pathToBranch = findSentencePath(branchId);
+    
+    // Continue the path by following activeChild relationships from the branch node
+    const fullPath = [...pathToBranch];
+    let currentNodeId = branchId;
+    
+    while (currentNodeId) {
+      const currentNode = sentenceNodes.get(currentNodeId);
+      if (currentNode && currentNode.activeChild) {
+        // Only add if not already in path (avoid infinite loops)
+        if (!fullPath.includes(currentNode.activeChild)) {
+          fullPath.push(currentNode.activeChild);
+          currentNodeId = currentNode.activeChild;
+        } else {
+          break;
+        }
+      } else {
+        break;
+      }
+    }
+    
+    console.log(`🛤️ New active path:`, fullPath.map(id => {
+      const node = sentenceNodes.get(id);
+      return `${id}: "${node?.content}"`;
+    }));
+    
+    setActivePath(fullPath);
+    
+    console.log(`🔄 Switching to branch ${branchId}, updating main editor`);
+    
+    // Update active child relationships along the path
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      // Update activeChild for each parent in the path
+      for (let i = 0; i < fullPath.length - 1; i++) {
+        const currentNodeId = fullPath[i];
+        const nextNodeId = fullPath[i + 1];
+        const currentNode = newMap.get(currentNodeId);
+        
+        if (currentNode && currentNode.children.includes(nextNodeId)) {
+          const updatedNode = {
+            ...currentNode,
+            activeChild: nextNodeId
+          };
+          newMap.set(currentNodeId, updatedNode);
+          console.log(`🎯 Set activeChild for "${currentNode.content}" to "${newMap.get(nextNodeId)?.content}"`);
+        }
+      }
+      
+      return newMap;
+    });
+    
+    // Reconstruct the narrative from the new active path
+    setTimeout(() => {
+      console.log(`🔧 Reconstructing narrative from path:`, fullPath);
+      
+      const narrativeText = fullPath
+        .map(nodeId => {
+          const node = sentenceNodes.get(nodeId);
+          let content = node ? node.content.trim() : '';
+          console.log(`📝 Processing node ${nodeId}: "${content}"`);
+          // Ensure each sentence ends with proper punctuation
+          if (content && !/[.!?]$/.test(content)) {
+            content += '.';
+          }
+          return content;
+        })
+        .filter(content => content.length > 0)
+        .join(' ');
+      
+      console.log(`📋 Final narrative text: "${narrativeText}"`);
+      
+      // Update the main editor content
+      if (narrativeSystemRef.current) {
+        console.log(`📝 Updating main editor with branch narrative: "${narrativeText}"`);
+        // narrativeSystemRef.current.updateContent(narrativeText);
+      } else {
+        console.warn('⚠️ narrativeSystemRef.current is null, cannot update editor content');
+      }
+    }, 100);
+    
+  }, [sentenceNodes, findSentencePath]);
+  
+  // Helper function to update branch content
+  // Track recently created nodes to prevent immediate content updates
+  const [recentlyCreatedNodes, setRecentlyCreatedNodes] = useState<Set<string>>(new Set());
+  // Track if we're currently creating a branch to prevent unwanted content updates
+  const [isCreatingBranch, setIsCreatingBranch] = useState(false);
+
+  // Track nodes that are currently in edit mode (user double-clicked)
+  const [editableNodes, setEditableNodes] = useState<Set<string>>(new Set());
+
+  const handleUpdateBranchContent = useCallback((branchId: string, newContent: string) => {
+    // console.log(`📝 🎯 ATTEMPTING TO UPDATE BRANCH CONTENT:`);
+    // console.log(`📝 Branch ID: ${branchId}`);
+    // console.log(`📝 New Content: "${newContent}"`);
+    // console.log(`📝 EditableNodes state:`, Array.from(editableNodes));
+    // console.log(`📝 IsCreatingBranch:`, isCreatingBranch);
+    // console.log(`📝 RecentlyCreatedNodes:`, Array.from(recentlyCreatedNodes));
+    
+    // STRICT PROTECTION: Only allow content updates for nodes explicitly in edit mode
+    if (!editableNodes.has(branchId)) {
+      // console.warn(`🚫 BLOCKED: Cannot update content for node ${branchId} - not in edit mode. Content updates are only allowed when user explicitly enters edit mode.`);
+      // console.warn(`🚫 Available editable nodes:`, Array.from(editableNodes));
+      return;
+    }
+    
+    // Prevent content updates during branch creation
+    if (isCreatingBranch) {
+      console.warn(`⚠️ Ignoring content update during branch creation for ${branchId}`);
+      return;
+    }
+    
+    // Prevent immediate content updates to recently created nodes
+    if (recentlyCreatedNodes.has(branchId)) {
+      // console.warn(`⚠️ Ignoring content update to recently created node ${branchId}. Content should be set during creation.`);
+      return;
+    }
+    
+    // First, validate that this branch actually exists and should be updated
+    const branchNode = sentenceNodes.get(branchId);
+    if (!branchNode) {
+      console.error(`❌ Cannot update branch: node ${branchId} not found`);
+      console.error(`❌ Available nodes:`, Array.from(sentenceNodes.keys()));
+      return;
+    }
+    
+    // Check if the content is actually different
+    if (branchNode.content === newContent) {
+      console.log(`📝 Content unchanged for ${branchId}, skipping update`);
+      return;
+    }
+    
+    // console.log(`📝 ✅ AUTHORIZED CONTENT UPDATE:`);
+    // console.log(`📝 Node ${branchId}: "${branchNode.content}" → "${newContent}"`);
+    
+    // Update the sentence node content
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      const existingNode = newMap.get(branchId);
+      
+      if (existingNode) {
+        const updatedNode = {
+          ...existingNode,
+          content: newContent,
+          revisedTime: typeof window !== 'undefined' ? Date.now() : 0,
+          editCount: existingNode.editCount + 1
+        };
+        newMap.set(branchId, updatedNode);
+        console.log(`✅ ✅ SUCCESSFULLY UPDATED NODE ${branchId}: "${newContent}"`);
+        console.log(`✅ Edit count incremented to: ${updatedNode.editCount}`);
+        
+        // If this node is part of the current active path, update the main editor
+        if (activePath.includes(branchId)) {
+          console.log(`🔄 Updated node is in active path, refreshing main editor`);
+          
+          // Reconstruct the narrative from the current active path with updated content
+          setTimeout(() => {
+            const narrativeText = activePath
+              .map(nodeId => {
+                const node = newMap.get(nodeId);
+                let content = node ? node.content.trim() : '';
+                // Ensure each sentence ends with proper punctuation
+                if (content && !/[.!?]$/.test(content)) {
+                  content += '.';
+                }
+                return content;
+              })
+              .filter(content => content.length > 0)
+              .join(' ');
+            
+            // Update the main editor content
+            if (narrativeSystemRef.current) {
+              console.log(`📝 Updating main editor with updated narrative: "${narrativeText}"`);
+              // narrativeSystemRef.current.updateContent(narrativeText);
+            }
+          }, 100);
+        } else {
+          console.log(`📝 Updated node ${branchId} is not in active path, main editor unchanged`);
+          console.log(`📝 Active path:`, activePath);
+        }
+      } else {
+        console.error(`❌ Cannot update branch: node ${branchId} not found in map`);
+      }
+      
+      return newMap;
+    });
+  }, [sentenceNodes, activePath, isCreatingBranch, recentlyCreatedNodes.size, editableNodes.size]);
+  
+  // Functions to manage edit mode for nodes
+  const enterEditMode = useCallback((nodeId: string) => {
+    setEditableNodes(prev => new Set([...prev, nodeId]));
+  }, []);
+
+  const exitEditMode = useCallback((nodeId: string) => {
+    console.log(`📝 Exiting edit mode for node ${nodeId}`);
+    setEditableNodes(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(nodeId);
+      return newSet;
+    });
+  }, []);
+
+  const exitAllEditMode = useCallback(() => {
+    console.log(`📝 Exiting edit mode for all nodes`);
+    setEditableNodes(new Set());
+  }, []);
+
+  // Handlers for NarrativeLayer edit mode integration
+  const handleEnterEditMode = useCallback((content: string) => {
+    console.log(`📝 NarrativeLayer requesting edit mode for content: "${content}"`);
+    
+    // Find the node with this content in the active path
+    let nodeId: string | null = null;
+    for (const pathNodeId of activePath) {
+      const node = sentenceNodes.get(pathNodeId);
+      if (node && node.content === content) {
+        nodeId = pathNodeId;
+        break;
+      }
+    }
+    
+    if (nodeId) {
+      console.log(`📝 Found node ${nodeId} for edit mode`);
+      enterEditMode(nodeId);
+    } else {
+      console.warn(`⚠️ Could not find node for content: "${content}"`);
+    }
+  }, [activePath, sentenceNodes, enterEditMode]);
+
+  const handleExitEditMode = useCallback((content: string) => {
+    console.log(`📝 NarrativeLayer exiting edit mode for content: "${content}"`);
+    
+    // Find the node with this content in the active path
+    let nodeId: string | null = null;
+    for (const pathNodeId of activePath) {
+      const node = sentenceNodes.get(pathNodeId);
+      if (node && node.content === content) {
+        nodeId = pathNodeId;
+        break;
+      }
+    }
+    
+    if (nodeId) {
+      console.log(`📝 Exiting edit mode for node ${nodeId}`);
+      exitEditMode(nodeId);
+    } else {
+      console.warn(`⚠️ Could not find node for content: "${content}"`);
+    }
+  }, [activePath, sentenceNodes, exitEditMode]);
+
+  // Helper function to create a new branch
+  const handleCreateBranch = useCallback((fromSentenceContent: string, branchContent: string) => {
+    console.log(`🌿 Creating branch from: "${fromSentenceContent}" with content: "${branchContent}"`);
+    
+    // Set flag to prevent content updates during branch creation
+    setIsCreatingBranch(true);
+    
+    // Find the parent sentence node
+    let parentNodeId: string | null = null;
+    for (const [id, node] of sentenceNodes.entries()) {
+      if (node.content === fromSentenceContent) {
+        parentNodeId = id;
+        break;
+      }
+    }
+    
+    if (!parentNodeId) {
+      console.error('❌ Cannot create branch: parent sentence not found');
+      setIsCreatingBranch(false);
+      return;
+    }
+    
+    // Create new branch node with meaningful default content
+    const defaultContent = branchContent || `Alternative continuation from: "${fromSentenceContent.substring(0, 30)}..."`;
+    const branchNode = createSentenceNode(defaultContent, parentNodeId);
+    
+    console.log(`🌿 Creating new branch node with ID: ${branchNode.id} and content: "${defaultContent}"`);
+    
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      // Add the new branch node
+      newMap.set(branchNode.id, { ...branchNode, isCompleted: true });
+      console.log(`✅ Added new branch node ${branchNode.id} to tree`);
+      
+      // Track this as a recently created node
+      setRecentlyCreatedNodes(prev => new Set([...prev, branchNode.id]));
+      
+      // Clear the recently created flag after a short delay
+      setTimeout(() => {
+        setRecentlyCreatedNodes(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(branchNode.id);
+          return newSet;
+        });
+      }, 500);
+      
+      // Update parent to include this branch as a child
+      const parentNode = newMap.get(parentNodeId!);
+      if (parentNode) {
+        const oldActiveChild = parentNode.activeChild;
+        const updatedParent = {
+          ...parentNode,
+          children: [...parentNode.children, branchNode.id],
+          // Always set the new branch as the active child when creating a branch
+          activeChild: branchNode.id
+        };
+        newMap.set(parentNodeId!, updatedParent);
+        console.log(`🎯 Updated parent "${parentNode.content}" activeChild from ${oldActiveChild} to ${branchNode.id} (new branch)`);
+      }
+      
+      // Find the path to the new branch using the updated map
+      const findPathInMap = (targetId: string, nodeMap: Map<string, SentenceNode>): string[] => {
+        const path: string[] = [];
+        let currentId: string | null = targetId;
+        
+        while (currentId) {
+          path.unshift(currentId);
+          const node = nodeMap.get(currentId);
+          currentId = node?.parent || null;
+        }
+        
+        return path;
+      };
+      
+      const newPath = findPathInMap(branchNode.id, newMap);
+      
+      // Update activeChild for each parent in the new path to ensure consistency
+      for (let i = 0; i < newPath.length - 1; i++) {
+        const currentNodeId = newPath[i];
+        const nextNodeId = newPath[i + 1];
+        const currentNode = newMap.get(currentNodeId);
+        
+        if (currentNode && currentNode.children.includes(nextNodeId)) {
+          const updatedNode = {
+            ...currentNode,
+            activeChild: nextNodeId
+          };
+          newMap.set(currentNodeId, updatedNode);
+          console.log(`🎯 Set activeChild for "${currentNode.content}" to "${newMap.get(nextNodeId)?.content}" in new branch path`);
+        }
+      }
+      
+      // Update active path and main editor content
+      setTimeout(() => {
+        setActivePath(newPath);
+        
+        // Update main editor content with the new path
+        const narrativeText = newPath
+          .map(nodeId => {
+            const node = newMap.get(nodeId);
+            let content = node ? node.content.trim() : '';
+            // Ensure each sentence ends with proper punctuation
+            if (content && !/[.!?]$/.test(content)) {
+              content += '.';
+            }
+            return content;
+          })
+          .filter(content => content.length > 0)
+          .join(' ');
+        
+        if (narrativeSystemRef.current) {
+          console.log(`📝 Updating main editor with new branch narrative: "${narrativeText}"`);
+          // narrativeSystemRef.current.updateContent(narrativeText);
+        }
+        
+        // Clear the flag after branch creation is complete
+        setIsCreatingBranch(false);
+      }, 100);
+      
+      return newMap;
+    });
+    
+    console.log(`✅ Created branch "${branchContent}" from sentence "${fromSentenceContent}"`);
+  }, [sentenceNodes, createSentenceNode]);
+
+  // Handle content changes in the editor - DISABLED to prevent unwanted updates
+  const handleContentChange = useCallback((oldContent: string, newContent: string) => {
+    if (oldContent === newContent) return;
+    
+    
+    // COMPLETELY DISABLED - we never want to update existing sentence content automatically
+    // If content needs to be updated, it must be done through explicit edit mode (double-click)
+    
+    return; // Early return - no content updates allowed
+    
+    // OLD CODE BELOW - KEPT FOR REFERENCE BUT NEVER EXECUTED
+    // console.log(`📝 Content changed from: "${oldContent.substring(0, 50)}..." to: "${newContent.substring(0, 50)}..."`);
+    
+    // Find all sentences in old content and new content
+    // const oldSentences = oldContent.split(/[.!?]+/).filter(s => s.trim().length > 0).map(s => s.trim());
+    // const newSentences = newContent.split(/[.!?]+/).filter(s => s.trim().length > 0).map(s => s.trim());
+    
+    // Update sentence nodes for changed content
+    // setSentenceNodes(prev => {
+    //   const newMap = new Map(prev);
+    //   
+    //   // Find nodes that need content updates
+    //   for (let i = 0; i < Math.max(oldSentences.length, newSentences.length); i++) {
+    //     const oldSentence = oldSentences[i];
+    //     const newSentence = newSentences[i];
+    //     
+    //     if (oldSentence && newSentence && oldSentence !== newSentence) {
+    //       // Find the node with old content and update it
+    //       for (const [nodeId, node] of newMap.entries()) {
+    //         if (node.content === oldSentence) {
+    //           newMap.set(nodeId, { ...node, content: newSentence });
+    //           console.log(`🔄 Updated node ${nodeId} content from "${oldSentence}" to "${newSentence}"`);
+    //           break;
+    //         }
+    //       }
+    //     }
+    //   }
+    //   
+    //   return newMap;
+    // });
+  }, []);
+
+
+  // Add to useEffect for testing (remove in production)
+  useEffect(() => {
+    // Only run on client side after hydration
+    if (!isClient) return;
+    
+    // Uncomment to test branching structure:
+    // addTestBranchingData();
+    
+    // Add global console commands for testing
+    if (typeof window !== 'undefined') {
+      (window as any).sentenceTreeDebug = {
+        exportTree: exportSentenceTree,
+        getStats: getSentenceTreeStats,
+        createBranch: handleCreateBranch,
+        switchToBranch: handleSwitchToBranch,
+        findPath: findSentencePath,
+        getChildren: getSentenceChildren,
+        getActivePathFromRoot,
+        validateTree: validateTreeStructure,
+        getCurrentEditableBranchId,
+        enterEditMode,
+        exitEditMode,
+        exitAllEditMode,
+        removeDuplicates: () => {
+          console.log('🧹 Running manual duplicate removal...');
+          const currentMap = sentenceNodes;
+          const cleanedMap = removeDuplicateSentenceNodes(currentMap);
+          if (cleanedMap.size !== currentMap.size) {
+            setSentenceNodes(cleanedMap);
+            const newActivePath = getActivePathFromCleanedMap(cleanedMap);
+            setActivePath(newActivePath);
+            console.log('✅ Duplicates removed and state updated');
+          } else {
+            console.log('✅ No duplicates found');
+          }
+          return cleanedMap;
+        },
+        editableNodes: Array.from(editableNodes), // Convert Set to Array for serialization
+        nodes: sentenceNodes,
+        activePath,
+        completedSentences, // Add this for easy access
+        forceCompletion: () => {
+          // Helper function to test completion logging
+        }
+      };
+      
+      
+    }
+  }, [isClient, sentenceNodes, activePath, completedSentences]);
+
   // Handle sentence selection for narrative layer
-  const handleSentenceSelect = (sentence: string, index: number) => {
-    // console.log(`📝 Sentence selected: "${sentence}" (Index: ${index})`);
+  const handleSentenceSelect = (sentence: string, index: number, pageId: string) => {
+    console.log(`📝 Sentence selected on page ${pageId}: "${sentence}" (Index: ${index})`);
     
     // Log the sentence selection interaction
     interactionLogger.logInteraction({
@@ -258,6 +1823,7 @@ export default function NarrativePage() {
       metadata: {
         sentence,
         index,
+        pageId,
         timestamp: Date.now()
       }
     });
@@ -269,19 +1835,21 @@ export default function NarrativePage() {
   };
 
   // Handle suggestion state changes
-  const handleSuggestionReceived = (suggestion: NarrativeSuggestion) => {
+  const handleSuggestionReceived = (suggestion: NarrativeSuggestion, pageId: string) => {
+    console.log(`📥 Suggestion received for page ${pageId}:`, suggestion);
     setHasPendingSuggestion(true);
   };
 
   // Handle suggestion accepted/denied
-  const handleSuggestionResolved = () => {
+  const handleSuggestionResolved = (pageId: string) => {
+    console.log(`✅ Suggestion resolved for page ${pageId}`);
     setHasPendingSuggestion(false);
   };
 
   // Use effect to check and update suggestion state periodically when needed
   useEffect(() => {
-    if (narrativeLayerRef.current) {
-      const hasActiveSuggestion = narrativeLayerRef.current.hasPendingSuggestion();
+    if (narrativeSystemRef.current) {
+      const hasActiveSuggestion = narrativeSystemRef.current.hasPendingSuggestion();
       if (hasActiveSuggestion !== hasPendingSuggestion) {
         setHasPendingSuggestion(hasActiveSuggestion);
       }
@@ -320,6 +1888,44 @@ export default function NarrativePage() {
     };
   }, []);
 
+  // Add insight timeline debug helpers and track page changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Add insight timeline debug helpers
+      (window as any).insightTimelineDebug = {
+        getTimelinesForAllPages: () => insightTimelinesByPage,
+        getTimelineForPage: (pageId: string) => getCurrentTimelineForPage(pageId),
+        getActiveNarratives: (pageId: string) => getActiveNodesNarratives(pageId),
+        generateSentenceIds: (pageId: string) => {
+          const narratives = getActiveNodesNarratives(pageId);
+          return generateSentenceIds(pageId, narratives);
+        },
+        updateTimelineForPage: (pageId: string) => updateInsightTimelineForPage(pageId),
+        getRecentlyUpdatedSentence: () => recentlyUpdatedSentence
+      };
+      
+      console.log('🔮 Insight Timeline debug helpers available:');
+      console.log('  - window.insightTimelineDebug.getTimelinesForAllPages()');
+      console.log('  - window.insightTimelineDebug.getTimelineForPage(pageId)');
+      console.log('  - window.insightTimelineDebug.getActiveNarratives(pageId)');
+      console.log('  - window.insightTimelineDebug.generateSentenceIds(pageId)');
+      console.log('  - window.insightTimelineDebug.updateTimelineForPage(pageId)');
+      console.log('  - window.insightTimelineDebug.getRecentlyUpdatedSentence()');
+    }
+    
+    // Track page changes and update timeline accordingly
+    const currentPageId = narrativeSystemRef.current?.getCurrentPageId();
+    if (currentPageId && showNarrativeLayer) {
+      console.log('📄 Page changed or narrative layer shown, checking timeline for page:', currentPageId);
+      
+      // If this page doesn't have a timeline yet, create an initial one
+      if (!insightTimelinesByPage[currentPageId] || insightTimelinesByPage[currentPageId].groups.length === 0) {
+        console.log('🆕 Creating initial timeline for new page:', currentPageId);
+        updateInsightTimelineForPage(currentPageId);
+      }
+    }
+  }, [insightTimelinesByPage, recentlyUpdatedSentence, showNarrativeLayer]);
+
   // Handle file selection from DatasetExplorer
   const handleFileSelection = async (files: DatasetFile[]) => {
     setSelectedFiles(files);
@@ -333,6 +1939,202 @@ export default function NarrativePage() {
     setSummaryLoading(true);
     try {
       // Convert DatasetFile to LondonDataFile format for the utility
+      const londonDataFiles = files.map(file => ({
+        id: file.id,
+        name: file.name,
+        path: file.path,
+        category: file.category || 'uncategorized',
+        description: file.description,
+        size: 0,
+        columns: [],
+        sampleData: [],
+        totalRecords: 0,
+        isLoaded: false
+      }));
+
+      const summaries = await generateMultipleFileSummaries(londonDataFiles);
+      setFileSummaries(summaries);
+    } catch (error) {
+      console.error('Error generating file summaries:', error);
+      setSummaryError(error instanceof Error ? error.message : 'Failed to analyze selected files');
+      setFileSummaries([]);
+    } finally {
+      setSummaryLoading(false);
+    }
+  };
+
+  // END OF OLD SENTENCE TREE MANAGEMENT CODE - Commented out
+  */
+
+  // Essential handlers that are still needed for the PagedNarrativeSystem
+  const handleSentenceEnd = async (sentence: string, confidence: number, pageId: string) => {
+    console.log(`🧠 Sentence completed on page ${pageId}: "${sentence}" (Confidence: ${confidence})`);
+    
+    // Track the recently updated sentence
+    setRecentlyUpdatedSentence({
+      pageId,
+      sentence,
+      timestamp: Date.now()
+    });
+    
+    // The PagedNarrativeSystem handles the tree structure internally
+    // Here we can focus on the analysis and logging
+    
+    try {
+      // Simulate analysis time
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log(`✅ Analysis complete for: "${sentence}" on page ${pageId}`);
+      
+      // Update insight timeline for this page
+      updateInsightTimelineForPage(pageId);
+      
+      // Log the sentence completion interaction
+      await interactionLogger.logInteraction({
+        eventType: 'view_change',
+        action: 'sentence_completion',
+        target: {
+          type: 'ui_element',
+          name: 'narrative_layer'
+        },
+        metadata: {
+          sentence,
+          confidence,
+          pageId,
+          timestamp: Date.now()
+        }
+      });
+    } catch (error) {
+      console.error('❌ Error analyzing sentence:', error);
+    }
+  };
+
+  // Handle sentence selection for narrative layer
+  const handleSentenceSelect = (sentence: string, index: number, pageId: string) => {
+    console.log(`📝 Sentence selected on page ${pageId}: "${sentence}" (Index: ${index})`);
+    
+    // Log the sentence selection interaction
+    interactionLogger.logInteraction({
+      eventType: 'click',
+      action: 'sentence_selection',
+      target: {
+        type: 'ui_element',
+        name: 'narrative_layer'
+      },
+      metadata: {
+        sentence,
+        index,
+        pageId,
+        timestamp: Date.now()
+      }
+    });
+  };
+
+  // Handle suggestion state changes
+  const handleSuggestionReceived = (suggestion: NarrativeSuggestion, pageId: string) => {
+    setHasPendingSuggestion(true);
+  };
+
+  // Handle suggestion accepted/denied
+  const handleSuggestionResolved = (pageId: string) => {
+    setHasPendingSuggestion(false);
+  };
+
+  const handleContentChange = (oldContent: string, newContent: string, pageId: string) => {
+    // Track the recently updated sentence
+    if (newContent !== oldContent) {
+      setRecentlyUpdatedSentence({
+        pageId,
+        sentence: newContent,
+        timestamp: Date.now()
+      });
+      
+      // Trigger insight timeline update
+      updateInsightTimelineForPage(pageId);
+    }
+  };
+
+  // Helper function to get active nodes narratives for a page
+  const getActiveNodesNarratives = (pageId: string): string[] => {
+    if (narrativeSystemRef.current) {
+      const pageContent = narrativeSystemRef.current.getPageContent(pageId);
+      if (pageContent) {
+        // Split content into sentences and filter out empty ones
+        return pageContent
+          .split(/[.!?]+/)
+          .map(sentence => sentence.trim())
+          .filter(sentence => sentence.length > 0);
+      }
+    }
+    return [];
+  };
+
+  // Helper function to generate sentence IDs for each sentence in the narrative
+  const generateSentenceIds = (pageId: string, narratives: string[]): string[] => {
+    return narratives.map((_, index) => `${pageId}-sentence-${index + 1}`);
+  };
+
+  // Helper function to get current insight timeline for a page
+  const getCurrentTimelineForPage = (pageId: string): TimelineGroup[] => {
+    return insightTimelinesByPage[pageId]?.groups || [];
+  };
+
+  // Function to get tree structure for timeline generation
+  const getTreeStructureForPage = (pageId: string) => {
+    if (narrativeSystemRef.current) {
+      return narrativeSystemRef.current.getPageTree(pageId);
+    }
+    return null;
+  };
+
+  // Function to update insight timeline for a specific page
+  const updateInsightTimelineForPage = async (pageId: string) => {
+    try {
+      const currentTimeline = getCurrentTimelineForPage(pageId);
+      const treeStructure = getTreeStructureForPage(pageId);
+      const recentSentence = recentlyUpdatedSentence?.sentence || '';
+
+      if (!treeStructure || treeStructure.nodes.length === 0) {
+        console.log('📝 No tree structure found for page', pageId);
+        return;
+      }
+
+      console.log('🔮 Updating insight timeline for page:', pageId);
+      console.log('🌳 Tree structure:', treeStructure);
+      
+      const updatedTimeline = await generateInsightTimeline(
+        currentTimeline,
+        treeStructure,
+        recentSentence,
+        pageId
+      );
+
+      // Update the timeline for this specific page
+      setInsightTimelinesByPage(prev => ({
+        ...prev,
+        [pageId]: updatedTimeline
+      }));
+
+      console.log('✅ Updated insight timeline for page:', pageId);
+    } catch (error) {
+      console.error('❌ Error updating insight timeline for page:', pageId, error);
+    }
+  };
+
+  const handleStopAnalysis = () => {
+    setIsAnalyzing(false);
+  };
+
+  const handleFileSelection = async (files: DatasetFile[]) => {
+    setSelectedFiles(files);
+    setSummaryError('');
+    
+    if (files.length === 0) {
+      setFileSummaries([]);
+      return;
+    }
+
+    setSummaryLoading(true);
+    try {
       const londonDataFiles = files.map(file => ({
         id: file.id,
         name: file.name,
@@ -403,21 +2205,92 @@ export default function NarrativePage() {
         {/* Left Section - 40% (Data Explorer or Narrative Layer) */}
         <div className="w-2/5">
           {showNarrativeLayer ? (
-            <NarrativeLayer 
-              ref={narrativeLayerRef}
+            <PagedNarrativeSystem 
+              ref={narrativeSystemRef}
               prompt={currentPrompt}
               onSentenceEnd={handleSentenceEnd}
               onSentenceSelect={handleSentenceSelect}
               onSuggestionReceived={handleSuggestionReceived}
               onSuggestionResolved={handleSuggestionResolved}
               disableInteractions={hasActiveInfoNodes}
-              onGenerateVisualization={(sentence: string, validation: any) => {
+              onContentChange={handleContentChange}
+              onPageChange={(fromPageId, toPageId) => {
+                // console.log(`📄 Page changed from ${fromPageId} to ${toPageId}`);
+              }}
+              onGenerateVisualization={async (sentence: string, validation: any, pageId: string) => {
                 // When NarrativeLayer wants to generate visualization, 
                 // Add info node to canvas
                 if (reactFlowCanvasRef.current) {
+                  let content = `Sentence: "${sentence}"\n\nSupported: ${validation.inquiry_supported ? 'Yes' : 'No'}\n\nExplanation: ${validation.explanation || 'No explanation provided'}`;
+                  
+                  // If supported, get detailed visualization recommendations
+                  if (validation.inquiry_supported) {
+                    try {
+                      // Show loading state and clear existing nodes
+                      reactFlowCanvasRef.current.showLoadingState('Generating AI-powered visualization recommendations...');
+                      
+                      console.log('🎯 Getting detailed visualization recommendations...');
+                      const recommendation = await getVisualizationRecommendation(
+                        sentence,
+                        'London demographic, transport, housing, and crime data',
+                        ['London Demographics', 'Transport Data', 'Housing Statistics', 'Crime Reports']
+                      );
+                      
+                      // Hide loading state
+                      reactFlowCanvasRef.current.hideLoadingState();
+                      
+                      // Format the enhanced content based on response type
+                      if (isDashboardRecommendation(recommendation)) {
+                        // Dashboard format
+                        content += `\n\n📊 DASHBOARD: ${recommendation.dashboardTitle}\n`;
+                        content += `📋 NARRATIVE: ${recommendation.overallNarrative}\n\n`;
+                        
+                        content += `💡 KEY INSIGHTS:\n`;
+                        recommendation.insightPanels.forEach((insight, index) => {
+                          content += `   • ${insight}\n`;
+                        });
+                        content += `\n`;
+                        
+                        content += `📈 DASHBOARD VIEWS (${recommendation.views.length}):\n\n`;
+                        recommendation.views.forEach((view, index) => {
+                          content += `${index + 1}. ${view.viewType.toUpperCase()}\n`;
+                          content += `   Description: ${view.description}\n`;
+                          content += `   Data: ${view.dataColumns.join(', ')}\n`;
+                          content += `   Analysis: ${view.aggregations.join(', ')}\n`;
+                          content += `   Interactions: ${view.interactions.join(', ')}\n`;
+                          content += `   Purpose: ${view.purpose}\n\n`;
+                        });
+                        
+                        content += `💾 DATASETS NEEDED:\n${recommendation.datasetRecommendations.join(', ')}`;
+                        
+                      } else {
+                        // Charts-only format
+                        content += `\n\n📊 VISUALIZATION STRATEGY:\n${recommendation.overallStrategy}\n\n`;
+                        content += `📈 RECOMMENDED VIEWS (${recommendation.totalViews}):\n\n`;
+                        
+                        recommendation.views.forEach((view, index) => {
+                          content += `${index + 1}. ${view.viewType.toUpperCase()}\n`;
+                          content += `   Description: ${view.description}\n`;
+                          content += `   Data: ${view.dataColumns.join(', ')}\n`;
+                          content += `   Analysis: ${view.aggregations.join(', ')}\n`;
+                          content += `   Interactions: ${view.interactions.join(', ')}\n`;
+                          content += `   Purpose: ${view.purpose}\n\n`;
+                        });
+                        
+                        content += `💾 DATASETS NEEDED:\n${recommendation.datasetRecommendations.join(', ')}`;
+                      }
+                      
+                    } catch (error) {
+                      console.error('❌ Failed to get visualization recommendations:', error);
+                      // Hide loading state even on error
+                      reactFlowCanvasRef.current.hideLoadingState();
+                      content += '\n\n⚠️ Unable to generate detailed recommendations at this time.';
+                    }
+                  }
+                  
                   reactFlowCanvasRef.current.addInfoNode({
-                    title: 'Analysis Result',
-                    content: `Sentence: "${sentence}"\n\nSupported: ${validation.inquiry_supported ? 'Yes' : 'No'}\n\nExplanation: ${validation.explanation || 'No explanation provided'}`
+                    title: validation.inquiry_supported ? 'Visualization Plan' : 'Analysis Result',
+                    content: content
                   });
                 }
               }}
@@ -443,13 +2316,13 @@ export default function NarrativePage() {
                     onClick={async () => {
                       // Check conditions for disabling the capture button
                       const hasInteractions = interactionCount > 0;
-                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
                       
                       // Prevent clicks if capturing, has pending suggestion, or no interactions made yet
                       if (isDisabled) return;
                       
                       setIsCapturingInsights(true);
-                      narrativeLayerRef.current?.showLoadingSuggestion();
+                      // narrativeSystemRef.current?.showLoadingSuggestion();
                       
                       try {
                         // Capture interactions and get the last 5
@@ -459,9 +2332,10 @@ export default function NarrativePage() {
                         setDashboardInteractions([]);
                         console.log('🧹 Local dashboard interactions cleared');
                         
-                        // Get narrative content and current sentence from the narrative layer
-                        const narrativeContext = narrativeLayerRef.current?.getFullText() || '';
-                        const currentSentence = narrativeLayerRef.current?.getCurrentSentence() || '';
+                        // Get narrative content from the current page
+                        const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                        const narrativeContext = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                        const currentSentence = ''; // We'll need to implement getCurrentSentence for paged system
                         
                         // console.log('📝 Captured narrative context:', narrativeContext);
                         // console.log('📍 Current sentence at cursor:', currentSentence);
@@ -476,15 +2350,18 @@ export default function NarrativePage() {
                         
                         if (suggestion && suggestion.narrative_suggestion) {
                           // console.log('✅ OpenAI suggestion received:', suggestion);
-                          // Show the suggestion in the narrative layer
-                          narrativeLayerRef.current?.showSuggestion(suggestion);
+                          // Show the suggestion in the narrative system
+                          const currentPageId = narrativeSystemRef.current?.getCurrentPageId();
+                          if (currentPageId) {
+                            narrativeSystemRef.current?.showSuggestion(suggestion, currentPageId);
+                          }
                         } else {
                           // console.log('ℹ️ No suggestion generated from current interactions');
-                          narrativeLayerRef.current?.hideLoadingSuggestion();
+                          // narrativeSystemRef.current?.hideLoadingSuggestion();
                         }
                       } catch (error) {
                         // console.error('❌ Failed to capture insights:', error);
-                        narrativeLayerRef.current?.hideLoadingSuggestion();
+                        // narrativeSystemRef.current?.hideLoadingSuggestion();
                       } finally {
                         setIsCapturingInsights(false);
                       }
@@ -623,13 +2500,47 @@ export default function NarrativePage() {
           {/* Timeline Div - 25% */}
           <div className="timeline-div h-1/4 bg-gray-100 border-t border-gray-200 p-4">
             <div className="h-full bg-white rounded-lg shadow-sm">
-              <EmptyTimeline />
+              {(() => {
+                const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                const currentTimeline = insightTimelinesByPage[currentPageId]?.groups || [];
+                const currentPageTree = narrativeSystemRef.current?.getCurrentPageTree();
+                const currentActivePath = currentPageTree?.activePath || []; // Get the current active path from the narrative system
+                
+                return currentTimeline.length > 0 ? (
+                  <TimelineVisualization 
+                    nodes={currentTimeline}
+                    pageId={currentPageId}
+                    activePath={currentActivePath}
+                  />
+                ) : (
+                  <EmptyTimeline />
+                );
+              })()}
             </div>
           </div>
         </div>
       </div>
     </div>
   );
+  
+  /*
+  // OLD: Development helper - now handled by PagedNarrativeSystem
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as any).deleteSentenceFromTree = deleteSentenceFromTree;
+      (window as any).deleteBranchFromTree = deleteBranchFromTree;
+      (window as any).insertNodeAfter = insertNodeAfter;
+      (window as any).exportSentenceTree = exportSentenceTree;
+      (window as any).sentenceNodes = sentenceNodes;
+      console.log('🧪 Development helpers available:');
+      console.log('  - window.deleteSentenceFromTree(sentenceContentOrId)');
+      console.log('  - window.deleteBranchFromTree(branchId)');
+      console.log('  - window.insertNodeAfter(afterSentenceContent, newSentenceContent)');
+      console.log('  - window.exportSentenceTree()');
+      console.log('  - window.sentenceNodes (current tree state)');
+    }
+  }, [deleteSentenceFromTree, deleteBranchFromTree, insertNodeAfter, exportSentenceTree, sentenceNodes]);
+  */
 }
 
 
