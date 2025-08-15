@@ -272,9 +272,6 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
   const calculateFlowLayout = useCallback(() => {
     if (nodes.length === 0) return { nodes: [], edges: [] };
     
-    console.log('🎯 ReactFlowTimeline - calculateFlowLayout called');
-    console.log('📊 Input nodes:', nodes);
-    console.log('🛤️ Active path:', activePath);
     
     const nodeSpacing = 80; // Horizontal spacing
     const branchOffset = 50; // Vertical offset for branches (reduced from 80)
@@ -291,7 +288,6 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     const rootNode = nodes.find(node => !node.parent_id || node.parent_id === "");
     if (!rootNode) return { nodes: [], edges: [] };
     
-    console.log('🌳 Root node found:', rootNode.sentence_id);
     
     // Start with root at position (0, 0)
     allPositions.set(rootNode.sentence_id, { x: 0, y: centerY });
@@ -308,7 +304,6 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
       const currentPosition = allPositions.get(nodeId);
       if (!currentPosition) continue;
       
-      console.log(`🔄 Processing node ${nodeId} at depth ${depth}, children:`, currentNode.child_ids);
       
       // Process all children of the current node
       const children = currentNode.child_ids || [];
@@ -353,7 +348,6 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
           }
         }
         
-        console.log(`📍 Positioning child ${childId} at (${childX}, ${childY}), childIndex: ${childIndex}, totalChildren: ${children.length}`);
         
         allPositions.set(childId, { x: childX, y: childY });
         processedNodes.add(childId);
@@ -377,7 +371,6 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
       };
     });
     
-    console.log('🎨 Generated React Flow nodes:', flowNodes);
     
     // Convert to React Flow edges - only create parent-child connections
     const flowEdges: Edge[] = [];
@@ -407,9 +400,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
         });
       }
     });
-    
-    console.log('🔗 Generated React Flow edges:', flowEdges);
-    console.log('📋 Final layout result:', { nodes: flowNodes, edges: flowEdges });
+
     
     return { nodes: flowNodes, edges: flowEdges };
   }, [nodes, activePathSet]);

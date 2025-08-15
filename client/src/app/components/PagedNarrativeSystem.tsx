@@ -153,7 +153,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       }
     }));
     
-    console.log(`🌳 Created new page ${pageId} with empty tree`);
     
     return pageId;
   }, [pages.size, maxPages, generatePageId]);
@@ -187,7 +186,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
         setTimeout(() => {
           if (currentNarrativeRef.current) {
             currentNarrativeRef.current.updateContent(narrativeText);
-            console.log(`📝 Page ${currentPageId} content synced: "${narrativeText}"`);
           }
         }, 50);
       }
@@ -244,8 +242,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       };
     });
     
-    // console.log(`📄 Page switched from ${oldPageId} to ${pageId}`);
-    console.log(`📚 All Pages Data:`, allPagesData);
     
     // Note: Content update is handled by the useEffect that depends on currentPageId
     // No need to update content here to avoid race conditions
@@ -355,7 +351,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       [pageId]: treeData
     }));
     
-    console.log(`🌳 ALL NODES FOR PAGE ${pageId}:`, treeData.nodes);
   }, []);
 
   // Check if new page can be created
@@ -389,7 +384,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
         switchToPage(newPageId);
         // Note: Content clearing is handled by the useEffect that depends on currentPageId
         // No need to manually clear content here to avoid race conditions
-        console.log(`📝 Created and switched to new page ${newPageId}`);
       }
     }
   }, [canCreateNewPage, createNewPage, switchToPage]);
@@ -1138,23 +1132,14 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       return;
     }
 
-    console.log('🗑️ onDeleteSentence called with ID:', sentenceId);
 
     // Find the node to delete using ID only (no content fallback)
     const nodeToDelete = currentPage.sentenceNodes.get(sentenceId);
     if (!nodeToDelete) {
       console.error('❌ onDeleteSentence: Node not found with ID:', sentenceId);
-      console.log('🔍 Available node IDs:', Array.from(currentPage.sentenceNodes.keys()));
       return;
     }
 
-    console.log('🔍 Node to delete:', { 
-      id: sentenceId, 
-      content: nodeToDelete.content,
-      parent: nodeToDelete.parent,
-      children: nodeToDelete.children,
-      activeChild: nodeToDelete.activeChild
-    });
 
     // Update the tree structure
     updatePageSentenceTree(currentPageId, (sentenceNodes) => {
@@ -1165,7 +1150,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       const childrenIds = [...nodeToDelete.children];
       const deletedNodeActiveChild = nodeToDelete.activeChild;
       
-      console.log('🔍 Deletion context:', { parentId, childrenIds, deletedNodeActiveChild });
 
       // Update parent node
       if (parentId) {
@@ -1187,13 +1171,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
             newActiveChild = parentNode.activeChild;
           }
           
-          console.log('🔄 Updating parent node:', {
-            parentId,
-            oldChildren: parentNode.children,
-            newChildren: updatedParentChildren,
-            oldActiveChild: parentNode.activeChild,
-            newActiveChild
-          });
           
           const updatedParent = {
             ...parentNode,
@@ -1210,7 +1187,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       for (const childId of childrenIds) {
         const childNode = newMap.get(childId);
         if (childNode) {
-          console.log('🔄 Updating child node:', { childId, oldParent: childNode.parent, newParent: parentId });
           const updatedChild = {
             ...childNode,
             parent: parentId,
@@ -1222,14 +1198,12 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       
       // Remove the deleted node
       newMap.delete(sentenceId);
-      console.log('🗑️ Node deleted successfully');
       
       return newMap;
     });
 
     // Rebuild active path and refresh UI (same pattern as insertion)
     setTimeout(() => {
-      console.log('🔄 Rebuilding active path after deletion...');
       
       setPages(prev => {
         const currentPageState = prev.get(currentPageId);
@@ -1250,7 +1224,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
           }
           
           if (!rootNodeId) {
-            console.error('❌ No root node found after deletion!');
             return [];
           }
           
@@ -1261,11 +1234,9 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
           while (currentId) {
             path.push(currentId);
             const node = currentPageState.sentenceNodes.get(currentId);
-            console.log(`🛤️ Active path rebuilding - node: ${currentId}, content: "${node?.content || 'NOT_FOUND'}", activeChild: ${node?.activeChild || 'null'}`);
             currentId = node?.activeChild || null;
           }
           
-          console.log(`🛤️ Complete active path after deletion: [${path.join(' -> ')}]`);
           return path;
         };
 
@@ -1296,16 +1267,11 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
           .filter((content: string) => content.length > 0)
           .join(' ');
         
-        console.log('📝 New narrative text after deletion:', narrativeText);
         
         // Schedule editor update after state update
         setTimeout(() => {
           if (currentNarrativeRef.current) {
-            console.log('📝 Calling updateContent on narrative editor after deletion...');
             currentNarrativeRef.current.updateContent(narrativeText);
-            console.log('📝 updateContent called successfully after deletion');
-          } else {
-            console.error('❌ currentNarrativeRef.current is null! Cannot update content after deletion.');
           }
         }, 50);
 
@@ -1376,20 +1342,12 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
   }, [getCurrentPage, updatePageSentenceTree, currentPageId]);
 
   const onInsertNodeAfter = useCallback((afterSentenceContentOrId: string, newSentenceContent: string, useId: boolean = false) => {
-    console.log('🔍 onInsertNodeAfter called with:', { 
-      afterSentenceContentOrId, 
-      newSentenceContent, 
-      useId,
-      currentPageId 
-    });
     
     const currentPage = getCurrentPage();
     if (!currentPage) {
-      console.error('❌ onInsertNodeAfter: No current page found');
       return;
     }
     
-    console.log('🔍 Current page nodes before insert:', Array.from(currentPage.sentenceNodes.entries()));
 
     // Find the node after which to insert
     let afterNode: SentenceNode | null = null;
@@ -1397,24 +1355,18 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
     
     if (useId) {
       // Use ID-based lookup
-      console.log('🔍 Looking for node by ID:', afterSentenceContentOrId);
       if (currentPage.sentenceNodes.has(afterSentenceContentOrId)) {
         afterNode = currentPage.sentenceNodes.get(afterSentenceContentOrId)!;
         afterNodeId = afterSentenceContentOrId;
-        console.log('✅ Found node by ID:', { id: afterNodeId, content: afterNode.content });
       } else {
-        console.error('❌ Node not found by ID:', afterSentenceContentOrId);
         return;
       }
     } else {
       // Use content-based lookup (original behavior)
-      console.log('🔍 Looking for node by content:', afterSentenceContentOrId);
       for (const [id, node] of currentPage.sentenceNodes.entries()) {
-        console.log('🔍 Checking node:', { id, content: node.content, matches: node.content === afterSentenceContentOrId });
         if (node.content === afterSentenceContentOrId) {
           afterNode = node;
           afterNodeId = id;
-          console.log('✅ Found matching node by content:', { id, content: node.content });
           break;
         }
       }
@@ -1425,17 +1377,14 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
         searchTerm: afterSentenceContentOrId,
         searchMethod: useId ? 'ID' : 'content'
       });
-      console.log('🔍 Available nodes:', Array.from(currentPage.sentenceNodes.entries()).map(([id, node]) => ({ id, content: node.content })));
       return;
     }
     
-    console.log('🔍 Creating new node for content:', newSentenceContent);
     
     // Create the new node
     const newNode = createSentenceNode(newSentenceContent, afterNodeId, currentPageId);
     newNode.isCompleted = true;
     
-    console.log('🔍 Created new node:', newNode);
     
     // Update the tree structure using the same pattern as createBranchFromSentence
     updatePageSentenceTree(currentPageId, (sentenceNodes) => {
@@ -1449,7 +1398,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       };
       
       newMap.set(newNode.id, newNodeWithInheritedChildren);
-      console.log('🔍 Added new node to map');
       
       // Update the "after" node
       const updatedAfterNode = {
@@ -1459,7 +1407,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
         revisedTime: Date.now()
       };
       newMap.set(afterNodeId, updatedAfterNode);
-      console.log('🔍 Updated after node to point to new node');
       
       // Update children to point to new node as parent
       for (const childId of afterNode.children) {
@@ -1471,18 +1418,15 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
             revisedTime: Date.now()
           };
           newMap.set(childId, updatedChildNode);
-          console.log('🔍 Updated child node parent:', childId);
         }
       }
       
-      console.log('🔍 Final map after insert:', Array.from(newMap.entries()));
       return newMap;
     });
 
     // CRITICAL: Follow the same pattern as createBranchFromSentence
     // Update the page's active path and refresh the narrative content
     setTimeout(() => {
-      console.log('🔍 Attempting to update active path for new node...', newNode.id);
       
       setPages(prev => {
         const currentPageState = prev.get(currentPageId);
@@ -1506,11 +1450,9 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
           while (currentId) {
             path.unshift(currentId);
             const node = currentPageState.sentenceNodes.get(currentId);
-            console.log(`🛤️ Path building - node: ${currentId}, content: "${node?.content || 'NOT_FOUND'}", parent: ${node?.parent || 'null'}`);
             currentId = node?.parent || null;
           }
           
-          console.log(`�️ Final path to new node: [${path.join(' -> ')}]`);
           return path;
         };
 
@@ -1526,7 +1468,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
           }
           
           if (!rootNodeId) {
-            console.error('❌ No root node found!');
             return [];
           }
           
@@ -1537,11 +1478,9 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
           while (currentId) {
             path.push(currentId);
             const node = currentPageState.sentenceNodes.get(currentId);
-            console.log(`🛤️ Active path building - node: ${currentId}, content: "${node?.content || 'NOT_FOUND'}", activeChild: ${node?.activeChild || 'null'}`);
             currentId = node?.activeChild || null;
           }
           
-          console.log(`🛤️ Complete active path from root: [${path.join(' -> ')}]`);
           return path;
         };
         
@@ -1572,16 +1511,12 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
           .filter((content: string) => content.length > 0)
           .join(' ');
         
-        console.log('📝 New narrative text after insertion:', narrativeText);
         
         // Schedule editor update after state update
         setTimeout(() => {
           if (currentNarrativeRef.current) {
-            console.log('📝 Calling updateContent on narrative editor...');
             currentNarrativeRef.current.updateContent(narrativeText);
-            console.log('📝 updateContent called successfully');
           } else {
-            console.error('❌ currentNarrativeRef.current is null! Cannot update content.');
           }
         }, 50);
 
@@ -1597,7 +1532,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
     if (nodeId) {
       setCurrentEditSentenceId(nodeId);
     } else {
-      console.error(`❌ Could not find node ID for sentence: "${sentenceContent}"`);
       setCurrentEditSentenceId(null);
     }
   }, [currentPageId, findNodeIdByContent]);
@@ -1605,17 +1539,14 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
   const updateSentenceNodeContent = useCallback((nodeId: string, newContent: string) => {
     const currentPage = getCurrentPage();
     if (!currentPage) {
-      console.error(`❌ No current page found for updating node ${nodeId}`);
       return false;
     }
 
     const nodeToUpdate = currentPage.sentenceNodes.get(nodeId);
     if (!nodeToUpdate) {
-      console.error(`❌ Node ${nodeId} not found in current page`);
       return false;
     }
 
-    console.log(`🎯 Updating node ${nodeId} content from "${nodeToUpdate.content}" to "${newContent}"`);
 
     updatePageSentenceTree(currentPageId, (sentenceNodes) => {
       const newMap = new Map(sentenceNodes);
@@ -1755,7 +1686,6 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
     debugCreateTestBranches: () => {
       const currentPage = getCurrentPage();
       if (!currentPage || currentPage.sentenceNodes.size === 0) {
-        // console.log('❌ No sentences found to create branches from');
         return;
       }
       
@@ -1849,13 +1779,11 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
 
     // 🐛 DEBUG: Add a helper to manually test branch creation
     debugCreateBranch: (fromSentenceContent: string, branchContent: string) => {
-    //   console.log(`🧪 Testing createBranchFromSentence: from "${fromSentenceContent}" with content "${branchContent}"`);
       return createBranchFromSentence(fromSentenceContent, branchContent);
     },
     
     // 🐛 DEBUG: Inspect the tree dictionary
     debugGetTreeDict: () => {
-      console.log('🌳 Current tree dictionary:', pageTreeDict);
       return pageTreeDict;
     }
   }), [
