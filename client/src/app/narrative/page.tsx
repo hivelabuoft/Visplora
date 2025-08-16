@@ -13,7 +13,7 @@ import { interactionLogger } from '../../lib/interactionLogger';
 import { captureAndLogInteractions, getCapturedInteractionCount } from '../utils/dashboardConfig';
 import { captureInsights, NarrativeSuggestion } from '../LLMs/suggestion_from_interaction';
 import { getVisualizationRecommendation, VisualizationRecommendation, isDashboardRecommendation } from '../LLMs/visualizationRecommendation';
-import { generateInsightTimeline, TimelineGroup } from '../LLMs/insightTimeline';
+import { generateInsightTimeline, TimelineGroup, ChangeMetadata } from '../LLMs/insightTimeline';
 import '../../styles/dataExplorer.css';
 import '../../styles/narrativeLayer.css';
 import '../../styles/dataExplorer.css';
@@ -122,6 +122,9 @@ export default function NarrativePage() {
 
   // Insight timeline state - per page tracking
   const [insightTimelinesByPage, setInsightTimelinesByPage] = useState<Record<string, { groups: TimelineGroup[] }>>({});
+  
+  // Track timeline loading state for each page
+  const [timelineLoadingByPage, setTimelineLoadingByPage] = useState<Record<string, boolean>>({});
   
   // Track the most recently updated sentence for LLM calls
   const [recentlyUpdatedSentence, setRecentlyUpdatedSentence] = useState<{
@@ -296,7 +299,6 @@ export default function NarrativePage() {
             // Ensure userId is set - fallback to username or create one
             if (!user.userId) {
               user.userId = user.username || `user_${user.participantId || Date.now()}`;
-              console.log('🔧 Set fallback userId:', user.userId);
             }
             
             setUserSession(user);
@@ -313,7 +315,6 @@ export default function NarrativePage() {
             lastName: 'User',
             username: 'demo_user'
           };
-          console.log('🔧 Using demo user:', demoUser);
           setUserSession(demoUser);
         }
       } catch (error) {
@@ -333,14 +334,12 @@ export default function NarrativePage() {
   // Initialize interaction logger when userSession is available
   useEffect(() => {
     if (userSession) {
-      console.log('🔧 Initializing interaction logger with user session:', userSession);
       
       // Ensure we have all required fields
       const userId = userSession.userId || userSession.username || `user_${userSession.participantId}`;
       const participantId = userSession.participantId;
       const sessionId = userSession.sessionId || `session_${userSession.participantId}_${Date.now()}`;
       
-      console.log('🔧 User context for logger:', { userId, participantId, sessionId });
       
       interactionLogger.initialize({
         userId,
@@ -736,36 +735,8 @@ export default function NarrativePage() {
   };
 
   // Handle sentence end detection for narrative layer - now delegated to PagedNarrativeSystem
-  const handleSentenceEnd = async (sentence: string, confidence: number, pageId: string) => {
-    console.log(`🧠 Sentence completed on page ${pageId}: "${sentence}" (Confidence: ${confidence})`);
-    
-    // The PagedNarrativeSystem handles the tree structure internally
-    // Here we can focus on the analysis and logging
-    
-    try {
-      // Simulate analysis time
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log(`✅ Analysis complete for: "${sentence}" on page ${pageId}`);
-      
-      // Log the sentence completion interaction
-      await interactionLogger.logInteraction({
-        eventType: 'view_change',
-        action: 'sentence_completion',
-        target: {
-          type: 'ui_element',
-          name: 'narrative_layer'
-        },
-        metadata: {
-          sentence,
-          confidence,
-          pageId,
-          timestamp: Date.now()
-        }
-      });
-    } catch (error) {
-      console.error('❌ Error analyzing sentence:', error);
-    }
-  };
+  // REMOVED: Duplicate unprotected handleSentenceEnd function
+  // The protected version is defined later with branch operation protection
 
   // Utility functions for sentence tree analysis
   const getSentenceTreeStats = () => {
@@ -1090,6 +1061,32 @@ export default function NarrativePage() {
   const deleteSentenceFromTree = useCallback((sentenceIdOrContent: string) => {
     console.log(`🗑️ Starting sentence deletion for: "${sentenceIdOrContent}"`);
     
+    // First, find the node to check if it has children
+    let nodeToDelete: SentenceNode | null = null;
+    if (sentenceNodes.has(sentenceIdOrContent)) {
+      nodeToDelete = sentenceNodes.get(sentenceIdOrContent)!;
+    } else {
+      // Search by content
+      for (const [id, node] of sentenceNodes.entries()) {
+        if (node.content === sentenceIdOrContent) {
+          nodeToDelete = node;
+          break;
+        }
+      }
+    }
+    
+    const hasChildren = nodeToDelete?.children && nodeToDelete.children.length > 0;
+    console.log(`🔥 DEBUG: Node "${nodeToDelete?.content}" has children:`, hasChildren);
+    
+    if (hasChildren) {
+      console.log('🔮 Sentence has children - allowing LLM calls for structural change');
+      // Don't start protection for nodes with children
+    } else {
+      console.log('🍃 Sentence is leaf node - preventing LLM calls');
+      // Start sentence deletion protection to prevent LLM calls (only for leaf nodes)
+      startBranchOperation('sentence_delete');
+    }
+    
     setSentenceNodes(prev => {
       const newMap = new Map(prev);
       
@@ -1216,11 +1213,20 @@ export default function NarrativePage() {
     
     // The active path will be automatically recalculated by the useEffect that watches sentenceNodes
     console.log(`🔄 Tree structure updated after deletion`);
-  }, [sentenceNodes, getActivePathFromRoot]);
+    
+    // Only end branch operation if we started it (for leaf nodes)
+    if (!hasChildren) {
+      // End sentence deletion protection after a short delay (only for leaf nodes)
+      endBranchOperation('sentence_delete', 1500);
+    }
+  }, [sentenceNodes, getActivePathFromRoot, startBranchOperation, endBranchOperation]);
 
   // Helper function to delete an entire branch and all its descendants
   const deleteBranchFromTree = useCallback((branchId: string) => {
     console.log(`🌿🗑️ Starting branch deletion for: "${branchId}"`);
+    
+    // Start branch deletion protection to prevent LLM calls
+    startBranchOperation('tree_branch_delete');
     
     setSentenceNodes(prev => {
       const newMap = new Map(prev);
@@ -1323,7 +1329,10 @@ export default function NarrativePage() {
     });
     
     console.log(`🔄 Tree structure updated after branch deletion`);
-  }, [sentenceNodes]);
+    
+    // End branch deletion protection after a short delay
+    endBranchOperation('tree_branch_delete', 1500);
+  }, [sentenceNodes, startBranchOperation, endBranchOperation]);
 
   // Helper function to switch to a specific branch
   const handleSwitchToBranch = useCallback((branchId: string) => {
@@ -1719,42 +1728,70 @@ export default function NarrativePage() {
   const handleContentChange = useCallback((oldContent: string, newContent: string) => {
     if (oldContent === newContent) return;
     
+    console.log(`🔄 MAIN COMPONENT Content synchronization: "${oldContent}" → "${newContent}"`);
     
-    // COMPLETELY DISABLED - we never want to update existing sentence content automatically
-    // If content needs to be updated, it must be done through explicit edit mode (double-click)
+    // CRITICAL FIX: Update sentence node content to keep tree structure in sync
+    // When user types in the editor, we need to update the corresponding tree node
     
-    return; // Early return - no content updates allowed
+    // Find the sentence node that contains the old content and update it
+    setSentenceNodes(prev => {
+      const newMap = new Map(prev);
+      
+      console.log(`🔍 MAIN COMPONENT: Searching through ${newMap.size} nodes for content match`);
+      
+      // Find the node with matching content (clean both for comparison)
+      const cleanOldContent = oldContent.trim().replace(/[.!?]+$/, '');
+      const cleanNewContent = newContent.trim();
+      
+      console.log(`🔍 MAIN COMPONENT: Looking for clean content: "${cleanOldContent}"`);
+      
+      // Log all current node contents for debugging
+      for (const [nodeId, node] of newMap) {
+        const cleanNodeContent = node.content.trim().replace(/[.!?]+$/, '');
+        console.log(`🔍 MAIN COMPONENT: Node ${nodeId}: "${cleanNodeContent}" vs "${cleanOldContent}"`);
+      }
+      
+      let updatedNode = null;
+      for (const [nodeId, node] of newMap) {
+        const cleanNodeContent = node.content.trim().replace(/[.!?]+$/, '');
+        if (cleanNodeContent === cleanOldContent) {
+          console.log(`🎯 MAIN COMPONENT: Found matching node ${nodeId}: "${node.content}" → "${cleanNewContent}"`);
+          updatedNode = { ...node, content: cleanNewContent };
+          newMap.set(nodeId, updatedNode);
+          break;
+        }
+      }
+      
+      if (updatedNode) {
+        console.log(`✅ MAIN COMPONENT: Tree structure synchronized for node ${updatedNode.id}`);
+      } else {
+        console.log(`⚠️  MAIN COMPONENT: No matching node found for content: "${cleanOldContent}"`);
+      }
+      
+      return newMap;
+    });
     
-    // OLD CODE BELOW - KEPT FOR REFERENCE BUT NEVER EXECUTED
-    // console.log(`📝 Content changed from: "${oldContent.substring(0, 50)}..." to: "${newContent.substring(0, 50)}..."`);
+    // CRITICAL: Also update PagedNarrativeSystem's internal tree structure
+    if (narrativeSystemRef.current) {
+      const currentPageId = narrativeSystemRef.current.getCurrentPageId();
+      console.log(`🔄 MAIN COMPONENT: Calling PagedNarrativeSystem.updateSentenceContent for page ${currentPageId}`);
+      const success = narrativeSystemRef.current.updateSentenceContent(currentPageId, oldContent, newContent);
+      if (success) {
+        console.log(`✅ MAIN COMPONENT: PagedNarrativeSystem tree structure synchronized`);
+      } else {
+        console.log(`⚠️  MAIN COMPONENT: Failed to update PagedNarrativeSystem tree structure`);
+      }
+    }
     
-    // Find all sentences in old content and new content
-    // const oldSentences = oldContent.split(/[.!?]+/).filter(s => s.trim().length > 0).map(s => s.trim());
-    // const newSentences = newContent.split(/[.!?]+/).filter(s => s.trim().length > 0).map(s => s.trim());
+    // NOTE: NO LLM timeline updates here - this is just for tree synchronization during typing
+    // LLM updates only happen via save button through updateSentenceNodeContent → onContentChange with special flag
     
-    // Update sentence nodes for changed content
-    // setSentenceNodes(prev => {
-    //   const newMap = new Map(prev);
-    //   
-    //   // Find nodes that need content updates
-    //   for (let i = 0; i < Math.max(oldSentences.length, newSentences.length); i++) {
-    //     const oldSentence = oldSentences[i];
-    //     const newSentence = newSentences[i];
-    //     
-    //     if (oldSentence && newSentence && oldSentence !== newSentence) {
-    //       // Find the node with old content and update it
-    //       for (const [nodeId, node] of newMap.entries()) {
-    //         if (node.content === oldSentence) {
-    //           newMap.set(nodeId, { ...node, content: newSentence });
-    //           console.log(`🔄 Updated node ${nodeId} content from "${oldSentence}" to "${newSentence}"`);
-    //           break;
-    //         }
-    //       }
-    //     }
-    //   }
-    //   
-    //   return newMap;
-    // });
+    // Log the tree synchronization for debugging
+    console.log(`🔍 MAIN COMPONENT: Tree content synchronization complete (no LLM call for typing)`);
+  }, []);
+    
+    // Log the tree synchronization for debugging
+    console.log(`� Tree content synchronization complete`);
   }, []);
 
 
@@ -1900,7 +1937,7 @@ export default function NarrativePage() {
           const narratives = getActiveNodesNarratives(pageId);
           return generateSentenceIds(pageId, narratives);
         },
-        updateTimelineForPage: (pageId: string) => updateInsightTimelineForPage(pageId),
+        updateTimelineForPage: (pageId: string) => requestTimelineUpdate(pageId, undefined, 'debugHelper'),
         getRecentlyUpdatedSentence: () => recentlyUpdatedSentence
       };
       
@@ -1911,6 +1948,45 @@ export default function NarrativePage() {
       console.log('  - window.insightTimelineDebug.generateSentenceIds(pageId)');
       console.log('  - window.insightTimelineDebug.updateTimelineForPage(pageId)');
       console.log('  - window.insightTimelineDebug.getRecentlyUpdatedSentence()');
+      
+      // Set up DOM event listeners to track branch-related clicks
+      const handleBranchClick = (event: Event) => {
+        const target = event.target as HTMLElement;
+        
+        // Track branch option clicks (switching)
+        if (target?.classList.contains('dropdown-item') && target?.classList.contains('branch-option')) {
+          console.log('🎯 Branch switch UI click detected, starting protection');
+          startBranchOperation('ui_branch_switch');
+          
+          // Store click time on the element for additional protection
+          (target as any).__lastClickTime = Date.now();
+          
+          // End protection after delay
+          endBranchOperation('ui_branch_switch', 3000);
+        }
+        
+        // Track branch delete button clicks
+        if (target?.textContent?.includes('Delete') || 
+            target?.classList.contains('delete-branch') ||
+            target?.closest('.delete-branch-btn') ||
+            target?.innerHTML?.includes('🗑️')) {
+          console.log('🗑️ Branch delete UI click detected, starting protection');
+          startBranchOperation('ui_branch_delete');
+          
+          // End protection after delay
+          endBranchOperation('ui_branch_delete', 3000);
+        }
+      };
+      
+      // Add click listener to document to catch branch clicks
+      document.addEventListener('click', handleBranchClick, true);
+      
+      // Cleanup function
+      const cleanup = () => {
+        document.removeEventListener('click', handleBranchClick, true);
+      };
+      
+      return cleanup;
     }
     
     // Track page changes and update timeline accordingly
@@ -1918,13 +1994,74 @@ export default function NarrativePage() {
     if (currentPageId && showNarrativeLayer) {
       console.log('📄 Page changed or narrative layer shown, checking timeline for page:', currentPageId);
       
-      // If this page doesn't have a timeline yet, create an initial one
+      // If this page doesn't have a timeline yet, create an initial one from tree structure
       if (!insightTimelinesByPage[currentPageId] || insightTimelinesByPage[currentPageId].groups.length === 0) {
         console.log('🆕 Creating initial timeline for new page:', currentPageId);
-        updateInsightTimelineForPage(currentPageId);
+        // Use combined timeline approach instead of direct LLM call for initial page timeline
+        const treeStructure = getTreeStructure();
+        const combinedTimeline = buildCombinedTimeline(treeStructure, currentPageId, undefined);
+        setInsightTimelinesByPage(prevTimelines => ({
+          ...prevTimelines,
+          [currentPageId]: combinedTimeline
+        }));
       }
     }
-  }, [insightTimelinesByPage, recentlyUpdatedSentence, showNarrativeLayer]);
+  }, [insightTimelinesByPage, showNarrativeLayer]); // Removed recentlyUpdatedSentence to prevent triggers on every keystroke
+
+  // Monitor tree structure changes to detect when new nodes are added without explicit button clicks
+  const [previousNodeCount, setPreviousNodeCount] = useState<number>(0);
+  
+  useEffect(() => {
+    const currentNodeCount = sentenceNodes.size;
+    
+    // If the node count increased and we're not in the middle of handling operations
+    if (currentNodeCount > previousNodeCount && currentNodeCount > 0) {
+      const currentPageId = narrativeSystemRef.current?.getCurrentPageId();
+      
+      if (currentPageId) {
+        // Use centralized branch operation check
+        if (isBranchOperationActive()) {
+          console.log('🚫 Tree change detected but blocked: Branch operation active');
+          setPreviousNodeCount(currentNodeCount);
+          return;
+        }
+        
+        console.log('🌳 Tree structure changed: node count increased from', previousNodeCount, 'to', currentNodeCount);
+        
+        // Get the new node that was added
+        const newNodeEntries = Array.from(sentenceNodes.entries());
+        const newNode = newNodeEntries[currentNodeCount - 1];
+        const treeStructure = getTreeStructureForPage(currentPageId);
+        
+        if (newNode && treeStructure) {
+          const [newNodeId, newNodeData] = newNode;
+          const nodeIndex = treeStructure.nodes.findIndex(n => n.id === newNodeId);
+          
+          // This represents an "add_next" operation when a new node appears
+          const changeMetadata: ChangeMetadata = {
+            operation_type: 'add_next',
+            sentence_id: newNodeId,
+            current_content: newNodeData.content,
+            parent_info: {
+              node_id: (nodeIndex + 1).toString(), // Use 1-based indexing
+              sentence_id: newNodeId,
+              sentence_content: newNodeData.content
+            }
+          };
+          
+          // Additional protection check before calling timeline update
+          if (isBranchOperationActive()) {
+            console.log('🚫 Tree monitoring blocked: Branch operation active for new node:', newNodeId);
+          } else {
+            // Update timeline with the detected change (use central gatekeeper)
+            requestTimelineUpdate(currentPageId, changeMetadata, 'treeMonitoring');
+          }
+        }
+      }
+    }
+    
+    setPreviousNodeCount(currentNodeCount);
+  }, [sentenceNodes, previousNodeCount, isBranchOperationActive]);
 
   // Handle file selection from DatasetExplorer
   const handleFileSelection = async (files: DatasetFile[]) => {
@@ -1966,16 +2103,83 @@ export default function NarrativePage() {
   // END OF OLD SENTENCE TREE MANAGEMENT CODE - Commented out
   */
 
+  // NEW: Handler specifically for save button edits (should trigger edit_sentence)
+  const handleSentenceEdit = useCallback((oldContent: string, newContent: string, nodeId: string, pageId: string) => {
+    console.log(`💾 SAVE BUTTON: handleSentenceEdit called: "${oldContent}" → "${newContent}" (node: ${nodeId})`);
+    
+    // IMPORTANT: Set recently updated sentence to block any follow-up sentence detections
+    setRecentlyUpdatedSentence({
+      pageId: pageId,
+      sentence: newContent,
+      timestamp: Date.now()
+    });
+    
+    // Get tree structure to build proper metadata
+    const treeStructure = getTreeStructureForPage(pageId);
+    
+    if (treeStructure && treeStructure.nodes.length > 0) {
+      // Find the node that was edited
+      let editedNode = null;
+      for (const node of treeStructure.nodes) {
+        if (node.id === nodeId) {
+          editedNode = node;
+          break;
+        }
+      }
+      
+      if (editedNode) {
+        console.log(`💾 SAVE BUTTON: Creating edit_sentence timeline update for node ${editedNode.id}`);
+        const changeMetadata = {
+          operation_type: 'edit_sentence' as const,
+          sentence_id: editedNode.id,
+          current_content: newContent,
+          previous_content: oldContent,
+          parent_info: {
+            node_id: (treeStructure.nodes.findIndex(n => n.id === editedNode.id) + 1).toString(),
+            sentence_id: editedNode.id,
+            sentence_content: newContent
+          }
+        };
+        
+        // Use central gatekeeper for timeline update
+        console.log(`💾 SAVE BUTTON: Triggering requestTimelineUpdate with edit_sentence`);
+        requestTimelineUpdate(pageId, changeMetadata, 'save-button-edit');
+      } else {
+        console.warn(`💾 SAVE BUTTON: Could not find edited node ${nodeId} in tree structure`);
+      }
+    } else {
+      console.warn(`💾 SAVE BUTTON: No tree structure found for page ${pageId}`);
+    }
+  }, []);
+
   // Essential handlers that are still needed for the PagedNarrativeSystem
   const handleSentenceEnd = async (sentence: string, confidence: number, pageId: string) => {
     console.log(`🧠 Sentence completed on page ${pageId}: "${sentence}" (Confidence: ${confidence})`);
     
-    // Track the recently updated sentence
-    setRecentlyUpdatedSentence({
-      pageId,
-      sentence,
-      timestamp: Date.now()
-    });
+    // PROTECTION: Check if we're in the middle of branch operations
+    if (isBranchOperationActive()) {
+      console.log('🚫 handleSentenceEnd blocked: Branch operation active for sentence:', sentence);
+      console.log('🔥 DEBUG: Protection active, sentence completion ignored');
+      return;
+    }
+
+    // PROTECTION: Block sentence completion for content that was just edited via save button
+    // This prevents save button → edit_sentence from being followed by sentence detection → add_next
+    if (recentlyUpdatedSentence && 
+        (sentence.includes(recentlyUpdatedSentence.sentence) || 
+         recentlyUpdatedSentence.sentence.includes(sentence) ||
+         sentence.trim() === recentlyUpdatedSentence.sentence.trim())) {
+      const timeSinceEdit = Date.now() - recentlyUpdatedSentence.timestamp;
+      if (timeSinceEdit < 3000) { // Block for 3 seconds after save button edit
+        console.log(`🚫 handleSentenceEnd blocked: Recently saved content "${sentence}" (${timeSinceEdit}ms ago)`);
+        console.log('🔥 DEBUG: Preventing duplicate add_next after save button edit_sentence');
+        return;
+      }
+    }
+
+    console.log('🔥 DEBUG: No branch operation active, proceeding with sentence completion');    // REMOVED: Don't set recentlyUpdatedSentence here - that should only happen via save button
+    // setRecentlyUpdatedSentence is ONLY for save button edits to prevent duplicate LLM calls
+    // Normal sentence completion should proceed through to LLM
     
     // The PagedNarrativeSystem handles the tree structure internally
     // Here we can focus on the analysis and logging
@@ -1985,8 +2189,71 @@ export default function NarrativePage() {
       await new Promise(resolve => setTimeout(resolve, 1000));
       console.log(`✅ Analysis complete for: "${sentence}" on page ${pageId}`);
       
-      // Update insight timeline for this page
-      updateInsightTimelineForPage(pageId);
+      // Double-check protection before proceeding (in case branch operation started during delay)
+      if (isBranchOperationActive()) {
+        console.log('🚫 handleSentenceEnd blocked after delay: Branch operation active for sentence:', sentence);
+        console.log('🔥 DEBUG: Protection activated during analysis delay, aborting LLM call');
+        return;
+      }
+      console.log('🔥 DEBUG: Second protection check passed, proceeding to LLM call');
+      // Get the actual tree structure to find the current active node
+      const treeStructure = getTreeStructureForPage(pageId);
+      let changeMetadata = null;
+      
+      console.log('🔥 DEBUG: Tree structure when processing sentence completion:', treeStructure?.nodes.length, 'nodes');
+      console.log('🔥 DEBUG: Tree nodes:', treeStructure?.nodes.map(n => `${n.id}:${n.content}`));
+      console.log('🔥 DEBUG: Sentence being processed:', sentence);
+      
+      if (treeStructure && treeStructure.activePath.length > 0) {
+        // Get the current active node (last node in active path)
+        const currentActiveNodeId = treeStructure.activePath[treeStructure.activePath.length - 1];
+        const currentActiveNode = treeStructure.nodes.find(n => n.id === currentActiveNodeId);
+        const currentNodeIndex = treeStructure.nodes.findIndex(n => n.id === currentActiveNodeId);
+        
+        console.log('🔥 DEBUG: Current active node ID:', currentActiveNodeId);
+        console.log('🔥 DEBUG: Current active node content:', currentActiveNode?.content);
+        console.log('🔥 DEBUG: Active path:', treeStructure.activePath);
+        
+        if (currentActiveNode) {
+          changeMetadata = {
+            operation_type: 'add_next' as const,
+            sentence_id: currentActiveNode.id,
+            current_content: sentence,
+            parent_info: {
+              node_id: (currentNodeIndex + 1).toString(), // Use 1-based indexing consistent with LLM
+              sentence_id: currentActiveNode.id,
+              sentence_content: currentActiveNode.content
+            }
+          };
+        } else {
+          // Fallback if no active node found
+          changeMetadata = {
+            operation_type: 'add_next' as const,
+            sentence_id: Date.now().toString(),
+            current_content: sentence,
+            parent_info: {
+              node_id: '1',
+              sentence_id: 'root',
+              sentence_content: sentence
+            }
+          };
+        }
+      } else {
+        // No tree structure yet, this might be the first node
+        changeMetadata = {
+          operation_type: 'add_next' as const,
+          sentence_id: 'root-' + Date.now(),
+          current_content: sentence,
+          parent_info: {
+            node_id: '1',
+            sentence_id: 'root',
+            sentence_content: sentence
+          }
+        };
+      }
+      
+      // Update insight timeline for this page with change metadata (use central gatekeeper)
+      requestTimelineUpdate(pageId, changeMetadata, 'handleSentenceEnd');
       
       // Log the sentence completion interaction
       await interactionLogger.logInteraction({
@@ -2039,18 +2306,13 @@ export default function NarrativePage() {
     setHasPendingSuggestion(false);
   };
 
-  const handleContentChange = (oldContent: string, newContent: string, pageId: string) => {
-    // Track the recently updated sentence
-    if (newContent !== oldContent) {
-      setRecentlyUpdatedSentence({
-        pageId,
-        sentence: newContent,
-        timestamp: Date.now()
-      });
-      
-      // Trigger insight timeline update
-      updateInsightTimelineForPage(pageId);
-    }
+  // Wrapper for PagedNarrativeSystem onContentChange - ONLY for tree synchronization, NO LLM calls
+  const handleContentChangeWrapper = (oldContent: string, newContent: string, pageId: string) => {
+    console.log(`🔄 WRAPPER: handleContentChangeWrapper called: "${oldContent}" → "${newContent}" (page: ${pageId})`);
+    console.log(`🔄 WRAPPER: This should ONLY synchronize tree structure, NO LLM calls`);
+    
+    // TODO: Call tree synchronization function - for now, just log
+    console.log(`🔄 WRAPPER: Tree synchronization would happen here (temporarily disabled)`);
   };
 
   // Helper function to get active nodes narratives for a page
@@ -2075,50 +2337,401 @@ export default function NarrativePage() {
 
   // Helper function to get current insight timeline for a page
   const getCurrentTimelineForPage = (pageId: string): TimelineGroup[] => {
-    return insightTimelinesByPage[pageId]?.groups || [];
+    const timeline = insightTimelinesByPage[pageId]?.groups || [];
+    console.log(`📊 getCurrentTimelineForPage(${pageId}):`, timeline.length, 'nodes');
+    console.log(`📊 Timeline node IDs:`, timeline.map(n => `${n.node_id}:${n.sentence_id}`));
+    return timeline;
   };
 
   // Function to get tree structure for timeline generation
   const getTreeStructureForPage = (pageId: string) => {
     if (narrativeSystemRef.current) {
-      return narrativeSystemRef.current.getPageTree(pageId);
+      const tree = narrativeSystemRef.current.getPageTree(pageId);
+      if (tree) {
+        console.log(`🌳 getTreeStructureForPage(${pageId}):`, tree.nodes.length, 'nodes');
+        console.log(`🌳 Tree node IDs:`, tree.nodes.map(n => `${n.id}:${n.content.substring(0, 20)}...`));
+        console.log(`🌳 Active path:`, tree.activePath);
+      }
+      return tree;
     }
     return null;
   };
 
+  // State to prevent timeline triggers during branch operations
+  const [isHandlingBranchSwitch, setIsHandlingBranchSwitch] = useState<boolean>(false);
+  const [branchOperationInProgress, setBranchOperationInProgress] = useState<boolean>(false);
+  const [lastBranchOperationTime, setLastBranchOperationTime] = useState<number>(0);
+  
+  // Global branch operation tracker with additional protection
+  const [globalBranchOperationState, setGlobalBranchOperationState] = useState<{
+    isActive: boolean;
+    operationType: string | null;
+    startTime: number;
+  }>({
+    isActive: false,
+    operationType: null,
+    startTime: 0
+  });
+
   // Function to update insight timeline for a specific page
-  const updateInsightTimelineForPage = async (pageId: string) => {
+  
+  // Centralized branch operation management
+  const startBranchOperation = useCallback((operationType: string) => {
+    console.log(`🚫 Starting branch operation: ${operationType}`);
+    console.log(`🔥 DEBUG: startBranchOperation called with`, operationType);
+    console.log(`🔥 DEBUG: Current state before operation:`, {
+      isHandlingBranchSwitch,
+      branchOperationInProgress,
+      globalBranchOperationState
+    });
+    
+    setIsHandlingBranchSwitch(true);
+    setBranchOperationInProgress(true);
+    setLastBranchOperationTime(Date.now());
+    setGlobalBranchOperationState({
+      isActive: true,
+      operationType,
+      startTime: Date.now()
+    });
+    
+    console.log(`🔥 DEBUG: State should now be updated`);
+  }, []);
+  
+  const endBranchOperation = useCallback((operationType: string, delay: number = 1500) => {
+    setTimeout(() => {
+      console.log(`✅ Ending branch operation: ${operationType}`);
+      setIsHandlingBranchSwitch(false);
+      setBranchOperationInProgress(false);
+      setGlobalBranchOperationState({
+        isActive: false,
+        operationType: null,
+        startTime: 0
+      });
+    }, delay);
+  }, []);
+  
+  // Enhanced function to check if any branch operation is active
+  const isBranchOperationActive = useCallback((): boolean => {
+    const now = Date.now();
+    
+    // Check state flags
+    if (isHandlingBranchSwitch || branchOperationInProgress || globalBranchOperationState.isActive) {
+      return true;
+    }
+    
+    // Check time-based protection
+    if (now - lastBranchOperationTime < 3000) { // 3 second protection window
+      return true;
+    }
+    
+    // Check global operation state time
+    if (globalBranchOperationState.startTime > 0 && now - globalBranchOperationState.startTime < 3000) {
+      return true;
+    }
+    
+    return false;
+  }, [isHandlingBranchSwitch, branchOperationInProgress, globalBranchOperationState, lastBranchOperationTime]);
+
+  // CENTRAL GATEKEEPER FUNCTION - ALL TIMELINE UPDATES MUST GO THROUGH HERE
+  const requestTimelineUpdate = useCallback((pageId: string, changeMetadata?: any, source: string = 'unknown') => {
+    console.log(`🔍 Timeline update requested from: ${source}`, changeMetadata?.operation_type || 'no-op');
+    
+    // COMPREHENSIVE PROTECTION CHECK
+    if (isBranchOperationActive()) {
+      console.log(`🚫 Timeline update BLOCKED from ${source}: Branch operation active`);
+      return false;
+    }
+    
+    // Allow the update
+    console.log(`✅ Timeline update ALLOWED from ${source}`);
+    updateInsightTimelineForPage(pageId, changeMetadata);
+    return true;
+  }, [isBranchOperationActive]);
+
+  const handleBranchSwitch = (branchId: string, pageId: string) => {
+    console.log('Branch switch detected:', branchId, 'on page:', pageId);
+    
+    // Use centralized branch operation management
+    startBranchOperation('branch_switch');
+    
+    // Add click tracking to branch elements for additional protection
+    if (typeof window !== 'undefined') {
+      const branchElements = document.querySelectorAll('.dropdown-item.branch-option');
+      branchElements.forEach(element => {
+        (element as any).__lastClickTime = Date.now();
+      });
+    }
+    
+    // For branch switching, we need to rebuild the timeline with the updated tree structure
+    // while preserving existing LLM insights
+    const treeStructure = getTreeStructureForPage(pageId);
+    const currentTimeline = getCurrentTimelineForPage(pageId);
+    
+    if (treeStructure && treeStructure.nodes.length > 0) {
+      // Use the combined timeline builder to merge tree structure with existing LLM insights
+      const combinedTimeline = buildCombinedTimeline(treeStructure, currentTimeline);
+      
+      // Update the timeline state directly for branch switches
+      setInsightTimelinesByPage(prev => ({
+        ...prev,
+        [pageId]: {
+          groups: combinedTimeline
+        }
+      }));
+      
+    }
+    
+    // End the branch operation
+    endBranchOperation('branch_switch');
+  };
+
+  const handleBranchDelete = (branchId: string, pageId: string) => {
+    console.log('🗑️ Branch delete detected:', branchId, 'on page:', pageId);
+    
+    // Use centralized branch operation management
+    startBranchOperation('branch_delete');
+    
+    // Add a small delay to ensure the tree structure is updated after deletion
+    setTimeout(() => {
+      console.log('🗑️ Processing branch deletion after tree update...');
+      
+      // For branch deletion, we need to rebuild the timeline with the updated tree structure
+      // This should NOT trigger LLM calls since it's a deletion operation
+      const treeStructure = getTreeStructureForPage(pageId);
+      const currentTimeline = getCurrentTimelineForPage(pageId);
+      
+      console.log('🗑️ Tree structure after deletion:', treeStructure?.nodes.length, 'nodes');
+      
+      if (treeStructure && treeStructure.nodes.length > 0) {
+        // Use the combined timeline builder to merge updated tree structure with existing LLM insights
+        const combinedTimeline = buildCombinedTimeline(treeStructure, currentTimeline);
+        
+        console.log('🗑️ Built combined timeline after deletion:', combinedTimeline.length, 'nodes');
+        
+        // Update the timeline state directly for branch deletions
+        setInsightTimelinesByPage(prev => ({
+          ...prev,
+          [pageId]: {
+            groups: combinedTimeline
+          }
+        }));
+        
+        console.log('🗑️ Updated timeline after branch deletion, nodes remaining:', combinedTimeline.length);
+      } else {
+        // If no nodes remain, clear the timeline
+        setInsightTimelinesByPage(prev => ({
+          ...prev,
+          [pageId]: {
+            groups: []
+          }
+        }));
+        console.log('🗑️ Cleared timeline - no nodes remaining after branch deletion');
+      }
+      
+      // End the branch operation
+      endBranchOperation('branch_delete', 1000);
+    }, 100); // Small delay to ensure tree is updated
+  };
+
+  const handleSentenceDelete = (sentenceId: string, pageId: string) => {
+    console.log('🗑️ Sentence delete detected:', sentenceId, 'on page:', pageId);
+    console.log('🔥 DEBUG: handleSentenceDelete called for sentence:', sentenceId);
+    
+    // Check if the sentence has children - if it does, we should allow LLM calls
+    const treeStructureBefore = getTreeStructureForPage(pageId);
+    const nodeToDelete = treeStructureBefore?.nodes.find(n => n.id === sentenceId);
+    const hasChildren = nodeToDelete?.children && nodeToDelete.children.length > 0;
+    
+    console.log('🔥 DEBUG: Node to delete:', nodeToDelete?.content, 'has children:', hasChildren);
+    
+    if (hasChildren) {
+      console.log('🔮 Sentence has children - allowing LLM calls for structural change');
+      // Don't start branch operation protection - allow normal LLM processing
+      return;
+    }
+    
+    console.log('🍃 Sentence is leaf node - blocking LLM calls');
+    // Start sentence deletion protection to prevent LLM calls (only for leaf nodes)
+    startBranchOperation('ui_sentence_delete');
+    
+    // Add a small delay to ensure the deletion is processed and timeline updated
+    setTimeout(() => {
+      console.log('🗑️ Processing leaf node deletion for timeline update...');
+      console.log('🔥 DEBUG: About to get tree structure after deletion');
+      
+      // Get updated tree structure after deletion
+      const treeStructure = getTreeStructureForPage(pageId);
+      const currentTimeline = getCurrentTimelineForPage(pageId);
+      
+      console.log('🗑️ Tree structure after sentence deletion:', treeStructure?.nodes.length, 'nodes');
+      console.log('🔥 DEBUG: Tree nodes after deletion:', treeStructure?.nodes.map(n => `${n.id}:${n.content}`));
+      console.log('🔥 DEBUG: Current timeline before rebuild:', currentTimeline.length, 'groups');
+      
+      if (treeStructure && treeStructure.nodes.length > 0) {
+        // Use the combined timeline builder to merge updated tree structure with existing LLM insights
+        const combinedTimeline = buildCombinedTimeline(treeStructure, currentTimeline);
+        
+        console.log('🗑️ Built combined timeline after sentence deletion:', combinedTimeline.length, 'nodes');
+        console.log('🔥 DEBUG: Combined timeline nodes:', combinedTimeline.map(n => `${n.node_id}:${n.sentence_id}`));
+        
+        // Update the timeline state directly for sentence deletions
+        setInsightTimelinesByPage(prev => ({
+          ...prev,
+          [pageId]: {
+            groups: combinedTimeline
+          }
+        }));
+        
+        console.log('🗑️ Updated timeline after sentence deletion, nodes remaining:', combinedTimeline.length);
+        console.log('🔥 DEBUG: Timeline state should now be updated, ReactFlow should recalculate');
+      } else {
+        // If no nodes remain, clear the timeline
+        setInsightTimelinesByPage(prev => ({
+          ...prev,
+          [pageId]: {
+            groups: []
+          }
+        }));
+        console.log('🗑️ Cleared timeline - no nodes remaining after sentence deletion');
+      }
+      
+      // End sentence deletion protection
+      endBranchOperation('ui_sentence_delete', 1000);
+      console.log('🔥 DEBUG: Leaf node deletion processing complete');
+    }, 200); // Small delay to ensure deletion is complete
+  };
+
+  // Helper function to build combined timeline from tree structure + LLM insights
+  const buildCombinedTimeline = (treeStructure: any, llmTimelineGroups: TimelineGroup[]): TimelineGroup[] => {
+    // Create a map of LLM insights by sentence_id for quick lookup
+    const llmInsightsMap = new Map<string, TimelineGroup>();
+    llmTimelineGroups.forEach(group => {
+      llmInsightsMap.set(group.sentence_id, group);
+    });
+
+    // Build complete timeline from all tree nodes
+    console.log(`🔍 TIMELINE BUILDING: Tree structure has ${treeStructure.nodes.length} nodes:`);
+    treeStructure.nodes.forEach((node: any, index: number) => {
+      console.log(`🔍 TIMELINE NODE ${index + 1}: ID=${node.id}, content="${node.content}"`);
+    });
+    
+    const combinedTimeline: TimelineGroup[] = treeStructure.nodes.map((node: any, index: number) => {
+      const llmInsight = llmInsightsMap.get(node.id);
+      
+      return {
+        node_id: index + 1,
+        sentence_id: node.id,
+        sentence_content: node.content,
+        parent_id: node.parent || '',
+        child_ids: node.children || [],
+        // Include LLM drift analysis if available, otherwise null
+        changed_from_previous: llmInsight?.changed_from_previous || null,
+        hover: llmInsight ? llmInsight.hover : {
+          title: node.content,
+          source: {
+            dataset: 'Current Session',
+            geo: 'User Input', 
+            time: 'Current',
+            measure: 'Narrative Flow',
+            unit: 'sentences'
+          },
+          reflect: [`Node ${index + 1}: ${node.content}`]
+        }
+      };
+    });
+
+    console.log('🔗 Built combined timeline:', combinedTimeline.length, 'total nodes,', 
+                Array.from(llmInsightsMap.keys()).length, 'with LLM insights');
+    
+    return combinedTimeline;
+  };
+
+  const updateInsightTimelineForPage = async (pageId: string, changeMetadata?: any, skipBranchSwitches: boolean = false) => {
     try {
       const currentTimeline = getCurrentTimelineForPage(pageId);
       const treeStructure = getTreeStructureForPage(pageId);
+      
+      console.log(`🔍 TIMELINE UPDATE: Got tree structure for page ${pageId}`);
+      if (treeStructure && treeStructure.nodes) {
+        console.log(`🔍 TIMELINE UPDATE: Tree has ${treeStructure.nodes.length} nodes:`);
+        treeStructure.nodes.forEach((node: any, index: number) => {
+          console.log(`🔍 TIMELINE UPDATE NODE ${index + 1}: ID=${node.id}, content="${node.content}"`);
+        });
+      } else {
+        console.log(`🔍 TIMELINE UPDATE: Tree structure is null or has no nodes`);
+      }
+      
       const recentSentence = recentlyUpdatedSentence?.sentence || '';
 
       if (!treeStructure || treeStructure.nodes.length === 0) {
-        console.log('📝 No tree structure found for page', pageId);
         return;
       }
 
-      console.log('🔮 Updating insight timeline for page:', pageId);
-      console.log('🌳 Tree structure:', treeStructure);
+      // Skip LLM call for branch switching operations (only activePath changes, no content changes)
+      if (skipBranchSwitches && changeMetadata?.operation_type === 'switch_branch') {
+        console.log('⏭️ Skipping LLM call for branch switching operation');
+        
+        // For branch switches, rebuild timeline with current tree structure + existing LLM insights
+        const combinedTimeline = buildCombinedTimeline(treeStructure, currentTimeline);
+        setInsightTimelinesByPage(prev => ({
+          ...prev,
+          [pageId]: { groups: combinedTimeline }
+        }));
+        return;
+      }
+
+      // Set loading state
+      setTimelineLoadingByPage(prev => ({ ...prev, [pageId]: true }));
+
+      console.log('🔮 Calling LLM with changeMetadata:', changeMetadata);
       
-      const updatedTimeline = await generateInsightTimeline(
+      const llmTimelineResponse = await generateInsightTimeline(
         currentTimeline,
         treeStructure,
         recentSentence,
-        pageId
+        pageId,
+        changeMetadata
       );
 
-      // Update the timeline for this specific page
+      // Combine LLM response with complete tree structure
+      const combinedTimeline = buildCombinedTimeline(treeStructure, llmTimelineResponse.groups);
+      
+      // Update the timeline state
       setInsightTimelinesByPage(prev => ({
         ...prev,
-        [pageId]: updatedTimeline
+        [pageId]: { groups: combinedTimeline }
       }));
 
       console.log('✅ Updated insight timeline for page:', pageId);
     } catch (error) {
       console.error('❌ Error updating insight timeline for page:', pageId, error);
+    } finally {
+      // Clear loading state
+      setTimelineLoadingByPage(prev => ({ ...prev, [pageId]: false }));
     }
   };
+
+  // Simple debounce function
+  const debounce = (func: Function, wait: number) => {
+    let timeout: NodeJS.Timeout;
+    return function executedFunction(...args: any[]) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+
+  // Debounced version to prevent rapid successive calls with comprehensive branch operation constraints
+  const debouncedUpdateTimeline = useCallback(
+    debounce((pageId: string, changeMetadata?: any, source: string = 'debounced') => {
+      // Use the central gatekeeper
+      requestTimelineUpdate(pageId, changeMetadata, source);
+    }, 1500), // Increased debounce to 1.5 seconds
+    [requestTimelineUpdate]
+  );
 
   const handleStopAnalysis = () => {
     setIsAnalyzing(false);
@@ -2213,7 +2826,11 @@ export default function NarrativePage() {
               onSuggestionReceived={handleSuggestionReceived}
               onSuggestionResolved={handleSuggestionResolved}
               disableInteractions={hasActiveInfoNodes}
-              onContentChange={handleContentChange}
+              onContentChange={handleContentChangeWrapper}
+              onSentenceEdit={handleSentenceEdit}
+              onBranchSwitch={handleBranchSwitch}
+              onBranchDelete={handleBranchDelete}
+              onSentenceDelete={handleSentenceDelete}
               onPageChange={(fromPageId, toPageId) => {
                 // console.log(`📄 Page changed from ${fromPageId} to ${toPageId}`);
               }}
@@ -2229,7 +2846,6 @@ export default function NarrativePage() {
                       // Show loading state and clear existing nodes
                       reactFlowCanvasRef.current.showLoadingState('Generating AI-powered visualization recommendations...');
                       
-                      console.log('🎯 Getting detailed visualization recommendations...');
                       const recommendation = await getVisualizationRecommendation(
                         sentence,
                         'London demographic, transport, housing, and crime data',
@@ -2505,12 +3121,14 @@ export default function NarrativePage() {
                 const currentTimeline = insightTimelinesByPage[currentPageId]?.groups || [];
                 const currentPageTree = narrativeSystemRef.current?.getCurrentPageTree();
                 const currentActivePath = currentPageTree?.activePath || []; // Get the current active path from the narrative system
+                const isTimelineLoading = timelineLoadingByPage[currentPageId] || false;
                 
-                return currentTimeline.length > 0 ? (
+                return currentTimeline.length > 0 || isTimelineLoading ? (
                   <TimelineVisualization 
                     nodes={currentTimeline}
                     pageId={currentPageId}
                     activePath={currentActivePath}
+                    isLoading={isTimelineLoading}
                   />
                 ) : (
                   <EmptyTimeline />

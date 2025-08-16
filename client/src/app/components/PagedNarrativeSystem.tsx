@@ -45,7 +45,11 @@ interface PagedNarrativeSystemProps {
   onGenerateVisualization?: (sentence: string, validation: any, pageId: string) => void;
   disableInteractions?: boolean;
   onContentChange?: (oldContent: string, newContent: string, pageId: string) => void;
+  onSentenceEdit?: (oldContent: string, newContent: string, nodeId: string, pageId: string) => void; // NEW: Callback for save button edits
   onPageChange?: (fromPageId: string, toPageId: string) => void;
+  onBranchSwitch?: (branchId: string, pageId: string) => void; // Called when user switches between branches
+  onBranchDelete?: (branchId: string, pageId: string) => void; // Called when user deletes a branch
+  onSentenceDelete?: (sentenceId: string, pageId: string) => void; // Called when user deletes a sentence
   maxPages?: number; // Maximum number of pages allowed
 }
 
@@ -62,6 +66,7 @@ export interface PagedNarrativeSystemRef {
   deletePage: (pageId: string) => boolean;
   showSuggestion: (suggestion: NarrativeSuggestion, pageId?: string) => void;
   hasPendingSuggestion: () => boolean;
+  updateSentenceContent: (pageId: string, oldContent: string, newContent: string) => boolean;
   // Debug helpers
   debugCreateTestBranches?: () => void;
   debugGetCurrentTreeState?: () => any;
@@ -79,7 +84,11 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
   onGenerateVisualization,
   disableInteractions = false,
   onContentChange,
+  onSentenceEdit,
   onPageChange,
+  onBranchSwitch,
+  onBranchDelete,
+  onSentenceDelete,
   maxPages = 10
 }, ref) => {
   // Core state
@@ -988,7 +997,12 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
         currentNarrativeRef.current.updateContent(narrativeText);
       }
     }, 100);
-  }, [getCurrentPage, updatePageSentenceTree, currentPageId]);
+
+    // Notify parent about branch switch
+    if (onBranchSwitch) {
+      onBranchSwitch(branchId, currentPageId);
+    }
+  }, [getCurrentPage, updatePageSentenceTree, currentPageId, onBranchSwitch]);
 
   const onCreateBranch = useCallback((fromSentenceContent: string, branchContent: string) => {
     
@@ -1132,6 +1146,10 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       return;
     }
 
+    // Notify parent about sentence deletion (for LLM protection)
+    console.log('🔥 DEBUG: About to notify parent of sentence deletion:', sentenceId, 'on page:', currentPageId);
+    onSentenceDelete?.(sentenceId, currentPageId);
+    console.log('🔥 DEBUG: Parent notified of sentence deletion');
 
     // Find the node to delete using ID only (no content fallback)
     const nodeToDelete = currentPage.sentenceNodes.get(sentenceId);
@@ -1279,7 +1297,7 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       });
     }, 200);
     
-  }, [getCurrentPage, updatePageSentenceTree, currentPageId, updateTreeDict]);
+  }, [getCurrentPage, updatePageSentenceTree, currentPageId, updateTreeDict, onSentenceDelete]);
 
   const onDeleteBranch = useCallback((branchId: string) => {
     const currentPage = getCurrentPage();
@@ -1339,7 +1357,10 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       
       return newMap;
     });
-  }, [getCurrentPage, updatePageSentenceTree, currentPageId]);
+    
+    // Notify parent component about branch deletion
+    onBranchDelete?.(branchId, currentPageId);
+  }, [getCurrentPage, updatePageSentenceTree, currentPageId, onBranchDelete]);
 
   const onInsertNodeAfter = useCallback((afterSentenceContentOrId: string, newSentenceContent: string, useId: boolean = false) => {
     
@@ -1547,6 +1568,8 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       return false;
     }
 
+    const oldContent = nodeToUpdate.content;
+    console.log(`🔄 updateSentenceNodeContent: "${oldContent}" → "${newContent}"`);
 
     updatePageSentenceTree(currentPageId, (sentenceNodes) => {
       const newMap = new Map(sentenceNodes);
@@ -1565,6 +1588,19 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       
       return newMap;
     });
+
+    // CRITICAL: Notify parent component about content change for tree synchronization
+    if (onContentChange && oldContent !== newContent) {
+      console.log(`🔄 updateSentenceNodeContent: Calling onContentChange for tree sync`);
+      onContentChange(oldContent, newContent, currentPageId);
+    }
+
+    // CRITICAL: For save button operations, trigger edit_sentence timeline update
+    // This is separate from regular typing which should not trigger LLM calls
+    if (onSentenceEdit && oldContent !== newContent) {
+      console.log(`💾 SAVE BUTTON: Triggering onSentenceEdit for edit_sentence timeline update`);
+      onSentenceEdit(oldContent, newContent, nodeId, currentPageId);
+    }
 
     // If this node is part of the current active path, update the main editor
     const updatedPage = getCurrentPage();
@@ -1589,7 +1625,7 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
     }
 
     return true;
-  }, [getCurrentPage, updatePageSentenceTree, currentPageId]);
+  }, [getCurrentPage, updatePageSentenceTree, currentPageId, onContentChange, onSentenceEdit]);
 
   const onExitEditMode = useCallback((sentenceContent: string) => {
     // Clear the stored edit sentence ID when exiting edit mode
@@ -1785,6 +1821,60 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
     // 🐛 DEBUG: Inspect the tree dictionary
     debugGetTreeDict: () => {
       return pageTreeDict;
+    },
+
+    // Update sentence content in the tree structure
+    updateSentenceContent: (pageId: string, oldContent: string, newContent: string) => {
+      console.log(`🔄 PagedNarrativeSystem.updateSentenceContent CALLED: "${oldContent}" → "${newContent}"`);
+      
+      const page = pages.get(pageId);
+      if (!page) {
+        console.log(`⚠️  PagedNarrativeSystem: Page ${pageId} not found`);
+        return false;
+      }
+      
+      console.log(`🔍 PagedNarrativeSystem: Page found with ${page.sentenceNodes.size} nodes`);
+      
+      // Find the node with matching old content (clean both for comparison)
+      const cleanOldContent = oldContent.trim().replace(/[.!?]+$/, '');
+      let foundNodeId = null;
+      let foundNode = null;
+      
+      console.log(`🔍 PagedNarrativeSystem: Looking for clean content: "${cleanOldContent}"`);
+      
+      // Log all current node contents for debugging
+      for (const [nodeId, node] of page.sentenceNodes.entries()) {
+        const cleanNodeContent = node.content.trim().replace(/[.!?]+$/, '');
+        console.log(`🔍 PagedNarrativeSystem: Node ${nodeId}: "${cleanNodeContent}" vs "${cleanOldContent}"`);
+      }
+      
+      for (const [nodeId, node] of page.sentenceNodes.entries()) {
+        const cleanNodeContent = node.content.trim().replace(/[.!?]+$/, '');
+        if (cleanNodeContent === cleanOldContent) {
+          foundNodeId = nodeId;
+          foundNode = node;
+          console.log(`🎯 PagedNarrativeSystem: Found matching node ${nodeId} in PagedNarrativeSystem`);
+          break;
+        }
+      }
+      
+      if (!foundNodeId || !foundNode) {
+        console.log(`⚠️  PagedNarrativeSystem: No matching node found for content: "${cleanOldContent}"`);
+        return false;
+      }
+      
+      // Update the node content using updatePageSentenceTree
+      console.log(`🔄 PagedNarrativeSystem: Calling updatePageSentenceTree for node ${foundNodeId}`);
+      updatePageSentenceTree(pageId, (sentenceNodes) => {
+        const newMap = new Map(sentenceNodes);
+        const updatedNode = { ...foundNode, content: newContent.trim() };
+        newMap.set(foundNodeId, updatedNode);
+        console.log(`✅ PagedNarrativeSystem: Updated node ${foundNodeId} in PagedNarrativeSystem tree from "${foundNode.content}" to "${updatedNode.content}"`);
+        return newMap;
+      });
+      
+      console.log(`✅ PagedNarrativeSystem: updateSentenceContent completed successfully`);
+      return true;
     }
   }), [
     currentPageId, pages, pageOrder, getCurrentPage, createNewPage, 

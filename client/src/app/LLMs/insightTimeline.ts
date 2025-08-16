@@ -46,11 +46,29 @@ export interface TreeStructure {
   activePath: string[];
 }
 
+export interface ChangeMetadata {
+  operation_type: 'add_next' | 'add_branch' | 'edit_sentence' | 'delete_sentence' | 'delete_branch' | 'switch_branch';
+  sentence_id: string;
+  previous_content?: string; // For edits and deletions
+  current_content?: string; // For edits and additions
+  parent_info?: {
+    node_id: string;
+    sentence_id: string;
+    sentence_content: string;
+  }; // Parent node information for all operations
+  child_nodes?: Array<{
+    node_id: string;
+    sentence_id: string;
+    sentence_content: string;
+  }>; // For deletions to track all affected children
+}
+
 export async function generateInsightTimeline(
   currentTimeline: TimelineGroup[],
   treeStructure: TreeStructure | null,
   recentlyUpdatedSentence: string,
-  pageId: string
+  pageId: string,
+  changeMetadata?: ChangeMetadata
 ): Promise<InsightTimelineResponse> {
   
   // Development mode: return placeholder timeline without calling LLM
@@ -110,7 +128,8 @@ export async function generateInsightTimeline(
         currentTimeline,
         treeStructure,
         recentlyUpdatedSentence,
-        pageId
+        pageId,
+        changeMetadata
       }),
     });
 

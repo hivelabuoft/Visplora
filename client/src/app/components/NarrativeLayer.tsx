@@ -1195,41 +1195,59 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   const finishEditingSentence = useCallback(() => {
     if (isEditingRef.current && editor && originalEditingContent) {
       
-      // Get the edited content from the current selection or active sentence
-      // Instead of using fixed editingPosition, get the current sentence at cursor
+      // Get the edited content from the current selection or by finding the original content
       let editedContent = '';
       
-      // Method 1: Try to get content from current selection
+      // Method 1: Try to get content from current selection (if user selected text)
       const selection = editor.state.selection;
       if (!selection.empty) {
         editedContent = editor.state.doc.textBetween(selection.from, selection.to).trim();
+        console.log(`💾 SAVE: Using selected content: "${editedContent}"`);
       } else {
-        // Method 2: If no selection, find the sentence around the cursor
-        const cursorPos = editor.state.selection.from;
+        // Method 2: Get ALL editor text and find what replaced the original content
         const fullText = editor.getText();
+        console.log(`💾 SAVE: Full editor text: "${fullText}"`);
+        console.log(`💾 SAVE: Original editing content: "${originalEditingContent}"`);
         
-        // Find sentence boundaries around cursor
-        let sentenceStart = 0;
-        let sentenceEnd = fullText.length;
+        // Find the original content in the full text and get the new version
+        // Since the original content might have been modified, we need to be smart about this
         
-        // Look backwards to find sentence start
-        for (let i = cursorPos - 1; i >= 0; i--) {
-          if (/[.!?]/.test(fullText[i])) {
-            sentenceStart = i + 1;
-            break;
+        // Simple approach: if there's only one sentence, use the full text
+        const sentences = fullText.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
+        console.log(`💾 SAVE: Found ${sentences.length} sentences:`, sentences);
+        
+        if (sentences.length === 1) {
+          // Only one sentence, use it
+          editedContent = sentences[0];
+          console.log(`💾 SAVE: Single sentence detected: "${editedContent}"`);
+        } else {
+          // Multiple sentences - find the one that's most similar to originalEditingContent
+          // or find the one that contains the editing changes
+          let bestMatch = sentences[0];
+          let maxSimilarity = 0;
+          
+          const originalClean = originalEditingContent.replace(/[.!?]+$/, '').trim();
+          
+          for (const sentence of sentences) {
+            // Check if this sentence contains most of the original content
+            const commonLength = Math.min(sentence.length, originalClean.length);
+            let similarity = 0;
+            for (let i = 0; i < commonLength; i++) {
+              if (sentence[i] === originalClean[i]) similarity++;
+            }
+            const similarityRatio = similarity / Math.max(sentence.length, originalClean.length);
+            
+            console.log(`💾 SAVE: Sentence "${sentence}" similarity to original: ${similarityRatio}`);
+            
+            if (similarityRatio > maxSimilarity) {
+              maxSimilarity = similarityRatio;
+              bestMatch = sentence;
+            }
           }
+          
+          editedContent = bestMatch;
+          console.log(`💾 SAVE: Best match selected: "${editedContent}" (similarity: ${maxSimilarity})`);
         }
-        
-        // Look forwards to find sentence end
-        for (let i = cursorPos; i < fullText.length; i++) {
-          if (/[.!?]/.test(fullText[i])) {
-            sentenceEnd = i;
-            break;
-          }
-        }
-        
-        // Extract the sentence and clean it
-        editedContent = fullText.substring(sentenceStart, sentenceEnd).trim();
       }
       
 
@@ -1609,20 +1627,24 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         if (selectedSentence.element.textContent) {
           const parentText = selectedSentence.element.textContent.trim();
           
-          // Get existing branches (if any) and add a new draft branch
+          // Get existing branches to calculate correct numbering
           const existingBranches = getBranchesForSentence ? getBranchesForSentence(parentText) : [];
           
           // Create a draft branch that's not yet committed to tree structure
           const draftBranchId = `draft-branch-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+          
+          // Include existing branches for correct numbering, but mark only the new one as visible
           const draftBranches = [
+            // Include existing branches (hidden during draft mode)
             ...existingBranches.map(branch => ({
               id: branch.id,
-              content: branch.fullPathContent || branch.content, // Use full path content for existing branches
+              content: branch.fullPathContent || branch.content,
               originalContent: branch.fullPathContent || branch.content,
               type: (branch.type === 'original_continuation' ? 'original' : 'alternative') as 'original' | 'alternative',
               editor: null,
               isNew: false
             })),
+            // Add the new branch
             {
               id: draftBranchId,
               content: '',
@@ -1642,24 +1664,24 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
             insertPosition: 0
           });
           
-          // Create editors after DOM update
+          // Create editors after DOM update (only for the new branch)
           setTimeout(() => {
-            draftBranches.forEach(branch => {
-              const editorElement = document.getElementById(`branch-editor-${branch.id}`);
+            const newBranch = draftBranches.find(b => b.isNew);
+            if (newBranch) {
+              const editorElement = document.getElementById(`branch-editor-${newBranch.id}`);
               if (editorElement) {
-                // Existing branches are read-only, new branches are editable
-                const isReadOnly = !branch.isNew;
-                const branchEditor = createBranchEditor(branch.content, `branch-editor-${branch.id}`, isReadOnly);
+                // New branches are editable
+                const branchEditor = createBranchEditor(newBranch.content, `branch-editor-${newBranch.id}`, false);
                 setBranchingMode(prev => ({
                   ...prev,
                   branches: prev.branches.map(b => 
-                    b.id === branch.id 
+                    b.id === newBranch.id 
                       ? { ...b, editor: branchEditor }
                       : b
                   )
                 }));
               }
-            });
+            }
           }, 100);
           
         }
@@ -2043,9 +2065,18 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         {branchingMode.isActive && (
           <div className="branch-section">
             {branchingMode.branches
-              .filter(branch => branch.type === 'alternative') // Only show alternatives
+              .filter(branch => {
+                // If we're in draft mode (user clicked "Create New Branch"), only show new branches
+                if (branchingMode.isDraft) {
+                  return branch.isNew;
+                }
+                // Otherwise, show all alternatives as before
+                return branch.type === 'alternative';
+              })
               .map((branch, index) => {
-              const alternativeNumber = index + 1; // Simple numbering for alternatives only
+              // Calculate the correct alternative number based on all alternatives, not just filtered ones
+              const allAlternatives = branchingMode.branches.filter(b => b.type === 'alternative');
+              const alternativeNumber = allAlternatives.findIndex(b => b.id === branch.id) + 1;
               
               return (
                 <div key={branch.id} className="branch-option">
@@ -2054,7 +2085,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                       Alternative {alternativeNumber}
                       {branch.isNew && <span className="draft-indicator"> (Draft)</span>}
                     </div>
-                    {index === branchingMode.branches.filter(b => b.type === 'alternative').length - 1 && (
+                    {branch.isNew && branchingMode.isDraft && (
                       <button 
                         className="branch-action-btn cancel-btn"
                         onClick={() => {

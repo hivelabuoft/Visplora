@@ -101,9 +101,10 @@ interface TimelineVisualizationProps {
   }[];
   pageId: string;
   activePath?: string[]; // Active path for highlighting
+  isLoading?: boolean; // Loading state for LLM processing
 }
 
-export const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({ nodes, pageId, activePath = [] }) => {
+export const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({ nodes, pageId, activePath = [], isLoading = false }) => {
   // Use React Flow for better zoom/pan control and automatic layout management
   return (
     <div className="h-full w-full">
@@ -111,6 +112,7 @@ export const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({ no
         nodes={nodes}
         pageId={pageId}
         activePath={activePath}
+        isLoading={isLoading}
       />
     </div>
   );

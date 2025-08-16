@@ -69,7 +69,176 @@ const getRandomDriftType = (nodeId: string) => {
   return DRIFT_TYPES[index];
 };
 
-// Interface for timeline nodes - keeping old structure with activeChild added
+// Function to create rich tooltip content with all node information
+const createRichTooltipContent = (node: TimelineNode, driftType: any) => {
+  const dimensions = node.changed_from_previous?.dimensions || {};
+  const title = node.hover?.title || 'No title available';
+  const reflectItems = node.hover?.reflect || [];
+  
+  // Safely escape HTML content to prevent XSS
+  const escapeHtml = (unsafe: string) => {
+    return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  };
+  
+  // Create HTML for dimensions
+  const dimensionsHtml = Object.keys(dimensions).length > 0 
+    ? Object.entries(dimensions)
+        .map(([key, value]) => `
+          <div style="display: flex; justify-content: space-between; margin-bottom: 4px; gap: 12px;">
+            <span style="font-weight: 500; color: #6b7280; flex-shrink: 0;">${escapeHtml(key)}:</span>
+            <span style="color: #374151; text-align: right; word-break: break-word;">${escapeHtml(value)}</span>
+          </div>
+        `).join('')
+    : '<div style="color: #6b7280; font-style: italic; text-align: center; padding: 8px;">No dimensions data</div>';
+  
+  // Create HTML for reflect items
+  const reflectHtml = reflectItems.length > 0
+    ? reflectItems
+        .map((item, index) => `
+          <div style="
+            background-color: #f9fafb; 
+            padding: 8px 12px; 
+            margin: 6px 0; 
+            border-radius: 6px;
+            border-left: 3px solid #059669;
+            font-size: 13px;
+            line-height: 1.4;
+            position: relative;
+            color: #374151;
+          ">
+            <div style="font-size: 10px; color: #6b7280; margin-bottom: 4px;">#${index + 1}</div>
+            ${escapeHtml(item)}
+          </div>
+        `).join('')
+    : '<div style="color: #6b7280; font-style: italic; text-align: center; padding: 8px;">No reflection data</div>';
+
+  // Get appropriate icon for drift type shape
+  const getShapeIcon = (shape: string) => {
+    switch(shape) {
+      case 'circle': return '●';
+      case 'square': return '■';
+      case 'diamond': return '◆';
+      case 'hexagon': return '⬢';
+      default: return '●';
+    }
+  };
+
+  const truncateContent = (content: string, maxLength: number = 120) => {
+    if (content.length <= maxLength) return content;
+    return content.substring(0, maxLength) + '...';
+  };
+
+  return `
+    <div style="max-width: 420px; font-family: system-ui, -apple-system, sans-serif; padding: 16px;">
+
+      <!-- Content -->
+      <div style="margin-bottom: 16px;">
+        <blockquote style="
+          color: #374151; 
+          font-size: 14px; 
+          line-height: 1.6; 
+          padding: 16px 20px; 
+          margin: 0;
+          background-color: #f9fafb; 
+          border-radius: 8px; 
+          border-left: 4px solid ${driftType.color};
+          font-weight: 500;
+          position: relative;
+          font-style: italic;
+        ">
+          <cite style="
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 28px;
+            color: ${driftType.color};
+            opacity: 0.2;
+            font-style: normal;
+          ">"</cite>
+          <span class="completed-sentence">
+            ${escapeHtml(truncateContent(node.sentence_content))}
+          </span>
+        </blockquote>
+      </div>
+
+      <!-- Title Section -->
+      <div style="margin-bottom: 16px;">
+        <div style="
+          color: #d97706; 
+          font-weight: 600; 
+          font-size: 12px; 
+          margin-bottom: 8px; 
+          text-transform: uppercase; 
+          letter-spacing: 0.5px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        ">
+          <span>Title</span>
+        </div>
+        <div style="
+          color: #374151; 
+          font-size: 13px; 
+          line-height: 1.5; 
+          padding: 10px; 
+          background-color: #f9fafb; 
+          border-radius: 6px;
+        ">
+          ${escapeHtml(title)}
+        </div>
+      </div>
+
+      <!-- Dimensions Section -->
+      <div style="margin-bottom: 16px;">
+        <div style="
+          color: #2563eb; 
+          font-weight: 600; 
+          font-size: 12px; 
+          margin-bottom: 8px; 
+          text-transform: uppercase; 
+          letter-spacing: 0.5px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        ">
+          <span>Dimensions</span>
+          ${Object.keys(dimensions).length > 0 ? `<span style="background-color: #2563eb; color: #ffffff; padding: 1px 6px; border-radius: 8px; font-size: 10px;">${Object.keys(dimensions).length}</span>` : ''}
+        </div>
+        <div style="background-color: #f9fafb; padding: 10px; border-radius: 6px; font-size: 12px;">
+          ${dimensionsHtml}
+        </div>
+      </div>
+
+      <!-- Reflection Section -->
+      <div>
+        <div style="
+          color: #059669; 
+          font-weight: 600; 
+          font-size: 12px; 
+          margin-bottom: 8px; 
+          text-transform: uppercase; 
+          letter-spacing: 0.5px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        ">
+          <span>Reflections</span>
+          ${reflectItems.length > 0 ? `<span style="background-color: #059669; color: #ffffff; padding: 1px 6px; border-radius: 8px; font-size: 10px;">${reflectItems.length}</span>` : ''}
+        </div>
+        <div>
+          ${reflectHtml}
+        </div>
+      </div>
+    </div>
+  `;
+};
+
+// Custom node component for timeline nodes
 interface TimelineNode {
   node_id: number;
   sentence_id: string;
@@ -84,7 +253,6 @@ interface TimelineNode {
   } | null;
   hover: {
     title: string;
-    source: any;
     reflect: string[];
   };
 }
@@ -93,6 +261,7 @@ interface ReactFlowTimelineProps {
   nodes: TimelineNode[];
   pageId: string;
   activePath?: string[];
+  isLoading?: boolean; // Add loading state
 }
 
 // Custom node component for timeline nodes
@@ -167,7 +336,7 @@ const TimelineNodeComponent = ({ data }: { data: any }) => {
     <div
       style={getNodeStyle()}
       data-tooltip-id="timeline-tooltip"
-      data-tooltip-content={`${node.sentence_content} - Node ${node.node_id} (${driftType.label})`}
+      data-tooltip-html={createRichTooltipContent(node, driftType)}
       className="timeline-node"
     >
       {/* React Flow Handles for connections */}
@@ -205,7 +374,7 @@ const nodeTypes = {
   timelineNode: TimelineNodeComponent,
 };
 
-const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageId, activePath = [] }) => {
+const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageId, activePath = [], isLoading = false }) => {
   const [reactFlowNodes, setReactFlowNodes, onNodesChange] = useNodesState<Node>([]);
   const [reactFlowEdges, setReactFlowEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const { fitView, setCenter } = useReactFlow();
@@ -272,6 +441,13 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
   const calculateFlowLayout = useCallback(() => {
     if (nodes.length === 0) return { nodes: [], edges: [] };
     
+    console.log('🎯 ReactFlowTimeline calculating layout for nodes:', nodes.map(n => ({
+      node_id: n.node_id,
+      sentence_id: n.sentence_id,
+      parent_id: n.parent_id,
+      child_ids: n.child_ids,
+      content: n.sentence_content // Show full content, not truncated
+    })));
     
     const nodeSpacing = 80; // Horizontal spacing
     const branchOffset = 50; // Vertical offset for branches (reduced from 80)
@@ -279,6 +455,30 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     
     // Create a map for quick lookups
     const nodeMap = new Map(nodes.map(node => [node.sentence_id, node]));
+    
+    // Build parent-child relationships from both child_ids and parent_id information
+    // This handles cases where the data might have inconsistent relationships
+    const childrenMap = new Map<string, string[]>();
+    
+    // Initialize with existing child_ids
+    nodes.forEach(node => {
+      if (node.child_ids && node.child_ids.length > 0) {
+        childrenMap.set(node.sentence_id, [...node.child_ids]);
+      } else {
+        childrenMap.set(node.sentence_id, []);
+      }
+    });
+    
+    // Build children relationships from parent_id information
+    nodes.forEach(node => {
+      if (node.parent_id && node.parent_id !== "") {
+        const existingChildren = childrenMap.get(node.parent_id) || [];
+        if (!existingChildren.includes(node.sentence_id)) {
+          existingChildren.push(node.sentence_id);
+          childrenMap.set(node.parent_id, existingChildren);
+        }
+      }
+    });
     
     // Position all nodes using a breadth-first traversal to properly handle the tree structure
     const allPositions = new Map<string, { x: number; y: number }>();
@@ -305,8 +505,8 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
       if (!currentPosition) continue;
       
       
-      // Process all children of the current node
-      const children = currentNode.child_ids || [];
+      // Process all children of the current node using the built children map
+      const children = childrenMap.get(nodeId) || [];
       children.forEach((childId: string, childIndex: number) => {
         if (processedNodes.has(childId)) return; // Already processed
         
@@ -321,7 +521,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
         
         if (children.length > 1) {
           // Find which child is in the active path (if any)
-          const activeChildIndex = children.findIndex((cId: string) => activePath.includes(cId));
+          const activeChildIndex = children.findIndex((cId: string) => activePathSet.has(cId));
           
           if (activeChildIndex !== -1) {
             // Position active child at parent's Y level, others above/below
@@ -375,10 +575,11 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     // Convert to React Flow edges - only create parent-child connections
     const flowEdges: Edge[] = [];
     
-    // Create edges based on parent-child relationships only
+    // Create edges based on parent-child relationships using the built children map
     nodes.forEach(node => {
-      if (node.child_ids && node.child_ids.length > 0) {
-        node.child_ids.forEach((childId: string) => {
+      const children = childrenMap.get(node.sentence_id) || [];
+      if (children.length > 0) {
+        children.forEach((childId: string) => {
           const childNode = nodes.find(n => n.sentence_id === childId);
           if (childNode) {
             const isActiveConnection = activePathSet.has(node.sentence_id) && activePathSet.has(childId);
@@ -407,24 +608,48 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
   
   // Update React Flow nodes and edges when data changes
   useEffect(() => {
+    // Skip layout calculation if loading or no nodes
+    if (isLoading || nodes.length === 0) {
+      return;
+    }
+    
     const { nodes: flowNodes, edges: flowEdges } = calculateFlowLayout();
     setReactFlowNodes(flowNodes);
     setReactFlowEdges(flowEdges);
+  }, [nodes, activePath, isLoading, calculateFlowLayout, setReactFlowNodes, setReactFlowEdges]);
+
+  // Separate effect for centering on active nodes to avoid setTimeout in main effect
+  useEffect(() => {
+    // Skip if loading, no nodes, or no active path
+    if (isLoading || nodes.length === 0 || activePath.length === 0 || reactFlowNodes.length === 0) {
+      return;
+    }
     
     // Center on the most recent nodes (last 3-4 nodes of active path)
-    if (activePath.length > 0) {
-      setTimeout(() => {
-        const recentNodes = activePath.slice(-3); // Focus on last 3 nodes
-        if (recentNodes.length > 0) {
-          const lastNodeId = recentNodes[recentNodes.length - 1];
-          const lastNode = flowNodes.find(n => n.id === lastNodeId);
-          if (lastNode) {
-            setCenter(lastNode.position.x, lastNode.position.y, { zoom: 1, duration: 800 });
-          }
-        }
-      }, 100);
+    const recentNodes = activePath.slice(-3); // Focus on last 3 nodes
+    if (recentNodes.length > 0) {
+      const lastNodeId = recentNodes[recentNodes.length - 1];
+      const lastNode = reactFlowNodes.find(n => n.id === lastNodeId);
+      if (lastNode) {
+        // Use requestAnimationFrame instead of setTimeout for better performance
+        requestAnimationFrame(() => {
+          setCenter(lastNode.position.x, lastNode.position.y, { zoom: 1, duration: 800 });
+        });
+      }
     }
-  }, [nodes, activePath, calculateFlowLayout, setReactFlowNodes, setReactFlowEdges, setCenter]);
+  }, [activePath, reactFlowNodes, isLoading, nodes.length, setCenter]);
+
+  // Show loading overlay when processing LLM response - render conditionally in JSX
+  if (isLoading) {
+    return (
+      <div className="h-full w-full flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-sm text-gray-600">Analyzing narrative insights...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full w-full">
@@ -506,20 +731,27 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
         </Panel>
       </ReactFlow>
       
-      {/* Main Tooltip */}
+      {/* Enhanced Rich Tooltip */}
       <Tooltip
         id="timeline-tooltip"
         place="top"
         style={{
-          backgroundColor: '#374151',
-          color: '#f9fafb',
-          borderRadius: '8px',
-          padding: '12px',
+          backgroundColor: '#ffffff',
+          color: '#1f2937',
+          borderRadius: '12px',
+          padding: '0px',
           fontSize: '14px',
-          maxWidth: '350px',
+          maxWidth: '420px',
           zIndex: 1000,
-          border: '1px solid #6b7280'
+          border: '1px solid #d1d5db',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
         }}
+        opacity={1}
+        delayShow={200}
+        delayHide={100}
+        render={({ content }) => (
+          <div dangerouslySetInnerHTML={{ __html: content || '' }} />
+        )}
       />
     </div>
   );
