@@ -116,7 +116,14 @@ export default function NarrativePage() {
         measure: string | string[];
         unit: string;
       };
-      reflect: string[];
+      reflect: Array<{
+        prompt: string;
+        reason: string;
+        related_sentence: {
+          node_id: number;
+          sentence_content: string;
+        } | null;
+      }>;
     };
   }
 
@@ -1989,24 +1996,39 @@ export default function NarrativePage() {
       return cleanup;
     }
     
-    // Track page changes and update timeline accordingly
-    const currentPageId = narrativeSystemRef.current?.getCurrentPageId();
-    if (currentPageId && showNarrativeLayer) {
-      console.log('📄 Page changed or narrative layer shown, checking timeline for page:', currentPageId);
-      
-      // If this page doesn't have a timeline yet, create an initial one from tree structure
-      if (!insightTimelinesByPage[currentPageId] || insightTimelinesByPage[currentPageId].groups.length === 0) {
-        console.log('🆕 Creating initial timeline for new page:', currentPageId);
-        // Use combined timeline approach instead of direct LLM call for initial page timeline
-        const treeStructure = getTreeStructure();
-        const combinedTimeline = buildCombinedTimeline(treeStructure, currentPageId, undefined);
-        setInsightTimelinesByPage(prevTimelines => ({
-          ...prevTimelines,
-          [currentPageId]: combinedTimeline
-        }));
+  }, [showNarrativeLayer]); // Only trigger when narrative layer visibility changes
+
+  // Initialize timeline for the current page when narrative layer is first shown
+  useEffect(() => {
+    if (showNarrativeLayer) {
+      const currentPageId = narrativeSystemRef.current?.getCurrentPageId();
+      if (currentPageId) {
+        console.log('📄 Narrative layer shown, initializing timeline for current page:', currentPageId);
+        
+        // If this page doesn't have a timeline yet, create an initial one from tree structure
+        if (!insightTimelinesByPage[currentPageId] || insightTimelinesByPage[currentPageId].groups.length === 0) {
+          console.log('🆕 Creating initial timeline for current page:', currentPageId);
+          const treeStructure = getTreeStructureForPage(currentPageId);
+          
+          if (treeStructure && treeStructure.nodes.length > 0) {
+            // Build timeline from existing tree structure (if page has content)
+            const combinedTimeline = buildCombinedTimeline(treeStructure, []);
+            setInsightTimelinesByPage(prevTimelines => ({
+              ...prevTimelines,
+              [currentPageId]: { groups: combinedTimeline }
+            }));
+          } else {
+            // New page with no content - initialize with empty timeline
+            console.log('🆕 Current page has no content, initializing with empty timeline');
+            setInsightTimelinesByPage(prevTimelines => ({
+              ...prevTimelines,
+              [currentPageId]: { groups: [] }
+            }));
+          }
+        }
       }
     }
-  }, [insightTimelinesByPage, showNarrativeLayer]); // Removed recentlyUpdatedSentence to prevent triggers on every keystroke
+  }, [showNarrativeLayer]); // Only trigger when narrative layer is shown
 
   // Monitor tree structure changes to detect when new nodes are added without explicit button clicks
   const [previousNodeCount, setPreviousNodeCount] = useState<number>(0);
@@ -2362,6 +2384,9 @@ export default function NarrativePage() {
   const [branchOperationInProgress, setBranchOperationInProgress] = useState<boolean>(false);
   const [lastBranchOperationTime, setLastBranchOperationTime] = useState<number>(0);
   
+  // State to prevent LLM calls during page switches
+  const [pageSwitchInProgress, setPageSwitchInProgress] = useState<boolean>(false);
+  
   // Global branch operation tracker with additional protection
   const [globalBranchOperationState, setGlobalBranchOperationState] = useState<{
     isActive: boolean;
@@ -2601,8 +2626,29 @@ export default function NarrativePage() {
     }, 200); // Small delay to ensure deletion is complete
   };
 
+  // Handle page reset - clear timeline for the page
+  const handlePageReset = (pageId: string) => {
+    console.log('🧹 Page reset detected for page:', pageId);
+    
+    // Clear the timeline for this page
+    setInsightTimelinesByPage(prev => ({
+      ...prev,
+      [pageId]: {
+        groups: []
+      }
+    }));
+    
+    console.log('✅ Timeline cleared for reset page:', pageId);
+  };
+
   // Helper function to build combined timeline from tree structure + LLM insights
   const buildCombinedTimeline = (treeStructure: any, llmTimelineGroups: TimelineGroup[]): TimelineGroup[] => {
+    // Handle null/empty tree structure
+    if (!treeStructure || !treeStructure.nodes || treeStructure.nodes.length === 0) {
+      console.log('🔍 TIMELINE BUILDING: Tree structure is empty, returning empty timeline');
+      return [];
+    }
+
     // Create a map of LLM insights by sentence_id for quick lookup
     const llmInsightsMap = new Map<string, TimelineGroup>();
     llmTimelineGroups.forEach(group => {
@@ -2648,6 +2694,12 @@ export default function NarrativePage() {
 
   const updateInsightTimelineForPage = async (pageId: string, changeMetadata?: any, skipBranchSwitches: boolean = false) => {
     try {
+      // Skip LLM calls during page switches
+      if (pageSwitchInProgress) {
+        console.log(`🚫 Timeline update BLOCKED: Page switch in progress`);
+        return;
+      }
+      
       const currentTimeline = getCurrentTimelineForPage(pageId);
       const treeStructure = getTreeStructureForPage(pageId);
       
@@ -2832,8 +2884,47 @@ export default function NarrativePage() {
               onBranchDelete={handleBranchDelete}
               onSentenceDelete={handleSentenceDelete}
               onPageChange={(fromPageId, toPageId) => {
-                // console.log(`📄 Page changed from ${fromPageId} to ${toPageId}`);
+                console.log(`📄 Page changed from ${fromPageId} to ${toPageId}`);
+                
+                // Set page switch flag to prevent LLM calls during this operation
+                setPageSwitchInProgress(true);
+                
+                // Immediately initialize empty timeline for new page to avoid showing previous page's timeline
+                if (!insightTimelinesByPage[toPageId]) {
+                  console.log(`🆕 Page ${toPageId} is new - immediately initializing with empty timeline`);
+                  setInsightTimelinesByPage(prev => ({
+                    ...prev,
+                    [toPageId]: { groups: [] }
+                  }));
+                }
+                
+                // Then check if we need to build timeline from existing tree structure
+                const treeStructure = getTreeStructureForPage(toPageId);
+                
+                if (treeStructure && treeStructure.nodes.length > 0) {
+                  // Page has content - build timeline from existing tree structure (no LLM calls)
+                  console.log(`📊 Page ${toPageId} has ${treeStructure.nodes.length} nodes, building timeline from cached data`);
+                  const combinedTimeline = buildCombinedTimeline(treeStructure, []);
+                  setInsightTimelinesByPage(prev => ({
+                    ...prev,
+                    [toPageId]: { groups: combinedTimeline }
+                  }));
+                } else {
+                  // Page is empty - ensure timeline stays empty
+                  console.log(`🆕 Page ${toPageId} is empty, ensuring timeline is empty`);
+                  setInsightTimelinesByPage(prev => ({
+                    ...prev,
+                    [toPageId]: { groups: [] }
+                  }));
+                }
+                
+                // Clear page switch flag after a brief delay
+                setTimeout(() => {
+                  setPageSwitchInProgress(false);
+                  console.log(`📄 Page switch to ${toPageId} complete`);
+                }, 500);
               }}
+              onPageReset={handlePageReset}
               onGenerateVisualization={async (sentence: string, validation: any, pageId: string) => {
                 // When NarrativeLayer wants to generate visualization, 
                 // Add info node to canvas

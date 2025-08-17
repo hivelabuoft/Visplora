@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtle Semantic Span Styles Preview</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            padding: 40px;
+            background-color: #fafafa;
+            line-height: 1.6;
+        }
+        
+        .preview-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+        }
+        
+        h1 {
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .example {
+            background-color: #fefefe;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        
+        /* Semantic Span Styles for Data-Driven Summary */
+        /* Subtle, shaded colors that don't catch too much attention */
+
+        /* Geographic locations - soft blue */
+        span[data-type="geo"] {
+            background-color: #f8fafc;
+            color: #475569;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 500;
+            border: 1px solid #e2e8f0;
+            font-size: inherit;
+            display: inline;
+        }
+
+        /* Metrics and measures - soft green */
+        span[data-type="metric"] {
+            background-color: #f9fafb;
+            color: #4b5563;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 500;
+            border: 1px solid #e5e7eb;
+            font-size: inherit;
+            display: inline;
+        }
+
+        /* Numeric values - soft amber/yellow */
+        span[data-type="value"] {
+            background-color: #fefce8;
+            color: #713f12;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+            border: 1px solid #fde68a;
+            font-size: inherit;
+            display: inline;
+        }
+
+        /* Time references - soft purple */
+        span[data-type="time"] {
+            background-color: #faf5ff;
+            color: #6b21a8;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 500;
+            border: 1px solid #e9d5ff;
+            font-size: inherit;
+            display: inline;
+        }
+
+        /* Demographic/categorical groups - soft red/pink */
+        span[data-type="group"] {
+            background-color: #fef2f2;
+            color: #991b1b;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 500;
+            border: 1px solid #fecaca;
+            font-size: inherit;
+            display: inline;
+        }
+
+        /* Hover effects - subtle enhancement */
+        span[data-type="geo"]:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+            cursor: default;
+        }
+
+        span[data-type="metric"]:hover {
+            background-color: #f3f4f6;
+            border-color: #d1d5db;
+            cursor: default;
+        }
+
+        span[data-type="value"]:hover {
+            background-color: #fef3c7;
+            border-color: #fcd34d;
+            cursor: default;
+        }
+
+        span[data-type="time"]:hover {
+            background-color: #f3e8ff;
+            border-color: #ddd6fe;
+            cursor: default;
+        }
+
+        span[data-type="group"]:hover {
+            background-color: #fee2e2;
+            border-color: #fca5a5;
+            cursor: default;
+        }
+
+        /* Ensure spans don't break text flow */
+        span[data-type] {
+            white-space: nowrap;
+            transition: all 0.15s ease-in-out;
+        }
+        
+        .legend {
+            background-color: #f8fafc;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        
+        .legend h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #4b5563;
+        }
+        
+        .legend-item {
+            display: inline-block;
+            margin-right: 15px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .subtle-note {
+            background-color: #f0f9ff;
+            border: 1px solid #e0f2fe;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #0c4a6e;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <h1>📊 Subtle Semantic Span Styling</h1>
+        
+        <div class="subtle-note">
+            <strong>Design Philosophy:</strong> These styles are intentionally subtle and shaded to provide helpful semantic highlighting without being distracting or overwhelming in the data analysis context.
+        </div>
+        
+        <div class="example">
+            Analysis reveals that <span data-type="geo">Camden</span> exhibits elevated <span data-type="metric">crime rates</span> of <span data-type="value">15.2%</span> compared to other <span data-type="geo">London boroughs</span>. The correlation between <span data-type="metric">school density</span> and <span data-type="group">youth demographics</span> suggests potential contributing factors to observed patterns in <span data-type="time">2023</span>.
+        </div>
+        
+        <div class="example">
+            <span data-type="geo">Westminster</span> shows <span data-type="value">£47,500</span> median <span data-type="metric">household income</span>, significantly higher than <span data-type="geo">Tower Hamlets</span> at <span data-type="value">£32,100</span>. <span data-type="group">Private school</span> concentration correlates with <span data-type="metric">property values</span> across these areas during <span data-type="time">2022-2023</span>.
+        </div>
+
+        <div class="example">
+            Vehicle ownership trends show <span data-type="geo">outer boroughs</span> experiencing increased <span data-type="metric">car ownership rates</span> of approximately <span data-type="value">8-12%</span> growth since <span data-type="time">2021</span>, with <span data-type="group">working families</span> representing the primary demographic shift.
+        </div>
+        
+        <div class="legend">
+            <h3>🎨 Subtle Semantic Highlighting:</h3>
+            <div class="legend-item">
+                <span data-type="geo">Geographic</span> - Soft blue-gray
+            </div>
+            <div class="legend-item">
+                <span data-type="metric">Metrics</span> - Light gray
+            </div>
+            <div class="legend-item">
+                <span data-type="value">Values</span> - Warm yellow
+            </div>
+            <div class="legend-item">
+                <span data-type="time">Time</span> - Gentle purple
+            </div>
+            <div class="legend-item">
+                <span data-type="group">Groups</span> - Soft pink
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; font-size: 12px; color: #6b7280;">
+            <strong>Hover over any highlighted term</strong> to see the subtle interactive effect.
+        </div>
+    </div>
+</body>
+</html>

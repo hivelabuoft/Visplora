@@ -115,8 +115,49 @@ export interface TimelineGroup {
       measure: string | string[];
       unit: string;
     };
-    reflect: string[];
+    reflect: Array<{
+      prompt: string;
+      reason: string;
+      related_sentence: {
+        node_id: number;
+        sentence_content: string;
+      } | null;
+    }>;
   };
+}
+
+// New interfaces for the two-step process
+export interface FirstStepResponse {
+  node_id: number;
+  sentence_id: string;
+  sentence_content: string;
+  changed_from_previous: {
+    drift_types: string[];
+    severity: string;
+    dimensions: Record<string, string>;
+  } | null;
+  related_source: {
+    related_categories: string[];
+    related_columns: string[];
+  };
+  related_sentence: {
+    node_id: number;
+    reason: string;
+  } | null;
+}
+
+export interface SecondStepResponse {
+  node_id: number;
+  sentence_id: string;
+  sentence_content: string;
+  reflect: Array<{
+    prompt: string;
+    reason: string;
+    related_sentence: {
+      node_id: number;
+      sentence_content: string;
+    } | null;
+  }>;
 }
 
 export interface InsightTimelineResponse {
@@ -125,9 +166,10 @@ export interface InsightTimelineResponse {
 
 export async function POST(request: NextRequest) {
   try {
-    const { currentTimeline, treeStructure, recentlyUpdatedSentence, pageId, changeMetadata } = await request.json();
+    const { currentTimeline, treeStructure, recentlyUpdatedSentence, pageId, changeMetadata, related_datasets } = await request.json();
     
     console.log('📝 Change metadata received:', changeMetadata);
+    console.log('📊 Related datasets received:', related_datasets);
 
     // Early exit if no changeMetadata is provided (to avoid triggering on typing)
     if (!changeMetadata) {
@@ -214,11 +256,18 @@ export async function POST(request: NextRequest) {
       change_metadata: llmChangeMetadata!
     };
 
-    const prompt = `You are an assistant helping a user track how their narrative insights evolve while exploring data.
+    // STEP 1: Analyze drift and find related sentences
+    const firstPrompt = `You are an assistant helping a user track how their narrative insights evolve while exploring data.
 
-The user is building a personal, exploratory story while browsing dashboards about life in London (e.g., safety, income, housing, education). They write one sentence at a time. After each sentence, your job is to evaluate if the *current sentence* introduces any shift compared to the *previous one*.
+The user is building a personal, exploratory story while browsing dashboards about life in London (e.g., safety, income, housing, education). They write one sentence at a time. After each sentence, your job is to evaluate if the *current sentence* introduces any shift compared to the *previous one* AND identify any previously written sentences in their active path that are related to the current sentence.
 
-Your output supports a visual insight timeline. Each sentence becomes a node in this timeline.
+############################
+RELEVANT DATASETS:
+The following datasets have been identified as potentially relevant to the current sentence:
+${related_datasets ? `
+Categories: ${related_datasets.related_categories?.join(', ') || 'None identified'}
+Columns: ${related_datasets.related_columns?.join(', ') || 'None identified'}
+` : 'No specific datasets identified for this sentence.'}
 
 ############################
 Your task:
@@ -226,46 +275,20 @@ For the given current sentence and the previous one (if available), return a JSO
 
 1. The original \`node_id\` and \`sentence_id\` EXACTLY as provided.
 2. A \`changed_from_previous\` object describing what changed, if anything, across time, geography, topic, measure, or logic.
-3. A \`hover\` block for this insight: a short title, and 1–3 reflection prompts (if any).
+3. A \`related_source\` object containing the relevant categories and columns from the dataset.
+4. A \`related_sentence\` object identifying the most relevant previous sentence in the active path, if any exists.
 
 If no previous sentence is provided, set \`changed_from_previous\` to \`null\`.
-
-Use the dataset catalog provided to anchor your metadata (\`dataset\`, \`geo\`, \`time\`, \`measure\`, \`unit\`). If unsure, use \`"unknown"\`.
-
-############################
-You will be given a JSON object containing:
-1) current_path_nodes: the active branch path (ordered) up to the node being considered. 
-   Each node has: { node_id, sentence_id, sentence_content }.
-2) immediate_child_relation: either null, or an object describing the direct child of the last path node 
-   that may need reclassification due to recent changes. 
-   Format: { node_id, sentence_id, sentence_content, parent_id }.
-   Why it exists: when a parent is edited, reparented, or removed, its child may drift relative to the new context and must be re-evaluated.
-3) change_metadata: describes the user's latest operation in the editor.
+If no related sentence is found in the active path, set \`related_sentence\` to \`null\`.
 
 ############################
 Allowed drift types:
-1. **Elaboration**  
-   Adds detail to the prior insight without changing topic, time, location, or measure.  
-   Use when the current sentence continues the same narrative logically and thematically.
+1. **Elaboration** - Adds detail to the prior insight without changing topic, time, location, or measure.
+2. **Context Shift** - Keeps the same topic but changes **where** (geo) or **when** (time) the insight applies.
+3. **Reframing** - Keeps the same topic and location but changes how the data is viewed.
+4. **Topic Change** - Switches the subject or domain entirely, or introduces logical contradiction.
 
-2. **Context Shift**  
-   Keeps the same topic but changes **where** (geo) or **when** (time) the insight applies.  
-   Examples: Camden → London, or 2021 → 2023.
-
-3. **Reframing**  
-   Keeps the same topic and location but changes how the data is viewed — such as switching the **measure** (e.g., average → median), the **unit** (counts → percentages), or the **subgroup** (e.g., all vehicles → SUVs).  
-   This reframes the insight without changing its subject.
-
-4. **Topic Change**  
-   Switches the subject or domain entirely, or introduces logical contradiction.  
-   Examples: From housing to crime, or from "prices down" → "affordability up."  
-   Often marks a new narrative branch or break in reasoning.
-
-Allowed severity:
-- \`none\`, \`minor\`, \`moderate\`, \`critical\`
-
-### If there is no previous sentence:
-Set \`changed_from_previous: null\`
+Allowed severity: \`none\`, \`minor\`, \`moderate\`, \`critical\`
 
 ############################
 INPUT DATA:
@@ -273,39 +296,39 @@ ${JSON.stringify(llmInput, null, 2)}
 
 ############################
 OUTPUT JSON FORMAT:
-Return an array of all the necessary node's drifts:
 [
   {
-    "node_id": <number>,                      // must match input
-    "sentence_id": <string>,                  // must match input
-    "sentence_content": <string>,             // must match input
+    "node_id": <number>,
+    "sentence_id": "<string>",
+    "sentence_content": "<string>",
     "changed_from_previous": {
-      "drift_types": [ ... ],                 // from allowed list
-      "severity": "<severity-level>",         // from allowed list
+      "drift_types": [ ... ],
+      "severity": "<severity-level>",
       "dimensions": {
-        "<what changed>": "<from → to>"       // explain the change
+        "<what changed>": "<from → to>"
       }
     } | null,
-    "hover": {
-      "title": "<concise insight title>",
-      "reflect": [
-        "<prompts to help the user verify their logic>",
-        "<prompts to help the user verify their logic>"
-      ]
-    }
+    "related_source": {
+      "related_categories": ["category1", "category2"],
+      "related_columns": ["column1", "column2"]
+    },
+    "related_sentence": {
+      "node_id": <number>,
+      "reason": "<reason why they are related>"
+    } | null
   }
 ]`;
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4",
+    const firstResponse = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "system", 
-          content: "You are an expert narrative insight tracker. You analyze how data exploration insights evolve and drift over time. Always respond with valid JSON only."
+          content: "You are an expert narrative insight tracker. You analyze how data exploration insights evolve and drift over time, and identify relationships between sentences. Always respond with valid JSON only."
         },
         {
           role: "user",
-          content: prompt
+          content: firstPrompt
         }
       ],
       temperature: 0.3,
@@ -313,101 +336,222 @@ Return an array of all the necessary node's drifts:
       top_p: 0.9
     });
 
-    const content = response.choices[0]?.message?.content?.trim();
-    if (!content) {
-      throw new Error('No content received from OpenAI');
+    const firstContent = firstResponse.choices[0]?.message?.content?.trim();
+    if (!firstContent) {
+      throw new Error('No content received from first OpenAI call');
     }
 
-    console.log('🤖 Raw OpenAI response:', content);
+    console.log('🤖 First step raw OpenAI response:', firstContent);
 
-    // Parse the LLM response
-    let llmDriftResponses: LLMDriftResponse[];
+    // Parse the first LLM response
+    let firstStepResponses: FirstStepResponse[];
     try {
-      const cleanContent = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      const cleanFirstContent = firstContent.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      firstStepResponses = JSON.parse(cleanFirstContent);
       
-      llmDriftResponses = JSON.parse(cleanContent);
-      
-      if (!Array.isArray(llmDriftResponses)) {
-        throw new Error('Expected array of drift responses');
+      if (!Array.isArray(firstStepResponses)) {
+        throw new Error('Expected array of first step responses');
       }
-      
     } catch (parseError) {
-      
+      console.error('❌ Error parsing first step response:', parseError);
       // Fallback response
-      llmDriftResponses = currentPathNodes.map(node => ({
+      firstStepResponses = currentPathNodes.map(node => ({
         node_id: node.node_id,
         sentence_id: node.sentence_id,
         sentence_content: node.sentence_content,
         changed_from_previous: null,
-        hover: {
-          title: 'Analysis Update',
-          reflect: ['Consider the data context', 'Verify the analytical logic']
-        }
+        related_source: {
+          related_categories: related_datasets?.related_categories || [],
+          related_columns: related_datasets?.related_columns || []
+        },
+        related_sentence: null
       }));
     }
 
-    // Map LLM responses back to TimelineGroup format
+    // STEP 2: Generate reflection prompts
+    const reflectionPromises = firstStepResponses.map(async (firstStepData) => {
+      // Find related sentences content for context
+      const relatedSentencesContext = firstStepData.related_sentence ? 
+        currentPathNodes.filter(node => node.node_id === firstStepData.related_sentence!.node_id)
+          .map(node => ({
+            node_id: node.node_id,
+            sentence_id: node.sentence_id,
+            sentence_content: node.sentence_content,
+            reason_for_relevance: firstStepData.related_sentence!.reason
+          })) : [];
+
+      const secondPrompt = `You are an assistant helping a user reflect on their reasoning as they explore data and build a personal narrative.
+
+The user writes one sentence at a time while browsing dashboards about life in London (e.g., safety, income, housing, education). Your task is to help the user think critically about their most recent insight by suggesting detailed reflection prompts — especially when the new insight may be contradictory, oversimplified, or incomplete.
+
+Your reflection should help the user:
+- Reconsider implicit assumptions
+- Explore alternative explanations
+- Think about branching to resolve contradictions
+- Keep the number of reflections manageable (0-3 per insight)
+- Each reflection question should be specific and actionable (7-15 words max)
+
+You must keep the reflection grounded within the scope of the provided datasets.
+
+############################
+RELEVANT DATA SOURCES:
+The following dataset categories have been identified as relevant to the current insight. Stay within these domains when suggesting reflection prompts:
+
+${JSON.stringify(firstStepData.related_source, null, 2)}
+
+Only use reasoning related to these domains. Do not speculate outside them.
+
+############################
+CONTEXTUAL INSIGHTS:
+Here are potentially related or contradictory insights previously written by the user. You may use them to explain reasoning tension or provide contrast.
+
+${JSON.stringify(relatedSentencesContext, null, 2)}
+
+Each item includes:
+- node_id
+- sentence_id  
+- sentence_content
+- reason_for_relevance (e.g., "same topic", "opposite claim", "same borough", "time mismatch")
+
+You may reference these insights in your reflection, but only if they meaningfully relate to the current sentence.
+
+############################
+INPUT:
+{
+  "node_id": ${firstStepData.node_id},
+  "sentence_id": "${firstStepData.sentence_id}",
+  "sentence_content": "${firstStepData.sentence_content}"
+}
+
+############################
+OUTPUT FORMAT:
+Return a single JSON object in this format:
+{
+  "node_id": ${firstStepData.node_id},
+  "sentence_id": "${firstStepData.sentence_id}",
+  "sentence_content": "${firstStepData.sentence_content}",
+  "reflect": [
+    {
+      "prompt": "<detailed reflection question>",
+      "reason": "<why this prompt is relevant>",
+      "related_sentence": {
+        "node_id": <number>,
+        "sentence_content": "<string>"
+      } | null
+    }
+  ]
+}
+
+If you cannot find anything to reflect on, return "reflect": []`;
+
+      const secondResponse = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: secondPrompt
+          },
+        ],
+        temperature: 0.5,
+        max_tokens: 2000,
+      });
+
+      const secondContent = secondResponse.choices[0]?.message?.content?.trim();
+      if (!secondContent) {
+        throw new Error('No content received from second OpenAI call');
+      }
+
+      console.log('🤖 Second step raw OpenAI response:', secondContent);
+
+      // Parse the second LLM response
+      try {
+        const cleanSecondContent = secondContent.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+        const secondStepData: SecondStepResponse = JSON.parse(cleanSecondContent);
+        return secondStepData;
+      } catch (parseError) {
+        console.error('❌ Error parsing second step response:', parseError);
+        // Fallback response
+        return {
+          node_id: firstStepData.node_id,
+          sentence_id: firstStepData.sentence_id,
+          sentence_content: firstStepData.sentence_content,
+          reflect: []
+        };
+      }
+    });
+
+    const secondStepResponses = await Promise.all(reflectionPromises);
+
+    // Combine results from both steps
+    const combinedResponses = firstStepResponses.map((firstStep, index) => {
+      const secondStep = secondStepResponses[index];
+      return {
+        firstStep,
+        secondStep
+      };
+    });
+
+    // Map combined responses back to TimelineGroup format
     const updatedTimeline: TimelineGroup[] = currentTimeline.map((group: TimelineGroup) => {
-      // Find matching drift response by node_id and sentence_id
-      const driftResponse = llmDriftResponses.find(
-        response => response.node_id === group.node_id && response.sentence_id === group.sentence_id
+      // Find matching combined response by node_id and sentence_id
+      const combinedResponse = combinedResponses.find(
+        response => response.firstStep.node_id === group.node_id && response.firstStep.sentence_id === group.sentence_id
       );
 
-      if (driftResponse) {
-        // Update the group with new drift information
+      if (combinedResponse) {
+        // Update the group with new information from both steps
         return {
           ...group,
-          changed_from_previous: driftResponse.changed_from_previous,
+          changed_from_previous: combinedResponse.firstStep.changed_from_previous,
           hover: {
             ...group.hover,
-            title: driftResponse.hover.title,
-            reflect: driftResponse.hover.reflect
+            title: `Insight Analysis`, // Simple title since reflection is now separate
+            reflect: combinedResponse.secondStep.reflect
           }
         };
       }
 
-      // No matching drift response found, return original group
+      // No matching response found, return original group
       return group;
     });
 
-    // Add new groups for any drift responses that don't match existing timeline groups
-    const newGroups: TimelineGroup[] = llmDriftResponses
+    // Add new groups for any responses that don't match existing timeline groups
+    const newGroups: TimelineGroup[] = combinedResponses
       .filter(response => !currentTimeline.some(
-        (group: TimelineGroup) => group.node_id === response.node_id && group.sentence_id === response.sentence_id
+        (group: TimelineGroup) => group.node_id === response.firstStep.node_id && group.sentence_id === response.firstStep.sentence_id
       ))
       .map(response => {
         // Find the corresponding tree node to get hierarchy info
-        const treeNode = treeStructure.nodes.find((n: SentenceNode) => n.id === response.sentence_id);
-        
+        const treeNode = treeStructure.nodes.find((n: SentenceNode) => n.id === response.firstStep.sentence_id);
         
         return {
-          node_id: response.node_id,
-          sentence_id: response.sentence_id,
-          sentence_content: response.sentence_content,
+          node_id: response.firstStep.node_id,
+          sentence_id: response.firstStep.sentence_id,
+          sentence_content: response.firstStep.sentence_content,
           parent_id: treeNode?.parent || '',
-          child_ids: treeNode?.children || [], // Don't truncate - keep all children
-          changed_from_previous: response.changed_from_previous,
+          child_ids: treeNode?.children || [],
+          changed_from_previous: response.firstStep.changed_from_previous,
           hover: {
-            title: response.hover.title,
+            title: 'Insight Analysis',
             source: {
-              dataset: 'London Data',
+              dataset: response.firstStep.related_source.related_categories,
               geo: 'London',
-              time: 'Current Period',
-              measure: 'Various Metrics',
+              time: 'Current Period', 
+              measure: response.firstStep.related_source.related_columns,
               unit: 'mixed'
             },
-            reflect: response.hover.reflect
+            reflect: response.secondStep.reflect
           }
         };
       });
 
     const finalTimeline = [...updatedTimeline, ...newGroups];
 
-    
+    console.log('✅ Final timeline generated with', finalTimeline.length, 'groups');
     return NextResponse.json({ groups: finalTimeline });
 
   } catch (error) {
-    
+    console.error('❌ Error in insight-timeline API:', error);
     // Return empty timeline as fallback
     return NextResponse.json({ groups: [] });
   }

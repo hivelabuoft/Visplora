@@ -1,5 +1,5 @@
 // Development flag - set to true to skip LLM calls and return placeholder data
-const DEV_MODE = true;
+const DEV_MODE = false;
 
 export interface TimelineGroup {
   node_id: number;
@@ -21,7 +21,14 @@ export interface TimelineGroup {
       measure: string | string[];
       unit: string;
     };
-    reflect: string[];
+    reflect: Array<{
+      prompt: string;
+      reason: string;
+      related_sentence: {
+        node_id: number;
+        sentence_content: string;
+      } | null;
+    }>;
   };
 }
 
@@ -61,6 +68,11 @@ export interface ChangeMetadata {
     sentence_id: string;
     sentence_content: string;
   }>; // For deletions to track all affected children
+}
+
+export interface DatasetRelevanceResponse {
+  related_categories: string[];
+  related_columns: string[];
 }
 
 export async function generateInsightTimeline(
@@ -105,7 +117,11 @@ export async function generateInsightTimeline(
             measure: 'N/A',
             unit: 'N/A'
           },
-          reflect: ['The author begins writing their narrative. No specific data exploration patterns, analytical focus areas, key findings, trends, or methodological approaches are implied in this sentence.']
+          reflect: [{
+            prompt: 'The author begins writing their narrative. No specific data exploration patterns, analytical focus areas, key findings, trends, or methodological approaches are implied in this sentence.',
+            reason: 'This is a development mode placeholder reflection.',
+            related_sentence: null
+          }]
         }
       };
     });
@@ -115,10 +131,41 @@ export async function generateInsightTimeline(
     } as InsightTimelineResponse;
   }
   
-  // Production mode: call LLM API
+  // Production mode: call LLM APIs
   try {
     console.log('🔮 Generating insight timeline for page:', pageId);
 
+    // Step 1: Analyze dataset relevance for the current sentence
+    let related_datasets: DatasetRelevanceResponse | null = null;
+    
+    if (recentlyUpdatedSentence && recentlyUpdatedSentence.trim().length > 0) {
+      console.log('📊 Step 1: Analyzing dataset relevance for sentence:', recentlyUpdatedSentence);
+      
+      try {
+        const datasetResponse = await fetch('/api/dataset-relevance', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sentence: recentlyUpdatedSentence
+          }),
+        });
+
+        if (datasetResponse.ok) {
+          related_datasets = await datasetResponse.json();
+          console.log('✅ Dataset relevance analysis result:', related_datasets);
+        } else {
+          console.warn('⚠️ Dataset relevance API call failed, proceeding without dataset context');
+        }
+      } catch (datasetError) {
+        console.warn('⚠️ Error in dataset relevance analysis, proceeding without dataset context:', datasetError);
+      }
+    }
+
+    // Step 2: Generate insight timeline with dataset context
+    console.log('🎯 Step 2: Generating insight timeline with dataset context');
+    
     const response = await fetch('/api/insight-timeline', {
       method: 'POST',
       headers: {
@@ -129,7 +176,8 @@ export async function generateInsightTimeline(
         treeStructure,
         recentlyUpdatedSentence,
         pageId,
-        changeMetadata
+        changeMetadata,
+        related_datasets
       }),
     });
 
@@ -164,9 +212,13 @@ export async function generateInsightTimeline(
             measure: 'General Metrics',
             unit: 'count'
           },
-          reflect: ['Basic insight generated due to API error']
+          reflect: [{
+            prompt: 'Basic insight generated due to API error',
+            reason: 'Fallback reflection due to system error.',
+            related_sentence: null
+          }]
         }
       }]
-    } as InsightTimelineResponse;
+    };
   }
 }

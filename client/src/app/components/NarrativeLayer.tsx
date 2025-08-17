@@ -24,6 +24,7 @@ import { validateDomain } from '../LLMs/domainValidation';
 import { NarrativeSuggestion } from '../LLMs/suggestion_from_interaction';
 import NarrativeSuggestionBox from './NarrativeSuggestion';
 import '../../styles/narrativeLayer.css';
+import { ConfirmationModal } from '../utils/ConfirmationModal';
 
 interface NarrativeLayerProps {
   prompt: string;
@@ -52,6 +53,7 @@ interface NarrativeLayerProps {
   onInsertNodeAfter?: (afterSentenceContentOrId: string, newSentenceContent: string, useId?: boolean) => void; // New callback for inserting node after a sentence
   updateSentenceNodeContent?: (nodeId: string, newContent: string) => boolean; // New callback for updating specific node content by ID
   currentEditSentenceId?: string | null; // ID of the sentence currently being edited
+  onResetPage?: () => void; // New callback for resetting the current page
 }
 
 // Expose methods for parent components to access editor content
@@ -86,7 +88,8 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   onDeleteBranch,
   onInsertNodeAfter,
   updateSentenceNodeContent,
-  currentEditSentenceId
+  currentEditSentenceId,
+  onResetPage
 }, ref) => {
   const [wordCount, setWordCount] = useState(0);
   const [sentenceCount, setSentenceCount] = useState(0);
@@ -115,6 +118,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Track click timeout to prevent click on double-click
   const [editorHistory, setEditorHistory] = useState<string[]>([]); // Track editor history for undo/redo
   const [historyIndex, setHistoryIndex] = useState<number>(-1); // Track current position in history
+  const [showResetModal, setShowResetModal] = useState(false); // Track reset confirmation modal
   
   // Undo system for deletions
   const [undoStack, setUndoStack] = useState<Array<{
@@ -2012,18 +2016,35 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   const handleReset = useCallback(() => {
     if (!editor) return;
     
-    const confirmReset = window.confirm('Are you sure you want to reset the entire narrative? This cannot be undone.');
-    if (confirmReset) {
-      editor.commands.clearContent();
-      setEditorHistory([]);
-      setHistoryIndex(-1);
-      processedSentencesRef.current.clear();
-      lastProcessedCountRef.current = 0;
-      setPreviousText('');
-      setWordCount(0);
-      setSentenceCount(0);
-    }
+    // Show the confirmation modal
+    setShowResetModal(true);
   }, [editor]);
+
+  const handleConfirmReset = useCallback(() => {
+    if (!editor) return;
+    
+    // Clear the editor content
+    editor.commands.clearContent();
+    setEditorHistory([]);
+    setHistoryIndex(-1);
+    processedSentencesRef.current.clear();
+    lastProcessedCountRef.current = 0;
+    setPreviousText('');
+    setWordCount(0);
+    setSentenceCount(0);
+    
+    // Call the parent component to clear the tree structure and timeline
+    if (onResetPage) {
+      onResetPage();
+    }
+    
+    // Close the modal
+    setShowResetModal(false);
+  }, [editor, onResetPage]);
+
+  const handleCancelReset = useCallback(() => {
+    setShowResetModal(false);
+  }, []);
 
   return (
     <div className="narrative-layer">
@@ -2465,6 +2486,18 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           )}
         </div>
       </div>
+
+      {/* Reset confirmation modal */}
+      <ConfirmationModal
+        isOpen={showResetModal}
+        title="Reset Page Content"
+        message="Are you sure you want to reset the entire narrative for this page? This will remove all content, tree structure, and timeline data. This action cannot be undone."
+        confirmText="Reset Page"
+        cancelText="Cancel"
+        variant="danger"
+        onConfirm={handleConfirmReset}
+        onCancel={handleCancelReset}
+      />
     </div>
   );
 });

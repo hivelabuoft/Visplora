@@ -24,6 +24,36 @@ import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Target } from 'lucide-react';
 import { TbTextPlus, TbRoute, TbCrop, TbGitBranch } from 'react-icons/tb';
+import { TimelineTooltip } from './TimelineTooltip';
+import { ReflectionModal } from './ReflectionModal';
+
+// Utility function to get active path before a specific node
+// Can be used independently of the React component
+export const getActivePathBeforeNode = (
+  clickedNodeId: string,
+  activePath: string[],
+  nodes: Array<{ sentence_id: string; sentence_content: string }>
+): string[] => {
+  if (activePath.length === 0) return [];
+  
+  // Find the index of the clicked node in the active path
+  const nodeIndex = activePath.indexOf(clickedNodeId);
+  
+  if (nodeIndex === -1) {
+    // If clicked node is not in active path, return entire active path
+    return activePath
+      .map(nodeId => nodes.find(n => n.sentence_id === nodeId))
+      .filter(node => node !== undefined)
+      .map(node => node!.sentence_content);
+  }
+  
+  // Return all nodes before the clicked node in the active path
+  return activePath
+    .slice(0, nodeIndex)
+    .map(nodeId => nodes.find(n => n.sentence_id === nodeId))
+    .filter(node => node !== undefined)
+    .map(node => node!.sentence_content);
+};
 
 // Drift types configuration
 const DRIFT_TYPES = [
@@ -70,173 +100,14 @@ const getRandomDriftType = (nodeId: string) => {
 };
 
 // Function to create rich tooltip content with all node information
-const createRichTooltipContent = (node: TimelineNode, driftType: any) => {
-  const dimensions = node.changed_from_previous?.dimensions || {};
-  const title = node.hover?.title || 'No title available';
-  const reflectItems = node.hover?.reflect || [];
-  
-  // Safely escape HTML content to prevent XSS
-  const escapeHtml = (unsafe: string) => {
-    return unsafe
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  };
-  
-  // Create HTML for dimensions
-  const dimensionsHtml = Object.keys(dimensions).length > 0 
-    ? Object.entries(dimensions)
-        .map(([key, value]) => `
-          <div style="display: flex; justify-content: space-between; margin-bottom: 4px; gap: 12px;">
-            <span style="font-weight: 500; color: #6b7280; flex-shrink: 0;">${escapeHtml(key)}:</span>
-            <span style="color: #374151; text-align: right; word-break: break-word;">${escapeHtml(value)}</span>
-          </div>
-        `).join('')
-    : '<div style="color: #6b7280; font-style: italic; text-align: center; padding: 8px;">No dimensions data</div>';
-  
-  // Create HTML for reflect items
-  const reflectHtml = reflectItems.length > 0
-    ? reflectItems
-        .map((item, index) => `
-          <div style="
-            background-color: #f9fafb; 
-            padding: 8px 12px; 
-            margin: 6px 0; 
-            border-radius: 6px;
-            border-left: 3px solid #059669;
-            font-size: 13px;
-            line-height: 1.4;
-            position: relative;
-            color: #374151;
-          ">
-            <div style="font-size: 10px; color: #6b7280; margin-bottom: 4px;">#${index + 1}</div>
-            ${escapeHtml(item)}
-          </div>
-        `).join('')
-    : '<div style="color: #6b7280; font-style: italic; text-align: center; padding: 8px;">No reflection data</div>';
-
-  // Get appropriate icon for drift type shape
-  const getShapeIcon = (shape: string) => {
-    switch(shape) {
-      case 'circle': return '●';
-      case 'square': return '■';
-      case 'diamond': return '◆';
-      case 'hexagon': return '⬢';
-      default: return '●';
-    }
-  };
-
-  const truncateContent = (content: string, maxLength: number = 120) => {
-    if (content.length <= maxLength) return content;
-    return content.substring(0, maxLength) + '...';
-  };
-
-  return `
-    <div style="max-width: 420px; font-family: system-ui, -apple-system, sans-serif; padding: 16px;">
-
-      <!-- Content -->
-      <div style="margin-bottom: 16px;">
-        <blockquote style="
-          color: #374151; 
-          font-size: 14px; 
-          line-height: 1.6; 
-          padding: 16px 20px; 
-          margin: 0;
-          background-color: #f9fafb; 
-          border-radius: 8px; 
-          border-left: 4px solid ${driftType.color};
-          font-weight: 500;
-          position: relative;
-          font-style: italic;
-        ">
-          <cite style="
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            font-size: 28px;
-            color: ${driftType.color};
-            opacity: 0.2;
-            font-style: normal;
-          ">"</cite>
-          <span class="completed-sentence">
-            ${escapeHtml(truncateContent(node.sentence_content))}
-          </span>
-        </blockquote>
-      </div>
-
-      <!-- Title Section -->
-      <div style="margin-bottom: 16px;">
-        <div style="
-          color: #d97706; 
-          font-weight: 600; 
-          font-size: 12px; 
-          margin-bottom: 8px; 
-          text-transform: uppercase; 
-          letter-spacing: 0.5px;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        ">
-          <span>Title</span>
-        </div>
-        <div style="
-          color: #374151; 
-          font-size: 13px; 
-          line-height: 1.5; 
-          padding: 10px; 
-          background-color: #f9fafb; 
-          border-radius: 6px;
-        ">
-          ${escapeHtml(title)}
-        </div>
-      </div>
-
-      <!-- Dimensions Section -->
-      <div style="margin-bottom: 16px;">
-        <div style="
-          color: #2563eb; 
-          font-weight: 600; 
-          font-size: 12px; 
-          margin-bottom: 8px; 
-          text-transform: uppercase; 
-          letter-spacing: 0.5px;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        ">
-          <span>Dimensions</span>
-          ${Object.keys(dimensions).length > 0 ? `<span style="background-color: #2563eb; color: #ffffff; padding: 1px 6px; border-radius: 8px; font-size: 10px;">${Object.keys(dimensions).length}</span>` : ''}
-        </div>
-        <div style="background-color: #f9fafb; padding: 10px; border-radius: 6px; font-size: 12px;">
-          ${dimensionsHtml}
-        </div>
-      </div>
-
-      <!-- Reflection Section -->
-      <div>
-        <div style="
-          color: #059669; 
-          font-weight: 600; 
-          font-size: 12px; 
-          margin-bottom: 8px; 
-          text-transform: uppercase; 
-          letter-spacing: 0.5px;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        ">
-          <span>Reflections</span>
-          ${reflectItems.length > 0 ? `<span style="background-color: #059669; color: #ffffff; padding: 1px 6px; border-radius: 8px; font-size: 10px;">${reflectItems.length}</span>` : ''}
-        </div>
-        <div>
-          ${reflectHtml}
-        </div>
-      </div>
-    </div>
-  `;
-};
+// Extend Window interface for reflection panel functions
+declare global {
+  interface Window {
+    showReflectionPanel: () => void;
+    hideReflectionPanel: () => void;
+    toggleReflectionReasoning: (itemId: string) => void;
+  }
+}
 
 // Custom node component for timeline nodes
 interface TimelineNode {
@@ -253,7 +124,15 @@ interface TimelineNode {
   } | null;
   hover: {
     title: string;
-    reflect: string[];
+    reflect: Array<{
+      prompt: string;
+      reason: string;
+      related_sentence: {
+        node_id: number;
+        sentence_content: string;
+      } | null;
+    }>;
+    dataDrivenSummary?: string; // Optional property for the generated summary
   };
 }
 
@@ -266,7 +145,7 @@ interface ReactFlowTimelineProps {
 
 // Custom node component for timeline nodes
 const TimelineNodeComponent = ({ data }: { data: any }) => {
-  const { node, isActive } = data;
+  const { node, isActive, onNodeClick, isSelected } = data;
   
   // Get random drift type for this node (dev mode)
   const driftType = getRandomDriftType(node.sentence_id);
@@ -284,6 +163,7 @@ const TimelineNodeComponent = ({ data }: { data: any }) => {
       cursor: 'pointer',
       position: 'relative' as const,
       border: '2px solid',
+      transition: 'all 0.2s ease-in-out',
     };
 
     // Apply drift type shape
@@ -311,6 +191,20 @@ const TimelineNodeComponent = ({ data }: { data: any }) => {
         shapeStyle = { borderRadius: '50%' };
     }
 
+    // Selected state styling
+    if (isSelected) {
+      return {
+        ...baseStyle,
+        ...shapeStyle,
+        backgroundColor: '#fef3c7', // amber-100
+        borderColor: '#f59e0b', // amber-500 border for selected
+        color: '#92400e', // amber-800 text
+        boxShadow: '0 0 0 3px rgba(245, 158, 11, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15)', // amber glow + shadow
+        transform: 'scale(1.1)', // Slightly larger when selected
+        zIndex: 10, // Bring to front
+      };
+    }
+
     if (isActive) {
       // Active path - use drift type color but with active styling
       return {
@@ -319,6 +213,7 @@ const TimelineNodeComponent = ({ data }: { data: any }) => {
         backgroundColor: driftType.color,
         borderColor: '#0891b2', // cyan-600 border for active
         color: '#0e7490', // cyan-700 text
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Subtle shadow for active
       };
     } else {
       // Inactive path - use drift type color with muted styling
@@ -336,8 +231,9 @@ const TimelineNodeComponent = ({ data }: { data: any }) => {
     <div
       style={getNodeStyle()}
       data-tooltip-id="timeline-tooltip"
-      data-tooltip-html={createRichTooltipContent(node, driftType)}
+      data-tooltip-content="" // We'll use tooltip render prop instead
       className="timeline-node"
+      onClick={(event) => onNodeClick(node, event)}
     >
       {/* React Flow Handles for connections */}
       <Handle
@@ -377,9 +273,86 @@ const nodeTypes = {
 const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageId, activePath = [], isLoading = false }) => {
   const [reactFlowNodes, setReactFlowNodes, onNodesChange] = useNodesState<Node>([]);
   const [reactFlowEdges, setReactFlowEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const [selectedNode, setSelectedNode] = useState<TimelineNode | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalPosition, setModalPosition] = useState<{ x: number; y: number } | null>(null);
+  const [isSummaryLoading, setIsSummaryLoading] = useState(false);
   const { fitView, setCenter } = useReactFlow();
   
   const activePathSet = useMemo(() => new Set(activePath), [activePath]);
+  
+  // Function to get all active path nodes before the clicked node (returns array of sentences)
+  const getPathBeforeNode = useCallback((clickedNodeId: string): string[] => {
+    return getActivePathBeforeNode(clickedNodeId, activePath, nodes);
+  }, [activePath, nodes]);
+  
+  // Handler for node clicks
+  const handleNodeClick = useCallback(async (node: TimelineNode, event?: React.MouseEvent) => {
+    // Get the active path before this node
+    const pathBeforeNode = getPathBeforeNode(node.sentence_id);
+    console.log(`📍 Active path before clicked node "${node.sentence_content.substring(0, 50)}...":`, pathBeforeNode);
+    console.log(`📊 Total sentences before clicked node: ${pathBeforeNode.length}`);
+    
+    // Open modal immediately
+    setSelectedNode(node);
+    setIsModalOpen(true);
+    setIsSummaryLoading(true);
+    
+    // Capture the click position for positioning the panel
+    if (event) {
+      setModalPosition({
+        x: event.clientX,
+        y: event.clientY
+      });
+    } else {
+      setModalPosition(null); // Fallback to center
+    }
+    
+    // Call the generate_data_driven_summary API
+    try {
+      console.log('🚀 Calling generate_data_driven_summary API...');
+      const response = await fetch('/api/generate-data-driven-summary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          activePathSentences: pathBeforeNode,
+          currentNode: node.sentence_content
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('✅ Data-driven summary generated:', result.summary);
+        
+        // Store the summary in the node data for display in modal
+        if (node.hover) {
+          node.hover.dataDrivenSummary = result.summary;
+        } else {
+          node.hover = {
+            title: node.sentence_content,
+            reflect: [],
+            dataDrivenSummary: result.summary
+          };
+        }
+      } else {
+        console.error('❌ Failed to generate data-driven summary:', response.statusText);
+      }
+    } catch (error) {
+      console.error('❌ Error calling generate_data_driven_summary API:', error);
+    } finally {
+      setIsSummaryLoading(false);
+    }
+  }, [getPathBeforeNode]);
+  
+  // Handler to close modal
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedNode(null);
+    setModalPosition(null);
+    setIsSummaryLoading(false);
+  }, []);
   
   // Get the current/most recent active node
   const getCurrentActiveNode = useCallback(() => {
@@ -446,7 +419,9 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
       sentence_id: n.sentence_id,
       parent_id: n.parent_id,
       child_ids: n.child_ids,
-      content: n.sentence_content // Show full content, not truncated
+      content: n.sentence_content, // Show full content, not truncated
+      changed_from_previous: n.changed_from_previous, // Add this for debugging
+      dimensions: n.changed_from_previous?.dimensions // Add this for debugging
     })));
     
     const nodeSpacing = 80; // Horizontal spacing
@@ -566,7 +541,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
         id: node.sentence_id,
         type: 'timelineNode',
         position,
-        data: { node, isActive },
+        data: { node, isActive, onNodeClick: handleNodeClick, isSelected: selectedNode?.sentence_id === node.sentence_id },
         draggable: false,
       };
     });
@@ -604,7 +579,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
 
     
     return { nodes: flowNodes, edges: flowEdges };
-  }, [nodes, activePathSet]);
+  }, [nodes, activePathSet, handleNodeClick]);
   
   // Update React Flow nodes and edges when data changes
   useEffect(() => {
@@ -749,10 +724,34 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
         opacity={1}
         delayShow={200}
         delayHide={100}
-        render={({ content }) => (
-          <div dangerouslySetInnerHTML={{ __html: content || '' }} />
-        )}
+        render={({ activeAnchor }) => {
+          // Find the node data for the hovered element
+          if (!activeAnchor) return null;
+          
+          // Extract node ID from the parent ReactFlow node
+          const reactFlowNode = activeAnchor.closest('[data-id]');
+          if (!reactFlowNode) return null;
+          
+          const nodeId = reactFlowNode.getAttribute('data-id');
+          const node = nodes.find(n => n.sentence_id === nodeId);
+          if (!node) return null;
+          
+          const driftType = getRandomDriftType(node.sentence_id);
+          
+          return <TimelineTooltip node={node} driftType={driftType} />;
+        }}
       />
+      
+      {/* Reflection Modal */}
+      {selectedNode && (
+        <ReflectionModal
+          node={selectedNode}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          position={modalPosition}
+          isSummaryLoading={isSummaryLoading}
+        />
+      )}
     </div>
   );
 };

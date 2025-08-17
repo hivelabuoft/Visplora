@@ -50,6 +50,7 @@ interface PagedNarrativeSystemProps {
   onBranchSwitch?: (branchId: string, pageId: string) => void; // Called when user switches between branches
   onBranchDelete?: (branchId: string, pageId: string) => void; // Called when user deletes a branch
   onSentenceDelete?: (sentenceId: string, pageId: string) => void; // Called when user deletes a sentence
+  onPageReset?: (pageId: string) => void; // Called when user resets a page
   maxPages?: number; // Maximum number of pages allowed
 }
 
@@ -64,6 +65,7 @@ export interface PagedNarrativeSystemRef {
   createNewPage: () => string;
   switchToPage: (pageId: string) => void;
   deletePage: (pageId: string) => boolean;
+  clearPageContent: (pageId?: string) => boolean;
   showSuggestion: (suggestion: NarrativeSuggestion, pageId?: string) => void;
   hasPendingSuggestion: () => boolean;
   updateSentenceContent: (pageId: string, oldContent: string, newContent: string) => boolean;
@@ -89,6 +91,7 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
   onBranchSwitch,
   onBranchDelete,
   onSentenceDelete,
+  onPageReset,
   maxPages = 10
 }, ref) => {
   // Core state
@@ -1707,6 +1710,43 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
     switchToPage,
     deletePage,
     
+    clearPageContent: (pageId?: string) => {
+      const targetPageId = pageId || currentPageId;
+      console.log(`🧹 Clearing content for page: ${targetPageId}`);
+      
+      const page = pages.get(targetPageId);
+      if (!page) {
+        console.log(`⚠️ Page ${targetPageId} not found`);
+        return false;
+      }
+      
+      // Clear all page content by resetting the sentence tree and active path
+      setPages(prev => {
+        const newPages = new Map(prev);
+        const clearedPage: NarrativePage = {
+          ...page,
+          sentenceNodes: new Map(),
+          activePath: [],
+          hasContent: false,
+          lastModified: Date.now()
+        };
+        newPages.set(targetPageId, clearedPage);
+        
+        // Update tree dictionary
+        updateTreeDict(targetPageId, clearedPage);
+        
+        return newPages;
+      });
+      
+      // Clear the narrative editor content if it's the current page
+      if (targetPageId === currentPageId && currentNarrativeRef.current) {
+        currentNarrativeRef.current.updateContent('');
+      }
+      
+      console.log(`✅ Cleared content for page: ${targetPageId}`);
+      return true;
+    },
+    
     showSuggestion: (suggestion: NarrativeSuggestion, pageId?: string) => {
       const targetPageId = pageId || currentPageId;
       if (targetPageId === currentPageId && currentNarrativeRef.current) {
@@ -1882,6 +1922,48 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
     getBranchesForSentence, createBranchFromSentence, pageTreeDict
   ]);
 
+  // Handle page reset (clear content, tree, and timeline)
+  const handleResetPage = useCallback(() => {
+    const targetPageId = currentPageId;
+    console.log(`🧹 Resetting page content for: ${targetPageId}`);
+    
+    const page = pages.get(targetPageId);
+    if (!page) {
+      console.log(`⚠️ Page ${targetPageId} not found`);
+      return;
+    }
+    
+    // Clear all page content by resetting the sentence tree and active path
+    setPages(prev => {
+      const newPages = new Map(prev);
+      const clearedPage: NarrativePage = {
+        ...page,
+        sentenceNodes: new Map(),
+        activePath: [],
+        hasContent: false,
+        lastModified: Date.now()
+      };
+      newPages.set(targetPageId, clearedPage);
+      
+      // Update tree dictionary
+      updateTreeDict(targetPageId, clearedPage);
+      
+      return newPages;
+    });
+    
+    // Clear the narrative editor content
+    if (currentNarrativeRef.current) {
+      currentNarrativeRef.current.updateContent('');
+    }
+    
+    // Notify parent component to clear timeline
+    if (onPageReset) {
+      onPageReset(targetPageId);
+    }
+    
+    console.log(`✅ Reset page content for: ${targetPageId}`);
+  }, [currentPageId, pages, updateTreeDict, onPageReset]);
+
   // Don't render until we have at least one page
   if (pages.size === 0 || !currentPageId) {
     return (
@@ -1920,6 +2002,7 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
           onInsertNodeAfter={onInsertNodeAfter}
           updateSentenceNodeContent={updateSentenceNodeContent}
           currentEditSentenceId={currentEditSentenceId}
+          onResetPage={handleResetPage}
         />
       </div>
 

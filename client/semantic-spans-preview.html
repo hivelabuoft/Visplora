@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Span Styles Preview</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            padding: 40px;
+            background-color: #fafafa;
+            line-height: 1.6;
+        }
+        
+        .preview-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+        }
+        
+        h1 {
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .example {
+            background-color: #fefefe;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        
+        /* Semantic span styles for data-driven summary */
+        span[data-type="geo"] {
+            background-color: #dbeafe;
+            color: #1e40af;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+            border: 1px solid #bfdbfe;
+        }
+
+        span[data-type="metric"] {
+            background-color: #ecfdf5;
+            color: #059669;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+            border: 1px solid #a7f3d0;
+        }
+
+        span[data-type="value"] {
+            background-color: #fef3c7;
+            color: #d97706;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            border: 1px solid #fcd34d;
+        }
+
+        span[data-type="time"] {
+            background-color: #f3e8ff;
+            color: #7c3aed;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+            border: 1px solid #c4b5fd;
+        }
+
+        span[data-type="group"] {
+            background-color: #fef2f2;
+            color: #dc2626;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+            border: 1px solid #fca5a5;
+        }
+        
+        .legend {
+            background-color: #f8fafc;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        
+        .legend h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #4b5563;
+        }
+        
+        .legend-item {
+            display: inline-block;
+            margin-right: 15px;
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <h1>📊 Data-Driven Summary Styling Preview</h1>
+        
+        <div class="example">
+            Analysis reveals that <span data-type="geo">Camden</span> exhibits elevated <span data-type="metric">crime rates</span> of <span data-type="value">15.2%</span> compared to other <span data-type="geo">London boroughs</span>. The correlation between <span data-type="metric">school density</span> and <span data-type="group">youth demographics</span> suggests potential contributing factors to observed patterns in <span data-type="time">2023</span>.
+        </div>
+        
+        <div class="example">
+            <span data-type="geo">Westminster</span> shows <span data-type="value">£47,500</span> median <span data-type="metric">household income</span>, significantly higher than <span data-type="geo">Tower Hamlets</span> at <span data-type="value">£32,100</span>. <span data-type="group">Private school</span> concentration correlates with <span data-type="metric">property values</span> across these areas during <span data-type="time">2022-2023</span>.
+        </div>
+        
+        <div class="legend">
+            <h3>🎨 Semantic Tag Legend:</h3>
+            <div class="legend-item">
+                <span data-type="geo">Geographic</span> - Places, boroughs, locations
+            </div>
+            <div class="legend-item">
+                <span data-type="metric">Metrics</span> - Measures, rates, densities
+            </div>
+            <div class="legend-item">
+                <span data-type="value">Values</span> - Numbers, percentages, amounts
+            </div>
+            <div class="legend-item">
+                <span data-type="time">Time</span> - Dates, years, periods
+            </div>
+            <div class="legend-item">
+                <span data-type="group">Groups</span> - Demographics, categories
+            </div>
+        </div>
+    </div>
+</body>
+</html>

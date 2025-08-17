@@ -96,7 +96,14 @@ interface TimelineVisualizationProps {
     hover: {
       title: string;
       source: any;
-      reflect: string[];
+      reflect: Array<{
+        prompt: string;
+        reason: string;
+        related_sentence: {
+          node_id: number;
+          sentence_content: string;
+        } | null;
+      }>;
     };
   }[];
   pageId: string;
