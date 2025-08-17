@@ -69,6 +69,7 @@ export interface PagedNarrativeSystemRef {
   showSuggestion: (suggestion: NarrativeSuggestion, pageId?: string) => void;
   hasPendingSuggestion: () => boolean;
   updateSentenceContent: (pageId: string, oldContent: string, newContent: string) => boolean;
+  switchActivePath: (pageId: string, targetNodeId: string, newActivePath: string[]) => boolean;
   // Debug helpers
   debugCreateTestBranches?: () => void;
   debugGetCurrentTreeState?: () => any;
@@ -1914,6 +1915,79 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       });
       
       console.log(`✅ PagedNarrativeSystem: updateSentenceContent completed successfully`);
+      return true;
+    },
+    
+    // Switch active path to a specific node
+    switchActivePath: (pageId: string, targetNodeId: string, newActivePath: string[]) => {
+      console.log(`🔄 Switching active path on page ${pageId} to node ${targetNodeId}`);
+      console.log(`🛤️ New active path:`, newActivePath);
+      
+      const page = pages.get(pageId);
+      if (!page) {
+        console.log(`⚠️ Page ${pageId} not found`);
+        return false;
+      }
+      
+      // Update the page's active path
+      setPages(prev => {
+        const newPages = new Map(prev);
+        const updatedPage: NarrativePage = {
+          ...page,
+          activePath: newActivePath,
+          lastModified: Date.now()
+        };
+        newPages.set(pageId, updatedPage);
+        
+        // Update tree dictionary
+        updateTreeDict(pageId, updatedPage);
+        
+        return newPages;
+      });
+      
+      // Update activeChild relationships to reflect the new path
+      updatePageSentenceTree(pageId, (sentenceNodes) => {
+        const newMap = new Map(sentenceNodes);
+        
+        // Update activeChild for each parent in the new path
+        for (let i = 0; i < newActivePath.length - 1; i++) {
+          const currentNodeId = newActivePath[i];
+          const nextNodeId = newActivePath[i + 1];
+          const currentNode = newMap.get(currentNodeId);
+          
+          if (currentNode && currentNode.children.includes(nextNodeId)) {
+            const updatedNode = {
+              ...currentNode,
+              activeChild: nextNodeId
+            };
+            newMap.set(currentNodeId, updatedNode);
+            console.log(`🎯 Set activeChild for "${currentNode.content.substring(0, 30)}..." to next node in path`);
+          }
+        }
+        
+        return newMap;
+      });
+      
+      // Update the narrative editor content if it's the current page
+      if (pageId === currentPageId && currentNarrativeRef.current) {
+        const narrativeText = newActivePath
+          .map(nodeId => {
+            const node = page.sentenceNodes.get(nodeId);
+            let content = node ? node.content.trim() : '';
+            // Ensure each sentence ends with proper punctuation
+            if (content && !/[.!?]$/.test(content)) {
+              content += '.';
+            }
+            return content;
+          })
+          .filter(content => content.length > 0)
+          .join(' ');
+        
+        console.log(`📝 Updating narrative editor with new path content: "${narrativeText}"`);
+        currentNarrativeRef.current.updateContent(narrativeText);
+      }
+      
+      console.log(`✅ Active path switched successfully`);
       return true;
     }
   }), [

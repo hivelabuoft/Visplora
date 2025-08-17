@@ -3214,12 +3214,35 @@ export default function NarrativePage() {
                 const currentActivePath = currentPageTree?.activePath || []; // Get the current active path from the narrative system
                 const isTimelineLoading = timelineLoadingByPage[currentPageId] || false;
                 
+                // Handle path switching from timeline clicks
+                const handlePathSwitch = (nodeId: string, newActivePath: string[]) => {
+                  console.log(`🔄 Timeline path switch requested for node ${nodeId} on page ${currentPageId}`);
+                  console.log(`🛤️ New path:`, newActivePath);
+                  
+                  if (narrativeSystemRef.current) {
+                    const success = narrativeSystemRef.current.switchActivePath(currentPageId, nodeId, newActivePath);
+                    if (success) {
+                      console.log(`✅ Successfully switched active path`);
+                      
+                      // Call branch switch callback to handle timeline updates
+                      if (handleBranchSwitch) {
+                        handleBranchSwitch(nodeId, currentPageId);
+                      }
+                    } else {
+                      console.error(`❌ Failed to switch active path`);
+                    }
+                  } else {
+                    console.error(`❌ narrativeSystemRef.current is null`);
+                  }
+                };
+                
                 return currentTimeline.length > 0 || isTimelineLoading ? (
                   <TimelineVisualization 
                     nodes={currentTimeline}
                     pageId={currentPageId}
                     activePath={currentActivePath}
                     isLoading={isTimelineLoading}
+                    onPathSwitch={handlePathSwitch}
                   />
                 ) : (
                   <EmptyTimeline />

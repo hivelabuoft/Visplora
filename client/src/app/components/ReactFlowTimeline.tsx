@@ -23,7 +23,7 @@ import '../../styles/timeline.css';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Target } from 'lucide-react';
-import { TbTextPlus, TbRoute, TbCrop, TbGitBranch } from 'react-icons/tb';
+import { TbTextPlus, TbRoute, TbCrop, TbGitBranch, TbGitFork } from 'react-icons/tb';
 import { TimelineTooltip } from './TimelineTooltip';
 import { ReflectionModal } from './ReflectionModal';
 
@@ -141,6 +141,7 @@ interface ReactFlowTimelineProps {
   pageId: string;
   activePath?: string[];
   isLoading?: boolean; // Add loading state
+  onPathSwitch?: (nodeId: string, newActivePath: string[]) => void; // Add callback for path switching
 }
 
 // Custom node component for timeline nodes
@@ -270,7 +271,7 @@ const nodeTypes = {
   timelineNode: TimelineNodeComponent,
 };
 
-const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageId, activePath = [], isLoading = false }) => {
+const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageId, activePath = [], isLoading = false, onPathSwitch }) => {
   const [reactFlowNodes, setReactFlowNodes, onNodesChange] = useNodesState<Node>([]);
   const [reactFlowEdges, setReactFlowEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [selectedNode, setSelectedNode] = useState<TimelineNode | null>(null);
@@ -281,13 +282,57 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
   
   const activePathSet = useMemo(() => new Set(activePath), [activePath]);
   
-  // Function to get all active path nodes before the clicked node (returns array of sentences)
+  // Function to get active path before a specific node
   const getPathBeforeNode = useCallback((clickedNodeId: string): string[] => {
     return getActivePathBeforeNode(clickedNodeId, activePath, nodes);
   }, [activePath, nodes]);
   
+  // Function to calculate path to a specific node (for branch switching)
+  const getPathToNode = useCallback((targetNodeId: string): string[] => {
+    const path: string[] = [];
+    const nodeMap = new Map(nodes.map(node => [node.sentence_id, node]));
+    
+    // Build path from target node back to root
+    let currentNodeId: string | null = targetNodeId;
+    while (currentNodeId) {
+      path.unshift(currentNodeId);
+      const currentNode = nodeMap.get(currentNodeId);
+      currentNodeId = currentNode?.parent_id || null;
+      
+      // Safety check to prevent infinite loops
+      if (path.length > 100) {
+        console.error('❌ Path calculation exceeded maximum depth, breaking to prevent infinite loop');
+        break;
+      }
+    }
+    
+    return path;
+  }, [nodes]);
+  
   // Handler for node clicks
   const handleNodeClick = useCallback(async (node: TimelineNode, event?: React.MouseEvent) => {
+    // Check if the node is in the active path
+    if (!activePathSet.has(node.sentence_id)) {
+      // Node is NOT in active path - switch to this branch
+      console.log(`� Switching to branch: "${node.sentence_content.substring(0, 50)}..."`);
+      
+      if (onPathSwitch) {
+        // Calculate the new active path to this node
+        const newActivePath = getPathToNode(node.sentence_id);
+        console.log(`🛤️ New active path:`, newActivePath.map(id => {
+          const n = nodes.find(n => n.sentence_id === id);
+          return `${id}: "${n?.sentence_content.substring(0, 30)}..."`;
+        }));
+        
+        // Call the path switch callback
+        onPathSwitch(node.sentence_id, newActivePath);
+      } else {
+        console.log(`🚫 No onPathSwitch callback provided, ignoring branch switch`);
+      }
+      return; // Exit early for branch switching
+    }
+    
+    // Node IS in active path - show the reflection modal as before
     // Get the active path before this node
     const pathBeforeNode = getPathBeforeNode(node.sentence_id);
     console.log(`📍 Active path before clicked node "${node.sentence_content.substring(0, 50)}...":`, pathBeforeNode);
@@ -344,7 +389,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     } finally {
       setIsSummaryLoading(false);
     }
-  }, [getPathBeforeNode]);
+  }, [getPathBeforeNode, activePathSet, onPathSwitch, getPathToNode, nodes]);
   
   // Handler to close modal
   const handleCloseModal = useCallback(() => {
@@ -736,8 +781,38 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
           const node = nodes.find(n => n.sentence_id === nodeId);
           if (!node) return null;
           
-          const driftType = getRandomDriftType(node.sentence_id);
+          // Check if this node is in the active path
+          const isNodeActive = activePathSet.has(node.sentence_id);
           
+          // If node is not active, show branch switch tooltip
+          if (!isNodeActive) {
+            return (
+              <div style={{
+                padding: '8px 12px',
+                fontSize: '12px',
+                fontWeight: '500',
+                color: '#374151',
+                backgroundColor: '#f3f4f6',
+                borderRadius: '6px',
+                border: '1px solid #d1d5db',
+                maxWidth: '200px',
+                textAlign: 'center'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', marginBottom: '4px' }}>
+                  <TbGitFork size={14} style={{ color: '#059669' }} />
+                  <strong>Click to switch branch</strong>
+                </div>
+                <span style={{ fontSize: '11px', opacity: 0.8 }}>
+                  "{node.sentence_content.length > 50 
+                    ? node.sentence_content.substring(0, 50) + '...' 
+                    : node.sentence_content}"
+                </span>
+              </div>
+            );
+          }
+          
+          // For active nodes, show the regular detailed tooltip
+          const driftType = getRandomDriftType(node.sentence_id);
           return <TimelineTooltip node={node} driftType={driftType} />;
         }}
       />
