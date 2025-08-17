@@ -7,6 +7,7 @@ import PagedNarrativeSystem, { PagedNarrativeSystemRef } from '../components/Pag
 import FileSummaryCanvas from '../components/FileSummaryCanvas';
 import { EmptyCanvas, EmptyTimeline, AnalyzingState, TimelineVisualization } from '../components/EmptyStates';
 import ReactFlowCanvas, { ReactFlowCanvasRef } from '../components/ReactFlowCanvas';
+import InquiryBoard, { InquiryBoardRef } from '../components/InquiryBoard';
 import LondonDashboard from '../london/page'; //this should be a different input after you have the right component for dashboard
 import { generateMultipleFileSummaries, FileSummary } from '../../utils/londonDataLoader';
 import { interactionLogger } from '../../lib/interactionLogger';
@@ -40,6 +41,7 @@ export default function NarrativePage() {
   const router = useRouter();
   const narrativeSystemRef = useRef<PagedNarrativeSystemRef>(null);
   const reactFlowCanvasRef = useRef<ReactFlowCanvasRef>(null);
+  const inquiryBoardRef = useRef<InquiryBoardRef>(null);
   
   // Add client-side only state to prevent hydration mismatches
   const [isClient, setIsClient] = useState(false);
@@ -49,6 +51,7 @@ export default function NarrativePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
+  const [showInquiryBoard, setShowInquiryBoard] = useState(false);
   const [showNarrativeLayer, setShowNarrativeLayer] = useState(false);
   const [currentPrompt, setCurrentPrompt] = useState('');
   const [shouldShowLondonDashboard, setShouldShowLondonDashboard] = useState(false);
@@ -2641,6 +2644,20 @@ export default function NarrativePage() {
     console.log('✅ Timeline cleared for reset page:', pageId);
   };
 
+  // Handle switching to inquiry board
+  const handleShowInquiryBoard = () => {
+    console.log('🔍 Switching to inquiry board view');
+    setShowInquiryBoard(true);
+    setShowDashboard(false);
+  };
+
+  // Handle returning from inquiry board to main views
+  const handleBackToViews = () => {
+    console.log('← Returning to main views from inquiry board');
+    setShowInquiryBoard(false);
+    setShowDashboard(true);
+  };
+
   // Helper function to build combined timeline from tree structure + LLM insights
   const buildCombinedTimeline = (treeStructure: any, llmTimelineGroups: TimelineGroup[]): TimelineGroup[] => {
     // Handle null/empty tree structure
@@ -3023,9 +3040,12 @@ export default function NarrativePage() {
                     onClick={async () => {
                       // Check conditions for disabling the capture button
                       const hasInteractions = interactionCount > 0;
-                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes || !hasNarrativeContent;
                       
-                      // Prevent clicks if capturing, has pending suggestion, or no interactions made yet
+                      // Prevent clicks if capturing, has pending suggestion, or no interactions made yet, or no narrative content
                       if (isDisabled) return;
                       
                       setIsCapturingInsights(true);
@@ -3040,8 +3060,7 @@ export default function NarrativePage() {
                         console.log('🧹 Local dashboard interactions cleared');
                         
                         // Get narrative content from the current page
-                        const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
-                        const narrativeContext = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                        const narrativeContext = narrativeContent;
                         const currentSentence = ''; // We'll need to implement getCurrentSentence for paged system
                         
                         // console.log('📝 Captured narrative context:', narrativeContext);
@@ -3075,18 +3094,27 @@ export default function NarrativePage() {
                     }}
                     disabled={(() => {
                       const hasInteractions = interactionCount > 0;
-                      return isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      return isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes || !hasNarrativeContent;
                     })()}
                     className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border ${
                       (() => {
                         const hasInteractions = interactionCount > 0;
-                        const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
+                        const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                        const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                        const hasNarrativeContent = narrativeContent.trim().length > 0;
+                        const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes || !hasNarrativeContent;
                         return isDisabled ? 'opacity-60 cursor-not-allowed' : '';
                       })()
                     }`}
                     style={(() => {
                       const hasInteractions = interactionCount > 0;
-                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes || !hasNarrativeContent;
                       return {
                         backgroundColor: isDisabled ? '#e5e7eb' : '#c5cea180', 
                         color: isDisabled ? '#6b7280' : '#5a6635',
@@ -3095,14 +3123,20 @@ export default function NarrativePage() {
                     })()}
                     onMouseEnter={(e) => {
                       const hasInteractions = interactionCount > 0;
-                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes || !hasNarrativeContent;
                       if (!isDisabled) {
                         e.currentTarget.style.backgroundColor = '#c5cea1b3';
                       }
                     }}
                     onMouseLeave={(e) => {
                       const hasInteractions = interactionCount > 0;
-                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes;
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes || !hasNarrativeContent;
                       if (!isDisabled) {
                         e.currentTarget.style.backgroundColor = '#c5cea180';
                       }
@@ -3124,7 +3158,13 @@ export default function NarrativePage() {
                   <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-gray-800 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-60">
                     {(() => {
                       const hasInteractions = interactionCount > 0;
-                      if (!hasInteractions) {
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      
+                      if (!hasNarrativeContent) {
+                        return 'Write some narrative content first';
+                      } else if (!hasInteractions) {
                         return 'Interact with the dashboard first to capture insights';
                       } else if (hasActiveInfoNodes) {
                         return 'Close info nodes before capturing insights';
@@ -3141,32 +3181,88 @@ export default function NarrativePage() {
                 </div>
                 <div className="relative group">
                   <button
-                    onClick={() => console.log('Inquiries button clicked')}
-                    className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border"
-                    style={{ 
-                      backgroundColor: '#f5bc7880', 
-                      color: '#8b5a2b',
-                      borderColor: '#f5bc78'
+                    onClick={() => {
+                      // Check if narrative is empty
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      
+                      if (!hasNarrativeContent) return;
+                      
+                      handleShowInquiryBoard();
                     }}
+                    disabled={(() => {
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      return !hasNarrativeContent;
+                    })()}
+                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border ${
+                      (() => {
+                        const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                        const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                        const hasNarrativeContent = narrativeContent.trim().length > 0;
+                        const isDisabled = !hasNarrativeContent;
+                        return isDisabled ? 'opacity-60 cursor-not-allowed' : '';
+                      })()
+                    }`}
+                    style={(() => {
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = !hasNarrativeContent;
+                      return {
+                        backgroundColor: isDisabled ? '#e5e7eb' : '#f5bc7880', 
+                        color: isDisabled ? '#6b7280' : '#8b5a2b',
+                        borderColor: isDisabled ? '#d1d5db' : '#f5bc78'
+                      };
+                    })()} 
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#f5bc78b3';
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = !hasNarrativeContent;
+                      if (!isDisabled) {
+                        e.currentTarget.style.backgroundColor = '#f5bc78b3';
+                      }
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = '#f5bc7880';
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = !hasNarrativeContent;
+                      if (!isDisabled) {
+                        e.currentTarget.style.backgroundColor = '#f5bc7880';
+                      }
                     }}
                   >
                     Inquiries
                   </button>
                   {/* Custom tooltip */}
                   <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-gray-800 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-60">
-                    View questions about this view
+                    {(() => {
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      
+                      if (!hasNarrativeContent) {
+                        return 'Write some narrative content first';
+                      } else {
+                        return 'View questions about this view';
+                      }
+                    })()}
                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-800"></div>
                   </div>
                 </div>
               </div>
             )}
             
-            {showDashboard && shouldShowLondonDashboard ? (
+            {showInquiryBoard ? (
+              <InquiryBoard
+                ref={inquiryBoardRef}
+                onGoBack={handleBackToViews}
+              />
+            ) : showDashboard && shouldShowLondonDashboard ? (
               <ReactFlowCanvas 
                 ref={reactFlowCanvasRef}
                 key="london-flow-canvas"

@@ -1,5 +1,4 @@
-// Development flag - set to true to skip LLM calls and return placeholder data
-const DEV_MODE = false;
+import { isDemoMode, logDemoModeStatus } from '../utils/demoMode';
 
 export interface TimelineGroup {
   node_id: number;
@@ -84,7 +83,8 @@ export async function generateInsightTimeline(
 ): Promise<InsightTimelineResponse> {
   
   // Development mode: return placeholder timeline without calling LLM
-  if (DEV_MODE) {
+  if (isDemoMode()) {
+    logDemoModeStatus('InsightTimeline');
     console.log('🔧 DEV MODE: Generating placeholder timeline for page:', pageId);
     
     if (!treeStructure || treeStructure.nodes.length === 0) {
