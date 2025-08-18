@@ -2,99 +2,102 @@
   {
     "qid": "iss_croydon_peak_2021",
     "title": "Did Croydon’s licensed vehicles peak in 2021 versus 2020?",
-    "type": "issue",
     "status": "resolved",
-    "answer": "Yes—Croydon’s total licensed vehicles in 2021 exceed 2020.",
     "sentenceRefs": ["s1"],
-    "links": []
-  },
-  {
-    "qid": "pos_croydon_peak_yes",
-    "title": "Croydon’s licensed vehicles peaked in 2021 vs 2020.",
-    "type": "position",
-    "status": "resolved",
-    "answer": "Peak confirmed for 2021 relative to 2020.",
-    "sentenceRefs": ["s1", "s2"],
+    "position_suggested_by": {
+      "text": "Croydon’s licensed vehicles peaked in 2021 vs 2020."
+    },
+    "argument_suggested_by": {
+      "text": "Borough totals show 2021 > 2020 for Croydon."
+    },
     "links": [
-      { "qid": "iss_croydon_peak_2021", "type": "responds_to", "explanation": "Statement answers the peak question.", "color": "gray" },
-      { "qid": "arg_croydon_totals_2020_2021", "type": "depends_on", "explanation": "Requires totals to establish peak.", "color": "blue" }
+      {
+        "qid": "iss_vehicle_scope",
+        "type": "suggested_by",
+        "explanation": "Clarifying scope of 'vehicles' led to this refined question.",
+        "color": "orange"
+      }
     ]
   },
   {
-    "qid": "arg_croydon_totals_2020_2021",
-    "title": "Borough totals show 2021 > 2020 for Croydon.",
-    "type": "argument",
-    "status": "resolved",
-    "answer": "Totals confirm 2021 higher than 2020.",
-    "sentenceRefs": ["s2"],
+    "qid": "iss_vehicle_scope",
+    "title": "Does the Croydon peak refer to all vehicle types or a subset?",
+    "status": "stalled",
+    "sentenceRefs": ["s1"],
     "links": [
-      { "qid": "pos_croydon_peak_yes", "type": "supports", "explanation": "Data backs the peak claim.", "color": "green" }
-    ]
-  },
-  {
-    "qid": "iss_citywide_suvs_up_vans_flat_2022",
-    "title": "Across London, did SUVs rise in 2022 while vans were flat?",
-    "type": "issue",
-    "status": "open",
-    "sentenceRefs": ["s3"],
-    "links": []
-  },
-  {
-    "qid": "pos_citywide_pattern_yes",
-    "title": "SUVs increased while vans were roughly flat in 2022 (citywide).",
-    "type": "position",
-    "status": "open",
-    "sentenceRefs": ["s3", "s4"],
-    "links": [
-      { "qid": "iss_citywide_suvs_up_vans_flat_2022", "type": "responds_to", "explanation": "Proposed answer to citywide question.", "color": "gray" }
-    ]
-  },
-  {
-    "qid": "arg_london_suv_counts_2021_2022",
-    "title": "Exact London SUV counts for 2021 and 2022.",
-    "type": "argument",
-    "status": "open",
-    "sentenceRefs": ["s4"],
-    "links": [
-      { "qid": "pos_citywide_pattern_yes", "type": "supports", "explanation": "Counts would verify an increase.", "color": "green" }
+      {
+        "qid": "iss_croydon_peak_2021",
+        "type": "specialized_from",
+        "explanation": "This focuses the broader question on vehicle categories.",
+        "color": "blue"
+      }
     ]
   },
   {
     "qid": "iss_camden_divergence_2021",
     "title": "In 2021, did Camden sale prices fall while private rents rose?",
-    "type": "issue",
     "status": "resolved",
-    "answer": "Yes—prices fell while private rents rose in 2021.",
     "sentenceRefs": ["s5"],
-    "links": []
-  },
-  {
-    "qid": "pos_camden_divergence_yes",
-    "title": "Camden shows prices down and rents up in 2021.",
-    "type": "position",
-    "status": "resolved",
-    "answer": "Divergence confirmed in 2021.",
-    "sentenceRefs": ["s5", "s6"],
+    "position_suggested_by": {
+      "text": "Camden shows prices down and rents up in 2021."
+    },
+    "argument_suggested_by": {
+      "text": "Price and rent data from Land Registry and VOA support this."
+    },
     "links": [
-      { "qid": "iss_camden_divergence_2021", "type": "responds_to", "explanation": "Claim answers the Camden divergence issue.", "color": "gray" }
+      {
+        "qid": "iss_composition_effect",
+        "type": "suggested_by",
+        "explanation": "Divergence led to inquiry about composition bias.",
+        "color": "orange"
+      }
     ]
   },
   {
-    "qid": "arg_composition_effect_camden",
-    "title": "Composition (e.g., bedroom mix) could explain the price–rent divergence.",
-    "type": "argument",
+    "qid": "iss_composition_effect",
+    "title": "Could Camden's price–rent divergence be due to composition (e.g., bedroom mix)?",
     "status": "open",
     "sentenceRefs": ["s6"],
     "links": [
-      { "qid": "pos_camden_divergence_yes", "type": "challenges", "explanation": "Offers alternative explanation for divergence.", "color": "red" }
+      {
+        "qid": "iss_camden_divergence_2021",
+        "type": "specialized_from",
+        "explanation": "This breaks down the original divergence question.",
+        "color": "blue"
+      }
     ]
   },
   {
     "qid": "iss_leisure_shift",
     "title": "Do library usage (down) and gym expansion (up) indicate a leisure shift?",
-    "type": "issue",
     "status": "open",
     "sentenceRefs": ["s7"],
+    "position_suggested_by": {
+      "text": "There is a leisure shift: libraries down while gyms up."
+    },
+    "argument_suggested_by": {
+      "text": "Hackney gyms grew ~10% in 2024; libraries declined in prior year."
+    },
+    "links": [
+      {
+        "qid": "iss_define_last_year",
+        "type": "replaces",
+        "explanation": "'Last year' must be clarified before comparing.",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "qid": "iss_define_last_year",
+    "title": "What specific year does 'last year' refer to in the library vs gym comparison?",
+    "status": "open",
+    "sentenceRefs": ["s7"],
+    "position_suggested_by": {
+      "text": "The temporal reference 'last year' needs clarification for accurate comparison."
+    },
+    "argument_suggested_by": {
+      "text": "Without clear temporal boundaries, trend comparisons are unreliable."
+    },
     "links": []
   }
 ]
