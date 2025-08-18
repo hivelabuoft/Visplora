@@ -1108,7 +1108,7 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
   return (
     <div className="w-full h-full relative">
       {/* Test Buttons */}
-      <div style={{
+      {/* <div style={{
         position: 'absolute',
         top: '10px',
         left: '10px',
@@ -1187,7 +1187,7 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
         >
           📈 Chart
         </button>
-      </div>
+      </div> */}
 
       <ReactFlow
         nodes={nodes}

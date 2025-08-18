@@ -23,7 +23,37 @@ import '../../styles/timeline.css';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Target } from 'lucide-react';
-import { TbTextPlus, TbRoute, TbCrop, TbGitBranch } from 'react-icons/tb';
+import { TbTextPlus, TbRoute, TbCrop, TbGitBranch, TbGitFork } from 'react-icons/tb';
+import { TimelineTooltip } from './TimelineTooltip';
+import { ReflectionModal } from './ReflectionModal';
+
+// Utility function to get active path before a specific node
+// Can be used independently of the React component
+export const getActivePathBeforeNode = (
+  clickedNodeId: string,
+  activePath: string[],
+  nodes: Array<{ sentence_id: string; sentence_content: string }>
+): string[] => {
+  if (activePath.length === 0) return [];
+  
+  // Find the index of the clicked node in the active path
+  const nodeIndex = activePath.indexOf(clickedNodeId);
+  
+  if (nodeIndex === -1) {
+    // If clicked node is not in active path, return entire active path
+    return activePath
+      .map(nodeId => nodes.find(n => n.sentence_id === nodeId))
+      .filter(node => node !== undefined)
+      .map(node => node!.sentence_content);
+  }
+  
+  // Return all nodes before the clicked node in the active path
+  return activePath
+    .slice(0, nodeIndex)
+    .map(nodeId => nodes.find(n => n.sentence_id === nodeId))
+    .filter(node => node !== undefined)
+    .map(node => node!.sentence_content);
+};
 
 // Drift types configuration
 const DRIFT_TYPES = [
@@ -69,7 +99,17 @@ const getRandomDriftType = (nodeId: string) => {
   return DRIFT_TYPES[index];
 };
 
-// Interface for timeline nodes - keeping old structure with activeChild added
+// Function to create rich tooltip content with all node information
+// Extend Window interface for reflection panel functions
+declare global {
+  interface Window {
+    showReflectionPanel: () => void;
+    hideReflectionPanel: () => void;
+    toggleReflectionReasoning: (itemId: string) => void;
+  }
+}
+
+// Custom node component for timeline nodes
 interface TimelineNode {
   node_id: number;
   sentence_id: string;
@@ -84,8 +124,15 @@ interface TimelineNode {
   } | null;
   hover: {
     title: string;
-    source: any;
-    reflect: string[];
+    reflect: Array<{
+      prompt: string;
+      reason: string;
+      related_sentence: {
+        node_id: number;
+        sentence_content: string;
+      } | null;
+    }>;
+    dataDrivenSummary?: string; // Optional property for the generated summary
   };
 }
 
@@ -93,11 +140,13 @@ interface ReactFlowTimelineProps {
   nodes: TimelineNode[];
   pageId: string;
   activePath?: string[];
+  isLoading?: boolean; // Add loading state
+  onPathSwitch?: (nodeId: string, newActivePath: string[]) => void; // Add callback for path switching
 }
 
 // Custom node component for timeline nodes
 const TimelineNodeComponent = ({ data }: { data: any }) => {
-  const { node, isActive } = data;
+  const { node, isActive, onNodeClick, isSelected } = data;
   
   // Get random drift type for this node (dev mode)
   const driftType = getRandomDriftType(node.sentence_id);
@@ -115,6 +164,7 @@ const TimelineNodeComponent = ({ data }: { data: any }) => {
       cursor: 'pointer',
       position: 'relative' as const,
       border: '2px solid',
+      transition: 'all 0.2s ease-in-out',
     };
 
     // Apply drift type shape
@@ -142,6 +192,20 @@ const TimelineNodeComponent = ({ data }: { data: any }) => {
         shapeStyle = { borderRadius: '50%' };
     }
 
+    // Selected state styling
+    if (isSelected) {
+      return {
+        ...baseStyle,
+        ...shapeStyle,
+        backgroundColor: '#fef3c7', // amber-100
+        borderColor: '#f59e0b', // amber-500 border for selected
+        color: '#92400e', // amber-800 text
+        boxShadow: '0 0 0 3px rgba(245, 158, 11, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15)', // amber glow + shadow
+        transform: 'scale(1.1)', // Slightly larger when selected
+        zIndex: 10, // Bring to front
+      };
+    }
+
     if (isActive) {
       // Active path - use drift type color but with active styling
       return {
@@ -150,6 +214,7 @@ const TimelineNodeComponent = ({ data }: { data: any }) => {
         backgroundColor: driftType.color,
         borderColor: '#0891b2', // cyan-600 border for active
         color: '#0e7490', // cyan-700 text
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Subtle shadow for active
       };
     } else {
       // Inactive path - use drift type color with muted styling
@@ -167,8 +232,9 @@ const TimelineNodeComponent = ({ data }: { data: any }) => {
     <div
       style={getNodeStyle()}
       data-tooltip-id="timeline-tooltip"
-      data-tooltip-content={`${node.sentence_content} - Node ${node.node_id} (${driftType.label})`}
+      data-tooltip-content="" // We'll use tooltip render prop instead
       className="timeline-node"
+      onClick={(event) => onNodeClick(node, event)}
     >
       {/* React Flow Handles for connections */}
       <Handle
@@ -205,12 +271,133 @@ const nodeTypes = {
   timelineNode: TimelineNodeComponent,
 };
 
-const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageId, activePath = [] }) => {
+const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageId, activePath = [], isLoading = false, onPathSwitch }) => {
   const [reactFlowNodes, setReactFlowNodes, onNodesChange] = useNodesState<Node>([]);
   const [reactFlowEdges, setReactFlowEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const [selectedNode, setSelectedNode] = useState<TimelineNode | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalPosition, setModalPosition] = useState<{ x: number; y: number } | null>(null);
+  const [isSummaryLoading, setIsSummaryLoading] = useState(false);
   const { fitView, setCenter } = useReactFlow();
   
   const activePathSet = useMemo(() => new Set(activePath), [activePath]);
+  
+  // Function to get active path before a specific node
+  const getPathBeforeNode = useCallback((clickedNodeId: string): string[] => {
+    return getActivePathBeforeNode(clickedNodeId, activePath, nodes);
+  }, [activePath, nodes]);
+  
+  // Function to calculate path to a specific node (for branch switching)
+  const getPathToNode = useCallback((targetNodeId: string): string[] => {
+    const path: string[] = [];
+    const nodeMap = new Map(nodes.map(node => [node.sentence_id, node]));
+    
+    // Build path from target node back to root
+    let currentNodeId: string | null = targetNodeId;
+    while (currentNodeId) {
+      path.unshift(currentNodeId);
+      const currentNode = nodeMap.get(currentNodeId);
+      currentNodeId = currentNode?.parent_id || null;
+      
+      // Safety check to prevent infinite loops
+      if (path.length > 100) {
+        console.error('❌ Path calculation exceeded maximum depth, breaking to prevent infinite loop');
+        break;
+      }
+    }
+    
+    return path;
+  }, [nodes]);
+  
+  // Handler for node clicks
+  const handleNodeClick = useCallback(async (node: TimelineNode, event?: React.MouseEvent) => {
+    // Check if the node is in the active path
+    if (!activePathSet.has(node.sentence_id)) {
+      // Node is NOT in active path - switch to this branch
+      console.log(`� Switching to branch: "${node.sentence_content.substring(0, 50)}..."`);
+      
+      if (onPathSwitch) {
+        // Calculate the new active path to this node
+        const newActivePath = getPathToNode(node.sentence_id);
+        console.log(`🛤️ New active path:`, newActivePath.map(id => {
+          const n = nodes.find(n => n.sentence_id === id);
+          return `${id}: "${n?.sentence_content.substring(0, 30)}..."`;
+        }));
+        
+        // Call the path switch callback
+        onPathSwitch(node.sentence_id, newActivePath);
+      } else {
+        console.log(`🚫 No onPathSwitch callback provided, ignoring branch switch`);
+      }
+      return; // Exit early for branch switching
+    }
+    
+    // Node IS in active path - show the reflection modal as before
+    // Get the active path before this node
+    const pathBeforeNode = getPathBeforeNode(node.sentence_id);
+    console.log(`📍 Active path before clicked node "${node.sentence_content.substring(0, 50)}...":`, pathBeforeNode);
+    console.log(`📊 Total sentences before clicked node: ${pathBeforeNode.length}`);
+    
+    // Open modal immediately
+    setSelectedNode(node);
+    setIsModalOpen(true);
+    setIsSummaryLoading(true);
+    
+    // Capture the click position for positioning the panel
+    if (event) {
+      setModalPosition({
+        x: event.clientX,
+        y: event.clientY
+      });
+    } else {
+      setModalPosition(null); // Fallback to center
+    }
+    
+    // Call the generate_data_driven_summary API
+    try {
+      console.log('🚀 Calling generate_data_driven_summary API...');
+      const response = await fetch('/api/generate-data-driven-summary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          activePathSentences: pathBeforeNode,
+          currentNode: node.sentence_content
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('✅ Data-driven summary generated:', result.summary);
+        
+        // Store the summary in the node data for display in modal
+        if (node.hover) {
+          node.hover.dataDrivenSummary = result.summary;
+        } else {
+          node.hover = {
+            title: node.sentence_content,
+            reflect: [],
+            dataDrivenSummary: result.summary
+          };
+        }
+      } else {
+        console.error('❌ Failed to generate data-driven summary:', response.statusText);
+      }
+    } catch (error) {
+      console.error('❌ Error calling generate_data_driven_summary API:', error);
+    } finally {
+      setIsSummaryLoading(false);
+    }
+  }, [getPathBeforeNode, activePathSet, onPathSwitch, getPathToNode, nodes]);
+  
+  // Handler to close modal
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedNode(null);
+    setModalPosition(null);
+    setIsSummaryLoading(false);
+  }, []);
   
   // Get the current/most recent active node
   const getCurrentActiveNode = useCallback(() => {
@@ -272,9 +459,15 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
   const calculateFlowLayout = useCallback(() => {
     if (nodes.length === 0) return { nodes: [], edges: [] };
     
-    console.log('🎯 ReactFlowTimeline - calculateFlowLayout called');
-    console.log('📊 Input nodes:', nodes);
-    console.log('🛤️ Active path:', activePath);
+    console.log('🎯 ReactFlowTimeline calculating layout for nodes:', nodes.map(n => ({
+      node_id: n.node_id,
+      sentence_id: n.sentence_id,
+      parent_id: n.parent_id,
+      child_ids: n.child_ids,
+      content: n.sentence_content, // Show full content, not truncated
+      changed_from_previous: n.changed_from_previous, // Add this for debugging
+      dimensions: n.changed_from_previous?.dimensions // Add this for debugging
+    })));
     
     const nodeSpacing = 80; // Horizontal spacing
     const branchOffset = 50; // Vertical offset for branches (reduced from 80)
@@ -282,6 +475,30 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     
     // Create a map for quick lookups
     const nodeMap = new Map(nodes.map(node => [node.sentence_id, node]));
+    
+    // Build parent-child relationships from both child_ids and parent_id information
+    // This handles cases where the data might have inconsistent relationships
+    const childrenMap = new Map<string, string[]>();
+    
+    // Initialize with existing child_ids
+    nodes.forEach(node => {
+      if (node.child_ids && node.child_ids.length > 0) {
+        childrenMap.set(node.sentence_id, [...node.child_ids]);
+      } else {
+        childrenMap.set(node.sentence_id, []);
+      }
+    });
+    
+    // Build children relationships from parent_id information
+    nodes.forEach(node => {
+      if (node.parent_id && node.parent_id !== "") {
+        const existingChildren = childrenMap.get(node.parent_id) || [];
+        if (!existingChildren.includes(node.sentence_id)) {
+          existingChildren.push(node.sentence_id);
+          childrenMap.set(node.parent_id, existingChildren);
+        }
+      }
+    });
     
     // Position all nodes using a breadth-first traversal to properly handle the tree structure
     const allPositions = new Map<string, { x: number; y: number }>();
@@ -291,7 +508,6 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     const rootNode = nodes.find(node => !node.parent_id || node.parent_id === "");
     if (!rootNode) return { nodes: [], edges: [] };
     
-    console.log('🌳 Root node found:', rootNode.sentence_id);
     
     // Start with root at position (0, 0)
     allPositions.set(rootNode.sentence_id, { x: 0, y: centerY });
@@ -308,10 +524,9 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
       const currentPosition = allPositions.get(nodeId);
       if (!currentPosition) continue;
       
-      console.log(`🔄 Processing node ${nodeId} at depth ${depth}, children:`, currentNode.child_ids);
       
-      // Process all children of the current node
-      const children = currentNode.child_ids || [];
+      // Process all children of the current node using the built children map
+      const children = childrenMap.get(nodeId) || [];
       children.forEach((childId: string, childIndex: number) => {
         if (processedNodes.has(childId)) return; // Already processed
         
@@ -326,7 +541,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
         
         if (children.length > 1) {
           // Find which child is in the active path (if any)
-          const activeChildIndex = children.findIndex((cId: string) => activePath.includes(cId));
+          const activeChildIndex = children.findIndex((cId: string) => activePathSet.has(cId));
           
           if (activeChildIndex !== -1) {
             // Position active child at parent's Y level, others above/below
@@ -353,7 +568,6 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
           }
         }
         
-        console.log(`📍 Positioning child ${childId} at (${childX}, ${childY}), childIndex: ${childIndex}, totalChildren: ${children.length}`);
         
         allPositions.set(childId, { x: childX, y: childY });
         processedNodes.add(childId);
@@ -372,20 +586,20 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
         id: node.sentence_id,
         type: 'timelineNode',
         position,
-        data: { node, isActive },
+        data: { node, isActive, onNodeClick: handleNodeClick, isSelected: selectedNode?.sentence_id === node.sentence_id },
         draggable: false,
       };
     });
     
-    console.log('🎨 Generated React Flow nodes:', flowNodes);
     
     // Convert to React Flow edges - only create parent-child connections
     const flowEdges: Edge[] = [];
     
-    // Create edges based on parent-child relationships only
+    // Create edges based on parent-child relationships using the built children map
     nodes.forEach(node => {
-      if (node.child_ids && node.child_ids.length > 0) {
-        node.child_ids.forEach((childId: string) => {
+      const children = childrenMap.get(node.sentence_id) || [];
+      if (children.length > 0) {
+        children.forEach((childId: string) => {
           const childNode = nodes.find(n => n.sentence_id === childId);
           if (childNode) {
             const isActiveConnection = activePathSet.has(node.sentence_id) && activePathSet.has(childId);
@@ -407,33 +621,55 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
         });
       }
     });
-    
-    console.log('🔗 Generated React Flow edges:', flowEdges);
-    console.log('📋 Final layout result:', { nodes: flowNodes, edges: flowEdges });
+
     
     return { nodes: flowNodes, edges: flowEdges };
-  }, [nodes, activePathSet]);
+  }, [nodes, activePathSet, handleNodeClick]);
   
   // Update React Flow nodes and edges when data changes
   useEffect(() => {
+    // Skip layout calculation if loading or no nodes
+    if (isLoading || nodes.length === 0) {
+      return;
+    }
+    
     const { nodes: flowNodes, edges: flowEdges } = calculateFlowLayout();
     setReactFlowNodes(flowNodes);
     setReactFlowEdges(flowEdges);
+  }, [nodes, activePath, isLoading, calculateFlowLayout, setReactFlowNodes, setReactFlowEdges]);
+
+  // Separate effect for centering on active nodes to avoid setTimeout in main effect
+  useEffect(() => {
+    // Skip if loading, no nodes, or no active path
+    if (isLoading || nodes.length === 0 || activePath.length === 0 || reactFlowNodes.length === 0) {
+      return;
+    }
     
     // Center on the most recent nodes (last 3-4 nodes of active path)
-    if (activePath.length > 0) {
-      setTimeout(() => {
-        const recentNodes = activePath.slice(-3); // Focus on last 3 nodes
-        if (recentNodes.length > 0) {
-          const lastNodeId = recentNodes[recentNodes.length - 1];
-          const lastNode = flowNodes.find(n => n.id === lastNodeId);
-          if (lastNode) {
-            setCenter(lastNode.position.x, lastNode.position.y, { zoom: 1, duration: 800 });
-          }
-        }
-      }, 100);
+    const recentNodes = activePath.slice(-3); // Focus on last 3 nodes
+    if (recentNodes.length > 0) {
+      const lastNodeId = recentNodes[recentNodes.length - 1];
+      const lastNode = reactFlowNodes.find(n => n.id === lastNodeId);
+      if (lastNode) {
+        // Use requestAnimationFrame instead of setTimeout for better performance
+        requestAnimationFrame(() => {
+          setCenter(lastNode.position.x, lastNode.position.y, { zoom: 1, duration: 800 });
+        });
+      }
     }
-  }, [nodes, activePath, calculateFlowLayout, setReactFlowNodes, setReactFlowEdges, setCenter]);
+  }, [activePath, reactFlowNodes, isLoading, nodes.length, setCenter]);
+
+  // Show loading overlay when processing LLM response - render conditionally in JSX
+  if (isLoading) {
+    return (
+      <div className="h-full w-full flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-sm text-gray-600">Analyzing narrative insights...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full w-full">
@@ -515,21 +751,82 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
         </Panel>
       </ReactFlow>
       
-      {/* Main Tooltip */}
+      {/* Enhanced Rich Tooltip */}
       <Tooltip
         id="timeline-tooltip"
         place="top"
         style={{
-          backgroundColor: '#374151',
-          color: '#f9fafb',
-          borderRadius: '8px',
-          padding: '12px',
+          backgroundColor: '#ffffff',
+          color: '#1f2937',
+          borderRadius: '12px',
+          padding: '0px',
           fontSize: '14px',
-          maxWidth: '350px',
+          maxWidth: '420px',
           zIndex: 1000,
-          border: '1px solid #6b7280'
+          border: '1px solid #d1d5db',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        }}
+        opacity={1}
+        delayShow={200}
+        delayHide={100}
+        render={({ activeAnchor }) => {
+          // Find the node data for the hovered element
+          if (!activeAnchor) return null;
+          
+          // Extract node ID from the parent ReactFlow node
+          const reactFlowNode = activeAnchor.closest('[data-id]');
+          if (!reactFlowNode) return null;
+          
+          const nodeId = reactFlowNode.getAttribute('data-id');
+          const node = nodes.find(n => n.sentence_id === nodeId);
+          if (!node) return null;
+          
+          // Check if this node is in the active path
+          const isNodeActive = activePathSet.has(node.sentence_id);
+          
+          // If node is not active, show branch switch tooltip
+          if (!isNodeActive) {
+            return (
+              <div style={{
+                padding: '8px 12px',
+                fontSize: '12px',
+                fontWeight: '500',
+                color: '#374151',
+                backgroundColor: '#f3f4f6',
+                borderRadius: '6px',
+                border: '1px solid #d1d5db',
+                maxWidth: '200px',
+                textAlign: 'center'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', marginBottom: '4px' }}>
+                  <TbGitFork size={14} style={{ color: '#059669' }} />
+                  <strong>Click to switch branch</strong>
+                </div>
+                <span style={{ fontSize: '11px', opacity: 0.8 }}>
+                  "{node.sentence_content.length > 50 
+                    ? node.sentence_content.substring(0, 50) + '...' 
+                    : node.sentence_content}"
+                </span>
+              </div>
+            );
+          }
+          
+          // For active nodes, show the regular detailed tooltip
+          const driftType = getRandomDriftType(node.sentence_id);
+          return <TimelineTooltip node={node} driftType={driftType} />;
         }}
       />
+      
+      {/* Reflection Modal */}
+      {selectedNode && (
+        <ReflectionModal
+          node={selectedNode}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          position={modalPosition}
+          isSummaryLoading={isSummaryLoading}
+        />
+      )}
     </div>
   );
 };

@@ -1,0 +1,94 @@
+/* Semantic Span Styles for Data-Driven Summary */
+/* Vibrant colors for better visual distinction */
+
+/* Geographic locations - blue */
+span[data-type="geo"] {
+  background-color: #8faace;
+  color: #1e40af;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  border: 1px solid #bfdbfe;
+  font-size: inherit;
+  display: inline;
+}
+
+/* Metrics and measures - green */
+span[data-type="metric"] {
+  background-color: #b0e6cc;
+  color: #059669;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  border: 1px solid #a7f3d0;
+  font-size: inherit;
+  display: inline;
+}
+
+/* Numeric values - amber/yellow */
+span[data-type="value"] {
+  background-color: #fef3c7;
+  color: #d97706;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  border: 1px solid #fcd34d;
+  font-size: inherit;
+  display: inline;
+}
+
+/* Time references - purple */
+span[data-type="time"] {
+  background-color: #f3e8ff;
+  color: #7c3aed;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  border: 1px solid #c4b5fd;
+  font-size: inherit;
+  display: inline;
+}
+
+/* Demographic/categorical groups - red */
+span[data-type="group"] {
+  background-color: #fef2f2;
+  color: #dc2626;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  border: 1px solid #fca5a5;
+  font-size: inherit;
+  display: inline;
+}
+
+/* Hover effects - enhanced for better interaction */
+span[data-type="geo"]:hover {
+  background-color: #bfdbfe;
+  border-color: #93c5fd;
+}
+
+span[data-type="metric"]:hover {
+  background-color: #d1fae5;
+  border-color: #86efac;
+}
+
+span[data-type="value"]:hover {
+  background-color: #fde68a;
+  border-color: #facc15;
+}
+
+span[data-type="time"]:hover {
+  background-color: #ddd6fe;
+  border-color: #a78bfa;
+}
+
+span[data-type="group"]:hover {
+  background-color: #fee2e2;
+  border-color: #f87171;
+}
+
+/* Ensure spans don't break text flow */
+span[data-type] {
+  white-space: nowrap;
+  transition: all 0.15s ease-in-out;
+}
