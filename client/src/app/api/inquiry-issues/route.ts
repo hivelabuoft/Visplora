@@ -6,9 +6,21 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export interface SentenceItem {
-  sentence_id: string;
+export interface SentenceNode {
+  id: string;
   content: string;
+  parent: string | null;
+  children: string[];
+  activeChild: string | null;
+  createdTime: number;
+  revisedTime: number;
+  editCount: number;
+  isCompleted: boolean;
+}
+
+export interface TreeStructure {
+  nodes: SentenceNode[];
+  activePath: string[];
 }
 
 export interface IssueIdentification {
@@ -23,34 +35,50 @@ export async function POST(request: NextRequest) {
     console.log('🔍 Inquiry Issues API: Processing request');
     
     const body = await request.json();
-    const { sentenceList } = body;
+    const { treeStructure, pageId } = body;
 
     // Validate input
-    if (!sentenceList || !Array.isArray(sentenceList)) {
-      console.error('❌ Invalid input: sentenceList is required and must be an array');
+    if (!treeStructure || !treeStructure.nodes || !Array.isArray(treeStructure.nodes)) {
+      console.error('❌ Invalid input: treeStructure with nodes array is required');
       return NextResponse.json(
-        { error: 'sentenceList is required and must be an array of sentence objects' },
+        { error: 'treeStructure with nodes array is required' },
         { status: 400 }
       );
     }
 
-    if (sentenceList.length === 0) {
-      console.log('📝 Empty sentence list, returning empty issues array');
+    if (!treeStructure.activePath || !Array.isArray(treeStructure.activePath)) {
+      console.error('❌ Invalid input: treeStructure.activePath is required');
+      return NextResponse.json(
+        { error: 'treeStructure.activePath is required' },
+        { status: 400 }
+      );
+    }
+
+    if (!pageId) {
+      console.error('❌ Invalid input: pageId is required');
+      return NextResponse.json(
+        { error: 'pageId is required' },
+        { status: 400 }
+      );
+    }
+
+    // Extract only the active path sentences from the tree structure
+    const activePathSentences = treeStructure.activePath
+      .map((sentenceId: string) => {
+        const node = treeStructure.nodes.find((n: SentenceNode) => n.id === sentenceId);
+        return node ? {
+          sentence_id: node.id,
+          content: node.content
+        } : null;
+      })
+      .filter((sentence: any) => sentence !== null);
+
+    if (activePathSentences.length === 0) {
+      console.log('📝 No active path sentences found, returning empty issues array');
       return NextResponse.json({ issues: [] });
     }
 
-    // Validate sentence structure
-    for (const sentence of sentenceList) {
-      if (!sentence.sentence_id || !sentence.content) {
-        console.error('❌ Invalid sentence structure:', sentence);
-        return NextResponse.json(
-          { error: 'Each sentence must have sentence_id and content properties' },
-          { status: 400 }
-        );
-      }
-    }
-
-    console.log(`📊 Processing ${sentenceList.length} sentences for issue identification`);
+    console.log(`📊 Processing ${activePathSentences.length} active path sentences for issue identification on page: ${pageId}`);
 
     // Create the system prompt for issue identification
     const systemPrompt = `You are an assistant that analyzes the user's narrative path during exploratory analysis and identifies which sentences raise meaningful questions (issues) worth tracking.
@@ -83,7 +111,7 @@ Return a JSON array of identified issues:
 If no issues are identified, return an empty array: \`[]\``;
 
     const userPrompt = `INPUT USER NARRATIVE:
-${JSON.stringify(sentenceList, null, 2)}
+${JSON.stringify(activePathSentences, null, 2)}
 
 Each sentence item contains:
 - sentence_id
@@ -176,7 +204,8 @@ Analyze this narrative and identify meaningful questions/issues that emerge from
     return NextResponse.json({ 
       issues,
       metadata: {
-        sentenceCount: sentenceList.length,
+        pageId,
+        sentenceCount: activePathSentences.length,
         issueCount: issues.length,
         timestamp: new Date().toISOString(),
         model: 'gpt-4o'
@@ -195,90 +224,4 @@ Analyze this narrative and identify meaningful questions/issues that emerge from
       { status: 500 }
     );
   }
-}
-
-// Handle GET request for API documentation
-export async function GET(request: NextRequest) {
-  const documentation = {
-    endpoint: '/api/inquiry-issues',
-    method: 'POST',
-    description: 'Analyzes user narrative sentences and identifies meaningful questions/issues for tracking',
-    
-    input: {
-      sentenceList: {
-        type: 'array',
-        description: 'Array of sentence objects from user narrative',
-        items: {
-          sentence_id: 'string (unique identifier)',
-          content: 'string (sentence text)'
-        },
-        example: [
-          {
-            sentence_id: 's1',
-            content: 'I noticed that sales seem to be declining in the northeast region.'
-          },
-          {
-            sentence_id: 's2', 
-            content: 'Let me check if this trend is consistent across all product categories.'
-          }
-        ]
-      }
-    },
-    
-    output: {
-      issues: {
-        type: 'array',
-        description: 'Array of identified issues from the narrative',
-        items: {
-          qid: 'string (unique ID prefixed with iss_)',
-          title: 'string (question title)',
-          status: 'enum: open | resolved | stalled',
-          sentenceRefs: 'array of sentence_id strings'
-        }
-      },
-      metadata: {
-        sentenceCount: 'number',
-        issueCount: 'number', 
-        timestamp: 'ISO string',
-        model: 'string'
-      }
-    },
-    
-    example: {
-      input: {
-        sentenceList: [
-          { sentence_id: 's1', content: 'Sales appear to be declining in Q3.' },
-          { sentence_id: 's2', content: 'I should investigate if this is due to seasonal factors.' },
-          { sentence_id: 's3', content: 'After checking historical data, it turns out this is normal seasonal variation.' }
-        ]
-      },
-      output: {
-        issues: [
-          {
-            qid: 'iss_q3_sales_decline_cause',
-            title: 'What is causing the Q3 sales decline?',
-            status: 'resolved',
-            sentenceRefs: ['s1', 's2', 's3']
-          }
-        ],
-        metadata: {
-          sentenceCount: 3,
-          issueCount: 1,
-          timestamp: '2025-08-17T12:00:00.000Z',
-          model: 'gpt-4o'
-        }
-      }
-    },
-    
-    configuration: {
-      model: 'gpt-4o',
-      temperature: 0.2,
-      top_p: 1.0,
-      max_tokens: 1500,
-      frequency_penalty: 0,
-      presence_penalty: 0
-    }
-  };
-
-  return NextResponse.json(documentation, { status: 200 });
 }

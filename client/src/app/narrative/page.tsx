@@ -3261,6 +3261,12 @@ export default function NarrativePage() {
               <InquiryBoard
                 ref={inquiryBoardRef}
                 onGoBack={handleBackToViews}
+                pageId={narrativeSystemRef.current?.getCurrentPageId() || 'default-page'}
+                treeStructure={(() => {
+                  const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                  const treeStructure = getTreeStructureForPage(currentPageId);
+                  return treeStructure || { nodes: [], activePath: [] };
+                })()}
               />
             ) : showDashboard && shouldShowLondonDashboard ? (
               <ReactFlowCanvas 

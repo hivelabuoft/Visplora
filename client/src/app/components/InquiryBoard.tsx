@@ -27,16 +27,17 @@ export interface InquiryIssue {
   title: string;
   status: 'open' | 'stalled' | 'resolved';
   
-  // Unified content fields
+  // Unified content fields from enrichment
   position_suggested_by?: {
     text: string;
+    confidence: 'low' | 'medium' | 'high';
   };
   argument_suggested_by?: {
     text: string;
+    basis: 'data' | 'mechanism' | 'pattern' | 'comparison' | 'other';
   };
   
   links: IssueLink[];
-  answer?: string; // for resolved issues
 }
 
 // New relationship types for issue-to-issue connections
@@ -44,7 +45,6 @@ export interface IssueLink {
   qid: string; // target issue node
   type: 'suggested_by' | 'generalized_from' | 'specialized_from' | 'replaces';
   explanation: string;
-  color?: string; // Optional color for the relationship
 }
 
 // Expose methods for parent components to interact with the inquiry board
@@ -210,22 +210,6 @@ const InquiryNodeComponent: React.FC<{
             </div>
           ))}
 
-          {/* Answer (for resolved issues) */}
-          {inquiry.answer && (
-            <div style={{
-              fontSize: '11px',
-              color: colors.accent,
-              backgroundColor: 'rgba(34, 197, 94, 0.1)',
-              padding: '8px',
-              borderRadius: '6px',
-              fontStyle: 'italic',
-              lineHeight: '1.3',
-              border: '1px solid rgba(34, 197, 94, 0.3)',
-            }}>
-              <strong>Answer:</strong> {inquiry.answer}
-            </div>
-          )}
-
           {/* Links Count Badge */}
           <div style={{
             position: 'absolute',
@@ -371,15 +355,24 @@ const initialEdges: Edge[] = [];
 
 interface InquiryBoardProps {
   onGoBack?: () => void;
+  treeStructure?: {
+    nodes: any[];
+    activePath: string[];
+  };
+  pageId?: string;
 }
 
 const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({ 
-  onGoBack 
+  onGoBack,
+  treeStructure,
+  pageId 
 }, ref) => {
   const [nodes, setNodes, onNodesChangeOriginal] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [layoutMode, setLayoutMode] = useState<'status' | 'relationship'>('status');
   const [inquiries, setInquiries] = useState<InquiryIssue[]>([]);
+  const [isLoadingInquiries, setIsLoadingInquiries] = useState(false);
+  const [loadingError, setLoadingError] = useState<string | null>(null);
 
   // Custom node change handler that restricts movement in status mode
   const handleNodesChange = useCallback(
@@ -472,31 +465,114 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
     ),
   };
 
-  // Load inquiry data from test file (only in demo mode)
+  // Load inquiry data - from API in production mode, from test file in demo mode
   useEffect(() => {
     const loadInquiries = async () => {
       logDemoModeStatus('InquiryBoard');
+      setIsLoadingInquiries(true);
+      setLoadingError(null);
       
-      if (!isDemoMode()) {
-        console.log('🚫 Production mode: No test data loaded for inquiry board');
-        setInquiries([]);
-        return;
+      if (isDemoMode()) {
+        // Demo mode: Load from test.json
+        try {
+          console.log('� Demo mode: Loading inquiry data from test.json');
+          const response = await fetch('/testcases/test_inquiry_board/test.json');
+          const data: InquiryIssue[] = await response.json();
+          console.log('✅ Demo mode: Loaded', data.length, 'inquiries from test data');
+          setInquiries(data);
+        } catch (error) {
+          console.error('❌ Failed to load inquiry test data:', error);
+          setLoadingError('Failed to load test data');
+          setInquiries([]);
+        }
+      } else {
+        // Production mode: Call inquiry APIs
+        try {
+          console.log('� Production mode: Calling inquiry APIs');
+          
+          // Use the tree structure passed from the narrative system
+          const currentTreeStructure = treeStructure || {
+            nodes: [],
+            activePath: []
+          };
+          
+          console.log('📝 Using tree structure with', currentTreeStructure.nodes.length, 'nodes and active path:', currentTreeStructure.activePath);
+          
+          // Check if we have any narrative content
+          if (currentTreeStructure.nodes.length === 0) {
+            console.log('ℹ️ No narrative content found, setting empty inquiries');
+            setInquiries([]);
+            setIsLoadingInquiries(false);
+            return;
+          }
+          
+          console.log('📝 Calling first layer API: /api/inquiry-issues');
+          
+          // Step 1: Call the first layer API to extract basic issues
+          const basicIssuesResponse = await fetch('/api/inquiry-issues', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              treeStructure: currentTreeStructure,
+              pageId: pageId || 'default-page'
+            }),
+          });
+          
+          if (!basicIssuesResponse.ok) {
+            throw new Error(`Basic issues API failed: ${basicIssuesResponse.status}`);
+          }
+          
+          const basicIssuesData = await basicIssuesResponse.json();
+          console.log('✅ First layer: Received', basicIssuesData.issues?.length || 0, 'basic issues');
+          
+          if (!basicIssuesData.issues || basicIssuesData.issues.length === 0) {
+            console.log('ℹ️ No basic issues found, setting empty array');
+            setInquiries([]);
+            setIsLoadingInquiries(false);
+            return;
+          }
+          
+          console.log('📝 Calling second layer API: /api/inquiry-enrichment');
+          
+          // Step 2: Call the second layer API to enrich the issues
+          const enrichmentResponse = await fetch('/api/inquiry-enrichment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              issues: basicIssuesData.issues,
+              treeStructure: currentTreeStructure,
+              pageId: pageId || 'default-page'
+            }),
+          });
+          
+          if (!enrichmentResponse.ok) {
+            throw new Error(`Enrichment API failed: ${enrichmentResponse.status}`);
+          }
+          
+          const enrichmentData = await enrichmentResponse.json();
+          console.log('✅ Second layer: Received', enrichmentData.enrichedIssues?.length || 0, 'enriched issues');
+          
+          // Use enriched issues as final data
+          const finalIssues = enrichmentData.enrichedIssues || [];
+          console.log('🎯 Production mode: Setting', finalIssues.length, 'final enriched issues');
+          setInquiries(finalIssues);
+          
+        } catch (error) {
+          console.error('❌ Failed to load inquiry data from APIs:', error);
+          setLoadingError(error instanceof Error ? error.message : 'Failed to load inquiries');
+          setInquiries([]);
+        }
       }
-
-      try {
-        console.log('📊 Demo mode: Loading inquiry data from test.json');
-        const response = await fetch('/testcases/test_inquiry_board/test.json');
-        const data: InquiryIssue[] = await response.json();
-        console.log('✅ Demo mode: Loaded', data.length, 'inquiries from test data');
-        setInquiries(data);
-      } catch (error) {
-        console.error('❌ Failed to load inquiry test data:', error);
-        setInquiries([]);
-      }
+      
+      setIsLoadingInquiries(false);
     };
 
     loadInquiries();
-  }, []);
+  }, [treeStructure, pageId]);
 
   // Create status-based layout (horizontal lanes)
   const createStatusLayout = () => {
@@ -667,7 +743,6 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
               data: {
                 explanation: link.explanation,
                 relationshipType: link.type,
-                color: link.color,
               },
               style: {
                 stroke: 'rgba(156, 163, 175, 0.4)', // Very subtle gray with transparency
@@ -724,6 +799,13 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
 
   return (
     <div className="w-full h-full relative">
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+      
       {/* Header with controls */}
       <div style={{
         position: 'absolute',
@@ -773,16 +855,40 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
         }}>
           <Network size={20} />
           Inquiry Board
-          <span style={{
-            fontSize: '12px',
-            fontWeight: '400',
-            color: '#64748b',
-            background: '#f1f5f9',
-            padding: '2px 8px',
-            borderRadius: '12px',
-          }}>
-            {inquiries.length} issues
-          </span>
+          {isLoadingInquiries ? (
+            <span style={{
+              fontSize: '12px',
+              fontWeight: '400',
+              color: '#3b82f6',
+              background: 'rgba(59, 130, 246, 0.1)',
+              padding: '2px 8px',
+              borderRadius: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}>
+              <div style={{
+                width: '10px',
+                height: '10px',
+                border: '2px solid transparent',
+                borderTop: '2px solid currentColor',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite'
+              }}></div>
+              analyzing...
+            </span>
+          ) : (
+            <span style={{
+              fontSize: '12px',
+              fontWeight: '400',
+              color: '#64748b',
+              background: '#f1f5f9',
+              padding: '2px 8px',
+              borderRadius: '12px',
+            }}>
+              {inquiries.length} issues
+            </span>
+          )}
         </div>
 
         {/* Right: Layout Toggle */}
@@ -830,7 +936,168 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
       </div>
 
       {/* Main Content Area */}
-      {layoutMode === 'status' ? (
+      {isLoadingInquiries ? (
+        /* Loading State */
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+          paddingTop: '80px',
+          flexDirection: 'column',
+          gap: '20px'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '24px 32px',
+            background: 'rgba(255, 255, 255, 0.9)',
+            borderRadius: '12px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(0, 0, 0, 0.05)'
+          }}>
+            <div style={{
+              width: '24px',
+              height: '24px',
+              border: '3px solid #e2e8f0',
+              borderTop: '3px solid #3b82f6',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite'
+            }}></div>
+            <div style={{
+              fontSize: '16px',
+              fontWeight: '500',
+              color: '#374151'
+            }}>
+              {isDemoMode() ? 'Loading demo inquiries...' : 'Analyzing narrative for inquiries...'}
+            </div>
+          </div>
+          <div style={{
+            fontSize: '14px',
+            color: '#6b7280',
+            textAlign: 'center',
+            maxWidth: '400px',
+            lineHeight: '1.5'
+          }}>
+            {isDemoMode() 
+              ? 'Loading test inquiry data from demo files'
+              : 'AI is extracting and enriching inquiry issues from your narrative content. This may take a moment.'
+            }
+          </div>
+        </div>
+      ) : loadingError ? (
+        /* Error State */
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+          paddingTop: '80px',
+          flexDirection: 'column',
+          gap: '16px'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '20px 24px',
+            background: 'rgba(254, 242, 242, 0.9)',
+            borderRadius: '12px',
+            border: '1px solid rgba(239, 68, 68, 0.2)',
+            maxWidth: '500px'
+          }}>
+            <div style={{
+              fontSize: '24px'
+            }}>
+              ⚠️
+            </div>
+            <div>
+              <div style={{
+                fontSize: '16px',
+                fontWeight: '600',
+                color: '#dc2626',
+                marginBottom: '4px'
+              }}>
+                Failed to Load Inquiries
+              </div>
+              <div style={{
+                fontSize: '14px',
+                color: '#7f1d1d'
+              }}>
+                {loadingError}
+              </div>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              setLoadingError(null);
+              // Trigger a reload by updating the effect
+              const loadInquiries = async () => {
+                // This will re-trigger the useEffect
+                setInquiries([]);
+              };
+              loadInquiries();
+            }}
+            style={{
+              padding: '8px 16px',
+              backgroundColor: '#dc2626',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              fontSize: '14px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              transition: 'background-color 0.2s'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#b91c1c'}
+            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#dc2626'}
+          >
+            Try Again
+          </button>
+        </div>
+      ) : inquiries.length === 0 ? (
+        /* Empty State */
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+          paddingTop: '80px',
+          flexDirection: 'column',
+          gap: '16px'
+        }}>
+          <div style={{
+            fontSize: '48px',
+            marginBottom: '8px'
+          }}>
+            🤔
+          </div>
+          <div style={{
+            fontSize: '18px',
+            fontWeight: '600',
+            color: '#374151',
+            marginBottom: '4px'
+          }}>
+            No Inquiries Found
+          </div>
+          <div style={{
+            fontSize: '14px',
+            color: '#6b7280',
+            textAlign: 'center',
+            maxWidth: '400px',
+            lineHeight: '1.5'
+          }}>
+            {!treeStructure || treeStructure.nodes.length === 0
+              ? 'Write some narrative content first to generate inquiry questions.'
+              : 'No inquiry issues were found in your current narrative. Try adding more analytical content or questions.'
+            }
+          </div>
+        </div>
+      ) : layoutMode === 'status' ? (
         /* Status View - Vertical Columns with Vertical Scrolling (Kanban Style) */
         <div style={{ 
           display: 'flex', 
