@@ -1,0 +1,495 @@
+{
+  "dataset_id": "ethnic-group",
+  "dataset_name": "Ethnic Group Distribution",
+  "category": "ethnicity",
+  "description": "Ethnic group distribution across London boroughs",
+  "file_path": "/dataset/london/ethnicity/Ethnic group.csv",
+  "field_roles": [
+    {
+      "name": "LSOA code",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "E01000001",
+        "E01000002",
+        "E01000003"
+      ]
+    },
+    {
+      "name": "local authority name",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Barnet",
+        "Bromley",
+        "Brent"
+      ]
+    },
+    {
+      "name": "local authority code",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "E09000003",
+        "E09000006",
+        "E09000005"
+      ]
+    },
+    {
+      "name": "All usual residents",
+      "type": "numeric",
+      "roles": [
+        "time"
+      ],
+      "sample_values": [
+        1011,
+        3191,
+        1745.69
+      ]
+    },
+    {
+      "name": "White British",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        45,
+        1671,
+        717.06
+      ]
+    },
+    {
+      "name": "White Irish",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        1,
+        175,
+        31.15
+      ]
+    },
+    {
+      "name": "White Gypsy/Irish Traveller",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        53,
+        1.93
+      ]
+    },
+    {
+      "name": "White Roma",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        65,
+        6.84
+      ]
+    },
+    {
+      "name": "White Other",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        14,
+        741,
+        245.5
+      ]
+    },
+    {
+      "name": "Mixed White and Asian",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        82,
+        22.62
+      ]
+    },
+    {
+      "name": "Mixed White and Black African",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        100,
+        15.64
+      ]
+    },
+    {
+      "name": "Mixed White and Black Caribbean",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        108,
+        20.94
+      ]
+    },
+    {
+      "name": "Mixed Other",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        109,
+        29.47
+      ]
+    },
+    {
+      "name": "Asian Bangladeshi",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        979,
+        45.63
+      ]
+    },
+    {
+      "name": "Asian Chinese",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        269,
+        30.58
+      ]
+    },
+    {
+      "name": "Asian Indian",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        1,
+        1813,
+        138.75
+      ]
+    },
+    {
+      "name": "Asian Pakistani",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        457,
+        42.61
+      ]
+    },
+    {
+      "name": "Asian Other",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        2,
+        353,
+        77.16
+      ]
+    },
+    {
+      "name": "Black African",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        1340,
+        139.82
+      ]
+    },
+    {
+      "name": "Black Caribbean",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        417,
+        46.33
+      ]
+    },
+    {
+      "name": "Black Other",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        207,
+        25.47
+      ]
+    },
+    {
+      "name": "Other Arab",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        373,
+        33.08
+      ]
+    },
+    {
+      "name": "Other Any other",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        333,
+        75.11
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "line_chart",
+      "description": "Time series analysis",
+      "encoding": {
+        "x": {
+          "name": "All usual residents",
+          "type": "numeric",
+          "roles": [
+            "time"
+          ],
+          "sample_values": [
+            1011,
+            3191,
+            1745.69
+          ]
+        },
+        "y": {
+          "name": "White British",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            45,
+            1671,
+            717.06
+          ]
+        },
+        "color": {
+          "name": "LSOA code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E01000001",
+            "E01000002",
+            "E01000003"
+          ]
+        }
+      }
+    },
+    {
+      "type": "choropleth_map",
+      "description": "Geographic distribution of metrics",
+      "encoding": {
+        "geo": {
+          "name": "LSOA code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E01000001",
+            "E01000002",
+            "E01000003"
+          ]
+        },
+        "color": {
+          "name": "White British",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            45,
+            1671,
+            717.06
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "LSOA code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E01000001",
+            "E01000002",
+            "E01000003"
+          ]
+        },
+        "y": {
+          "name": "White British",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            45,
+            1671,
+            717.06
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Category comparison",
+      "encoding": {
+        "x": {
+          "name": "LSOA code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E01000001",
+            "E01000002",
+            "E01000003"
+          ]
+        },
+        "y": {
+          "name": "White British",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            45,
+            1671,
+            717.06
+          ]
+        }
+      }
+    },
+    {
+      "type": "stacked_bar_chart",
+      "description": "Multi-category analysis",
+      "encoding": {
+        "x": {
+          "name": "LSOA code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E01000001",
+            "E01000002",
+            "E01000003"
+          ]
+        },
+        "y": {
+          "name": "White British",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            45,
+            1671,
+            717.06
+          ]
+        },
+        "color": {
+          "name": "local authority name",
+          "type": "categorical",
+          "roles": [
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barnet",
+            "Bromley",
+            "Brent"
+          ]
+        }
+      }
+    },
+    {
+      "type": "histogram",
+      "description": "Distribution analysis",
+      "encoding": {
+        "x": {
+          "name": "White British",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            45,
+            1671,
+            717.06
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.713Z"
+}

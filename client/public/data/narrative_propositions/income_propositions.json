@@ -1,0 +1,334 @@
+{
+  "dataset_name": "income",
+  "complexity_score": 5,
+  "total_propositions": 25,
+  "proposition_breakdown": {
+    "temporal_trends": 8,
+    "geographic_patterns": 8,
+    "statistical_patterns": 5,
+    "cross_dimensional": 4
+  },
+  "generated_at": "2025-08-18T17:23:46.870Z",
+  "categories": {
+    "temporal_trends": [
+      {
+        "id": "tt1",
+        "proposition": "Mean income in Kensington and Chelsea increased by 20% from 2015 to 2020.",
+        "variables_needed": [
+          "Area",
+          "Mean_income",
+          "Year"
+        ],
+        "time_period": "2015-2020",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt2",
+        "proposition": "Median income in Westminster showed a cyclical pattern with peaks every 5 years from 2000 to 2020.",
+        "variables_needed": [
+          "Area",
+          "Median_income",
+          "Year"
+        ],
+        "time_period": "2000-2020",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt3",
+        "proposition": "From 1999 to 2023, the mean income in Camden has increased by 50%.",
+        "variables_needed": [
+          "Area",
+          "Mean_income",
+          "Year"
+        ],
+        "time_period": "1999-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt4",
+        "proposition": "The median income in London boroughs experienced a sharp decline of 10% during the 2008 financial crisis.",
+        "variables_needed": [
+          "Area",
+          "Median_income",
+          "Year"
+        ],
+        "time_period": "2008",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt5",
+        "proposition": "Mean income growth rate in outer London boroughs was 2% higher annually than inner London from 2010 to 2020.",
+        "variables_needed": [
+          "Area",
+          "Mean_income",
+          "Year"
+        ],
+        "time_period": "2010-2020",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt6",
+        "proposition": "Income inequality, measured by the gap between mean and median income, widened by 15% from 2015 to 2023 in London.",
+        "variables_needed": [
+          "Mean_income",
+          "Median_income",
+          "Year"
+        ],
+        "time_period": "2015-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt7",
+        "proposition": "The year 2020 saw the highest increase in mean income across all London boroughs compared to the previous decade.",
+        "variables_needed": [
+          "Area",
+          "Mean_income",
+          "Year"
+        ],
+        "time_period": "2020",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt8",
+        "proposition": "From 1999 to 2023, the median income in London has shown a consistent upward trend, increasing by 60%.",
+        "variables_needed": [
+          "Median_income",
+          "Year"
+        ],
+        "time_period": "1999-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      }
+    ],
+    "geographic_patterns": [
+      {
+        "id": "gp1",
+        "proposition": "Kensington and Chelsea consistently ranks as the borough with the highest mean income from 1999 to 2023.",
+        "variables_needed": [
+          "Area",
+          "Mean_income"
+        ],
+        "time_period": "1999-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp2",
+        "proposition": "The income disparity between North and South London boroughs widened by 25% from 2010 to 2020.",
+        "variables_needed": [
+          "Area",
+          "Mean_income"
+        ],
+        "time_period": "2010-2020",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp3",
+        "proposition": "Westminster and Camden account for 30% of the highest mean incomes despite covering only 10% of London's area.",
+        "variables_needed": [
+          "Area",
+          "Mean_income"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "gp4",
+        "proposition": "Inner London boroughs exhibit a higher mean income than outer boroughs by an average of £15,000 in 2023.",
+        "variables_needed": [
+          "Area",
+          "Mean_income"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp5",
+        "proposition": "Mean income in East London boroughs is consistently lower than the London average from 1999 to 2023.",
+        "variables_needed": [
+          "Area",
+          "Mean_income"
+        ],
+        "time_period": "1999-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp6",
+        "proposition": "The top 5 boroughs with the highest median incomes in 2023 are all located in West London.",
+        "variables_needed": [
+          "Area",
+          "Median_income"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp7",
+        "proposition": "Income inequality is most pronounced in Central London boroughs, with a 30% higher gap between mean and median incomes compared to the outskirts.",
+        "variables_needed": [
+          "Area",
+          "Mean_income",
+          "Median_income"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "gp8",
+        "proposition": "The mean income in South London boroughs increased by 10% more than in North London from 2015 to 2023.",
+        "variables_needed": [
+          "Area",
+          "Mean_income"
+        ],
+        "time_period": "2015-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "statistical_patterns": [
+      {
+        "id": "sp1",
+        "proposition": "The distribution of mean income across London boroughs is positively skewed in 2023.",
+        "variables_needed": [
+          "Mean_income"
+        ],
+        "time_period": "2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "histogram",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "sp2",
+        "proposition": "A correlation of 0.85 exists between mean and median income across all boroughs in 2023.",
+        "variables_needed": [
+          "Mean_income",
+          "Median_income"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "scatter_plot",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "sp3",
+        "proposition": "Outliers in mean income are observed in Kensington and Chelsea, with values 30% higher than the London average in 2023.",
+        "variables_needed": [
+          "Area",
+          "Mean_income"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "box_plot",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "sp4",
+        "proposition": "The variance in median income across London boroughs decreased by 10% from 2010 to 2023.",
+        "variables_needed": [
+          "Median_income",
+          "Year"
+        ],
+        "time_period": "2010-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "sp5",
+        "proposition": "The Gini coefficient for income inequality in London boroughs was 0.35 in 2023.",
+        "variables_needed": [
+          "Mean_income",
+          "Median_income"
+        ],
+        "time_period": "2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Advanced"
+      }
+    ],
+    "cross_dimensional": [
+      {
+        "id": "cd1",
+        "proposition": "Mean income peaks in Kensington and Chelsea during the 2020-2023 period, with a 25% increase compared to the previous decade.",
+        "variables_needed": [
+          "Area",
+          "Mean_income",
+          "Year"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd2",
+        "proposition": "Median income in outer London boroughs increased by 15% more than inner boroughs from 2015 to 2023.",
+        "variables_needed": [
+          "Area",
+          "Median_income",
+          "Year"
+        ],
+        "time_period": "2015-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cd3",
+        "proposition": "Income growth in East London boroughs correlates with a 20% increase in local business establishments from 2010 to 2020.",
+        "variables_needed": [
+          "Area",
+          "Mean_income",
+          "Year"
+        ],
+        "time_period": "2010-2020",
+        "geographic_level": "Borough",
+        "suggested_visualization": "scatter_plot",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd4",
+        "proposition": "The gap between mean and median income in Central London boroughs widened by 10% during economic downturns from 2008 to 2023.",
+        "variables_needed": [
+          "Area",
+          "Mean_income",
+          "Median_income",
+          "Year"
+        ],
+        "time_period": "2008-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      }
+    ]
+  }
+}

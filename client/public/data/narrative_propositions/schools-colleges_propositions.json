@@ -1,0 +1,408 @@
+{
+  "dataset_name": "schools-colleges",
+  "complexity_score": 6,
+  "total_propositions": 30,
+  "proposition_breakdown": {
+    "temporal_trends": 6,
+    "geographic_patterns": 10,
+    "categorical_analysis": 10,
+    "cross_dimensional": 4
+  },
+  "generated_at": "2025-08-18T17:24:40.841Z",
+  "categories": {
+    "temporal_trends": [
+      {
+        "id": "tt_01",
+        "proposition": "School performance ratings improved by 8% from 2021 to 2023 in the borough of Hackney.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2021-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_02",
+        "proposition": "The number of schools rated 'Outstanding' increased by 15% in 2022 compared to 2021 across all London boroughs.",
+        "variables_needed": [
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2021-2022",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt_03",
+        "proposition": "There is a seasonal peak in school enrollments in September each year from 2021 to 2023.",
+        "variables_needed": [
+          "date",
+          "value"
+        ],
+        "time_period": "2021-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt_04",
+        "proposition": "The average student-teacher ratio decreased by 5% from 2022 to 2023 in the borough of Lambeth.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_05",
+        "proposition": "From 2021 to 2023, there has been a 10% increase in the number of schools offering STEM programs in the borough of Camden.",
+        "variables_needed": [
+          "area",
+          "category",
+          "date"
+        ],
+        "time_period": "2021-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_06",
+        "proposition": "The number of schools with 'Good' ratings has remained stable from 2021 to 2023 across London.",
+        "variables_needed": [
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2021-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      }
+    ],
+    "geographic_patterns": [
+      {
+        "id": "gp_01",
+        "proposition": "Boroughs in East London have 20% more schools rated 'Outstanding' compared to West London in 2023.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_02",
+        "proposition": "The borough of Kensington and Chelsea has the highest concentration of private schools, accounting for 30% of all schools in the borough.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp_03",
+        "proposition": "In 2023, South London boroughs have a 25% higher average school performance rating compared to North London boroughs.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_04",
+        "proposition": "The borough of Tower Hamlets shows a clustering of schools with 'Requires Improvement' ratings, making up 40% of its schools.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "gp_05",
+        "proposition": "Inner London boroughs have 15% more schools offering arts programs compared to Outer London boroughs in 2023.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_06",
+        "proposition": "The borough of Greenwich has the lowest average student-teacher ratio in 2023, with a ratio of 15:1.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp_07",
+        "proposition": "Boroughs in West London have a 10% higher enrollment rate in secondary schools compared to East London in 2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_08",
+        "proposition": "The borough of Islington has the highest percentage of schools with special needs programs, accounting for 35% of its schools.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp_09",
+        "proposition": "In 2023, schools in the borough of Richmond upon Thames have the highest average performance rating in London.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp_10",
+        "proposition": "The borough of Haringey has the most diverse range of school types, with 25% of schools being academies, 30% being community schools, and 45% being private schools.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "categorical_analysis": [
+      {
+        "id": "ca_01",
+        "proposition": "In 2023, 40% of schools in London are rated 'Good', making it the most common rating category.",
+        "variables_needed": [
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_02",
+        "proposition": "Private schools make up 25% of all schools in the borough of Westminster in 2023.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_03",
+        "proposition": "In 2023, academies account for 50% of all secondary schools in the borough of Barnet.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_04",
+        "proposition": "Schools offering bilingual programs are most concentrated in the borough of Hammersmith and Fulham, representing 20% of its schools.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_05",
+        "proposition": "In 2023, 30% of schools in the borough of Southwark are rated 'Outstanding', the highest proportion in London.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_06",
+        "proposition": "Community schools make up 60% of all schools in Outer London boroughs in 2023.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_07",
+        "proposition": "In 2023, the least common school type in London is free schools, accounting for only 5% of all schools.",
+        "variables_needed": [
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_08",
+        "proposition": "The borough of Croydon has the highest percentage of schools with sports facilities, at 45%.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_09",
+        "proposition": "In 2023, 15% of schools in London offer specialized programs in technology, with the majority located in the borough of Camden.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_10",
+        "proposition": "Faith schools account for 20% of all schools in the borough of Ealing in 2023.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      }
+    ],
+    "cross_dimensional": [
+      {
+        "id": "cd_01",
+        "proposition": "In 2023, the borough of Lewisham shows a 10% increase in schools rated 'Good' compared to 2022, with a significant concentration in the northern part of the borough.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd_02",
+        "proposition": "Schools offering arts programs in Inner London have seen a 5% increase in performance ratings from 2021 to 2023.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2021-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd_03",
+        "proposition": "The proportion of schools with 'Outstanding' ratings in East London increased by 12% from 2021 to 2023, with the largest growth in the borough of Newham.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2021-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd_04",
+        "proposition": "In 2023, schools in the borough of Bromley that offer STEM programs have a 20% higher average performance rating compared to those that do not.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      }
+    ]
+  }
+}

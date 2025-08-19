@@ -1,0 +1,531 @@
+{
+  "dataset_id": "school-information-2022-2023",
+  "dataset_name": "School Information 2022-2023",
+  "category": "schools-colleges",
+  "description": "School information for England 2022-2023",
+  "file_path": "/dataset/london/schools-colleges/2022-2023_england_school_information.csv",
+  "field_roles": [
+    {
+      "name": "URN",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100000,
+        101910,
+        100873.84
+      ]
+    },
+    {
+      "name": "LANAME",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Barnet",
+        "Lewisham",
+        "Camden"
+      ]
+    },
+    {
+      "name": "LA",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        201,
+        936,
+        236.78
+      ]
+    },
+    {
+      "name": "ESTAB",
+      "type": "numeric",
+      "roles": [
+        "time"
+      ],
+      "sample_values": [
+        2000,
+        7207,
+        3772.34
+      ]
+    },
+    {
+      "name": "LAESTAB",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        2013614,
+        9366016,
+        2371552.34
+      ]
+    },
+    {
+      "name": "SCHNAME",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "The Aldgate School",
+        "City of London School for Girls",
+        "St Paul's Cathedral School"
+      ]
+    },
+    {
+      "name": "STREET",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "St James's Passage",
+        "St Giles' Terrace",
+        "2 New Change"
+      ]
+    },
+    {
+      "name": "LOCALITY",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "Duke's Place",
+        "Barbican",
+        "West Hampstead"
+      ]
+    },
+    {
+      "name": "ADDRESS3",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "Hampstead",
+        "London",
+        "Hampstead"
+      ]
+    },
+    {
+      "name": "TOWN",
+      "type": "categorical",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "London",
+        "Dagenham",
+        "Barnet"
+      ]
+    },
+    {
+      "name": "POSTCODE",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "EC3A 5DE",
+        "EC2Y 8BB",
+        "EC4M 9AD"
+      ]
+    },
+    {
+      "name": "SCHSTATUS",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Open",
+        "Closed",
+        "Open, but proposed to close"
+      ]
+    },
+    {
+      "name": "OPENDATE",
+      "type": "text",
+      "roles": [
+        "time"
+      ],
+      "sample_values": []
+    },
+    {
+      "name": "CLOSEDATE",
+      "type": "text",
+      "roles": [
+        "time"
+      ],
+      "sample_values": [
+        "31-08-2023",
+        "30-04-2023",
+        "31-08-2023"
+      ]
+    },
+    {
+      "name": "MINORGROUP",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Maintained school",
+        "Independent school",
+        "Special school"
+      ]
+    },
+    {
+      "name": "SCHOOLTYPE",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Community school",
+        "Voluntary aided school",
+        "Other independent school"
+      ]
+    },
+    {
+      "name": "ISPRIMARY",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        1,
+        0.9
+      ]
+    },
+    {
+      "name": "ISSECONDARY",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        1,
+        0.22
+      ]
+    },
+    {
+      "name": "ISPOST16",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        1,
+        0.15
+      ]
+    },
+    {
+      "name": "AGELOW",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        15,
+        4.13
+      ]
+    },
+    {
+      "name": "AGEHIGH",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        5,
+        25,
+        12.24
+      ]
+    },
+    {
+      "name": "GENDER",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Mixed",
+        "Girls",
+        "Boys"
+      ]
+    },
+    {
+      "name": "RELCHAR",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Does not apply",
+        "None",
+        "Church of England"
+      ]
+    },
+    {
+      "name": "ADMPOL",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Not applicable",
+        "Non-selective",
+        "Selective"
+      ]
+    },
+    {
+      "name": "OFSTEDRATING",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Good",
+        "Outstanding",
+        "Requires improvement"
+      ]
+    },
+    {
+      "name": "OFSTEDLASTINSP",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "13-06-2024",
+        "05-10-2022",
+        "23-03-2022"
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "line_chart",
+      "description": "Time series analysis",
+      "encoding": {
+        "x": {
+          "name": "ESTAB",
+          "type": "numeric",
+          "roles": [
+            "time"
+          ],
+          "sample_values": [
+            2000,
+            7207,
+            3772.34
+          ]
+        },
+        "y": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101910,
+            100873.84
+          ]
+        },
+        "color": {
+          "name": "LANAME",
+          "type": "categorical",
+          "roles": [
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barnet",
+            "Lewisham",
+            "Camden"
+          ]
+        }
+      }
+    },
+    {
+      "type": "choropleth_map",
+      "description": "Geographic distribution of metrics",
+      "encoding": {
+        "geo": {
+          "name": "TOWN",
+          "type": "categorical",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "London",
+            "Dagenham",
+            "Barnet"
+          ]
+        },
+        "color": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101910,
+            100873.84
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "TOWN",
+          "type": "categorical",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "London",
+            "Dagenham",
+            "Barnet"
+          ]
+        },
+        "y": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101910,
+            100873.84
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Category comparison",
+      "encoding": {
+        "x": {
+          "name": "LANAME",
+          "type": "categorical",
+          "roles": [
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barnet",
+            "Lewisham",
+            "Camden"
+          ]
+        },
+        "y": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101910,
+            100873.84
+          ]
+        }
+      }
+    },
+    {
+      "type": "stacked_bar_chart",
+      "description": "Multi-category analysis",
+      "encoding": {
+        "x": {
+          "name": "LANAME",
+          "type": "categorical",
+          "roles": [
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barnet",
+            "Lewisham",
+            "Camden"
+          ]
+        },
+        "y": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101910,
+            100873.84
+          ]
+        },
+        "color": {
+          "name": "SCHNAME",
+          "type": "text",
+          "roles": [
+            "category"
+          ],
+          "sample_values": [
+            "The Aldgate School",
+            "City of London School for Girls",
+            "St Paul's Cathedral School"
+          ]
+        }
+      }
+    },
+    {
+      "type": "histogram",
+      "description": "Distribution analysis",
+      "encoding": {
+        "x": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101910,
+            100873.84
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.716Z"
+}

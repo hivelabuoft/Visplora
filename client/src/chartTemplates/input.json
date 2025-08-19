@@ -1,0 +1,791 @@
+{
+  "chartTemplates": {
+    "lineChart": {
+      "description": "Template for generating line chart data and configurations",
+      "chartType": "line",
+      "supportedModes": ["2D", "3D"],
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing time/category data",
+          "column": "string - Column name for time/category axis"
+        },
+        "metric": "string - The metric being measured (e.g., 'Count', 'Value', 'Cases')",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Simple time series data without dimension switching",
+          "example": [
+            { "x-variableName": "time", "y-variableName": "value", "time": "2020", "value": 450 },
+            { "x-variableName": "time", "y-variableName": "value", "time": "2021", "value": 520 },
+            { "x-variableName": "time", "y-variableName": "value", "time": "2022", "value": 580 },
+            { "x-variableName": "time", "y-variableName": "value", "time": "2023", "value": 620 }
+          ],
+          "schema": {
+            "time": "string - Time period (year, month, date, etc.)",
+            "value": "number - Numeric value for the metric"
+          }
+        },
+        "3D": {
+          "description": "Multi-dimensional data with dimension switching capability",
+          "dimensions": ["Anti-social behaviour", "Burglary", "Vehicle crime", "Violent crime"],
+          "example": {
+            "Anti-social behaviour": [
+              { "x-variableName": "time", "y-variableName": "value", "dimensionName": "dimension", "time": "2020", "value": 420, "dimension": "Anti-social behaviour" },
+              { "x-variableName": "time", "y-variableName": "value", "dimensionName": "dimension", "time": "2021", "value": 480, "dimension": "Anti-social behaviour" },
+              { "x-variableName": "time", "y-variableName": "value", "dimensionName": "dimension", "time": "2022", "value": 510, "dimension": "Anti-social behaviour" },
+              { "x-variableName": "time", "y-variableName": "value", "dimensionName": "dimension", "time": "2023", "value": 550, "dimension": "Anti-social behaviour" }
+            ],
+            "Burglary": [
+              { "x-variableName": "time", "y-variableName": "value", "dimensionName": "dimension", "time": "2020", "value": 280, "dimension": "Burglary" },
+              { "x-variableName": "time", "y-variableName": "value", "dimensionName": "dimension", "time": "2021", "value": 320, "dimension": "Burglary" },
+              { "x-variableName": "time", "y-variableName": "value", "dimensionName": "dimension", "time": "2022", "value": 350, "dimension": "Burglary" },
+              { "x-variableName": "time", "y-variableName": "value", "dimensionName": "dimension", "time": "2023", "value": 380, "dimension": "Burglary" }
+            ]
+          },
+          "schema": {
+            "time": "string - Time period (year, month, date, etc.)",
+            "value": "number - Numeric value for the metric",
+            "dimension": "string - The dimension/category name for switching"
+          }
+        }
+      },
+      "dimensionHandling": {
+        "textTruncation": {
+          "small": "6 characters + '...'",
+          "medium": "10 characters + '...'",
+          "large": "12 characters + '...'"
+        },
+        "maxDimensions": "No strict limit, but UI optimized for 4-6 dimensions"
+      },
+      "chartDimensions": {
+        "small": { "width": 120, "height": "50px (with dimensions) / 60px (without)" },
+        "medium": { "width": 280, "height": "100px (with dimensions) / 120px (without)" },
+        "large": { "width": 400, "height": "150px (with dimensions) / 180px (without)" }
+      }
+    },
+    
+    "multiLineChart": {
+      "description": "Template for generating multi-line chart with multiple series on the same time axis",
+      "chartType": "multiLine",
+      "supportedModes": ["2D", "3D"],
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing time/category data",
+          "column": "string - Column name for time/category axis"
+        },
+        "metric": "string - The metric being measured (e.g., 'Count', 'Value', 'Cases')",
+        "seriesField": "string - Field name for different series/lines",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Multiple series time series data without dimension switching",
+          "example": [
+            { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "time": "2020", "value": 450, "series": "Series A" },
+            { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "time": "2021", "value": 520, "series": "Series A" },
+            { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "time": "2022", "value": 580, "series": "Series A" },
+            { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "time": "2023", "value": 620, "series": "Series A" },
+            { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "time": "2020", "value": 380, "series": "Series B" },
+            { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "time": "2021", "value": 420, "series": "Series B" },
+            { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "time": "2022", "value": 460, "series": "Series B" },
+            { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "time": "2023", "value": 500, "series": "Series B" }
+          ],
+          "schema": {
+            "time": "string - Time period (year, month, date, etc.)",
+            "value": "number - Numeric value for the metric",
+            "series": "string - Series identifier for multiple lines"
+          }
+        },
+        "3D": {
+          "description": "Multi-series data with dimension switching capability",
+          "dimensions": ["Crime Type", "Borough Comparison", "Age Groups", "Income Levels"],
+          "example": {
+            "Crime Type": [
+              { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "dimensionName": "dimension", "time": "2020", "value": 420, "series": "Anti-social behaviour", "dimension": "Crime Type" },
+              { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "dimensionName": "dimension", "time": "2021", "value": 480, "series": "Anti-social behaviour", "dimension": "Crime Type" },
+              { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "dimensionName": "dimension", "time": "2020", "value": 280, "series": "Burglary", "dimension": "Crime Type" },
+              { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "dimensionName": "dimension", "time": "2021", "value": 320, "series": "Burglary", "dimension": "Crime Type" }
+            ],
+            "Borough Comparison": [
+              { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "dimensionName": "dimension", "time": "2020", "value": 520, "series": "Camden", "dimension": "Borough Comparison" },
+              { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "dimensionName": "dimension", "time": "2021", "value": 580, "series": "Camden", "dimension": "Borough Comparison" },
+              { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "dimensionName": "dimension", "time": "2020", "value": 480, "series": "Westminster", "dimension": "Borough Comparison" },
+              { "x-variableName": "time", "y-variableName": "value", "seriesName": "series", "dimensionName": "dimension", "time": "2021", "value": 540, "series": "Westminster", "dimension": "Borough Comparison" }
+            ]
+          },
+          "schema": {
+            "time": "string - Time period (year, month, date, etc.)",
+            "value": "number - Numeric value for the metric",
+            "series": "string - Series identifier for multiple lines",
+            "dimension": "string - The dimension/category name for switching"
+          }
+        }
+      },
+      "seriesConfiguration": {
+        "maxSeries": "6 series recommended for readability",
+        "colorScheme": ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#1E40AF", "#F59E0B"],
+        "legendPosition": "right or bottom based on space"
+      },
+      "chartDimensions": {
+        "small": { "width": 120, "height": "50px (with dimensions) / 60px (without)" },
+        "medium": { "width": 280, "height": "100px (with dimensions) / 120px (without)" },
+        "large": { "width": 400, "height": "150px (with dimensions) / 180px (without)" }
+      }
+    },
+    
+    "comboBarLineChart": {
+      "description": "Template for generating combo chart with bars and line on different y-axes",
+      "chartType": "comboBarLine",
+      "supportedModes": ["2D", "3D"],
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing category data",
+          "column": "string - Column name for x-axis categories"
+        },
+        "barMetric": "string - The metric for bar chart (e.g., 'Count', 'Volume')",
+        "lineMetric": "string - The metric for line chart (e.g., 'Rate', 'Percentage')",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Combined bar and line data without dimension switching",
+          "example": [
+            { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "category": "Q1", "barValue": 450, "lineValue": 75.5 },
+            { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "category": "Q2", "barValue": 520, "lineValue": 82.3 },
+            { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "category": "Q3", "barValue": 580, "lineValue": 78.9 },
+            { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "category": "Q4", "barValue": 620, "lineValue": 85.2 }
+          ],
+          "schema": {
+            "category": "string - X-axis category (time, region, etc.)",
+            "barValue": "number - Numeric value for bar chart (left y-axis)",
+            "lineValue": "number - Numeric value for line chart (right y-axis)"
+          }
+        },
+        "3D": {
+          "description": "Multi-dimensional combo data with dimension switching",
+          "dimensions": ["By Region", "By Product", "By Season", "By Department"],
+          "example": {
+            "By Region": [
+              { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "dimensionName": "dimension", "category": "North", "barValue": 420, "lineValue": 73.8, "dimension": "By Region" },
+              { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "dimensionName": "dimension", "category": "South", "barValue": 380, "lineValue": 68.5, "dimension": "By Region" },
+              { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "dimensionName": "dimension", "category": "East", "barValue": 510, "lineValue": 79.2, "dimension": "By Region" },
+              { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "dimensionName": "dimension", "category": "West", "barValue": 460, "lineValue": 76.1, "dimension": "By Region" }
+            ],
+            "By Product": [
+              { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "dimensionName": "dimension", "category": "Product A", "barValue": 320, "lineValue": 88.3, "dimension": "By Product" },
+              { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "dimensionName": "dimension", "category": "Product B", "barValue": 280, "lineValue": 92.7, "dimension": "By Product" },
+              { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "dimensionName": "dimension", "category": "Product C", "barValue": 410, "lineValue": 75.9, "dimension": "By Product" },
+              { "x-variableName": "category", "barVariableName": "barValue", "lineVariableName": "lineValue", "dimensionName": "dimension", "category": "Product D", "barValue": 360, "lineValue": 83.4, "dimension": "By Product" }
+            ]
+          },
+          "schema": {
+            "category": "string - X-axis category",
+            "barValue": "number - Numeric value for bar chart (left y-axis)",
+            "lineValue": "number - Numeric value for line chart (right y-axis)",
+            "dimension": "string - The dimension/category name for switching"
+          }
+        }
+      },
+      "axisConfiguration": {
+        "leftAxis": "Bar chart metric (quantitative scale)",
+        "rightAxis": "Line chart metric (independent quantitative scale)",
+        "xAxis": "Categorical or temporal axis shared by both"
+      },
+      "visualConfiguration": {
+        "barOpacity": 0.7,
+        "lineStrokeWidth": 3,
+        "barColor": "#2B7A9B",
+        "lineColor": "#8B5CF6",
+        "pointSize": 60
+      },
+      "chartDimensions": {
+        "small": { "width": 120, "height": "50px (with dimensions) / 60px (without)" },
+        "medium": { "width": 280, "height": "100px (with dimensions) / 120px (without)" },
+        "large": { "width": 400, "height": "150px (with dimensions) / 180px (without)" }
+      }
+    },
+    
+    "barChart": {
+      "description": "Template for generating simple bar chart variations for ranking comparisons",
+      "chartType": "bar",
+      "supportedModes": ["2D", "3D"],
+      "variations": {
+        "simple_bar": "Basic horizontal/vertical bar chart for ranking comparisons",
+        "bar_with_mean": "Bar chart with mean line overlay for comparison reference",
+        "bar_with_threshold": "Bar chart with threshold line and beyond-threshold highlighting",
+        "bar_with_mean_threshold": "Bar chart with both mean overlay and threshold animations"
+      },
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing category data",
+          "column": "string - Column name for categories (boroughs, regions, etc.)"
+        },
+        "metric": "string - The metric being measured (e.g., 'Crime Count', 'Population', 'Cases')",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "orientation": "string (optional) - 'horizontal' or 'vertical' (default: 'horizontal' for rankings)",
+        "sortOrder": "string (optional) - 'ascending', 'descending', or 'none' (default: 'descending' for rankings)",
+        "showMean": "boolean (optional) - Whether to show mean line overlay",
+        "meanValue": "number (optional) - Custom mean value, calculated automatically if not provided",
+        "showThreshold": "boolean (optional) - Whether to show threshold line",
+        "thresholdValue": "number (optional) - Threshold value for beyond-threshold highlighting",
+        "thresholdAnimation": "string (optional) - 'highlight', 'pulse', 'color_change' animation for beyond-threshold bars",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Simple ranking data without dimension switching",
+          "example": [
+            { "categoryName": "category", "valueName": "value", "category": "Camden", "value": 1240 },
+            { "categoryName": "category", "valueName": "value", "category": "Westminster", "value": 980 },
+            { "categoryName": "category", "valueName": "value", "category": "Hackney", "value": 850 },
+            { "categoryName": "category", "valueName": "value", "category": "Islington", "value": 720 },
+            { "categoryName": "category", "valueName": "value", "category": "Tower Hamlets", "value": 650 },
+            { "categoryName": "category", "valueName": "value", "category": "Southwark", "value": 580 }
+          ],
+          "schema": {
+            "category": "string - Category name (borough, region, product, etc.)",
+            "value": "number - Numeric value for ranking"
+          }
+        },
+        "3D": {
+          "description": "Multi-dimensional bar data with dimension switching capability",
+          "dimensions": ["Crime Type", "Borough Ranking", "Seasonal Analysis", "Age Group Analysis"],
+          "example": {
+            "Crime Type": [
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Anti-social behaviour", "value": 2400, "dimension": "Crime Type" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Violent crime", "value": 1980, "dimension": "Crime Type" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Burglary", "value": 1650, "dimension": "Crime Type" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Vehicle crime", "value": 1420, "dimension": "Crime Type" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Other theft", "value": 1180, "dimension": "Crime Type" }
+            ],
+            "Borough Ranking": [
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Camden", "value": 1240, "dimension": "Borough Ranking" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Westminster", "value": 980, "dimension": "Borough Ranking" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Hackney", "value": 850, "dimension": "Borough Ranking" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Islington", "value": 720, "dimension": "Borough Ranking" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Tower Hamlets", "value": 650, "dimension": "Borough Ranking" }
+            ]
+          },
+          "schema": {
+            "category": "string - Category name",
+            "value": "number - Numeric value for ranking",
+            "dimension": "string - The dimension/analysis type name for switching"
+          }
+        }
+      },
+      "meanOverlayConfiguration": {
+        "automaticCalculation": "Mean calculated from data values when meanValue not provided",
+        "visualStyle": {
+          "lineColor": "#EF4444",
+          "lineWidth": 2,
+          "lineDash": [5, 5],
+          "labelPosition": "right",
+          "labelText": "Mean: {value}",
+          "labelColor": "#EF4444",
+          "labelFontSize": "size-responsive: small(8px), medium(10px), large(12px)"
+        }
+      },
+      "thresholdConfiguration": {
+        "visualStyle": {
+          "lineColor": "#F59E0B",
+          "lineWidth": 2,
+          "lineDash": [3, 3],
+          "labelPosition": "right",
+          "labelText": "Threshold: {value}",
+          "labelColor": "#F59E0B"
+        },
+        "beyondThresholdHighlighting": {
+          "highlight": {
+            "barOpacity": 1.0,
+            "normalOpacity": 0.6,
+            "highlightColor": "#DC2626",
+            "normalColor": "default"
+          },
+          "pulse": {
+            "animationDuration": "2s",
+            "pulseOpacity": [0.7, 1.0, 0.7],
+            "pulseColor": "#DC2626"
+          },
+          "color_change": {
+            "beyondColor": "#DC2626",
+            "belowColor": "#10B981",
+            "transitionDuration": "0.3s"
+          }
+        }
+      },
+      "colorScheme": "#3B82F6",
+      "chartDimensions": {
+        "small": { 
+          "width": 150, 
+          "height": "70px (with dimensions) / 80px (without)",
+          "barHeight": "12px",
+          "spacing": "2px"
+        },
+        "medium": { 
+          "width": 300, 
+          "height": "140px (with dimensions) / 160px (without)",
+          "barHeight": "20px",
+          "spacing": "4px"
+        },
+        "large": { 
+          "width": 450, 
+          "height": "210px (with dimensions) / 240px (without)",
+          "barHeight": "28px",
+          "spacing": "6px"
+        }
+      }
+    },
+    
+    "groupedBarChart": {
+      "description": "Template for generating grouped bar charts for multi-series comparisons with optional mean and threshold overlays",
+      "chartType": "groupedBar",
+      "supportedModes": ["2D", "3D"],
+      "variations": {
+        "simple_grouped": "Basic grouped bar chart for comparing multiple series",
+        "grouped_with_mean": "Grouped bar chart with mean line overlay for each series or overall",
+        "grouped_with_threshold": "Grouped bar chart with threshold line and highlighting",
+        "grouped_with_mean_threshold": "Grouped bar chart with both mean overlay and threshold features"
+      },
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing category data",
+          "column": "string - Column name for categories"
+        },
+        "metric": "string - The metric being measured",
+        "seriesField": "string - Field name for different series/groups",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "orientation": "string (optional) - 'horizontal' or 'vertical' (default: 'vertical' for grouped)",
+        "sortOrder": "string (optional) - 'ascending', 'descending', or 'none'",
+        "showMean": "boolean (optional) - Whether to show mean line overlay",
+        "meanCalculation": "string (optional) - 'overall', 'per_series', or 'per_category'",
+        "showThreshold": "boolean (optional) - Whether to show threshold line",
+        "thresholdValue": "number (optional) - Threshold value for highlighting",
+        "thresholdAnimation": "string (optional) - Animation type for beyond-threshold bars",
+        "numberOfGroups": "number (optional) - Number of groups/series in the grouped bar chart (1-4, randomly selected if not specified)",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Grouped bar data for multi-series comparisons",
+          "example": [
+            { "categoryName": "category", "valueName": "value", "seriesName": "series", "category": "Camden", "value": 1240, "series": "2022" },
+            { "categoryName": "category", "valueName": "value", "seriesName": "series", "category": "Camden", "value": 1180, "series": "2023" },
+            { "categoryName": "category", "valueName": "value", "seriesName": "series", "category": "Westminster", "value": 980, "series": "2022" },
+            { "categoryName": "category", "valueName": "value", "seriesName": "series", "category": "Westminster", "value": 920, "series": "2023" },
+            { "categoryName": "category", "valueName": "value", "seriesName": "series", "category": "Hackney", "value": 850, "series": "2022" },
+            { "categoryName": "category", "valueName": "value", "seriesName": "series", "category": "Hackney", "value": 810, "series": "2023" }
+          ],
+          "schema": {
+            "category": "string - Category name",
+            "value": "number - Numeric value for ranking",
+            "series": "string - Series identifier (year, type, etc.)"
+          }
+        },
+        "3D": {
+          "description": "Multi-dimensional grouped bar data with dimension switching",
+          "dimensions": ["Year Comparison", "Crime Type Analysis", "Regional Analysis"],
+          "example": {
+            "Year Comparison": [
+              { "categoryName": "category", "valueName": "value", "seriesName": "series", "dimensionName": "dimension", "category": "Camden", "value": 1240, "series": "2022", "dimension": "Year Comparison" },
+              { "categoryName": "category", "valueName": "value", "seriesName": "series", "dimensionName": "dimension", "category": "Camden", "value": 1180, "series": "2023", "dimension": "Year Comparison" }
+            ]
+          },
+          "schema": {
+            "category": "string - Category name",
+            "value": "number - Numeric value",
+            "series": "string - Series identifier",
+            "dimension": "string - Dimension name for switching"
+          }
+        }
+      },
+      "colorScheme": ["#3B82F6", "#8B5CF6", "#06B6D4", "#10B981"],
+      "chartDimensions": {
+        "small": { "width": 180, "height": "80px (with dimensions) / 90px (without)" },
+        "medium": { "width": 350, "height": "160px (with dimensions) / 180px (without)" },
+        "large": { "width": 500, "height": "240px (with dimensions) / 270px (without)" }
+      }
+    },
+    
+    "stackedBarChart": {
+      "description": "Template for generating stacked bar charts showing composition within categories with optional overlays",
+      "chartType": "stackedBar",
+      "supportedModes": ["2D", "3D"],
+      "variations": {
+        "simple_stacked": "Basic stacked bar chart showing composition",
+        "stacked_with_mean": "Stacked bar chart with mean line overlay for totals",
+        "stacked_with_threshold": "Stacked bar chart with threshold line and highlighting",
+        "stacked_with_mean_threshold": "Stacked bar chart with both mean and threshold features"
+      },
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing category data",
+          "column": "string - Column name for categories"
+        },
+        "metric": "string - The metric being measured",
+        "stackField": "string - Field name for different stack segments",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "orientation": "string (optional) - 'horizontal' or 'vertical' (default: 'horizontal' for composition)",
+        "sortOrder": "string (optional) - 'ascending', 'descending', or 'none' (based on totals)",
+        "showMean": "boolean (optional) - Whether to show mean line overlay for totals",
+        "showThreshold": "boolean (optional) - Whether to show threshold line",
+        "thresholdValue": "number (optional) - Threshold value for total highlighting",
+        "thresholdAnimation": "string (optional) - Animation type for beyond-threshold bars",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Stacked bar data showing composition within categories",
+          "example": [
+            { "categoryName": "category", "valueName": "value", "stackName": "stack", "category": "Camden", "value": 740, "stack": "Violent Crime" },
+            { "categoryName": "category", "valueName": "value", "stackName": "stack", "category": "Camden", "value": 500, "stack": "Property Crime" },
+            { "categoryName": "category", "valueName": "value", "stackName": "stack", "category": "Westminster", "value": 580, "stack": "Violent Crime" },
+            { "categoryName": "category", "valueName": "value", "stackName": "stack", "category": "Westminster", "value": 400, "stack": "Property Crime" },
+            { "categoryName": "category", "valueName": "value", "stackName": "stack", "category": "Hackney", "value": 510, "stack": "Violent Crime" },
+            { "categoryName": "category", "valueName": "value", "stackName": "stack", "category": "Hackney", "value": 340, "stack": "Property Crime" }
+          ],
+          "schema": {
+            "category": "string - Category name",
+            "value": "number - Numeric value for each stack segment",
+            "stack": "string - Stack segment identifier"
+          }
+        },
+        "3D": {
+          "description": "Multi-dimensional stacked bar data with dimension switching",
+          "dimensions": ["Crime Breakdown", "Seasonal Breakdown", "Age Group Breakdown"],
+          "example": {
+            "Crime Breakdown": [
+              { "categoryName": "category", "valueName": "value", "stackName": "stack", "dimensionName": "dimension", "category": "Camden", "value": 740, "stack": "Violent Crime", "dimension": "Crime Breakdown" },
+              { "categoryName": "category", "valueName": "value", "stackName": "stack", "dimensionName": "dimension", "category": "Camden", "value": 500, "stack": "Property Crime", "dimension": "Crime Breakdown" }
+            ]
+          },
+          "schema": {
+            "category": "string - Category name",
+            "value": "number - Numeric value for stack segment",
+            "stack": "string - Stack segment identifier",
+            "dimension": "string - Dimension name for switching"
+          }
+        }
+      },
+      "colorScheme": ["#1E40AF", "#3B82F6", "#60A5FA", "#93C5FD", "#DBEAFE"],
+      "chartDimensions": {
+        "small": { "width": 180, "height": "80px (with dimensions) / 90px (without)" },
+        "medium": { "width": 350, "height": "160px (with dimensions) / 180px (without)" },
+        "large": { "width": 500, "height": "240px (with dimensions) / 270px (without)" }
+      }
+    },
+    
+    "divergentBar": {
+      "description": "Template for generating horizontal diverging bar charts showing positive/negative comparisons from a center point",
+      "chartType": "horizontalDivergingBar",
+      "supportedModes": ["2D", "3D"],
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing category data",
+          "column": "string - Column name for categories"
+        },
+        "positiveMetric": "string - The positive metric being measured (e.g., 'Growth', 'Increase')",
+        "negativeMetric": "string - The negative metric being measured (e.g., 'Decline', 'Decrease')",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "centerValue": "number (optional) - Center point for divergence (default: 0)",
+        "showCenterLine": "boolean (optional) - Whether to show center reference line",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Diverging data showing positive and negative values from center",
+          "example": [
+            { "categoryName": "category", "valueName": "value", "category": "Camden", "value": 15.3 },
+            { "categoryName": "category", "valueName": "value", "category": "Westminster", "value": 8.7 },
+            { "categoryName": "category", "valueName": "value", "category": "Hackney", "value": -4.2 },
+            { "categoryName": "category", "valueName": "value", "category": "Islington", "value": 12.1 },
+            { "categoryName": "category", "valueName": "value", "category": "Tower Hamlets", "value": -8.9 },
+            { "categoryName": "category", "valueName": "value", "category": "Southwark", "value": -12.4 }
+          ],
+          "schema": {
+            "category": "string - Category name (borough, region, product, etc.)",
+            "value": "number - Numeric value (positive or negative) for diverging comparison"
+          }
+        },
+        "3D": {
+          "description": "Multi-dimensional diverging data with dimension switching capability",
+          "dimensions": ["Population Change", "Economic Growth", "Crime Rate Change", "Employment Change"],
+          "example": {
+            "Population Change": [
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Camden", "value": 15.3, "dimension": "Population Change" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Westminster", "value": 8.7, "dimension": "Population Change" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Hackney", "value": -4.2, "dimension": "Population Change" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Islington", "value": 12.1, "dimension": "Population Change" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Tower Hamlets", "value": -8.9, "dimension": "Population Change" }
+            ],
+            "Economic Growth": [
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Camden", "value": 22.4, "dimension": "Economic Growth" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Westminster", "value": 18.2, "dimension": "Economic Growth" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Hackney", "value": -2.1, "dimension": "Economic Growth" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Islington", "value": 14.8, "dimension": "Economic Growth" },
+              { "categoryName": "category", "valueName": "value", "dimensionName": "dimension", "category": "Tower Hamlets", "value": -6.3, "dimension": "Economic Growth" }
+            ]
+          },
+          "schema": {
+            "category": "string - Category name",
+            "value": "number - Numeric value (positive or negative) for diverging comparison",
+            "dimension": "string - The dimension/analysis type name for switching"
+          }
+        }
+      },
+      "visualConfiguration": {
+        "positiveColor": "#10B981",
+        "negativeColor": "#EF4444",
+        "centerLineColor": "#6B7280",
+        "centerLineWidth": 1,
+        "centerLineDash": [2, 2]
+      },
+      "chartDimensions": {
+        "small": { 
+          "width": 200, 
+          "height": "80px (with dimensions) / 90px (without)",
+          "barHeight": "14px",
+          "spacing": "3px"
+        },
+        "medium": { 
+          "width": 350, 
+          "height": "160px (with dimensions) / 180px (without)",
+          "barHeight": "22px",
+          "spacing": "5px"
+        },
+        "large": { 
+          "width": 500, 
+          "height": "240px (with dimensions) / 270px (without)",
+          "barHeight": "30px",
+          "spacing": "7px"
+        }
+      }
+    },
+    
+    "donutChart": {
+      "description": "Template for generating donut/pie chart data and configurations",
+      "chartType": "donut",
+      "supportedModes": ["2D", "3D"],
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing category data",
+          "column": "string - Column name for categories"
+        },
+        "metric": "string - The metric being measured (e.g., 'Count', 'Percentage', 'Cases')",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Simple categorical data without dimension switching",
+          "example": [
+            { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "category": "Anti-social behaviour", "value": 320, "percentage": 28.5 },
+            { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "category": "Violent crime", "value": 280, "percentage": 24.9 },
+            { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "category": "Burglary", "value": 180, "percentage": 16.0 },
+            { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "category": "Vehicle crime", "value": 150, "percentage": 13.4 },
+            { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "category": "Other theft", "value": 195, "percentage": 17.3 }
+          ],
+          "schema": {
+            "category": "string - Category name for the slice",
+            "value": "number - Numeric value for the slice",
+            "percentage": "number - Percentage value for the slice"
+          }
+        },
+        "3D": {
+          "description": "Multi-dimensional categorical data with dimension switching",
+          "dimensions": ["2020", "2021", "2022", "2023"],
+          "example": {
+            "2020": [
+              { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "dimensionName": "dimension", "category": "Anti-social behaviour", "value": 300, "percentage": 26.5, "dimension": "2020" },
+              { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "dimensionName": "dimension", "category": "Violent crime", "value": 250, "percentage": 22.1, "dimension": "2020" },
+              { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "dimensionName": "dimension", "category": "Burglary", "value": 160, "percentage": 14.2, "dimension": "2020" },
+              { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "dimensionName": "dimension", "category": "Vehicle crime", "value": 140, "percentage": 12.4, "dimension": "2020" },
+              { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "dimensionName": "dimension", "category": "Other theft", "value": 280, "percentage": 24.8, "dimension": "2020" }
+            ],
+            "2021": [
+              { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "dimensionName": "dimension", "category": "Anti-social behaviour", "value": 320, "percentage": 28.1, "dimension": "2021" },
+              { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "dimensionName": "dimension", "category": "Violent crime", "value": 270, "percentage": 23.7, "dimension": "2021" },
+              { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "dimensionName": "dimension", "category": "Burglary", "value": 170, "percentage": 14.9, "dimension": "2021" },
+              { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "dimensionName": "dimension", "category": "Vehicle crime", "value": 145, "percentage": 12.7, "dimension": "2021" },
+              { "categoryName": "category", "valueName": "value", "percentageName": "percentage", "dimensionName": "dimension", "category": "Other theft", "value": 235, "percentage": 20.6, "dimension": "2021" }
+            ]
+          },
+          "schema": {
+            "category": "string - Category name for the slice",
+            "value": "number - Numeric value for the slice",
+            "percentage": "number - Percentage value for the slice",
+            "dimension": "string - The dimension/time period name for switching"
+          }
+        }
+      },
+      "dimensionHandling": {
+        "textTruncation": {
+          "small": "6 characters + '...'",
+          "medium": "10 characters + '...'",
+          "large": "12 characters + '...'"
+        },
+        "maxDimensions": "No strict limit, but UI optimized for 4-6 dimensions"
+      },
+      "chartDimensions": {
+        "small": { "width": "90px (with dimensions) / 100px (without)", "height": "80px (with dimensions) / 100px (without)" },
+        "medium": { "width": "180px (with dimensions) / 200px (without)", "height": "160px (with dimensions) / 200px (without)" },
+        "large": { "width": "250px (with dimensions) / 280px (without)", "height": "220px (with dimensions) / 280px (without)" }
+      },
+      "legendConfiguration": {
+        "position": "right",
+        "fontSizes": {
+          "small": { "title": "6px", "label": "5px" },
+          "medium": { "title": "10px", "label": "9px" },
+          "large": { "title": "12px", "label": "11px" }
+        }
+      }
+    }
+  },
+  
+  "commonGuidelines": {
+    "dataGeneration": {
+      "useConcreteValues": "Always provide concrete numeric values, avoid Math.random() for consistent rendering",
+      "dataConsistency": "Ensure percentages add up to 100% for donut charts",
+      "timeSeriesPattern": "For line charts, show realistic trend patterns (gradual increase/decrease)"
+    },
+    "dimensionNaming": {
+      "meaningful": "Use meaningful dimension names like 'Anti-social behaviour', 'Vehicle crime' instead of generic 'Category A', 'Category B'",
+      "consistency": "Keep dimension names consistent across all data points within the same dimension"
+    },
+    "sizingGuidelines": {
+      "small": "Optimized for node previews, minimal text, compact dimensions",
+      "medium": "Standard dashboard size, balanced text and chart area",
+      "large": "Detail view, full text display, spacious layout"
+    },
+    "colorSchemes": {
+      "lineChart": "#8B5CF6 (primary purple)",
+      "donutChart": ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#1E40AF", "#F59E0B"],
+      "multiLineChart": ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#1E40AF", "#F59E0B"],
+      "comboBarLineChart": { "bar": "#2B7A9B", "line": "#8B5CF6" },
+      "barChart": "#3B82F6",
+      "groupedBarChart": ["#3B82F6", "#8B5CF6", "#06B6D4", "#10B981"],
+      "stackedBarChart": ["#1E40AF", "#3B82F6", "#60A5FA", "#93C5FD", "#DBEAFE"],
+      "horizontalDivergingBarChart": { "positive": "#10B981", "negative": "#EF4444", "center": "#6B7280" },
+      "overlayLines": {
+        "mean_line": "#EF4444",
+        "threshold_line": "#F59E0B",
+        "above_threshold": "#DC2626",
+        "below_threshold": "#10B981"
+      }
+    }
+  },
+  
+  "llmInstructions": {
+    "dataCreation": {
+      "step1": "Identify chart type (line, donut, multiLine, comboBarLine, bar, groupedBar, stackedBar, or horizontalDivergingBar) and mode (2D or 3D)",
+      "step2": "Generate meaningful dimension names based on context",
+      "step3": "Create realistic data values following the schema",
+      "step4": "Ensure data consistency (percentages, trends, realistic ranges)",
+      "step5": "Apply proper variable naming using the template structure",
+      "step6": "For bar charts, determine if mean/threshold overlays are needed"
+    },
+    "variableMapping": {
+      "lineChart": {
+        "xAxis": "time field - temporal or ordinal data",
+        "yAxis": "value field - quantitative metric",
+        "dimension": "dimension field - categorical switching variable"
+      },
+      "multiLineChart": {
+        "xAxis": "time field - temporal or ordinal data",
+        "yAxis": "value field - quantitative metric",
+        "series": "series field - categorical line identifier",
+        "dimension": "dimension field - categorical switching variable"
+      },
+      "comboBarLineChart": {
+        "xAxis": "category field - categorical or temporal data",
+        "yAxisLeft": "barValue field - quantitative metric for bars",
+        "yAxisRight": "lineValue field - quantitative metric for line",
+        "dimension": "dimension field - categorical switching variable"
+      },
+      "donutChart": {
+        "categories": "category field - categorical slices",
+        "values": "value field - quantitative size of slices",
+        "percentages": "percentage field - relative proportion",
+        "dimension": "dimension field - categorical switching variable"
+      },
+      "barChart": {
+        "xAxis": "category field - categorical data for ranking",
+        "yAxis": "value field - quantitative metric for comparison",
+        "dimension": "dimension field - categorical switching variable"
+      },
+      "groupedBarChart": {
+        "xAxis": "category field - categorical data for grouping",
+        "yAxis": "value field - quantitative metric for comparison",
+        "series": "series field - for grouping bars within categories",
+        "dimension": "dimension field - categorical switching variable"
+      },
+      "stackedBarChart": {
+        "xAxis": "category field - categorical data for stacking",
+        "yAxis": "value field - quantitative metric for stack segments",
+        "stack": "stack field - for different segments within bars",
+        "dimension": "dimension field - categorical switching variable"
+      },
+      "horizontalDivergingBarChart": {
+        "xAxis": "value field - quantitative metric (positive or negative)",
+        "yAxis": "category field - categorical data for comparison",
+        "dimension": "dimension field - categorical switching variable"
+      }
+    },
+    "chartSpecificGuidelines": {
+      "multiLineChart": {
+        "seriesNaming": "Use meaningful series names like 'Camden', 'Westminster' or 'Anti-social behaviour', 'Burglary'",
+        "dataStructure": "Each time point should have entries for all series",
+        "colorDistribution": "Assign consistent colors to each series across time periods"
+      },
+      "comboBarLineChart": {
+        "dualMetrics": "Ensure bar and line metrics have different scales and meanings (e.g., volume vs rate)",
+        "axisLabeling": "Use descriptive axis labels that explain the different metrics",
+        "dataAlignment": "Each category should have both bar and line values"
+      },
+      "barChart": {
+        "rankingContext": "Use meaningful category names for ranking comparisons (boroughs, products, regions)",
+        "dataOrdering": "Provide data in logical ranking order (typically descending for most metrics)",
+        "meanCalculation": "Calculate realistic mean values that provide meaningful comparison reference",
+        "thresholdSelection": "Choose threshold values that create meaningful above/below distinctions"
+      },
+      "groupedBarChart": {
+        "seriesConsistency": "Ensure all categories have values for all series",
+        "groupingLogic": "Use meaningful grouping (e.g., years, types, regions)",
+        "meanOptions": "Mean can be calculated overall, per series, or per category",
+        "comparisonContext": "Highlight differences between groups within categories"
+      },
+      "stackedBarChart": {
+        "stackConsistency": "Ensure stack segments sum to meaningful totals",
+        "compositionLogic": "Use segments that represent parts of a whole",
+        "meanCalculation": "Mean typically calculated on total values (sum of all stacks)",
+        "proportionalMeaning": "Each stack should represent a meaningful component"
+      },
+      "horizontalDivergingBarChart": {
+        "divergingData": "Use data with both positive and negative values from a center point",
+        "centerPoint": "Define meaningful center point (usually 0, baseline, or average)",
+        "categoryOrdering": "Order categories by magnitude or logical grouping",
+        "valueRange": "Ensure reasonable range for both positive and negative values",
+        "comparisonContext": "Use for showing change, variance, or performance relative to baseline"
+      }
+    }
+  }
+}

@@ -1,0 +1,434 @@
+{
+  "dataset_id": "voa-average-rent-pivot-table",
+  "dataset_name": "VOA Average Rent Pivot Table",
+  "category": "private-rent",
+  "description": "VOA average rent pivot table by borough",
+  "file_path": "/dataset/london/private-rent/voa-average-rent-borough_Pivot-Table.csv",
+  "field_roles": [
+    {
+      "name": "Code",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "E09000002",
+        "E09000003",
+        "E09000004"
+      ]
+    },
+    {
+      "name": "Area",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Barking and Dagenham",
+        "Barnet",
+        "Bexley"
+      ]
+    },
+    {
+      "name": "1647",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        450,
+        2297,
+        1119.86
+      ]
+    },
+    {
+      "name": "1690",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        450,
+        2167,
+        994.42
+      ]
+    },
+    {
+      "name": "1517",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        450,
+        2145,
+        1008.44
+      ]
+    },
+    {
+      "name": "1712",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        450,
+        2080,
+        1022.81
+      ]
+    },
+    {
+      "name": "1712",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        450,
+        2080,
+        1022.81
+      ]
+    },
+    {
+      "name": "1733",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        425,
+        2167,
+        1048.49
+      ]
+    },
+    {
+      "name": "1733",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        425,
+        2167,
+        1048.49
+      ]
+    },
+    {
+      "name": "1668",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        450,
+        2275,
+        1088.53
+      ]
+    },
+    {
+      "name": "1647",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        450,
+        2297,
+        1119.86
+      ]
+    },
+    {
+      "name": "1798",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        450,
+        2351,
+        1124.53
+      ]
+    },
+    {
+      "name": "1863",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        465,
+        2253,
+        1153.3
+      ]
+    },
+    {
+      "name": "1928",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        475,
+        2383,
+        1202.16
+      ]
+    },
+    {
+      "name": "2102",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        475,
+        2492,
+        1277.81
+      ]
+    },
+    {
+      "name": "2102",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        475,
+        2492,
+        1277.81
+      ]
+    },
+    {
+      "name": "2145",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        480,
+        2492,
+        1290.09
+      ]
+    },
+    {
+      "name": "2058",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2611,
+        1300.91
+      ]
+    },
+    {
+      "name": "1950",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2795,
+        1292.37
+      ]
+    },
+    {
+      "name": "1925",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2265,
+        1272.35
+      ]
+    },
+    {
+      "name": "2117",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2383,
+        1295.05
+      ]
+    },
+    {
+      "name": "2210",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1310.67
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "choropleth_map",
+      "description": "Geographic distribution of metrics",
+      "encoding": {
+        "geo": {
+          "name": "Area",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barking and Dagenham",
+            "Barnet",
+            "Bexley"
+          ]
+        },
+        "color": {
+          "name": "1647",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            450,
+            2297,
+            1119.86
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "Area",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barking and Dagenham",
+            "Barnet",
+            "Bexley"
+          ]
+        },
+        "y": {
+          "name": "1647",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            450,
+            2297,
+            1119.86
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Category comparison",
+      "encoding": {
+        "x": {
+          "name": "Code",
+          "type": "text",
+          "roles": [
+            "category"
+          ],
+          "sample_values": [
+            "E09000002",
+            "E09000003",
+            "E09000004"
+          ]
+        },
+        "y": {
+          "name": "1647",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            450,
+            2297,
+            1119.86
+          ]
+        }
+      }
+    },
+    {
+      "type": "stacked_bar_chart",
+      "description": "Multi-category analysis",
+      "encoding": {
+        "x": {
+          "name": "Code",
+          "type": "text",
+          "roles": [
+            "category"
+          ],
+          "sample_values": [
+            "E09000002",
+            "E09000003",
+            "E09000004"
+          ]
+        },
+        "y": {
+          "name": "1647",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            450,
+            2297,
+            1119.86
+          ]
+        },
+        "color": {
+          "name": "Area",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barking and Dagenham",
+            "Barnet",
+            "Bexley"
+          ]
+        }
+      }
+    },
+    {
+      "type": "histogram",
+      "description": "Distribution analysis",
+      "encoding": {
+        "x": {
+          "name": "1647",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            450,
+            2297,
+            1119.86
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.723Z"
+}

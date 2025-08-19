@@ -165,6 +165,18 @@ const FileSummaryCard: React.FC<{ summary: FileSummary }> = ({ summary }) => {
                 </ul>
               </div>
             )}
+            
+            {/* Enhanced Metadata Information */}
+            {summary.file.file_summary && (
+              <div className="mt-3 p-3 bg-blue-50 rounded border">
+                <h5 className="font-medium text-blue-900 mb-2 text-sm">Enhanced Metadata Available</h5>
+                <div className="text-xs text-blue-700 space-y-1">
+                  <div>✓ Pre-analyzed column types and examples</div>
+                  <div>✓ Statistical summaries and value ranges</div>
+                  <div>✓ Data samples for quick preview</div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -201,7 +213,7 @@ const FileSummaryCard: React.FC<{ summary: FileSummary }> = ({ summary }) => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {summary.columns.map((column, i) => (
-                    <ColumnRow key={i} column={column} />
+                    <ColumnRow key={i} column={column} fileSummary={summary.file.file_summary} />
                   ))}
                 </tbody>
               </table>
@@ -266,7 +278,7 @@ const FileSummaryCard: React.FC<{ summary: FileSummary }> = ({ summary }) => {
   );
 };
 
-const ColumnRow: React.FC<{ column: ColumnSummary }> = ({ column }) => {
+const ColumnRow: React.FC<{ column: ColumnSummary; fileSummary?: any }> = ({ column, fileSummary }) => {
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'numeric': return 'bg-blue-100 text-blue-800';
@@ -302,6 +314,21 @@ const ColumnRow: React.FC<{ column: ColumnSummary }> = ({ column }) => {
           {column.dateRange}
         </div>
       );
+    }
+    
+    // Enhanced: Show value examples from metadata if available
+    if (fileSummary?.value_examples?.[column.name]) {
+      const examples = fileSummary.value_examples[column.name];
+      if (examples.length > 0) {
+        return (
+          <div className="text-xs text-gray-600">
+            <div className="truncate" title={examples.slice(0, 3).join(', ')}>
+              {examples.slice(0, 2).join(', ')}
+              {examples.length > 2 ? '...' : ''}
+            </div>
+          </div>
+        );
+      }
     }
     
     return <div className="text-xs text-gray-400">-</div>;

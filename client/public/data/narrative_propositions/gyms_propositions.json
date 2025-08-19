@@ -1,0 +1,272 @@
+{
+  "dataset_name": "gyms",
+  "complexity_score": 4,
+  "total_propositions": 20,
+  "proposition_breakdown": {
+    "geographic_patterns": 8,
+    "categorical_analysis": 8,
+    "cross_dimensional": 4
+  },
+  "generated_at": "2025-08-18T17:26:33.494Z",
+  "categories": {
+    "geographic_patterns": [
+      {
+        "id": "geo_01",
+        "proposition": "In 2024, the boroughs of Hackney and Tower Hamlets account for 25% of all gym facilities in East London.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_02",
+        "proposition": "Gym density in Inner London is twice as high as in Outer London in 2024.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "geo_03",
+        "proposition": "The borough of Kensington and Chelsea has the highest concentration of premium gyms, representing 30% of its total gym facilities in 2024.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_04",
+        "proposition": "LSOAs in Southwark show a clustering of budget gyms, with 40% of the area's gym facilities being budget gyms in 2024.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "heat_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "geo_05",
+        "proposition": "North London boroughs have a 15% higher average gym membership rate compared to South London in 2024.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_06",
+        "proposition": "In 2024, the borough of Westminster has the highest number of gyms per capita, with a rate of 1 gym per 1,000 residents.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_07",
+        "proposition": "East London boroughs exhibit a 20% increase in gym facilities compared to 2023.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2023-2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "geo_08",
+        "proposition": "Boroughs in West London have the lowest average gym membership fees, 10% below the London average in 2024.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "categorical_analysis": [
+      {
+        "id": "cat_01",
+        "proposition": "In 2024, budget gyms represent 50% of all gym categories in Outer London boroughs.",
+        "variables_needed": [
+          "category",
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_02",
+        "proposition": "Premium gyms are most concentrated in central boroughs, making up 60% of gym types in Westminster in 2024.",
+        "variables_needed": [
+          "category",
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_03",
+        "proposition": "Community gyms are the least common category, representing only 10% of gym facilities across London in 2024.",
+        "variables_needed": [
+          "category",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "cat_04",
+        "proposition": "In 2024, there is a 30% higher prevalence of boutique gyms in high-income boroughs compared to low-income boroughs.",
+        "variables_needed": [
+          "category",
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cat_05",
+        "proposition": "The category of '24-hour gyms' has grown to represent 15% of all gym facilities in London by 2024.",
+        "variables_needed": [
+          "category",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_06",
+        "proposition": "In 2024, family-oriented gyms are predominantly located in suburban boroughs, accounting for 40% of gym types there.",
+        "variables_needed": [
+          "category",
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_07",
+        "proposition": "Gyms offering specialized classes (e.g., yoga, pilates) are concentrated in the boroughs of Camden and Islington, making up 35% of their gym categories in 2024.",
+        "variables_needed": [
+          "category",
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_08",
+        "proposition": "In 2024, eco-friendly gyms are a niche category, comprising only 5% of all gym facilities in London.",
+        "variables_needed": [
+          "category",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      }
+    ],
+    "cross_dimensional": [
+      {
+        "id": "cross_01",
+        "proposition": "From 2023 to 2024, premium gym memberships increased by 20% in Central London boroughs, while budget gym memberships remained stable.",
+        "variables_needed": [
+          "category",
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2023-2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_02",
+        "proposition": "In 2024, the introduction of new gym categories in East London boroughs led to a 15% increase in overall gym memberships.",
+        "variables_needed": [
+          "category",
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_03",
+        "proposition": "Seasonal analysis shows that gym attendance peaks in January and February across all categories in 2024, with a 25% higher attendance than the yearly average.",
+        "variables_needed": [
+          "category",
+          "date",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_04",
+        "proposition": "In 2024, the growth of boutique gyms in Inner London correlates with a 10% increase in average income levels in those areas.",
+        "variables_needed": [
+          "category",
+          "area",
+          "value"
+        ],
+        "time_period": "2024",
+        "geographic_level": "Borough",
+        "suggested_visualization": "scatter_plot",
+        "complexity_level": "Advanced"
+      }
+    ]
+  }
+}

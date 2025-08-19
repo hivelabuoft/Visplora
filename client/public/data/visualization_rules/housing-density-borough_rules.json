@@ -1,0 +1,349 @@
+{
+  "dataset_id": "housing-density-borough",
+  "dataset_name": "Housing Density by Borough",
+  "category": "population",
+  "description": "Housing density statistics by borough",
+  "file_path": "/dataset/london/population/housing-density-borough.csv",
+  "field_roles": [
+    {
+      "name": "Code",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "E09000001",
+        "E09000002",
+        "E09000003"
+      ]
+    },
+    {
+      "name": "Name",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "City of London",
+        "Barking and Dagenham",
+        "Barnet"
+      ]
+    },
+    {
+      "name": "Year",
+      "type": "numeric",
+      "roles": [
+        "time"
+      ],
+      "sample_values": [
+        1999,
+        2050,
+        2024.26
+      ]
+    },
+    {
+      "name": "Source",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "GLA Population Projections",
+        "ONS MYE"
+      ]
+    },
+    {
+      "name": "Population",
+      "type": "numeric",
+      "roles": [
+        "time",
+        "metric"
+      ],
+      "sample_values": [
+        6581,
+        503490,
+        286961.47
+      ]
+    },
+    {
+      "name": "Inland_Area _Hectares",
+      "type": "numeric",
+      "roles": [
+        "geo",
+        "category",
+        "facet",
+        "metric"
+      ],
+      "sample_values": [
+        290.4,
+        15013.5,
+        5662.29
+      ]
+    },
+    {
+      "name": "Total_Area_Hectares",
+      "type": "numeric",
+      "roles": [
+        "geo",
+        "category",
+        "facet",
+        "metric"
+      ],
+      "sample_values": [
+        314.9,
+        15013.5,
+        5733.25
+      ]
+    },
+    {
+      "name": "Population_per_hectare",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        19.6,
+        185.1,
+        70.5
+      ]
+    },
+    {
+      "name": "Square_Kilometres",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        2.9,
+        150.1,
+        56.61
+      ]
+    },
+    {
+      "name": "Population_per_square_kilometre",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        1964.2,
+        18508,
+        7050.39
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "line_chart",
+      "description": "Time series analysis",
+      "encoding": {
+        "x": {
+          "name": "Year",
+          "type": "numeric",
+          "roles": [
+            "time"
+          ],
+          "sample_values": [
+            1999,
+            2050,
+            2024.26
+          ]
+        },
+        "y": {
+          "name": "Population",
+          "type": "numeric",
+          "roles": [
+            "time",
+            "metric"
+          ],
+          "sample_values": [
+            6581,
+            503490,
+            286961.47
+          ]
+        },
+        "color": {
+          "name": "Code",
+          "type": "categorical",
+          "roles": [
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        }
+      }
+    },
+    {
+      "type": "choropleth_map",
+      "description": "Geographic distribution of metrics",
+      "encoding": {
+        "geo": {
+          "name": "Inland_Area _Hectares",
+          "type": "numeric",
+          "roles": [
+            "geo",
+            "category",
+            "facet",
+            "metric"
+          ],
+          "sample_values": [
+            290.4,
+            15013.5,
+            5662.29
+          ]
+        },
+        "color": {
+          "name": "Population",
+          "type": "numeric",
+          "roles": [
+            "time",
+            "metric"
+          ],
+          "sample_values": [
+            6581,
+            503490,
+            286961.47
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "Inland_Area _Hectares",
+          "type": "numeric",
+          "roles": [
+            "geo",
+            "category",
+            "facet",
+            "metric"
+          ],
+          "sample_values": [
+            290.4,
+            15013.5,
+            5662.29
+          ]
+        },
+        "y": {
+          "name": "Population",
+          "type": "numeric",
+          "roles": [
+            "time",
+            "metric"
+          ],
+          "sample_values": [
+            6581,
+            503490,
+            286961.47
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Category comparison",
+      "encoding": {
+        "x": {
+          "name": "Code",
+          "type": "categorical",
+          "roles": [
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "y": {
+          "name": "Population",
+          "type": "numeric",
+          "roles": [
+            "time",
+            "metric"
+          ],
+          "sample_values": [
+            6581,
+            503490,
+            286961.47
+          ]
+        }
+      }
+    },
+    {
+      "type": "stacked_bar_chart",
+      "description": "Multi-category analysis",
+      "encoding": {
+        "x": {
+          "name": "Code",
+          "type": "categorical",
+          "roles": [
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "y": {
+          "name": "Population",
+          "type": "numeric",
+          "roles": [
+            "time",
+            "metric"
+          ],
+          "sample_values": [
+            6581,
+            503490,
+            286961.47
+          ]
+        },
+        "color": {
+          "name": "Name",
+          "type": "categorical",
+          "roles": [
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "City of London",
+            "Barking and Dagenham",
+            "Barnet"
+          ]
+        }
+      }
+    },
+    {
+      "type": "histogram",
+      "description": "Distribution analysis",
+      "encoding": {
+        "x": {
+          "name": "Population",
+          "type": "numeric",
+          "roles": [
+            "time",
+            "metric"
+          ],
+          "sample_values": [
+            6581,
+            503490,
+            286961.47
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.715Z"
+}

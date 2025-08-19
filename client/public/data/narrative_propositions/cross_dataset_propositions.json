@@ -1,0 +1,2697 @@
+{
+  "type": "cross_dataset",
+  "total_propositions": 100,
+  "categories": {
+    "economic_correlations": 20,
+    "demographic_patterns": 18,
+    "infrastructure_relationships": 16,
+    "temporal_lag_analysis": 15,
+    "gentrification_indicators": 12,
+    "safety_livability_relationships": 10,
+    "market_development_patterns": 9
+  },
+  "temporal_overlap_opportunities": {
+    "2022_2023_overlap": [
+      "crime-rates",
+      "schools-colleges",
+      "libraries",
+      "gyms"
+    ],
+    "2019_2023_overlap": [
+      "vehicles",
+      "house-prices",
+      "income",
+      "private-rent"
+    ],
+    "historical_context": [
+      "population",
+      "house-prices",
+      "income"
+    ],
+    "lag_relationships": [
+      "income_2020 → gyms_2024",
+      "schools_2021 → house-prices_2023",
+      "restaurants_2017 → crime_2022",
+      "population_growth_1990-2021 → current_infrastructure_2022-2024",
+      "restaurant_density_2015-2017 → neighborhood_safety_2022-2023",
+      "house_price_growth_2010-2020 → school_performance_2021-2023"
+    ]
+  },
+  "generated_at": "2025-08-18T17:27:09.362Z",
+  "propositions_by_category": {
+    "economic_correlations": {
+      "count": 20,
+      "relevant_datasets": [
+        "income",
+        "house-prices",
+        "private-rent",
+        "restaurants"
+      ],
+      "propositions": [
+        {
+          "proposition": "Boroughs with higher crime rates in 2022-2023 have lower median income levels in 2023.",
+          "datasets_required": [
+            "crime-rates",
+            "income"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ],
+            "income": [
+              "Area",
+              "Median_income"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "income": "2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Crime rates in the same year may impact or reflect economic conditions."
+        },
+        {
+          "proposition": "Boroughs with significant population growth from 1990 to 2021 show increased house prices from 1995 to 2023.",
+          "datasets_required": [
+            "population",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "population": [
+              "area",
+              "value"
+            ],
+            "house-prices": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "population": "1990-2021",
+            "house-prices": "1995-2023"
+          },
+          "relationship_type": "historical_context",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Long-term population growth drives demand, influencing house prices."
+        },
+        {
+          "proposition": "Areas with a high percentage of Black African ethnicity in the latest census have lower mean income levels in 2023.",
+          "datasets_required": [
+            "ethnicity",
+            "income"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "Black_African"
+            ],
+            "income": [
+              "Area",
+              "Mean_income"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "income": "2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Ethnic composition may correlate with economic disparities."
+        },
+        {
+          "proposition": "Boroughs with higher vehicle registrations from 2019 to 2023 have higher private rent prices in 2023.",
+          "datasets_required": [
+            "vehicles",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "vehicles": [
+              "area",
+              "value"
+            ],
+            "private-rent": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "vehicles": "2019-2023",
+            "private-rent": "2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "Increased vehicle ownership may indicate economic prosperity, affecting rent prices."
+        },
+        {
+          "proposition": "Boroughs with higher mean income in 2023 have more gyms per capita in 2024.",
+          "datasets_required": [
+            "income",
+            "gyms"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income"
+            ],
+            "gyms": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher income levels could lead to increased demand for fitness facilities."
+        },
+        {
+          "proposition": "Boroughs with higher house price appreciation from 1995 to 2023 have better school performance ratings in 2023.",
+          "datasets_required": [
+            "house-prices",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "house-prices": [
+              "area",
+              "value"
+            ],
+            "schools-colleges": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "house-prices": "1995-2023",
+            "schools-colleges": "2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher house prices may correlate with better-funded schools."
+        },
+        {
+          "proposition": "Boroughs with higher crime rates in 2022-2023 have fewer libraries per capita in the same period.",
+          "datasets_required": [
+            "crime-rates",
+            "libraries"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ],
+            "libraries": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "libraries": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Higher crime rates may indicate less investment in public amenities like libraries."
+        },
+        {
+          "proposition": "Boroughs with higher Asian Indian population in the latest census have higher median income levels in 2023.",
+          "datasets_required": [
+            "ethnicity",
+            "income"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "Asian_Indian"
+            ],
+            "income": [
+              "Area",
+              "Median_income"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "income": "2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Ethnic composition may correlate with economic prosperity."
+        },
+        {
+          "proposition": "Boroughs with increased restaurant openings from 2001 to 2017 have higher house prices in 2023.",
+          "datasets_required": [
+            "restaurants",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "restaurants": [
+              "area",
+              "value"
+            ],
+            "house-prices": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "restaurants": "2001-2017",
+            "house-prices": "2023"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "A vibrant restaurant scene may enhance neighborhood desirability, affecting house prices."
+        },
+        {
+          "proposition": "Boroughs with higher mean income in 2023 have lower crime rates in 2022-2023.",
+          "datasets_required": [
+            "income",
+            "crime-rates"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income"
+            ],
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "crime-rates": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher income levels may correlate with lower crime rates."
+        },
+        {
+          "proposition": "Boroughs with higher private rent prices in 2023 have fewer libraries per capita in 2022-2023.",
+          "datasets_required": [
+            "private-rent",
+            "libraries"
+          ],
+          "variables_needed": {
+            "private-rent": [
+              "area",
+              "value"
+            ],
+            "libraries": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "private-rent": "2023",
+            "libraries": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Higher rent prices may correlate with less investment in public amenities."
+        },
+        {
+          "proposition": "Boroughs with a higher percentage of White British ethnicity in the latest census have higher house prices in 2023.",
+          "datasets_required": [
+            "ethnicity",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "White_British"
+            ],
+            "house-prices": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "house-prices": "2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Ethnic composition may correlate with neighborhood desirability, affecting house prices."
+        },
+        {
+          "proposition": "Boroughs with higher school performance ratings in 2023 have higher mean income levels in 2023.",
+          "datasets_required": [
+            "schools-colleges",
+            "income"
+          ],
+          "variables_needed": {
+            "schools-colleges": [
+              "area",
+              "value"
+            ],
+            "income": [
+              "Area",
+              "Mean_income"
+            ]
+          },
+          "time_periods": {
+            "schools-colleges": "2023",
+            "income": "2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Better school performance may correlate with higher income levels."
+        },
+        {
+          "proposition": "Boroughs with higher vehicle registrations from 2019 to 2023 have higher mean income levels in 2023.",
+          "datasets_required": [
+            "vehicles",
+            "income"
+          ],
+          "variables_needed": {
+            "vehicles": [
+              "area",
+              "value"
+            ],
+            "income": [
+              "Area",
+              "Mean_income"
+            ]
+          },
+          "time_periods": {
+            "vehicles": "2019-2023",
+            "income": "2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "Increased vehicle ownership may indicate economic prosperity."
+        },
+        {
+          "proposition": "Boroughs with higher private rent prices in 2023 have higher house prices in 2023.",
+          "datasets_required": [
+            "private-rent",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "private-rent": [
+              "area",
+              "value"
+            ],
+            "house-prices": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "private-rent": "2023",
+            "house-prices": "2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher rent prices may correlate with higher house prices."
+        },
+        {
+          "proposition": "Boroughs with higher crime rates in 2022-2023 have lower house prices in 2023.",
+          "datasets_required": [
+            "crime-rates",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ],
+            "house-prices": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "house-prices": "2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher crime rates may negatively impact house prices."
+        },
+        {
+          "proposition": "Boroughs with higher income growth from 1999 to 2023 show increased gym facilities by 2024.",
+          "datasets_required": [
+            "income",
+            "gyms"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income"
+            ],
+            "gyms": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "income": "1999-2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Income growth may lead to increased demand for fitness facilities."
+        },
+        {
+          "proposition": "Boroughs with higher house prices in 2023 have more boutique gyms per capita in 2024.",
+          "datasets_required": [
+            "house-prices",
+            "gyms"
+          ],
+          "variables_needed": {
+            "house-prices": [
+              "area",
+              "value"
+            ],
+            "gyms": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "house-prices": "2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher house prices may correlate with demand for premium fitness facilities."
+        },
+        {
+          "proposition": "Boroughs with higher mean income in 2023 have more restaurants per capita in 2017.",
+          "datasets_required": [
+            "income",
+            "restaurants"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income"
+            ],
+            "restaurants": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "restaurants": "2017"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher income levels may correlate with a vibrant restaurant scene."
+        }
+      ]
+    },
+    "demographic_patterns": {
+      "count": 18,
+      "relevant_datasets": [
+        "ethnicity",
+        "country-of-births",
+        "population"
+      ],
+      "propositions": [
+        {
+          "proposition": "Boroughs with high crime rates in 2022-2023 have lower library usage in the same period.",
+          "datasets_required": [
+            "crime-rates",
+            "libraries"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ],
+            "libraries": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "libraries": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Crime rates and library usage are analyzed concurrently to identify correlation."
+        },
+        {
+          "proposition": "Boroughs with higher income growth from 1999-2023 have seen an increase in gym facilities by 2024.",
+          "datasets_required": [
+            "income",
+            "gyms"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "gyms": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "income": "1999-2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Income growth over the years is expected to influence gym facilities availability in the following year."
+        },
+        {
+          "proposition": "Areas with a high percentage of Black African ethnicity have experienced different crime category patterns in 2022-2023.",
+          "datasets_required": [
+            "ethnicity",
+            "crime-rates"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "Black_African"
+            ],
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "crime-rates": "2022-2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "heat_map",
+          "temporal_assumption": "Ethnicity data from the census snapshot is used to analyze crime patterns in the subsequent years."
+        },
+        {
+          "proposition": "Boroughs with high population density in 2021 have higher private rent prices from 2011-present.",
+          "datasets_required": [
+            "population",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "population": [
+              "area",
+              "value",
+              "category"
+            ],
+            "private-rent": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "population": "2021",
+            "private-rent": "2011-present"
+          },
+          "relationship_type": "historical_context",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Population density is a long-term factor influencing rent prices."
+        },
+        {
+          "proposition": "Boroughs with higher mean income in 2023 have more schools with excellent performance ratings.",
+          "datasets_required": [
+            "income",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "schools-colleges": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "schools-colleges": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "bubble_chart",
+          "temporal_assumption": "Income levels in 2023 are compared with school performance ratings in the same period."
+        },
+        {
+          "proposition": "Boroughs with a high percentage of Asian Indian ethnicity have experienced different house price trends from 1995-present.",
+          "datasets_required": [
+            "ethnicity",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "Asian_Indian"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "house-prices": "1995-present"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Ethnicity data from the census snapshot is used to analyze house price trends over the years."
+        },
+        {
+          "proposition": "Boroughs with high vehicle ownership from 2019-2023 have experienced different crime rates in 2022-2023.",
+          "datasets_required": [
+            "vehicles",
+            "crime-rates"
+          ],
+          "variables_needed": {
+            "vehicles": [
+              "area",
+              "value",
+              "category"
+            ],
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ]
+          },
+          "time_periods": {
+            "vehicles": "2019-2023",
+            "crime-rates": "2022-2023"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "Vehicle ownership trends may influence crime rates in subsequent years."
+        },
+        {
+          "proposition": "Boroughs with higher historical population growth from 1801-2021 have more restaurants by 2015-2017.",
+          "datasets_required": [
+            "population",
+            "restaurants"
+          ],
+          "variables_needed": {
+            "population": [
+              "area",
+              "value",
+              "category"
+            ],
+            "restaurants": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "population": "1801-2021",
+            "restaurants": "2015-2017"
+          },
+          "relationship_type": "historical_context",
+          "suggested_visualization": "area_chart",
+          "temporal_assumption": "Long-term population growth is expected to correlate with restaurant density."
+        },
+        {
+          "proposition": "Boroughs with higher mean income in 2023 have higher house prices from 1995-present.",
+          "datasets_required": [
+            "income",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "house-prices": "1995-present"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Income levels in 2023 are used as a proxy to analyze house price trends over the years."
+        },
+        {
+          "proposition": "Boroughs with a high percentage of White British ethnicity have experienced different vehicle ownership trends from 2019-2023.",
+          "datasets_required": [
+            "ethnicity",
+            "vehicles"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "White_British"
+            ],
+            "vehicles": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "vehicles": "2019-2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Ethnicity data from the census snapshot is used to analyze vehicle ownership trends."
+        },
+        {
+          "proposition": "Boroughs with higher school performance ratings in 2022-2023 have experienced different crime rates in the same period.",
+          "datasets_required": [
+            "schools-colleges",
+            "crime-rates"
+          ],
+          "variables_needed": {
+            "schools-colleges": [
+              "area",
+              "value",
+              "category"
+            ],
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ]
+          },
+          "time_periods": {
+            "schools-colleges": "2022-2023",
+            "crime-rates": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "heat_map",
+          "temporal_assumption": "School performance ratings and crime rates are analyzed concurrently to identify correlation."
+        },
+        {
+          "proposition": "Boroughs with higher private rent prices from 2011-present have more gyms by 2024.",
+          "datasets_required": [
+            "private-rent",
+            "gyms"
+          ],
+          "variables_needed": {
+            "private-rent": [
+              "area",
+              "value"
+            ],
+            "gyms": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "private-rent": "2011-present",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Private rent prices over the years are expected to influence gym facilities availability in the following year."
+        },
+        {
+          "proposition": "Boroughs with higher mean income in 2023 have higher vehicle ownership from 2019-2023.",
+          "datasets_required": [
+            "income",
+            "vehicles"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "vehicles": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "vehicles": "2019-2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "Income levels in 2023 are used as a proxy to analyze vehicle ownership trends."
+        },
+        {
+          "proposition": "Boroughs with higher house prices from 1995-present have more schools with excellent performance ratings by 2022-2023.",
+          "datasets_required": [
+            "house-prices",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "house-prices": [
+              "area",
+              "value",
+              "category"
+            ],
+            "schools-colleges": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "house-prices": "1995-present",
+            "schools-colleges": "2022-2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "bubble_chart",
+          "temporal_assumption": "House prices over the years are used as a proxy to analyze school performance ratings."
+        },
+        {
+          "proposition": "Boroughs with higher population density in 2021 have more vehicle ownership from 2019-2023.",
+          "datasets_required": [
+            "population",
+            "vehicles"
+          ],
+          "variables_needed": {
+            "population": [
+              "area",
+              "value",
+              "category"
+            ],
+            "vehicles": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "population": "2021",
+            "vehicles": "2019-2023"
+          },
+          "relationship_type": "historical_context",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Population density is a long-term factor influencing vehicle ownership."
+        },
+        {
+          "proposition": "Boroughs with higher mean income in 2023 have more restaurants by 2015-2017.",
+          "datasets_required": [
+            "income",
+            "restaurants"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "restaurants": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "restaurants": "2015-2017"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Income levels in 2023 are used as a proxy to analyze restaurant density."
+        },
+        {
+          "proposition": "Boroughs with higher private rent prices from 2011-present have higher house prices from 1995-present.",
+          "datasets_required": [
+            "private-rent",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "private-rent": [
+              "area",
+              "value"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "private-rent": "2011-present",
+            "house-prices": "1995-present"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Private rent prices and house prices are analyzed concurrently to identify correlation."
+        },
+        {
+          "proposition": "Boroughs with higher school performance ratings in 2022-2023 have higher private rent prices from 2011-present.",
+          "datasets_required": [
+            "schools-colleges",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "schools-colleges": [
+              "area",
+              "value",
+              "category"
+            ],
+            "private-rent": [
+              "area",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "schools-colleges": "2022-2023",
+            "private-rent": "2011-present"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "bubble_chart",
+          "temporal_assumption": "School performance ratings are used as a proxy to analyze private rent prices."
+        }
+      ]
+    },
+    "infrastructure_relationships": {
+      "count": 16,
+      "relevant_datasets": [
+        "schools-colleges",
+        "libraries",
+        "gyms",
+        "vehicles"
+      ],
+      "propositions": [
+        {
+          "proposition": "Boroughs with higher crime rates in 2022-2023 have fewer boutique gyms per capita in 2024.",
+          "datasets_required": [
+            "crime-rates",
+            "gyms"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ],
+            "gyms": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Crime rates in previous years may influence the establishment of new gyms."
+        },
+        {
+          "proposition": "Boroughs with income growth from 2019-2023 show an increase in house prices by 2023.",
+          "datasets_required": [
+            "income",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "income": "2019-2023",
+            "house-prices": "2023"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Increased income levels can lead to higher demand and thus higher house prices."
+        },
+        {
+          "proposition": "Areas with a higher percentage of Black African ethnicity in the latest census have higher crime rates in 2022-2023.",
+          "datasets_required": [
+            "ethnicity",
+            "crime-rates"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "Black_African"
+            ],
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "crime-rates": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "heatmap",
+          "temporal_assumption": "Ethnic composition may correlate with crime rates due to socio-economic factors."
+        },
+        {
+          "proposition": "Boroughs with the highest population growth from 1990-2021 have the highest restaurant density in 2015-2017.",
+          "datasets_required": [
+            "population",
+            "restaurants"
+          ],
+          "variables_needed": {
+            "population": [
+              "area",
+              "value",
+              "date"
+            ],
+            "restaurants": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "population": "1990-2021",
+            "restaurants": "2015-2017"
+          },
+          "relationship_type": "historical_context",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Population growth can lead to increased demand for dining options."
+        },
+        {
+          "proposition": "Boroughs with higher mean income in 2023 have more libraries per capita in 2022-2023.",
+          "datasets_required": [
+            "income",
+            "libraries"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "libraries": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "libraries": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher income levels may correlate with better public infrastructure."
+        },
+        {
+          "proposition": "Boroughs with high vehicle registration growth from 2019-2023 have higher private rent prices in 2023.",
+          "datasets_required": [
+            "vehicles",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "vehicles": [
+              "area",
+              "value",
+              "date"
+            ],
+            "private-rent": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "vehicles": "2019-2023",
+            "private-rent": "2023"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "Increased vehicle registrations may indicate economic growth, affecting rent prices."
+        },
+        {
+          "proposition": "Areas with higher house price appreciation from 1995-2023 have better school performance ratings in 2021-2023.",
+          "datasets_required": [
+            "house-prices",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "house-prices": [
+              "area",
+              "value",
+              "date"
+            ],
+            "schools-colleges": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "house-prices": "1995-2023",
+            "schools-colleges": "2021-2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher house prices may reflect better local amenities, including schools."
+        },
+        {
+          "proposition": "Boroughs with a higher percentage of Asian Indian ethnicity have higher mean income in 2023.",
+          "datasets_required": [
+            "ethnicity",
+            "income"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "Asian_Indian"
+            ],
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "income": "2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Ethnic composition may correlate with economic indicators."
+        },
+        {
+          "proposition": "Boroughs with higher crime rates in 2022-2023 have lower school performance ratings in 2021-2023.",
+          "datasets_required": [
+            "crime-rates",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ],
+            "schools-colleges": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "schools-colleges": "2021-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher crime rates may negatively impact school environments."
+        },
+        {
+          "proposition": "Boroughs with higher mean income in 2023 have more boutique gyms in 2024.",
+          "datasets_required": [
+            "income",
+            "gyms"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "gyms": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Higher income levels may lead to increased demand for premium fitness facilities."
+        },
+        {
+          "proposition": "Boroughs with higher population density in 2021 have higher private rent prices in 2023.",
+          "datasets_required": [
+            "population",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "population": [
+              "area",
+              "value",
+              "date"
+            ],
+            "private-rent": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "population": "2021",
+            "private-rent": "2023"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher population density can drive up demand and prices for rental properties."
+        },
+        {
+          "proposition": "Boroughs with higher house price growth from 1995-2023 have more vehicles registered by 2023.",
+          "datasets_required": [
+            "house-prices",
+            "vehicles"
+          ],
+          "variables_needed": {
+            "house-prices": [
+              "area",
+              "value",
+              "date"
+            ],
+            "vehicles": [
+              "area",
+              "value",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "house-prices": "1995-2023",
+            "vehicles": "2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "House price growth may correlate with economic prosperity, leading to more vehicle ownership."
+        },
+        {
+          "proposition": "Boroughs with higher mean income in 2023 have more restaurants per capita in 2015-2017.",
+          "datasets_required": [
+            "income",
+            "restaurants"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "restaurants": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "restaurants": "2015-2017"
+          },
+          "relationship_type": "historical_context",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher income levels may support a larger number of dining establishments."
+        },
+        {
+          "proposition": "Boroughs with higher crime rates in 2022-2023 have lower house price growth in 2023.",
+          "datasets_required": [
+            "crime-rates",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "house-prices": "2023"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher crime rates may deter investment and reduce property value growth."
+        },
+        {
+          "proposition": "Boroughs with higher Asian Indian population in the latest census have more schools per capita in 2021-2023.",
+          "datasets_required": [
+            "ethnicity",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "Asian_Indian"
+            ],
+            "schools-colleges": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "schools-colleges": "2021-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Ethnic composition may correlate with the demand for educational infrastructure."
+        },
+        {
+          "proposition": "Boroughs with higher vehicle registration growth from 2019-2023 have more gyms in 2024.",
+          "datasets_required": [
+            "vehicles",
+            "gyms"
+          ],
+          "variables_needed": {
+            "vehicles": [
+              "area",
+              "value",
+              "date"
+            ],
+            "gyms": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "vehicles": "2019-2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "Increased vehicle registrations may indicate economic growth, leading to more fitness facilities."
+        }
+      ]
+    },
+    "temporal_lag_analysis": {
+      "count": 15,
+      "relevant_datasets": [
+        "vehicles",
+        "house-prices",
+        "income",
+        "private-rent"
+      ],
+      "propositions": [
+        {
+          "proposition": "Boroughs with higher mean income growth from 2019-2023 show an increase in gym facilities by 2024.",
+          "datasets_required": [
+            "income",
+            "gyms"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "gyms": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2019-2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Income growth influences investment in fitness facilities with a lag."
+        },
+        {
+          "proposition": "Boroughs with a decrease in crime rates from 2022-2023 experience an increase in school performance ratings by 2024.",
+          "datasets_required": [
+            "crime-rates",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "date",
+              "count"
+            ],
+            "schools-colleges": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "schools-colleges": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Reduced crime rates create a safer environment conducive to better educational outcomes."
+        },
+        {
+          "proposition": "Boroughs with significant house price appreciation from 2019-2023 see an increase in the number of vehicles by 2024.",
+          "datasets_required": [
+            "house-prices",
+            "vehicles"
+          ],
+          "variables_needed": {
+            "house-prices": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "vehicles": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "house-prices": "2019-2023",
+            "vehicles": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Rising house prices may correlate with increased vehicle ownership as wealth increases."
+        },
+        {
+          "proposition": "Boroughs with higher private rent increases from 2019-2023 have more libraries by 2024.",
+          "datasets_required": [
+            "private-rent",
+            "libraries"
+          ],
+          "variables_needed": {
+            "private-rent": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "libraries": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "private-rent": "2019-2023",
+            "libraries": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "Increased rent may lead to higher demand for public resources such as libraries."
+        },
+        {
+          "proposition": "Boroughs with a high percentage of White British ethnicity in the census snapshot have lower crime rates by 2023.",
+          "datasets_required": [
+            "ethnicity",
+            "crime-rates"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "local_authority_name",
+              "White_British"
+            ],
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "date",
+              "count"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "crime-rates": "2023"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "heatmap",
+          "temporal_assumption": "Ethnic composition may influence social dynamics affecting crime rates."
+        },
+        {
+          "proposition": "Boroughs with higher Asian Indian population in the census snapshot have higher mean incomes by 2023.",
+          "datasets_required": [
+            "ethnicity",
+            "income"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "local_authority_name",
+              "Asian_Indian"
+            ],
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "income": "2023"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Cultural and educational factors may contribute to higher income levels."
+        },
+        {
+          "proposition": "Boroughs with higher Black African population in the census snapshot have more restaurants by 2023.",
+          "datasets_required": [
+            "ethnicity",
+            "restaurants"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "local_authority_name",
+              "Black_African"
+            ],
+            "restaurants": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "restaurants": "2023"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "pie_chart",
+          "temporal_assumption": "Cultural diversity may drive demand for diverse dining options."
+        },
+        {
+          "proposition": "Boroughs with higher vehicle registrations from 2019-2023 have higher private rent prices by 2024.",
+          "datasets_required": [
+            "vehicles",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "vehicles": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "private-rent": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "vehicles": "2019-2023",
+            "private-rent": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Increased vehicle ownership may indicate economic growth leading to higher rent prices."
+        },
+        {
+          "proposition": "Boroughs with higher income levels from 2019-2023 have more boutique gyms by 2024.",
+          "datasets_required": [
+            "income",
+            "gyms"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "gyms": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2019-2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Higher income levels may drive demand for premium fitness facilities."
+        },
+        {
+          "proposition": "Boroughs with higher school performance ratings from 2022-2023 have higher house prices by 2024.",
+          "datasets_required": [
+            "schools-colleges",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "schools-colleges": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "schools-colleges": "2022-2023",
+            "house-prices": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Good school performance can increase property demand, driving up prices."
+        },
+        {
+          "proposition": "Boroughs with higher restaurant density from 2015-2017 have higher population growth by 2021.",
+          "datasets_required": [
+            "restaurants",
+            "population"
+          ],
+          "variables_needed": {
+            "restaurants": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "population": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "restaurants": "2015-2017",
+            "population": "2021"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "A thriving restaurant scene may attract more residents, boosting population growth."
+        },
+        {
+          "proposition": "Boroughs with higher income inequality from 1999-2023 have more libraries by 2024.",
+          "datasets_required": [
+            "income",
+            "libraries"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Median_income",
+              "Year"
+            ],
+            "libraries": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "income": "1999-2023",
+            "libraries": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "heatmap",
+          "temporal_assumption": "Income inequality may drive demand for public resources like libraries."
+        },
+        {
+          "proposition": "Boroughs with higher house price growth from 1995-2023 have higher school performance ratings by 2024.",
+          "datasets_required": [
+            "house-prices",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "house-prices": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "schools-colleges": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "house-prices": "1995-2023",
+            "schools-colleges": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher house prices may correlate with better school funding and performance."
+        },
+        {
+          "proposition": "Boroughs with higher population density from 1801-2021 have more gyms by 2024.",
+          "datasets_required": [
+            "population",
+            "gyms"
+          ],
+          "variables_needed": {
+            "population": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "gyms": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "population": "1801-2021",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "Higher population density may increase demand for fitness facilities."
+        },
+        {
+          "proposition": "Boroughs with higher mean income from 1999-2023 have higher private rent prices by 2024.",
+          "datasets_required": [
+            "income",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "private-rent": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "income": "1999-2023",
+            "private-rent": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Higher income levels can drive up demand for rental properties, increasing prices."
+        }
+      ]
+    },
+    "gentrification_indicators": {
+      "count": 12,
+      "relevant_datasets": [
+        "income",
+        "house-prices",
+        "ethnicity",
+        "restaurants"
+      ],
+      "propositions": [
+        {
+          "proposition": "Boroughs with a decrease in crime rates from 2022 to 2023 show an increase in private rent prices from 2022 to present.",
+          "datasets_required": [
+            "crime-rates",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "date",
+              "count"
+            ],
+            "private-rent": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "private-rent": "2022-present"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Improved safety perceptions lead to increased demand and higher rents."
+        },
+        {
+          "proposition": "Boroughs with high income growth from 2019 to 2023 have experienced significant house price appreciation in the same period.",
+          "datasets_required": [
+            "income",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "income": "2019-2023",
+            "house-prices": "2019-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Rising incomes increase purchasing power, driving up house prices."
+        },
+        {
+          "proposition": "Areas with a high percentage of White British ethnicity in the census snapshot have seen a higher increase in boutique gyms by 2024.",
+          "datasets_required": [
+            "ethnicity",
+            "gyms"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "local_authority_name",
+              "White_British"
+            ],
+            "gyms": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "gyms": "2024"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Demographic characteristics influence lifestyle amenities."
+        },
+        {
+          "proposition": "Boroughs with high vehicle ownership from 2019 to 2023 have experienced a slower increase in house prices compared to boroughs with lower vehicle ownership.",
+          "datasets_required": [
+            "vehicles",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "vehicles": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "vehicles": "2019-2023",
+            "house-prices": "2019-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "High vehicle ownership may indicate less reliance on public transport, affecting housing demand."
+        },
+        {
+          "proposition": "Boroughs with significant population growth from 1801 to 2021 have higher school performance ratings from 2010 to 2023.",
+          "datasets_required": [
+            "population",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "population": [
+              "area",
+              "value",
+              "date"
+            ],
+            "schools-colleges": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "population": "1801-2021",
+            "schools-colleges": "2010-2023"
+          },
+          "relationship_type": "historical_context",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Long-term population growth supports better educational infrastructure."
+        },
+        {
+          "proposition": "Boroughs with a high number of libraries from 2022 to 2023 have seen a decrease in crime rates over the same period.",
+          "datasets_required": [
+            "libraries",
+            "crime-rates"
+          ],
+          "variables_needed": {
+            "libraries": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "date",
+              "count"
+            ]
+          },
+          "time_periods": {
+            "libraries": "2022-2023",
+            "crime-rates": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "heatmap",
+          "temporal_assumption": "Access to educational resources may contribute to reduced crime."
+        },
+        {
+          "proposition": "Boroughs with higher median income from 1999 to 2023 have more licensed restaurants from 2001 to 2017.",
+          "datasets_required": [
+            "income",
+            "restaurants"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Median_income",
+              "Year"
+            ],
+            "restaurants": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "income": "1999-2023",
+            "restaurants": "2001-2017"
+          },
+          "relationship_type": "temporal_lag",
+          "suggested_visualization": "bubble_chart",
+          "temporal_assumption": "Higher incomes increase demand for dining options."
+        },
+        {
+          "proposition": "Boroughs with a high number of gyms in 2024 have seen a decrease in vehicle ownership from 2019 to 2023.",
+          "datasets_required": [
+            "gyms",
+            "vehicles"
+          ],
+          "variables_needed": {
+            "gyms": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "vehicles": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "gyms": "2024",
+            "vehicles": "2019-2023"
+          },
+          "relationship_type": "causal",
+          "suggested_visualization": "stacked_bar_chart",
+          "temporal_assumption": "Increased fitness facilities may reduce reliance on vehicles."
+        },
+        {
+          "proposition": "Boroughs with a high percentage of Asian Indian ethnicity in the census snapshot have experienced higher increases in private rent prices from 2011 to present.",
+          "datasets_required": [
+            "ethnicity",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "local_authority_name",
+              "Asian_Indian"
+            ],
+            "private-rent": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "private-rent": "2011-present"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Demographic shifts influence housing demand."
+        },
+        {
+          "proposition": "Boroughs with higher school performance ratings from 2010 to 2023 have experienced greater house price appreciation from 1995 to present.",
+          "datasets_required": [
+            "schools-colleges",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "schools-colleges": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "schools-colleges": "2010-2023",
+            "house-prices": "1995-present"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Quality education attracts families, increasing housing demand."
+        },
+        {
+          "proposition": "Boroughs with a high percentage of Black African ethnicity in the census snapshot have seen a slower increase in house prices from 1995 to present.",
+          "datasets_required": [
+            "ethnicity",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "local_authority_name",
+              "Black_African"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "house-prices": "1995-present"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Demographic factors may influence real estate trends."
+        },
+        {
+          "proposition": "Boroughs with a high number of restaurants from 2001 to 2017 have seen greater income growth from 1999 to 2023.",
+          "datasets_required": [
+            "restaurants",
+            "income"
+          ],
+          "variables_needed": {
+            "restaurants": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ]
+          },
+          "time_periods": {
+            "restaurants": "2001-2017",
+            "income": "1999-2023"
+          },
+          "relationship_type": "temporal_lag",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "A vibrant dining scene may contribute to economic vitality."
+        }
+      ]
+    },
+    "safety_livability_relationships": {
+      "count": 10,
+      "relevant_datasets": [
+        "crime-rates",
+        "schools-colleges",
+        "libraries",
+        "gyms"
+      ],
+      "propositions": [
+        {
+          "proposition": "Boroughs with higher crime rates in 2022-2023 have lower school performance ratings in 2023.",
+          "datasets_required": [
+            "crime-rates",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ],
+            "schools-colleges": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "schools-colleges": "2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher crime rates negatively impact school performance within the same year."
+        },
+        {
+          "proposition": "Boroughs with significant income growth from 2019-2023 show an increase in gym facilities by 2024.",
+          "datasets_required": [
+            "income",
+            "gyms"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "gyms": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2019-2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Increased income levels lead to higher demand for fitness facilities."
+        },
+        {
+          "proposition": "Areas with the highest population growth from 1990-2021 have experienced the most significant increase in house prices from 1995-present.",
+          "datasets_required": [
+            "population",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "population": [
+              "area",
+              "value",
+              "date"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "population": "1990-2021",
+            "house-prices": "1995-present"
+          },
+          "relationship_type": "historical_context",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "Population growth drives demand, increasing house prices over time."
+        },
+        {
+          "proposition": "Boroughs with higher ethnic diversity (census_snapshot) have lower crime rates in 2022-2023.",
+          "datasets_required": [
+            "ethnicity",
+            "crime-rates"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "local_authority_name",
+              "White_British",
+              "Asian_Indian",
+              "Black_African"
+            ],
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "crime-rates": "2022-2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "heatmap",
+          "temporal_assumption": "Ethnic diversity may correlate with community cohesion, impacting crime rates."
+        },
+        {
+          "proposition": "Boroughs with higher vehicle ownership from 2019-2023 have higher private rent prices in the same period.",
+          "datasets_required": [
+            "vehicles",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "vehicles": [
+              "area",
+              "value",
+              "category"
+            ],
+            "private-rent": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "vehicles": "2019-2023",
+            "private-rent": "2019-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Higher vehicle ownership may indicate wealthier populations, affecting rent prices."
+        },
+        {
+          "proposition": "Boroughs with higher mean income in 2023 have more libraries per capita in 2022-2023.",
+          "datasets_required": [
+            "income",
+            "libraries"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "libraries": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "libraries": "2022-2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher income levels may correlate with better public amenities like libraries."
+        },
+        {
+          "proposition": "Boroughs with higher school performance ratings in 2023 have seen a decrease in crime rates from 2022-2023.",
+          "datasets_required": [
+            "schools-colleges",
+            "crime-rates"
+          ],
+          "variables_needed": {
+            "schools-colleges": [
+              "area",
+              "value",
+              "category"
+            ],
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ]
+          },
+          "time_periods": {
+            "schools-colleges": "2023",
+            "crime-rates": "2022-2023"
+          },
+          "relationship_type": "causal",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Improved school performance may contribute to reduced crime rates."
+        },
+        {
+          "proposition": "Boroughs with higher house price appreciation from 1995-2023 have better school performance ratings in 2021-2023.",
+          "datasets_required": [
+            "house-prices",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "house-prices": [
+              "area",
+              "value",
+              "date"
+            ],
+            "schools-colleges": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "house-prices": "1995-2023",
+            "schools-colleges": "2021-2023"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher house prices may reflect better educational resources and school performance."
+        },
+        {
+          "proposition": "Boroughs with higher crime rates in 2022-2023 have lower private rent prices in the same period.",
+          "datasets_required": [
+            "crime-rates",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "count"
+            ],
+            "private-rent": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "private-rent": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Higher crime rates may deter potential renters, reducing rent prices."
+        },
+        {
+          "proposition": "Boroughs with higher income levels in 2023 have more boutique gyms in 2024.",
+          "datasets_required": [
+            "income",
+            "gyms"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "gyms": [
+              "area",
+              "value",
+              "category"
+            ]
+          },
+          "time_periods": {
+            "income": "2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Higher income levels may increase demand for premium fitness facilities."
+        }
+      ]
+    },
+    "market_development_patterns": {
+      "count": 9,
+      "relevant_datasets": [
+        "crime-rates",
+        "schools-colleges",
+        "libraries",
+        "gyms"
+      ],
+      "propositions": [
+        {
+          "proposition": "Boroughs with higher crime rates in 2022-2023 have seen a decrease in school performance ratings in the same period.",
+          "datasets_required": [
+            "crime-rates",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "date",
+              "count"
+            ],
+            "schools-colleges": [
+              "area",
+              "category",
+              "date",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "schools-colleges": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Crime rates and school performance are analyzed over the same time period to identify potential correlations."
+        },
+        {
+          "proposition": "Boroughs with an increase in vehicle registrations from 2019-2023 have experienced higher house price appreciation in the same period.",
+          "datasets_required": [
+            "vehicles",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "vehicles": [
+              "area",
+              "category",
+              "date",
+              "value"
+            ],
+            "house-prices": [
+              "area",
+              "category",
+              "date",
+              "value"
+            ]
+          },
+          "time_periods": {
+            "vehicles": "2019-2023",
+            "house-prices": "2019-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "Simultaneous analysis of vehicle registration trends and house price changes."
+        },
+        {
+          "proposition": "Boroughs with higher income growth from 1999-2023 have seen a rise in private rent prices from 2011-present.",
+          "datasets_required": [
+            "income",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "private-rent": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "income": "1999-2023",
+            "private-rent": "2011-present"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Income growth is used as a proxy to explain trends in private rent prices."
+        },
+        {
+          "proposition": "Boroughs with a significant increase in population from 1801-2021 have the highest number of gyms in 2024.",
+          "datasets_required": [
+            "population",
+            "gyms"
+          ],
+          "variables_needed": {
+            "population": [
+              "area",
+              "value",
+              "date"
+            ],
+            "gyms": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "population": "1801-2021",
+            "gyms": "2024"
+          },
+          "relationship_type": "historical",
+          "suggested_visualization": "bar_chart",
+          "temporal_assumption": "Long-term population growth is assumed to influence the current number of gyms."
+        },
+        {
+          "proposition": "Boroughs with higher ethnic diversity as per the latest census have seen a rise in restaurant openings from 2001-2017.",
+          "datasets_required": [
+            "ethnicity",
+            "restaurants"
+          ],
+          "variables_needed": {
+            "ethnicity": [
+              "LSOA_code",
+              "local_authority_name",
+              "White_British",
+              "Asian_Indian",
+              "Black_African"
+            ],
+            "restaurants": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "ethnicity": "census_snapshot",
+            "restaurants": "2001-2017"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "heatmap",
+          "temporal_assumption": "Ethnic diversity is used as a proxy to explain trends in restaurant openings."
+        },
+        {
+          "proposition": "Boroughs with a higher number of libraries in 2022-2023 have seen an increase in school performance ratings in the same period.",
+          "datasets_required": [
+            "libraries",
+            "schools-colleges"
+          ],
+          "variables_needed": {
+            "libraries": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "schools-colleges": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "libraries": "2022-2023",
+            "schools-colleges": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Libraries and school performance are analyzed over the same time period to identify potential correlations."
+        },
+        {
+          "proposition": "Boroughs with a higher mean income from 1999-2023 have experienced greater house price appreciation from 1995-present.",
+          "datasets_required": [
+            "income",
+            "house-prices"
+          ],
+          "variables_needed": {
+            "income": [
+              "Area",
+              "Mean_income",
+              "Year"
+            ],
+            "house-prices": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "income": "1999-2023",
+            "house-prices": "1995-present"
+          },
+          "relationship_type": "proxy",
+          "suggested_visualization": "line_chart",
+          "temporal_assumption": "Income levels are used as a proxy to explain house price trends."
+        },
+        {
+          "proposition": "Boroughs with higher crime rates in 2022-2023 have seen a decrease in private rent prices in the same period.",
+          "datasets_required": [
+            "crime-rates",
+            "private-rent"
+          ],
+          "variables_needed": {
+            "crime-rates": [
+              "borough_name",
+              "crime_category",
+              "date",
+              "count"
+            ],
+            "private-rent": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "crime-rates": "2022-2023",
+            "private-rent": "2022-2023"
+          },
+          "relationship_type": "correlation",
+          "suggested_visualization": "scatter_plot",
+          "temporal_assumption": "Crime rates and private rent prices are analyzed over the same time period to identify potential correlations."
+        },
+        {
+          "proposition": "Boroughs with higher vehicle registrations from 2019-2023 have seen an increase in gym facilities by 2024.",
+          "datasets_required": [
+            "vehicles",
+            "gyms"
+          ],
+          "variables_needed": {
+            "vehicles": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ],
+            "gyms": [
+              "area",
+              "value",
+              "category",
+              "date"
+            ]
+          },
+          "time_periods": {
+            "vehicles": "2019-2023",
+            "gyms": "2024"
+          },
+          "relationship_type": "lag",
+          "suggested_visualization": "dual_axis_chart",
+          "temporal_assumption": "Vehicle registration trends are assumed to influence the number of gym facilities with a temporal lag."
+        }
+      ]
+    }
+  }
+}

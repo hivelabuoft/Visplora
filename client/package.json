@@ -14,6 +14,7 @@
     "@radix-ui/react-dropdown-menu": "^2.1.15",
     "@radix-ui/react-popover": "^1.1.14",
     "@radix-ui/react-select": "^2.2.5",
+    "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.12",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@tiptap/core": "^3.0.7",
@@ -35,6 +36,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "d3": "^7.9.0",
+    "dotenv": "^17.2.1",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.511.0",
@@ -50,14 +52,14 @@
     "react-leaflet": "^5.0.0",
     "react-map-gl": "^8.0.4",
     "react-tooltip": "^5.29.1",
-    "react-vega": "^7.6.0",
+    "react-vega": "^7.7.1",
     "react-zoom-pan-pinch": "^3.7.0",
     "reactflow": "^11.11.4",
     "tailwind-merge": "^3.3.0",
     "uuid": "^11.1.0",
     "vega": "^6.1.2",
     "vega-embed": "^7.0.2",
-    "vega-lite": "^6.1.0"
+    "vega-lite": "^6.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

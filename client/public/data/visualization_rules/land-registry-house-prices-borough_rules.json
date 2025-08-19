@@ -1,0 +1,99 @@
+{
+  "dataset_id": "land-registry-house-prices-borough",
+  "dataset_name": "Land Registry House Prices by Borough",
+  "category": "house-prices",
+  "description": "Land registry house price statistics by borough",
+  "file_path": "/dataset/london/house-prices/land-registry-house-prices-borough.csv",
+  "field_roles": [
+    {
+      "name": "Code",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "E09000001",
+        "E09000002",
+        "E09000003"
+      ]
+    },
+    {
+      "name": "Area",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "City of London",
+        "Barking and Dagenham",
+        "Barnet"
+      ]
+    },
+    {
+      "name": "Year",
+      "type": "datetime",
+      "roles": [
+        "time"
+      ],
+      "sample_values": [
+        "Year ending Dec 1995",
+        "Year ending Dec 1995",
+        "Year ending Dec 1995"
+      ]
+    },
+    {
+      "name": "Measure",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Median"
+      ]
+    },
+    {
+      "name": "Value",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "105,000",
+        "49,000",
+        "85,125"
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "Area",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "City of London",
+            "Barking and Dagenham",
+            "Barnet"
+          ]
+        },
+        "y": {
+          "name": "count",
+          "roles": [
+            "metric"
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.716Z"
+}

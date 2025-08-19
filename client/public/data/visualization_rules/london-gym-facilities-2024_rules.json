@@ -1,0 +1,323 @@
+{
+  "dataset_id": "london-gym-facilities-2024",
+  "dataset_name": "London Gym Facilities 2024",
+  "category": "gyms",
+  "description": "London gym facilities data for 2024",
+  "file_path": "/dataset/london/gyms/london_gym_facilities_2024.csv",
+  "field_roles": [
+    {
+      "name": "area_name",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Barking and Dagenham 001",
+        "Barking and Dagenham 002",
+        "Barking and Dagenham 003"
+      ]
+    },
+    {
+      "name": "borough_name",
+      "type": "categorical",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Lambeth",
+        "Camden",
+        "Richmond upon Thames"
+      ]
+    },
+    {
+      "name": "lsoa_code",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "E09000002001",
+        "E09000002002",
+        "E09000002003"
+      ]
+    },
+    {
+      "name": "gym_type",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Chain Gym",
+        "Budget Gym",
+        "Independent Gym"
+      ]
+    },
+    {
+      "name": "facility_count",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        12,
+        2.1
+      ]
+    },
+    {
+      "name": "population",
+      "type": "numeric",
+      "roles": [
+        "time",
+        "metric"
+      ],
+      "sample_values": [
+        8618,
+        395869,
+        277404.03
+      ]
+    },
+    {
+      "name": "income_level",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "medium",
+        "very-high",
+        "medium-high"
+      ]
+    },
+    {
+      "name": "example_brands",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "PureGym, The Gym, Fitness First",
+        "PureGym, The Gym, Snap Fitness",
+        "Local Fitness, Community Gym, Independent Health Club"
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "line_chart",
+      "description": "Time series analysis",
+      "encoding": {
+        "x": {
+          "name": "population",
+          "type": "numeric",
+          "roles": [
+            "time",
+            "metric"
+          ],
+          "sample_values": [
+            8618,
+            395869,
+            277404.03
+          ]
+        },
+        "y": {
+          "name": "facility_count",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            0,
+            12,
+            2.1
+          ]
+        },
+        "color": {
+          "name": "area_name",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barking and Dagenham 001",
+            "Barking and Dagenham 002",
+            "Barking and Dagenham 003"
+          ]
+        }
+      }
+    },
+    {
+      "type": "choropleth_map",
+      "description": "Geographic distribution of metrics",
+      "encoding": {
+        "geo": {
+          "name": "area_name",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barking and Dagenham 001",
+            "Barking and Dagenham 002",
+            "Barking and Dagenham 003"
+          ]
+        },
+        "color": {
+          "name": "facility_count",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            0,
+            12,
+            2.1
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "area_name",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barking and Dagenham 001",
+            "Barking and Dagenham 002",
+            "Barking and Dagenham 003"
+          ]
+        },
+        "y": {
+          "name": "facility_count",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            0,
+            12,
+            2.1
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Category comparison",
+      "encoding": {
+        "x": {
+          "name": "area_name",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barking and Dagenham 001",
+            "Barking and Dagenham 002",
+            "Barking and Dagenham 003"
+          ]
+        },
+        "y": {
+          "name": "facility_count",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            0,
+            12,
+            2.1
+          ]
+        }
+      }
+    },
+    {
+      "type": "stacked_bar_chart",
+      "description": "Multi-category analysis",
+      "encoding": {
+        "x": {
+          "name": "area_name",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barking and Dagenham 001",
+            "Barking and Dagenham 002",
+            "Barking and Dagenham 003"
+          ]
+        },
+        "y": {
+          "name": "facility_count",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            0,
+            12,
+            2.1
+          ]
+        },
+        "color": {
+          "name": "borough_name",
+          "type": "categorical",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Lambeth",
+            "Camden",
+            "Richmond upon Thames"
+          ]
+        }
+      }
+    },
+    {
+      "type": "histogram",
+      "description": "Distribution analysis",
+      "encoding": {
+        "x": {
+          "name": "facility_count",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            0,
+            12,
+            2.1
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.724Z"
+}

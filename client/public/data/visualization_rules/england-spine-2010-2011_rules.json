@@ -1,0 +1,519 @@
+{
+  "dataset_id": "england-spine-2010-2011",
+  "dataset_name": "England Spine 2010-2011",
+  "category": "schools-colleges",
+  "description": "England spine data for 2010-2011",
+  "file_path": "/dataset/london/schools-colleges/2010-2011_england_spine.csv",
+  "field_roles": [
+    {
+      "name": "URN",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100000,
+        101359,
+        100696.92
+      ]
+    },
+    {
+      "name": "LA",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        201,
+        936,
+        221.08
+      ]
+    },
+    {
+      "name": "ESTAB",
+      "type": "numeric",
+      "roles": [
+        "time"
+      ],
+      "sample_values": [
+        2000,
+        7207,
+        3791.19
+      ]
+    },
+    {
+      "name": "LAESTAB",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        2013614,
+        9366016,
+        2214611.19
+      ]
+    },
+    {
+      "name": "SCHNAME",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "Sir John Cass's Foundation Primary School",
+        "City of London School for Girls",
+        "St Paul's Cathedral School"
+      ]
+    },
+    {
+      "name": "STREET",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "St James's Passage",
+        "St Giles' Terrace",
+        "2 New Change"
+      ]
+    },
+    {
+      "name": "LOCALITY",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "Duke's Place",
+        "Barbican",
+        "West Hampstead"
+      ]
+    },
+    {
+      "name": "ADDRESS3",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "Hampstead",
+        "Kentish Town",
+        "Greenwich"
+      ]
+    },
+    {
+      "name": "TOWN",
+      "type": "categorical",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "London",
+        "Dagenham",
+        "Barnet"
+      ]
+    },
+    {
+      "name": "POSTCODE",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "EC3A 5DE",
+        "EC2Y 8BB",
+        "EC4M 9AD"
+      ]
+    },
+    {
+      "name": "TELNUM",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "020 72831147",
+        "020 78475500",
+        "020 72485156"
+      ]
+    },
+    {
+      "name": "ICLOSE",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        1,
+        0.03
+      ]
+    },
+    {
+      "name": "ISNEW",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "MINORGROUP",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Maintained School",
+        "Independent School",
+        "Special School"
+      ]
+    },
+    {
+      "name": "NFTYPE",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Community School",
+        "Voluntary Aided School",
+        "Independent School"
+      ]
+    },
+    {
+      "name": "ISPRIMARY",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        1,
+        0.85
+      ]
+    },
+    {
+      "name": "ISSECONDARY",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        1,
+        0.25
+      ]
+    },
+    {
+      "name": "ISPOST16",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        1,
+        0.15
+      ]
+    },
+    {
+      "name": "AGEL",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        1,
+        14,
+        4.6
+      ]
+    },
+    {
+      "name": "AGEH",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        6,
+        20,
+        12.27
+      ]
+    },
+    {
+      "name": "GENDER",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Mixed",
+        "Girls",
+        "Boys"
+      ]
+    },
+    {
+      "name": "SFGENDER",
+      "type": "numeric",
+      "roles": [
+        "metric",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        0,
+        3,
+        0.37
+      ]
+    },
+    {
+      "name": "RELDENOM",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Does not apply",
+        "Church of England",
+        "Roman Catholic"
+      ]
+    },
+    {
+      "name": "ADMPOL",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Not collected",
+        "Comprehensive",
+        "Not applicable"
+      ]
+    },
+    {
+      "name": "NEWACFLAG",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0,
+        2,
+        0.05
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "line_chart",
+      "description": "Time series analysis",
+      "encoding": {
+        "x": {
+          "name": "ESTAB",
+          "type": "numeric",
+          "roles": [
+            "time"
+          ],
+          "sample_values": [
+            2000,
+            7207,
+            3791.19
+          ]
+        },
+        "y": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101359,
+            100696.92
+          ]
+        },
+        "color": {
+          "name": "SCHNAME",
+          "type": "text",
+          "roles": [
+            "category"
+          ],
+          "sample_values": [
+            "Sir John Cass's Foundation Primary School",
+            "City of London School for Girls",
+            "St Paul's Cathedral School"
+          ]
+        }
+      }
+    },
+    {
+      "type": "choropleth_map",
+      "description": "Geographic distribution of metrics",
+      "encoding": {
+        "geo": {
+          "name": "TOWN",
+          "type": "categorical",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "London",
+            "Dagenham",
+            "Barnet"
+          ]
+        },
+        "color": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101359,
+            100696.92
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "TOWN",
+          "type": "categorical",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "London",
+            "Dagenham",
+            "Barnet"
+          ]
+        },
+        "y": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101359,
+            100696.92
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Category comparison",
+      "encoding": {
+        "x": {
+          "name": "SCHNAME",
+          "type": "text",
+          "roles": [
+            "category"
+          ],
+          "sample_values": [
+            "Sir John Cass's Foundation Primary School",
+            "City of London School for Girls",
+            "St Paul's Cathedral School"
+          ]
+        },
+        "y": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101359,
+            100696.92
+          ]
+        }
+      }
+    },
+    {
+      "type": "stacked_bar_chart",
+      "description": "Multi-category analysis",
+      "encoding": {
+        "x": {
+          "name": "SCHNAME",
+          "type": "text",
+          "roles": [
+            "category"
+          ],
+          "sample_values": [
+            "Sir John Cass's Foundation Primary School",
+            "City of London School for Girls",
+            "St Paul's Cathedral School"
+          ]
+        },
+        "y": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101359,
+            100696.92
+          ]
+        },
+        "color": {
+          "name": "STREET",
+          "type": "text",
+          "roles": [
+            "category"
+          ],
+          "sample_values": [
+            "St James's Passage",
+            "St Giles' Terrace",
+            "2 New Change"
+          ]
+        }
+      }
+    },
+    {
+      "type": "histogram",
+      "description": "Distribution analysis",
+      "encoding": {
+        "x": {
+          "name": "URN",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100000,
+            101359,
+            100696.92
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.722Z"
+}

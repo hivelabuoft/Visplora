@@ -1,0 +1,460 @@
+{
+  "dataset_name": "population",
+  "complexity_score": 7,
+  "total_propositions": 35,
+  "proposition_breakdown": {
+    "temporal_trends": 15,
+    "geographic_patterns": 10,
+    "statistical_patterns": 6,
+    "cross_dimensional": 4
+  },
+  "generated_at": "2025-08-18T17:23:07.878Z",
+  "categories": {
+    "temporal_trends": [
+      {
+        "id": "tt1",
+        "proposition": "The population density in the borough of Westminster increased by 25% from 2000 to 2020.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2000-2020",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt2",
+        "proposition": "From 1801 to 2021, the population in London has grown steadily, with a notable spike during the 1940s.",
+        "variables_needed": [
+          "value",
+          "date"
+        ],
+        "time_period": "1801-2021",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt3",
+        "proposition": "The borough of Camden experienced a 10% decrease in population from 1910 to 1920.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "1910-1920",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt4",
+        "proposition": "Population density in inner London boroughs has increased by 30% from 1990 to 2010.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "1990-2010",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt5",
+        "proposition": "The population of outer London boroughs remained relatively stable between 1950 and 1970.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "1950-1970",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt6",
+        "proposition": "Population growth in London was highest during the 19th century, particularly from 1850 to 1900.",
+        "variables_needed": [
+          "value",
+          "date"
+        ],
+        "time_period": "1850-1900",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt7",
+        "proposition": "The population in the borough of Hackney increased by 15% from 2010 to 2020.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2010-2020",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt8",
+        "proposition": "Between 1980 and 2000, the population in the borough of Islington grew by 20%.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "1980-2000",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt9",
+        "proposition": "The 1960s saw a decline in population across most London boroughs, averaging a 5% decrease.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "1960-1970",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt10",
+        "proposition": "Population density in the borough of Kensington and Chelsea increased by 40% from 1995 to 2005.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "1995-2005",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt11",
+        "proposition": "The population in the borough of Lambeth grew by 18% between 2005 and 2015.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2005-2015",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt12",
+        "proposition": "From 1970 to 1990, the population in the borough of Southwark increased by 12%.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "1970-1990",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt13",
+        "proposition": "The population of the borough of Haringey increased by 22% from 2000 to 2020.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2000-2020",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt14",
+        "proposition": "Population growth in the borough of Barnet was 5% higher than the London average from 1990 to 2010.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "1990-2010",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt15",
+        "proposition": "The borough of Enfield saw a 30% increase in population from 1985 to 2005.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "1985-2005",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "geographic_patterns": [
+      {
+        "id": "gp1",
+        "proposition": "The boroughs of Camden and Westminster have the highest population densities in London.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp2",
+        "proposition": "Outer London boroughs generally have lower population densities compared to inner London boroughs.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp3",
+        "proposition": "The borough of Tower Hamlets has one of the fastest-growing populations in London.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp4",
+        "proposition": "Population density is highest in the central boroughs of London, such as Westminster and Kensington and Chelsea.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp5",
+        "proposition": "The borough of Croydon has a significantly larger population compared to its neighboring boroughs.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp6",
+        "proposition": "Boroughs in East London, such as Newham and Barking and Dagenham, have seen rapid population growth.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp7",
+        "proposition": "The borough of Richmond upon Thames has one of the lowest population densities in London.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp8",
+        "proposition": "Population distribution in London shows a clear north-south divide, with higher densities in the north.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "gp9",
+        "proposition": "The borough of Hillingdon has a lower population density compared to central London boroughs.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp10",
+        "proposition": "Population growth hotspots are identified in the boroughs of Hackney and Haringey.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "statistical_patterns": [
+      {
+        "id": "sp1",
+        "proposition": "Population distribution across London boroughs is skewed towards higher densities in central areas.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "histogram",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "sp2",
+        "proposition": "There is a high variance in population density between inner and outer London boroughs.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "box_plot",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "sp3",
+        "proposition": "The top 10% of boroughs account for 50% of London's total population.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pareto_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "sp4",
+        "proposition": "A correlation exists between borough population size and density, with a correlation coefficient of 0.75.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "scatter_plot",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "sp5",
+        "proposition": "Outliers in population growth are observed in the boroughs of Newham and Tower Hamlets.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "box_plot",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "sp6",
+        "proposition": "Population density follows a bimodal distribution, with peaks in both inner and outer boroughs.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "density_plot",
+        "complexity_level": "Advanced"
+      }
+    ],
+    "cross_dimensional": [
+      {
+        "id": "cd1",
+        "proposition": "Population growth in the borough of Greenwich is higher during the summer months.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cd2",
+        "proposition": "The category of 'young adults' is predominantly higher in central London boroughs.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "cd3",
+        "proposition": "Population density in the borough of Brent peaks during the winter months.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cd4",
+        "proposition": "The elderly population category shows a significant increase in outer London boroughs over the past two decades.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2001-2021",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      }
+    ]
+  }
+}

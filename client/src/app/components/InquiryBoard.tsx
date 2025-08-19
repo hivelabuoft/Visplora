@@ -27,6 +27,9 @@ export interface InquiryIssue {
   title: string;
   status: 'open' | 'stalled' | 'resolved';
   
+  // Sentence references from the first layer API
+  sentenceRefs?: string[];
+  
   // Unified content fields from enrichment
   position_suggested_by?: {
     text: string;
@@ -458,7 +461,7 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
     inquiryNode: (props: any) => (
       <InquiryNodeComponent
         {...props}
-        onClick={(nodeId: string) => console.log('Node clicked:', nodeId)}
+        onClick={(nodeId: string) => handleInquiryNodeClick(nodeId)}
         showHandles={true} // Enable handles when used in ReactFlow
         maxWidth="280px" // Limit width in network view
       />
@@ -475,20 +478,16 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
       if (isDemoMode()) {
         // Demo mode: Load from test.json
         try {
-          console.log('� Demo mode: Loading inquiry data from test.json');
           const response = await fetch('/testcases/test_inquiry_board/test.json');
           const data: InquiryIssue[] = await response.json();
-          console.log('✅ Demo mode: Loaded', data.length, 'inquiries from test data');
           setInquiries(data);
         } catch (error) {
-          console.error('❌ Failed to load inquiry test data:', error);
           setLoadingError('Failed to load test data');
           setInquiries([]);
         }
       } else {
         // Production mode: Call inquiry APIs
         try {
-          console.log('� Production mode: Calling inquiry APIs');
           
           // Use the tree structure passed from the narrative system
           const currentTreeStructure = treeStructure || {
@@ -500,13 +499,11 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
           
           // Check if we have any narrative content
           if (currentTreeStructure.nodes.length === 0) {
-            console.log('ℹ️ No narrative content found, setting empty inquiries');
             setInquiries([]);
             setIsLoadingInquiries(false);
             return;
           }
           
-          console.log('📝 Calling first layer API: /api/inquiry-issues');
           
           // Step 1: Call the first layer API to extract basic issues
           const basicIssuesResponse = await fetch('/api/inquiry-issues', {
@@ -525,16 +522,13 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
           }
           
           const basicIssuesData = await basicIssuesResponse.json();
-          console.log('✅ First layer: Received', basicIssuesData.issues?.length || 0, 'basic issues');
           
           if (!basicIssuesData.issues || basicIssuesData.issues.length === 0) {
-            console.log('ℹ️ No basic issues found, setting empty array');
             setInquiries([]);
             setIsLoadingInquiries(false);
             return;
           }
           
-          console.log('📝 Calling second layer API: /api/inquiry-enrichment');
           
           // Step 2: Call the second layer API to enrich the issues
           const enrichmentResponse = await fetch('/api/inquiry-enrichment', {
@@ -554,11 +548,9 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
           }
           
           const enrichmentData = await enrichmentResponse.json();
-          console.log('✅ Second layer: Received', enrichmentData.enrichedIssues?.length || 0, 'enriched issues');
           
           // Use enriched issues as final data
           const finalIssues = enrichmentData.enrichedIssues || [];
-          console.log('🎯 Production mode: Setting', finalIssues.length, 'final enriched issues');
           setInquiries(finalIssues);
           
         } catch (error) {
@@ -658,15 +650,12 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
   const createEdgesFromLinks = () => {
     const edgeList: Edge[] = [];
     
-    console.log('🔗 Creating edges for inquiries:', inquiries.length);
 
     inquiries.forEach((inquiry) => {
       if (inquiry.links && inquiry.links.length > 0) {
-        console.log(`🔗 Processing ${inquiry.links.length} links for ${inquiry.qid}`);
         inquiry.links.forEach((link, linkIndex) => {
           // Check if the linked inquiry exists in our dataset
           const targetExists = inquiries.some(inq => inq.qid === link.qid);
-          console.log(`🔗 Link ${inquiry.qid} -> ${link.qid} (${link.type}): target exists = ${targetExists}`);
           if (targetExists) {
             // Get actual node positions from current nodes state
             const sourceNode = nodes.find(n => n.id === inquiry.qid);
@@ -761,7 +750,6 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
       }
     });
     
-    console.log('🔗 Created edges:', edgeList.length, edgeList.map(e => `${e.source}->${e.target}`));
     return edgeList;
   };
 
@@ -780,13 +768,22 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
       setEdges(newEdges); // Create edges for network view
     }
     
-    console.log('🔄 Setting nodes:', newNodes.length);
     setNodes(newNodes);
   }, [inquiries, layoutMode, setNodes, setEdges]);
 
+  // Handle inquiry node click - log sentence references
+  const handleInquiryNodeClick = useCallback((nodeId: string) => {
+    const clickedInquiry = inquiries.find(inquiry => inquiry.qid === nodeId);
+    if (clickedInquiry) {
+      if (clickedInquiry.sentenceRefs && clickedInquiry.sentenceRefs.length > 0) {
+        clickedInquiry.sentenceRefs.forEach((sentenceId, index) => {
+        });
+      } 
+    }
+  }, [inquiries]);
+
   // Handle go back button
   const handleGoBack = useCallback(() => {
-    console.log('🔙 Going back from inquiry board');
     if (onGoBack) {
       onGoBack();
     }
@@ -1155,7 +1152,7 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
                   <InquiryNodeComponent
                     data={inquiry}
                     selected={false}
-                    onClick={(nodeId: string) => console.log('Clicked:', nodeId)}
+                    onClick={(nodeId: string) => handleInquiryNodeClick(nodeId)}
                   />
                 </div>
               ))}
@@ -1224,7 +1221,7 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
                   <InquiryNodeComponent
                     data={inquiry}
                     selected={false}
-                    onClick={(nodeId: string) => console.log('Clicked:', nodeId)}
+                    onClick={(nodeId: string) => handleInquiryNodeClick(nodeId)}
                   />
                 </div>
               ))}
@@ -1293,7 +1290,7 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
                   <InquiryNodeComponent
                     data={inquiry}
                     selected={false}
-                    onClick={(nodeId: string) => console.log('Clicked:', nodeId)}
+                    onClick={(nodeId: string) => handleInquiryNodeClick(nodeId)}
                   />
                 </div>
               ))}

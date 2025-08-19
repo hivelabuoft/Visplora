@@ -1,0 +1,280 @@
+{
+  "dataset_name": "vehicles",
+  "complexity_score": 4,
+  "total_propositions": 20,
+  "proposition_breakdown": {
+    "temporal_trends": 6,
+    "geographic_patterns": 6,
+    "categorical_analysis": 6,
+    "cross_dimensional": 2
+  },
+  "generated_at": "2025-08-18T17:25:14.300Z",
+  "categories": {
+    "temporal_trends": [
+      {
+        "id": "tt1",
+        "proposition": "The number of electric vehicles increased by 25% annually from 2020 to 2023 across London boroughs.",
+        "variables_needed": [
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt2",
+        "proposition": "Hybrid vehicle registrations peaked in Q2 2022, showing a 15% increase compared to Q1 2022.",
+        "variables_needed": [
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2022",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt3",
+        "proposition": "Diesel vehicle registrations have declined by 10% each year from 2019 to 2023.",
+        "variables_needed": [
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2019-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt4",
+        "proposition": "The highest increase in vehicle registrations occurred in 2021, with a 30% rise compared to 2020.",
+        "variables_needed": [
+          "value",
+          "date"
+        ],
+        "time_period": "2020-2021",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt5",
+        "proposition": "Seasonal trends show a consistent 5% increase in vehicle registrations every summer from 2019 to 2023.",
+        "variables_needed": [
+          "value",
+          "date"
+        ],
+        "time_period": "2019-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt6",
+        "proposition": "The number of petrol vehicles remained stable with less than 2% variation annually from 2019 to 2023.",
+        "variables_needed": [
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2019-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      }
+    ],
+    "geographic_patterns": [
+      {
+        "id": "gp1",
+        "proposition": "Westminster has the highest number of electric vehicles, accounting for 20% of all electric vehicles in London.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp2",
+        "proposition": "Outer London boroughs have 30% more diesel vehicles compared to inner London boroughs.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp3",
+        "proposition": "The distribution of hybrid vehicles is evenly spread across North and South London, each holding 50% of the total.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp4",
+        "proposition": "Boroughs in East London show a 40% higher concentration of petrol vehicles compared to West London.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp5",
+        "proposition": "Camden and Hackney have the lowest number of diesel vehicles, together comprising only 5% of London's total.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp6",
+        "proposition": "South London boroughs have seen a 20% increase in electric vehicle registrations from 2020 to 2023.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "categorical_analysis": [
+      {
+        "id": "ca1",
+        "proposition": "Electric vehicles represent 40% of all new vehicle registrations in 2023.",
+        "variables_needed": [
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca2",
+        "proposition": "Diesel vehicles account for the least number of registrations, making up only 10% of the total in 2023.",
+        "variables_needed": [
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca3",
+        "proposition": "Hybrid vehicles have seen a 50% increase in their share of total registrations from 2019 to 2023.",
+        "variables_needed": [
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2019-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca4",
+        "proposition": "Petrol vehicles remain the most common type, comprising 45% of all vehicles in 2023.",
+        "variables_needed": [
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca5",
+        "proposition": "The proportion of electric vehicles is highest in high-income boroughs, making up 60% of registrations.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca6",
+        "proposition": "The least common vehicle type in 2023 is diesel, with registrations decreasing by 5% from the previous year.",
+        "variables_needed": [
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      }
+    ],
+    "cross_dimensional": [
+      {
+        "id": "cd1",
+        "proposition": "Electric vehicle registrations peak 30% higher in inner London boroughs during summer months from 2020 to 2023.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd2",
+        "proposition": "Hybrid vehicles show a 20% increase in registrations in outer London boroughs during winter months from 2019 to 2023.",
+        "variables_needed": [
+          "area",
+          "category",
+          "value",
+          "date"
+        ],
+        "time_period": "2019-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      }
+    ]
+  }
+}

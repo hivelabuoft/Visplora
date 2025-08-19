@@ -1,0 +1,140 @@
+{
+  "dataset_id": "london-crime-data-2022-2023",
+  "dataset_name": "London Crime Data 2022-2023",
+  "category": "crime-rates",
+  "description": "Crime statistics for London 2022-2023",
+  "file_path": "/dataset/london/crime-rates/london_crime_data_2022_2023.csv",
+  "field_roles": [
+    {
+      "name": "area_name",
+      "type": "categorical",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Barking and Dagenham 002",
+        "Barking and Dagenham 003",
+        "Barking and Dagenham 006"
+      ]
+    },
+    {
+      "name": "borough_name",
+      "type": "categorical",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Barking and Dagenham"
+      ]
+    },
+    {
+      "name": "lsoa_code",
+      "type": "categorical",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "E09000002002",
+        "E09000002003",
+        "E09000002006"
+      ]
+    },
+    {
+      "name": "crime_category",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "anti-social-behaviour",
+        "burglary",
+        "theft-from-the-person"
+      ]
+    },
+    {
+      "name": "crime_category_name",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Anti-social behaviour",
+        "Burglary",
+        "Theft from the person"
+      ]
+    },
+    {
+      "name": "year",
+      "type": "numeric",
+      "roles": [
+        "time"
+      ],
+      "sample_values": [
+        2022,
+        2022,
+        2022
+      ]
+    },
+    {
+      "name": "month",
+      "type": "numeric",
+      "roles": [
+        "time"
+      ],
+      "sample_values": [
+        1,
+        2,
+        1.08
+      ]
+    },
+    {
+      "name": "date",
+      "type": "datetime",
+      "roles": [
+        "time"
+      ],
+      "sample_values": [
+        "2022-01",
+        "2022-01",
+        "2022-01"
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "area_name",
+          "type": "categorical",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barking and Dagenham 002",
+            "Barking and Dagenham 003",
+            "Barking and Dagenham 006"
+          ]
+        },
+        "y": {
+          "name": "count",
+          "roles": [
+            "metric"
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.707Z"
+}

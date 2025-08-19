@@ -1,0 +1,548 @@
+{
+  "dataset_name": "crime-rates",
+  "complexity_score": 8,
+  "total_propositions": 40,
+  "proposition_breakdown": {
+    "temporal_trends": 8,
+    "geographic_patterns": 10,
+    "categorical_analysis": 8,
+    "cross_dimensional": 8,
+    "statistical_patterns": 6
+  },
+  "generated_at": "2025-08-18T17:20:59.392Z",
+  "categories": {
+    "temporal_trends": [
+      {
+        "id": "temp_001",
+        "proposition": "Theft-from-the-person incidents increased by 10% from January 2022 to January 2023 across London.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "temp_002",
+        "proposition": "Burglary incidents show a seasonal peak in December 2022 in Westminster.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count",
+          "borough_name"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "temp_003",
+        "proposition": "Violent crime rates remained stable from 2022 to 2023 in Camden, with less than 2% variation.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count",
+          "borough_name"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "temp_004",
+        "proposition": "Overall crime rates in Tower Hamlets decreased by 5% from Q1 2022 to Q1 2023.",
+        "variables_needed": [
+          "date",
+          "count",
+          "borough_name"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "temp_005",
+        "proposition": "Crime incidents in London show a cyclical pattern with peaks in summer months of 2022 and 2023.",
+        "variables_needed": [
+          "date",
+          "count"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "temp_006",
+        "proposition": "The number of theft-from-the-person incidents in Camden increased by 15% from February 2022 to February 2023.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count",
+          "borough_name"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "temp_007",
+        "proposition": "Violent crime incidents in London decreased by 8% from March 2022 to March 2023.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "temp_008",
+        "proposition": "Burglary incidents in Tower Hamlets show a 20% increase during the winter months of 2022.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count",
+          "borough_name"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      }
+    ],
+    "geographic_patterns": [
+      {
+        "id": "geo_001",
+        "proposition": "Westminster accounts for 25% of all theft-from-the-person incidents in London.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "geo_002",
+        "proposition": "Camden and Tower Hamlets together account for 40% of violent crime incidents in London.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_003",
+        "proposition": "Burglary incidents are most concentrated in the northern boroughs of London.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "geo_004",
+        "proposition": "Theft-from-the-person incidents are highest in central London boroughs compared to outer boroughs.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "geo_005",
+        "proposition": "South London boroughs report fewer violent crime incidents compared to North London.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_006",
+        "proposition": "LSOA-level analysis shows hotspots of burglary incidents in the eastern part of Tower Hamlets.",
+        "variables_needed": [
+          "crime_category",
+          "area_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "heat_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "geo_007",
+        "proposition": "Westminster and Camden together account for 30% of all crime incidents in London.",
+        "variables_needed": [
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "geo_008",
+        "proposition": "Crime rates in the western boroughs of London are 15% lower than in the eastern boroughs.",
+        "variables_needed": [
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_009",
+        "proposition": "Central London boroughs show a higher concentration of theft incidents compared to suburban areas.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "geo_010",
+        "proposition": "The distribution of violent crime incidents is more uniform across London compared to other crime categories.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "heat_map",
+        "complexity_level": "Advanced"
+      }
+    ],
+    "categorical_analysis": [
+      {
+        "id": "cat_001",
+        "proposition": "Theft-from-the-person is the most common crime category, accounting for 35% of all incidents in London.",
+        "variables_needed": [
+          "crime_category",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "cat_002",
+        "proposition": "Burglary incidents account for 20% of total crime in Camden.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "cat_003",
+        "proposition": "Violent crime is the least common category in Tower Hamlets, making up only 15% of incidents.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "cat_004",
+        "proposition": "The proportion of theft-from-the-person incidents is higher in Westminster compared to burglary and violent crime.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_005",
+        "proposition": "Violent crime incidents are more evenly distributed across boroughs compared to theft-from-the-person.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "heat_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cat_006",
+        "proposition": "Burglary incidents are more concentrated in residential areas, with 60% occurring in LSOAs with higher residential density.",
+        "variables_needed": [
+          "crime_category",
+          "area_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "heat_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cat_007",
+        "proposition": "Theft-from-the-person incidents in Camden are twice as common as violent crime incidents.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_008",
+        "proposition": "Burglary is the most common crime category in suburban boroughs, accounting for 40% of incidents.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "cross_dimensional": [
+      {
+        "id": "cross_001",
+        "proposition": "Theft-from-the-person incidents peak 30% higher in central London during summer months.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count",
+          "borough_name"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_002",
+        "proposition": "Burglary incidents in outer London boroughs increase by 25% during winter months.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count",
+          "borough_name"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_003",
+        "proposition": "Violent crime rates in Westminster show a 15% increase during weekends compared to weekdays.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count",
+          "borough_name"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cross_004",
+        "proposition": "Theft-from-the-person incidents in Camden are 20% higher during holiday seasons.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count",
+          "borough_name"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cross_005",
+        "proposition": "Burglary incidents in Tower Hamlets are 10% higher in residential LSOAs compared to commercial areas.",
+        "variables_needed": [
+          "crime_category",
+          "area_name",
+          "count"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "heat_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_006",
+        "proposition": "Violent crime incidents in London show a 12% increase in areas with higher population density.",
+        "variables_needed": [
+          "crime_category",
+          "area_name",
+          "count"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "heat_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_007",
+        "proposition": "Theft-from-the-person incidents in central London are 15% higher during weekdays compared to weekends.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count",
+          "borough_name"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cross_008",
+        "proposition": "Crime rates in London show a 10% increase in areas with higher commercial activity during the holiday season.",
+        "variables_needed": [
+          "crime_category",
+          "date",
+          "count",
+          "area_name"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "heat_map",
+        "complexity_level": "Advanced"
+      }
+    ],
+    "statistical_patterns": [
+      {
+        "id": "stat_001",
+        "proposition": "The distribution of crime incidents in London follows a normal distribution with a slight right skew.",
+        "variables_needed": [
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "histogram",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "stat_002",
+        "proposition": "The variance in burglary incidents is higher in outer London boroughs compared to inner boroughs.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "box_plot",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "stat_003",
+        "proposition": "The top 10% of LSOAs account for 50% of all theft-from-the-person incidents in London.",
+        "variables_needed": [
+          "crime_category",
+          "area_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "pareto_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "stat_004",
+        "proposition": "There is a positive correlation between population density and violent crime incidents in London.",
+        "variables_needed": [
+          "crime_category",
+          "area_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "scatter_plot",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "stat_005",
+        "proposition": "Outlier analysis shows that certain LSOAs in Westminster have significantly higher crime rates compared to the average.",
+        "variables_needed": [
+          "area_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "box_plot",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "stat_006",
+        "proposition": "The distribution of violent crime incidents across London is bimodal, with peaks in central and outer boroughs.",
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "histogram",
+        "complexity_level": "Advanced"
+      }
+    ]
+  }
+}
