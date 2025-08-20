@@ -1,0 +1,205 @@
+{
+  "category": "categorical_analysis",
+  "dataset": "gyms",
+  "processed_at": "2025-08-20T04:09:53.979Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_01",
+      "dataset": "gyms",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2024, budget gyms represent 50% of all gym categories in Outer London boroughs.",
+      "reworded_proposition": "In 2024, budget gyms dominate the gym landscape in Outer London boroughs.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Dominance of Budget Gyms in Outer London",
+      "chart_description": "Visual representation of gym categories in Outer London for 2024.",
+      "reasoning": "A donut chart effectively illustrates the proportion of each gym category, highlighting the dominance of budget gyms.",
+      "tapas_questions": [
+        "Which gym category has the highest representation in Outer London?",
+        "What percentage of gyms in Outer London are budget gyms?",
+        "How does the representation of budget gyms compare to premium gyms in Outer London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_02",
+      "dataset": "gyms",
+      "category": "categorical_analysis",
+      "original_proposition": "Premium gyms are most concentrated in central boroughs, making up 60% of gym types in Westminster in 2024.",
+      "reworded_proposition": "Premium gyms are predominantly located in central boroughs, with Westminster showing a particularly high concentration.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Distribution of Premium Gyms in Central Boroughs",
+      "chart_description": "Visual representation of premium gym concentration by borough in 2024.",
+      "reasoning": "A simple bar chart effectively highlights the concentration of premium gyms across different boroughs, allowing for easy comparison.",
+      "tapas_questions": [
+        "Which borough has the highest concentration of premium gyms?",
+        "What percentage of gyms in Westminster are premium?",
+        "How does the concentration of premium gyms in Westminster compare to other boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_03",
+      "dataset": "gyms",
+      "category": "categorical_analysis",
+      "original_proposition": "Community gyms are the least common category, representing only 10% of gym facilities across London in 2024.",
+      "reworded_proposition": "Community gyms are notably less prevalent compared to other gym categories across London in 2024.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Distribution of Gym Categories in London, 2024",
+      "chart_description": "Visual representation of gym category proportions in London for 2024.",
+      "reasoning": "A donut chart effectively highlights the proportion of each gym category, emphasizing the relative scarcity of community gyms.",
+      "tapas_questions": [
+        "Which gym category is the most common in London?",
+        "What percentage of gym facilities are community gyms?",
+        "How do community gyms compare to other categories in terms of prevalence?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_04",
+      "dataset": "gyms",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2024, there is a 30% higher prevalence of boutique gyms in high-income boroughs compared to low-income boroughs.",
+      "reworded_proposition": "In 2024, boutique gyms are more prevalent in high-income boroughs compared to their low-income counterparts.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Boutique Gym Prevalence by Income Level in 2024",
+      "chart_description": "Comparison of boutique gym prevalence between high and low-income boroughs.",
+      "reasoning": "A bar chart with a mean line effectively highlights the comparison between high and low-income boroughs, showing the average prevalence across all boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest prevalence of boutique gyms?",
+        "What is the average prevalence of boutique gyms across all boroughs?",
+        "How does the prevalence of boutique gyms in high-income boroughs compare to low-income boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_05",
+      "dataset": "gyms",
+      "category": "categorical_analysis",
+      "original_proposition": "The category of '24-hour gyms' has grown to represent 15% of all gym facilities in London by 2024.",
+      "reworded_proposition": "The presence of '24-hour gyms' has noticeably increased, now comprising a significant portion of London's gym facilities by 2024.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Growth of 24-Hour Gyms in London",
+      "chart_description": "Trends in the proportion of 24-hour gyms among all gym facilities in London up to 2024.",
+      "reasoning": "A line chart effectively illustrates the trend over time, showing how the proportion of 24-hour gyms has evolved.",
+      "tapas_questions": [
+        "What percentage of gym facilities are 24-hour gyms in 2024?",
+        "How did the proportion of 24-hour gyms change over the years?",
+        "Which year saw the highest increase in 24-hour gyms?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_06",
+      "dataset": "gyms",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2024, family-oriented gyms are predominantly located in suburban boroughs, accounting for 40% of gym types there.",
+      "reworded_proposition": "In 2024, suburban boroughs tend to have a higher concentration of family-oriented gyms compared to other areas.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Distribution of Family-Oriented Gyms in 2024",
+      "chart_description": "Comparison of gym types across boroughs in 2024",
+      "reasoning": "A simple bar chart effectively compares the distribution of gym types across different boroughs, highlighting the predominance of family-oriented gyms in suburban areas.",
+      "tapas_questions": [
+        "Which borough has the highest number of family-oriented gyms?",
+        "What percentage of gyms in suburban boroughs are family-oriented?",
+        "How does the number of family-oriented gyms compare between suburban and urban boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_07",
+      "dataset": "gyms",
+      "category": "categorical_analysis",
+      "original_proposition": "Gyms offering specialized classes (e.g., yoga, pilates) are concentrated in the boroughs of Camden and Islington, making up 35% of their gym categories in 2024.",
+      "reworded_proposition": "Gyms in Camden and Islington prominently feature specialized classes like yoga and pilates, dominating their gym offerings in 2024.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Specialized Gym Classes in Camden and Islington",
+      "chart_description": "Proportion of gyms offering specialized classes in Camden and Islington for 2024.",
+      "reasoning": "A donut chart effectively shows the proportion of gym categories focusing on specialized classes within the boroughs, highlighting the concentration visually.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of gyms offering specialized classes?",
+        "What percentage of gyms in Camden offer specialized classes?",
+        "How does Islington compare to Camden in terms of specialized gym offerings?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_08",
+      "dataset": "gyms",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2024, eco-friendly gyms are a niche category, comprising only 5% of all gym facilities in London.",
+      "reworded_proposition": "Eco-friendly gyms remain a small segment of the gym market in London, making up a minor portion of the total facilities.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Share of Eco-Friendly Gyms in London",
+      "chart_description": "Visual representation of eco-friendly gyms as a part of total gym facilities in 2024.",
+      "reasoning": "A donut chart effectively illustrates the proportion of eco-friendly gyms within the overall gym market, highlighting their niche status.",
+      "tapas_questions": [
+        "What percentage of gym facilities are eco-friendly in London?",
+        "Which category of gym facilities is the most common?",
+        "How does the number of eco-friendly gyms compare to other types?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    }
+  ]
+}

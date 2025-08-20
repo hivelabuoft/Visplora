@@ -1,0 +1,214 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "crime-rates",
+  "processed_at": "2025-08-20T04:04:41.011Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_001",
+      "dataset": "crime-rates",
+      "category": "cross_dimensional",
+      "original_proposition": "Theft-from-the-person incidents peak 30% higher in central London during summer months.",
+      "reworded_proposition": "Theft-from-the-person incidents tend to surge in central London during the summer months.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Trends in Theft-from-the-Person Incidents",
+      "chart_description": "Visualizing monthly theft incidents in central London over time.",
+      "reasoning": "A line chart effectively illustrates changes over time, highlighting seasonal trends.",
+      "tapas_questions": [
+        "How did theft-from-the-person incidents change from winter to summer?",
+        "Which month had the highest number of theft-from-the-person incidents?",
+        "What is the average number of theft incidents per month?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_002",
+      "dataset": "crime-rates",
+      "category": "cross_dimensional",
+      "original_proposition": "Burglary incidents in outer London boroughs increase by 25% during winter months.",
+      "reworded_proposition": "Burglary incidents tend to rise in outer London boroughs during the winter months.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Seasonal Trends in Burglary Incidents",
+      "chart_description": "Explore how burglary rates fluctuate in outer London boroughs across seasons.",
+      "reasoning": "A 3D line chart effectively captures the temporal trend of burglary incidents across multiple boroughs, highlighting seasonal variations.",
+      "tapas_questions": [
+        "How do burglary incidents compare between winter and summer months?",
+        "Which borough has the highest increase in burglary incidents during winter?",
+        "What is the average burglary rate in outer London boroughs during winter?"
+      ],
+      "3d_dimension": "time_subdivision",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_003",
+      "dataset": "crime-rates",
+      "category": "cross_dimensional",
+      "original_proposition": "Violent crime rates in Westminster show a 15% increase during weekends compared to weekdays.",
+      "reworded_proposition": "Violent crime rates in Westminster tend to rise significantly during weekends compared to weekdays.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Weekend vs Weekday Violent Crime in Westminster",
+      "chart_description": "Comparison of violent crime rates in Westminster between weekends and weekdays.",
+      "reasoning": "A bar chart with a mean line effectively highlights the difference in crime rates between weekends and weekdays, while also showing the average rate for context.",
+      "tapas_questions": [
+        "How do weekend violent crime rates compare to weekdays in Westminster?",
+        "What is the average violent crime rate in Westminster?",
+        "Which days have the highest violent crime rates in Westminster?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_004",
+      "dataset": "crime-rates",
+      "category": "cross_dimensional",
+      "original_proposition": "Theft-from-the-person incidents in Camden are 20% higher during holiday seasons.",
+      "reworded_proposition": "Theft-from-the-person incidents in Camden tend to rise noticeably during holiday seasons compared to other times of the year.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Trends in Camden Theft Incidents",
+      "chart_description": "Visualizing theft-from-the-person incidents in Camden over time, highlighting holiday season peaks.",
+      "reasoning": "A simple line chart effectively shows changes over time, making it easy to identify seasonal patterns and trends in theft incidents.",
+      "tapas_questions": [
+        "How do theft-from-the-person incidents in Camden compare between holiday and non-holiday seasons?",
+        "What is the trend of theft-from-the-person incidents in Camden over the year?",
+        "Which period shows the highest theft-from-the-person incidents in Camden?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_005",
+      "dataset": "crime-rates",
+      "category": "cross_dimensional",
+      "original_proposition": "Burglary incidents in Tower Hamlets are 10% higher in residential LSOAs compared to commercial areas.",
+      "reworded_proposition": "Burglary incidents in Tower Hamlets are notably more frequent in residential areas compared to commercial zones.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Burglary Incidents in Tower Hamlets by Area Type",
+      "chart_description": "Comparison of burglary rates in residential vs. commercial LSOAs in Tower Hamlets.",
+      "reasoning": "The histogram heatmap is suitable for comparing burglary rates across two categorical dimensions: area type and LSOA, highlighting differences in frequency.",
+      "tapas_questions": [
+        "Which area type has the highest burglary incidents?",
+        "What percentage of burglaries occur in residential areas?",
+        "How do burglary incidents in residential areas compare to commercial areas?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "area_name",
+        "count"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_006",
+      "dataset": "crime-rates",
+      "category": "cross_dimensional",
+      "original_proposition": "Violent crime incidents in London show a 12% increase in areas with higher population density.",
+      "reworded_proposition": "Areas in London with higher population density tend to experience a noticeable rise in violent crime incidents.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Violent Crime vs. Population Density in London",
+      "chart_description": "Explore the relationship between population density and violent crime incidents in London.",
+      "reasoning": "A histogram heatmap effectively shows the distribution and intensity of violent crime incidents across areas with varying population densities, highlighting patterns and correlations.",
+      "tapas_questions": [
+        "Which area has the highest count of violent crime?",
+        "How does violent crime count vary with population density?",
+        "What is the average violent crime count across all areas?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "area_name",
+        "count"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_007",
+      "dataset": "crime-rates",
+      "category": "cross_dimensional",
+      "original_proposition": "Theft-from-the-person incidents in central London are 15% higher during weekdays compared to weekends.",
+      "reworded_proposition": "Theft-from-the-person incidents in central London tend to be more frequent on weekdays compared to weekends.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Weekday vs Weekend Theft Incidents in Central London",
+      "chart_description": "Comparison of theft incidents on weekdays and weekends in central London.",
+      "reasoning": "A bar chart with a mean line effectively highlights the difference in theft incidents between weekdays and weekends, allowing for easy comparison against the average.",
+      "tapas_questions": [
+        "Which borough has the highest theft-from-the-person incidents?",
+        "How does weekday theft compare to weekend theft in central London?",
+        "What is the average number of theft incidents across weekdays and weekends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_008",
+      "dataset": "crime-rates",
+      "category": "cross_dimensional",
+      "original_proposition": "Crime rates in London show a 10% increase in areas with higher commercial activity during the holiday season.",
+      "reworded_proposition": "During the holiday season, areas in London with higher commercial activity tend to experience noticeable increases in crime rates.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Crime Rate Changes in Commercial Areas",
+      "chart_description": "Visualizing crime rate trends in high-activity areas during holidays.",
+      "reasoning": "The histogram heatmap effectively shows the distribution and intensity of crime rates across different areas and time periods, highlighting patterns in commercial zones during holidays.",
+      "tapas_questions": [
+        "Which area has the highest crime rate during the holiday season?",
+        "How does crime rate in high commercial areas compare to others?",
+        "What percentage of total crime occurs in commercial areas?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "area_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

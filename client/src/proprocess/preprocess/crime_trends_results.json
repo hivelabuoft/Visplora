@@ -1,0 +1,106 @@
+{
+  "proposition_id": "crime-rates_temporal_trends_temp_001",
+  "dataset": "crime-rates",
+  "file_path": "public/dataset/london/crime-rates/london_crime_data_2022_2023.csv",
+  "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;",
+  "results": [
+    {
+      "time": "2022-01",
+      "value": 30020
+    },
+    {
+      "time": "2022-02",
+      "value": 29654
+    },
+    {
+      "time": "2022-03",
+      "value": 29199
+    },
+    {
+      "time": "2022-04",
+      "value": 30106
+    },
+    {
+      "time": "2022-05",
+      "value": 29247
+    },
+    {
+      "time": "2022-06",
+      "value": 30299
+    },
+    {
+      "time": "2022-07",
+      "value": 29808
+    },
+    {
+      "time": "2022-08",
+      "value": 28617
+    },
+    {
+      "time": "2022-09",
+      "value": 29215
+    },
+    {
+      "time": "2022-10",
+      "value": 28614
+    },
+    {
+      "time": "2022-11",
+      "value": 29984
+    },
+    {
+      "time": "2022-12",
+      "value": 28823
+    },
+    {
+      "time": "2023-01",
+      "value": 28414
+    },
+    {
+      "time": "2023-02",
+      "value": 28723
+    },
+    {
+      "time": "2023-03",
+      "value": 28430
+    },
+    {
+      "time": "2023-04",
+      "value": 30821
+    },
+    {
+      "time": "2023-05",
+      "value": 29854
+    },
+    {
+      "time": "2023-06",
+      "value": 29732
+    },
+    {
+      "time": "2023-07",
+      "value": 28896
+    },
+    {
+      "time": "2023-08",
+      "value": 27879
+    },
+    {
+      "time": "2023-09",
+      "value": 29774
+    },
+    {
+      "time": "2023-10",
+      "value": 30122
+    },
+    {
+      "time": "2023-11",
+      "value": 29939
+    },
+    {
+      "time": "2023-12",
+      "value": 29338
+    }
+  ],
+  "result_count": 24,
+  "execution_timestamp": "2025-08-20T15:35:08.116Z"
+}

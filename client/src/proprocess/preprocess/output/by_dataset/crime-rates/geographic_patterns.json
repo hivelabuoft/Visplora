@@ -1,0 +1,256 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "crime-rates",
+  "processed_at": "2025-08-20T04:04:24.938Z",
+  "total_propositions": 10,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_001",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "Westminster accounts for 25% of all theft-from-the-person incidents in London.",
+      "reworded_proposition": "Westminster is a major hotspot for theft-from-the-person incidents in London.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Distribution of Theft Incidents in London Boroughs",
+      "chart_description": "Visualizes the share of theft incidents across London boroughs.",
+      "reasoning": "A donut chart effectively highlights Westminster's significant share of theft incidents compared to other boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest number of theft-from-the-person incidents?",
+        "What percentage of theft-from-the-person incidents occur in Westminster?",
+        "How does Westminster compare to other boroughs in terms of theft incidents?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_002",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "Camden and Tower Hamlets together account for 40% of violent crime incidents in London.",
+      "reworded_proposition": "Camden and Tower Hamlets are major contributors to violent crime incidents in London.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Violent Crime Distribution by Borough",
+      "chart_description": "Comparison of violent crime incidents across London boroughs",
+      "reasoning": "A simple 2D bar chart effectively compares the number of violent crime incidents across different boroughs, highlighting the significant contributions of Camden and Tower Hamlets.",
+      "tapas_questions": [
+        "Which borough has the highest number of violent crime incidents?",
+        "What percentage of violent crime incidents occur in Camden?",
+        "How does Tower Hamlets compare to other boroughs in terms of violent crime incidents?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_003",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "Burglary incidents are most concentrated in the northern boroughs of London.",
+      "reworded_proposition": "Burglary incidents are predominantly found in the northern boroughs of London.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Burglary Concentration in Northern London Boroughs",
+      "chart_description": "Visualizing burglary incidents across London boroughs, highlighting northern areas.",
+      "reasoning": "A simple bar chart effectively compares the number of burglary incidents across different boroughs, highlighting geographic patterns.",
+      "tapas_questions": [
+        "Which borough has the highest number of burglary incidents?",
+        "What percentage of total burglary incidents occur in the northern boroughs?",
+        "How do burglary incidents in northern boroughs compare to southern boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_004",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "Theft-from-the-person incidents are highest in central London boroughs compared to outer boroughs.",
+      "reworded_proposition": "Central London boroughs experience notably higher theft-from-the-person incidents compared to their outer counterparts.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Theft-from-Person Incidents by Borough",
+      "chart_description": "Comparison of theft-from-person incidents across London boroughs.",
+      "reasoning": "A simple bar chart effectively highlights differences in theft-from-the-person incidents across boroughs, making it easy to compare central and outer areas.",
+      "tapas_questions": [
+        "Which borough has the highest theft-from-the-person incidents?",
+        "How does the number of incidents in central boroughs compare to outer boroughs?",
+        "What percentage of total incidents occur in central London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_005",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "South London boroughs report fewer violent crime incidents compared to North London.",
+      "reworded_proposition": "South London boroughs tend to experience fewer incidents of violent crime compared to their northern counterparts.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Violent Crime Incidents in London Boroughs",
+      "chart_description": "Comparison of violent crime incidents between South and North London boroughs.",
+      "reasoning": "A bar chart with a mean line effectively highlights differences in crime rates between boroughs, allowing for easy comparison against the average.",
+      "tapas_questions": [
+        "Which borough has the lowest number of violent crime incidents?",
+        "How does the average violent crime rate in South London compare to North London?",
+        "Which boroughs are below the average violent crime rate?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_006",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "LSOA-level analysis shows hotspots of burglary incidents in the eastern part of Tower Hamlets.",
+      "reworded_proposition": "Burglary incidents are notably concentrated in the eastern regions of Tower Hamlets.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Burglary Hotspots in Tower Hamlets",
+      "chart_description": "Visualizing burglary concentration across Tower Hamlets LSOAs.",
+      "reasoning": "A heatmap effectively highlights geographic concentration and patterns of burglary incidents across different LSOAs.",
+      "tapas_questions": [
+        "Which LSOA has the highest burglary count?",
+        "What percentage of burglaries occur in the eastern part of Tower Hamlets?",
+        "How does the eastern part compare to other areas in terms of burglary incidents?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "area_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_007",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "Westminster and Camden together account for 30% of all crime incidents in London.",
+      "reworded_proposition": "Westminster and Camden are major contributors to London's crime incidents, together making up a significant portion.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Crime Distribution in London Boroughs",
+      "chart_description": "Visualizes the share of crime incidents by borough in London.",
+      "reasoning": "A donut chart effectively highlights the proportion of crime incidents attributed to each borough, emphasizing the significant share of Westminster and Camden.",
+      "tapas_questions": [
+        "Which borough has the highest number of crime incidents?",
+        "What percentage of crime incidents occur in Westminster?",
+        "How does Camden compare to other boroughs in terms of crime incidents?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_008",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "Crime rates in the western boroughs of London are 15% lower than in the eastern boroughs.",
+      "reworded_proposition": "Crime rates in London's western boroughs tend to be noticeably lower compared to those in the eastern boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Crime Rate Comparison: Western vs Eastern London",
+      "chart_description": "Visual comparison of crime rates between western and eastern London boroughs.",
+      "reasoning": "A bar chart effectively highlights the comparative differences in crime rates between two groups of boroughs, making it easy to see the contrast.",
+      "tapas_questions": [
+        "Which borough has the highest crime rate?",
+        "What percentage of total crime is in the eastern boroughs?",
+        "How do crime rates compare between the western and eastern boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_009",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "Central London boroughs show a higher concentration of theft incidents compared to suburban areas.",
+      "reworded_proposition": "Central London boroughs consistently experience a higher prevalence of theft incidents compared to their suburban counterparts.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Theft Incidents in Central vs. Suburban Boroughs",
+      "chart_description": "Comparison of theft incidents between central and suburban London boroughs.",
+      "reasoning": "A simple 2D bar chart effectively highlights the comparative differences in theft incidents between central and suburban boroughs, making it easy to visualize geographic patterns.",
+      "tapas_questions": [
+        "Which borough has the highest number of theft incidents?",
+        "How do theft incidents in central boroughs compare to suburban ones?",
+        "What percentage of theft incidents occur in central London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_010",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "The distribution of violent crime incidents is more uniform across London compared to other crime categories.",
+      "reworded_proposition": "Violent crime incidents are distributed more evenly across London boroughs compared to other types of crime.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Uniformity of Violent Crime Distribution in London",
+      "chart_description": "Visualizing the even spread of violent crime across boroughs compared to other crimes.",
+      "reasoning": "A histogram heatmap effectively shows the distribution and density of violent crime incidents across different boroughs, highlighting uniformity.",
+      "tapas_questions": [
+        "Which borough has the most uniform distribution of violent crime?",
+        "How does the distribution of violent crime compare to theft across boroughs?",
+        "What percentage of total crime does violent crime represent in each borough?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

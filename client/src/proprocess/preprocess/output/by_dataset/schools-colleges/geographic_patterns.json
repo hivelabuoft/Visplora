@@ -1,0 +1,254 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "schools-colleges",
+  "processed_at": "2025-08-20T04:08:00.024Z",
+  "total_propositions": 10,
+  "propositions": [
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_01",
+      "dataset": "schools-colleges",
+      "category": "geographic_patterns",
+      "original_proposition": "Boroughs in East London have 20% more schools rated 'Outstanding' compared to West London in 2023.",
+      "reworded_proposition": "East London boroughs tend to have a notably higher proportion of schools rated 'Outstanding' compared to their West London counterparts in 2023.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Outstanding School Ratings: East vs West London",
+      "chart_description": "Comparison of 'Outstanding' school ratings between East and West London boroughs in 2023.",
+      "reasoning": "A bar chart is ideal for comparing categorical data, such as the number of 'Outstanding' schools across different boroughs, allowing for clear visual comparison between East and West London.",
+      "tapas_questions": [
+        "Which borough has the highest number of 'Outstanding' schools?",
+        "What percentage of schools are rated 'Outstanding' in East London?",
+        "How does the number of 'Outstanding' schools in East London compare to West London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_02",
+      "dataset": "schools-colleges",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Kensington and Chelsea has the highest concentration of private schools, accounting for 30% of all schools in the borough.",
+      "reworded_proposition": "Kensington and Chelsea stands out with a notably high concentration of private schools compared to other boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Private School Concentration by Borough",
+      "chart_description": "Visual comparison of private school concentration across boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the comparison of private school concentrations across different boroughs, making it easy to identify the standout borough.",
+      "tapas_questions": [
+        "Which borough has the highest concentration of private schools?",
+        "What percentage of schools in Kensington and Chelsea are private?",
+        "How does Kensington and Chelsea compare to other boroughs in terms of private school concentration?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_03",
+      "dataset": "schools-colleges",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2023, South London boroughs have a 25% higher average school performance rating compared to North London boroughs.",
+      "reworded_proposition": "In 2023, school performance ratings in South London boroughs are notably higher than those in North London.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "School Performance Ratings: South vs North London",
+      "chart_description": "Comparison of average school ratings between South and North London boroughs in 2023.",
+      "reasoning": "A bar chart with a mean line effectively highlights the difference in average school performance ratings between two geographic regions, allowing for easy comparison.",
+      "tapas_questions": [
+        "Which borough has the highest school performance rating?",
+        "What is the average school performance rating across all boroughs?",
+        "How do South London boroughs compare to North London in terms of school performance ratings?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_04",
+      "dataset": "schools-colleges",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Tower Hamlets shows a clustering of schools with 'Requires Improvement' ratings, making up 40% of its schools.",
+      "reworded_proposition": "Tower Hamlets has a notable concentration of schools needing improvement, with a significant portion receiving such ratings.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Distribution of School Ratings in Tower Hamlets",
+      "chart_description": "Visual representation of school ratings in Tower Hamlets, highlighting those requiring improvement.",
+      "reasoning": "A bar chart effectively highlights the distribution of school ratings across categories, making it easy to compare the concentration of 'Requires Improvement' ratings.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of schools requiring improvement?",
+        "What percentage of schools in Tower Hamlets require improvement?",
+        "How does Tower Hamlets compare to other boroughs in terms of school ratings?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_05",
+      "dataset": "schools-colleges",
+      "category": "geographic_patterns",
+      "original_proposition": "Inner London boroughs have 15% more schools offering arts programs compared to Outer London boroughs in 2023.",
+      "reworded_proposition": "Inner London boroughs tend to have a higher prevalence of schools offering arts programs compared to their Outer London counterparts in 2023.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Arts Program Availability in London Schools",
+      "chart_description": "Comparison of arts program offerings between Inner and Outer London boroughs in 2023.",
+      "reasoning": "A bar chart with a mean line effectively highlights the difference in arts program offerings between Inner and Outer London boroughs, while also providing a visual benchmark for comparison.",
+      "tapas_questions": [
+        "Which borough has the highest number of schools offering arts programs?",
+        "What is the average number of schools offering arts programs across all boroughs?",
+        "How does Inner London compare to Outer London in terms of arts program availability?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_06",
+      "dataset": "schools-colleges",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Greenwich has the lowest average student-teacher ratio in 2023, with a ratio of 15:1.",
+      "reworded_proposition": "Greenwich stands out for having the most favorable student-teacher ratio among boroughs in 2023.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Student-Teacher Ratios Across Boroughs in 2023",
+      "chart_description": "Comparison of student-teacher ratios by borough, highlighting Greenwich's position.",
+      "reasoning": "A bar chart with a mean line effectively highlights Greenwich's position relative to other boroughs and the overall average.",
+      "tapas_questions": [
+        "Which borough has the lowest student-teacher ratio?",
+        "What is the average student-teacher ratio across all boroughs?",
+        "Which boroughs are below the average student-teacher ratio?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_07",
+      "dataset": "schools-colleges",
+      "category": "geographic_patterns",
+      "original_proposition": "Boroughs in West London have a 10% higher enrollment rate in secondary schools compared to East London in 2023.",
+      "reworded_proposition": "West London boroughs show notably higher secondary school enrollment rates compared to those in East London for 2023.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Secondary School Enrollment: West vs East London",
+      "chart_description": "Comparison of enrollment rates between West and East London boroughs in 2023.",
+      "reasoning": "A simple bar chart effectively highlights the comparison between two geographic regions, making it easy to see the difference in enrollment rates.",
+      "tapas_questions": [
+        "Which borough has the highest enrollment rate?",
+        "What percentage of total enrollment is in West London?",
+        "How does enrollment in West London compare to East London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_08",
+      "dataset": "schools-colleges",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Islington has the highest percentage of schools with special needs programs, accounting for 35% of its schools.",
+      "reworded_proposition": "Islington stands out with a notably high proportion of schools offering special needs programs compared to other boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Proportion of Schools with Special Needs Programs by Borough",
+      "chart_description": "Comparison of boroughs based on the percentage of schools with special needs programs.",
+      "reasoning": "A simple bar chart effectively highlights the differences in the percentage of schools with special needs programs across boroughs, making it easy to compare Islington with others.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of schools with special needs programs?",
+        "What percentage of schools in Islington have special needs programs?",
+        "How does Islington compare to other boroughs in terms of special needs programs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_09",
+      "dataset": "schools-colleges",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2023, schools in the borough of Richmond upon Thames have the highest average performance rating in London.",
+      "reworded_proposition": "In 2023, Richmond upon Thames schools consistently outperform others in London, achieving the highest average performance ratings.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Average School Performance in London Boroughs",
+      "chart_description": "Comparison of average school performance ratings across London boroughs in 2023.",
+      "reasoning": "A bar chart with a mean line effectively highlights Richmond upon Thames' superior performance compared to other boroughs and the overall average.",
+      "tapas_questions": [
+        "Which borough has the highest average performance rating?",
+        "What is the average performance rating across all boroughs?",
+        "Which boroughs are above the average performance rating?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_10",
+      "dataset": "schools-colleges",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Haringey has the most diverse range of school types, with 25% of schools being academies, 30% being community schools, and 45% being private schools.",
+      "reworded_proposition": "Haringey stands out with a notably diverse mix of school types, including a significant presence of academies, community, and private schools.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Diversity of School Types in Haringey",
+      "chart_description": "Visual representation of school type distribution in Haringey.",
+      "reasoning": "A donut chart effectively illustrates the proportion of different school types within a single borough, highlighting diversity.",
+      "tapas_questions": [
+        "What percentage of schools in Haringey are academies?",
+        "How does the proportion of private schools compare to community schools in Haringey?",
+        "Which school type is most prevalent in Haringey?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

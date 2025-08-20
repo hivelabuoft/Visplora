@@ -1,0 +1,371 @@
+{
+  "chart_type": "areaChart",
+  "total_generated": 15,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_chart_analysis_areaChart_simple_2D_001",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Knife crime incidents in Lambeth surged by 30% from 2022 to 2023",
+      "chart_type": "areaChart_simple_2D",
+      "chart_title": "Knife Crime Trend in Lambeth",
+      "chart_description": "The area chart shows the increase in knife crime incidents in Lambeth over the past two years.",
+      "reasoning": "The area chart effectively illustrates the growing number of incidents over time, highlighting periods of steep increase.",
+      "tapas_questions": [
+        "How has knife crime trended over the past two years in Lambeth?",
+        "What is the rate of increase in knife crime incidents?",
+        "Are there any seasonal patterns in knife crime incidents?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "month"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_areaChart_simple_2D_002",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "White British population declined steadily in Tower Hamlets from 2010 to 2020",
+      "chart_type": "areaChart_simple_2D",
+      "chart_title": "White British Population Trend in Tower Hamlets",
+      "chart_description": "The area chart depicts the steady decline in the White British population in Tower Hamlets over a decade.",
+      "reasoning": "Area charts are ideal for visualizing long-term trends in population changes, allowing for clear comparison over time.",
+      "tapas_questions": [
+        "What is the rate of decline in the White British population?",
+        "How does the decline compare to other ethnic groups?",
+        "What are the implications of this demographic change?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "year"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_areaChart_simple_2D_003",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Increase in Eastern European-born residents in Haringey from 2015 to 2020",
+      "chart_type": "areaChart_simple_2D",
+      "chart_title": "Eastern European Population Growth in Haringey",
+      "chart_description": "Showing the rise in residents born in Eastern Europe living in Haringey over a five-year span.",
+      "reasoning": "The filled area in the chart shows the cumulative increase, making it easy to see overall growth.",
+      "tapas_questions": [
+        "How has the Eastern European-born population changed over time?",
+        "What are the factors driving this demographic change?",
+        "How does this growth compare to other boroughs?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate",
+        "Year"
+      ],
+      "time_period": "2015-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_chart_analysis_areaChart_stacked_2D_004",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Overall population in Croydon grew by 15% between 2000 and 2020 with significant youth increase",
+      "chart_type": "areaChart_stacked_2D",
+      "chart_title": "Population Growth in Croydon by Age Group",
+      "chart_description": "The stacked area chart shows the growth in Croydon's population, highlighting the youth demographic.",
+      "reasoning": "Stacked area charts display the contribution of each age group to the total population growth.",
+      "tapas_questions": [
+        "Which age group contributed most to the population growth?",
+        "What is the overall growth trend in Croydon?",
+        "How does the youth population trend compare to other age groups?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "area",
+        "year",
+        "age_group",
+        "population"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_chart_analysis_areaChart_simple_2D_005",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income levels in Westminster have seen a steady rise since 2010",
+      "chart_type": "areaChart_simple_2D",
+      "chart_title": "Steady Rise in Income Levels in Westminster",
+      "chart_description": "The chart illustrates the upward trend in income levels in Westminster over the past decade.",
+      "reasoning": "An area chart is effective for visualizing steady growth in income over a long period.",
+      "tapas_questions": [
+        "What is the overall trend in income levels in Westminster?",
+        "How do income levels in Westminster compare to other boroughs?",
+        "What factors might contribute to this income growth?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Year",
+        "Area",
+        "Income"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_areaChart_simple_2D_006",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House prices in Kensington and Chelsea peaked in 2021",
+      "chart_type": "areaChart_simple_2D",
+      "chart_title": "House Price Peaks in Kensington and Chelsea",
+      "chart_description": "The area chart shows the peak in property prices in Kensington and Chelsea in 2021.",
+      "reasoning": "Area charts are useful for highlighting specific peaks in data over time.",
+      "tapas_questions": [
+        "What was the trend in house prices leading up to the peak?",
+        "How do prices in 2021 compare with previous years?",
+        "What economic factors might explain this peak?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2010-2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_areaChart_simple_2D_007",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Enrollment in secondary schools in Hackney increased by 20% from 2018 to 2023",
+      "chart_type": "areaChart_simple_2D",
+      "chart_title": "Rising Enrollment in Hackney Secondary Schools",
+      "chart_description": "The area chart demonstrates the growth in enrollment numbers in Hackney's secondary schools.",
+      "reasoning": "The cumulative nature of the area chart makes it easy to visualize enrollment growth over time.",
+      "tapas_questions": [
+        "What trends can be observed in secondary school enrollment?",
+        "How does Hackney compare to other boroughs in terms of enrollment growth?",
+        "What might be driving the increase in school enrollment?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "LANAME",
+        "Year",
+        "Enrollment"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_areaChart_simple_2D_008",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Electric vehicle registrations in London quadrupled from 2018 to 2023",
+      "chart_type": "areaChart_simple_2D",
+      "chart_title": "Electric Vehicle Registration Surge in London",
+      "chart_description": "This chart shows the rapid increase in electric vehicle registrations across London.",
+      "reasoning": "Area charts are effective for showing exponential growth patterns over time.",
+      "tapas_questions": [
+        "What is the overall trend in electric vehicle registrations?",
+        "How does this growth compare to other types of vehicles?",
+        "What are the implications of this trend for infrastructure?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Year",
+        "Local Authority",
+        "Electric Vehicles"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_areaChart_simple_2D_009",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Restaurant employment in Westminster increased by 25% from 2015 to 2020",
+      "chart_type": "areaChart_simple_2D",
+      "chart_title": "Growth in Restaurant Employment in Westminster",
+      "chart_description": "The area chart shows the increase in restaurant employment in Westminster over five years.",
+      "reasoning": "Area charts are suitable for highlighting employment growth trends over time.",
+      "tapas_questions": [
+        "What is the trend in restaurant employment in Westminster?",
+        "How does this trend compare to other boroughs?",
+        "What factors might be contributing to this growth?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Employment"
+      ],
+      "time_period": "2015-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_areaChart_simple_2D_010",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Average rents in Camden rose by 40% between 2015 and 2023",
+      "chart_type": "areaChart_simple_2D",
+      "chart_title": "Rising Average Rents in Camden",
+      "chart_description": "The area chart displays the increase in average rents in Camden over an eight-year period.",
+      "reasoning": "An area chart effectively shows the cumulative rise in average rents over time.",
+      "tapas_questions": [
+        "What is the trend in average rent prices in Camden?",
+        "How does this trend compare to other boroughs?",
+        "What might be driving the increase in rent prices?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Average (£)"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_areaChart_simple_3D_011",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Theft and burglary incidents in Croydon peaked during winter months in 2022",
+      "chart_type": "areaChart_simple_3D",
+      "chart_title": "Seasonal Peaks in Theft and Burglary in Croydon",
+      "chart_description": "This 3D area chart illustrates the peak in theft and burglary incidents during winter months.",
+      "reasoning": "The 3D aspect allows for a detailed view of seasonal variations across multiple categories.",
+      "tapas_questions": [
+        "When do theft and burglary incidents peak in Croydon?",
+        "How do these peaks compare to other crime categories?",
+        "What might explain the seasonal trend in these incidents?"
+      ],
+      "3d_dimension": "month",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "month"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_areaChart_simple_3D_012",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Ethnic diversity in Newham increased significantly across all groups from 2010 to 2020",
+      "chart_type": "areaChart_simple_3D",
+      "chart_title": "Increasing Ethnic Diversity in Newham",
+      "chart_description": "The 3D area chart shows the rise in diversity across multiple ethnic groups in Newham.",
+      "reasoning": "3D charts can display multiple ethnic group trends simultaneously, providing a comprehensive view.",
+      "tapas_questions": [
+        "How has ethnic diversity changed in Newham over time?",
+        "Which ethnic groups have seen the most growth?",
+        "What are the implications of these demographic changes?"
+      ],
+      "3d_dimension": "ethnic_group",
+      "variables_needed": [
+        "local authority name",
+        "ethnic_group",
+        "year"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_chart_analysis_areaChart_simple_3D_013",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Population density in Islington increased sharply from 2000 to 2020",
+      "chart_type": "areaChart_simple_3D",
+      "chart_title": "Rising Population Density in Islington",
+      "chart_description": "The 3D area chart highlights the sharp increase in population density in Islington over two decades.",
+      "reasoning": "3D area charts are effective for showing changes in density over time and across different areas.",
+      "tapas_questions": [
+        "What is the trend in population density in Islington?",
+        "How does Islington's density compare to other boroughs?",
+        "What factors might be contributing to this increase?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "area",
+        "year",
+        "density"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_chart_analysis_areaChart_simple_3D_014",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income disparities widened significantly in London boroughs from 2010 to 2020",
+      "chart_type": "areaChart_simple_3D",
+      "chart_title": "Widening Income Disparities in London",
+      "chart_description": "This 3D area chart shows the growing income gap across London boroughs over a decade.",
+      "reasoning": "The 3D area chart provides a clear view of disparities across multiple boroughs over time.",
+      "tapas_questions": [
+        "How have income disparities changed over time in London?",
+        "Which boroughs show the largest disparities?",
+        "What might be contributing to these widening gaps?"
+      ],
+      "3d_dimension": "borough_name",
+      "variables_needed": [
+        "Year",
+        "Borough",
+        "Income"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_areaChart_simple_3D_015",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House price volatility increased in Central London boroughs between 2010 and 2023",
+      "chart_type": "areaChart_simple_3D",
+      "chart_title": "Volatility in House Prices in Central London",
+      "chart_description": "The 3D area chart displays fluctuations in house prices across Central London boroughs.",
+      "reasoning": "3D area charts are ideal for visualizing complex datasets with multiple variables, such as boroughs and time.",
+      "tapas_questions": [
+        "What is the trend in house price volatility in Central London?",
+        "How do price changes compare across different boroughs?",
+        "What are the potential causes of this volatility?"
+      ],
+      "3d_dimension": "borough_name",
+      "variables_needed": [
+        "Year",
+        "Borough",
+        "Price"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ],
+  "generation_timestamp": "2025-08-20T16:21:35.137Z"
+}

@@ -1,0 +1,79 @@
+{
+  "category": "statistical_patterns",
+  "dataset": "libraries",
+  "processed_at": "2025-08-20T04:10:12.020Z",
+  "total_propositions": 3,
+  "propositions": [
+    {
+      "proposition_id": "libraries_statistical_patterns_stat_01",
+      "dataset": "libraries",
+      "category": "statistical_patterns",
+      "original_proposition": "The distribution of library visits across London boroughs in 2022-2023 is positively skewed, with a few boroughs having significantly higher visits.",
+      "reworded_proposition": "Library visits in London show a few boroughs attracting notably more visitors, creating a skewed distribution.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Distribution of Library Visits in London Boroughs",
+      "chart_description": "Visualizing the skewed distribution of library visits across boroughs in 2022-2023.",
+      "reasoning": "A histogram is ideal for showing the skewed distribution of library visits across boroughs, highlighting areas with significantly higher visits.",
+      "tapas_questions": [
+        "Which borough has the highest number of library visits?",
+        "What percentage of total library visits occurred in the top borough?",
+        "How do library visits compare between the borough with the highest and lowest visits?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "libraries_statistical_patterns_stat_02",
+      "dataset": "libraries",
+      "category": "statistical_patterns",
+      "original_proposition": "There is a strong positive correlation between library funding and visitor numbers in 2022-2023, with a correlation coefficient of 0.75.",
+      "reworded_proposition": "Library funding and visitor numbers show a strong positive relationship over the past year.",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Library Funding vs Visitor Numbers",
+      "chart_description": "Visualizing the correlation between funding and visitors in 2022-2023",
+      "reasoning": "A scatter plot effectively illustrates the relationship between two continuous variables, such as funding and visitor numbers.",
+      "tapas_questions": [
+        "Is there a correlation between library funding and visitor numbers?",
+        "Which borough has the highest library funding?",
+        "How do visitor numbers compare across different boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "value"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "libraries_statistical_patterns_stat_03",
+      "dataset": "libraries",
+      "category": "statistical_patterns",
+      "original_proposition": "In 2022-2023, the variance in library event attendance is highest in Inner London boroughs, indicating diverse engagement levels.",
+      "reworded_proposition": "Inner London boroughs show the most varied levels of engagement in library events during 2022-2023.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Library Event Attendance Variance in Inner London",
+      "chart_description": "Exploring diverse engagement levels in Inner London boroughs.",
+      "reasoning": "A histogram effectively displays the distribution and variance of event attendance across different boroughs, highlighting areas with the most engagement diversity.",
+      "tapas_questions": [
+        "Which borough has the highest variance in library event attendance?",
+        "How does library event attendance variance compare between Inner and Outer London?",
+        "What is the average variance in library event attendance across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

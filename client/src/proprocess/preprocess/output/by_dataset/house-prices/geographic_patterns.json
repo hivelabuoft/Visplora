@@ -1,0 +1,202 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "house-prices",
+  "processed_at": "2025-08-20T04:07:24.557Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "house-prices_geographic_patterns_gp_001",
+      "dataset": "house-prices",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2023, the boroughs of Kensington and Chelsea, and Westminster have the highest average house prices in London.",
+      "reworded_proposition": "In 2023, Kensington and Chelsea, along with Westminster, stand out for having the most elevated house prices in London.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Top Boroughs by House Prices in 2023",
+      "chart_description": "Comparison of average house prices across London boroughs in 2023.",
+      "reasoning": "A bar chart effectively highlights the comparison of house prices across different boroughs, making it easy to identify the highest values.",
+      "tapas_questions": [
+        "Which borough has the highest average house price?",
+        "What percentage of the total house price value is in Kensington and Chelsea?",
+        "How do house prices in Westminster compare to the London average?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "house-prices_geographic_patterns_gp_002",
+      "dataset": "house-prices",
+      "category": "geographic_patterns",
+      "original_proposition": "House prices in East London boroughs are generally 20% lower than those in West London as of 2023.",
+      "reworded_proposition": "House prices in East London boroughs tend to be noticeably lower than those in West London in 2023.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Comparison of House Prices in East vs West London",
+      "chart_description": "Visualizing the disparity in house prices between East and West London boroughs in 2023.",
+      "reasoning": "A bar chart effectively highlights the differences in house prices between two geographic regions, making it easy to compare values across boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest house prices?",
+        "What percentage of house prices are in East London?",
+        "How do house prices compare between East and West London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_geographic_patterns_gp_003",
+      "dataset": "house-prices",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Hackney shows a clustering of high house prices compared to surrounding areas in 2023.",
+      "reworded_proposition": "Hackney stands out with notably higher house prices compared to its neighboring boroughs in 2023.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "House Prices in Hackney vs. Surrounding Areas",
+      "chart_description": "Comparison of Hackney's house prices to nearby boroughs in 2023.",
+      "reasoning": "A bar chart effectively highlights the comparison of house prices between Hackney and surrounding boroughs, making it easy to see the relative differences.",
+      "tapas_questions": [
+        "Which borough has the highest house prices?",
+        "How do house prices in Hackney compare to neighboring boroughs?",
+        "What is the average house price across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_geographic_patterns_gp_004",
+      "dataset": "house-prices",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2023, house prices in North London boroughs are 15% higher on average than those in South London.",
+      "reworded_proposition": "House prices in North London boroughs tend to be notably higher than those in South London during 2023.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Comparison of House Prices in North vs South London",
+      "chart_description": "Visualizing the difference in average house prices between North and South London boroughs in 2023.",
+      "reasoning": "A bar chart with a mean line effectively highlights the comparison between North and South London boroughs, showing how each borough's house prices relate to the overall average.",
+      "tapas_questions": [
+        "Which borough has the highest house prices?",
+        "What is the average house price across all boroughs?",
+        "How do house prices in North London compare to South London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_geographic_patterns_gp_005",
+      "dataset": "house-prices",
+      "category": "geographic_patterns",
+      "original_proposition": "The boroughs of Camden and Islington have shown a consistent pattern of high house prices from 2010 to 2023.",
+      "reworded_proposition": "Camden and Islington have persistently experienced elevated house prices over the years from 2010 to 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trends in House Prices in Camden and Islington",
+      "chart_description": "House price trends in Camden and Islington from 2010 to 2023.",
+      "reasoning": "A line chart is ideal for showing trends over time, allowing easy comparison of house price patterns between Camden and Islington.",
+      "tapas_questions": [
+        "How did house prices change in Camden from 2010 to 2023?",
+        "Which borough had higher house prices in 2020, Camden or Islington?",
+        "What is the average house price in Islington over the years?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_geographic_patterns_gp_006",
+      "dataset": "house-prices",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2023, outer London boroughs such as Bromley and Croydon have lower house prices compared to inner London boroughs.",
+      "reworded_proposition": "In 2023, house prices in outer London boroughs like Bromley and Croydon tend to be lower than those in the inner boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "House Prices in Outer vs. Inner London Boroughs, 2023",
+      "chart_description": "Comparison of house prices between outer and inner London boroughs in 2023.",
+      "reasoning": "A simple bar chart effectively compares house prices across different boroughs, highlighting the contrast between outer and inner London.",
+      "tapas_questions": [
+        "Which borough has the highest house prices?",
+        "How do house prices in Bromley compare to those in inner London?",
+        "What is the average house price across all London boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "house-prices_geographic_patterns_gp_007",
+      "dataset": "house-prices",
+      "category": "geographic_patterns",
+      "original_proposition": "House prices in the borough of Haringey are significantly higher than those in Enfield in 2023.",
+      "reworded_proposition": "In 2023, house prices in Haringey are notably higher compared to those in Enfield.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Comparison of House Prices: Haringey vs Enfield",
+      "chart_description": "Visual comparison of house prices between Haringey and Enfield in 2023.",
+      "reasoning": "A bar chart effectively highlights the price difference between two boroughs, making it easy to compare their values.",
+      "tapas_questions": [
+        "Which borough has the highest house prices?",
+        "How do house prices in Haringey compare to those in Enfield?",
+        "What is the average house price across both boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "house-prices_geographic_patterns_gp_008",
+      "dataset": "house-prices",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Lambeth has experienced a notable increase in house prices compared to neighboring boroughs from 2015 to 2023.",
+      "reworded_proposition": "Lambeth has seen a significant rise in house prices over recent years, outpacing its neighboring boroughs.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "House Price Trends in Lambeth vs Neighbors",
+      "chart_description": "Comparison of house price trends in Lambeth and nearby boroughs from 2015 to 2023.",
+      "reasoning": "A line chart effectively illustrates trends over time, making it ideal for comparing house price changes across multiple boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest increase in house prices?",
+        "How did house prices in Lambeth change from 2015 to 2023?",
+        "How does Lambeth compare to its neighbors in terms of house price growth?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

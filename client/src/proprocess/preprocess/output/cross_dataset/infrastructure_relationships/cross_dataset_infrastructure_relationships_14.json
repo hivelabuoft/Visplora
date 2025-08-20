@@ -1,0 +1,43 @@
+{
+  "input": {
+    "type": "cross_dataset",
+    "category": "infrastructure_relationships",
+    "proposition_id": "cross_dataset_infrastructure_relationships_14",
+    "proposition": "Boroughs with higher crime rates in 2022-2023 have lower house price growth in 2023.",
+    "datasets_required": [
+      "crime-rates",
+      "house-prices"
+    ],
+    "variables_needed": {
+      "crime-rates": [
+        "borough_name",
+        "crime_category",
+        "count"
+      ],
+      "house-prices": [
+        "area",
+        "value",
+        "date"
+      ]
+    },
+    "time_periods": {
+      "crime-rates": "2022-2023",
+      "house-prices": "2023"
+    },
+    "relationship_type": "lag",
+    "suggested_visualization": "scatter_plot",
+    "temporal_assumption": "Higher crime rates may deter investment and reduce property value growth."
+  },
+  "analysis": "### Cross-Dataset Analysis Methodology\n\n1. **Data Collection and Preparation:**\n   - Extract crime rate data for each borough from 2022 to 2023 using the provided SQL query. This will give us the total crime count per borough.\n   - Extract house price data for each borough for the year 2023 using the provided SQL query. This will provide the average house price per borough for 2023.\n\n2. **Data Alignment:**\n   - Align the datasets by matching the `borough_name` from the crime dataset with the `area` from the house price dataset. Ensure consistent naming conventions and handle any discrepancies in naming.\n\n3. **Temporal Alignment:**\n   - Given the lag relationship type, the crime data from 2022-2023 will be used to predict or correlate with house price growth in 2023. This assumes that crime rates influence house prices with a delay.\n\n4. **Correlation Analysis:**\n   - Calculate the total crime count for each borough over 2022-2023.\n   - Compute the percentage change in house prices for each borough from the previous year to 2023 to measure growth.\n   - Use Pearson correlation to assess the relationship between crime rates and house price growth.\n\n5. **Statistical Validation:**\n   - Perform hypothesis testing (e.g., t-test) to determine if the observed correlation is statistically significant.\n   - Calculate p-values to assess the likelihood that the observed correlation is due to chance.\n\n6. **Visualization:**\n   - Create a scatter plot with crime rates on the x-axis and house price growth on the y-axis. Each point represents a borough.\n\n### Key Findings and Correlations\n\n- **Correlation Coefficient:** The Pearson correlation coefficient will indicate the strength and direction of the relationship between crime rates and house price growth.\n- **Significant Patterns:** Identify any boroughs that significantly deviate from the trend, which may indicate other influencing factors.\n- **Outliers:** Highlight boroughs with exceptionally high or low crime rates or house price growth.\n\n### Statistical Significance Measures\n\n- **P-Value:** A p-value less than 0.05 would suggest that the correlation is statistically significant.\n- **Confidence Intervals:** Provide a range within which the true correlation coefficient is likely to fall.\n\n### Data Quality Considerations\n\n- **Data Completeness:** Ensure that all boroughs have complete data for both crime rates and house prices.\n- **Data Consistency:** Verify that the data is consistently formatted and free of errors or anomalies.\n- **Temporal Coverage:** Confirm that the time periods for crime data and house price data align correctly.\n\n### Visualization Recommendations\n\n- **Scatter Plot:** Use a scatter plot to visualize the relationship. Each point should be labeled with the borough name for clarity.\n- **Trend Line:** Add a trend line to the scatter plot to illustrate the overall direction of the relationship.\n- **Color Coding:** Use color coding to differentiate between boroughs or highlight specific patterns.\n\n### Limitations and Assumptions\n\n- **Causality vs. Correlation:** The analysis identifies correlation, not causation. Other factors may influence house prices.\n- **Data Limitations:** The analysis is limited by the accuracy and completeness of the datasets.\n- **Temporal Lag Assumption:** The assumption that crime rates influence house prices with a one-year lag may not hold true for all boroughs.\n\n### Expected Output Structure\n\n```json\n{\n  \"type\": \"scatter\",\n  \"data\": [\n    {\n      \"x\": \"crime-rates_value\",\n      \"y\": \"house-prices_value\",\n      \"borough\": \"area_name\",\n      \"dataset1\": \"crime-rates\",\n      \"dataset2\": \"house-prices\"\n    }\n  ]\n}\n```\n\nThis structured output will facilitate the creation of a scatter plot to visualize the relationship between crime rates and house price growth across London boroughs.",
+  "datasets_involved": [
+    "crime-rates",
+    "house-prices"
+  ],
+  "relationship_type": "lag",
+  "temporal_alignment": {
+    "crime-rates": "2022-2023",
+    "house-prices": "2023"
+  },
+  "processing_timestamp": "2025-08-20T06:33:31.303Z",
+  "status": "completed"
+}

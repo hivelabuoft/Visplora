@@ -1,0 +1,381 @@
+{
+  "category": "temporal_trends",
+  "dataset": "population",
+  "processed_at": "2025-08-20T04:06:25.110Z",
+  "total_propositions": 15,
+  "propositions": [
+    {
+      "proposition_id": "population_temporal_trends_tt1",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "The population density in the borough of Westminster increased by 25% from 2000 to 2020.",
+      "reworded_proposition": "Westminster has experienced a notable rise in population density over the past two decades.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Population Density Trends in Westminster",
+      "chart_description": "Illustrates the increase in population density from 2000 to 2020.",
+      "reasoning": "A line chart effectively shows the trend of population density over time, highlighting changes and patterns.",
+      "tapas_questions": [
+        "How did the population density change from 2000 to 2020?",
+        "What is the average population density across all boroughs?",
+        "Which boroughs have a higher population density than Westminster?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt2",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "From 1801 to 2021, the population in London has grown steadily, with a notable spike during the 1940s.",
+      "reworded_proposition": "London's population has shown a steady increase over the years, with a significant rise observed during the 1940s.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Population Growth in London (1801-2021)",
+      "chart_description": "Visualize London's population trends with a notable 1940s spike.",
+      "reasoning": "A simple 2D line chart effectively illustrates the temporal trend of population growth over a long period, highlighting any significant changes.",
+      "tapas_questions": [
+        "How did the population change from 1801 to 2021?",
+        "What was the population trend during the 1940s?",
+        "Which decade saw the highest growth in population?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "time_period": "1801-2021",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt3",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "The borough of Camden experienced a 10% decrease in population from 1910 to 1920.",
+      "reworded_proposition": "Camden saw a noticeable decline in its population during the decade from 1910 to 1920.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Change in Camden (1910-1920)",
+      "chart_description": "Visualize Camden's population trend over the decade.",
+      "reasoning": "A simple bar chart effectively illustrates the population trend over a specific time period, highlighting the decrease.",
+      "tapas_questions": [
+        "How did Camden's population change from 1910 to 1920?",
+        "What is the average population in Camden during this period?",
+        "Which year had the lowest population in Camden?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "1910-1920",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt4",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "Population density in inner London boroughs has increased by 30% from 1990 to 2010.",
+      "reworded_proposition": "Inner London boroughs have experienced a notable rise in population density over the two decades from 1990 to 2010.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Population Density Growth in Inner London (1990-2010)",
+      "chart_description": "Tracks the increase in population density in inner London boroughs over two decades.",
+      "reasoning": "A line chart effectively illustrates changes over time, making it ideal for showing trends in population density across multiple boroughs over a 20-year period.",
+      "tapas_questions": [
+        "How did population density change from 1990 to 2010 in each borough?",
+        "Which borough had the highest increase in population density?",
+        "What is the average population density increase across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "1990-2010",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt5",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "The population of outer London boroughs remained relatively stable between 1950 and 1970.",
+      "reworded_proposition": "The population in outer London boroughs showed little variation from 1950 to 1970.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Stability of Outer London Borough Populations (1950-1970)",
+      "chart_description": "Explore the stable population trends in outer London boroughs over two decades.",
+      "reasoning": "A simple line chart effectively illustrates the stability or changes in population over time, highlighting trends across multiple boroughs.",
+      "tapas_questions": [
+        "Which borough had the most stable population?",
+        "How did the population change from 1950 to 1970 in each borough?",
+        "What was the average population across all boroughs in 1960?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "1950-1970",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt6",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "Population growth in London was highest during the 19th century, particularly from 1850 to 1900.",
+      "reworded_proposition": "London experienced its most rapid population expansion during the latter half of the 19th century.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "London Population Growth in the 19th Century",
+      "chart_description": "Explore London's population trends from 1850 to 1900.",
+      "reasoning": "A line chart effectively illustrates changes over time, making it ideal for showing population growth trends across decades.",
+      "tapas_questions": [
+        "How did the population change from 1850 to 1900?",
+        "Which decade saw the highest population growth?",
+        "What was the population trend during the 19th century?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "time_period": "1850-1900",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt7",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "The population in the borough of Hackney increased by 15% from 2010 to 2020.",
+      "reworded_proposition": "Hackney has experienced a notable population growth over the past decade.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Growth in Hackney (2010-2020)",
+      "chart_description": "Visualizing the population increase in Hackney over a decade.",
+      "reasoning": "A bar chart effectively highlights changes over time, making it suitable for illustrating population growth.",
+      "tapas_questions": [
+        "How did the population change in Hackney from 2010 to 2020?",
+        "What is the average population growth across all boroughs?",
+        "Which borough had the highest population growth from 2010 to 2020?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt8",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "Between 1980 and 2000, the population in the borough of Islington grew by 20%.",
+      "reworded_proposition": "The borough of Islington experienced a notable increase in population over the two decades from 1980 to 2000.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Population Growth in Islington (1980-2000)",
+      "chart_description": "Visualizing the population trend in Islington over two decades.",
+      "reasoning": "A line chart effectively shows changes over time, making it ideal for illustrating population growth trends.",
+      "tapas_questions": [
+        "How did the population change from 1980 to 2000 in Islington?",
+        "What is the average population in Islington during this period?",
+        "Which year had the highest population in Islington?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "1980-2000",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt9",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "The 1960s saw a decline in population across most London boroughs, averaging a 5% decrease.",
+      "reworded_proposition": "During the 1960s, most London boroughs experienced a noticeable decline in population.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Decline in London Boroughs (1960s)",
+      "chart_description": "Visualizing population changes across London boroughs from 1960 to 1970.",
+      "reasoning": "A simple bar chart effectively highlights the population decline across different boroughs over the decade.",
+      "tapas_questions": [
+        "Which borough had the largest population decrease?",
+        "How did the population change from 1960 to 1970 in each borough?",
+        "What is the average population change across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "1960-1970",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt10",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "Population density in the borough of Kensington and Chelsea increased by 40% from 1995 to 2005.",
+      "reworded_proposition": "The borough of Kensington and Chelsea experienced a notable rise in population density over the decade from 1995 to 2005.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Population Density Growth in Kensington and Chelsea",
+      "chart_description": "Trends in population density from 1995 to 2005 in Kensington and Chelsea.",
+      "reasoning": "A line chart effectively illustrates changes over time, making it ideal for showing the trend in population density across a decade.",
+      "tapas_questions": [
+        "How did population density change from 1995 to 2005 in Kensington and Chelsea?",
+        "What is the average population density in Kensington and Chelsea over the period?",
+        "Which year had the highest population density in Kensington and Chelsea?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "1995-2005",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt11",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "The population in the borough of Lambeth grew by 18% between 2005 and 2015.",
+      "reworded_proposition": "Lambeth experienced a notable population increase over the decade from 2005 to 2015.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Growth in Lambeth (2005-2015)",
+      "chart_description": "Visualizing the population trend in Lambeth over a decade.",
+      "reasoning": "A simple bar chart effectively illustrates changes in population over time, highlighting trends and comparisons.",
+      "tapas_questions": [
+        "How did the population change in Lambeth from 2005 to 2015?",
+        "What is the average population growth across all boroughs?",
+        "Which borough had the highest population growth between 2005 and 2015?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2005-2015",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt12",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "From 1970 to 1990, the population in the borough of Southwark increased by 12%.",
+      "reworded_proposition": "Between 1970 and 1990, Southwark experienced a noticeable growth in population.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Population Growth in Southwark (1970-1990)",
+      "chart_description": "Visualizing the population increase in Southwark over two decades.",
+      "reasoning": "A line chart effectively illustrates trends over time, making it ideal for showing population growth across years.",
+      "tapas_questions": [
+        "How did the population change from 1970 to 1990 in Southwark?",
+        "What is the average population growth rate across all boroughs?",
+        "Which borough had the highest population increase from 1970 to 1990?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "1970-1990",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt13",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "The population of the borough of Haringey increased by 22% from 2000 to 2020.",
+      "reworded_proposition": "Haringey has experienced a notable population growth over the past two decades.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Growth in Haringey (2000-2020)",
+      "chart_description": "Visualizing the increase in Haringey's population from 2000 to 2020.",
+      "reasoning": "A simple bar chart effectively illustrates the population growth over time, highlighting changes in a clear and straightforward manner.",
+      "tapas_questions": [
+        "How did the population in Haringey change from 2000 to 2020?",
+        "What is the average population in Haringey over the years?",
+        "Which year had the highest population in Haringey?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt14",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "Population growth in the borough of Barnet was 5% higher than the London average from 1990 to 2010.",
+      "reworded_proposition": "Barnet experienced a notably higher population growth compared to the London average between 1990 and 2010.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Barnet vs London: Population Growth (1990-2010)",
+      "chart_description": "Comparison of population growth trends in Barnet and London from 1990 to 2010.",
+      "reasoning": "A line chart effectively illustrates temporal trends, making it easy to compare Barnet's growth against the London average over time.",
+      "tapas_questions": [
+        "Which borough had the highest population growth?",
+        "How did Barnet's population growth compare to the London average?",
+        "What was the average population growth across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "1990-2010",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt15",
+      "dataset": "population",
+      "category": "temporal_trends",
+      "original_proposition": "The borough of Enfield saw a 30% increase in population from 1985 to 2005.",
+      "reworded_proposition": "Enfield experienced a notable rise in population over two decades, from 1985 to 2005.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Growth in Enfield (1985-2005)",
+      "chart_description": "Visualizing the population increase in Enfield over 20 years.",
+      "reasoning": "A simple bar chart effectively illustrates the trend of population growth over the specified time period, highlighting changes year by year.",
+      "tapas_questions": [
+        "How did the population change from 1985 to 2005 in Enfield?",
+        "What is the average population in Enfield during this period?",
+        "Which year had the highest population in Enfield?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "1985-2005",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

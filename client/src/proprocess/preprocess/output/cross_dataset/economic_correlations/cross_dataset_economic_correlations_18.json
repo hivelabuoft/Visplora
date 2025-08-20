@@ -1,0 +1,41 @@
+{
+  "input": {
+    "type": "cross_dataset",
+    "category": "economic_correlations",
+    "proposition_id": "cross_dataset_economic_correlations_18",
+    "proposition": "Boroughs with higher house prices in 2023 have more boutique gyms per capita in 2024.",
+    "datasets_required": [
+      "house-prices",
+      "gyms"
+    ],
+    "variables_needed": {
+      "house-prices": [
+        "area",
+        "value"
+      ],
+      "gyms": [
+        "area",
+        "value"
+      ]
+    },
+    "time_periods": {
+      "house-prices": "2023",
+      "gyms": "2024"
+    },
+    "relationship_type": "lag",
+    "suggested_visualization": "scatter_plot",
+    "temporal_assumption": "Higher house prices may correlate with demand for premium fitness facilities."
+  },
+  "analysis": "### Cross-Dataset Analysis Methodology\n\n1. **Data Collection and Preparation:**\n   - Extract the 2023 house prices data and 2024 boutique gym counts for each London borough using the provided SQL queries.\n   - Ensure both datasets are cleaned and standardized, focusing on the 'area' as the common key for merging.\n\n2. **Temporal Alignment:**\n   - Given the lag relationship, align datasets by matching 2023 house prices with 2024 gym counts. This assumes that changes in house prices might influence the number of boutique gyms in the following year.\n\n3. **Data Integration:**\n   - Perform a left join on the datasets using the 'area' field to create a combined dataset that includes house prices and gym counts for each borough.\n\n4. **Correlation Analysis:**\n   - Calculate Pearson or Spearman correlation coefficients to assess the strength and direction of the relationship between house prices and gym counts.\n   - Use scatter plots to visualize the relationship, plotting house prices on the x-axis and gym counts on the y-axis.\n\n5. **Statistical Validation:**\n   - Conduct hypothesis testing (e.g., t-tests) to determine if the observed correlation is statistically significant.\n   - Consider p-values and confidence intervals to validate findings.\n\n6. **Outlier Detection:**\n   - Identify any boroughs that significantly deviate from the trend, which could indicate unique local factors affecting gym proliferation.\n\n### Key Findings and Correlations\n\n- **Correlation Coefficient:** Calculate the correlation coefficient to quantify the relationship. A positive coefficient would suggest that higher house prices are associated with more boutique gyms.\n- **Significant Patterns:** Look for clusters of boroughs that follow the trend and those that do not, providing insights into local economic or cultural factors.\n- **Outliers:** Identify boroughs with unusually high or low gym counts relative to house prices, which may warrant further investigation.\n\n### Statistical Significance Measures\n\n- **P-Value:** Determine the p-value to assess the statistical significance of the correlation. A p-value less than 0.05 typically indicates a significant relationship.\n- **Confidence Interval:** Calculate a 95% confidence interval for the correlation coefficient to understand the precision of the estimate.\n\n### Data Quality Considerations\n\n- **Data Completeness:** Ensure all boroughs are represented in both datasets to avoid skewed results.\n- **Data Accuracy:** Verify the accuracy of both datasets, particularly in terms of correct borough identification and data entry.\n\n### Visualization Recommendations\n\n- **Scatter Plot:** Create a scatter plot with house prices on the x-axis and gym counts on the y-axis, labeling each point with the borough name for clarity.\n- **Trend Line:** Add a trend line to the scatter plot to visually represent the correlation.\n- **Highlight Outliers:** Use different colors or markers to highlight outliers or significant clusters.\n\n### Limitations and Assumptions\n\n- **Causation vs. Correlation:** The analysis identifies correlation, not causation. Other factors may influence the number of gyms, such as local policies or demographic changes.\n- **Temporal Assumption:** The assumption that house prices in 2023 influence gym counts in 2024 may not hold if other intervening variables are at play.\n- **Data Limitations:** Potential inaccuracies or missing data could affect the analysis. Ensure robust data validation processes are in place.\n\n### Conclusion\n\nThis analysis aims to uncover potential relationships between house prices and boutique gym proliferation in London boroughs. By following the outlined methodology, we can provide insights into urban economic dynamics and identify areas for further investigation or policy intervention.",
+  "datasets_involved": [
+    "house-prices",
+    "gyms"
+  ],
+  "relationship_type": "lag",
+  "temporal_alignment": {
+    "house-prices": "2023",
+    "gyms": "2024"
+  },
+  "processing_timestamp": "2025-08-20T06:26:31.872Z",
+  "status": "completed"
+}

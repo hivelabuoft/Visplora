@@ -1,0 +1,160 @@
+{
+  "category": "categorical_analysis",
+  "dataset": "private-rent",
+  "processed_at": "2025-08-20T04:09:33.144Z",
+  "total_propositions": 6,
+  "propositions": [
+    {
+      "proposition_id": "private-rent_categorical_analysis_ca1",
+      "dataset": "private-rent",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2023, the category 'Luxury Apartments' accounted for 40% of the total rent value in Kensington and Chelsea.",
+      "reworded_proposition": "In 2023, 'Luxury Apartments' emerged as a dominant category, representing a substantial portion of the total rent value in Kensington and Chelsea.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Rent Distribution in Kensington and Chelsea, 2023",
+      "chart_description": "Visual representation of rent value distribution by category in 2023.",
+      "reasoning": "A donut chart effectively highlights the proportion of each category within the total rent value, making it easy to see the dominance of 'Luxury Apartments'.",
+      "tapas_questions": [
+        "What percentage of the total rent value is attributed to 'Luxury Apartments'?",
+        "Which category accounts for the highest rent value in Kensington and Chelsea?",
+        "How does the rent value of 'Luxury Apartments' compare to other categories?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_categorical_analysis_ca2",
+      "dataset": "private-rent",
+      "category": "categorical_analysis",
+      "original_proposition": "The 'Studio' category saw a 20% increase in rent values from 2020 to 2023 in inner London boroughs.",
+      "reworded_proposition": "Rent values for 'Studio' apartments have shown a notable upward trend in inner London boroughs over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trend of Studio Rent Values in Inner London",
+      "chart_description": "Visualizing the increase in studio rent from 2020 to 2023.",
+      "reasoning": "A line chart effectively illustrates trends over time, highlighting the increase in rent values.",
+      "tapas_questions": [
+        "How did rent values for studios change from 2020 to 2023?",
+        "Which borough had the highest increase in studio rent?",
+        "What is the average rent value for studios across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_categorical_analysis_ca3",
+      "dataset": "private-rent",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2022, 'Family Homes' represented the least common category in central London boroughs, making up only 10% of the market.",
+      "reworded_proposition": "In central London boroughs, 'Family Homes' were notably scarce in 2022, comprising a small fraction of the housing market.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Scarcity of Family Homes in Central London",
+      "chart_description": "Visualizing the limited presence of 'Family Homes' in 2022.",
+      "reasoning": "A simple bar chart effectively shows the comparison of market share among different housing categories, highlighting the scarcity of 'Family Homes'.",
+      "tapas_questions": [
+        "Which category has the lowest market share in central London?",
+        "What percentage of the housing market is made up by 'Family Homes'?",
+        "How does the 'Family Homes' category compare to other categories in terms of market share?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_categorical_analysis_ca4",
+      "dataset": "private-rent",
+      "category": "categorical_analysis",
+      "original_proposition": "The 'Shared Accommodation' category has seen a 15% decline in rent values from 2015 to 2023 in outer London boroughs.",
+      "reworded_proposition": "Rent values for 'Shared Accommodation' have steadily decreased in outer London boroughs over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trend in Shared Accommodation Rent Values",
+      "chart_description": "Decline in rent values from 2015 to 2023 in outer London.",
+      "reasoning": "A line chart effectively illustrates the trend of declining rent values over time, highlighting changes across the specified period.",
+      "tapas_questions": [
+        "How did rent values change from 2015 to 2023?",
+        "Which boroughs experienced the largest decline in rent values?",
+        "What is the average rent value across all boroughs in 2023?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "private-rent_categorical_analysis_ca5",
+      "dataset": "private-rent",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2023, 'Luxury Apartments' were most concentrated in Westminster, comprising 50% of the borough's rent value.",
+      "reworded_proposition": "In 2023, Westminster saw a notable concentration of 'Luxury Apartments', making up a significant portion of the borough's rental value.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Luxury Apartment Concentration in Westminster",
+      "chart_description": "Visualize the share of rent value from 'Luxury Apartments' in Westminster for 2023.",
+      "reasoning": "A donut chart effectively illustrates the proportion of a category within a whole, highlighting the dominance of 'Luxury Apartments' in Westminster's rental market.",
+      "tapas_questions": [
+        "What percentage of rent value is from 'Luxury Apartments' in Westminster?",
+        "Which borough has the highest concentration of 'Luxury Apartments'?",
+        "How does Westminster compare to other boroughs in luxury rent value?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_categorical_analysis_ca6",
+      "dataset": "private-rent",
+      "category": "categorical_analysis",
+      "original_proposition": "The 'Affordable Housing' category has consistently been the most common in East London boroughs from 2011 to 2023.",
+      "reworded_proposition": "In East London boroughs, 'Affordable Housing' has remained the predominant category over the years.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Dominance of Affordable Housing in East London",
+      "chart_description": "Trends in housing categories from 2011 to 2023 in East London boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the dominance of a single category across multiple entities over time.",
+      "tapas_questions": [
+        "Which borough has the highest proportion of 'Affordable Housing'?",
+        "What percentage of housing is 'Affordable Housing' in each borough?",
+        "How did the 'Affordable Housing' category change from 2011 to 2023?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "time_period": "2011-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    }
+  ]
+}

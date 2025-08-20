@@ -1,0 +1,606 @@
+{
+  "chart_type": "divergentBar",
+  "total_generated": 25,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_crime_category_divergentBarChart_simple_2D_001",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Knife crime incidents in Lambeth exceeded the London average in 2023",
+      "chart_type": "divergentBarChart_simple_2D",
+      "chart_title": "Knife Crime Deviations in Lambeth",
+      "chart_description": "A divergent bar chart showing how knife crime incidents in Lambeth compare to the London average",
+      "reasoning": "This chart highlights deviations from the average, effectively showing areas with higher crime rates",
+      "tapas_questions": [
+        "How does Lambeth's knife crime compare to the London average?",
+        "Which other boroughs show similar patterns?",
+        "What might contribute to these deviations?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "crime_category_name"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "income_wage_trends_divergentBarChart_with_mean_2D_002",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Inner London boroughs show a significant income rise above the mean from 2020 to 2023",
+      "chart_type": "divergentBarChart_with_mean_2D",
+      "chart_title": "Income Growth Above Mean in Inner London",
+      "chart_description": "Divergent bar chart comparing income changes in Inner London boroughs against the average",
+      "reasoning": "Visualizes income changes against the mean, highlighting areas of significant economic growth",
+      "tapas_questions": [
+        "Which boroughs have seen the most significant income growth?",
+        "How does this trend compare to the rest of London?",
+        "What factors could be driving the income rise?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "income"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_property_value_divergentBarChart_with_threshold_2D_003",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House prices in Kensington and Chelsea remain significantly above the London threshold in 2023",
+      "chart_type": "divergentBarChart_with_threshold_2D",
+      "chart_title": "Kensington and Chelsea House Prices vs London Threshold",
+      "chart_description": "A divergent bar chart showing property prices in Kensington and Chelsea in comparison to a set threshold",
+      "reasoning": "Highlights deviations above a defined threshold, useful for emphasizing high property values",
+      "tapas_questions": [
+        "How do Kensington and Chelsea's house prices compare to the threshold?",
+        "What is the average property value in this borough?",
+        "Are there other boroughs with similar trends?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "vehicles_registration_trends_divergentBarChart_simple_3D_004",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Electric vehicle registrations surged in 2023, surpassing diesel vehicles in Outer London",
+      "chart_type": "divergentBarChart_simple_3D",
+      "chart_title": "Electric vs Diesel Vehicle Registrations in Outer London",
+      "chart_description": "A 3D divergent bar chart depicting the shift in vehicle registrations from diesel to electric",
+      "reasoning": "3D chart effectively shows the transition and comparison between different vehicle types over time",
+      "tapas_questions": [
+        "How have electric vehicle registrations changed over time?",
+        "What is the trend for diesel vehicle registrations?",
+        "What might be causing this shift in vehicle preference?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Local Authority",
+        "year",
+        "Cars",
+        "Electric"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_population_distribution_divergentBarChart_with_mean_2D_005",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "The Asian population in Newham and Tower Hamlets is significantly above the London mean",
+      "chart_type": "divergentBarChart_with_mean_2D",
+      "chart_title": "Asian Population Distribution in Newham and Tower Hamlets",
+      "chart_description": "Divergent bar chart showing the Asian population compared to the London average",
+      "reasoning": "Highlights population concentrations relative to the mean, showing areas with higher ethnic diversity",
+      "tapas_questions": [
+        "How does the Asian population in these boroughs compare to the London mean?",
+        "What historical factors contribute to this distribution?",
+        "Are there other boroughs with similar patterns?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "local authority name",
+        "All usual residents",
+        "Asian"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "gyms_facility_growth_divergentBarChart_simple_3D_006",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Fitness facilities in Hackney grew substantially in 2024, surpassing other boroughs",
+      "chart_type": "divergentBarChart_simple_3D",
+      "chart_title": "Hackney's Fitness Facility Expansion",
+      "chart_description": "3D divergent bar chart showing the growth of gym facilities compared to other boroughs",
+      "reasoning": "3D visualization emphasizes the growth trend and comparison across boroughs",
+      "tapas_questions": [
+        "What is the rate of growth in gym facilities in Hackney?",
+        "How does Hackney compare to other boroughs?",
+        "What factors might contribute to this growth?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "facility_count"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "libraries_visitation_trends_divergentBarChart_with_threshold_2D_007",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Library visits per capita in Westminster fall below the expected threshold in 2023",
+      "chart_type": "divergentBarChart_with_threshold_2D",
+      "chart_title": "Westminster Library Visits Below Threshold",
+      "chart_description": "A divergent bar chart showing library visits per capita against a set visitation threshold",
+      "reasoning": "Effectively highlights areas with lower than expected library usage",
+      "tapas_questions": [
+        "How do library visits in Westminster compare to the threshold?",
+        "What factors could explain the lower visitation rates?",
+        "Are there other boroughs with similar patterns?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "area",
+        "Library visits per 1,000 population"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_employment_divergentBarChart_with_mean_2D_008",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Restaurant employment in Camden significantly surpasses the London mean in 2023",
+      "chart_type": "divergentBarChart_with_mean_2D",
+      "chart_title": "Camden Restaurant Employment vs London Mean",
+      "chart_description": "Divergent bar chart showing restaurant employment levels compared to the London average",
+      "reasoning": "Highlights areas of high employment relative to the mean, showing economic concentration",
+      "tapas_questions": [
+        "How does restaurant employment in Camden compare to the London mean?",
+        "What might contribute to Camden's higher employment levels?",
+        "Are there other boroughs with similar trends?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area name",
+        "employment"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_density_trends_divergentBarChart_simple_2D_009",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Population density in Islington soared above other boroughs from 2010 to 2021",
+      "chart_type": "divergentBarChart_simple_2D",
+      "chart_title": "Islington's Population Density Surge",
+      "chart_description": "Divergent bar chart showing population density changes in Islington compared to other boroughs",
+      "reasoning": "Effectively shows population changes and density increases over time",
+      "tapas_questions": [
+        "How has population density in Islington changed over time?",
+        "How does it compare to other boroughs?",
+        "What factors might be contributing to this density increase?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "area",
+        "year",
+        "population_density"
+      ],
+      "time_period": "2010-2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_market_shifts_divergentBarChart_simple_3D_010",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Private rents in Hackney have consistently been above the London average since 2020",
+      "chart_type": "divergentBarChart_simple_3D",
+      "chart_title": "Hackney's Private Rent Trends",
+      "chart_description": "3D divergent bar chart showing private rent changes in Hackney compared to the London average",
+      "reasoning": "3D chart provides a comprehensive view of rent changes over time and across categories",
+      "tapas_questions": [
+        "How do private rents in Hackney compare to the London average?",
+        "What is the trend over the past few years?",
+        "What might be driving these rent levels?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Area",
+        "year",
+        "Average (£)"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "schools-colleges_performance_divergentBarChart_with_mean_2D_011",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Performance in secondary schools in Richmond upon Thames consistently exceeds London mean",
+      "chart_type": "divergentBarChart_with_mean_2D",
+      "chart_title": "Richmond upon Thames School Performance",
+      "chart_description": "Divergent bar chart comparing school performance in Richmond upon Thames to the London mean",
+      "reasoning": "Highlights educational achievements relative to the mean, showcasing areas of excellence",
+      "tapas_questions": [
+        "How does school performance in Richmond upon Thames compare to the London mean?",
+        "What factors contribute to the high performance?",
+        "Are there other boroughs with similar educational success?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "LANAME",
+        "school_performance"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_demographics_divergentBarChart_simple_3D_012",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Newham shows the highest concentration of foreign-born residents in 2023",
+      "chart_type": "divergentBarChart_simple_3D",
+      "chart_title": "Foreign-Born Population Concentration in Newham",
+      "chart_description": "3D divergent bar chart illustrating the concentration of foreign-born residents compared to other boroughs",
+      "reasoning": "3D visualization effectively demonstrates demographic concentration and diversity",
+      "tapas_questions": [
+        "How does Newham's foreign-born population compare to other boroughs?",
+        "What are the predominant countries of birth?",
+        "What factors contribute to this demographic pattern?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_seasonal_variations_divergentBarChart_simple_2D_013",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Violent crime peaks in summer months across East London boroughs",
+      "chart_type": "divergentBarChart_simple_2D",
+      "chart_title": "Seasonal Violent Crime Patterns in East London",
+      "chart_description": "Divergent bar chart showing seasonal variations in violent crime across East London",
+      "reasoning": "Effectively shows seasonal crime patterns, highlighting peak periods",
+      "tapas_questions": [
+        "How does violent crime vary by season?",
+        "Which boroughs have the highest summer peaks?",
+        "What interventions could address these seasonal trends?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "month",
+        "crime_category"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_inequality_trends_divergentBarChart_with_threshold_2D_014",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income inequality widened significantly between 2019 and 2023 in London",
+      "chart_type": "divergentBarChart_with_threshold_2D",
+      "chart_title": "Income Inequality Trends in London",
+      "chart_description": "Divergent bar chart showing widening income inequality against a defined threshold",
+      "reasoning": "Highlights economic disparities, focusing on deviations from an inequality threshold",
+      "tapas_questions": [
+        "How has income inequality changed over the years?",
+        "Which boroughs experienced the most significant changes?",
+        "What policies could address growing inequalities?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "year",
+        "income",
+        "inequality_index"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_market_fluctuations_divergentBarChart_simple_2D_015",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Property values in Croydon fluctuate significantly more than the London average",
+      "chart_type": "divergentBarChart_simple_2D",
+      "chart_title": "Property Value Fluctuations in Croydon",
+      "chart_description": "Divergent bar chart showing property value fluctuations in Croydon compared to the London average",
+      "reasoning": "Highlights volatility in property prices, important for market analysis",
+      "tapas_questions": [
+        "How do property values in Croydon compare to the London average?",
+        "What might be causing these fluctuations?",
+        "Are similar trends observed in other boroughs?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "value"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "vehicles_transport_trends_divergentBarChart_with_mean_2D_016",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Motorcycle registrations in Southwark surpass the London mean consistently since 2020",
+      "chart_type": "divergentBarChart_with_mean_2D",
+      "chart_title": "Southwark Motorcycle Registrations vs London Mean",
+      "chart_description": "Divergent bar chart showing motorcycle registration trends compared to the London mean",
+      "reasoning": "Highlights areas with higher vehicle registrations relative to the mean, showing transport preferences",
+      "tapas_questions": [
+        "How do motorcycle registrations in Southwark compare to the London mean?",
+        "What might be driving the popularity of motorcycles?",
+        "Are there other boroughs with similar trends?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Local Authority",
+        "year",
+        "Motor cycles"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "libraries_usage_decline_divergentBarChart_simple_2D_017",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Library visits in Barking and Dagenham declined sharply post-2020",
+      "chart_type": "divergentBarChart_simple_2D",
+      "chart_title": "Decline in Library Visits in Barking and Dagenham",
+      "chart_description": "Divergent bar chart showing the decline in library visits in Barking and Dagenham compared to previous years",
+      "reasoning": "Emphasizes changes in public facility usage, important for understanding community engagement",
+      "tapas_questions": [
+        "How have library visits changed in Barking and Dagenham?",
+        "What factors might be contributing to this decline?",
+        "Are there similar trends in other boroughs?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "area",
+        "year",
+        "Library visits per 1,000 population"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_facility_concentration_divergentBarChart_with_threshold_2D_018",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Gym facility concentration in Wandsworth exceeds the health infrastructure threshold in 2024",
+      "chart_type": "divergentBarChart_with_threshold_2D",
+      "chart_title": "Wandsworth Gym Facility Concentration",
+      "chart_description": "Divergent bar chart showing gym facility concentration against a health infrastructure threshold",
+      "reasoning": "Highlights areas with exceptional infrastructure, useful for assessing health amenities",
+      "tapas_questions": [
+        "How does Wandsworth's gym concentration compare to the threshold?",
+        "What factors contribute to this high concentration?",
+        "Are there other boroughs with similar facilities?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "facility_count",
+        "threshold"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_unit_growth_divergentBarChart_simple_3D_019",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Restaurant unit growth in Tower Hamlets outpaces London average since 2018",
+      "chart_type": "divergentBarChart_simple_3D",
+      "chart_title": "Tower Hamlets Restaurant Unit Growth",
+      "chart_description": "3D divergent bar chart showing restaurant unit growth compared to the London average",
+      "reasoning": "3D visualization shows growth trends over time, emphasizing economic development",
+      "tapas_questions": [
+        "How does restaurant growth in Tower Hamlets compare to the London average?",
+        "What might be driving this rapid growth?",
+        "Are there other boroughs experiencing similar trends?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Area name",
+        "year",
+        "unit_growth"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_age_shifts_divergentBarChart_with_mean_2D_020",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Elderly population in Barnet is significantly above the London mean in 2023",
+      "chart_type": "divergentBarChart_with_mean_2D",
+      "chart_title": "Barnet's Elderly Population vs London Mean",
+      "chart_description": "Divergent bar chart showing elderly population changes compared to the London mean",
+      "reasoning": "Effectively highlights demographic changes, useful for planning and resource allocation",
+      "tapas_questions": [
+        "How does Barnet's elderly population compare to the London mean?",
+        "What factors contribute to this demographic shift?",
+        "Are there other boroughs with similar patterns?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "area",
+        "year",
+        "elderly_population"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_diversity_patterns_divergentBarChart_with_threshold_2D_021",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Diversity levels in Brent surpass the multiculturalism threshold in 2023",
+      "chart_type": "divergentBarChart_with_threshold_2D",
+      "chart_title": "Brent's Diversity Levels vs Multiculturalism Threshold",
+      "chart_description": "Divergent bar chart showing diversity levels against a set multiculturalism threshold",
+      "reasoning": "Highlights areas of high diversity, important for cultural and social analysis",
+      "tapas_questions": [
+        "How does Brent's diversity compare to the threshold?",
+        "What are the predominant countries of origin?",
+        "What factors contribute to this high diversity?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "diversity_index"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_affordability_trends_divergentBarChart_simple_2D_022",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Rent affordability in Enfield declined sharply from 2020 to 2023",
+      "chart_type": "divergentBarChart_simple_2D",
+      "chart_title": "Rent Affordability Decline in Enfield",
+      "chart_description": "Divergent bar chart showing changes in rent affordability in Enfield",
+      "reasoning": "Emphasizes affordability changes, important for economic and housing policy analysis",
+      "tapas_questions": [
+        "How has rent affordability in Enfield changed over time?",
+        "What factors contribute to the decline?",
+        "Are similar trends observed in other boroughs?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area",
+        "year",
+        "affordability_index"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "schools-colleges_enrollment_trends_divergentBarChart_with_mean_2D_023",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Primary school enrollment in Haringey exceeds the London mean since 2021",
+      "chart_type": "divergentBarChart_with_mean_2D",
+      "chart_title": "Haringey Primary School Enrollment vs London Mean",
+      "chart_description": "Divergent bar chart showing primary school enrollment trends compared to the London mean",
+      "reasoning": "Highlights educational enrollment trends, important for planning and resource allocation",
+      "tapas_questions": [
+        "How does primary school enrollment in Haringey compare to the London mean?",
+        "What factors contribute to high enrollment levels?",
+        "Are there other boroughs with similar educational trends?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "LANAME",
+        "year",
+        "enrollment"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "crime-rates_category_shifts_divergentBarChart_simple_3D_024",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Burglary rates in Camden shifted dramatically, peaking in winter months",
+      "chart_type": "divergentBarChart_simple_3D",
+      "chart_title": "Burglary Rate Shifts in Camden",
+      "chart_description": "3D divergent bar chart illustrating seasonal shifts in burglary rates",
+      "reasoning": "3D visualization provides insights into seasonal crime patterns, important for law enforcement strategies",
+      "tapas_questions": [
+        "How do burglary rates in Camden change by season?",
+        "What might contribute to the winter peak?",
+        "Are there similar seasonal patterns in other boroughs?"
+      ],
+      "3d_dimension": "month",
+      "variables_needed": [
+        "borough_name",
+        "month",
+        "crime_category"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_affordability_shifts_divergentBarChart_with_threshold_2D_025",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Affordability of housing in Greenwich fell below the affordability threshold in 2023",
+      "chart_type": "divergentBarChart_with_threshold_2D",
+      "chart_title": "Housing Affordability in Greenwich",
+      "chart_description": "Divergent bar chart showing housing affordability against a set threshold",
+      "reasoning": "Emphasizes affordability issues, important for housing policy and economic analysis",
+      "tapas_questions": [
+        "How does housing affordability in Greenwich compare to the threshold?",
+        "What factors contribute to the decline in affordability?",
+        "Are similar trends observed in other boroughs?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "affordability_index"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ],
+  "generation_timestamp": "2025-08-20T16:45:06.344Z"
+}

@@ -1,0 +1,28 @@
+{
+  "type": "cross_dataset",
+  "category": "economic_correlations",
+  "proposition_id": "test_cross_dataset_1",
+  "proposition": "Boroughs with higher crime rates in 2022-2023 have lower median income levels in 2023.",
+  "datasets_required": [
+    "crime-rates",
+    "income"
+  ],
+  "variables_needed": {
+    "crime-rates": [
+      "borough_name",
+      "crime_category",
+      "count"
+    ],
+    "income": [
+      "Area",
+      "Median_income"
+    ]
+  },
+  "time_periods": {
+    "crime-rates": "2022-2023",
+    "income": "2023"
+  },
+  "relationship_type": "correlation",
+  "suggested_visualization": "scatter_plot",
+  "temporal_assumption": "Crime rates in the same year may impact or reflect economic conditions."
+}

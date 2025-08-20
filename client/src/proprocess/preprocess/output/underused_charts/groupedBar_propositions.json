@@ -1,0 +1,608 @@
+{
+  "chart_type": "groupedBar",
+  "total_generated": 25,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_chart_analysis_groupedBarChart_simple_2D_001",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Hackney reports the highest theft rates in 2023 among London boroughs",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Theft Rates Across London Boroughs in 2023",
+      "chart_description": "Comparative analysis of theft incidents reported by each borough in 2023",
+      "reasoning": "A grouped bar chart allows for a clear side-by-side comparison of theft rates in each borough",
+      "tapas_questions": [
+        "Which borough has the highest theft rate?",
+        "How does Hackney's theft rate compare to others?",
+        "What is the theft rate trend across different boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "count"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_groupedBarChart_simple_3D_002",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Ethnic diversity peaks in Newham and Tower Hamlets with significant White and Asian populations",
+      "chart_type": "groupedBarChart_simple_3D",
+      "chart_title": "Ethnic Group Distribution in Newham and Tower Hamlets",
+      "chart_description": "3D grouped bar chart showing the ethnic composition of Newham and Tower Hamlets",
+      "reasoning": "3D visualization highlights the diversity within boroughs by displaying multiple ethnic groups",
+      "tapas_questions": [
+        "Which ethnic group is most prevalent in Newham?",
+        "How do ethnic distributions compare between Newham and Tower Hamlets?",
+        "What is the representation of Asian populations in these boroughs?"
+      ],
+      "3d_dimension": "ethnic_group",
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "Asian",
+        "Black",
+        "Mixed"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_groupedBarChart_simple_2D_003",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Foreign-born population in Kensington and Chelsea shows a significant increase from 2019 to 2023",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Foreign-born Population Growth in Kensington and Chelsea",
+      "chart_description": "Analysis of the rise in foreign-born residents in Kensington and Chelsea from 2019 to 2023",
+      "reasoning": "The grouped bar chart effectively displays changes in population by birth country over time",
+      "tapas_questions": [
+        "Which country of birth has the highest increase?",
+        "How does the foreign-born population in 2023 compare to 2019?",
+        "What trends are visible in the population change?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Year",
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_chart_analysis_groupedBarChart_simple_2D_004",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Population density in Inner London boroughs consistently higher than Outer London since 2000",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Population Density Comparison: Inner vs Outer London",
+      "chart_description": "Comparison of population density between Inner and Outer London boroughs over the years",
+      "reasoning": "Grouped bar charts allow for easy comparison of population densities across multiple years",
+      "tapas_questions": [
+        "Which areas have the highest population density?",
+        "How does Inner London compare to Outer London in terms of density?",
+        "What are the trends in population density over the years?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "2000",
+        "2010",
+        "2020"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "income_chart_analysis_groupedBarChart_simple_3D_005",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income levels in Westminster and Kensington show significant disparity in 3D comparison",
+      "chart_type": "groupedBarChart_simple_3D",
+      "chart_title": "Income Level Disparities in Westminster and Kensington",
+      "chart_description": "3D visualization of income levels highlighting disparities between Westminster and Kensington",
+      "reasoning": "3D charts add depth to income comparisons by visualizing disparities across multiple dimensions",
+      "tapas_questions": [
+        "Which borough has higher income levels?",
+        "How do income levels differ within the boroughs?",
+        "What are the key factors contributing to income disparities?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "borough_name",
+        "1999-00",
+        "2000-01",
+        "2001-02"
+      ],
+      "time_period": "1999-2002",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_groupedBarChart_simple_2D_006",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House prices in Richmond upon Thames steadily increased from 2018 to 2023",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "House Price Trends in Richmond upon Thames",
+      "chart_description": "A look at the steady increase in house prices in Richmond upon Thames over the last five years",
+      "reasoning": "The grouped bar chart efficiently displays changes in house prices over a specified period",
+      "tapas_questions": [
+        "What is the trend in house prices in Richmond?",
+        "How do prices in 2023 compare to 2018?",
+        "What are the implications of rising house prices?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_groupedBarChart_simple_3D_007",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Performance in secondary schools varies widely across London boroughs in 2023",
+      "chart_type": "groupedBarChart_simple_3D",
+      "chart_title": "Secondary School Performance Across London",
+      "chart_description": "3D chart showing performance variations in secondary schools across London boroughs",
+      "reasoning": "3D visualization helps in understanding differences in school performance across multiple boroughs",
+      "tapas_questions": [
+        "Which boroughs have the highest performing schools?",
+        "How does school performance vary across boroughs?",
+        "What factors contribute to performance differences?"
+      ],
+      "3d_dimension": "school_type",
+      "variables_needed": [
+        "LANAME",
+        "SCHNAME",
+        "performance_score"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_groupedBarChart_simple_2D_008",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Electric vehicle registrations surge in Outer London from 2020 to 2023",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Electric Vehicle Registrations in Outer London",
+      "chart_description": "Increase in electric vehicle registrations in Outer London boroughs over recent years",
+      "reasoning": "A grouped bar chart effectively illustrates the growth of electric vehicle registrations over time",
+      "tapas_questions": [
+        "What is the trend in electric vehicle registrations?",
+        "How do registrations in 2023 compare to 2020?",
+        "What might be driving the increase in registrations?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Local Authority",
+        "Cars",
+        "Electric"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_groupedBarChart_simple_2D_009",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Unlicensed restaurants in Camden employed more staff than licensed ones in 2023",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Employment in Licensed vs Unlicensed Restaurants in Camden",
+      "chart_description": "Comparison of employment numbers in licensed and unlicensed restaurants in Camden for 2023",
+      "reasoning": "Grouped bar charts are suitable for comparing employment numbers across different restaurant categories",
+      "tapas_questions": [
+        "Which type of restaurant employs more staff?",
+        "How significant is the employment difference?",
+        "What implications could this have for the local economy?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area name",
+        "Licensed Restaurants Employment",
+        "Unlicensed Restaurants Employment"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_groupedBarChart_simple_3D_010",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Average rent in Central London boroughs exceeds outer boroughs by 50% in 2023",
+      "chart_type": "groupedBarChart_simple_3D",
+      "chart_title": "Average Rent Comparison: Central vs Outer London",
+      "chart_description": "3D comparison of average rent prices between Central and Outer London boroughs in 2023",
+      "reasoning": "3D grouped bar charts provide a comprehensive view of rent disparities across geographic regions",
+      "tapas_questions": [
+        "Which areas have the highest average rents?",
+        "How do central and outer boroughs compare in rent prices?",
+        "What economic factors contribute to these differences?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Area",
+        "Average (£)",
+        "Year"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_groupedBarChart_simple_2D_011",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Public gyms outnumber private ones in Lambeth, leading to increased community access",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Public vs Private Gym Facilities in Lambeth",
+      "chart_description": "Comparison of the number of public and private gyms in Lambeth and their impact on community access",
+      "reasoning": "Grouped bar charts help in comparing the number of facilities by type within a borough",
+      "tapas_questions": [
+        "Which type of gym is more prevalent in Lambeth?",
+        "How does the number of public gyms affect community access?",
+        "What are the potential benefits of more public gyms?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "gym_type",
+        "facility_count"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_groupedBarChart_simple_2D_012",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Library visits per capita highest in Islington despite overall reduction in facilities",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Library Visits per Capita in Islington",
+      "chart_description": "Analysis of library visits per capita in Islington amidst a reduction in library facilities",
+      "reasoning": "Grouped bar charts allow for a comparison of library visit metrics across different areas",
+      "tapas_questions": [
+        "How does Islington's library usage compare to other areas?",
+        "What might explain the high per capita visits?",
+        "How does the reduction in facilities impact usage?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "Library visits per 1,000 population"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_groupedBarChart_simple_3D_013",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Violent crimes in Southwark peak during summer months, showing seasonal variations",
+      "chart_type": "groupedBarChart_simple_3D",
+      "chart_title": "Seasonal Variations in Violent Crimes in Southwark",
+      "chart_description": "3D chart illustrating the seasonal pattern of violent crimes in Southwark with a summer peak",
+      "reasoning": "3D charts effectively depict seasonal variations, adding a temporal dimension to crime analysis",
+      "tapas_questions": [
+        "When do violent crimes peak in Southwark?",
+        "How does crime vary by season?",
+        "What factors contribute to seasonal crime patterns?"
+      ],
+      "3d_dimension": "month",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "month",
+        "count"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_groupedBarChart_simple_2D_014",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "White British population in Bromley remains the largest ethnic group despite overall decline",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Ethnic Composition in Bromley",
+      "chart_description": "Examination of the White British population's predominance in Bromley amid a general decline",
+      "reasoning": "Grouped bar charts are ideal for showing the distribution and changes in ethnic composition over time",
+      "tapas_questions": [
+        "What is the trend in the White British population?",
+        "How does this group compare to others in Bromley?",
+        "What are the implications of these demographic changes?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "All usual residents"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_groupedBarChart_simple_3D_015",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Indian-born residents in Brent show a steady increase, surpassing other groups by 2023",
+      "chart_type": "groupedBarChart_simple_3D",
+      "chart_title": "Growth of Indian-born Population in Brent",
+      "chart_description": "3D analysis of the growth trend among Indian-born residents in Brent compared to other groups",
+      "reasoning": "3D charts provide depth to demographic changes, highlighting significant trends over time",
+      "tapas_questions": [
+        "How has the Indian-born population changed over time?",
+        "What is the population trend for other groups in Brent?",
+        "What might explain the growth in Indian-born residents?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_chart_analysis_groupedBarChart_simple_2D_016",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Haringey sees a sharp population increase between 2010 and 2020",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Population Growth in Haringey",
+      "chart_description": "Analysis of Haringey's population growth over a decade, highlighting significant increases",
+      "reasoning": "Grouped bar charts are effective for displaying population changes over specified time intervals",
+      "tapas_questions": [
+        "What is the rate of population growth in Haringey?",
+        "How does growth in Haringey compare to other boroughs?",
+        "What factors might be contributing to this increase?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "2010",
+        "2020"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "income_chart_analysis_groupedBarChart_simple_2D_017",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Average income in Barking and Dagenham remains below London average despite recent growth",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Income Levels in Barking and Dagenham vs London Average",
+      "chart_description": "Comparison of average income in Barking and Dagenham against the broader London average",
+      "reasoning": "A grouped bar chart allows for direct comparison of local income against a broader benchmark",
+      "tapas_questions": [
+        "How does income in Barking and Dagenham compare to the London average?",
+        "What is the trend in income growth for this area?",
+        "What might be contributing to the income gap?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "average_income",
+        "London_average"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_groupedBarChart_simple_3D_018",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House prices in Croydon show the most significant growth among outer boroughs from 2018 to 2023",
+      "chart_type": "groupedBarChart_simple_3D",
+      "chart_title": "House Price Growth in Croydon",
+      "chart_description": "3D visualization of house price trends in Croydon, highlighting significant growth",
+      "reasoning": "3D visualization captures the dynamic changes in house prices over multiple years",
+      "tapas_questions": [
+        "What is the trend in house prices in Croydon?",
+        "How does Croydon's growth compare to other outer boroughs?",
+        "What factors may be driving this growth?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_groupedBarChart_simple_2D_019",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Primary school enrolment in Hackney rises steadily, surpassing neighboring boroughs",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Primary School Enrolment Trends in Hackney",
+      "chart_description": "Comparison of primary school enrolment numbers in Hackney versus neighboring boroughs",
+      "reasoning": "Grouped bar charts are useful for side-by-side comparison of enrolment figures across regions",
+      "tapas_questions": [
+        "How does Hackney's enrolment compare to neighboring areas?",
+        "What is the trend in primary school enrolment?",
+        "What factors might be contributing to the rise in enrolment?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LANAME",
+        "enrolment_numbers"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_groupedBarChart_simple_3D_020",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Hybrid vehicle ownership in London boroughs shows a significant upward trend from 2019 to 2023",
+      "chart_type": "groupedBarChart_simple_3D",
+      "chart_title": "Hybrid Vehicle Ownership Trends in London",
+      "chart_description": "3D analysis of hybrid vehicle ownership trends across London boroughs over recent years",
+      "reasoning": "3D charts add depth to the visualization, showing changes in vehicle types over time",
+      "tapas_questions": [
+        "What is the trend in hybrid vehicle ownership?",
+        "How do different boroughs compare in terms of hybrid ownership?",
+        "What factors might be influencing these trends?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Local Authority",
+        "Hybrid"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_groupedBarChart_simple_2D_021",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Licensed restaurants in Westminster see a decline in employment from 2020 to 2023",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Employment Trends in Licensed Restaurants in Westminster",
+      "chart_description": "Analysis of employment trends in licensed restaurants in Westminster over recent years",
+      "reasoning": "A grouped bar chart clearly illustrates changes in employment figures over time",
+      "tapas_questions": [
+        "What is the trend in restaurant employment in Westminster?",
+        "How significant is the decline in employment?",
+        "What factors might be contributing to this trend?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area name",
+        "Licensed Restaurants Employment"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_groupedBarChart_simple_2D_022",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Median rent in Barking and Dagenham remains lowest among London boroughs in 2023",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Median Rent Comparison Across London Boroughs",
+      "chart_description": "Comparison of median rent prices across London boroughs with a focus on Barking and Dagenham",
+      "reasoning": "Grouped bar charts allow for clear comparison of rent levels across multiple boroughs",
+      "tapas_questions": [
+        "Which borough has the lowest median rent?",
+        "How does Barking and Dagenham compare to other boroughs?",
+        "What are the implications of these rent levels?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Median (£)"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_groupedBarChart_simple_3D_023",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Fitness facilities in Southwark show a diverse range of offerings with a focus on community centers",
+      "chart_type": "groupedBarChart_simple_3D",
+      "chart_title": "Diversity of Gym Facilities in Southwark",
+      "chart_description": "3D visualization of the variety of gym facilities in Southwark, emphasizing community centers",
+      "reasoning": "3D charts highlight the diversity of gym types, offering insights into community health infrastructure",
+      "tapas_questions": [
+        "What types of gym facilities are most common in Southwark?",
+        "How does the diversity of offerings compare to other areas?",
+        "What role do community centers play in fitness infrastructure?"
+      ],
+      "3d_dimension": "gym_type",
+      "variables_needed": [
+        "borough_name",
+        "gym_type",
+        "facility_count"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_groupedBarChart_simple_2D_024",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Boroughs like Greenwich see an increase in library visits despite a decline in facilities",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Library Visits vs Facilities in Greenwich",
+      "chart_description": "Examination of library visits in Greenwich amidst a reduction in available facilities",
+      "reasoning": "Grouped bar charts provide a clear picture of the relationship between visits and facilities",
+      "tapas_questions": [
+        "What is the trend in library visits in Greenwich?",
+        "How does the number of facilities impact visit numbers?",
+        "What might explain the increase in visits despite fewer facilities?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "Library visits per 1,000 population"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_groupedBarChart_simple_2D_025",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Burglary incidents in Ealing remain consistently high compared to other crimes in 2023",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Burglary Incidents in Ealing",
+      "chart_description": "Comparison of burglary incidents with other crime categories in Ealing for 2023",
+      "reasoning": "Grouped bar charts are well-suited to display the prevalence of specific crime categories",
+      "tapas_questions": [
+        "How do burglary incidents compare to other crimes in Ealing?",
+        "What is the trend in burglary incidents?",
+        "What measures could be taken to address high burglary rates?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "count"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    }
+  ],
+  "generation_timestamp": "2025-08-20T16:49:56.204Z"
+}

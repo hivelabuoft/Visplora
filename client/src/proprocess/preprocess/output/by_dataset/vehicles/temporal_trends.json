@@ -1,0 +1,156 @@
+{
+  "category": "temporal_trends",
+  "dataset": "vehicles",
+  "processed_at": "2025-08-20T04:08:19.914Z",
+  "total_propositions": 6,
+  "propositions": [
+    {
+      "proposition_id": "vehicles_temporal_trends_tt1",
+      "dataset": "vehicles",
+      "category": "temporal_trends",
+      "original_proposition": "The number of electric vehicles increased by 25% annually from 2020 to 2023 across London boroughs.",
+      "reworded_proposition": "Electric vehicle adoption has shown a steady upward trend across London boroughs from 2020 to 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Growth of Electric Vehicles in London",
+      "chart_description": "Annual increase in electric vehicles from 2020 to 2023",
+      "reasoning": "A line chart effectively illustrates the temporal trend of increasing electric vehicles over several years.",
+      "tapas_questions": [
+        "How did the number of electric vehicles change from 2020 to 2023?",
+        "Which year saw the highest increase in electric vehicles?",
+        "What is the average annual growth rate of electric vehicles?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_temporal_trends_tt2",
+      "dataset": "vehicles",
+      "category": "temporal_trends",
+      "original_proposition": "Hybrid vehicle registrations peaked in Q2 2022, showing a 15% increase compared to Q1 2022.",
+      "reworded_proposition": "Hybrid vehicle registrations experienced a notable surge in the second quarter of 2022, following a steady rise from the first quarter.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Surge in Hybrid Vehicle Registrations in Q2 2022",
+      "chart_description": "Visualizing the rise in hybrid vehicle registrations from Q1 to Q2 2022 in London.",
+      "reasoning": "A bar chart with a mean line effectively highlights the increase in registrations over time and allows for comparison against the average.",
+      "tapas_questions": [
+        "How did hybrid vehicle registrations change from Q1 to Q2 2022?",
+        "What is the average number of hybrid vehicle registrations in 2022?",
+        "Which quarter had the highest hybrid vehicle registrations in 2022?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2022",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_temporal_trends_tt3",
+      "dataset": "vehicles",
+      "category": "temporal_trends",
+      "original_proposition": "Diesel vehicle registrations have declined by 10% each year from 2019 to 2023.",
+      "reworded_proposition": "Diesel vehicle registrations have been steadily decreasing each year from 2019 to 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trend of Diesel Vehicle Registrations in London",
+      "chart_description": "Annual decline in diesel vehicle registrations from 2019 to 2023.",
+      "reasoning": "A line chart effectively illustrates the temporal trend of declining diesel vehicle registrations over multiple years.",
+      "tapas_questions": [
+        "How did diesel vehicle registrations change from 2019 to 2023?",
+        "What is the average annual decline in diesel vehicle registrations?",
+        "Which year had the largest decrease in diesel vehicle registrations?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_temporal_trends_tt4",
+      "dataset": "vehicles",
+      "category": "temporal_trends",
+      "original_proposition": "The highest increase in vehicle registrations occurred in 2021, with a 30% rise compared to 2020.",
+      "reworded_proposition": "Vehicle registrations saw a remarkable surge in 2021, marking a significant increase from the previous year.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trend in Vehicle Registrations: 2020 vs 2021",
+      "chart_description": "Illustrates the significant rise in vehicle registrations from 2020 to 2021.",
+      "reasoning": "A line chart effectively shows the change in vehicle registrations over time, highlighting the significant increase in 2021.",
+      "tapas_questions": [
+        "How did vehicle registrations change from 2020 to 2021?",
+        "What is the percentage increase in vehicle registrations in 2021?",
+        "Which year had the highest vehicle registrations?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "time_period": "2020-2021",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_temporal_trends_tt5",
+      "dataset": "vehicles",
+      "category": "temporal_trends",
+      "original_proposition": "Seasonal trends show a consistent 5% increase in vehicle registrations every summer from 2019 to 2023.",
+      "reworded_proposition": "Every summer from 2019 to 2023, vehicle registrations in London show a steady upward trend.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Increase in Vehicle Registrations",
+      "chart_description": "Illustrates the upward trend in vehicle registrations each summer from 2019 to 2023 in London.",
+      "reasoning": "A simple 2D line chart effectively displays temporal trends, highlighting seasonal patterns over multiple years.",
+      "tapas_questions": [
+        "How did vehicle registrations change from summer 2019 to summer 2023?",
+        "What is the average increase in vehicle registrations each summer?",
+        "Which year saw the highest increase in vehicle registrations during summer?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "vehicles_temporal_trends_tt6",
+      "dataset": "vehicles",
+      "category": "temporal_trends",
+      "original_proposition": "The number of petrol vehicles remained stable with less than 2% variation annually from 2019 to 2023.",
+      "reworded_proposition": "Petrol vehicle numbers in London have shown remarkable stability, with minimal annual fluctuations over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Stability of Petrol Vehicle Numbers in London",
+      "chart_description": "Annual trends in petrol vehicle counts from 2019 to 2023",
+      "reasoning": "A simple line chart effectively illustrates the stability and minimal variation in petrol vehicle numbers over time.",
+      "tapas_questions": [
+        "How did the number of petrol vehicles change from 2019 to 2023?",
+        "What is the average number of petrol vehicles per year?",
+        "Which year had the highest number of petrol vehicles?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    }
+  ]
+}

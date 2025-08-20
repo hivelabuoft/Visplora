@@ -1,0 +1,394 @@
+{
+  "dataset": "libraries",
+  "processed_at": "2025-08-20T04:10:12.021Z",
+  "total_propositions": 15,
+  "categories": {
+    "geographic_patterns": {
+      "category": "geographic_patterns",
+      "dataset": "libraries",
+      "processed_at": "2025-08-20T04:10:04.365Z",
+      "total_propositions": 8,
+      "propositions": [
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_01",
+          "dataset": "libraries",
+          "category": "geographic_patterns",
+          "original_proposition": "In 2022-2023, the boroughs of Camden and Westminster have the highest library density, accounting for 25% of all libraries in London.",
+          "reworded_proposition": "Camden and Westminster stand out for having the densest concentration of libraries, making up a significant portion of London's total.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Library Density in London Boroughs",
+          "chart_description": "Comparison of library density across London boroughs for 2022-2023.",
+          "reasoning": "A bar chart effectively compares the library density across different boroughs, highlighting Camden and Westminster's prominence.",
+          "tapas_questions": [
+            "Which borough has the highest library density?",
+            "What percentage of libraries are in Camden?",
+            "How does Westminster compare to other boroughs in terms of library density?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_02",
+          "dataset": "libraries",
+          "category": "geographic_patterns",
+          "original_proposition": "Outer London boroughs collectively host 40% of the libraries despite covering 60% of the geographic area in 2022-2023.",
+          "reworded_proposition": "Outer London boroughs have a notably lower density of libraries relative to their geographic coverage.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Library Distribution in Outer London Boroughs",
+          "chart_description": "Comparison of library density versus geographic area in Outer London.",
+          "reasoning": "A bar chart effectively highlights the disparity between the number of libraries and geographic area across boroughs, making it easy to compare proportions.",
+          "tapas_questions": [
+            "Which borough has the highest number of libraries?",
+            "What percentage of libraries are located in each borough?",
+            "How does the library count compare to the geographic area in each borough?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_03",
+          "dataset": "libraries",
+          "category": "geographic_patterns",
+          "original_proposition": "The North London region has seen a 10% increase in library visits from 2022 to 2023, compared to a 5% increase in the South.",
+          "reworded_proposition": "Library visits in North London have grown more rapidly than in the South over the past year.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Growth in Library Visits: North vs South London",
+          "chart_description": "Comparing library visit trends in North and South London from 2022 to 2023.",
+          "reasoning": "A line chart effectively illustrates the trend of library visits over time, highlighting differences between regions.",
+          "tapas_questions": [
+            "Which area had the highest increase in library visits?",
+            "What is the percentage increase in library visits in North London?",
+            "How did library visits change from 2022 to 2023 in South London?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_04",
+          "dataset": "libraries",
+          "category": "geographic_patterns",
+          "original_proposition": "Libraries in East London boroughs have a 15% higher average visitor count compared to West London in 2022-2023.",
+          "reworded_proposition": "East London boroughs consistently attract more library visitors than their West London counterparts during 2022-2023.",
+          "chart_type": "barChart_with_mean_2D",
+          "chart_title": "Library Visitor Counts in East vs. West London",
+          "chart_description": "Comparison of average library visitors in East and West London boroughs for 2022-2023.",
+          "reasoning": "A bar chart with a mean line effectively highlights the comparison between East and West London, showing both individual borough performance and the overall average.",
+          "tapas_questions": [
+            "Which borough has the highest library visitor count?",
+            "What is the average visitor count across all boroughs?",
+            "How does East London compare to West London in terms of library visitors?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_05",
+          "dataset": "libraries",
+          "category": "geographic_patterns",
+          "original_proposition": "In 2022-2023, the top three boroughs with the most library events are Hackney, Lambeth, and Southwark, hosting 50% of all events.",
+          "reworded_proposition": "Hackney, Lambeth, and Southwark stand out as the leading boroughs for library events, collectively accounting for a substantial portion of all events in 2022-2023.",
+          "chart_type": "donutChart_simple_2D",
+          "chart_title": "Library Event Distribution by Borough",
+          "chart_description": "Visualizing the share of library events across top boroughs in 2022-2023.",
+          "reasoning": "A donut chart effectively illustrates the proportion of library events hosted by each borough, highlighting the dominance of the top three.",
+          "tapas_questions": [
+            "Which borough has the highest number of library events?",
+            "What percentage of library events are hosted in Hackney?",
+            "How do Lambeth and Southwark compare in terms of library events?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_06",
+          "dataset": "libraries",
+          "category": "geographic_patterns",
+          "original_proposition": "Library funding per capita is highest in Kensington and Chelsea, 30% above the London average in 2022-2023.",
+          "reworded_proposition": "Kensington and Chelsea lead in library funding per capita, significantly surpassing the London average for 2022-2023.",
+          "chart_type": "barChart_with_mean_2D",
+          "chart_title": "Library Funding Per Capita by Borough",
+          "chart_description": "Comparison of library funding per capita across London boroughs with average line.",
+          "reasoning": "A bar chart with a mean line effectively highlights how each borough compares to the average, emphasizing Kensington and Chelsea's leading position.",
+          "tapas_questions": [
+            "Which borough has the highest library funding per capita?",
+            "What is the average library funding per capita across all boroughs?",
+            "Which boroughs are above the average library funding per capita?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_07",
+          "dataset": "libraries",
+          "category": "geographic_patterns",
+          "original_proposition": "In 2022-2023, libraries in the boroughs of Greenwich and Lewisham have the lowest average book circulation, 20% below the London average.",
+          "reworded_proposition": "In 2022-2023, libraries in Greenwich and Lewisham consistently show book circulation rates significantly below the London average.",
+          "chart_type": "barChart_with_mean_2D",
+          "chart_title": "Library Book Circulation in Greenwich and Lewisham",
+          "chart_description": "Compare book circulation in Greenwich and Lewisham to the London average for 2022-2023.",
+          "reasoning": "A bar chart with a mean line effectively highlights how Greenwich and Lewisham's book circulation compares to the London average, emphasizing the deviation.",
+          "tapas_questions": [
+            "Which borough has the lowest book circulation?",
+            "What is the average book circulation across all boroughs?",
+            "How do Greenwich and Lewisham compare in terms of book circulation?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_08",
+          "dataset": "libraries",
+          "category": "geographic_patterns",
+          "original_proposition": "Central London boroughs, including Westminster and Camden, show a clustering of libraries with high digital resource usage in 2022-2023.",
+          "reworded_proposition": "Central London boroughs like Westminster and Camden exhibit a notable concentration of libraries with elevated digital resource usage during 2022-2023.",
+          "chart_type": "histogramHeatmap_simple_2D",
+          "chart_title": "Digital Resource Usage in Central London Libraries",
+          "chart_description": "Visualizing high digital resource usage in libraries across Central London boroughs for 2022-2023.",
+          "reasoning": "A histogram heatmap effectively highlights geographic patterns and concentrations of high digital resource usage across boroughs, making it suitable for visualizing the clustering mentioned.",
+          "tapas_questions": [
+            "Which borough has the highest digital resource usage?",
+            "How does digital resource usage in Westminster compare to Camden?",
+            "What percentage of libraries have high digital resource usage in Central London?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        }
+      ]
+    },
+    "categorical_analysis": {
+      "category": "categorical_analysis",
+      "dataset": "libraries",
+      "processed_at": "2025-08-20T04:10:08.021Z",
+      "total_propositions": 4,
+      "propositions": [
+        {
+          "proposition_id": "libraries_categorical_analysis_cat_01",
+          "dataset": "libraries",
+          "category": "categorical_analysis",
+          "original_proposition": "In 2022-2023, 'Community Events' is the most common category of library activities, representing 40% of all activities.",
+          "reworded_proposition": "During 2022-2023, 'Community Events' emerged as the predominant category of library activities, making up a substantial portion of all activities.",
+          "chart_type": "donutChart_simple_2D",
+          "chart_title": "Dominance of 'Community Events' in Library Activities",
+          "chart_description": "Visual representation of activity categories in libraries for 2022-2023.",
+          "reasoning": "A donut chart effectively shows the proportion of each category, highlighting the dominance of 'Community Events'.",
+          "tapas_questions": [
+            "Which category has the highest representation in library activities?",
+            "What percentage of library activities are 'Community Events'?",
+            "How does 'Community Events' compare to other categories in terms of activity representation?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "category",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "London-wide",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "libraries_categorical_analysis_cat_02",
+          "dataset": "libraries",
+          "category": "categorical_analysis",
+          "original_proposition": "Educational programs in libraries are more concentrated in Inner London boroughs, accounting for 60% of such programs in 2022-2023.",
+          "reworded_proposition": "Educational programs in libraries are predominantly found in Inner London boroughs, making up a significant portion of such initiatives in recent years.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Distribution of Library Programs in London",
+          "chart_description": "Shows concentration of educational programs across London boroughs in 2022-2023.",
+          "reasoning": "A simple bar chart effectively highlights the distribution and concentration of educational programs across different boroughs, making it easy to compare Inner and Outer London.",
+          "tapas_questions": [
+            "Which borough has the highest number of educational programs?",
+            "What percentage of educational programs are in Inner London?",
+            "How does Inner London compare to Outer London in terms of educational programs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "category",
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "libraries_categorical_analysis_cat_03",
+          "dataset": "libraries",
+          "category": "categorical_analysis",
+          "original_proposition": "Digital resource usage is the least common category, making up only 10% of library activities in Outer London in 2022-2023.",
+          "reworded_proposition": "Digital resources are the least utilized category, representing a small fraction of library activities in Outer London during the past year.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Library Activity Categories in Outer London",
+          "chart_description": "Comparison of library activity categories in Outer London for 2022-2023",
+          "reasoning": "A simple bar chart effectively highlights the comparison between different categories, emphasizing the low usage of digital resources.",
+          "tapas_questions": [
+            "Which category has the lowest usage in Outer London?",
+            "What percentage of library activities are digital resources?",
+            "How does digital resource usage compare to other categories?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "category",
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "libraries_categorical_analysis_cat_04",
+          "dataset": "libraries",
+          "category": "categorical_analysis",
+          "original_proposition": "In 2022-2023, 'Reading Clubs' are twice as prevalent in South London boroughs compared to North London.",
+          "reworded_proposition": "Reading Clubs are notably more common in South London boroughs than in North London during 2022-2023.",
+          "chart_type": "barChart_with_mean_2D",
+          "chart_title": "Distribution of Reading Clubs in London Boroughs",
+          "chart_description": "Comparison of Reading Club prevalence between South and North London boroughs in 2022-2023.",
+          "reasoning": "A bar chart with a mean line effectively highlights the disparity in Reading Club prevalence between the two regions, while also providing an average for context.",
+          "tapas_questions": [
+            "Which borough has the highest number of Reading Clubs?",
+            "What is the average number of Reading Clubs across all boroughs?",
+            "How does the prevalence of Reading Clubs in South London compare to North London?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "category",
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        }
+      ]
+    },
+    "statistical_patterns": {
+      "category": "statistical_patterns",
+      "dataset": "libraries",
+      "processed_at": "2025-08-20T04:10:12.020Z",
+      "total_propositions": 3,
+      "propositions": [
+        {
+          "proposition_id": "libraries_statistical_patterns_stat_01",
+          "dataset": "libraries",
+          "category": "statistical_patterns",
+          "original_proposition": "The distribution of library visits across London boroughs in 2022-2023 is positively skewed, with a few boroughs having significantly higher visits.",
+          "reworded_proposition": "Library visits in London show a few boroughs attracting notably more visitors, creating a skewed distribution.",
+          "chart_type": "histogram_simple_2D",
+          "chart_title": "Distribution of Library Visits in London Boroughs",
+          "chart_description": "Visualizing the skewed distribution of library visits across boroughs in 2022-2023.",
+          "reasoning": "A histogram is ideal for showing the skewed distribution of library visits across boroughs, highlighting areas with significantly higher visits.",
+          "tapas_questions": [
+            "Which borough has the highest number of library visits?",
+            "What percentage of total library visits occurred in the top borough?",
+            "How do library visits compare between the borough with the highest and lowest visits?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "libraries_statistical_patterns_stat_02",
+          "dataset": "libraries",
+          "category": "statistical_patterns",
+          "original_proposition": "There is a strong positive correlation between library funding and visitor numbers in 2022-2023, with a correlation coefficient of 0.75.",
+          "reworded_proposition": "Library funding and visitor numbers show a strong positive relationship over the past year.",
+          "chart_type": "scatterPlot_simple_2D",
+          "chart_title": "Library Funding vs Visitor Numbers",
+          "chart_description": "Visualizing the correlation between funding and visitors in 2022-2023",
+          "reasoning": "A scatter plot effectively illustrates the relationship between two continuous variables, such as funding and visitor numbers.",
+          "tapas_questions": [
+            "Is there a correlation between library funding and visitor numbers?",
+            "Which borough has the highest library funding?",
+            "How do visitor numbers compare across different boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "libraries_statistical_patterns_stat_03",
+          "dataset": "libraries",
+          "category": "statistical_patterns",
+          "original_proposition": "In 2022-2023, the variance in library event attendance is highest in Inner London boroughs, indicating diverse engagement levels.",
+          "reworded_proposition": "Inner London boroughs show the most varied levels of engagement in library events during 2022-2023.",
+          "chart_type": "histogram_simple_2D",
+          "chart_title": "Library Event Attendance Variance in Inner London",
+          "chart_description": "Exploring diverse engagement levels in Inner London boroughs.",
+          "reasoning": "A histogram effectively displays the distribution and variance of event attendance across different boroughs, highlighting areas with the most engagement diversity.",
+          "tapas_questions": [
+            "Which borough has the highest variance in library event attendance?",
+            "How does library event attendance variance compare between Inner and Outer London?",
+            "What is the average variance in library event attendance across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "2022-2023",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "income",
+  "processed_at": "2025-08-20T04:07:09.039Z",
+  "total_propositions": 4,
+  "propositions": [
+    {
+      "proposition_id": "income_cross_dimensional_cd1",
+      "dataset": "income",
+      "category": "cross_dimensional",
+      "original_proposition": "Mean income peaks in Kensington and Chelsea during the 2020-2023 period, with a 25% increase compared to the previous decade.",
+      "reworded_proposition": "Kensington and Chelsea have experienced a notable rise in mean income during 2020-2023, surpassing previous decade trends.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Income Trends in Kensington and Chelsea",
+      "chart_description": "Visualize income growth in Kensington and Chelsea from 2020 to 2023.",
+      "reasoning": "A line chart effectively shows the trend of income changes over time, highlighting the increase in Kensington and Chelsea.",
+      "tapas_questions": [
+        "How did mean income change from 2010-2019 to 2020-2023 in Kensington and Chelsea?",
+        "Which borough had the highest mean income in 2020?",
+        "What is the average mean income across all boroughs during 2020-2023?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income",
+        "Year"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_cross_dimensional_cd2",
+      "dataset": "income",
+      "category": "cross_dimensional",
+      "original_proposition": "Median income in outer London boroughs increased by 15% more than inner boroughs from 2015 to 2023.",
+      "reworded_proposition": "Outer London boroughs have seen a more pronounced growth in median income compared to inner boroughs over recent years.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Income Growth in London Boroughs (2015-2023)",
+      "chart_description": "Comparison of median income growth between outer and inner London boroughs.",
+      "reasoning": "A simple bar chart effectively compares the growth in median income between two groups over a specified period.",
+      "tapas_questions": [
+        "Which borough has the highest median income growth?",
+        "How does median income growth in outer boroughs compare to inner boroughs?",
+        "What is the average median income growth across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Median_income",
+        "Year"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_cross_dimensional_cd3",
+      "dataset": "income",
+      "category": "cross_dimensional",
+      "original_proposition": "Income growth in East London boroughs correlates with a 20% increase in local business establishments from 2010 to 2020.",
+      "reworded_proposition": "In East London, rising incomes appear to be linked with a noticeable increase in local business establishments over the past decade.",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Income vs Business Growth in East London",
+      "chart_description": "Exploring the relationship between income growth and business establishment increase from 2010 to 2020.",
+      "reasoning": "A scatter plot effectively visualizes the relationship between two quantitative variables, such as income growth and business establishment increase.",
+      "tapas_questions": [
+        "Is there a correlation between income growth and business establishment increase?",
+        "Which boroughs show the strongest relationship between income and business growth?",
+        "How did the number of business establishments change from 2010 to 2020?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income",
+        "Year"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_cross_dimensional_cd4",
+      "dataset": "income",
+      "category": "cross_dimensional",
+      "original_proposition": "The gap between mean and median income in Central London boroughs widened by 10% during economic downturns from 2008 to 2023.",
+      "reworded_proposition": "During economic downturns from 2008 to 2023, Central London boroughs experienced a growing disparity between mean and median income levels.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Income Disparity Trends in Central London",
+      "chart_description": "Explore the widening gap between mean and median income from 2008 to 2023.",
+      "reasoning": "A 3D line chart allows for the visualization of income trends over time while comparing mean and median values across multiple boroughs.",
+      "tapas_questions": [
+        "How did the mean income change from 2008 to 2023?",
+        "Which borough has the largest gap between mean and median income?",
+        "What is the average median income across all boroughs?"
+      ],
+      "3d_dimension": "geographic_subdivision",
+      "variables_needed": [
+        "Area",
+        "Mean_income",
+        "Median_income",
+        "Year"
+      ],
+      "time_period": "2008-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "category": "temporal_trends",
+  "dataset": "country-of-births",
+  "processed_at": "2025-08-20T04:05:38.457Z",
+  "total_propositions": 5,
+  "propositions": [
+    {
+      "proposition_id": "country-of-births_temporal_trends_tt_001",
+      "dataset": "country-of-births",
+      "category": "temporal_trends",
+      "original_proposition": "The number of births from European countries increased by 8% from 2017 to 2018 across London boroughs.",
+      "reworded_proposition": "Births from European countries have shown a noticeable upward trend across London boroughs from 2017 to 2018.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Trends in Births from European Countries in London",
+      "chart_description": "Visualizing the increase in births from European countries across London boroughs from 2017 to 2018.",
+      "reasoning": "A 3D line chart effectively captures the temporal trend of increasing births, while allowing for geographic subdivision by boroughs to provide more detailed insights.",
+      "tapas_questions": [
+        "How did the number of births from European countries change from 2017 to 2018?",
+        "Which London borough had the highest increase in births from European countries?",
+        "What is the average increase in births from European countries across all boroughs?"
+      ],
+      "3d_dimension": "geographic_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017-2018",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_temporal_trends_tt_002",
+      "dataset": "country-of-births",
+      "category": "temporal_trends",
+      "original_proposition": "Births from Asian countries peaked in the summer months of 2018, showing a 15% increase compared to other seasons.",
+      "reworded_proposition": "Births from Asian countries in London experienced a notable rise during the summer months of 2018 compared to other seasons.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Trends in Births from Asian Countries, 2018",
+      "chart_description": "Visualizing birth trends from Asian countries across different seasons in 2018.",
+      "reasoning": "A line chart effectively illustrates temporal trends, highlighting seasonal variations in birth rates.",
+      "tapas_questions": [
+        "How did births from Asian countries change from spring to summer in 2018?",
+        "Which season had the highest number of births from Asian countries?",
+        "What percentage of total births occurred in the summer of 2018?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_temporal_trends_tt_003",
+      "dataset": "country-of-births",
+      "category": "temporal_trends",
+      "original_proposition": "From 2017 to 2018, there was a 10% decline in births from African countries in outer London boroughs.",
+      "reworded_proposition": "Between 2017 and 2018, outer London boroughs experienced a noticeable decline in births from African countries.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Decline in Births from African Countries in Outer London",
+      "chart_description": "Visualizing the decrease in births in outer London from 2017 to 2018.",
+      "reasoning": "A simple 2D bar chart effectively illustrates the decline in a specific category over a set time period, highlighting changes across different boroughs.",
+      "tapas_questions": [
+        "Which borough had the largest decline in births from African countries?",
+        "What percentage of births in 2018 were from African countries in outer London?",
+        "How did the number of births from African countries change from 2017 to 2018?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017-2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_temporal_trends_tt_004",
+      "dataset": "country-of-births",
+      "category": "temporal_trends",
+      "original_proposition": "Births from North American countries remained stable from 2017 to 2018, showing no significant seasonal variation.",
+      "reworded_proposition": "Births from North American countries in London showed consistent patterns with minimal seasonal changes between 2017 and 2018.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Stable Birth Trends from North America (2017-2018)",
+      "chart_description": "A line chart showing stable birth trends from North America in London over two years.",
+      "reasoning": "A simple 2D line chart effectively illustrates the stability and lack of seasonal variation in birth trends over the specified time period.",
+      "tapas_questions": [
+        "How did births from North America change from 2017 to 2018?",
+        "What is the average number of births from North America during this period?",
+        "Which month had the highest number of births from North America?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017-2018",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_temporal_trends_tt_005",
+      "dataset": "country-of-births",
+      "category": "temporal_trends",
+      "original_proposition": "The number of births from South American countries increased by 5% in the first quarter of 2018 compared to the same period in 2017.",
+      "reworded_proposition": "Births from South American countries in London showed a noticeable rise in the first quarter of 2018 compared to the same period in the previous year.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Rise in Births from South America in London",
+      "chart_description": "Trends in births from South American countries in London from 2017 to 2018.",
+      "reasoning": "A 3D line chart effectively captures the temporal trend of births over time, with the third dimension allowing for detailed temporal subdivision.",
+      "tapas_questions": [
+        "How did births from South America change from Q1 2017 to Q1 2018?",
+        "What is the average number of births from South America across quarters?",
+        "Which quarter had the highest number of births from South America?"
+      ],
+      "3d_dimension": "time_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017-2018",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

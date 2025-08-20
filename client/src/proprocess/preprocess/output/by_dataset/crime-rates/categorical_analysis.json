@@ -1,0 +1,207 @@
+{
+  "category": "categorical_analysis",
+  "dataset": "crime-rates",
+  "processed_at": "2025-08-20T04:04:32.707Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_001",
+      "dataset": "crime-rates",
+      "category": "categorical_analysis",
+      "original_proposition": "Theft-from-the-person is the most common crime category, accounting for 35% of all incidents in London.",
+      "reworded_proposition": "Theft-from-the-person emerges as the predominant crime category, making up a substantial portion of incidents in London.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Dominant Crime Categories in London",
+      "chart_description": "Visual representation of crime categories by proportion in London.",
+      "reasoning": "A donut chart effectively illustrates the proportion of each crime category, highlighting the dominance of theft-from-the-person.",
+      "tapas_questions": [
+        "Which crime category is the most common in London?",
+        "What percentage of crimes does theft-from-the-person represent?",
+        "How does theft-from-the-person compare to other crime categories?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_002",
+      "dataset": "crime-rates",
+      "category": "categorical_analysis",
+      "original_proposition": "Burglary incidents account for 20% of total crime in Camden.",
+      "reworded_proposition": "In Camden, burglary incidents represent a notable portion of the overall crime landscape.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Burglary Incidents in Camden's Crime Profile",
+      "chart_description": "Visualizing the proportion of burglary incidents within Camden's total crime.",
+      "reasoning": "A simple 2D bar chart effectively highlights the proportion of burglary incidents compared to other crime categories within Camden.",
+      "tapas_questions": [
+        "What percentage of total crime is burglary in Camden?",
+        "Which crime category has the highest incidence in Camden?",
+        "How does burglary compare to other crime categories in Camden?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_003",
+      "dataset": "crime-rates",
+      "category": "categorical_analysis",
+      "original_proposition": "Violent crime is the least common category in Tower Hamlets, making up only 15% of incidents.",
+      "reworded_proposition": "In Tower Hamlets, violent crime is notably less prevalent compared to other crime categories.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Crime Category Distribution in Tower Hamlets",
+      "chart_description": "Visual representation of crime categories in Tower Hamlets.",
+      "reasoning": "A simple bar chart effectively highlights the distribution of different crime categories, making it easy to identify the least common category.",
+      "tapas_questions": [
+        "Which crime category is the most common in Tower Hamlets?",
+        "What percentage of total incidents does violent crime represent in Tower Hamlets?",
+        "How does the frequency of violent crime compare to other categories in Tower Hamlets?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_004",
+      "dataset": "crime-rates",
+      "category": "categorical_analysis",
+      "original_proposition": "The proportion of theft-from-the-person incidents is higher in Westminster compared to burglary and violent crime.",
+      "reworded_proposition": "In Westminster, theft-from-the-person incidents are notably more prevalent compared to burglary and violent crime.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Crime Category Prevalence in Westminster",
+      "chart_description": "Comparison of theft, burglary, and violent crime rates in Westminster.",
+      "reasoning": "A bar chart with a mean line effectively highlights the prevalence of different crime types and allows for easy comparison against the average.",
+      "tapas_questions": [
+        "Which crime category has the highest count in Westminster?",
+        "What is the average count of incidents across crime categories in Westminster?",
+        "How does theft-from-the-person compare to burglary in terms of incident count in Westminster?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_005",
+      "dataset": "crime-rates",
+      "category": "categorical_analysis",
+      "original_proposition": "Violent crime incidents are more evenly distributed across boroughs compared to theft-from-the-person.",
+      "reworded_proposition": "Violent crime incidents show a more uniform distribution across boroughs, whereas theft-from-the-person is concentrated in specific areas.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Distribution of Crime Types Across Boroughs",
+      "chart_description": "Visualize how violent crimes and thefts are spread across different boroughs.",
+      "reasoning": "A histogram heatmap effectively shows the distribution and concentration of different crime types across boroughs, highlighting patterns and disparities.",
+      "tapas_questions": [
+        "Which borough has the highest count of violent crimes?",
+        "What percentage of theft-from-the-person incidents occur in each borough?",
+        "How does the distribution of violent crimes compare to theft-from-the-person across boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_006",
+      "dataset": "crime-rates",
+      "category": "categorical_analysis",
+      "original_proposition": "Burglary incidents are more concentrated in residential areas, with 60% occurring in LSOAs with higher residential density.",
+      "reworded_proposition": "Burglary incidents tend to cluster in areas with higher residential density.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Burglary Incidents in High-Density Residential Areas",
+      "chart_description": "Visualizing burglary concentration in dense residential LSOAs.",
+      "reasoning": "A histogram heatmap effectively shows the distribution and concentration of burglary incidents across different LSOAs, highlighting areas with higher residential density.",
+      "tapas_questions": [
+        "Which LSOA has the highest number of burglary incidents?",
+        "What percentage of burglary incidents occur in high-density residential areas?",
+        "How do burglary incidents compare between different LSOAs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "area_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_007",
+      "dataset": "crime-rates",
+      "category": "categorical_analysis",
+      "original_proposition": "Theft-from-the-person incidents in Camden are twice as common as violent crime incidents.",
+      "reworded_proposition": "In Camden, theft-from-the-person incidents occur at a notably higher rate than violent crimes.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Comparison of Crime Types in Camden",
+      "chart_description": "Visual comparison of theft-from-the-person vs violent crime incidents in Camden.",
+      "reasoning": "A simple bar chart effectively highlights the comparative frequency of different crime types within a single borough.",
+      "tapas_questions": [
+        "Which crime category has the highest count in Camden?",
+        "How does theft-from-the-person compare to violent crime in Camden?",
+        "What percentage of total crime in Camden is theft-from-the-person?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_008",
+      "dataset": "crime-rates",
+      "category": "categorical_analysis",
+      "original_proposition": "Burglary is the most common crime category in suburban boroughs, accounting for 40% of incidents.",
+      "reworded_proposition": "In suburban boroughs, burglary emerges as the predominant crime category, making up a significant portion of reported incidents.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Prevalence of Burglary in Suburban Boroughs",
+      "chart_description": "Comparison of burglary incidents across suburban boroughs.",
+      "reasoning": "A simple 2D bar chart effectively compares the frequency of burglary incidents across different suburban boroughs, highlighting the dominance of this crime category.",
+      "tapas_questions": [
+        "Which borough has the highest number of burglary incidents?",
+        "What percentage of total crime incidents are burglaries in each borough?",
+        "How does burglary compare to other crime categories in suburban boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

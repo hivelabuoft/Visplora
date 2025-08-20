@@ -1,0 +1,124 @@
+{
+  "propositions": [
+    {
+      "proposition_id": "housing-prices_comboBarLine_001",
+      "dataset": "housing-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Kensington and Chelsea lead in housing price increases with a stable percentage growth rate",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Kensington and Chelsea Housing Market Trends",
+      "chart_description": "Bar chart illustrates absolute price increases, line shows percentage growth over the period",
+      "reasoning": "The combo chart provides a clear picture of both the magnitude and rate of price changes",
+      "tapas_questions": [
+        "Which borough has the highest absolute increase in housing prices?",
+        "What is the percentage growth rate in Kensington and Chelsea?",
+        "How do price increases compare across boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "price_increase",
+        "percentage_growth"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "public-transport-usage_comboBarLine_002",
+      "dataset": "public-transport-usage",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Tower Hamlets sees highest growth in public transport usage with consistent monthly increases",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Tower Hamlets Public Transport Trends",
+      "chart_description": "Bar chart displays monthly usage increases, line shows the cumulative growth rate",
+      "reasoning": "Combo chart highlights both incremental usage surges and overall growth rate trends",
+      "tapas_questions": [
+        "Which borough has the highest transport usage growth?",
+        "What is the monthly increase trend in Tower Hamlets?",
+        "How does the overall growth compare to other boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "monthly_increase",
+        "cumulative_growth"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "education-attainment_comboBarLine_003",
+      "dataset": "education-attainment",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Richmond upon Thames records the highest increase in graduate attainment while maintaining steady improvement rates",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Richmond Graduate Attainment Levels",
+      "chart_description": "Bar chart shows absolute graduate numbers, line tracks the improvement rate over time",
+      "reasoning": "The dual-axis chart effectively separates absolute count from percentage improvement trends",
+      "tapas_questions": [
+        "Which borough has the highest increase in graduates?",
+        "What is the improvement rate in Richmond upon Thames?",
+        "How do attainment trends compare across boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "graduate_count",
+        "improvement_rate"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "employment-rates_comboBarLine_004",
+      "dataset": "employment-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Bromley's employment numbers rise sharply, contrasting with steady rate increases",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Bromley Employment Trends",
+      "chart_description": "Bar chart represents total employment numbers, line indicates percentage rate changes",
+      "reasoning": "The chart captures the divergence between total employment growth and rate of change",
+      "tapas_questions": [
+        "Which borough has the largest increase in employment numbers?",
+        "How does Bromley's employment rate change?",
+        "What contrasts exist between volume and rate trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "employment_numbers",
+        "rate_change"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "healthcare-access_comboBarLine_005",
+      "dataset": "healthcare-access",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Hackney shows the highest increase in healthcare facility access with steady per-capita improvement",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Hackney Healthcare Access Developments",
+      "chart_description": "Bar chart shows facility access increases, line details per-capita improvement rates",
+      "reasoning": "This chart effectively differentiates total access growth from individual level improvements",
+      "tapas_questions": [
+        "Which borough shows the highest facility access increase?",
+        "What is the per-capita access improvement in Hackney?",
+        "How do access trends vary among boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "facility_access",
+        "per_capita_improvement"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

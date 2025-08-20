@@ -1,0 +1,56 @@
+{
+  "category": "statistical_patterns",
+  "dataset": "ethnicity",
+  "processed_at": "2025-08-20T04:05:33.633Z",
+  "total_propositions": 2,
+  "propositions": [
+    {
+      "proposition_id": "ethnicity_statistical_patterns_stat_001",
+      "dataset": "ethnicity",
+      "category": "statistical_patterns",
+      "original_proposition": "The distribution of White British residents across London follows a normal distribution with a mean of 50,000 residents per borough.",
+      "reworded_proposition": "The presence of White British residents in London boroughs generally aligns with a central tendency, clustering around a typical value.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Distribution of White British Residents in London",
+      "chart_description": "Visualize the spread of White British residents across London boroughs.",
+      "reasoning": "A histogram is ideal for showing the distribution pattern of a population across different boroughs, highlighting the central tendency and spread.",
+      "tapas_questions": [
+        "Which borough has the highest number of White British residents?",
+        "What percentage of White British residents are in the most populous borough?",
+        "How does the number of White British residents compare between two specific boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "White_British"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_statistical_patterns_stat_002",
+      "dataset": "ethnicity",
+      "category": "statistical_patterns",
+      "original_proposition": "There is a strong positive correlation (r=0.8) between the number of Asian Indian residents and the presence of cultural centers in boroughs.",
+      "reworded_proposition": "Boroughs with a higher number of Asian Indian residents tend to have more cultural centers.",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Correlation Between Asian Indian Population and Cultural Centers",
+      "chart_description": "Exploring the relationship between Asian Indian residents and cultural centers by borough.",
+      "reasoning": "A scatter plot is ideal for visualizing the correlation between two continuous variables, such as population and number of cultural centers.",
+      "tapas_questions": [
+        "Which borough has the highest number of Asian Indian residents?",
+        "Is there a correlation between Asian Indian residents and cultural centers?",
+        "Which boroughs have more cultural centers than the average?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "Asian_Indian"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

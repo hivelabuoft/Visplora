@@ -1,0 +1,159 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "vehicles",
+  "processed_at": "2025-08-20T04:08:31.310Z",
+  "total_propositions": 6,
+  "propositions": [
+    {
+      "proposition_id": "vehicles_geographic_patterns_gp1",
+      "dataset": "vehicles",
+      "category": "geographic_patterns",
+      "original_proposition": "Westminster has the highest number of electric vehicles, accounting for 20% of all electric vehicles in London.",
+      "reworded_proposition": "Westminster stands out as the borough with the most electric vehicles, representing a significant portion of London's total.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Electric Vehicle Distribution in London Boroughs",
+      "chart_description": "Comparison of electric vehicle numbers across London boroughs in 2023.",
+      "reasoning": "A bar chart effectively compares the number of electric vehicles across different boroughs, highlighting Westminster's leading position.",
+      "tapas_questions": [
+        "Which borough has the highest number of electric vehicles?",
+        "What percentage of electric vehicles are in Westminster?",
+        "How does Westminster compare to other boroughs in terms of electric vehicle numbers?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_geographic_patterns_gp2",
+      "dataset": "vehicles",
+      "category": "geographic_patterns",
+      "original_proposition": "Outer London boroughs have 30% more diesel vehicles compared to inner London boroughs.",
+      "reworded_proposition": "Outer London boroughs tend to have a noticeably higher prevalence of diesel vehicles compared to their inner London counterparts.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Diesel Vehicle Distribution in London Boroughs",
+      "chart_description": "Comparison of diesel vehicle prevalence between outer and inner London boroughs in 2023.",
+      "reasoning": "A bar chart with a mean line effectively highlights the comparison between outer and inner boroughs, showing the distribution and average prevalence of diesel vehicles.",
+      "tapas_questions": [
+        "Which borough has the highest number of diesel vehicles?",
+        "What is the average number of diesel vehicles across all boroughs?",
+        "How do outer boroughs compare to inner boroughs in terms of diesel vehicle count?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_geographic_patterns_gp3",
+      "dataset": "vehicles",
+      "category": "geographic_patterns",
+      "original_proposition": "The distribution of hybrid vehicles is evenly spread across North and South London, each holding 50% of the total.",
+      "reworded_proposition": "Hybrid vehicles are distributed evenly between North and South London, each accounting for half of the total share.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Hybrid Vehicle Distribution in London",
+      "chart_description": "Visualizes the equal distribution of hybrid vehicles across North and South London in 2023.",
+      "reasoning": "A donut chart effectively highlights the equal distribution of hybrid vehicles across two distinct geographic areas, emphasizing the 50/50 split.",
+      "tapas_questions": [
+        "What percentage of hybrid vehicles are in North London?",
+        "What percentage of hybrid vehicles are in South London?",
+        "How does the distribution of hybrid vehicles compare between North and South London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_geographic_patterns_gp4",
+      "dataset": "vehicles",
+      "category": "geographic_patterns",
+      "original_proposition": "Boroughs in East London show a 40% higher concentration of petrol vehicles compared to West London.",
+      "reworded_proposition": "East London boroughs tend to have a notably higher concentration of petrol vehicles compared to those in West London.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Petrol Vehicle Concentration in East vs. West London",
+      "chart_description": "Comparison of petrol vehicle concentration between East and West London boroughs in 2023.",
+      "reasoning": "A bar chart effectively highlights the comparative differences in petrol vehicle concentration between geographic areas, making it easy to visualize the contrast between East and West London.",
+      "tapas_questions": [
+        "Which borough has the highest concentration of petrol vehicles?",
+        "What percentage of petrol vehicles are in East London?",
+        "How does the concentration of petrol vehicles in East London compare to West London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_geographic_patterns_gp5",
+      "dataset": "vehicles",
+      "category": "geographic_patterns",
+      "original_proposition": "Camden and Hackney have the lowest number of diesel vehicles, together comprising only 5% of London's total.",
+      "reworded_proposition": "Camden and Hackney stand out for having notably fewer diesel vehicles, making up a small fraction of London's total.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Diesel Vehicle Distribution in London Boroughs",
+      "chart_description": "Comparison of diesel vehicle counts across London boroughs in 2023.",
+      "reasoning": "A bar chart effectively highlights the comparison of diesel vehicle counts across different boroughs, making it easy to identify those with the lowest numbers.",
+      "tapas_questions": [
+        "Which borough has the lowest number of diesel vehicles?",
+        "What percentage of diesel vehicles is in Camden?",
+        "How does Hackney compare to Camden in terms of diesel vehicles?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_geographic_patterns_gp6",
+      "dataset": "vehicles",
+      "category": "geographic_patterns",
+      "original_proposition": "South London boroughs have seen a 20% increase in electric vehicle registrations from 2020 to 2023.",
+      "reworded_proposition": "South London boroughs have experienced a notable rise in electric vehicle registrations over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Rise in EV Registrations in South London",
+      "chart_description": "Trend of electric vehicle registrations from 2020 to 2023 in South London boroughs.",
+      "reasoning": "A line chart effectively illustrates trends over time, showing changes in electric vehicle registrations across multiple boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest increase in electric vehicle registrations?",
+        "How did electric vehicle registrations change from 2020 to 2023?",
+        "What is the average increase in electric vehicle registrations across South London boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

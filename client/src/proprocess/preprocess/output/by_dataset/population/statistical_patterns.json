@@ -1,0 +1,152 @@
+{
+  "category": "statistical_patterns",
+  "dataset": "population",
+  "processed_at": "2025-08-20T04:06:43.175Z",
+  "total_propositions": 6,
+  "propositions": [
+    {
+      "proposition_id": "population_statistical_patterns_sp1",
+      "dataset": "population",
+      "category": "statistical_patterns",
+      "original_proposition": "Population distribution across London boroughs is skewed towards higher densities in central areas.",
+      "reworded_proposition": "Central London boroughs tend to have notably higher population densities compared to other areas.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Population Density Across London Boroughs",
+      "chart_description": "Visualizes the distribution of population density across different boroughs in London.",
+      "reasoning": "A histogram effectively shows the distribution of population density, highlighting areas with higher concentrations.",
+      "tapas_questions": [
+        "Which borough has the highest population density?",
+        "How does population density in central areas compare to outer boroughs?",
+        "What percentage of the population lives in the most densely populated boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_statistical_patterns_sp2",
+      "dataset": "population",
+      "category": "statistical_patterns",
+      "original_proposition": "There is a high variance in population density between inner and outer London boroughs.",
+      "reworded_proposition": "Population density varies significantly between inner and outer London boroughs.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Population Density Across London Boroughs",
+      "chart_description": "Explore the variation in population density between inner and outer boroughs.",
+      "reasoning": "A histogram effectively displays the distribution and variance in population density across different boroughs, highlighting differences between inner and outer areas.",
+      "tapas_questions": [
+        "Which borough has the highest population density?",
+        "What is the average population density across all boroughs?",
+        "How does the population density of inner boroughs compare to outer boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_statistical_patterns_sp3",
+      "dataset": "population",
+      "category": "statistical_patterns",
+      "original_proposition": "The top 10% of boroughs account for 50% of London's total population.",
+      "reworded_proposition": "A small number of boroughs hold a disproportionately large share of London's population.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Concentration in London's Boroughs",
+      "chart_description": "Visualizing the population distribution across London's boroughs.",
+      "reasoning": "A simple bar chart effectively illustrates the distribution of population across boroughs, highlighting the concentration in a few areas.",
+      "tapas_questions": [
+        "Which borough has the highest population?",
+        "What percentage of the total population is in each borough?",
+        "How does the population of the top borough compare to others?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_statistical_patterns_sp4",
+      "dataset": "population",
+      "category": "statistical_patterns",
+      "original_proposition": "A correlation exists between borough population size and density, with a correlation coefficient of 0.75.",
+      "reworded_proposition": "There is a notable relationship between the size of a borough's population and its density.",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Borough Population Size vs. Density",
+      "chart_description": "Exploring the relationship between population size and density across boroughs.",
+      "reasoning": "A scatter plot is ideal for visualizing the relationship between two continuous variables, such as population size and density.",
+      "tapas_questions": [
+        "Which borough has the highest population density?",
+        "Is there a correlation between population size and density?",
+        "How does the population size compare across boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_statistical_patterns_sp5",
+      "dataset": "population",
+      "category": "statistical_patterns",
+      "original_proposition": "Outliers in population growth are observed in the boroughs of Newham and Tower Hamlets.",
+      "reworded_proposition": "Newham and Tower Hamlets stand out with notably higher population growth compared to other boroughs.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Population Growth Outliers in Boroughs",
+      "chart_description": "Highlighting boroughs with exceptional population growth",
+      "reasoning": "A histogram effectively showcases the distribution of population growth across boroughs, highlighting outliers.",
+      "tapas_questions": [
+        "Which borough has the highest population growth?",
+        "How does Newham compare to Tower Hamlets in terms of population growth?",
+        "What percentage of total population growth is in Newham?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_statistical_patterns_sp6",
+      "dataset": "population",
+      "category": "statistical_patterns",
+      "original_proposition": "Population density follows a bimodal distribution, with peaks in both inner and outer boroughs.",
+      "reworded_proposition": "Population density exhibits two distinct peaks, one in inner boroughs and another in outer boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Bimodal Distribution of Population Density",
+      "chart_description": "Explore the peaks in population density across inner and outer boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the bimodal distribution by comparing population densities across different boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest population density?",
+        "How do inner boroughs compare to outer boroughs in terms of population density?",
+        "What is the average population density across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

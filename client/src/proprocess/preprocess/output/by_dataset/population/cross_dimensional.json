@@ -1,0 +1,109 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "population",
+  "processed_at": "2025-08-20T04:06:46.193Z",
+  "total_propositions": 4,
+  "propositions": [
+    {
+      "proposition_id": "population_cross_dimensional_cd1",
+      "dataset": "population",
+      "category": "cross_dimensional",
+      "original_proposition": "Population growth in the borough of Greenwich is higher during the summer months.",
+      "reworded_proposition": "Greenwich experiences noticeable population increases during the summer months.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Population Trends in Greenwich",
+      "chart_description": "Visualize population changes in Greenwich across different months.",
+      "reasoning": "A simple line chart effectively illustrates changes in population over time, highlighting seasonal trends.",
+      "tapas_questions": [
+        "How does population change from spring to summer in Greenwich?",
+        "What is the population trend in Greenwich during winter months?",
+        "Which month shows the highest population increase in Greenwich?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_cross_dimensional_cd2",
+      "dataset": "population",
+      "category": "cross_dimensional",
+      "original_proposition": "The category of 'young adults' is predominantly higher in central London boroughs.",
+      "reworded_proposition": "Central London boroughs tend to have a notably higher concentration of young adults compared to other areas.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Young Adult Population in Central London",
+      "chart_description": "Comparison of young adult population across London boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the differences in young adult population across boroughs, making it easy to compare central London to other areas.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of young adults?",
+        "How does the young adult population in central boroughs compare to others?",
+        "What is the average percentage of young adults across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_cross_dimensional_cd3",
+      "dataset": "population",
+      "category": "cross_dimensional",
+      "original_proposition": "Population density in the borough of Brent peaks during the winter months.",
+      "reworded_proposition": "The borough of Brent experiences a noticeable increase in population density during the winter months.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Brent's Population Density Trends in Winter",
+      "chart_description": "Explore how Brent's population density changes during winter months.",
+      "reasoning": "A line chart effectively illustrates changes in population density over time, highlighting seasonal trends.",
+      "tapas_questions": [
+        "How does Brent's population density in winter compare to other months?",
+        "What is the average population density in Brent across all months?",
+        "Which month has the highest population density in Brent?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_cross_dimensional_cd4",
+      "dataset": "population",
+      "category": "cross_dimensional",
+      "original_proposition": "The elderly population category shows a significant increase in outer London boroughs over the past two decades.",
+      "reworded_proposition": "Outer London boroughs have experienced a notable rise in their elderly population over the last twenty years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Elderly Population Growth in Outer London",
+      "chart_description": "Trends in elderly population across outer London boroughs from 2001 to 2021.",
+      "reasoning": "A line chart effectively illustrates changes over time, highlighting trends in population growth across different boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest increase in elderly population?",
+        "How does the elderly population in outer London compare to inner London?",
+        "What is the average growth rate of the elderly population across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2001-2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

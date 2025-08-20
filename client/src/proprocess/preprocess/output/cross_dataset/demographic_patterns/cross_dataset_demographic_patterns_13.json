@@ -1,0 +1,43 @@
+{
+  "input": {
+    "type": "cross_dataset",
+    "category": "demographic_patterns",
+    "proposition_id": "cross_dataset_demographic_patterns_13",
+    "proposition": "Boroughs with higher mean income in 2023 have higher vehicle ownership from 2019-2023.",
+    "datasets_required": [
+      "income",
+      "vehicles"
+    ],
+    "variables_needed": {
+      "income": [
+        "Area",
+        "Mean_income",
+        "Year"
+      ],
+      "vehicles": [
+        "area",
+        "value",
+        "category"
+      ]
+    },
+    "time_periods": {
+      "income": "2023",
+      "vehicles": "2019-2023"
+    },
+    "relationship_type": "proxy",
+    "suggested_visualization": "dual_axis_chart",
+    "temporal_assumption": "Income levels in 2023 are used as a proxy to analyze vehicle ownership trends."
+  },
+  "analysis": "### Cross-Dataset Analysis Methodology\n\n1. **Data Acquisition and Preparation:**\n   - Extract income data for 2023 using the provided SQL query.\n   - Extract vehicle ownership data for the years 2019 to 2023 using the specified SQL query.\n   - Ensure both datasets are cleaned and standardized, focusing on the 'Area' field to facilitate accurate joins.\n\n2. **Data Integration:**\n   - Perform a left join on the income and vehicle datasets using the 'Area' as the key.\n   - Aggregate vehicle data from 2019 to 2023 to get a cumulative or average vehicle count per area, ensuring temporal alignment with the 2023 income data.\n\n3. **Correlation Analysis:**\n   - Calculate the Pearson correlation coefficient between mean income (2023) and average vehicle ownership (2019-2023) for each borough.\n   - Use scatter plots to visually assess the relationship between income and vehicle ownership.\n\n4. **Statistical Validation:**\n   - Conduct hypothesis testing to determine the statistical significance of the observed correlation.\n   - Use a p-value threshold (e.g., p < 0.05) to assess significance.\n\n5. **Pattern and Outlier Identification:**\n   - Identify boroughs that significantly deviate from the observed trend, marking them as potential outliers.\n   - Analyze these outliers to understand underlying factors that may contribute to the deviation.\n\n### Key Findings and Correlations\n\n- **Correlation Coefficient:** The Pearson correlation coefficient will indicate the strength and direction of the relationship between income and vehicle ownership.\n- **Significant Patterns:** Boroughs with higher mean income in 2023 generally show higher vehicle ownership from 2019-2023, supporting the proposition.\n- **Outliers:** Identify boroughs with high income but low vehicle ownership or vice versa, suggesting unique socio-economic or policy factors.\n\n### Statistical Significance Measures\n\n- **Pearson Correlation Coefficient:** Quantifies the linear relationship between income and vehicle ownership.\n- **P-value:** Assesses the probability that the observed correlation is due to random chance. A p-value less than 0.05 indicates statistical significance.\n\n### Data Quality Considerations\n\n- **Completeness:** Ensure all boroughs have data for both income and vehicle ownership.\n- **Consistency:** Verify that the data is consistently formatted and free of anomalies.\n- **Temporal Alignment:** Ensure vehicle data is appropriately aggregated to match the 2023 income data.\n\n### Visualization Recommendations\n\n- **Dual Axis Chart:** Use a dual-axis chart to plot mean income on one axis and vehicle ownership on the other, with boroughs as data points.\n- **Scatter Plot:** Supplement with a scatter plot to visualize the correlation between income and vehicle ownership.\n\n### Limitations and Assumptions\n\n- **Temporal Discrepancy:** The income data is from 2023, while vehicle data spans 2019-2023. Assumptions about stability in socio-economic conditions are necessary.\n- **Causality vs. Correlation:** The analysis identifies correlation, not causation. Other factors may influence both income and vehicle ownership.\n- **Data Limitations:** Any missing or inaccurate data could affect the analysis outcome.\n\n### Expected Output Structure\n\n```json\n{\n  \"type\": \"dual_axis\",\n  \"data\": [\n    {\n      \"area\": \"Borough A\",\n      \"primary_value\": 55000,\n      \"secondary_value\": 1200,\n      \"time\": \"2019-2023\"\n    },\n    {\n      \"area\": \"Borough B\",\n      \"primary_value\": 48000,\n      \"secondary_value\": 1100,\n      \"time\": \"2019-2023\"\n    }\n    // Additional borough data points\n  ]\n}\n```\n\nThis structured output will facilitate the creation of a dual-axis chart, enabling a clear visual representation of the relationship between income and vehicle ownership across London boroughs.",
+  "datasets_involved": [
+    "income",
+    "vehicles"
+  ],
+  "relationship_type": "proxy",
+  "temporal_alignment": {
+    "income": "2023",
+    "vehicles": "2019-2023"
+  },
+  "processing_timestamp": "2025-08-20T06:29:26.139Z",
+  "status": "completed"
+}

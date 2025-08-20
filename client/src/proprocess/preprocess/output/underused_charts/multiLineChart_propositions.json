@@ -1,0 +1,422 @@
+{
+  "chart_type": "multiLineChart",
+  "total_generated": 17,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_trends_multiLineChart_simple_2D_001",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "London's violent crime rates surged in 2023 compared to previous years",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Trends in Violent Crime Rates Across London",
+      "chart_description": "This chart compares violent crime rates over time across various London boroughs.",
+      "reasoning": "A multi-line chart is suitable for visualizing trends across multiple boroughs over time.",
+      "tapas_questions": [
+        "Which borough experienced the highest increase in violent crime?",
+        "How do crime trends vary across different boroughs?",
+        "What years saw the most significant changes in crime rates?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "crime_rate"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_distribution_multiLineChart_simple_2D_002",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "White British population shows declining trend across London boroughs",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Decline of White British Population in London",
+      "chart_description": "The chart shows trends in the White British population proportion across different boroughs.",
+      "reasoning": "A multi-line chart effectively highlights population trends over time across multiple categories.",
+      "tapas_questions": [
+        "Which boroughs have the most significant decline in White British population?",
+        "How do trends compare between inner and outer London?",
+        "What is the overall change in White British population percentage?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "year"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_population_multiLineChart_simple_2D_003",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Asian-born populations in London boroughs have steadily increased since 2010",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Growth of Asian-born Populations in London",
+      "chart_description": "This chart visualizes the growth of Asian-born populations across different London boroughs over time.",
+      "reasoning": "A multi-line chart is ideal for showing trends of multiple demographic groups over time.",
+      "tapas_questions": [
+        "Which boroughs have the highest growth in Asian-born populations?",
+        "How does the growth rate compare to other ethnic groups?",
+        "What years experienced the most significant demographic shifts?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Year",
+        "Estimate"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_density_multiLineChart_simple_2D_004",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Population density in central London has increased significantly since 2000",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Rising Population Density in Central London",
+      "chart_description": "This chart illustrates the increase in population density in central London boroughs over the years.",
+      "reasoning": "A multi-line chart can effectively display density trends across multiple boroughs.",
+      "tapas_questions": [
+        "Which central boroughs have seen the most increase in population density?",
+        "How does population density compare between central and outer boroughs?",
+        "What is the impact of increased density on local infrastructure?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "year",
+        "population_density"
+      ],
+      "time_period": "2000-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_growth_multiLineChart_simple_2D_005",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income levels in affluent London boroughs have risen faster than in deprived areas since 2015",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Income Growth Disparities in London Boroughs",
+      "chart_description": "The chart compares income growth trends in affluent vs. deprived London boroughs.",
+      "reasoning": "Multi-line charts help in comparing income growth rates across different boroughs.",
+      "tapas_questions": [
+        "Which boroughs have the fastest-growing incomes?",
+        "How do income growth rates differ between affluent and deprived areas?",
+        "What economic factors might contribute to these trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "income_level"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_trends_multiLineChart_simple_2D_006",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House prices in outer London boroughs have increased at a slower rate compared to inner London since 2010",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Comparison of House Price Trends in London",
+      "chart_description": "This chart shows the rate of house price increases in inner vs. outer London boroughs.",
+      "reasoning": "A multi-line chart is effective for comparing growth rates in house prices across regions.",
+      "tapas_questions": [
+        "Which boroughs have the highest increase in house prices?",
+        "How do trends differ between inner and outer London?",
+        "What factors might influence these housing trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_performance_multiLineChart_simple_2D_007",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Performance in London secondary schools shows improvement trends from 2015 to 2023",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Improvement in Secondary School Performance in London",
+      "chart_description": "The chart visualizes performance trends in London secondary schools over the years.",
+      "reasoning": "A multi-line chart can effectively display performance improvements across multiple schools.",
+      "tapas_questions": [
+        "Which schools show the most significant improvement?",
+        "How do performance trends differ between boroughs?",
+        "What initiatives might have contributed to these trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LANAME",
+        "Year",
+        "Performance"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_registration_multiLineChart_simple_2D_008",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Electric vehicle registrations in London have tripled since 2020",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Rise in Electric Vehicle Registrations in London",
+      "chart_description": "This chart shows the increase in electric vehicle registrations across London boroughs.",
+      "reasoning": "A multi-line chart is suitable for showing the growth trend in electric vehicle registrations over time.",
+      "tapas_questions": [
+        "Which boroughs have the highest number of electric vehicle registrations?",
+        "How does the trend compare to traditional vehicle types?",
+        "What policies might influence the rise in electric vehicle adoption?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Local Authority",
+        "Year",
+        "Electric Vehicles"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "restaurants_employment_multiLineChart_simple_2D_009",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Employment in licensed restaurants has steadily increased in central London",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Growth in Restaurant Employment in Central London",
+      "chart_description": "The chart displays employment trends in licensed restaurants across central London boroughs.",
+      "reasoning": "Multi-line charts can effectively compare employment growth across different boroughs.",
+      "tapas_questions": [
+        "Which boroughs show the most significant employment growth?",
+        "How does employment growth correlate with restaurant openings?",
+        "What economic impacts result from increased restaurant employment?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Employment"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_trends_multiLineChart_simple_2D_010",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Private rental prices in London have outpaced income growth since 2015",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Rising Private Rental Prices vs Income Growth in London",
+      "chart_description": "This chart compares the trend in private rental prices against income growth across London boroughs.",
+      "reasoning": "A multi-line chart is ideal for comparing trends in rental prices and income levels.",
+      "tapas_questions": [
+        "Which boroughs have the fastest-growing rental prices?",
+        "How do rental price trends compare to income growth?",
+        "What are the implications of rising rents on residents?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Average (£)",
+        "Income Level"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "gyms_facilities_multiLineChart_simple_2D_011",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "The number of gym facilities in London has doubled since 2018",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Expansion of Gym Facilities in London",
+      "chart_description": "This chart shows the growth in the number of gym facilities across London boroughs.",
+      "reasoning": "Multi-line charts are useful for showing growth trends in facilities over time.",
+      "tapas_questions": [
+        "Which boroughs have the highest growth in gym facilities?",
+        "How does the availability of gym facilities vary across London?",
+        "What factors might drive the increase in gym facilities?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "facility_count"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "libraries_visits_multiLineChart_simple_2D_012",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Library visits in London have declined since the onset of the pandemic",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Decline in Library Visits in London",
+      "chart_description": "The chart visualizes the decline in library visits across London boroughs since the pandemic.",
+      "reasoning": "A multi-line chart can effectively illustrate changes in library visit trends over time.",
+      "tapas_questions": [
+        "Which boroughs have seen the most significant decline in library visits?",
+        "How do library visit trends compare to other public services?",
+        "What recovery measures might increase library visits?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "year",
+        "Library visits per 1,000 population"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_trends_multiLineChart_simple_3D_013",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Theft-related crimes peak in December across London boroughs",
+      "chart_type": "multiLineChart_simple_3D",
+      "chart_title": "Seasonal Peaks in Theft-related Crimes in London",
+      "chart_description": "This 3D chart shows theft-related crime trends across London boroughs, highlighting peaks in December.",
+      "reasoning": "A 3D chart allows for the visualization of monthly crime patterns across multiple boroughs.",
+      "tapas_questions": [
+        "Which boroughs have the highest theft-related crime rates in December?",
+        "How do theft-related crime trends vary month-to-month?",
+        "What seasonal factors might contribute to crime spikes?"
+      ],
+      "3d_dimension": "month",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "month",
+        "crime_rate"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_distribution_multiLineChart_simple_3D_014",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Diverse ethnic groups show varying growth patterns across London boroughs",
+      "chart_type": "multiLineChart_simple_3D",
+      "chart_title": "Growth Patterns of Ethnic Groups in London Boroughs",
+      "chart_description": "This 3D chart visualizes the growth patterns of different ethnic groups across London boroughs.",
+      "reasoning": "A 3D chart can effectively display the distribution and growth of multiple ethnic groups.",
+      "tapas_questions": [
+        "Which ethnic groups show the most significant growth?",
+        "How do ethnic group distributions vary across boroughs?",
+        "What cultural factors might influence these growth patterns?"
+      ],
+      "3d_dimension": "ethnic_group",
+      "variables_needed": [
+        "local authority name",
+        "ethnic_group",
+        "year",
+        "population"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_population_multiLineChart_simple_3D_015",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Eastern European-born populations have increased significantly in London since 2010",
+      "chart_type": "multiLineChart_simple_3D",
+      "chart_title": "Rise of Eastern European-born Populations in London",
+      "chart_description": "A 3D chart showing the increase in Eastern European-born populations across London boroughs.",
+      "reasoning": "3D charts are useful for showing demographic changes across multiple groups and boroughs.",
+      "tapas_questions": [
+        "Which boroughs have the highest Eastern European-born populations?",
+        "How do trends compare with other immigrant groups?",
+        "What factors might explain these demographic changes?"
+      ],
+      "3d_dimension": "broad_group",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Year",
+        "Estimate"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_density_multiLineChart_simple_3D_016",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Suburban London boroughs show varying population density trends",
+      "chart_type": "multiLineChart_simple_3D",
+      "chart_title": "Population Density Trends in Suburban London",
+      "chart_description": "This 3D chart illustrates population density trends across suburban London boroughs.",
+      "reasoning": "A 3D chart allows for the detailed visualization of density trends across multiple boroughs and years.",
+      "tapas_questions": [
+        "Which suburban boroughs have the highest population density?",
+        "How do density trends compare with central boroughs?",
+        "What urban planning issues arise from these trends?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "area",
+        "year",
+        "population_density"
+      ],
+      "time_period": "2000-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_growth_multiLineChart_simple_3D_017",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income disparities between ethnic groups have widened in London since 2010",
+      "chart_type": "multiLineChart_simple_3D",
+      "chart_title": "Widening Income Disparities Among Ethnic Groups in London",
+      "chart_description": "A 3D chart showing the widening income disparities among different ethnic groups in London.",
+      "reasoning": "A 3D chart can effectively visualize income trends across multiple ethnic groups.",
+      "tapas_questions": [
+        "Which ethnic groups have the largest income disparities?",
+        "How do income trends vary across different ethnicities?",
+        "What socioeconomic factors contribute to these disparities?"
+      ],
+      "3d_dimension": "ethnic_group",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "income_level",
+        "ethnic_group"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ],
+  "generation_timestamp": "2025-08-20T16:23:58.819Z"
+}

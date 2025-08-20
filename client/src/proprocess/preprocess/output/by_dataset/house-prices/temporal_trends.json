@@ -1,0 +1,255 @@
+{
+  "category": "temporal_trends",
+  "dataset": "house-prices",
+  "processed_at": "2025-08-20T04:07:16.633Z",
+  "total_propositions": 10,
+  "propositions": [
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_001",
+      "dataset": "house-prices",
+      "category": "temporal_trends",
+      "original_proposition": "House prices increased by 20% from 2020 to 2023 in the borough of Kensington and Chelsea.",
+      "reworded_proposition": "House prices in Kensington and Chelsea have shown a notable upward trend from 2020 to 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Kensington and Chelsea House Price Trends",
+      "chart_description": "House price changes in Kensington and Chelsea from 2020 to 2023.",
+      "reasoning": "A line chart effectively illustrates the trend of house prices over a specified time period, highlighting changes and patterns.",
+      "tapas_questions": [
+        "How did house prices change from 2020 to 2023?",
+        "What is the average house price in Kensington and Chelsea over the years?",
+        "Which year had the highest increase in house prices?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_002",
+      "dataset": "house-prices",
+      "category": "temporal_trends",
+      "original_proposition": "The average house price in London rose by 5% each year from 1995 to 2005.",
+      "reworded_proposition": "London's housing market experienced a steady upward trend in average prices over the decade from 1995 to 2005.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Rising House Prices in London (1995-2005)",
+      "chart_description": "A decade-long trend of increasing average house prices in London.",
+      "reasoning": "A line chart effectively illustrates the temporal trend of rising house prices over the specified decade.",
+      "tapas_questions": [
+        "How did the average house price change from 1995 to 2005?",
+        "What is the average house price in London for the year 2000?",
+        "Which year saw the highest increase in average house price?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "time_period": "1995-2005",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_003",
+      "dataset": "house-prices",
+      "category": "temporal_trends",
+      "original_proposition": "From 2010 to 2015, house prices in the borough of Hackney experienced a peak growth of 30% in 2013.",
+      "reworded_proposition": "Between 2010 and 2015, Hackney saw a notable surge in house prices, with the most significant increase occurring in 2013.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "House Price Trends in Hackney (2010-2015)",
+      "chart_description": "Visualizing the growth pattern of house prices in Hackney over time.",
+      "reasoning": "A line chart effectively illustrates trends over time, highlighting the peak growth year in Hackney.",
+      "tapas_questions": [
+        "How did house prices change in Hackney from 2010 to 2015?",
+        "In which year did Hackney experience the highest growth in house prices?",
+        "What is the average house price growth in Hackney during this period?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2010-2015",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_004",
+      "dataset": "house-prices",
+      "category": "temporal_trends",
+      "original_proposition": "House prices in outer London boroughs have shown a cyclical pattern with peaks every 5 years from 1995 to 2023.",
+      "reworded_proposition": "House prices in outer London boroughs exhibit a recurring cyclical trend, peaking approximately every five years over the last few decades.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Cyclical Trends in Outer London House Prices",
+      "chart_description": "Visualizing recurring peaks in house prices from 1995 to 2023",
+      "reasoning": "A line chart effectively illustrates the cyclical nature of house prices over time, highlighting peaks and trends.",
+      "tapas_questions": [
+        "How did house prices change from 1995 to 2023?",
+        "Which borough had the highest house price peak?",
+        "What is the average house price across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "1995-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_005",
+      "dataset": "house-prices",
+      "category": "temporal_trends",
+      "original_proposition": "The period from 2008 to 2010 saw a 15% decline in house prices across London due to the financial crisis.",
+      "reworded_proposition": "Between 2008 and 2010, house prices across London experienced a noticeable decline, influenced by the financial crisis.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "London House Prices Trend (2008-2010)",
+      "chart_description": "Visualizing the decline in house prices during the financial crisis.",
+      "reasoning": "A line chart effectively illustrates temporal trends, highlighting changes in house prices over the specified period.",
+      "tapas_questions": [
+        "How did house prices change from 2008 to 2010?",
+        "What is the average house price decline during the period?",
+        "Which year saw the most significant drop in house prices?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "time_period": "2008-2010",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_006",
+      "dataset": "house-prices",
+      "category": "temporal_trends",
+      "original_proposition": "In 2022, house prices in the borough of Westminster increased by 10% compared to 2021.",
+      "reworded_proposition": "House prices in Westminster showed a notable upward trend in 2022 compared to the previous year.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Westminster House Price Trends (2021-2022)",
+      "chart_description": "Comparison of house prices in Westminster between 2021 and 2022.",
+      "reasoning": "A bar chart with a mean line effectively highlights the year-on-year change in house prices, allowing for easy comparison against the average trend.",
+      "tapas_questions": [
+        "How did house prices change from 2021 to 2022 in Westminster?",
+        "What is the average house price change across all boroughs?",
+        "Which boroughs experienced a rise in house prices above the average?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2021-2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_007",
+      "dataset": "house-prices",
+      "category": "temporal_trends",
+      "original_proposition": "House prices in the borough of Camden have consistently risen by 7% annually from 2015 to 2023.",
+      "reworded_proposition": "House prices in Camden have shown a steady upward trend over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Camden House Prices Trend (2015-2023)",
+      "chart_description": "Visualizing the steady rise in house prices in Camden over time.",
+      "reasoning": "A line chart effectively illustrates the temporal trend of rising house prices over the specified period.",
+      "tapas_questions": [
+        "How did house prices change from 2015 to 2023 in Camden?",
+        "What is the average annual increase in house prices in Camden?",
+        "How do house prices in Camden compare to other boroughs over the same period?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_008",
+      "dataset": "house-prices",
+      "category": "temporal_trends",
+      "original_proposition": "The year 1999 marked the lowest average house prices in London during the period from 1995 to 2005.",
+      "reworded_proposition": "In 1999, London experienced its lowest average house prices within the decade from 1995 to 2005.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "London House Prices: 1995-2005",
+      "chart_description": "Trends in average house prices in London over a decade.",
+      "reasoning": "A line chart effectively displays changes in house prices over time, highlighting trends and specific low points.",
+      "tapas_questions": [
+        "What was the average house price in 1999?",
+        "How did house prices change from 1995 to 2005?",
+        "Which year had the highest average house prices?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "time_period": "1995-2005",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_009",
+      "dataset": "house-prices",
+      "category": "temporal_trends",
+      "original_proposition": "From 2018 to 2023, house prices in Southwark borough have shown a seasonal increase during the summer months.",
+      "reworded_proposition": "House prices in Southwark borough tend to rise during the summer months each year from 2018 to 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Trends in Southwark House Prices",
+      "chart_description": "Visualize summer price increases in Southwark from 2018 to 2023.",
+      "reasoning": "A line chart effectively shows temporal trends and seasonal patterns over multiple years.",
+      "tapas_questions": [
+        "How do house prices in Southwark change during summer months?",
+        "What is the average house price in Southwark over the years?",
+        "Which year had the highest summer increase in house prices?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_010",
+      "dataset": "house-prices",
+      "category": "temporal_trends",
+      "original_proposition": "The borough of Richmond upon Thames experienced a 25% increase in house prices from 2000 to 2005.",
+      "reworded_proposition": "Richmond upon Thames saw a notable upward trend in house prices between 2000 and 2005.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "House Price Trends in Richmond upon Thames",
+      "chart_description": "Visualizing the increase in house prices from 2000 to 2005.",
+      "reasoning": "A line chart effectively illustrates temporal trends, showing the progression of house prices over time.",
+      "tapas_questions": [
+        "How did house prices change from 2000 to 2005 in Richmond upon Thames?",
+        "What is the average house price in Richmond upon Thames during this period?",
+        "How does Richmond upon Thames compare to other boroughs in terms of house price increase?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2000-2005",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

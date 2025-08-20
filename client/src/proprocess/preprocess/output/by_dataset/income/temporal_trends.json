@@ -1,0 +1,207 @@
+{
+  "category": "temporal_trends",
+  "dataset": "income",
+  "processed_at": "2025-08-20T04:06:54.033Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "income_temporal_trends_tt1",
+      "dataset": "income",
+      "category": "temporal_trends",
+      "original_proposition": "Mean income in Kensington and Chelsea increased by 20% from 2015 to 2020.",
+      "reworded_proposition": "Kensington and Chelsea have seen a notable rise in mean income over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Income Growth in Kensington and Chelsea",
+      "chart_description": "Trends in mean income from 2015 to 2020 in Kensington and Chelsea.",
+      "reasoning": "A line chart effectively illustrates temporal trends, highlighting changes in mean income over time.",
+      "tapas_questions": [
+        "How did mean income change from 2015 to 2020 in Kensington and Chelsea?",
+        "What is the average mean income across all years?",
+        "Which year had the highest mean income in Kensington and Chelsea?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income",
+        "Year"
+      ],
+      "time_period": "2015-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_temporal_trends_tt2",
+      "dataset": "income",
+      "category": "temporal_trends",
+      "original_proposition": "Median income in Westminster showed a cyclical pattern with peaks every 5 years from 2000 to 2020.",
+      "reworded_proposition": "Median income in Westminster exhibits a recurring pattern, peaking every five years over the two-decade span.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Cyclical Trends in Westminster's Median Income",
+      "chart_description": "Observe the recurring peaks in median income every five years from 2000 to 2020.",
+      "reasoning": "A line chart effectively illustrates temporal patterns, highlighting cyclical trends over time.",
+      "tapas_questions": [
+        "How did median income change from 2000 to 2020?",
+        "Which year had the highest median income in Westminster?",
+        "What is the average median income in Westminster over the period?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Median_income",
+        "Year"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_temporal_trends_tt3",
+      "dataset": "income",
+      "category": "temporal_trends",
+      "original_proposition": "From 1999 to 2023, the mean income in Camden has increased by 50%.",
+      "reworded_proposition": "Over the years from 1999 to 2023, Camden has experienced a notable upward trend in mean income levels.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Mean Income Growth in Camden (1999-2023)",
+      "chart_description": "Visualizing the upward trend in mean income in Camden over time.",
+      "reasoning": "A line chart effectively illustrates the temporal trend of increasing mean income over the specified period.",
+      "tapas_questions": [
+        "How did the mean income change from 1999 to 2023 in Camden?",
+        "What is the average mean income in Camden over the years?",
+        "Which year had the highest mean income in Camden?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income",
+        "Year"
+      ],
+      "time_period": "1999-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "income_temporal_trends_tt4",
+      "dataset": "income",
+      "category": "temporal_trends",
+      "original_proposition": "The median income in London boroughs experienced a sharp decline of 10% during the 2008 financial crisis.",
+      "reworded_proposition": "During the 2008 financial crisis, London boroughs saw a notable downturn in median income levels.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Impact of 2008 Crisis on London Borough Incomes",
+      "chart_description": "Track the decline in median income across London boroughs in 2008.",
+      "reasoning": "A line chart effectively illustrates temporal trends, highlighting the income decline during the crisis.",
+      "tapas_questions": [
+        "How did median income change from 2007 to 2009?",
+        "Which borough experienced the largest decline in median income?",
+        "What is the average median income across all boroughs in 2008?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Median_income",
+        "Year"
+      ],
+      "time_period": "2008",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_temporal_trends_tt5",
+      "dataset": "income",
+      "category": "temporal_trends",
+      "original_proposition": "Mean income growth rate in outer London boroughs was 2% higher annually than inner London from 2010 to 2020.",
+      "reworded_proposition": "Outer London boroughs have consistently experienced a more robust annual growth in mean income compared to their inner London counterparts over the past decade.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Income Growth Comparison: Outer vs Inner London",
+      "chart_description": "Annual mean income growth rates in outer vs inner London from 2010 to 2020.",
+      "reasoning": "A bar chart with a mean line effectively highlights the comparison of income growth rates between outer and inner London, while also showing the average growth rate across boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest mean income growth rate?",
+        "How does mean income growth in outer London compare to inner London?",
+        "What is the average mean income growth rate across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income",
+        "Year"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_temporal_trends_tt6",
+      "dataset": "income",
+      "category": "temporal_trends",
+      "original_proposition": "Income inequality, measured by the gap between mean and median income, widened by 15% from 2015 to 2023 in London.",
+      "reworded_proposition": "The disparity between mean and median income in London has noticeably increased over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Income Disparity Trend in London (2015-2023)",
+      "chart_description": "Tracking the widening gap between mean and median income in London over time.",
+      "reasoning": "A line chart effectively illustrates changes over time, highlighting the trend of widening income disparity.",
+      "tapas_questions": [
+        "How did the gap between mean and median income change from 2015 to 2023?",
+        "What is the average mean income across all years?",
+        "Which year had the highest disparity between mean and median income?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Mean_income",
+        "Median_income",
+        "Year"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_temporal_trends_tt7",
+      "dataset": "income",
+      "category": "temporal_trends",
+      "original_proposition": "The year 2020 saw the highest increase in mean income across all London boroughs compared to the previous decade.",
+      "reworded_proposition": "In 2020, London boroughs experienced the most notable rise in average income compared to any other year in the past decade.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "2020 Income Surge in London Boroughs",
+      "chart_description": "Visualizing the exceptional rise in mean income across boroughs in 2020.",
+      "reasoning": "A bar chart with a mean line effectively highlights the income increase in 2020 compared to the average of previous years, making it easy to see which boroughs experienced the most significant changes.",
+      "tapas_questions": [
+        "Which borough had the highest mean income increase in 2020?",
+        "How does the 2020 mean income compare to the previous decade?",
+        "What is the average mean income across all boroughs in 2020?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income",
+        "Year"
+      ],
+      "time_period": "2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_temporal_trends_tt8",
+      "dataset": "income",
+      "category": "temporal_trends",
+      "original_proposition": "From 1999 to 2023, the median income in London has shown a consistent upward trend, increasing by 60%.",
+      "reworded_proposition": "Over the years from 1999 to 2023, London has experienced a steady rise in median income.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "London's Median Income Growth (1999-2023)",
+      "chart_description": "Illustrates the upward trend in median income over time in London.",
+      "reasoning": "A line chart effectively shows the trend of median income over a continuous time period, highlighting the consistent increase.",
+      "tapas_questions": [
+        "How did the median income change from 1999 to 2023?",
+        "What is the average median income across the years?",
+        "Which year had the highest median income?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Median_income",
+        "Year"
+      ],
+      "time_period": "1999-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    }
+  ]
+}

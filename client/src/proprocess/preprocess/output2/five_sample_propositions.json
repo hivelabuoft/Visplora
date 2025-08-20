@@ -1,0 +1,124 @@
+{
+  "processed_at": "2025-08-20T06:10:42.603Z",
+  "total_propositions": 5,
+  "successful": 5,
+  "failed": 0,
+  "sample_propositions": [
+    {
+      "source_dataset": "crime-rates",
+      "proposition_id": "crime-rates_temporal_trends_temp_001",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "source_dataset": "house-prices",
+      "proposition_id": "house-prices_temporal_trends_tt_001",
+      "dataset": "house-prices",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date, area_name ORDER BY date;"
+    },
+    {
+      "source_dataset": "population",
+      "proposition_id": "population_temporal_trends_tt1",
+      "dataset": "population",
+      "time_period": "2000-2020",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2000-01-01' AND '2020-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "source_dataset": "vehicles",
+      "proposition_id": "vehicles_categorical_analysis_ca1",
+      "dataset": "vehicles",
+      "time_period": "2023",
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT vehicle_type AS category, SUM(registration_count) AS value, (SUM(registration_count) * 100.0 / (SELECT SUM(registration_count) FROM vehicle_data WHERE YEAR(date) = 2023)) AS percentage FROM vehicle_data WHERE YEAR(date) = 2023 GROUP BY vehicle_type ORDER BY value DESC;"
+    },
+    {
+      "source_dataset": "private-rent",
+      "proposition_id": "private-rent_temporal_trends_tt1",
+      "dataset": "private-rent",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, AVG(average_rent) AS value FROM rent_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    }
+  ]
+}

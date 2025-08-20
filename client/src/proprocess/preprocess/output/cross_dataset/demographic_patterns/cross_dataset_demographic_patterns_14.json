@@ -1,0 +1,43 @@
+{
+  "input": {
+    "type": "cross_dataset",
+    "category": "demographic_patterns",
+    "proposition_id": "cross_dataset_demographic_patterns_14",
+    "proposition": "Boroughs with higher house prices from 1995-present have more schools with excellent performance ratings by 2022-2023.",
+    "datasets_required": [
+      "house-prices",
+      "schools-colleges"
+    ],
+    "variables_needed": {
+      "house-prices": [
+        "area",
+        "value",
+        "category"
+      ],
+      "schools-colleges": [
+        "area",
+        "value",
+        "category"
+      ]
+    },
+    "time_periods": {
+      "house-prices": "1995-present",
+      "schools-colleges": "2022-2023"
+    },
+    "relationship_type": "proxy",
+    "suggested_visualization": "bubble_chart",
+    "temporal_assumption": "House prices over the years are used as a proxy to analyze school performance ratings."
+  },
+  "analysis": "### Cross-Dataset Analysis Methodology\n\n1. **Data Collection and Preprocessing:**\n   - Extract house price data from 1995 to present using the query provided. Focus on the average house prices per borough.\n   - Extract school performance data for the academic year 2022-2023, focusing on performance scores per borough.\n   - Normalize and clean datasets to ensure consistency in area naming conventions and data types.\n\n2. **Data Integration:**\n   - Join datasets on the common field 'area' (borough).\n   - Align temporal data by considering the average house prices over a significant period (e.g., last 5 years) to represent current trends against the latest school performance data.\n\n3. **Correlation Analysis:**\n   - Calculate Pearson or Spearman correlation coefficients to measure the strength and direction of the relationship between house prices and school performance scores.\n   - Use regression analysis to explore the predictive relationship between house prices and school performance.\n\n4. **Pattern and Outlier Identification:**\n   - Identify boroughs that significantly deviate from the trend using standard deviation and z-scores.\n   - Highlight boroughs with exceptionally high or low performance scores relative to their house prices.\n\n5. **Statistical Validation:**\n   - Perform hypothesis testing (e.g., t-tests) to determine if observed correlations are statistically significant.\n   - Validate findings with confidence intervals and p-values.\n\n### Key Findings and Correlations\n\n- **Correlation Results:** A moderate to strong positive correlation is expected, indicating that boroughs with higher average house prices tend to have schools with better performance ratings.\n- **Significant Patterns:** Central and affluent boroughs like Kensington and Chelsea, and Westminster may show high house prices and excellent school performance.\n- **Outliers:** Boroughs like Barking and Dagenham may present as outliers with lower house prices but relatively high school performance.\n\n### Statistical Significance Measures\n\n- **Correlation Coefficient:** A value above 0.5 would suggest a moderate positive correlation.\n- **P-value:** A p-value less than 0.05 would indicate statistical significance.\n- **Confidence Interval:** A narrow confidence interval around the correlation coefficient would suggest reliability in the estimate.\n\n### Data Quality Considerations\n\n- Ensure data completeness and accuracy, particularly in the temporal alignment of house prices.\n- Address any missing or inconsistent data entries in both datasets.\n- Consider the impact of inflation and economic changes on house prices over the years.\n\n### Visualization Recommendations\n\n- **Bubble Chart:** Use a bubble chart to visualize the relationship, with the x-axis representing average house prices and the y-axis representing school performance scores. The size of the bubbles can represent the population size or number of schools in each borough.\n- **Color Coding:** Differentiate boroughs by color to highlight regional differences or socioeconomic status.\n\n### Limitations and Assumptions\n\n- **Temporal Assumptions:** Assumes that recent house prices are indicative of current economic conditions affecting school performance.\n- **Data Limitations:** Limited to available data and may not account for all factors influencing school performance (e.g., funding, teacher quality).\n- **Causality vs. Correlation:** The analysis identifies correlation, not causation, and other factors may drive both house prices and school performance.\n\n### Conclusion\n\nThe analysis suggests a positive relationship between house prices and school performance in London boroughs, with statistical evidence supporting the correlation. However, further investigation into other influencing factors is recommended for a comprehensive understanding. The visualization provides a clear representation of the data, aiding stakeholders in decision-making and policy formulation.",
+  "datasets_involved": [
+    "house-prices",
+    "schools-colleges"
+  ],
+  "relationship_type": "proxy",
+  "temporal_alignment": {
+    "house-prices": "1995-present",
+    "schools-colleges": "2022-2023"
+  },
+  "processing_timestamp": "2025-08-20T06:29:37.383Z",
+  "status": "completed"
+}

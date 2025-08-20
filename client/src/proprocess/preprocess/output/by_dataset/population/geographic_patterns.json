@@ -1,0 +1,248 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "population",
+  "processed_at": "2025-08-20T04:06:36.192Z",
+  "total_propositions": 10,
+  "propositions": [
+    {
+      "proposition_id": "population_geographic_patterns_gp1",
+      "dataset": "population",
+      "category": "geographic_patterns",
+      "original_proposition": "The boroughs of Camden and Westminster have the highest population densities in London.",
+      "reworded_proposition": "Camden and Westminster stand out as having notably higher population densities compared to other London boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Density Across London Boroughs",
+      "chart_description": "Comparison of population densities in London boroughs, highlighting Camden and Westminster.",
+      "reasoning": "A simple bar chart effectively highlights the differences in population densities across boroughs, making it easy to identify the highest values.",
+      "tapas_questions": [
+        "Which borough has the highest population density?",
+        "How does Camden's population density compare to Westminster's?",
+        "What is the average population density across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp2",
+      "dataset": "population",
+      "category": "geographic_patterns",
+      "original_proposition": "Outer London boroughs generally have lower population densities compared to inner London boroughs.",
+      "reworded_proposition": "Outer London boroughs tend to exhibit lower population densities than their inner London counterparts.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Density: Outer vs. Inner London",
+      "chart_description": "Comparison of population densities between outer and inner London boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the differences in population densities between the two groups of boroughs, allowing for easy comparison.",
+      "tapas_questions": [
+        "Which borough has the lowest population density?",
+        "How does the population density of outer boroughs compare to inner boroughs?",
+        "What is the average population density across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp3",
+      "dataset": "population",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Tower Hamlets has one of the fastest-growing populations in London.",
+      "reworded_proposition": "Tower Hamlets is experiencing one of the most rapid population increases among London's boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Growth in London Boroughs",
+      "chart_description": "Comparison of population growth rates across London boroughs",
+      "reasoning": "A bar chart effectively highlights the comparative growth rates of different boroughs, making it easy to identify which areas are growing fastest.",
+      "tapas_questions": [
+        "Which borough has the fastest-growing population?",
+        "How does Tower Hamlets compare to other boroughs in population growth?",
+        "What percentage of London's population growth is in Tower Hamlets?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp4",
+      "dataset": "population",
+      "category": "geographic_patterns",
+      "original_proposition": "Population density is highest in the central boroughs of London, such as Westminster and Kensington and Chelsea.",
+      "reworded_proposition": "Central London boroughs like Westminster and Kensington and Chelsea exhibit notably higher population density compared to other areas.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Density Across London Boroughs",
+      "chart_description": "Comparison of population density in London boroughs, highlighting central areas.",
+      "reasoning": "A bar chart effectively highlights the differences in population density across boroughs, making it easy to compare central areas with others.",
+      "tapas_questions": [
+        "Which borough has the highest population density?",
+        "How does Westminster compare to Kensington and Chelsea in terms of population density?",
+        "What percentage of the total population resides in Westminster?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp5",
+      "dataset": "population",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Croydon has a significantly larger population compared to its neighboring boroughs.",
+      "reworded_proposition": "Croydon stands out with a notably larger population than its neighboring boroughs.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Population Comparison of Croydon and Neighboring Boroughs",
+      "chart_description": "Visualize how Croydon's population size compares to nearby boroughs.",
+      "reasoning": "A bar chart with a mean line effectively highlights Croydon's population size relative to its neighbors and the average.",
+      "tapas_questions": [
+        "Which borough has the highest population?",
+        "How does Croydon's population compare to the average of its neighbors?",
+        "What is the average population across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp6",
+      "dataset": "population",
+      "category": "geographic_patterns",
+      "original_proposition": "Boroughs in East London, such as Newham and Barking and Dagenham, have seen rapid population growth.",
+      "reworded_proposition": "East London boroughs, including Newham and Barking and Dagenham, are experiencing notable population increases.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Growth in East London Boroughs",
+      "chart_description": "Comparison of population growth across East London boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the differences in population growth across boroughs, making it easy to compare.",
+      "tapas_questions": [
+        "Which borough has the highest population growth?",
+        "How does Newham compare to Barking and Dagenham in terms of population growth?",
+        "What percentage of the total population growth is in Newham?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp7",
+      "dataset": "population",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Richmond upon Thames has one of the lowest population densities in London.",
+      "reworded_proposition": "Richmond upon Thames stands out for its notably low population density compared to other London boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Density Across London Boroughs",
+      "chart_description": "Comparison of population density among London boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the comparison of population density across different boroughs, making it easy to identify those with the lowest values.",
+      "tapas_questions": [
+        "Which borough has the lowest population density?",
+        "How does Richmond upon Thames compare to other boroughs in terms of population density?",
+        "What is the average population density across all London boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp8",
+      "dataset": "population",
+      "category": "geographic_patterns",
+      "original_proposition": "Population distribution in London shows a clear north-south divide, with higher densities in the north.",
+      "reworded_proposition": "London's population distribution reveals a distinct pattern, with the northern boroughs experiencing notably higher population densities compared to the south.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "North-South Population Density in London",
+      "chart_description": "Comparison of population densities across London's boroughs.",
+      "reasoning": "A simple bar chart effectively illustrates the comparative population densities across different boroughs, highlighting the north-south divide.",
+      "tapas_questions": [
+        "Which borough has the highest population density?",
+        "What percentage of the population is in northern boroughs?",
+        "How does the population density compare between northern and southern boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp9",
+      "dataset": "population",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Hillingdon has a lower population density compared to central London boroughs.",
+      "reworded_proposition": "Hillingdon exhibits a notably lower population density than the more densely populated central London boroughs.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Population Density Across London Boroughs",
+      "chart_description": "Comparison of population density between Hillingdon and central London boroughs.",
+      "reasoning": "A bar chart with a mean line effectively highlights the contrast in population density between Hillingdon and central boroughs, while the mean line provides a benchmark for comparison.",
+      "tapas_questions": [
+        "Which borough has the highest population density?",
+        "What is the average population density across all boroughs?",
+        "How does Hillingdon compare to Westminster in terms of population density?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp10",
+      "dataset": "population",
+      "category": "geographic_patterns",
+      "original_proposition": "Population growth hotspots are identified in the boroughs of Hackney and Haringey.",
+      "reworded_proposition": "Hackney and Haringey emerge as key areas of population growth.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Population Growth in Hackney and Haringey",
+      "chart_description": "Comparison of population growth across boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the comparison of population growth between boroughs, emphasizing the hotspots.",
+      "tapas_questions": [
+        "Which borough has the highest population growth?",
+        "How does Hackney compare to Haringey in terms of population growth?",
+        "What percentage of total population growth is in Hackney?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

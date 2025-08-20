@@ -1,0 +1,250 @@
+{
+  "processed_at": "2025-08-20T03:04:12.082Z",
+  "total_processed": 10,
+  "test_run": true,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_001",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Theft-from-the-person incidents increased by 10% from January 2022 to January 2023 across London.",
+      "reworded_proposition": "There was a noticeable rise in theft-from-the-person cases in London over the past year.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Rise in London Theft Incidents",
+      "chart_description": "Year-over-year increase in theft-from-the-person cases.",
+      "reasoning": "A line chart effectively shows the trend of increasing incidents over time.",
+      "tapas_questions": [
+        "Which area has the highest count?",
+        "Which area has the lowest count?",
+        "What is the overall pattern shown in the data?"
+      ],
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_002",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Burglary incidents show a seasonal peak in December 2022 in Westminster.",
+      "reworded_proposition": "Burglary incidents in Westminster tend to increase during the holiday season.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Seasonal Trends in Westminster Burglaries",
+      "chart_description": "Illustrates the rise in burglary incidents during holiday months.",
+      "reasoning": "A line chart effectively shows trends over time, highlighting seasonal peaks.",
+      "tapas_questions": [
+        "Which borough has the highest count?",
+        "Which borough has the lowest count?",
+        "What is the overall pattern shown in the data?"
+      ],
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_003",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Violent crime rates remained stable from 2022 to 2023 in Camden, with less than 2% variation.",
+      "reworded_proposition": "Violent crime rates in Camden showed minimal change between 2022 and 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Camden's Stable Violent Crime Rates",
+      "chart_description": "A comparison of violent crime rates in Camden over two years.",
+      "reasoning": "A line chart effectively illustrates the stability of crime rates over time.",
+      "tapas_questions": [
+        "Which borough has the highest count?",
+        "Which borough has the lowest count?",
+        "What is the overall pattern shown in the data?"
+      ],
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_004",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Overall crime rates in Tower Hamlets decreased by 5% from Q1 2022 to Q1 2023.",
+      "reworded_proposition": "Crime levels in Tower Hamlets saw a slight decline over the past year.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Crime Trends in Tower Hamlets",
+      "chart_description": "A visual representation of crime rate changes over a year.",
+      "reasoning": "A line chart effectively shows trends over time, highlighting the decrease.",
+      "tapas_questions": [
+        "Which borough has the highest count?",
+        "Which borough has the lowest count?",
+        "What is the overall pattern shown in the data?"
+      ],
+      "variables_needed": [
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_005",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Crime incidents in London show a cyclical pattern with peaks in summer months of 2022 and 2023.",
+      "reworded_proposition": "Crime rates in London tend to rise during the summer seasons.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Crime Trends in London",
+      "chart_description": "Visualizing the seasonal fluctuations in crime rates.",
+      "reasoning": "A line chart effectively shows the cyclical nature of crime trends over time.",
+      "tapas_questions": [
+        "Which area has the highest count?",
+        "Which area has the lowest count?",
+        "What is the overall pattern shown in the data?"
+      ],
+      "variables_needed": [
+        "date",
+        "count"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_006",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "The number of theft-from-the-person incidents in Camden increased by 15% from February 2022 to February 2023.",
+      "reworded_proposition": "There was a noticeable rise in theft-from-the-person cases in Camden over the past year.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Rise in Camden Theft Incidents",
+      "chart_description": "Yearly increase in theft-from-the-person cases in Camden.",
+      "reasoning": "A line chart effectively illustrates trends over time, highlighting the increase.",
+      "tapas_questions": [
+        "Which borough has the highest count?",
+        "Which borough has the lowest count?",
+        "What is the overall pattern shown in the data?"
+      ],
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_007",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Violent crime incidents in London decreased by 8% from March 2022 to March 2023.",
+      "reworded_proposition": "There was a noticeable decline in violent crime incidents in London over the year ending in March 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Decline in Violent Crime in London",
+      "chart_description": "Yearly trend showing reduction in violent crime incidents.",
+      "reasoning": "A line chart effectively illustrates the downward trend over time, highlighting the decrease in incidents.",
+      "tapas_questions": [
+        "Which area has the highest count?",
+        "Which area has the lowest count?",
+        "What is the overall pattern shown in the data?"
+      ],
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_008",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Burglary incidents in Tower Hamlets show a 20% increase during the winter months of 2022.",
+      "reworded_proposition": "Burglary incidents in Tower Hamlets rose noticeably during the winter months of 2022.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Winter Rise in Tower Hamlets Burglaries",
+      "chart_description": "A visual representation of increased burglaries in winter 2022.",
+      "reasoning": "A line chart effectively shows the trend of rising burglary incidents over time.",
+      "tapas_questions": [
+        "Which borough has the highest count?",
+        "Which borough has the lowest count?",
+        "What is the overall pattern shown in the data?"
+      ],
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_001",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "Westminster accounts for 25% of all theft-from-the-person incidents in London.",
+      "reworded_proposition": "Westminster experiences a significant portion of London's theft-from-the-person incidents.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Theft Incidents in London Boroughs",
+      "chart_description": "Comparison of theft-from-person incidents across London areas.",
+      "reasoning": "A bar chart effectively compares the prevalence of theft incidents across different boroughs, highlighting Westminster's prominence.",
+      "tapas_questions": [
+        "Which borough has the highest count?",
+        "Which borough has the lowest count?",
+        "What is the overall pattern shown in the data?"
+      ],
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "crime-rates_geographic_patterns_geo_002",
+      "dataset": "crime-rates",
+      "category": "geographic_patterns",
+      "original_proposition": "Camden and Tower Hamlets together account for 40% of violent crime incidents in London.",
+      "reworded_proposition": "A significant portion of violent crime in London occurs in Camden and Tower Hamlets.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Violent Crime Distribution in London",
+      "chart_description": "Visual representation of violent crime concentration in key areas.",
+      "reasoning": "A pie chart effectively illustrates the proportion of crime incidents in specific areas compared to the whole.",
+      "tapas_questions": [
+        "Which borough has the highest count?",
+        "Which borough has the lowest count?",
+        "What is the overall pattern shown in the data?"
+      ],
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

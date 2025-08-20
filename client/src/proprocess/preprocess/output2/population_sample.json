@@ -1,0 +1,23 @@
+{
+  "source_dataset": "population",
+  "proposition_id": "population_temporal_trends_tt1",
+  "dataset": "population",
+  "time_period": "2000-2020",
+  "variables_needed": [
+    "area",
+    "value",
+    "date"
+  ],
+  "chart_type": "lineChart_simple_2D",
+  "example": [
+    {
+      "time": "",
+      "value": 0
+    },
+    {
+      "time": "",
+      "value": 0
+    }
+  ],
+  "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2000-01-01' AND '2020-12-31' GROUP BY date ORDER BY date;"
+}

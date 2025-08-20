@@ -1,0 +1,51 @@
+{
+  "processing_date": "2025-08-20T06:44:20.501Z",
+  "total_categories": 7,
+  "total_propositions": 99,
+  "successful_propositions": 99,
+  "failed_propositions": 0,
+  "results": [
+    {
+      "category": "economic_correlations",
+      "successCount": 19,
+      "errorCount": 0,
+      "total": 19
+    },
+    {
+      "category": "demographic_patterns",
+      "successCount": 18,
+      "errorCount": 0,
+      "total": 18
+    },
+    {
+      "category": "infrastructure_relationships",
+      "successCount": 16,
+      "errorCount": 0,
+      "total": 16
+    },
+    {
+      "category": "temporal_lag_analysis",
+      "successCount": 15,
+      "errorCount": 0,
+      "total": 15
+    },
+    {
+      "category": "gentrification_indicators",
+      "successCount": 12,
+      "errorCount": 0,
+      "total": 12
+    },
+    {
+      "category": "safety_livability_relationships",
+      "successCount": 10,
+      "errorCount": 0,
+      "total": 10
+    },
+    {
+      "category": "market_development_patterns",
+      "successCount": 9,
+      "errorCount": 0,
+      "total": 9
+    }
+  ]
+}

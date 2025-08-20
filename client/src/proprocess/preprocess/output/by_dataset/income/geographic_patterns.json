@@ -1,0 +1,201 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "income",
+  "processed_at": "2025-08-20T04:07:01.981Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "income_geographic_patterns_gp1",
+      "dataset": "income",
+      "category": "geographic_patterns",
+      "original_proposition": "Kensington and Chelsea consistently ranks as the borough with the highest mean income from 1999 to 2023.",
+      "reworded_proposition": "Kensington and Chelsea has consistently been the borough with the highest average income over the years.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Top Boroughs by Mean Income (1999-2023)",
+      "chart_description": "Comparison of mean income across boroughs from 1999 to 2023.",
+      "reasoning": "A simple 2D bar chart effectively compares mean income across different boroughs over a long time span, highlighting Kensington and Chelsea's leading position.",
+      "tapas_questions": [
+        "Which borough has the highest mean income?",
+        "How does Kensington and Chelsea compare to other boroughs in terms of mean income?",
+        "What is the average mean income across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income"
+      ],
+      "time_period": "1999-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "income_geographic_patterns_gp2",
+      "dataset": "income",
+      "category": "geographic_patterns",
+      "original_proposition": "The income disparity between North and South London boroughs widened by 25% from 2010 to 2020.",
+      "reworded_proposition": "Income inequality between North and South London boroughs has noticeably increased over the past decade.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Income Disparity in London Boroughs (2010-2020)",
+      "chart_description": "Comparison of income levels between North and South London boroughs over a decade.",
+      "reasoning": "A bar chart effectively illustrates the differences in income levels across boroughs, highlighting disparities between regions.",
+      "tapas_questions": [
+        "Which borough has the highest mean income?",
+        "How did the mean income change from 2010 to 2020 in North London?",
+        "How does South London compare to North London in terms of mean income?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_geographic_patterns_gp3",
+      "dataset": "income",
+      "category": "geographic_patterns",
+      "original_proposition": "Westminster and Camden account for 30% of the highest mean incomes despite covering only 10% of London's area.",
+      "reworded_proposition": "Westminster and Camden stand out for having notably high mean incomes compared to their relatively small geographic coverage in London.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Mean Incomes in Westminster and Camden",
+      "chart_description": "Comparison of mean incomes in Westminster and Camden against their geographic coverage in London.",
+      "reasoning": "A simple bar chart effectively highlights the disparity between mean incomes and geographic coverage, making it easy to compare these two boroughs against others.",
+      "tapas_questions": [
+        "Which borough has the highest mean income?",
+        "What percentage of London's area is covered by Westminster and Camden?",
+        "How does Westminster's mean income compare to Camden's?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_geographic_patterns_gp4",
+      "dataset": "income",
+      "category": "geographic_patterns",
+      "original_proposition": "Inner London boroughs exhibit a higher mean income than outer boroughs by an average of £15,000 in 2023.",
+      "reworded_proposition": "Inner London boroughs tend to have notably higher average incomes compared to their outer counterparts.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Income Comparison: Inner vs Outer London Boroughs",
+      "chart_description": "Average income differences between inner and outer London boroughs in 2023.",
+      "reasoning": "A bar chart with a mean line effectively highlights income disparities between groups and shows how individual boroughs compare to the average.",
+      "tapas_questions": [
+        "Which borough has the highest mean income?",
+        "What is the average income across all boroughs?",
+        "How do inner boroughs compare to outer boroughs in terms of mean income?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_geographic_patterns_gp5",
+      "dataset": "income",
+      "category": "geographic_patterns",
+      "original_proposition": "Mean income in East London boroughs is consistently lower than the London average from 1999 to 2023.",
+      "reworded_proposition": "East London boroughs have persistently lower income levels compared to the London average over the years.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Income Levels in East London vs. London Average",
+      "chart_description": "Comparison of mean income in East London boroughs to the London average from 1999 to 2023.",
+      "reasoning": "A bar chart effectively highlights the income disparities between East London boroughs and the overall London average over time.",
+      "tapas_questions": [
+        "Which borough has the lowest mean income?",
+        "How does mean income in East London compare to the London average?",
+        "What is the average mean income across all London boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income"
+      ],
+      "time_period": "1999-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "income_geographic_patterns_gp6",
+      "dataset": "income",
+      "category": "geographic_patterns",
+      "original_proposition": "The top 5 boroughs with the highest median incomes in 2023 are all located in West London.",
+      "reworded_proposition": "In 2023, West London boroughs dominate the list of areas with the highest median incomes.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Top Median Incomes in West London Boroughs",
+      "chart_description": "Visualizing the highest median incomes by borough in West London for 2023.",
+      "reasoning": "A bar chart effectively highlights the comparison of median incomes across boroughs, making it easy to identify the top performers.",
+      "tapas_questions": [
+        "Which borough has the highest median income?",
+        "What percentage of the top 5 median incomes are from West London?",
+        "How does the median income of the top borough compare to the lowest in the top 5?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Median_income"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "income_geographic_patterns_gp7",
+      "dataset": "income",
+      "category": "geographic_patterns",
+      "original_proposition": "Income inequality is most pronounced in Central London boroughs, with a 30% higher gap between mean and median incomes compared to the outskirts.",
+      "reworded_proposition": "Central London boroughs exhibit a notably wider disparity between mean and median incomes compared to those on the outskirts.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Income Disparity in Central vs. Outer London",
+      "chart_description": "Comparison of income gaps across London boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the differences in income disparity across various boroughs, making it easy to compare Central London with the outskirts.",
+      "tapas_questions": [
+        "Which borough has the highest income disparity?",
+        "How does the income gap in Central London compare to the outskirts?",
+        "What is the average income disparity across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income",
+        "Median_income"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_geographic_patterns_gp8",
+      "dataset": "income",
+      "category": "geographic_patterns",
+      "original_proposition": "The mean income in South London boroughs increased by 10% more than in North London from 2015 to 2023.",
+      "reworded_proposition": "South London boroughs have experienced a notably higher increase in mean income compared to their northern counterparts over recent years.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Income Growth in South vs. North London Boroughs",
+      "chart_description": "Comparison of mean income growth between South and North London from 2015 to 2023.",
+      "reasoning": "A bar chart with a mean line effectively highlights the differences in income growth between the two regions and allows easy comparison against the average.",
+      "tapas_questions": [
+        "Which borough has the highest mean income increase?",
+        "What is the average mean income increase across all boroughs?",
+        "How does mean income growth in South London compare to North London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

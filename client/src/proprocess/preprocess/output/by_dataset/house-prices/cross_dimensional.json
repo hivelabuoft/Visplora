@@ -1,0 +1,161 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "house-prices",
+  "processed_at": "2025-08-20T04:07:40.394Z",
+  "total_propositions": 6,
+  "propositions": [
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_001",
+      "dataset": "house-prices",
+      "category": "cross_dimensional",
+      "original_proposition": "House prices in the borough of Greenwich peak during the summer months from 2020 to 2023.",
+      "reworded_proposition": "House prices in Greenwich tend to reach their highest levels during the summer months over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Trends in Greenwich House Prices",
+      "chart_description": "Visualizing peak house prices in Greenwich from 2020 to 2023.",
+      "reasoning": "A line chart effectively shows trends over time, highlighting seasonal patterns in house prices.",
+      "tapas_questions": [
+        "How do house prices in Greenwich vary by month?",
+        "Which month has the highest average house prices in Greenwich?",
+        "How did house prices change from summer to winter in 2021?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_002",
+      "dataset": "house-prices",
+      "category": "cross_dimensional",
+      "original_proposition": "In 2023, the category of 'luxury homes' shows higher prices in central London boroughs compared to suburban areas.",
+      "reworded_proposition": "In 2023, luxury home prices are notably higher in central London boroughs compared to their suburban counterparts.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Luxury Home Prices in London Boroughs, 2023",
+      "chart_description": "Comparison of luxury home prices between central and suburban London boroughs in 2023.",
+      "reasoning": "A bar chart effectively compares the prices of luxury homes across different boroughs, highlighting the central vs. suburban disparity.",
+      "tapas_questions": [
+        "Which borough has the highest luxury home prices?",
+        "How do luxury home prices compare between central and suburban areas?",
+        "What is the average luxury home price across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_003",
+      "dataset": "house-prices",
+      "category": "cross_dimensional",
+      "original_proposition": "From 2015 to 2023, the boroughs of Camden and Islington show a significant increase in house prices in the 'family homes' category.",
+      "reworded_proposition": "Between 2015 and 2023, Camden and Islington have experienced a notable upward trend in family home prices.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Rising Family Home Prices in Camden & Islington",
+      "chart_description": "Tracking the increase in family home prices from 2015 to 2023.",
+      "reasoning": "A line chart effectively illustrates trends over time, highlighting the increase in house prices across the specified period.",
+      "tapas_questions": [
+        "How did family home prices change from 2015 to 2023 in Camden?",
+        "Which borough had a higher increase in family home prices?",
+        "What is the average increase in family home prices across both boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_004",
+      "dataset": "house-prices",
+      "category": "cross_dimensional",
+      "original_proposition": "The 'apartments' category in the borough of Tower Hamlets has seen a 25% increase in prices from 2020 to 2023.",
+      "reworded_proposition": "Apartment prices in Tower Hamlets have steadily risen over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trend of Apartment Prices in Tower Hamlets",
+      "chart_description": "Visualizing the upward trend in apartment prices from 2020 to 2023 in Tower Hamlets.",
+      "reasoning": "A line chart effectively shows the trend of apartment prices over time, highlighting the increase.",
+      "tapas_questions": [
+        "How did apartment prices change from 2020 to 2023 in Tower Hamlets?",
+        "What is the average price of apartments in Tower Hamlets over the years?",
+        "Which year saw the highest increase in apartment prices in Tower Hamlets?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_005",
+      "dataset": "house-prices",
+      "category": "cross_dimensional",
+      "original_proposition": "In 2023, house prices in the 'detached homes' category are highest in the borough of Richmond upon Thames.",
+      "reworded_proposition": "In 2023, Richmond upon Thames stands out for having the highest house prices in the detached homes category compared to other boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Detached Home Prices in Boroughs, 2023",
+      "chart_description": "Comparison of detached home prices across boroughs in 2023.",
+      "reasoning": "A bar chart effectively compares house prices across different boroughs, highlighting Richmond upon Thames as the highest.",
+      "tapas_questions": [
+        "Which borough has the highest house prices for detached homes?",
+        "How do house prices in Richmond upon Thames compare to other boroughs?",
+        "What is the average house price for detached homes across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_006",
+      "dataset": "house-prices",
+      "category": "cross_dimensional",
+      "original_proposition": "The borough of Hammersmith and Fulham shows a 30% increase in 'luxury homes' prices during winter months from 2020 to 2023.",
+      "reworded_proposition": "Hammersmith and Fulham has experienced a notable rise in luxury home prices during the winter months over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Winter Luxury Home Price Trends in Hammersmith & Fulham",
+      "chart_description": "Track the increase in luxury home prices during winter from 2020 to 2023.",
+      "reasoning": "A simple 2D line chart effectively illustrates the trend of price changes over time, highlighting seasonal patterns.",
+      "tapas_questions": [
+        "How did luxury home prices change from winter 2020 to winter 2023 in Hammersmith and Fulham?",
+        "What is the average luxury home price during winter months in Hammersmith and Fulham?",
+        "Which winter month saw the highest increase in luxury home prices in Hammersmith and Fulham?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

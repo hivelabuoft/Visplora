@@ -658,6 +658,265 @@
           "large": { "title": "12px", "label": "11px" }
         }
       }
+    },
+    
+    "areaChart": {
+      "description": "Template for generating area charts showing trends over time with filled area under line",
+      "chartType": "area",
+      "supportedModes": ["2D", "3D"],
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing time/category data",
+          "column": "string - Column name for time/category axis"
+        },
+        "metric": "string - The metric being measured (e.g., 'Count', 'Value', 'Cases')",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Simple time series data for area fill",
+          "example": [
+            { "x-variableName": "time", "y-variableName": "value", "time": "2020", "value": 450 },
+            { "x-variableName": "time", "y-variableName": "value", "time": "2021", "value": 520 },
+            { "x-variableName": "time", "y-variableName": "value", "time": "2022", "value": 580 },
+            { "x-variableName": "time", "y-variableName": "value", "time": "2023", "value": 620 }
+          ],
+          "schema": {
+            "time": "string - Time period",
+            "value": "number - Numeric value for area fill"
+          }
+        },
+        "3D": {
+          "description": "Multi-dimensional area data with dimension switching",
+          "dimensions": ["Sales", "Marketing", "Operations", "Support"],
+          "example": {
+            "Sales": [
+              { "x-variableName": "time", "y-variableName": "value", "dimensionName": "dimension", "time": "2020", "value": 420, "dimension": "Sales" },
+              { "x-variableName": "time", "y-variableName": "value", "dimensionName": "dimension", "time": "2021", "value": 480, "dimension": "Sales" }
+            ]
+          },
+          "schema": {
+            "time": "string - Time period",
+            "value": "number - Numeric value",
+            "dimension": "string - Dimension name for switching"
+          }
+        }
+      },
+      "chartDimensions": {
+        "small": { "width": 120, "height": "50px (with dimensions) / 60px (without)" },
+        "medium": { "width": 280, "height": "100px (with dimensions) / 120px (without)" },
+        "large": { "width": 400, "height": "150px (with dimensions) / 180px (without)" }
+      }
+    },
+    
+    "scatterPlot": {
+      "description": "Template for generating scatter plots showing correlation between two metrics",
+      "chartType": "scatter",
+      "supportedModes": ["2D", "3D"],
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing data points",
+          "column": "string - Column name for category/point labels"
+        },
+        "xMetric": "string - The X-axis metric (e.g., 'Income', 'Population')",
+        "yMetric": "string - The Y-axis metric (e.g., 'Crime Rate', 'Satisfaction')",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Simple scatter data with x-y coordinates",
+          "example": [
+            { "x-variableName": "x_value", "y-variableName": "y_value", "categoryName": "category", "x_value": 25000, "y_value": 85, "category": "Camden" },
+            { "x-variableName": "x_value", "y-variableName": "y_value", "categoryName": "category", "x_value": 32000, "y_value": 92, "category": "Westminster" },
+            { "x-variableName": "x_value", "y-variableName": "y_value", "categoryName": "category", "x_value": 28000, "y_value": 78, "category": "Hackney" }
+          ],
+          "schema": {
+            "x_value": "number - X-axis numeric value",
+            "y_value": "number - Y-axis numeric value",
+            "category": "string - Point identifier/label"
+          }
+        },
+        "3D": {
+          "description": "Multi-dimensional scatter data with dimension switching",
+          "dimensions": ["Economic", "Social", "Environmental", "Education"],
+          "example": {
+            "Economic": [
+              { "x-variableName": "x_value", "y-variableName": "y_value", "categoryName": "category", "dimensionName": "dimension", "x_value": 25000, "y_value": 85, "category": "Camden", "dimension": "Economic" }
+            ]
+          },
+          "schema": {
+            "x_value": "number - X-axis value",
+            "y_value": "number - Y-axis value",
+            "category": "string - Point identifier",
+            "dimension": "string - Dimension name for switching"
+          }
+        }
+      },
+      "chartDimensions": {
+        "small": { "width": 120, "height": "80px (with dimensions) / 90px (without)" },
+        "medium": { "width": 250, "height": "160px (with dimensions) / 180px (without)" },
+        "large": { "width": 400, "height": "250px (with dimensions) / 280px (without)" }
+      }
+    },
+    
+    "bubbleChart": {
+      "description": "Template for generating bubble charts with three dimensions (x, y, and bubble size)",
+      "chartType": "bubble",
+      "supportedModes": ["2D", "3D"],
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing data points",
+          "column": "string - Column name for category/point labels"
+        },
+        "xMetric": "string - The X-axis metric (e.g., 'Income', 'Population')",
+        "yMetric": "string - The Y-axis metric (e.g., 'Crime Rate', 'Satisfaction')",
+        "sizeMetric": "string - The bubble size metric (e.g., 'Population', 'Volume')",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Bubble data with x, y coordinates and size values",
+          "example": [
+            { "x-variableName": "x_value", "y-variableName": "y_value", "sizeVariableName": "size_value", "categoryName": "category", "x_value": 25000, "y_value": 85, "size_value": 500000, "category": "Camden" },
+            { "x-variableName": "x_value", "y-variableName": "y_value", "sizeVariableName": "size_value", "categoryName": "category", "x_value": 32000, "y_value": 92, "size_value": 750000, "category": "Westminster" }
+          ],
+          "schema": {
+            "x_value": "number - X-axis numeric value",
+            "y_value": "number - Y-axis numeric value",
+            "size_value": "number - Bubble size value",
+            "category": "string - Bubble identifier/label"
+          }
+        },
+        "3D": {
+          "description": "Multi-dimensional bubble data with dimension switching",
+          "dimensions": ["Economic", "Social", "Environmental", "Education"],
+          "example": {
+            "Economic": [
+              { "x-variableName": "x_value", "y-variableName": "y_value", "sizeVariableName": "size_value", "categoryName": "category", "dimensionName": "dimension", "x_value": 25000, "y_value": 85, "size_value": 500000, "category": "Camden", "dimension": "Economic" }
+            ]
+          },
+          "schema": {
+            "x_value": "number - X-axis value",
+            "y_value": "number - Y-axis value",
+            "size_value": "number - Bubble size value",
+            "category": "string - Bubble identifier",
+            "dimension": "string - Dimension name for switching"
+          }
+        }
+      },
+      "chartDimensions": {
+        "small": { "width": 120, "height": "80px (with dimensions) / 90px (without)" },
+        "medium": { "width": 250, "height": "160px (with dimensions) / 180px (without)" },
+        "large": { "width": 400, "height": "250px (with dimensions) / 280px (without)" }
+      }
+    },
+    
+    "histogram": {
+      "description": "Template for generating histograms showing distribution of a single metric",
+      "chartType": "histogram",
+      "supportedModes": ["2D", "3D"],
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing distribution data",
+          "column": "string - Column name for the metric to be distributed"
+        },
+        "metric": "string - The metric being distributed (e.g., 'Age', 'Income', 'Score')",
+        "bins": "number (optional) - Number of histogram bins (default: auto-calculated)",
+        "dimension": "string (optional) - For 3D charts, the dimension to switch between",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "Distribution data for histogram binning",
+          "example": [
+            { "binName": "bin", "countName": "count", "bin": "0-10", "count": 15 },
+            { "binName": "bin", "countName": "count", "bin": "10-20", "count": 25 },
+            { "binName": "bin", "countName": "count", "bin": "20-30", "count": 40 },
+            { "binName": "bin", "countName": "count", "bin": "30-40", "count": 30 },
+            { "binName": "bin", "countName": "count", "bin": "40-50", "count": 20 }
+          ],
+          "schema": {
+            "bin": "string - Bin range (e.g., '0-10', '10-20')",
+            "count": "number - Frequency count for the bin"
+          }
+        },
+        "3D": {
+          "description": "Multi-dimensional histogram data with dimension switching",
+          "dimensions": ["Age Groups", "Income Brackets", "Education Levels", "Experience Years"],
+          "example": {
+            "Age Groups": [
+              { "binName": "bin", "countName": "count", "dimensionName": "dimension", "bin": "18-25", "count": 120, "dimension": "Age Groups" },
+              { "binName": "bin", "countName": "count", "dimensionName": "dimension", "bin": "26-35", "count": 180, "dimension": "Age Groups" }
+            ]
+          },
+          "schema": {
+            "bin": "string - Bin range identifier",
+            "count": "number - Frequency count",
+            "dimension": "string - Dimension name for switching"
+          }
+        }
+      },
+      "chartDimensions": {
+        "small": { "width": 120, "height": "70px (with dimensions) / 80px (without)" },
+        "medium": { "width": 250, "height": "140px (with dimensions) / 160px (without)" },
+        "large": { "width": 400, "height": "210px (with dimensions) / 240px (without)" }
+      }
+    },
+    
+    "histogramHeatmap": {
+      "description": "Template for generating 2D histogram heatmaps showing joint distribution of two metrics",
+      "chartType": "histogramHeatmap",
+      "supportedModes": ["2D"],
+      "parameters": {
+        "charttitle": "string - The main title of the chart",
+        "description": "string - Subtitle or description of the chart",
+        "categories": {
+          "csv": "string - Path to CSV file containing joint distribution data",
+          "column": "string - Base column name for the data"
+        },
+        "xMetric": "string - The X-axis metric for binning (e.g., 'Age', 'Income')",
+        "yMetric": "string - The Y-axis metric for binning (e.g., 'Score', 'Spending')",
+        "xBins": "number (optional) - Number of X-axis bins (default: 10)",
+        "yBins": "number (optional) - Number of Y-axis bins (default: 10)",
+        "size": "string - Chart size: 'small', 'medium', or 'large'"
+      },
+      "dataStructure": {
+        "2D": {
+          "description": "2D histogram data for heatmap visualization",
+          "example": [
+            { "xBinName": "x_bin", "yBinName": "y_bin", "countName": "count", "x_bin": "20-30", "y_bin": "0-100", "count": 25 },
+            { "xBinName": "x_bin", "yBinName": "y_bin", "countName": "count", "x_bin": "20-30", "y_bin": "100-200", "count": 40 },
+            { "xBinName": "x_bin", "yBinName": "y_bin", "countName": "count", "x_bin": "30-40", "y_bin": "0-100", "count": 35 },
+            { "xBinName": "x_bin", "yBinName": "y_bin", "countName": "count", "x_bin": "30-40", "y_bin": "100-200", "count": 60 }
+          ],
+          "schema": {
+            "x_bin": "string - X-axis bin range (e.g., '20-30')",
+            "y_bin": "string - Y-axis bin range (e.g., '0-100')",
+            "count": "number - Frequency count for the bin intersection"
+          }
+        }
+      },
+      "colorScheme": {
+        "lowValue": "#FEF3E2",
+        "midValue": "#F59E0B",
+        "highValue": "#92400E"
+      },
+      "chartDimensions": {
+        "small": { "width": 120, "height": "100px" },
+        "medium": { "width": 200, "height": "200px" },
+        "large": { "width": 300, "height": "300px" }
+      }
     }
   },
   
@@ -685,6 +944,11 @@
       "groupedBarChart": ["#3B82F6", "#8B5CF6", "#06B6D4", "#10B981"],
       "stackedBarChart": ["#1E40AF", "#3B82F6", "#60A5FA", "#93C5FD", "#DBEAFE"],
       "horizontalDivergingBarChart": { "positive": "#10B981", "negative": "#EF4444", "center": "#6B7280" },
+      "areaChart": "#8B5CF6",
+      "scatterPlot": "#3B82F6",
+      "bubbleChart": ["#3B82F6", "#8B5CF6", "#06B6D4", "#10B981"],
+      "histogram": "#6B7280",
+      "histogramHeatmap": { "low": "#FEF3E2", "mid": "#F59E0B", "high": "#92400E" },
       "overlayLines": {
         "mean_line": "#EF4444",
         "threshold_line": "#F59E0B",
@@ -748,6 +1012,34 @@
         "xAxis": "value field - quantitative metric (positive or negative)",
         "yAxis": "category field - categorical data for comparison",
         "dimension": "dimension field - categorical switching variable"
+      },
+      "areaChart": {
+        "xAxis": "time field - temporal or ordinal data",
+        "yAxis": "value field - quantitative metric for area fill",
+        "dimension": "dimension field - categorical switching variable"
+      },
+      "scatterPlot": {
+        "xAxis": "x_value field - first quantitative variable",
+        "yAxis": "y_value field - second quantitative variable",
+        "category": "category field - point identifier or grouping",
+        "dimension": "dimension field - categorical switching variable"
+      },
+      "bubbleChart": {
+        "xAxis": "x_value field - first quantitative variable",
+        "yAxis": "y_value field - second quantitative variable",
+        "size": "size_value field - quantitative variable for bubble size",
+        "category": "category field - bubble identifier or grouping",
+        "dimension": "dimension field - categorical switching variable"
+      },
+      "histogram": {
+        "xAxis": "bin field - bin range identifiers",
+        "yAxis": "count field - frequency or count values",
+        "dimension": "dimension field - categorical switching variable"
+      },
+      "histogramHeatmap": {
+        "xAxis": "x_bin field - X-axis bin range identifiers",
+        "yAxis": "y_bin field - Y-axis bin range identifiers",
+        "color": "count field - frequency or density values for color mapping"
       }
     },
     "chartSpecificGuidelines": {
@@ -785,6 +1077,36 @@
         "categoryOrdering": "Order categories by magnitude or logical grouping",
         "valueRange": "Ensure reasonable range for both positive and negative values",
         "comparisonContext": "Use for showing change, variance, or performance relative to baseline"
+      },
+      "areaChart": {
+        "trendVisualization": "Use for showing trends over time with emphasis on cumulative values",
+        "dataOrdering": "Ensure time series data is in chronological order",
+        "areaFill": "Area under the curve represents cumulative or volume-based metrics",
+        "baselineZero": "Area charts work best when baseline starts from zero"
+      },
+      "scatterPlot": {
+        "correlationAnalysis": "Use for exploring relationships between two continuous variables",
+        "dataPoints": "Each point represents an individual case or category",
+        "outlierDetection": "Scatter plots help identify outliers and unusual patterns",
+        "axisScaling": "Ensure appropriate scaling for both X and Y axes"
+      },
+      "bubbleChart": {
+        "threeDimensional": "Bubble size adds a third dimension to scatter plot analysis",
+        "sizeMeaning": "Bubble size should represent a meaningful quantitative variable",
+        "dataBalancing": "Ensure bubble sizes are visually distinguishable but not overwhelming",
+        "labelingStrategy": "Consider labeling only the most significant bubbles to avoid clutter"
+      },
+      "histogram": {
+        "distributionAnalysis": "Use for understanding the distribution of a single continuous variable",
+        "binSelection": "Choose appropriate bin sizes to reveal distribution patterns",
+        "dataRange": "Ensure the range covers all data points adequately",
+        "frequencyInterpretation": "Height represents frequency or count of observations in each bin"
+      },
+      "histogramHeatmap": {
+        "jointDistribution": "Use for analyzing the joint distribution of two continuous variables",
+        "binning": "Both X and Y axes should be appropriately binned for meaningful patterns",
+        "colorMapping": "Use color intensity to represent frequency or density",
+        "dataResolution": "Ensure sufficient data points for meaningful heatmap patterns"
       }
     }
   }

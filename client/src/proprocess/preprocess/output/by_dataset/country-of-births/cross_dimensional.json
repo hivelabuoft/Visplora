@@ -1,0 +1,138 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "country-of-births",
+  "processed_at": "2025-08-20T04:06:10.010Z",
+  "total_propositions": 5,
+  "propositions": [
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_001",
+      "dataset": "country-of-births",
+      "category": "cross_dimensional",
+      "original_proposition": "In 2018, births from European countries were 20% higher in inner London boroughs during the spring months.",
+      "reworded_proposition": "During the spring months of 2018, inner London boroughs experienced a noticeably higher number of births from European countries compared to other times of the year.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Birth Trends in Inner London, 2018",
+      "chart_description": "Births from European countries peaked in spring in inner London.",
+      "reasoning": "A line chart effectively illustrates the temporal trend of births across different months, highlighting seasonal variations.",
+      "tapas_questions": [
+        "Which borough had the highest number of births from European countries in spring 2018?",
+        "What percentage of births in inner London were from European countries during spring 2018?",
+        "How did the number of births from European countries change from winter to spring in 2018?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_002",
+      "dataset": "country-of-births",
+      "category": "cross_dimensional",
+      "original_proposition": "From 2017 to 2018, births from African countries showed a 12% increase in outer London boroughs during the winter months.",
+      "reworded_proposition": "Births from African countries in outer London boroughs increased notably during the winter months from 2017 to 2018.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Increase in Births from African Countries",
+      "chart_description": "Trends in births from African countries in outer London, 2017-2018.",
+      "reasoning": "A line chart effectively shows the trend over time, highlighting the increase during the specified period.",
+      "tapas_questions": [
+        "How did births from African countries change from 2017 to 2018?",
+        "Which outer London borough had the highest increase in births?",
+        "What percentage of births were from African countries in 2018?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017-2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_003",
+      "dataset": "country-of-births",
+      "category": "cross_dimensional",
+      "original_proposition": "Births from Asian countries in 2018 were concentrated in the eastern boroughs, peaking in the summer with a 15% increase.",
+      "reworded_proposition": "Births from Asian countries in 2018 showed a notable concentration in the eastern boroughs, with a noticeable peak during the summer months.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Trends in Births from Asian Countries",
+      "chart_description": "Explore birth trends from Asian countries across eastern boroughs in 2018.",
+      "reasoning": "A line chart effectively illustrates the temporal trend and seasonal peaks in births across boroughs.",
+      "tapas_questions": [
+        "Which borough had the highest number of births from Asian countries?",
+        "How did the number of births from Asian countries change from spring to summer?",
+        "What percentage of total births occurred in the eastern boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_004",
+      "dataset": "country-of-births",
+      "category": "cross_dimensional",
+      "original_proposition": "In 2017, births from North American countries were evenly distributed across seasons, with a slight increase of 5% in autumn.",
+      "reworded_proposition": "In 2017, births from North American countries were fairly consistent throughout the year, with a noticeable uptick in the autumn months.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Seasonal Distribution of North American Births in 2017",
+      "chart_description": "Visualize the seasonal trends in births from North American countries across 2017.",
+      "reasoning": "A 3D line chart effectively shows trends over time with seasonal breakdowns, highlighting the slight increase in autumn.",
+      "tapas_questions": [
+        "Which season had the highest number of births from North American countries?",
+        "What percentage of births occurred in autumn?",
+        "How did the number of births change from summer to autumn?"
+      ],
+      "3d_dimension": "time_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_005",
+      "dataset": "country-of-births",
+      "category": "cross_dimensional",
+      "original_proposition": "The number of births from South American countries in 2018 was highest in the boroughs of Lambeth and Southwark during the spring, showing a 10% increase compared to other seasons.",
+      "reworded_proposition": "Births from South American countries peaked in Lambeth and Southwark during spring 2018, surpassing other seasons.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Birth Trends in Lambeth and Southwark",
+      "chart_description": "Birth trends from South American countries in Lambeth and Southwark during 2018.",
+      "reasoning": "A line chart effectively illustrates seasonal trends over time, highlighting changes in birth numbers across different periods.",
+      "tapas_questions": [
+        "Which borough had the highest number of births in spring?",
+        "How did the number of births change from spring to summer?",
+        "What percentage of births occurred in Lambeth during spring?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ]
+}
