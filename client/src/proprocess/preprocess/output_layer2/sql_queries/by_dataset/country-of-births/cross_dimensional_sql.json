@@ -1,0 +1,125 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "country-of-births",
+  "processed_at": "2025-08-20T18:02:38.848Z",
+  "total_queries": 5,
+  "sql_queries": [
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_001",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM birth_country_data WHERE date BETWEEN '2018-01-01' AND '2018-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_002",
+      "dataset": "country-of-births",
+      "time_period": "2017-2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM birth_country_data WHERE date BETWEEN '2017-01-01' AND '2018-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_003",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM birth_country_data WHERE date BETWEEN '2018-01-01' AND '2018-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_004",
+      "dataset": "country-of-births",
+      "time_period": "2017",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT date AS time, population_count AS value, country_of_birth AS dimension FROM birth_country_data WHERE date LIKE '2017%' GROUP BY date, country_of_birth ORDER BY date, country_of_birth;"
+    },
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_005",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM birth_country_data WHERE date BETWEEN '2018-01-01' AND '2018-12-31' GROUP BY date ORDER BY date;"
+    }
+  ]
+}

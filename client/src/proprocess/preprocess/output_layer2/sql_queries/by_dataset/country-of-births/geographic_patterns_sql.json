@@ -1,0 +1,197 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "country-of-births",
+  "processed_at": "2025-08-20T18:02:48.963Z",
+  "total_queries": 8,
+  "sql_queries": [
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_001",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT country_of_birth AS category, SUM(population_count) AS value FROM birth_country_data WHERE date = '2018' GROUP BY country_of_birth ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_002",
+      "dataset": "country-of-births",
+      "time_period": "2017",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT country_of_birth AS category, SUM(population_count) AS value FROM birth_country_data WHERE date = '2017' GROUP BY country_of_birth ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_003",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT country_of_birth AS category, SUM(population_count) AS value FROM birth_country_data WHERE date = '2018' GROUP BY country_of_birth ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_004",
+      "dataset": "country-of-births",
+      "time_period": "2017",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT country_of_birth AS category, SUM(population_count) AS value, AVG(SUM(population_count)) OVER () AS mean_value FROM birth_country_data WHERE date = '2017' GROUP BY country_of_birth ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_005",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT country_of_birth AS category, SUM(population_count) AS value FROM birth_country_data WHERE date = '2018' GROUP BY country_of_birth ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_006",
+      "dataset": "country-of-births",
+      "time_period": "2017-2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM birth_country_data WHERE date BETWEEN '2017-01-01' AND '2018-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_007",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT country_of_birth AS category, SUM(population_count) AS value, area_name AS dimension FROM birth_country_data WHERE date = '2018' GROUP BY country_of_birth, area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_008",
+      "dataset": "country-of-births",
+      "time_period": "2017",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT country_of_birth AS category, SUM(population_count) AS value FROM birth_country_data WHERE date = '2017' GROUP BY country_of_birth ORDER BY value DESC;"
+    }
+  ]
+}

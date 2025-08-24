@@ -1,0 +1,369 @@
+{
+  "dataset": "libraries",
+  "processed_at": "2025-08-20T18:05:19.223Z",
+  "total_queries": 15,
+  "categories": {
+    "categorical_analysis": {
+      "category": "categorical_analysis",
+      "dataset": "libraries",
+      "processed_at": "2025-08-20T18:05:07.470Z",
+      "total_queries": 4,
+      "sql_queries": [
+        {
+          "proposition_id": "libraries_categorical_analysis_cat_01",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "category",
+            "value"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value, (SUM(visitor_count) * 100.0 / (SELECT SUM(visitor_count) FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31')) AS percentage FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "libraries_categorical_analysis_cat_02",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "category",
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "libraries_categorical_analysis_cat_03",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "category",
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "libraries_categorical_analysis_cat_04",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "category",
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value, AVG(visitor_count) OVER () AS mean_value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+        }
+      ]
+    },
+    "geographic_patterns": {
+      "category": "geographic_patterns",
+      "dataset": "libraries",
+      "processed_at": "2025-08-20T18:05:17.101Z",
+      "total_queries": 8,
+      "sql_queries": [
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_01",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_02",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_03",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(visitor_count) AS value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_04",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value, AVG(SUM(visitor_count)) OVER () AS mean_value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_05",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value, (SUM(visitor_count) * 100.0 / (SELECT SUM(visitor_count) FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31')) AS percentage FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_06",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value, AVG(SUM(visitor_count)) OVER () AS mean_value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_07",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value, AVG(SUM(visitor_count)) OVER () AS mean_value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "libraries_geographic_patterns_geo_08",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS x_bin, visitor_count AS y_bin, COUNT(*) AS count FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name, visitor_count ORDER BY area_name, visitor_count;"
+        }
+      ]
+    },
+    "statistical_patterns": {
+      "category": "statistical_patterns",
+      "dataset": "libraries",
+      "processed_at": "2025-08-20T18:05:19.222Z",
+      "total_queries": 3,
+      "sql_queries": [
+        {
+          "proposition_id": "libraries_statistical_patterns_stat_01",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT CONCAT(FLOOR(visitor_count / 1000) * 1000, '-', FLOOR(visitor_count / 1000) * 1000 + 999) AS bin, COUNT(*) AS frequency FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY bin ORDER BY bin;"
+        },
+        {
+          "proposition_id": "libraries_statistical_patterns_stat_02",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "value"
+          ],
+          "chart_type": "scatterPlot_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            },
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            }
+          ],
+          "sql_query": "SELECT library_name AS category, SUM(visitor_count) AS x_value, SUM(book_count) AS y_value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY library_name ORDER BY library_name;"
+        },
+        {
+          "proposition_id": "libraries_statistical_patterns_stat_03",
+          "dataset": "libraries",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT CONCAT('Area: ', area_name) AS bin, SUM(visitor_count) AS frequency FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "category": "categorical_analysis",
+  "dataset": "restaurants",
+  "processed_at": "2025-08-20T18:06:09.185Z",
+  "total_queries": 5,
+  "sql_queries": [
+    {
+      "proposition_id": "restaurants_categorical_analysis_ca_001",
+      "dataset": "restaurants",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, (SUM(restaurant_count) * 100.0 / (SELECT SUM(restaurant_count) FROM restaurant_data)) AS percentage FROM restaurant_data GROUP BY cuisine_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "restaurants_categorical_analysis_ca_002",
+      "dataset": "restaurants",
+      "time_period": "2001-2017",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT date AS time, restaurant_count AS value, cuisine_type AS dimension FROM restaurant_data WHERE date BETWEEN '2001-01-01' AND '2017-12-31' GROUP BY date, cuisine_type ORDER BY date, cuisine_type;"
+    },
+    {
+      "proposition_id": "restaurants_categorical_analysis_ca_003",
+      "dataset": "restaurants",
+      "time_period": "2010-2017",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value FROM restaurant_data WHERE date BETWEEN '2010-01-01' AND '2017-12-31' GROUP BY cuisine_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "restaurants_categorical_analysis_ca_004",
+      "dataset": "restaurants",
+      "time_period": "2017",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, (SUM(restaurant_count) * 100.0 / (SELECT SUM(restaurant_count) FROM restaurant_data WHERE YEAR(date) = 2017)) AS percentage FROM restaurant_data WHERE YEAR(date) = 2017 GROUP BY cuisine_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "restaurants_categorical_analysis_ca_005",
+      "dataset": "restaurants",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, (SUM(restaurant_count) * 100.0 / (SELECT SUM(restaurant_count) FROM restaurant_data)) AS percentage FROM restaurant_data GROUP BY cuisine_type ORDER BY value DESC;"
+    }
+  ]
+}

@@ -1,0 +1,968 @@
+{
+  "dataset": "crime-rates",
+  "processed_at": "2025-08-20T18:03:25.478Z",
+  "total_queries": 40,
+  "categories": {
+    "categorical_analysis": {
+      "category": "categorical_analysis",
+      "dataset": "crime-rates",
+      "processed_at": "2025-08-20T18:02:58.252Z",
+      "total_queries": 8,
+      "sql_queries": [
+        {
+          "proposition_id": "crime-rates_categorical_analysis_cat_001",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "count"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value, (SUM(count) * 100.0 / (SELECT SUM(count) FROM crime_data)) AS percentage FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_categorical_analysis_cat_002",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_categorical_analysis_cat_003",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_categorical_analysis_cat_004",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value, AVG(SUM(count)) OVER (PARTITION BY crime_category) AS mean_value FROM crime_data GROUP BY crime_category, borough_name ORDER BY category;"
+        },
+        {
+          "proposition_id": "crime-rates_categorical_analysis_cat_005",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS x_bin, borough_name AS y_bin, SUM(count) AS count FROM crime_data GROUP BY crime_category, borough_name ORDER BY crime_category, borough_name;"
+        },
+        {
+          "proposition_id": "crime-rates_categorical_analysis_cat_006",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "area_name",
+            "count"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS x_bin, area_name AS y_bin, SUM(count) AS count FROM crime_data GROUP BY crime_category, area_name ORDER BY crime_category, area_name;"
+        },
+        {
+          "proposition_id": "crime-rates_categorical_analysis_cat_007",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_categorical_analysis_cat_008",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+        }
+      ]
+    },
+    "cross_dimensional": {
+      "category": "cross_dimensional",
+      "dataset": "crime-rates",
+      "processed_at": "2025-08-20T18:03:04.555Z",
+      "total_queries": 8,
+      "sql_queries": [
+        {
+          "proposition_id": "crime-rates_cross_dimensional_cross_001",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count",
+            "borough_name"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "crime-rates_cross_dimensional_cross_002",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count",
+            "borough_name"
+          ],
+          "chart_type": "lineChart_simple_3D",
+          "example": [
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            },
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            }
+          ],
+          "sql_query": "SELECT date AS time, count AS value, crime_category AS dimension FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date, crime_category, borough_name ORDER BY date, crime_category, borough_name;"
+        },
+        {
+          "proposition_id": "crime-rates_cross_dimensional_cross_003",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count",
+            "borough_name"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value, AVG(SUM(count)) OVER (PARTITION BY crime_category) AS mean_value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category ORDER BY category;"
+        },
+        {
+          "proposition_id": "crime-rates_cross_dimensional_cross_004",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count",
+            "borough_name"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "crime-rates_cross_dimensional_cross_005",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "area_name",
+            "count"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS x_bin, area_name AS y_bin, SUM(count) AS count FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category, area_name ORDER BY x_bin, y_bin;"
+        },
+        {
+          "proposition_id": "crime-rates_cross_dimensional_cross_006",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "area_name",
+            "count"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS x_bin, area_name AS y_bin, SUM(count) AS count FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category, area_name ORDER BY x_bin, y_bin;"
+        },
+        {
+          "proposition_id": "crime-rates_cross_dimensional_cross_007",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count",
+            "borough_name"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value, AVG(SUM(count)) OVER (PARTITION BY crime_category) AS mean_value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category ORDER BY category;"
+        },
+        {
+          "proposition_id": "crime-rates_cross_dimensional_cross_008",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count",
+            "area_name"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS x_bin, area_name AS y_bin, SUM(count) AS count FROM crime_data JOIN ethnicity_data ON crime_data.borough_name = ethnicity_data.borough_name WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category, area_name ORDER BY x_bin, y_bin;"
+        }
+      ]
+    },
+    "geographic_patterns": {
+      "category": "geographic_patterns",
+      "dataset": "crime-rates",
+      "processed_at": "2025-08-20T18:03:16.396Z",
+      "total_queries": 10,
+      "sql_queries": [
+        {
+          "proposition_id": "crime-rates_geographic_patterns_geo_001",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value, (SUM(count) * 100.0 / (SELECT SUM(count) FROM crime_data)) AS percentage FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_geographic_patterns_geo_002",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_geographic_patterns_geo_003",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_geographic_patterns_geo_004",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_geographic_patterns_geo_005",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value, AVG(SUM(count)) OVER (PARTITION BY crime_category) AS mean_value FROM crime_data GROUP BY crime_category, borough_name ORDER BY crime_category, borough_name;"
+        },
+        {
+          "proposition_id": "crime-rates_geographic_patterns_geo_006",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "area_name",
+            "count"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS x_bin, area_name AS y_bin, SUM(count) AS count FROM crime_data GROUP BY crime_category, area_name ORDER BY crime_category, area_name;"
+        },
+        {
+          "proposition_id": "crime-rates_geographic_patterns_geo_007",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT borough_name AS category, SUM(count) AS value, (SUM(count) * 100.0 / (SELECT SUM(count) FROM crime_data)) AS percentage FROM crime_data GROUP BY borough_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_geographic_patterns_geo_008",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT borough_name AS category, SUM(count) AS value FROM crime_data GROUP BY borough_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_geographic_patterns_geo_009",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_geographic_patterns_geo_010",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS x_bin, borough_name AS y_bin, SUM(count) AS count FROM crime_data GROUP BY crime_category, borough_name ORDER BY crime_category, borough_name;"
+        }
+      ]
+    },
+    "statistical_patterns": {
+      "category": "statistical_patterns",
+      "dataset": "crime-rates",
+      "processed_at": "2025-08-20T18:03:19.629Z",
+      "total_queries": 6,
+      "sql_queries": [
+        {
+          "proposition_id": "crime-rates_statistical_patterns_stat_001",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "count"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS bin, SUM(count) AS frequency FROM crime_data GROUP BY crime_category ORDER BY frequency DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_statistical_patterns_stat_002",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT CONCAT(crime_category, ' - ', borough_name) AS bin, SUM(count) AS frequency FROM crime_data GROUP BY crime_category, borough_name ORDER BY bin;"
+        },
+        {
+          "proposition_id": "crime-rates_statistical_patterns_stat_003",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "area_name",
+            "count"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_statistical_patterns_stat_004",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "area_name",
+            "count"
+          ],
+          "chart_type": "scatterPlot_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            },
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, area_name AS x_value, SUM(count) AS y_value FROM crime_data GROUP BY crime_category, area_name ORDER BY crime_category, area_name;"
+        },
+        {
+          "proposition_id": "crime-rates_statistical_patterns_stat_005",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area_name",
+            "count"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT borough_name AS bin, SUM(count) AS frequency FROM crime_data GROUP BY borough_name ORDER BY frequency DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_statistical_patterns_stat_006",
+          "dataset": "crime-rates",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "crime_category",
+            "borough_name",
+            "count"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT CONCAT(crime_category, ' - ', borough_name) AS bin, SUM(count) AS frequency FROM crime_data GROUP BY crime_category, borough_name ORDER BY bin;"
+        }
+      ]
+    },
+    "temporal_trends": {
+      "category": "temporal_trends",
+      "dataset": "crime-rates",
+      "processed_at": "2025-08-20T18:03:25.477Z",
+      "total_queries": 8,
+      "sql_queries": [
+        {
+          "proposition_id": "crime-rates_temporal_trends_temp_001",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "crime-rates_temporal_trends_temp_002",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count",
+            "borough_name"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "crime-rates_temporal_trends_temp_003",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count",
+            "borough_name"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "crime-rates_temporal_trends_temp_004",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "date",
+            "count",
+            "borough_name"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "crime-rates_temporal_trends_temp_005",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "date",
+            "count"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "crime-rates_temporal_trends_temp_006",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count",
+            "borough_name"
+          ],
+          "chart_type": "lineChart_simple_3D",
+          "example": [
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            },
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            }
+          ],
+          "sql_query": "SELECT date AS time, count AS value, crime_category AS dimension FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' ORDER BY date, crime_category;"
+        },
+        {
+          "proposition_id": "crime-rates_temporal_trends_temp_007",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "crime-rates_temporal_trends_temp_008",
+          "dataset": "crime-rates",
+          "time_period": "2022-2023",
+          "variables_needed": [
+            "crime_category",
+            "date",
+            "count",
+            "borough_name"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category ORDER BY value DESC;"
+        }
+      ]
+    }
+  }
+}

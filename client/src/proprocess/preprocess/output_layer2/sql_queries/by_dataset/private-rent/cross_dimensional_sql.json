@@ -1,0 +1,76 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "private-rent",
+  "processed_at": "2025-08-20T18:05:49.821Z",
+  "total_queries": 3,
+  "sql_queries": [
+    {
+      "proposition_id": "private-rent_cross_dimensional_cd1",
+      "dataset": "private-rent",
+      "time_period": "2022",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT property_type AS category, AVG(average_rent) AS value FROM rent_data WHERE date BETWEEN '2022-01-01' AND '2022-12-31' GROUP BY property_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "private-rent_cross_dimensional_cd2",
+      "dataset": "private-rent",
+      "time_period": "2011-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_rent AS value FROM rent_data WHERE date BETWEEN '2011-01-01' AND '2023-12-31' ORDER BY date;"
+    },
+    {
+      "proposition_id": "private-rent_cross_dimensional_cd3",
+      "dataset": "private-rent",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT property_type AS category, AVG(average_rent) AS value FROM rent_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY property_type ORDER BY value DESC;"
+    }
+  ]
+}

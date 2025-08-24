@@ -148,8 +148,33 @@ interface ReactFlowTimelineProps {
 const TimelineNodeComponent = ({ data }: { data: any }) => {
   const { node, isActive, onNodeClick, isSelected } = data;
   
-  // Get random drift type for this node (dev mode)
-  const driftType = getRandomDriftType(node.sentence_id);
+  // Get drift type from the actual node data, with fallback to random for dev
+  const getDriftTypeForNode = (node: TimelineNode) => {
+    if (node.changed_from_previous?.drift_types && node.changed_from_previous.drift_types.length > 0) {
+      const driftTypeId = node.changed_from_previous.drift_types[0];
+      
+      // Map drift types from JSON data to component IDs
+      const driftTypeMapping: { [key: string]: string } = {
+        'elaboration': 'elaboration',
+        'context shift': 'context_shift',
+        'reframing': 'reframing',
+        'topic_change': 'topic_change',
+        'topic change': 'topic_change' // Handle both variants
+      };
+      
+      const mappedDriftType = driftTypeMapping[driftTypeId] || driftTypeId;
+      const driftType = DRIFT_TYPES.find(dt => dt.id === mappedDriftType);
+      
+      if (driftType) {
+        return driftType;
+      }
+    }
+    
+    // Fallback to random assignment for development
+    return getRandomDriftType(node.sentence_id);
+  };
+  
+  const driftType = getDriftTypeForNode(node);
   
   // Minimal node styling with drift type
   const getNodeStyle = () => {
@@ -464,118 +489,239 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
       sentence_id: n.sentence_id,
       parent_id: n.parent_id,
       child_ids: n.child_ids,
-      content: n.sentence_content, // Show full content, not truncated
-      changed_from_previous: n.changed_from_previous, // Add this for debugging
-      dimensions: n.changed_from_previous?.dimensions // Add this for debugging
+      content: n.sentence_content.substring(0, 30) + '...', // Truncated for readability
+      changed_from_previous: n.changed_from_previous,
     })));
     
-    const nodeSpacing = 80; // Horizontal spacing
-    const branchOffset = 50; // Vertical offset for branches (reduced from 80)
+    const nodeSpacing = 100; // Increased horizontal spacing
+    const branchOffset = 80; // Increased vertical offset for branches
     const centerY = 0; // Center at Y=0
     
     // Create a map for quick lookups
     const nodeMap = new Map(nodes.map(node => [node.sentence_id, node]));
     
-    // Build parent-child relationships from both child_ids and parent_id information
-    // This handles cases where the data might have inconsistent relationships
+    // Build STRICT parent-child relationships - ONLY use the data as provided
+    // Each node should have at most ONE parent and can have multiple children
     const childrenMap = new Map<string, string[]>();
     
-    // Initialize with existing child_ids
+    // Initialize all nodes with empty children arrays
     nodes.forEach(node => {
-      if (node.child_ids && node.child_ids.length > 0) {
-        childrenMap.set(node.sentence_id, [...node.child_ids]);
-      } else {
-        childrenMap.set(node.sentence_id, []);
-      }
+      childrenMap.set(node.sentence_id, []);
     });
     
-    // Build children relationships from parent_id information
+    // Build children relationships ONLY from parent_id information to ensure tree structure
     nodes.forEach(node => {
       if (node.parent_id && node.parent_id !== "") {
-        const existingChildren = childrenMap.get(node.parent_id) || [];
-        if (!existingChildren.includes(node.sentence_id)) {
-          existingChildren.push(node.sentence_id);
-          childrenMap.set(node.parent_id, existingChildren);
+        const parentChildren = childrenMap.get(node.parent_id) || [];
+        if (!parentChildren.includes(node.sentence_id)) {
+          parentChildren.push(node.sentence_id);
+          childrenMap.set(node.parent_id, parentChildren);
         }
       }
     });
     
-    // Position all nodes using a breadth-first traversal to properly handle the tree structure
+    // Verify no cycles and proper tree structure
+    const verifyTreeStructure = () => {
+      const visited = new Set<string>();
+      const recursionStack = new Set<string>();
+      
+      const hasCycle = (nodeId: string): boolean => {
+        if (recursionStack.has(nodeId)) return true; // Cycle detected
+        if (visited.has(nodeId)) return false; // Already processed
+        
+        visited.add(nodeId);
+        recursionStack.add(nodeId);
+        
+        const children = childrenMap.get(nodeId) || [];
+        for (const child of children) {
+          if (hasCycle(child)) return true;
+        }
+        
+        recursionStack.delete(nodeId);
+        return false;
+      };
+      
+      // Check all nodes for cycles
+      for (const nodeId of childrenMap.keys()) {
+        if (hasCycle(nodeId)) {
+          console.error('❌ Cycle detected in timeline tree structure!');
+          return false;
+        }
+      }
+      return true;
+    };
+    
+    if (!verifyTreeStructure()) {
+      console.error('❌ Invalid tree structure, falling back to linear layout');
+      // Fallback to simple linear layout if tree structure is invalid
+      const fallbackNodes = nodes.map((node, index) => ({
+        id: node.sentence_id,
+        type: 'timelineNode',
+        position: { x: index * nodeSpacing, y: centerY },
+        data: { node, isActive: activePathSet.has(node.sentence_id), onNodeClick: handleNodeClick, isSelected: selectedNode?.sentence_id === node.sentence_id },
+        draggable: false,
+      }));
+      return { nodes: fallbackNodes, edges: [] };
+    }
+    
+    // Position all nodes using proper tree traversal
     const allPositions = new Map<string, { x: number; y: number }>();
     const processedNodes = new Set<string>();
     
     // Find the root node (node with no parent or empty parent_id)
     const rootNode = nodes.find(node => !node.parent_id || node.parent_id === "");
-    if (!rootNode) return { nodes: [], edges: [] };
+    if (!rootNode) {
+      console.error('❌ No root node found in timeline data');
+      return { nodes: [], edges: [] };
+    }
     
+    console.log('🌱 Root node found:', rootNode.sentence_id, rootNode.sentence_content.substring(0, 30) + '...');
     
     // Start with root at position (0, 0)
     allPositions.set(rootNode.sentence_id, { x: 0, y: centerY });
     processedNodes.add(rootNode.sentence_id);
     
-    // Queue for breadth-first processing: [nodeId, depth]
-    const queue: Array<{ nodeId: string; depth: number }> = [{ nodeId: rootNode.sentence_id, depth: 0 }];
-    
-    while (queue.length > 0) {
-      const { nodeId, depth } = queue.shift()!;
-      const currentNode = nodeMap.get(nodeId);
-      if (!currentNode) continue;
+    // Recursive function to position children with improved overlap prevention
+    const positionChildren = (parentId: string, parentPosition: { x: number; y: number }, depth: number) => {
+      const children = childrenMap.get(parentId) || [];
+      if (children.length === 0) return;
       
-      const currentPosition = allPositions.get(nodeId);
-      if (!currentPosition) continue;
+      console.log(`📍 Positioning ${children.length} children for node ${parentId} at depth ${depth}`);
       
+      // Calculate the vertical space needed for all descendants of each child
+      const calculateSubtreeHeight = (nodeId: string, visited = new Set<string>()): number => {
+        if (visited.has(nodeId)) return 0; // Prevent infinite recursion
+        visited.add(nodeId);
+        
+        const nodeChildren = childrenMap.get(nodeId) || [];
+        if (nodeChildren.length === 0) return 1; // Leaf node takes 1 unit
+        
+        let totalHeight = 0;
+        for (const childId of nodeChildren) {
+          totalHeight += calculateSubtreeHeight(childId, new Set(visited));
+        }
+        return Math.max(1, totalHeight); // At least 1 unit for the node itself
+      };
       
-      // Process all children of the current node using the built children map
-      const children = childrenMap.get(nodeId) || [];
-      children.forEach((childId: string, childIndex: number) => {
-        if (processedNodes.has(childId)) return; // Already processed
+      // Calculate heights for each child's subtree
+      const subtreeHeights = children.map(childId => calculateSubtreeHeight(childId));
+      const totalSubtreeHeight = subtreeHeights.reduce((sum, height) => sum + height, 0);
+      
+      // If we have multiple children, we need more vertical space
+      let currentY = parentPosition.y;
+      
+      if (children.length > 1) {
+        // Find which child is in the active path (if any)
+        const activeChildIndex = children.findIndex((cId: string) => activePathSet.has(cId));
         
-        const childNode = nodeMap.get(childId);
-        if (!childNode) return;
+        // Calculate total height needed and center around parent
+        const totalHeightNeeded = Math.max(totalSubtreeHeight * branchOffset, children.length * branchOffset);
+        const startY = parentPosition.y - (totalHeightNeeded / 2);
         
-        // Calculate position for this child
-        const childX = currentPosition.x + nodeSpacing; // Always move right for children
-        
-        // For multiple children, spread them vertically around the parent
-        let childY = currentPosition.y; // Start with parent's Y position
-        
-        if (children.length > 1) {
-          // Find which child is in the active path (if any)
-          const activeChildIndex = children.findIndex((cId: string) => activePathSet.has(cId));
-          
-          if (activeChildIndex !== -1) {
-            // Position active child at parent's Y level, others above/below
+        if (activeChildIndex !== -1) {
+          // Position active child at parent's Y level, others distributed above/below
+          children.forEach((childId: string, childIndex: number) => {
+            if (processedNodes.has(childId)) {
+              console.warn(`⚠️ Node ${childId} already processed, skipping to prevent cycles`);
+              return;
+            }
+            
+            const childNode = nodeMap.get(childId);
+            if (!childNode) {
+              console.warn(`⚠️ Child node ${childId} not found in node map`);
+              return;
+            }
+            
+            const childX = parentPosition.x + nodeSpacing;
+            let childY: number;
+            
             if (childIndex === activeChildIndex) {
-              childY = currentPosition.y; // Active child stays at parent's level
+              childY = parentPosition.y; // Active child stays at parent's level
             } else {
-              // Calculate offset for non-active children
-              let branchOrder = childIndex;
-              if (childIndex > activeChildIndex) {
-                branchOrder = childIndex - 1; // Adjust for active child taking center
-              }
+              // Distribute non-active children based on their position relative to active
+              const nonActiveIndex = childIndex > activeChildIndex ? childIndex - 1 : childIndex;
+              const totalNonActive = children.length - 1;
               
-              // Alternate above and below parent's level
-              if (branchOrder % 2 === 0) {
-                childY = currentPosition.y + (Math.floor(branchOrder / 2) + 1) * branchOffset; // Below
+              if (totalNonActive === 1) {
+                // Only one non-active child, place it offset from active
+                childY = parentPosition.y + (childIndex > activeChildIndex ? branchOffset : -branchOffset);
               } else {
-                childY = currentPosition.y - (Math.floor(branchOrder / 2) + 1) * branchOffset; // Above
+                // Multiple non-active children, distribute them
+                const spacing = totalHeightNeeded / (totalNonActive + 1);
+                childY = startY + spacing * (nonActiveIndex + 1);
               }
             }
-          } else {
-            // No active child, spread evenly around parent's Y position
-            const totalOffset = (children.length - 1) * branchOffset / 2;
-            childY = currentPosition.y - totalOffset + (childIndex * branchOffset);
+            
+            const childPosition = { x: childX, y: childY };
+            allPositions.set(childId, childPosition);
+            processedNodes.add(childId);
+            
+            console.log(`  └─ Positioned child ${childId} at (${childX}, ${childY})`);
+            
+            // Recursively position this child's children
+            positionChildren(childId, childPosition, depth + 1);
+          });
+        } else {
+          // No active child, distribute evenly with more spacing
+          children.forEach((childId: string, childIndex: number) => {
+            if (processedNodes.has(childId)) {
+              console.warn(`⚠️ Node ${childId} already processed, skipping to prevent cycles`);
+              return;
+            }
+            
+            const childNode = nodeMap.get(childId);
+            if (!childNode) {
+              console.warn(`⚠️ Child node ${childId} not found in node map`);
+              return;
+            }
+            
+            const childX = parentPosition.x + nodeSpacing;
+            
+            // Distribute children evenly with increased spacing
+            const spacing = Math.max(branchOffset, totalHeightNeeded / children.length);
+            const childY = startY + spacing * childIndex + spacing / 2;
+            
+            const childPosition = { x: childX, y: childY };
+            allPositions.set(childId, childPosition);
+            processedNodes.add(childId);
+            
+            console.log(`  └─ Positioned child ${childId} at (${childX}, ${childY})`);
+            
+            // Recursively position this child's children
+            positionChildren(childId, childPosition, depth + 1);
+          });
+        }
+      } else {
+        // Single child, position directly to the right at same Y level
+        const childId = children[0];
+        if (!processedNodes.has(childId)) {
+          const childNode = nodeMap.get(childId);
+          if (childNode) {
+            const childX = parentPosition.x + nodeSpacing;
+            const childY = parentPosition.y; // Same Y as parent for single child
+            
+            const childPosition = { x: childX, y: childY };
+            allPositions.set(childId, childPosition);
+            processedNodes.add(childId);
+            
+            console.log(`  └─ Positioned single child ${childId} at (${childX}, ${childY})`);
+            
+            // Recursively position this child's children
+            positionChildren(childId, childPosition, depth + 1);
           }
         }
-        
-        
-        allPositions.set(childId, { x: childX, y: childY });
-        processedNodes.add(childId);
-        
-        // Add to queue for further processing
-        queue.push({ nodeId: childId, depth: depth + 1 });
-      });
-    }
+      }
+    };
+    
+    // Start recursive positioning from root
+    positionChildren(rootNode.sentence_id, allPositions.get(rootNode.sentence_id)!, 0);
+    
+    console.log('📊 Final positions:', Array.from(allPositions.entries()).map(([id, pos]) => ({
+      id,
+      x: pos.x,
+      y: pos.y,
+      content: nodeMap.get(id)?.sentence_content.substring(0, 20) + '...'
+    })));
     
     // Convert to React Flow nodes
     const flowNodes: Node[] = nodes.map(node => {
@@ -591,40 +737,37 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
       };
     });
     
-    
-    // Convert to React Flow edges - only create parent-child connections
+    // Create edges ONLY between direct parent-child relationships
     const flowEdges: Edge[] = [];
     
-    // Create edges based on parent-child relationships using the built children map
     nodes.forEach(node => {
       const children = childrenMap.get(node.sentence_id) || [];
-      if (children.length > 0) {
-        children.forEach((childId: string) => {
-          const childNode = nodes.find(n => n.sentence_id === childId);
-          if (childNode) {
-            const isActiveConnection = activePathSet.has(node.sentence_id) && activePathSet.has(childId);
-            
-            flowEdges.push({
-              id: `${node.sentence_id}-${childId}`,
-              source: node.sentence_id,
-              target: childId,
-              style: {
-                stroke: isActiveConnection ? '#0891b2' : '#cbd5e1', // cyan-600 for active, slate-300 for inactive
-                strokeWidth: 2,
-              },
-              markerEnd: {
-                type: MarkerType.ArrowClosed,
-                color: isActiveConnection ? '#0891b2' : '#cbd5e1',
-              },
-            });
-          }
-        });
-      }
+      children.forEach((childId: string) => {
+        const childNode = nodes.find(n => n.sentence_id === childId);
+        if (childNode) {
+          const isActiveConnection = activePathSet.has(node.sentence_id) && activePathSet.has(childId);
+          
+          flowEdges.push({
+            id: `${node.sentence_id}-${childId}`,
+            source: node.sentence_id,
+            target: childId,
+            style: {
+              stroke: isActiveConnection ? '#0891b2' : '#cbd5e1', // cyan-600 for active, slate-300 for inactive
+              strokeWidth: 2,
+            },
+            markerEnd: {
+              type: MarkerType.ArrowClosed,
+              color: isActiveConnection ? '#0891b2' : '#cbd5e1',
+            },
+          });
+        }
+      });
     });
-
+    
+    console.log('🔗 Created edges:', flowEdges.map(e => `${e.source} → ${e.target}`));
     
     return { nodes: flowNodes, edges: flowEdges };
-  }, [nodes, activePathSet, handleNodeClick]);
+  }, [nodes, activePathSet, handleNodeClick, selectedNode]);
   
   // Update React Flow nodes and edges when data changes
   useEffect(() => {

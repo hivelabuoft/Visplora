@@ -1,52 +1,231 @@
 import os
 import pandas as pd
+import json
 from dotenv import load_dotenv
-from vanna.openai.openai_chat import OpenAI_Chat
 
 # Load environment variables
 load_dotenv('../../../.env.local')
 
+# Try multiple approaches for Vanna imports
+try:
+    from vanna.remote import VannaDefault
+    VANNA_REMOTE_AVAILABLE = True
+except ImportError:
+    VANNA_REMOTE_AVAILABLE = False
+    VannaDefault = None
+
+try:
+    from vanna.openai import OpenAI_Chat
+    from vanna.chromadb import ChromaDB_VectorStore
+    
+    class LocalVanna(ChromaDB_VectorStore, OpenAI_Chat):
+        def __init__(self, config=None):
+            ChromaDB_VectorStore.__init__(self, config=config)
+            OpenAI_Chat.__init__(self, config=config)
+    
+    VANNA_LOCAL_AVAILABLE = True
+except ImportError:
+    VANNA_LOCAL_AVAILABLE = False
+    LocalVanna = None
+
+# Direct OpenAI integration as fallback
+try:
+    import openai
+    OPENAI_AVAILABLE = True
+except ImportError:
+    OPENAI_AVAILABLE = False
+
 class VannaSQL:
     def __init__(self):
-        """Initialize Vanna with OpenAI integration"""
-        self.vn = OpenAI_Chat(
-            model='gpt-4o',
-            api_key=os.getenv('OPENAI_API_KEY')
-        )
+        """Initialize Vanna with multiple fallback approaches"""
         
-        # Dataset file mappings (same as sql_query_executor.js)
+        # Always set dataset paths first
+        # Dataset file mappings (matching layer2.js table naming convention)
         self.dataset_paths = {
-            'crime-rates': '../../../public/dataset/london/crime-rates/london_crime_data_2022_2023.csv',
-            'ethnicity': '../../../public/dataset/london/ethnicity/Ethnic group.csv',
-            'country-of-births': '../../../public/dataset/london/country-of-births/cob-borough.csv',
-            'population': '../../../public/dataset/london/population/population 1801 to 2021.csv',
-            'income': '../../../public/dataset/london/income/income-of-tax-payers.csv',
-            'house-prices': '../../../public/dataset/london/house-prices/land-registry-house-prices-borough.csv',
-            'schools-colleges': '../../../public/dataset/london/schools-colleges/2022-2023_england_school_information.csv',
-            'vehicles': '../../../public/dataset/london/vehicles/vehicles-licensed-type-borough_2023.csv',
-            'restaurants': '../../../public/dataset/london/restaurants/licensed-restaurants-cafes-borough_Restaurants-units.csv',
-            'private-rent': '../../../public/dataset/london/private-rent/voa-average-rent-borough_Raw-data.csv',
-            'gyms': '../../../public/dataset/london/gyms/london_gym_facilities_2024.csv',
-            'libraries': '../../../public/dataset/london/libraries/libraries-by-areas-chart.csv'
+            'crime_data': '../../../public/dataset/london/crime-rates/london_crime_data_2022_2023.csv',
+            'ethnicity_data': '../../../public/dataset/london/ethnicity/Ethnic group.csv',
+            'birth_country_data': '../../../public/dataset/london/country-of-births/cob-borough.csv',
+            'population_data': '../../../public/dataset/london/population/population 1801 to 2021.csv',
+            'income_data': '../../../public/dataset/london/income/income-of-tax-payers.csv',
+            'house_price_data': '../../../public/dataset/london/house-prices/land-registry-house-prices-borough.csv',
+            'education_data': '../../../public/dataset/london/schools-colleges/2022-2023_england_school_information.csv',
+            'vehicle_data': '../../../public/dataset/london/vehicles/vehicles-licensed-type-borough_2023.csv',
+            'restaurant_data': '../../../public/dataset/london/restaurants/licensed-restaurants-cafes-borough_Restaurants-units.csv',
+            'rent_data': '../../../public/dataset/london/private-rent/voa-average-rent-borough_Raw-data.csv',
+            'gym_data': '../../../public/dataset/london/gyms/london_gym_facilities_2024.csv',
+            'library_data': '../../../public/dataset/london/libraries/libraries-by-areas-chart.csv'
         }
         
+        # Try to get API key from environment
+        api_key = os.getenv('OPENAI_API_KEY')
+        
+        # If not found, try to load from .env.local directly
+        if not api_key:
+            try:
+                with open('../../../.env.local', 'r') as f:
+                    for line in f:
+                        if line.startswith('OPENAI_API_KEY='):
+                            api_key = line.split('=', 1)[1].strip().strip('"\'')
+                            break
+            except:
+                pass
+        
+        if not api_key:
+            print("❌ OPENAI_API_KEY not found in environment or .env.local")
+            self.vn = None
+            self.api_key = None
+            self.use_direct_openai = False
+            return
+        
+        self.api_key = api_key
+        print(f"✅ Found OpenAI API key: {api_key[:10]}...")
+        
+        # Try Vanna Remote first
+        self.vn = None
+        if VANNA_REMOTE_AVAILABLE:
+            try:
+                print("🔄 Trying VannaDefault (remote)...")
+                vn = VannaDefault(model='gpt-4o', api_key=api_key)
+                
+                # Test it with a simple query
+                test_sql = vn.generate_sql("SELECT 1")
+                self.vn = vn
+                self.use_direct_openai = False
+                print("✅ VannaDefault initialized successfully")
+                return
+            except Exception as e:
+                print(f"⚠️  VannaDefault failed: {e}")
+        
+        # Try Local Vanna
+        if VANNA_LOCAL_AVAILABLE:
+            try:
+                print("🔄 Trying LocalVanna...")
+                vn = LocalVanna(config={'api_key': api_key, 'model': 'gpt-4o'})
+                self.vn = vn
+                self.use_direct_openai = False
+                print("✅ LocalVanna initialized successfully")
+                return
+            except Exception as e:
+                print(f"⚠️  LocalVanna failed: {e}")
+        
+        # Fallback to direct OpenAI API
+        if OPENAI_AVAILABLE:
+            try:
+                print("🔄 Using direct OpenAI API...")
+                from openai import OpenAI
+                
+                # Initialize OpenAI client with new format
+                self.openai_client = OpenAI(api_key=api_key)
+                
+                # Test the API
+                response = self.openai_client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=[{"role": "user", "content": "Hello"}],
+                    max_tokens=10
+                )
+                
+                self.vn = None  # We'll handle this directly
+                self.use_direct_openai = True
+                print("✅ Direct OpenAI API initialized successfully")
+                return
+            except Exception as e:
+                print(f"⚠️  Direct OpenAI failed: {e}")
+                # Try legacy format
+                try:
+                    print("🔄 Trying legacy OpenAI format...")
+                    import openai as openai_legacy
+                    openai_legacy.api_key = api_key
+                    
+                    # Test the legacy API
+                    response = openai_legacy.ChatCompletion.create(
+                        model="gpt-4o",
+                        messages=[{"role": "user", "content": "Hello"}],
+                        max_tokens=10
+                    )
+                    
+                    self.vn = None
+                    self.use_direct_openai = True
+                    self.openai_client = None  # Use legacy format
+                    print("✅ Legacy OpenAI API initialized successfully")
+                    return
+                except Exception as legacy_error:
+                    print(f"⚠️  Legacy OpenAI also failed: {legacy_error}")
+        
+        # All methods failed
+        print("❌ All initialization methods failed")
+        self.vn = None
+        self.use_direct_openai = False
+    def generate_sql_direct(self, prompt):
+        """Generate SQL using direct OpenAI API when Vanna is not available"""
+        if not self.use_direct_openai or not OPENAI_AVAILABLE:
+            return None
+        
+        try:
+            if hasattr(self, 'openai_client') and self.openai_client:
+                # Use new OpenAI client format
+                response = self.openai_client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=[
+                        {"role": "system", "content": "You are an expert SQL developer. Generate only valid SQL queries based on user requests."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    max_tokens=500,
+                    temperature=0.1
+                )
+                return response.choices[0].message.content.strip()
+            else:
+                # Use legacy format
+                import openai as openai_legacy
+                response = openai_legacy.ChatCompletion.create(
+                    model="gpt-4o",
+                    messages=[
+                        {"role": "system", "content": "You are an expert SQL developer. Generate only valid SQL queries based on user requests."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    max_tokens=500,
+                    temperature=0.1
+                )
+                return response.choices[0].message.content.strip()
+                
+        except Exception as e:
+            print(f"❌ Direct OpenAI SQL generation failed: {e}")
+            return None
+    
     def train_on_csv(self, dataset_name, csv_path=None, sample_size=1000):
         """
         Train Vanna on a CSV dataset
         
         Args:
-            dataset_name (str): Name of the dataset
+            dataset_name (str): Name of the dataset (e.g. 'crime-rates' or 'crime_data')
             csv_path (str): Optional path to CSV file (uses dataset_paths if not provided)
             sample_size (int): Number of rows to sample for training
         """
         try:
+            # Map dataset name to table name if needed
+            dataset_to_table = {
+                'crime-rates': 'crime_data',
+                'ethnicity': 'ethnicity_data', 
+                'population': 'population_data',
+                'income': 'income_data',
+                'house-prices': 'house_price_data',
+                'country-of-births': 'birth_country_data',
+                'schools-colleges': 'education_data',
+                'vehicles': 'vehicle_data',
+                'restaurants': 'restaurant_data',
+                'private-rent': 'rent_data',
+                'gyms': 'gym_data',
+                'libraries': 'library_data'
+            }
+            
+            table_name = dataset_to_table.get(dataset_name, dataset_name)
+            
             # Get CSV path
             if csv_path is None:
-                if dataset_name not in self.dataset_paths:
-                    raise ValueError(f"Dataset '{dataset_name}' not found in dataset_paths")
-                csv_path = self.dataset_paths[dataset_name]
+                if table_name not in self.dataset_paths:
+                    raise ValueError(f"Dataset '{table_name}' not found in dataset_paths")
+                csv_path = self.dataset_paths[table_name]
             
-            print(f"📊 Loading dataset: {dataset_name}")
+            print(f"📊 Loading dataset: {dataset_name} (table: {table_name})")
             print(f"📂 File path: {csv_path}")
             
             # Load CSV data
@@ -60,18 +239,19 @@ class VannaSQL:
             else:
                 df_sample = df
             
-            # Train Vanna on the CSV structure and sample data
-            print(f"🎓 Training Vanna on {dataset_name}...")
-            
-            # Train on data structure and sample content
-            self.vn.train(
-                df=df_sample,
-                documentation=f"This is the {dataset_name} dataset with columns: {', '.join(df.columns.tolist())}"
-            )
-            
+            # Only train if Vanna client is available
+            if self.vn is not None:
+                print(f"🎓 Training Vanna on {dataset_name}...")
                 
-            print(f"✅ Training completed for {dataset_name}")
-            
+                # Train on data structure and sample content
+                self.vn.train(
+                    df=df_sample,
+                    documentation=f"This is the {table_name} dataset with columns: {', '.join(df.columns.tolist())}"
+                )
+                print(f"✅ Training completed for {dataset_name}")
+            else:
+                print(f"⚠️  Vanna client not available, skipping training for {dataset_name}")
+                
         except Exception as e:
             print(f"❌ Error training on {dataset_name}: {str(e)}")
     
@@ -104,11 +284,26 @@ class VannaSQL:
                 
             print(f"🤔 Question: {full_question}")
             
-            # Generate SQL
-            sql = self.vn.generate_sql(full_question)
-            print(f"📝 Generated SQL:\n{sql}")
+            # Try Vanna first if available
+            if self.vn is not None:
+                try:
+                    sql = self.vn.generate_sql(full_question)
+                    print(f"📝 Generated SQL (Vanna):\n{sql}")
+                    return sql
+                except Exception as e:
+                    print(f"⚠️  Vanna generate_sql failed: {e}")
             
-            return sql
+            # Try direct OpenAI if available
+            if self.use_direct_openai:
+                try:
+                    sql = self.generate_sql_direct(full_question)
+                    print(f"📝 Generated SQL (Direct OpenAI):\n{sql}")
+                    return sql
+                except Exception as e:
+                    print(f"⚠️  Direct OpenAI failed: {e}")
+            
+            print("⚠️  No working SQL generation client available")
+            return None
             
         except Exception as e:
             print(f"❌ Error generating SQL: {str(e)}")
@@ -142,12 +337,44 @@ class VannaSQL:
             print(f"📊 Dataset: {dataset}")
             print(f"📝 Original SQL: {original_sql}")
             
+            # Check if any client is available
+            if self.vn is None and not self.use_direct_openai:
+                print("⚠️  No SQL validation client available, skipping validation")
+                return {
+                    "proposition_id": proposition_id,
+                    "dataset": dataset,
+                    "status": "skipped",
+                    "original_sql": original_sql,
+                    "fixed_sql": original_sql,
+                    "issues_found": ["No SQL validation client available"],
+                    "validation_response": "Skipped - No validation client initialized"
+                }
+            
             # Get actual dataset schema info
             dataset_info = ""
-            if dataset in self.dataset_paths:
+            
+            # Map dataset name to table name (matching layer2.js convention)
+            dataset_to_table = {
+                'crime-rates': 'crime_data',
+                'ethnicity': 'ethnicity_data', 
+                'population': 'population_data',
+                'income': 'income_data',
+                'house-prices': 'house_price_data',
+                'country-of-births': 'birth_country_data',
+                'schools-colleges': 'education_data',
+                'vehicles': 'vehicle_data',
+                'restaurants': 'restaurant_data',
+                'private-rent': 'rent_data',
+                'gyms': 'gym_data',
+                'libraries': 'library_data'
+            }
+            
+            table_name = dataset_to_table.get(dataset, dataset + '_data')
+            
+            if table_name in self.dataset_paths:
                 try:
                     import pandas as pd
-                    df = pd.read_csv(self.dataset_paths[dataset])
+                    df = pd.read_csv(self.dataset_paths[table_name])
                     columns = df.columns.tolist()
                     sample_data = df.head(3).to_dict('records')
                     dataset_info = f"Available columns: {', '.join(columns)}\nSample data: {sample_data}"
@@ -156,7 +383,7 @@ class VannaSQL:
             
             # Create validation prompt
             validation_prompt = f"""
-            Please validate and fix this SQL query for the {dataset} dataset:
+            CRITICAL: You are validating SQL for the {dataset} dataset. Before suggesting any fixes, you MUST carefully examine the actual data format in this specific dataset.
             
             ORIGINAL SQL QUERY:
             {original_sql}
@@ -173,26 +400,66 @@ class VannaSQL:
             QUERY PURPOSE:
             {description if description else 'Not specified'}
             
+            CRITICAL DATE/TIME FORMAT VALIDATION:
+            1. Each dataset has DIFFERENT date/time formats - DO NOT assume!
+            2. For crime-rates dataset: date column contains "2022-01" format (YYYY-MM), NOT full dates like "2022-01-01"
+            3. For other datasets: You MUST check what the actual date format is before suggesting changes
+            4. NEVER change date filtering unless you're certain the current format is wrong for the actual data
+            5. Common mistake: changing BETWEEN '2022-01' AND '2023-12' to BETWEEN '2022-01-01' AND '2023-12-31' when data has YYYY-MM format
+            
             Please analyze this SQL query and check for:
-            1. Wrong table names (should match actual dataset structure)
-            2. Wrong column names (check against available columns)
-            3. Syntax errors (GROUP BY, aggregation functions, etc.)
-            4. Logic errors (incorrect aggregations, wrong filters)
-            5. Missing or incorrect data types
+            1. **FIRST PRIORITY**: Verify date/time format compatibility with actual data
+            2. Wrong table names (should match actual dataset structure)
+            3. Wrong column names (check against available columns)
+            4. Syntax errors (GROUP BY, aggregation functions, etc.)
+            5. Logic errors (incorrect aggregations, wrong filters)
+            6. Missing or incorrect data types
+            
+            EXAMPLES OF CORRECT DATE FILTERING:
+            - If date column has "2022-01" format: WHERE date BETWEEN '2022-01' AND '2023-12'
+            - If date column has full dates: WHERE date BETWEEN '2022-01-01' AND '2023-12-31'  
+            - If using year column (integer): WHERE year BETWEEN 2022 AND 2023
             
             If issues are found, provide a corrected SQL query that:
             - Uses correct table/column names for the {dataset} dataset
+            - Uses date filtering that matches the ACTUAL data format
             - Produces the expected output structure: {expected_output}
             - Handles the data appropriately for this dataset
             - Follows proper SQL syntax
             
             Return your response in this format:
-            ISSUES FOUND: [list any issues, or "None" if query is correct]
-            CORRECTED SQL: [provide fixed SQL query]
+            ISSUES FOUND: [list any issues, or "None" if query is correct - be specific about date format]
+            CORRECTED SQL: [provide fixed SQL query only if needed]
             """
             
-            # Get Vanna's analysis and fix
-            response = self.vn.generate_sql(validation_prompt)
+            # Get SQL validation response
+            response = None
+            
+            if self.vn is not None:
+                # Use Vanna client
+                try:
+                    response = self.vn.generate_sql(validation_prompt)
+                except Exception as e:
+                    print(f"⚠️  Vanna generate_sql failed: {e}")
+            
+            if response is None and self.use_direct_openai:
+                # Use direct OpenAI API
+                try:
+                    response = self.generate_sql_direct(validation_prompt)
+                except Exception as e:
+                    print(f"⚠️  Direct OpenAI failed: {e}")
+            
+            if response is None:
+                # All methods failed
+                return {
+                    "proposition_id": proposition_id,
+                    "dataset": dataset,
+                    "status": "validation_failed",
+                    "original_sql": original_sql,
+                    "fixed_sql": original_sql,
+                    "issues_found": ["SQL validation failed - no working client"],
+                    "validation_response": "Validation failed"
+                }
             
             # Parse the response to extract issues and corrected SQL
             issues_found = []

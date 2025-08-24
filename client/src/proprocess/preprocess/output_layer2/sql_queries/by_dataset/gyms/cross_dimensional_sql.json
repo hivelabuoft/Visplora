@@ -1,0 +1,101 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "gyms",
+  "processed_at": "2025-08-20T18:04:10.625Z",
+  "total_queries": 4,
+  "sql_queries": [
+    {
+      "proposition_id": "gyms_cross_dimensional_cross_01",
+      "dataset": "gyms",
+      "time_period": "2023-2024",
+      "variables_needed": [
+        "category",
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT date AS time, membership_count AS value, facility_type AS dimension FROM gym_data WHERE date BETWEEN '2023-01-01' AND '2024-12-31' GROUP BY date, facility_type ORDER BY date, facility_type;"
+    },
+    {
+      "proposition_id": "gyms_cross_dimensional_cross_02",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT facility_type AS category, SUM(membership_count) AS value FROM gym_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2024 GROUP BY facility_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "gyms_cross_dimensional_cross_03",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "category",
+        "date",
+        "value"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT DATE_FORMAT(date, '%Y-%m-%d') AS time, SUM(membership_count) AS value FROM gym_data WHERE YEAR(date) = 2024 GROUP BY DATE_FORMAT(date, '%Y-%m-%d') ORDER BY time;"
+    },
+    {
+      "proposition_id": "gyms_cross_dimensional_cross_04",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT facility_type AS category, COUNT(gym_name) AS x_value, SUM(membership_count) AS y_value FROM gym_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2024 GROUP BY facility_type ORDER BY category;"
+    }
+  ]
+}

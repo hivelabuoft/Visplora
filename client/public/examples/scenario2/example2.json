@@ -1,0 +1,125 @@
+{
+    "exploration_path": [
+        {
+            "sentence_id": 1,
+            "sentence_content": "I wanted to focus on mobility and accessibility, so I started by looking at London boroughs with the best transport links to central areas.",
+            "children": [2],
+            "parent": null,
+            "system_shows": "Bar chart: average commute time to Zone 1 by borough; heatmap overlay showing tube/rail station density",
+            "drift_type": "elaboration"
+        },
+        {
+            "sentence_id": 2,
+            "sentence_content": "Greenwich, Lewisham, and Tower Hamlets showed strong connectivity, but I wanted to understand the cost side of this mobility advantage.",
+            "children": [3],
+            "parent": 1,
+            "system_shows": "Transport cost calculator by borough; monthly zone pass pricing; commute cost vs salary percentage",
+            "drift_type": "context_shift"
+        },
+        {
+            "sentence_id": 3,
+            "sentence_content": "When I factored in transport costs alongside housing costs, the total affordability picture shifted significantly for each area.",
+            "children": [4],
+            "parent": 2,
+            "system_shows": "Stacked bar chart: housing cost + transport cost by borough; total monthly burden visualization",
+            "drift_type": "reframing"
+        },
+        {
+            "sentence_id": 4,
+            "sentence_content": "I then looked at local amenities within walking distance to see which areas offered the best daily convenience without transport dependence.",
+            "children": [5],
+            "parent": 3,
+            "system_shows": "Walkability score by borough; density of shops, cafes, and services within 800m radius",
+            "drift_type": "context_shift"
+        },
+        {
+            "sentence_id": 5,
+            "sentence_content": "The data revealed that some well-connected areas had poor local amenities, making residents more dependent on travel for daily needs.",
+            "children": [],
+            "parent": 4,
+            "system_shows": "Scatter plot: transport connectivity vs local amenity score; quadrant analysis highlighting different lifestyle trade-offs",
+            "drift_type": "elaboration"
+        }
+    ],
+    "data_story": [
+        {
+            "data_story_sentence": "Transport connectivity analysis identified Greenwich, Lewisham, and Tower Hamlets as having superior access to central London.",
+            "ref_id": 1
+        },
+        {
+            "data_story_sentence": "However, when transport costs were included in affordability calculations, the true cost of mobility became apparent.",
+            "ref_id": 2
+        },
+        {
+            "data_story_sentence": "Combined housing and transport costs revealed a more nuanced affordability landscape across London boroughs.",
+            "ref_id": 3
+        },
+        {
+            "data_story_sentence": "Local walkability analysis showed that high connectivity areas often compensate for lower neighborhood amenity density.",
+            "ref_id": 4
+        },
+        {
+            "data_story_sentence": "The final analysis revealed trade-offs between transport connectivity and local self-sufficiency across different boroughs.",
+            "ref_id": 5
+        }
+    ],
+    "inquiries": [
+        {
+            "qid": "Q0",
+            "title": "Which boroughs have the best transport connectivity to central London?",
+            "status": "resolved", 
+            "sentenceRefs": ["1", "2"],
+            "position_suggested_by": {
+                "text": "Greenwich, Lewisham, and Tower Hamlets emerge as top connectivity areas.",
+                "confidence": "high"
+            },
+            "argument_suggested_by": {
+                "text": "Analysis of commute times and transport infrastructure density.",
+                "basis": "comparison"
+            },
+            "links": []
+        },
+        {
+            "qid": "Q1",
+            "title": "How do transport costs affect overall affordability calculations?",
+            "status": "resolved",
+            "sentenceRefs": ["2", "3"],
+            "position_suggested_by": {
+                "text": "Transport costs significantly alter the affordability ranking of boroughs when combined with housing costs.",
+                "confidence": "high"
+            },
+            "argument_suggested_by": {
+                "text": "Combined analysis of housing costs, transport costs, and income ratios.",
+                "basis": "comparison"
+            },
+            "links": [
+                {
+                    "qid": "Q0",
+                    "type": "suggested_by",
+                    "explanation": "Transport connectivity analysis prompted investigation of associated costs."
+                }
+            ]
+        },
+        {
+            "qid": "Q2", 
+            "title": "What is the relationship between transport connectivity and local amenities?",
+            "status": "resolved",
+            "sentenceRefs": ["4", "5"],
+            "position_suggested_by": {
+                "text": "Well-connected areas often have lower local amenity density, creating lifestyle trade-offs.",
+                "confidence": "medium"
+            },
+            "argument_suggested_by": {
+                "text": "Walkability analysis and local service density mapping.",
+                "basis": "pattern"
+            },
+            "links": [
+                {
+                    "qid": "Q1",
+                    "type": "suggested_by", 
+                    "explanation": "Total cost analysis raised questions about local vs travel-dependent lifestyles."
+                }
+            ]
+        }
+    ]
+}

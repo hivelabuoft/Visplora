@@ -1,0 +1,134 @@
+{
+  "category": "statistical_patterns",
+  "dataset": "house-prices",
+  "processed_at": "2025-08-20T18:04:33.836Z",
+  "total_queries": 6,
+  "sql_queries": [
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_001",
+      "dataset": "house-prices",
+      "time_period": "2023",
+      "variables_needed": [
+        "value"
+      ],
+      "chart_type": "histogram_simple_2D",
+      "example": [
+        {
+          "bin": "",
+          "frequency": 0
+        },
+        {
+          "bin": "",
+          "frequency": 0
+        }
+      ],
+      "sql_query": "SELECT CONCAT(FLOOR(average_price / 100000) * 100000, '-', FLOOR(average_price / 100000) * 100000 + 99999) AS bin, COUNT(*) AS frequency FROM house_price_data WHERE YEAR(date) = 2023 GROUP BY FLOOR(average_price / 100000) ORDER BY FLOOR(average_price / 100000);"
+    },
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_002",
+      "dataset": "house-prices",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "histogram_simple_2D",
+      "example": [
+        {
+          "bin": "",
+          "frequency": 0
+        },
+        {
+          "bin": "",
+          "frequency": 0
+        }
+      ],
+      "sql_query": "SELECT CONCAT(FLOOR(average_price / 100000) * 100000, '-', FLOOR(average_price / 100000) * 100000 + 99999) AS bin, COUNT(*) AS frequency FROM house_price_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY bin ORDER BY bin;"
+    },
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_003",
+      "dataset": "house-prices",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_price) AS x_value, AVG(median_price) AS y_value FROM house_price_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_004",
+      "dataset": "house-prices",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_price) AS value FROM house_price_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_005",
+      "dataset": "house-prices",
+      "time_period": "2023",
+      "variables_needed": [
+        "value"
+      ],
+      "chart_type": "histogram_simple_2D",
+      "example": [
+        {
+          "bin": "",
+          "frequency": 0
+        },
+        {
+          "bin": "",
+          "frequency": 0
+        }
+      ],
+      "sql_query": "SELECT CONCAT(FLOOR(average_price / 100000) * 100000, '-', FLOOR(average_price / 100000) * 100000 + 99999) AS bin, COUNT(*) AS frequency FROM house_price_data WHERE YEAR(date) = 2023 GROUP BY FLOOR(average_price / 100000) ORDER BY FLOOR(average_price / 100000);"
+    },
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_006",
+      "dataset": "house-prices",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_price) AS value FROM house_price_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY area_name ORDER BY value DESC;"
+    }
+  ]
+}

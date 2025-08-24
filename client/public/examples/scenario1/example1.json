@@ -1,0 +1,484 @@
+{
+ "exploration_path":[
+  {
+    "sentence_id": 1,
+    "sentence_content": "I started by checking where rent is cheapest across London.",
+    "children": [2],
+    "parent": null,
+    "system_shows": "Bar chart: average monthly rent by borough; lowest three highlighted",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 2,
+    "sentence_content": "Barking & Dagenham, Bexley, and Havering came up as the cheapest, but I wanted to understand what sits behind that.",
+    "children": [3],
+    "parent": 1,
+    "system_shows": "Callout chips on the three lowest bars; tooltip with borough stats",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 3,
+    "sentence_content": "I pulled income next to rent and looked at the rent-to-income picture so I’m not just chasing ‘cheap for a reason.",
+    "children": [4],
+    "parent": 2,
+    "system_shows": "Choropleth: median income by borough; bar chart: rent-to-income ratio for all boroughs",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 4,
+    "sentence_content": "Barking’s income is low and rent is low, while Havering’s rent burden looks friendlier than average.",
+    "children": [5],
+    "parent": 3,
+    "system_shows": "Bars highlighted for Barking & Dagenham and Havering; percentile badges",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 5,
+    "sentence_content": "Since ‘cheap’ doesn’t tell the whole story, I opened up a quick view of everyday life—gyms and restaurants.",
+    "children": [6],
+    "parent": 4,
+    "system_shows": "Mini dashboard: gyms per 10k, restaurants per 10k, borough toggles",
+    "drift_type": "context shift"
+  },
+  {
+    "sentence_id": 6,
+    "sentence_content": "The affordable set felt mixed on amenities, so I branched: start from places with decent gyms and restaurant counts first, then check their rents.",
+    "children": [7, 8, 9],
+    "parent": 5,
+    "system_shows": "Scatter: restaurants/10k (x) vs gyms/10k (y), point color = rent; filter for ‘acceptable rent band’",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 7,
+    "sentence_content": "Lewisham popped up as lively without extreme rents—good energy for the money.",
+    "children": [10],
+    "parent": 6,
+    "system_shows": "Small multiples: Lewisham vs London median on rent, ratio, gyms/10k, restaurants/10k",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 8,
+    "sentence_content": "Havering looked balanced—budget-friendly with a quieter scene.",
+    "children": [10],
+    "parent": 6,
+    "system_shows": "Small multiples: Havering vs London median on rent, ratio, gyms/10k, restaurants/10k",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 9,
+    "sentence_content": "Sutton stayed in the mix as the value pick with solid basics rather than a hotspot vibe.",
+    "children": [10, 12],
+    "parent": 6,
+    "system_shows": "Small multiples: Sutton vs London median on rent, ratio, gyms/10k, restaurants/10k",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 10,
+    "sentence_content": "Because calm matters, I overlaid crime for Lewisham, Havering, and Sutton to see how the tradeoffs feel in practice.",
+    "children": [11, 14],
+    "parent": 7,
+    "system_shows": "Bars: crime per 1,000 residents (all boroughs) with the three candidates highlighted; scatter: rent-to-income vs crime",
+    "drift_type": "context shift"
+  },
+  {
+    "sentence_id": 11,
+    "sentence_content": "Sutton came through calmer, Havering sat in the middle, and Lewisham traded a bit of safety for more to do.",
+    "children": [12],
+    "parent": 10,
+    "system_shows": "Quartile bands on crime chart; candidate annotations",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 12,
+    "sentence_content": "With that context I tweaked my earlier ‘cheapest’ note—among those, Havering is the better-balanced pick while Barking’s value comes with more risk.",
+    "children": [13],
+    "parent": 9,
+    "system_shows": "Timeline: jump-back to earlier sentence; inline edit with evidence badges",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 13,
+    "sentence_content": "Pulling it together, my quick presets are save-first: Sutton; balance-first: Havering; activity-first: Lewisham.",
+    "children": [],
+    "parent": 12,
+    "system_shows": "Summary composer: preset cards assembled from most-used views",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 14,
+    "sentence_content": "If you can pay a bit more for extra peace, I’d also add Bromley as a calm option even though it sits above the tighter budgets.",
+    "children": [13],
+    "parent": 10,
+    "system_shows": "Crime bars re-sorted; Bromley highlighted; rent overlay shows higher band",
+    "drift_type": "topic_change"
+  },
+  {
+    "sentence_id": 15,
+    "sentence_content": "Rather than chasing the very cheapest, I flipped the view to start from places that feel active—good gyms and restaurant counts—and only then checked whether the rent looks sensible.",
+    "children": [16],
+    "parent": 2,
+    "system_shows": "Scatter: restaurants/10k (x) vs gyms/10k (y), point color = rent; affordability band filter toggled on",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 16,
+    "sentence_content": "With that lens, Lewisham bubbled up as lively without central-London prices, while Sutton and Havering stayed in the frame as calmer, value-leaning options.",
+    "children": [17],
+    "parent": 15,
+    "system_shows": "Highlighted points for Lewisham, Sutton, Havering; legend shows rent band",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 17,
+    "sentence_content": "I sanity-checked the rent burden so I wasn’t mistaking buzz for a bad deal.",
+    "children": [18],
+    "parent": 16,
+    "system_shows": "Bar chart: rent-to-income ratio for Lewisham, Sutton, Havering vs London median",
+    "drift_type": "context shift"
+  },
+  {
+    "sentence_id": 18,
+    "sentence_content": "Lewisham’s burden landed in the acceptable range, Sutton remained comfortably low, and Havering stayed middle-lane.",
+    "children": [19],
+    "parent": 17,
+    "system_shows": "Percentile bands overlaid on ratio bars; candidate badges",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 19,
+    "sentence_content": "Because feel matters, I layered in crime to see how the tradeoff looks once calm is on the table.",
+    "children": [20],
+    "parent": 18,
+    "system_shows": "Scatter: rent-to-income (x) vs crime/1,000 (y) with quadrant shading; candidates labeled",
+    "drift_type": "context shift"
+  },
+  {
+    "sentence_id": 20,
+    "sentence_content": "Taken together: choose Sutton if you want low burden and calmer streets; pick Lewisham if you want more going on without blowing the budget; keep Havering as a steady compromise.",
+    "children": [],
+    "parent": 19,
+    "system_shows": "Summary composer surfaced top three evidence-linked lines from prior views",
+    "drift_type": "elaboration"
+  },
+
+   {
+    "sentence_id": 21,
+    "sentence_content": "I wanted a value-for-amenities angle—within an acceptable rent band, who gives me more gyms and restaurants for the money?",
+    "children": [22],
+    "parent": 2,
+    "system_shows": "Scatter/index: amenities-per-£ of rent (normalized gyms/10k and restaurants/10k divided by rent); affordability band overlay; candidate highlights",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 22,
+    "sentence_content": "On that value lens, Lewisham and Havering surface at the top, with Sutton steady in the middle—good return without inner-city prices.",
+    "children": [],
+    "parent": 21,
+    "system_shows": "Ranked bars: amenities-per-£ index with confidence bands; callouts for Lewisham/Havering/Sutton",
+    "drift_type": "elaboration"
+  },
+
+  {
+    "sentence_id": 23,
+    "sentence_content": "One more angle from the cheap set: what actually drives the safety picture—annoyances versus real danger?",
+    "children": [24],
+    "parent": 2,
+    "system_shows": "Stacked bars: crime category mix (theft/ASB/violent) for Barking & Dagenham vs Havering vs London median",
+    "drift_type": "topic_change"
+  },
+  {
+    "sentence_id": 24,
+    "sentence_content": "Barking skews higher on theft and anti-social behaviour rather than the most serious categories, while Havering stays closer to the median mix.",
+    "children": [25],
+    "parent": 23,
+    "system_shows": "Category percentages annotated; median line overlays",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 25,
+    "sentence_content": "That nuance helps: Barking’s tradeoff feels more about everyday hassle than outright danger, which some renters might accept to maximise savings.",
+    "children": [],
+    "parent": 24,
+    "system_shows": "Note pinned to earlier ‘cheapest’ thread with link to category chart",
+    "drift_type": "elaboration"
+  }
+  ],
+"data_story":[
+  {
+    "data_story_sentence": "Across London, borough-level rent data identifies Barking & Dagenham, Bexley, and Havering as the lowest-cost areas to rent.",
+    "ref_id": 2
+  },
+  {
+    "data_story_sentence": "Normalizing against local incomes shows Barking & Dagenham’s low rents track its lower earnings, while Havering exhibits a comparatively favorable rent-to-income burden.",
+    "ref_id": 4
+  },
+  {
+    "data_story_sentence": "Because price alone is insufficient for livability, we extend the analysis to amenity access—gyms and restaurants—within an acceptable rent band.",
+    "ref_id": 6
+  },
+  {
+    "data_story_sentence": "Under this amenity-first lens, Lewisham delivers above-median activity at non-central price levels.",
+    "ref_id": 7
+  },
+  {
+    "data_story_sentence": "Sutton remains a value-oriented option, trading nightlife density for stable essentials.",
+    "ref_id": 9
+  },
+  {
+    "data_story_sentence": "Havering presents a balanced profile—budget-friendly with a quieter amenity mix.",
+    "ref_id": 8
+  },
+  {
+    "data_story_sentence": "Safety overlays for the candidates jointly compare crime per 1,000 residents with rent burden to surface practical tradeoffs.",
+    "ref_id": 10
+  },
+  {
+    "data_story_sentence": "Sutton and Bromley cluster in the lower-crime segment, Havering is mid-range, and Lewisham accepts a modest safety premium for greater activity.",
+    "ref_id": 11
+  },
+  {
+    "data_story_sentence": "Revisiting the cheapest set with safety incorporated, Havering emerges as the better-balanced option, whereas Barking & Dagenham’s value carries higher risk.",
+    "ref_id": 12
+  },
+  {
+    "data_story_sentence": "Decision framing: select Sutton for the lowest rent burden with calmer streets; choose Lewisham for livelier amenities within a manageable budget; retain Havering as a steady compromise.",
+    "ref_id": 20
+  },
+  {
+    "data_story_sentence": "For renters prioritizing peace over price, Bromley merits inclusion despite a higher rent band.",
+    "ref_id": 14
+  },
+  {
+    "data_story_sentence": "In Barking & Dagenham, elevated incidents skew toward theft and anti-social behavior rather than the most severe categories, a tradeoff some cost-focused renters may accept.",
+    "ref_id": 25
+  }
+],
+"inquiries": [
+  {
+    "qid": "Q0",
+    "title": "Identify lowest-cost boroughs to rent (affordability baseline)",
+    "status": "resolved",
+    "sentenceRefs": ["1", "2"],
+    "position_suggested_by": {
+      "text": "Barking & Dagenham, Bexley, and Havering surface as the lowest-rent boroughs.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Direct comparison of borough-level average rents.",
+      "basis": "comparison"
+    },
+    "links": []
+  },
+  {
+    "qid": "Q1",
+    "title": "Cheapest-path viability after normalizing by income",
+    "status": "resolved",
+    "sentenceRefs": ["3", "4", "5", "12"],
+    "position_suggested_by": {
+      "text": "Havering shows a friendlier rent-to-income burden than Barking & Dagenham; cheapest ≠ best by default.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Rent-to-income ratios contextualize affordability beyond sticker price.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q0",
+        "type": "suggested_by",
+        "explanation": "Income normalization was prompted by the initial cheapest-boroughs scan."
+      }
+    ]
+  },
+  {
+    "qid": "Q2",
+    "title": "Amenity-first shortlisting within an acceptable rent band",
+    "status": "resolved",
+    "sentenceRefs": ["6", "7", "8", "9"],
+    "position_suggested_by": {
+      "text": "Lewisham (amenities-forward), Havering (balanced), Sutton (value) emerge as candidates when prioritizing gyms/restaurants first.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Filter and rank by amenities per capita, then sort by rent band.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "Q1",
+        "type": "replaces",
+        "explanation": "Switches the search strategy from cheapest-first to amenities-first within affordability."
+      },
+      {
+        "qid": "Q0",
+        "type": "generalized_from",
+        "explanation": "Builds on the initial affordability scope but broadens criteria to livability."
+      }
+    ]
+  },
+  {
+    "qid": "Q3",
+    "title": "Safety overlay for amenity-first candidates",
+    "status": "resolved",
+    "sentenceRefs": ["10", "11"],
+    "position_suggested_by": {
+      "text": "Sutton and Bromley trend calmer; Havering mid-range; Lewisham trades some safety for activity.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Joint view of crime per 1,000 and rent-burden positioning for Lewisham, Havering, Sutton (plus Bromley).",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q2",
+        "type": "suggested_by",
+        "explanation": "Safety was layered after the amenity-first shortlist to expose trade-offs."
+      }
+    ]
+  },
+  {
+    "qid": "Q4",
+    "title": "Final recommendation presets (save-first, balance-first, activity-first)",
+    "status": "resolved",
+    "sentenceRefs": ["20", "13"],
+    "position_suggested_by": {
+      "text": "Save-first: Sutton; Balance-first: Havering; Activity-first: Lewisham.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Synthesis across ratio, crime, and amenities into audience-oriented choices.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q2",
+        "type": "specialized_from",
+        "explanation": "Operationalizes the amenity-first shortlist into concrete audience presets."
+      },
+      {
+        "qid": "Q3",
+        "type": "specialized_from",
+        "explanation": "Integrates safety overlays into the final choice framing."
+      }
+    ]
+  },
+  {
+    "qid": "Q5",
+    "title": "Premium calm option: include Bromley despite higher rents",
+    "status": "resolved",
+    "sentenceRefs": ["14"],
+    "position_suggested_by": {
+      "text": "Bromley offers notably calmer streets at a higher price point.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Crime profile comparison with affordability context.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q3",
+        "type": "suggested_by",
+        "explanation": "Low-crime signal surfaced when safety was overlaid on candidates."
+      },
+      {
+        "qid": "Q4",
+        "type": "specialized_from",
+        "explanation": "Extends the recommendation set for renters prioritizing peace over price."
+      }
+    ]
+  },
+   {
+    "qid": "Q6",
+    "title": "Amenities value-for-money within affordability band",
+    "status": "resolved",
+    "sentenceRefs": ["21", "22"],
+    "position_suggested_by": {
+      "text": "Lewisham and Havering offer higher amenities-per-£ than peers; Sutton provides solid value at a calmer pace.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Composite index combining gyms/10k and restaurants/10k normalized by rent.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "Q2",
+        "type": "specialized_from",
+        "explanation": "Refines the amenity-first shortlist by normalizing for rent."
+      }
+    ]
+  },
+  {
+    "qid": "Q7",
+    "title": "Commute practicality for central workers",
+    "status": "open",
+    "sentenceRefs": [],
+    "position_suggested_by": {
+      "text": "Commute time/cost likely moderates attractiveness across the shortlisted boroughs.",
+      "confidence": "low"
+    },
+    "argument_suggested_by": {
+      "text": "Known decision factor not represented in the current dataset selection.",
+      "basis": "other"
+    },
+    "links": [
+      {
+        "qid": "Q4",
+        "type": "suggested_by",
+        "explanation": "Raised when converting findings into audience-oriented presets."
+      }
+    ]
+  },
+  {
+    "qid": "Q8",
+    "title": "Why is Barking & Dagenham so cheap? Nature of risk vs nuisance",
+    "status": "stalled",
+    "sentenceRefs": ["23", "24", "25"],
+    "position_suggested_by": {
+      "text": "Elevated incidents skew toward theft/ASB rather than the most severe categories; some renters may accept nuisance to maximize savings.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Crime category mix compared to London median; partial explanation without longitudinal or causality data.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "Q1",
+        "type": "generalized_from",
+        "explanation": "Drills into the qualitative character behind the cheapest-path trade-off."
+      }
+    ]
+  },
+  {
+    "qid": "Q9",
+    "title": "Safe-activity mix (amenities vs. crime) for evening feel",
+    "status": "resolved",
+    "sentenceRefs": ["23", "24"],
+    "position_suggested_by": {
+      "text": "Sutton and Havering cluster in an easygoing zone; Lewisham is livelier with a modest safety premium.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Bivariate comparison of restaurants/10k against crime/1,000 with gyms/10k as size cue.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q2",
+        "type": "suggested_by",
+        "explanation": "Built on the amenity-first lens to include safety."
+      },
+      {
+        "qid": "Q3",
+        "type": "generalized_from",
+        "explanation": "Extends the safety overlay by pairing it directly with amenity density."
+      }
+    ]
+  }
+]
+
+}
+

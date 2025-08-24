@@ -43,6 +43,7 @@ class SQLQueryGenerator {
     
     // Map our chart type naming to template naming
     const chartTypeMapping = {
+      // Standard chart types
       'barChart_simple_2D': 'barChart',
       'barChart_simple_3D': 'barChart',
       'barChart_with_mean_2D': 'barChart',
@@ -59,21 +60,42 @@ class SQLQueryGenerator {
       'divergentBar_simple_3D': 'divergentBar',
       'lineChart_simple_2D': 'lineChart',
       'lineChart_simple_3D': 'lineChart',
+      'lineChart_with_mean_2D': 'lineChart',
+      'lineChart_with_threshold_2D': 'lineChart',
       'multiLineChart_simple_2D': 'multiLineChart',
       'multiLineChart_simple_3D': 'multiLineChart',
       'areaChart_simple_2D': 'areaChart',
       'areaChart_simple_3D': 'areaChart',
+      'areaChart_stacked_2D': 'areaChart',
       'comboBarLineChart_simple_2D': 'comboBarLineChart',
       'comboBarLineChart_simple_3D': 'comboBarLineChart',
       'donutChart_simple_2D': 'donutChart',
       'donutChart_simple_3D': 'donutChart',
       'scatterPlot_simple_2D': 'scatterPlot',
       'scatterPlot_simple_3D': 'scatterPlot',
+      'scatterPlot_with_mean_2D': 'scatterPlot',
+      'scatterPlot_with_threshold_2D': 'scatterPlot',
       'bubbleChart_simple_2D': 'bubbleChart',
       'bubbleChart_simple_3D': 'bubbleChart',
       'histogram_simple_2D': 'histogram',
       'histogram_simple_3D': 'histogram',
-      'histogramHeatmap_simple_2D': 'histogramHeatmap'
+      'histogramHeatmap_simple_2D': 'histogramHeatmap',
+      
+      // Underused chart type naming variations
+      'comboBarLine_simple_2D': 'comboBarLineChart',
+      'comboBarLine_simple_3D': 'comboBarLineChart',
+      'comboBarLine_with_mean_2D': 'comboBarLineChart',
+      'comboBarLine_with_threshold_2D': 'comboBarLineChart',
+      
+      'divergentBarChart_simple_2D': 'divergentBar',
+      'divergentBarChart_simple_3D': 'divergentBar',
+      'divergentBarChart_with_mean_2D': 'divergentBar',
+      'divergentBarChart_with_threshold_2D': 'divergentBar',
+      
+      'groupedBar_simple_2D': 'groupedBarChart',
+      'groupedBar_simple_3D': 'groupedBarChart',
+      'groupedBar_with_mean_2D': 'groupedBarChart',
+      'groupedBar_with_threshold_2D': 'groupedBarChart'
     };
     
     const templateName = chartTypeMapping[chartType];
@@ -390,19 +412,11 @@ Return ONLY the SQL query, no explanations or markdown formatting.`;
   }
 
   /**
-   * Process all proposition files from layer1 output
+   * Process propositions from by_dataset directory (category-based structure)
    */
-  async processAllLayer1Output(inputDir, outputDir, batchSize = 3) {
-    console.log('🔄 Starting Layer 2: SQL Query Generation...');
-    console.log('=====================================\n');
-
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
-    }
-
-    const allResults = [];
+  async processDatasetPropositions(inputDir, outputDir, allResults, batchSize = 3) {
     let totalProcessed = 0;
-
+    
     // Process each dataset directory
     const datasetDirs = fs.readdirSync(inputDir).filter(item => {
       const itemPath = path.join(inputDir, item);
@@ -465,7 +479,7 @@ Return ONLY the SQL query, no explanations or markdown formatting.`;
         datasetResults[categoryName] = categoryOutput;
 
         // Save individual category file
-        const categoryOutputPath = path.join(outputDir, datasetName);
+        const categoryOutputPath = path.join(outputDir, 'by_dataset', datasetName);
         if (!fs.existsSync(categoryOutputPath)) {
           fs.mkdirSync(categoryOutputPath, { recursive: true });
         }
@@ -483,19 +497,131 @@ Return ONLY the SQL query, no explanations or markdown formatting.`;
         categories: datasetResults
       };
 
-      const datasetFilePath = path.join(outputDir, `${datasetName}_sql_complete.json`);
+      const datasetFilePath = path.join(outputDir, 'by_dataset', `${datasetName}_sql_complete.json`);
       fs.writeFileSync(datasetFilePath, JSON.stringify(datasetOutput, null, 2));
       console.log(`  Saved complete ${datasetName} SQL queries to: ${datasetFilePath}`);
     }
 
-    // Save master SQL file
+    return totalProcessed;
+  }
+
+  /**
+   * Process propositions from underused_charts directory (chart-type based structure)
+   */
+  async processUnderusedChartPropositions(inputDir, outputDir, allResults, batchSize = 3) {
+    let totalProcessed = 0;
+    
+    // Process each chart type file
+    const chartTypeFiles = fs.readdirSync(inputDir).filter(file => 
+      file.endsWith('_propositions.json')
+    );
+
+    for (const chartFile of chartTypeFiles) {
+      const chartType = chartFile.replace('_propositions.json', '');
+      console.log(`\nProcessing underused chart type: ${chartType}`);
+
+      const chartPath = path.join(inputDir, chartFile);
+      const chartData = JSON.parse(fs.readFileSync(chartPath, 'utf8'));
+
+      const chartResults = [];
+
+      if (chartData.propositions && chartData.propositions.length > 0) {
+        // Process propositions in batches
+        for (let i = 0; i < chartData.propositions.length; i += batchSize) {
+          const batch = chartData.propositions.slice(i, i + batchSize);
+          const batchPromises = batch.map(prop => this.processSingleProposition(prop));
+
+          try {
+            const batchResults = await Promise.all(batchPromises);
+            chartResults.push(...batchResults);
+            allResults.push(...batchResults);
+            totalProcessed += batchResults.length;
+
+            console.log(`  Processed batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(chartData.propositions.length/batchSize)} (${totalProcessed} total for ${chartType})`);
+
+            // Add delay between batches to respect rate limits
+            if (i + batchSize < chartData.propositions.length) {
+              await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
+            }
+
+          } catch (error) {
+            console.error(`Error processing batch starting at index ${i} for ${chartType}:`, error);
+          }
+        }
+      }
+
+      // Save chart type results with SQL queries
+      const chartOutput = {
+        chart_type: chartType,
+        category: 'chart_specific_analysis',
+        processed_at: new Date().toISOString(),
+        total_queries: chartResults.length,
+        sql_queries: chartResults
+      };
+
+      // Save individual chart type file
+      const chartOutputPath = path.join(outputDir, 'underused_charts');
+      if (!fs.existsSync(chartOutputPath)) {
+        fs.mkdirSync(chartOutputPath, { recursive: true });
+      }
+
+      const chartFilePath = path.join(chartOutputPath, `${chartType}_sql.json`);
+      fs.writeFileSync(chartFilePath, JSON.stringify(chartOutput, null, 2));
+      console.log(`  Saved ${chartType} SQL queries to: ${chartFilePath}`);
+    }
+
+    return totalProcessed;
+  }
+
+  /**
+   * Process all proposition files from both layer1 outputs
+   */
+  async processAllLayer1Output(inputBaseDir, outputDir, batchSize = 3) {
+    console.log('🔄 Starting Layer 2: SQL Query Generation...');
+    console.log('=====================================\n');
+
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    const allResults = [];
+    let totalProcessedDataset = 0;
+    let totalProcessedUnderused = 0;
+
+    // Process by_dataset directory if it exists
+    const byDatasetDir = path.join(inputBaseDir, 'by_dataset');
+    if (fs.existsSync(byDatasetDir)) {
+      console.log('📊 Processing by_dataset propositions...');
+      totalProcessedDataset = await this.processDatasetPropositions(byDatasetDir, outputDir, allResults, batchSize);
+      console.log(`✅ Completed by_dataset processing: ${totalProcessedDataset} propositions`);
+    } else {
+      console.log('⚠️  by_dataset directory not found, skipping...');
+    }
+
+    // Process underused_charts directory if it exists
+    const underusedChartsDir = path.join(inputBaseDir, 'underused_charts');
+    if (fs.existsSync(underusedChartsDir)) {
+      console.log('\n📈 Processing underused_charts propositions...');
+      totalProcessedUnderused = await this.processUnderusedChartPropositions(underusedChartsDir, outputDir, allResults, batchSize);
+      console.log(`✅ Completed underused_charts processing: ${totalProcessedUnderused} propositions`);
+    } else {
+      console.log('⚠️  underused_charts directory not found, skipping...');
+    }
+
+    // Save master SQL file combining both sources
     const masterOutput = {
       processed_at: new Date().toISOString(),
-      total_sql_queries: allResults.length,
-      successful_queries: allResults.filter(r => r.sql_query !== null).length,
-      failed_queries: allResults.filter(r => r.sql_query === null).length,
-      queries_by_dataset: this.summarizeByDataset(allResults),
-      queries_by_chart_type: this.summarizeByChartType(allResults),
+      processing_summary: {
+        by_dataset_queries: totalProcessedDataset,
+        underused_charts_queries: totalProcessedUnderused,
+        total_queries: allResults.length
+      },
+      statistics: {
+        successful_queries: allResults.filter(r => r.sql_query !== null).length,
+        failed_queries: allResults.filter(r => r.sql_query === null).length,
+        queries_by_dataset: this.summarizeByDataset(allResults),
+        queries_by_chart_type: this.summarizeByChartType(allResults)
+      },
       all_sql_queries: allResults
     };
 
@@ -504,6 +630,8 @@ Return ONLY the SQL query, no explanations or markdown formatting.`;
 
     console.log('\n=====================================');
     console.log('✅ Layer 2 SQL Generation completed successfully!');
+    console.log(`📊 by_dataset SQL queries: ${totalProcessedDataset}`);
+    console.log(`📈 underused_charts SQL queries: ${totalProcessedUnderused}`);
     console.log(`📊 Total SQL queries generated: ${allResults.length}`);
     console.log(`✅ Successful: ${allResults.filter(r => r.sql_query !== null).length}`);
     console.log(`❌ Failed: ${allResults.filter(r => r.sql_query === null).length}`);
@@ -554,21 +682,35 @@ async function main() {
   try {
     const generator = new SQLQueryGenerator();
     
-    // Paths
-    const inputDir = path.join(__dirname, 'output', 'by_dataset');
-    const outputDir = path.join(__dirname, 'output_layer2', 'sql_queries', 'by_dataset');
+    // Paths - now uses base output directory to access both subdirectories
+    const inputBaseDir = path.join(__dirname, 'output');
+    const outputDir = path.join(__dirname, 'output_layer2', 'sql_queries');
     
-    console.log(`📂 Input directory: ${inputDir}`);
+    console.log(`📂 Input base directory: ${inputBaseDir}`);
     console.log(`📂 Output directory: ${outputDir}`);
     
     // Check if input directory exists
-    if (!fs.existsSync(inputDir)) {
-      console.error(`❌ Input directory not found: ${inputDir}`);
-      console.error('Please run layer1.js first to generate proposition data.');
+    if (!fs.existsSync(inputBaseDir)) {
+      console.error(`❌ Input directory not found: ${inputBaseDir}`);
+      console.error('Please run layer1 scripts first to generate proposition data.');
       process.exit(1);
     }
     
-    await generator.processAllLayer1Output(inputDir, outputDir);
+    // Check what directories are available
+    const byDatasetPath = path.join(inputBaseDir, 'by_dataset');
+    const underusedChartsPath = path.join(inputBaseDir, 'underused_charts');
+    
+    console.log(`📊 by_dataset directory exists: ${fs.existsSync(byDatasetPath)}`);
+    console.log(`📈 underused_charts directory exists: ${fs.existsSync(underusedChartsPath)}`);
+    
+    if (!fs.existsSync(byDatasetPath) && !fs.existsSync(underusedChartsPath)) {
+      console.error('❌ No valid input directories found. Need either:');
+      console.error('  - output/by_dataset/ (from layer1.js)');
+      console.error('  - output/underused_charts/ (from generate_underused_chart_propositions.js)');
+      process.exit(1);
+    }
+    
+    await generator.processAllLayer1Output(inputBaseDir, outputDir);
     
   } catch (error) {
     console.error('❌ Layer 2 processing failed:', error.message);

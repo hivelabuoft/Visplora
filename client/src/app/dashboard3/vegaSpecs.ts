@@ -32,7 +32,7 @@ export const boroughMapSpec = {
   "layer": [
     {
       "data": {
-        "url": "data/londonBoroughs.json",
+        "url": "/data/londonBoroughs.json",
         "format": {
           "type": "topojson",
           "feature": "boroughs"
@@ -122,7 +122,7 @@ export const smallBoroughMapSpec = (selectedBorough: string) => ({
   "width": 40,
   "height": 40,
   "data": {
-    "url": "data/londonBoroughs.json",
+    "url": "/data/londonBoroughs.json",
     "format": {
       "type": "topojson" as const,
       "feature": "boroughs"

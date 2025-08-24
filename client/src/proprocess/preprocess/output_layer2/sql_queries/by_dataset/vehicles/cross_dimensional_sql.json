@@ -1,0 +1,54 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "vehicles",
+  "processed_at": "2025-08-20T18:07:00.670Z",
+  "total_queries": 2,
+  "sql_queries": [
+    {
+      "proposition_id": "vehicles_cross_dimensional_cd1",
+      "dataset": "vehicles",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "area",
+        "category",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(registration_count) AS value FROM vehicle_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "vehicles_cross_dimensional_cd2",
+      "dataset": "vehicles",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "area",
+        "category",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(registration_count) AS value FROM vehicle_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    }
+  ]
+}

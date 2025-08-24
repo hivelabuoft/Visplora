@@ -1,0 +1,594 @@
+{
+  "dataset": "income",
+  "processed_at": "2025-08-20T18:05:03.397Z",
+  "total_queries": 25,
+  "categories": {
+    "cross_dimensional": {
+      "category": "cross_dimensional",
+      "dataset": "income",
+      "processed_at": "2025-08-20T18:04:45.054Z",
+      "total_queries": 4,
+      "sql_queries": [
+        {
+          "proposition_id": "income_cross_dimensional_cd1",
+          "dataset": "income",
+          "time_period": "2020-2023",
+          "variables_needed": [
+            "Area",
+            "Mean_income",
+            "Year"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, average_income AS value FROM income_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date, area_name ORDER BY date;"
+        },
+        {
+          "proposition_id": "income_cross_dimensional_cd2",
+          "dataset": "income",
+          "time_period": "2015-2023",
+          "variables_needed": [
+            "Area",
+            "Median_income",
+            "Year"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, AVG(median_income) AS value FROM income_data WHERE date BETWEEN '2015-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "income_cross_dimensional_cd3",
+          "dataset": "income",
+          "time_period": "2010-2020",
+          "variables_needed": [
+            "Area",
+            "Mean_income",
+            "Year"
+          ],
+          "chart_type": "scatterPlot_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            },
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, AVG(average_income) AS x_value, EXTRACT(YEAR FROM date) AS y_value FROM income_data WHERE EXTRACT(YEAR FROM date) BETWEEN 2010 AND 2020 GROUP BY area_name, EXTRACT(YEAR FROM date) ORDER BY area_name, y_value;"
+        },
+        {
+          "proposition_id": "income_cross_dimensional_cd4",
+          "dataset": "income",
+          "time_period": "2008-2023",
+          "variables_needed": [
+            "Area",
+            "Mean_income",
+            "Median_income",
+            "Year"
+          ],
+          "chart_type": "lineChart_simple_3D",
+          "example": [
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            },
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            }
+          ],
+          "sql_query": "SELECT date AS time, average_income AS value, area_name AS dimension FROM income_data WHERE date BETWEEN '2008-01-01' AND '2023-12-31' GROUP BY date, area_name, average_income ORDER BY date, area_name;"
+        }
+      ]
+    },
+    "geographic_patterns": {
+      "category": "geographic_patterns",
+      "dataset": "income",
+      "processed_at": "2025-08-20T18:04:51.706Z",
+      "total_queries": 8,
+      "sql_queries": [
+        {
+          "proposition_id": "income_geographic_patterns_gp1",
+          "dataset": "income",
+          "time_period": "1999-2023",
+          "variables_needed": [
+            "Area",
+            "Mean_income"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, AVG(average_income) AS value FROM income_data WHERE date BETWEEN '1999-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "income_geographic_patterns_gp2",
+          "dataset": "income",
+          "time_period": "2010-2020",
+          "variables_needed": [
+            "Area",
+            "Mean_income"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, AVG(average_income) AS value FROM income_data WHERE date BETWEEN '2010-01-01' AND '2020-12-31' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "income_geographic_patterns_gp3",
+          "dataset": "income",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "Area",
+            "Mean_income"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, AVG(average_income) AS value FROM income_data GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "income_geographic_patterns_gp4",
+          "dataset": "income",
+          "time_period": "2023",
+          "variables_needed": [
+            "Area",
+            "Mean_income"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, AVG(average_income) AS value, (SELECT AVG(average_income) FROM income_data WHERE DATE_FORMAT(date, '%Y') = '2023') AS mean_value FROM income_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "income_geographic_patterns_gp5",
+          "dataset": "income",
+          "time_period": "1999-2023",
+          "variables_needed": [
+            "Area",
+            "Mean_income"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, AVG(average_income) AS value FROM income_data WHERE date BETWEEN '1999-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "income_geographic_patterns_gp6",
+          "dataset": "income",
+          "time_period": "2023",
+          "variables_needed": [
+            "Area",
+            "Median_income"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, median_income AS value FROM income_data WHERE date = '2023' GROUP BY area_name, median_income ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "income_geographic_patterns_gp7",
+          "dataset": "income",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "Area",
+            "Mean_income",
+            "Median_income"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, AVG(average_income) AS value FROM income_data GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "income_geographic_patterns_gp8",
+          "dataset": "income",
+          "time_period": "2015-2023",
+          "variables_needed": [
+            "Area",
+            "Mean_income"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, AVG(average_income) AS value, (SELECT AVG(average_income) FROM income_data WHERE date BETWEEN '2015-01-01' AND '2023-12-31') AS mean_value FROM income_data WHERE date BETWEEN '2015-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+        }
+      ]
+    },
+    "statistical_patterns": {
+      "category": "statistical_patterns",
+      "dataset": "income",
+      "processed_at": "2025-08-20T18:04:55.530Z",
+      "total_queries": 5,
+      "sql_queries": [
+        {
+          "proposition_id": "income_statistical_patterns_sp1",
+          "dataset": "income",
+          "time_period": "2023",
+          "variables_needed": [
+            "Mean_income"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT CONCAT(FLOOR(average_income / 10000) * 10000, '-', FLOOR(average_income / 10000) * 10000 + 9999) AS bin, COUNT(*) AS frequency FROM income_data WHERE date BETWEEN '2023-01-01' AND '2023-12-31' GROUP BY FLOOR(average_income / 10000) ORDER BY FLOOR(average_income / 10000);"
+        },
+        {
+          "proposition_id": "income_statistical_patterns_sp2",
+          "dataset": "income",
+          "time_period": "2023",
+          "variables_needed": [
+            "Mean_income",
+            "Median_income"
+          ],
+          "chart_type": "scatterPlot_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            },
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            }
+          ],
+          "sql_query": "SELECT borough_name AS category, AVG(average_income) AS x_value, AVG(median_income) AS y_value FROM income_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY borough_name ORDER BY borough_name;"
+        },
+        {
+          "proposition_id": "income_statistical_patterns_sp3",
+          "dataset": "income",
+          "time_period": "2023",
+          "variables_needed": [
+            "Area",
+            "Mean_income"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT CONCAT(FLOOR(average_income / 10000) * 10000, '-', FLOOR(average_income / 10000) * 10000 + 9999) AS bin, COUNT(*) AS frequency FROM income_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY bin ORDER BY bin;"
+        },
+        {
+          "proposition_id": "income_statistical_patterns_sp4",
+          "dataset": "income",
+          "time_period": "2010-2023",
+          "variables_needed": [
+            "Median_income",
+            "Year"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, median_income AS value FROM income_data WHERE date BETWEEN '2010-01-01' AND '2023-12-31' GROUP BY date, median_income ORDER BY date;"
+        },
+        {
+          "proposition_id": "income_statistical_patterns_sp5",
+          "dataset": "income",
+          "time_period": "2023",
+          "variables_needed": [
+            "Mean_income",
+            "Median_income"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT 'Mean Income' AS category, AVG(average_income) AS value FROM income_data WHERE date LIKE '2023%' UNION ALL SELECT 'Median Income' AS category, AVG(median_income) AS value FROM income_data WHERE date LIKE '2023%';"
+        }
+      ]
+    },
+    "temporal_trends": {
+      "category": "temporal_trends",
+      "dataset": "income",
+      "processed_at": "2025-08-20T18:05:03.397Z",
+      "total_queries": 8,
+      "sql_queries": [
+        {
+          "proposition_id": "income_temporal_trends_tt1",
+          "dataset": "income",
+          "time_period": "2015-2020",
+          "variables_needed": [
+            "Area",
+            "Mean_income",
+            "Year"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, average_income AS value FROM income_data WHERE date BETWEEN '2015-01-01' AND '2020-12-31' GROUP BY date, area_name ORDER BY date;"
+        },
+        {
+          "proposition_id": "income_temporal_trends_tt2",
+          "dataset": "income",
+          "time_period": "2000-2020",
+          "variables_needed": [
+            "Area",
+            "Median_income",
+            "Year"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, median_income AS value FROM income_data WHERE date BETWEEN '2000-01-01' AND '2020-12-31' GROUP BY date, area_name ORDER BY date;"
+        },
+        {
+          "proposition_id": "income_temporal_trends_tt3",
+          "dataset": "income",
+          "time_period": "1999-2023",
+          "variables_needed": [
+            "Area",
+            "Mean_income",
+            "Year"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, AVG(average_income) AS value FROM income_data WHERE date BETWEEN '1999-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "income_temporal_trends_tt4",
+          "dataset": "income",
+          "time_period": "2008",
+          "variables_needed": [
+            "Area",
+            "Median_income",
+            "Year"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, median_income AS value FROM income_data WHERE date = '2008' GROUP BY date, median_income ORDER BY date"
+        },
+        {
+          "proposition_id": "income_temporal_trends_tt5",
+          "dataset": "income",
+          "time_period": "2010-2020",
+          "variables_needed": [
+            "Area",
+            "Mean_income",
+            "Year"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, AVG(average_income) AS value, (SELECT AVG(average_income) FROM income_data WHERE date BETWEEN '2010-01-01' AND '2020-12-31') AS mean_value FROM income_data WHERE date BETWEEN '2010-01-01' AND '2020-12-31' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "income_temporal_trends_tt6",
+          "dataset": "income",
+          "time_period": "2015-2023",
+          "variables_needed": [
+            "Mean_income",
+            "Median_income",
+            "Year"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT DATE_FORMAT(date, '%Y') AS time, AVG(average_income) AS value FROM income_data WHERE DATE_FORMAT(date, '%Y') BETWEEN '2015' AND '2023' GROUP BY DATE_FORMAT(date, '%Y') ORDER BY DATE_FORMAT(date, '%Y');"
+        },
+        {
+          "proposition_id": "income_temporal_trends_tt7",
+          "dataset": "income",
+          "time_period": "2020",
+          "variables_needed": [
+            "Area",
+            "Mean_income",
+            "Year"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, AVG(average_income) AS value, (SELECT AVG(average_income) FROM income_data WHERE YEAR(date) = 2020) AS mean_value FROM income_data WHERE YEAR(date) = 2020 GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "income_temporal_trends_tt8",
+          "dataset": "income",
+          "time_period": "1999-2023",
+          "variables_needed": [
+            "Median_income",
+            "Year"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, median_income AS value FROM income_data WHERE date BETWEEN '1999-01-01' AND '2023-12-31' GROUP BY date, median_income ORDER BY date;"
+        }
+      ]
+    }
+  }
+}

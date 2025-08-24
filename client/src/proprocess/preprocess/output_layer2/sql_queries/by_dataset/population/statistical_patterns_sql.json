@@ -1,0 +1,136 @@
+{
+  "category": "statistical_patterns",
+  "dataset": "population",
+  "processed_at": "2025-08-20T18:05:32.968Z",
+  "total_queries": 6,
+  "sql_queries": [
+    {
+      "proposition_id": "population_statistical_patterns_sp1",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "histogram_simple_2D",
+      "example": [
+        {
+          "bin": "",
+          "frequency": 0
+        },
+        {
+          "bin": "",
+          "frequency": 0
+        }
+      ],
+      "sql_query": "SELECT CONCAT(FLOOR(population_count / 1000) * 1000, '-', FLOOR(population_count / 1000) * 1000 + 999) AS bin, COUNT(*) AS frequency FROM population_data GROUP BY bin ORDER BY bin;"
+    },
+    {
+      "proposition_id": "population_statistical_patterns_sp2",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "histogram_simple_2D",
+      "example": [
+        {
+          "bin": "",
+          "frequency": 0
+        },
+        {
+          "bin": "",
+          "frequency": 0
+        }
+      ],
+      "sql_query": "SELECT CONCAT(FLOOR(population_count / 1000) * 1000, '-', FLOOR(population_count / 1000) * 1000 + 999) AS bin, COUNT(*) AS frequency FROM population_data GROUP BY FLOOR(population_count / 1000) ORDER BY FLOOR(population_count / 1000);"
+    },
+    {
+      "proposition_id": "population_statistical_patterns_sp3",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "population_statistical_patterns_sp4",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS x_value, COUNT(*) AS y_value FROM population_data GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "population_statistical_patterns_sp5",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "histogram_simple_2D",
+      "example": [
+        {
+          "bin": "",
+          "frequency": 0
+        },
+        {
+          "bin": "",
+          "frequency": 0
+        }
+      ],
+      "sql_query": "SELECT CONCAT(FLOOR(population_count / 1000) * 1000, '-', FLOOR(population_count / 1000) * 1000 + 999) AS bin, COUNT(*) AS frequency FROM population_data GROUP BY FLOOR(population_count / 1000) ORDER BY FLOOR(population_count / 1000);"
+    },
+    {
+      "proposition_id": "population_statistical_patterns_sp6",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+    }
+  ]
+}

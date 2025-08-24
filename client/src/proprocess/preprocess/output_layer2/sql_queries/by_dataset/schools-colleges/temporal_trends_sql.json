@@ -1,0 +1,142 @@
+{
+  "category": "temporal_trends",
+  "dataset": "schools-colleges",
+  "processed_at": "2025-08-20T18:06:56.678Z",
+  "total_queries": 6,
+  "sql_queries": [
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_01",
+      "dataset": "schools-colleges",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(student_count) AS value FROM education_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_02",
+      "dataset": "schools-colleges",
+      "time_period": "2021-2022",
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT institution_type AS category, SUM(student_count) AS value, AVG(SUM(student_count)) OVER () AS mean_value FROM education_data WHERE date BETWEEN '2021-01-01' AND '2022-12-31' GROUP BY institution_type ORDER BY category;"
+    },
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_03",
+      "dataset": "schools-colleges",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "date",
+        "value"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(student_count) AS value FROM education_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_04",
+      "dataset": "schools-colleges",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(student_count) AS value FROM education_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_05",
+      "dataset": "schools-colleges",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "area",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, COUNT(institution_name) AS value FROM education_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_06",
+      "dataset": "schools-colleges",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(student_count) AS value FROM education_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    }
+  ]
+}

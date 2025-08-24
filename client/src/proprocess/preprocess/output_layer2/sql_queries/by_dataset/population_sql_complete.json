@@ -1,0 +1,800 @@
+{
+  "dataset": "population",
+  "processed_at": "2025-08-20T18:05:44.088Z",
+  "total_queries": 35,
+  "categories": {
+    "cross_dimensional": {
+      "category": "cross_dimensional",
+      "dataset": "population",
+      "processed_at": "2025-08-20T18:05:22.214Z",
+      "total_queries": 4,
+      "sql_queries": [
+        {
+          "proposition_id": "population_cross_dimensional_cd1",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "population_cross_dimensional_cd2",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "population_cross_dimensional_cd3",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "population_cross_dimensional_cd4",
+          "dataset": "population",
+          "time_period": "2001-2021",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2001-01-01' AND '2021-12-31' GROUP BY date ORDER BY date;"
+        }
+      ]
+    },
+    "geographic_patterns": {
+      "category": "geographic_patterns",
+      "dataset": "population",
+      "processed_at": "2025-08-20T18:05:28.886Z",
+      "total_queries": 10,
+      "sql_queries": [
+        {
+          "proposition_id": "population_geographic_patterns_gp1",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp2",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp3",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp4",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp5",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value, AVG(SUM(population_count)) OVER () AS mean_value FROM population_data GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp6",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp7",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp8",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp9",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value, AVG(SUM(population_count)) OVER () AS mean_value FROM population_data GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp10",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+        }
+      ]
+    },
+    "statistical_patterns": {
+      "category": "statistical_patterns",
+      "dataset": "population",
+      "processed_at": "2025-08-20T18:05:32.968Z",
+      "total_queries": 6,
+      "sql_queries": [
+        {
+          "proposition_id": "population_statistical_patterns_sp1",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT CONCAT(FLOOR(population_count / 1000) * 1000, '-', FLOOR(population_count / 1000) * 1000 + 999) AS bin, COUNT(*) AS frequency FROM population_data GROUP BY bin ORDER BY bin;"
+        },
+        {
+          "proposition_id": "population_statistical_patterns_sp2",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT CONCAT(FLOOR(population_count / 1000) * 1000, '-', FLOOR(population_count / 1000) * 1000 + 999) AS bin, COUNT(*) AS frequency FROM population_data GROUP BY FLOOR(population_count / 1000) ORDER BY FLOOR(population_count / 1000);"
+        },
+        {
+          "proposition_id": "population_statistical_patterns_sp3",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "population_statistical_patterns_sp4",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "scatterPlot_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            },
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS x_value, COUNT(*) AS y_value FROM population_data GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "population_statistical_patterns_sp5",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT CONCAT(FLOOR(population_count / 1000) * 1000, '-', FLOOR(population_count / 1000) * 1000 + 999) AS bin, COUNT(*) AS frequency FROM population_data GROUP BY FLOOR(population_count / 1000) ORDER BY FLOOR(population_count / 1000);"
+        },
+        {
+          "proposition_id": "population_statistical_patterns_sp6",
+          "dataset": "population",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+        }
+      ]
+    },
+    "temporal_trends": {
+      "category": "temporal_trends",
+      "dataset": "population",
+      "processed_at": "2025-08-20T18:05:44.086Z",
+      "total_queries": 15,
+      "sql_queries": [
+        {
+          "proposition_id": "population_temporal_trends_tt1",
+          "dataset": "population",
+          "time_period": "2000-2020",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2000-01-01' AND '2020-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt2",
+          "dataset": "population",
+          "time_period": "1801-2021",
+          "variables_needed": [
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '1801-01-01' AND '2021-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt3",
+          "dataset": "population",
+          "time_period": "1910-1920",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '1910-01-01' AND '1920-12-31' GROUP BY area_name ORDER BY category;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt4",
+          "dataset": "population",
+          "time_period": "1990-2010",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '1990-01-01' AND '2010-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt5",
+          "dataset": "population",
+          "time_period": "1950-1970",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '1950-01-01' AND '1970-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt6",
+          "dataset": "population",
+          "time_period": "1850-1900",
+          "variables_needed": [
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '1850-01-01' AND '1900-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt7",
+          "dataset": "population",
+          "time_period": "2010-2020",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2010-01-01' AND '2020-12-31' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt8",
+          "dataset": "population",
+          "time_period": "1980-2000",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '1980-01-01' AND '2000-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt9",
+          "dataset": "population",
+          "time_period": "1960-1970",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '1960-01-01' AND '1970-12-31' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt10",
+          "dataset": "population",
+          "time_period": "1995-2005",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '1995-01-01' AND '2005-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt11",
+          "dataset": "population",
+          "time_period": "2005-2015",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2005-01-01' AND '2015-12-31' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt12",
+          "dataset": "population",
+          "time_period": "1970-1990",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '1970-01-01' AND '1990-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt13",
+          "dataset": "population",
+          "time_period": "2000-2020",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2000-01-01' AND '2020-12-31' GROUP BY area_name ORDER BY category;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt14",
+          "dataset": "population",
+          "time_period": "1990-2010",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '1990-01-01' AND '2010-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt15",
+          "dataset": "population",
+          "time_period": "1985-2005",
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '1985-01-01' AND '2005-12-31' GROUP BY area_name ORDER BY category;"
+        }
+      ]
+    }
+  }
+}

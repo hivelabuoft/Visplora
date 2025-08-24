@@ -1,0 +1,77 @@
+{
+  "test_metadata": {
+    "test_date": "2025-08-20T15:25:27.923468",
+    "input_file": "../preprocess/output2/five_sample_propositions.json",
+    "total_propositions": 5,
+    "datasets_trained": [
+      "crime-rates",
+      "population",
+      "vehicles",
+      "house-prices",
+      "private-rent"
+    ]
+  },
+  "summary": {
+    "valid": 0,
+    "fixed": 5,
+    "errors": 0,
+    "needs_attention": 0
+  },
+  "detailed_results": [
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_001",
+      "dataset": "crime-rates",
+      "status": "fixed",
+      "original_sql": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;",
+      "fixed_sql": "```sql\nSELECT date AS time, COUNT(*) AS value \nFROM crime_data \nWHERE date BETWEEN '2022-01' AND '2023-12' \nGROUP BY date \nORDER BY date;\n```",
+      "issues_found": [
+        "1. The `date` column in the dataset uses the \"YYYY-MM\" format, not full dates like \"YYYY-MM-DD\". The original query incorrectly uses the full date format in the `BETWEEN` clause.\n2. The `count` column is not listed in the available columns, which suggests it might not exist. The query attempts to sum a non-existent column."
+      ],
+      "validation_response": "ISSUES FOUND: \n1. The `date` column in the dataset uses the \"YYYY-MM\" format, not full dates like \"YYYY-MM-DD\". The original query incorrectly uses the full date format in the `BETWEEN` clause.\n2. The `count` column is not listed in the available columns, which suggests it might not exist. The query attempts to sum a non-existent column.\n\nCORRECTED SQL:\n```sql\nSELECT date AS time, COUNT(*) AS value \nFROM crime_data \nWHERE date BETWEEN '2022-01' AND '2023-12' \nGROUP BY date \nORDER BY date;\n```"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_001",
+      "dataset": "house-prices",
+      "status": "fixed",
+      "original_sql": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date, area_name ORDER BY date;",
+      "fixed_sql": "```sql\nSELECT \n    Year AS time, \n    Value AS value \nFROM \n    house_prices \nWHERE \n    Year BETWEEN 'Year ending Dec 2020' AND 'Year ending Dec 2023' \nGROUP BY \n    Year, Area \nORDER BY \n    Year;\n```",
+      "issues_found": [
+        "1. The table name `house_price_data` does not match the dataset structure provided.\n2. The column names `date`, `average_price`, and `area_name` do not exist in the dataset. The correct columns are `Year`, `Value`, and `Area`.\n3. The `Year` column format is \"Year ending Dec 1995\", which is not compatible with the `BETWEEN '2020-01-01' AND '2023-12-31'` date filtering.\n4. The `GROUP BY` clause is incorrect because it uses non-existent columns and does not match the dataset structure."
+      ],
+      "validation_response": "ISSUES FOUND: \n1. The table name `house_price_data` does not match the dataset structure provided.\n2. The column names `date`, `average_price`, and `area_name` do not exist in the dataset. The correct columns are `Year`, `Value`, and `Area`.\n3. The `Year` column format is \"Year ending Dec 1995\", which is not compatible with the `BETWEEN '2020-01-01' AND '2023-12-31'` date filtering.\n4. The `GROUP BY` clause is incorrect because it uses non-existent columns and does not match the dataset structure.\n\nCORRECTED SQL: \n```sql\nSELECT \n    Year AS time, \n    Value AS value \nFROM \n    house_prices \nWHERE \n    Year BETWEEN 'Year ending Dec 2020' AND 'Year ending Dec 2023' \nGROUP BY \n    Year, Area \nORDER BY \n    Year;\n```"
+    },
+    {
+      "proposition_id": "population_temporal_trends_tt1",
+      "dataset": "population",
+      "status": "fixed",
+      "original_sql": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2000-01-01' AND '2020-12-31' GROUP BY date ORDER BY date;",
+      "fixed_sql": "```sql\nSELECT \n    '2001' AS time, SUM(CAST(REPLACE(\"2001\", ',', '') AS INTEGER)) AS value \nFROM \n    population_data\nUNION ALL\nSELECT \n    '2011' AS time, SUM(CAST(REPLACE(\"2011\", ',', '') AS INTEGER)) AS value \nFROM \n    population_data\nUNION ALL\nSELECT \n    '2021' AS time, SUM(CAST(REPLACE(\"2021\", ',', '') AS INTEGER)) AS value \nFROM \n    population_data\nORDER BY \n    time;\n```",
+      "issues_found": [
+        "1. The dataset does not have a 'date' column; instead, it has columns for each year as individual columns (e.g., '2001', '2011').\n2. The original query assumes a date range filtering, which is not applicable since the dataset uses year columns.\n3. The table name 'population_data' does not match the dataset structure provided.\n4. The query needs to be adjusted to sum across the relevant year columns."
+      ],
+      "validation_response": "ISSUES FOUND: \n1. The dataset does not have a 'date' column; instead, it has columns for each year as individual columns (e.g., '2001', '2011').\n2. The original query assumes a date range filtering, which is not applicable since the dataset uses year columns.\n3. The table name 'population_data' does not match the dataset structure provided.\n4. The query needs to be adjusted to sum across the relevant year columns.\n\nCORRECTED SQL:\n```sql\nSELECT \n    '2001' AS time, SUM(CAST(REPLACE(\"2001\", ',', '') AS INTEGER)) AS value \nFROM \n    population_data\nUNION ALL\nSELECT \n    '2011' AS time, SUM(CAST(REPLACE(\"2011\", ',', '') AS INTEGER)) AS value \nFROM \n    population_data\nUNION ALL\nSELECT \n    '2021' AS time, SUM(CAST(REPLACE(\"2021\", ',', '') AS INTEGER)) AS value \nFROM \n    population_data\nORDER BY \n    time;\n```"
+    },
+    {
+      "proposition_id": "vehicles_categorical_analysis_ca1",
+      "dataset": "vehicles",
+      "status": "fixed",
+      "original_sql": "SELECT vehicle_type AS category, SUM(registration_count) AS value, (SUM(registration_count) * 100.0 / (SELECT SUM(registration_count) FROM vehicle_data WHERE YEAR(date) = 2023)) AS percentage FROM vehicle_data WHERE YEAR(date) = 2023 GROUP BY vehicle_type ORDER BY value DESC;",
+      "fixed_sql": "```sql\nSELECT \n    'Cars' AS category, \n    SUM(Cars) AS value, \n    (SUM(Cars) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nUNION ALL\nSELECT \n    'Motor cycles' AS category, \n    SUM(Motor cycles) AS value, \n    (SUM(Motor cycles) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nUNION ALL\nSELECT \n    'Light goods' AS category, \n    SUM(Light goods) AS value, \n    (SUM(Light goods) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nUNION ALL\nSELECT \n    'Heavy goods' AS category, \n    SUM(Heavy goods) AS value, \n    (SUM(Heavy goods) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nUNION ALL\nSELECT \n    'Buses and coaches' AS category, \n    SUM(Buses and coaches) AS value, \n    (SUM(Buses and coaches) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nUNION ALL\nSELECT \n    'Other vehicles' AS category, \n    SUM(Other vehicles) AS value, \n    (SUM(Other vehicles) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nORDER BY value DESC;\n```",
+      "issues_found": [
+        "1. The original query uses a column `date` which does not exist in the dataset. The dataset does not have a date column, so filtering by year is not applicable.\n2. The original query uses `vehicle_type` and `registration_count` columns, which do not exist in the dataset. The dataset has specific vehicle type columns like `Cars`, `Motor cycles`, etc.\n3. The aggregation logic needs to be adjusted to sum across the specific vehicle type columns."
+      ],
+      "validation_response": "ISSUES FOUND: \n1. The original query uses a column `date` which does not exist in the dataset. The dataset does not have a date column, so filtering by year is not applicable.\n2. The original query uses `vehicle_type` and `registration_count` columns, which do not exist in the dataset. The dataset has specific vehicle type columns like `Cars`, `Motor cycles`, etc.\n3. The aggregation logic needs to be adjusted to sum across the specific vehicle type columns.\n\nCORRECTED SQL:\n```sql\nSELECT \n    'Cars' AS category, \n    SUM(Cars) AS value, \n    (SUM(Cars) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nUNION ALL\nSELECT \n    'Motor cycles' AS category, \n    SUM(Motor cycles) AS value, \n    (SUM(Motor cycles) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nUNION ALL\nSELECT \n    'Light goods' AS category, \n    SUM(Light goods) AS value, \n    (SUM(Light goods) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nUNION ALL\nSELECT \n    'Heavy goods' AS category, \n    SUM(Heavy goods) AS value, \n    (SUM(Heavy goods) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nUNION ALL\nSELECT \n    'Buses and coaches' AS category, \n    SUM(Buses and coaches) AS value, \n    (SUM(Buses and coaches) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nUNION ALL\nSELECT \n    'Other vehicles' AS category, \n    SUM(Other vehicles) AS value, \n    (SUM(Other vehicles) * 100.0 / SUM(Total)) AS percentage \nFROM vehicle_data\nORDER BY value DESC;\n```"
+    },
+    {
+      "proposition_id": "private-rent_temporal_trends_tt1",
+      "dataset": "private-rent",
+      "status": "fixed",
+      "original_sql": "SELECT date AS time, AVG(average_rent) AS value FROM rent_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;",
+      "fixed_sql": "```sql\nSELECT \n    Quarter AS time, \n    AVG(CAST(Average AS FLOAT)) AS value \nFROM \n    private_rent \nWHERE \n    Quarter BETWEEN 'Q1' AND 'Q4' \nGROUP BY \n    Quarter \nORDER BY \n    Quarter;\n```",
+      "issues_found": [
+        "1. The original query uses a column named `date`, which does not exist in the dataset. The dataset has a `Quarter` column that likely represents time.\n2. The column `average_rent` does not exist; the correct column name is `Average`.\n3. The table name `rent_data` is incorrect; the dataset does not specify a table name, but we will assume it should be `private_rent` based on the context.\n4. The expected output structure requires a `time` field, which should be derived from the `Quarter` column.\n5. The date filtering logic needs to be adjusted to use the `Quarter` column, which is in the format 'QY' (e.g., 'Q2')."
+      ],
+      "validation_response": "ISSUES FOUND: \n1. The original query uses a column named `date`, which does not exist in the dataset. The dataset has a `Quarter` column that likely represents time.\n2. The column `average_rent` does not exist; the correct column name is `Average`.\n3. The table name `rent_data` is incorrect; the dataset does not specify a table name, but we will assume it should be `private_rent` based on the context.\n4. The expected output structure requires a `time` field, which should be derived from the `Quarter` column.\n5. The date filtering logic needs to be adjusted to use the `Quarter` column, which is in the format 'QY' (e.g., 'Q2').\n\nCORRECTED SQL: \n```sql\nSELECT \n    Quarter AS time, \n    AVG(CAST(Average AS FLOAT)) AS value \nFROM \n    private_rent \nWHERE \n    Quarter BETWEEN 'Q1' AND 'Q4' \nGROUP BY \n    Quarter \nORDER BY \n    Quarter;\n```"
+    }
+  ]
+}

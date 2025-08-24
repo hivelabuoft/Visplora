@@ -1,0 +1,189 @@
+{
+  "category": "temporal_trends",
+  "dataset": "crime-rates",
+  "processed_at": "2025-08-20T18:03:25.477Z",
+  "total_queries": 8,
+  "sql_queries": [
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_001",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_002",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_003",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_004",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_005",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "date",
+        "count"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_006",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "lineChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT date AS time, count AS value, crime_category AS dimension FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' ORDER BY date, crime_category;"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_007",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_008",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category ORDER BY value DESC;"
+    }
+  ]
+}

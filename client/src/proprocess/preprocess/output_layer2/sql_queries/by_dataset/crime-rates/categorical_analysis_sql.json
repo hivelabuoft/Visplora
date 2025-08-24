@@ -1,0 +1,192 @@
+{
+  "category": "categorical_analysis",
+  "dataset": "crime-rates",
+  "processed_at": "2025-08-20T18:02:58.252Z",
+  "total_queries": 8,
+  "sql_queries": [
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_001",
+      "dataset": "crime-rates",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "crime_category",
+        "count"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS value, (SUM(count) * 100.0 / (SELECT SUM(count) FROM crime_data)) AS percentage FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_002",
+      "dataset": "crime-rates",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_003",
+      "dataset": "crime-rates",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_004",
+      "dataset": "crime-rates",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS value, AVG(SUM(count)) OVER (PARTITION BY crime_category) AS mean_value FROM crime_data GROUP BY crime_category, borough_name ORDER BY category;"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_005",
+      "dataset": "crime-rates",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "chart_type": "histogramHeatmap_simple_2D",
+      "example": [
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        },
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS x_bin, borough_name AS y_bin, SUM(count) AS count FROM crime_data GROUP BY crime_category, borough_name ORDER BY crime_category, borough_name;"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_006",
+      "dataset": "crime-rates",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "crime_category",
+        "area_name",
+        "count"
+      ],
+      "chart_type": "histogramHeatmap_simple_2D",
+      "example": [
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        },
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS x_bin, area_name AS y_bin, SUM(count) AS count FROM crime_data GROUP BY crime_category, area_name ORDER BY crime_category, area_name;"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_007",
+      "dataset": "crime-rates",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_008",
+      "dataset": "crime-rates",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS value FROM crime_data GROUP BY crime_category ORDER BY value DESC;"
+    }
+  ]
+}

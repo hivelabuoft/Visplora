@@ -1,0 +1,100 @@
+{
+  "category": "categorical_analysis",
+  "dataset": "libraries",
+  "processed_at": "2025-08-20T18:05:07.470Z",
+  "total_queries": 4,
+  "sql_queries": [
+    {
+      "proposition_id": "libraries_categorical_analysis_cat_01",
+      "dataset": "libraries",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value, (SUM(visitor_count) * 100.0 / (SELECT SUM(visitor_count) FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31')) AS percentage FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "libraries_categorical_analysis_cat_02",
+      "dataset": "libraries",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "libraries_categorical_analysis_cat_03",
+      "dataset": "libraries",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "libraries_categorical_analysis_cat_04",
+      "dataset": "libraries",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS value, AVG(visitor_count) OVER () AS mean_value FROM library_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    }
+  ]
+}

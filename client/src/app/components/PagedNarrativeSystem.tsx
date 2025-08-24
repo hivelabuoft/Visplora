@@ -70,6 +70,13 @@ export interface PagedNarrativeSystemRef {
   hasPendingSuggestion: () => boolean;
   updateSentenceContent: (pageId: string, oldContent: string, newContent: string) => boolean;
   switchActivePath: (pageId: string, targetNodeId: string, newActivePath: string[]) => boolean;
+  // NEW: Initialize with tree structure from example data
+  initializeWithExampleTree: (explorationPath: Array<{
+    sentence_id: number;
+    sentence_content: string;
+    children: number[];
+    parent: number | null;
+  }>) => void;
   // Debug helpers
   debugCreateTestBranches?: () => void;
   debugGetCurrentTreeState?: () => any;
@@ -178,11 +185,11 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
     }
   }, [pages.size, createNewPage]);
 
-  // Sync narrative editor content when currentPageId changes
+  // Sync narrative editor content when currentPageId changes or when page content is updated
   useEffect(() => {
     if (currentPageId && pages.has(currentPageId) && currentNarrativeRef.current) {
       const currentPage = pages.get(currentPageId);
-      if (currentPage) {
+      if (currentPage && currentPage.hasContent) {
         const narrativeText = currentPage.activePath
           .map(nodeId => {
             const node = currentPage.sentenceNodes.get(nodeId);
@@ -195,15 +202,18 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
           .filter(content => content.length > 0)
           .join(' ');
         
+        console.log(`🔄 useEffect: Syncing narrative content (${narrativeText.length} chars)`);
+        
         // Small delay to ensure ref is ready
         setTimeout(() => {
-          if (currentNarrativeRef.current) {
+          if (currentNarrativeRef.current && narrativeText.trim()) {
             currentNarrativeRef.current.updateContent(narrativeText);
+            console.log(`✅ useEffect: NarrativeLayer content synced`);
           }
         }, 50);
       }
     }
-  }, [currentPageId]); // Only depend on currentPageId, not pages
+  }, [currentPageId, pages]); // Include pages in dependency array to catch tree updates
 
   // Get current page
   const getCurrentPage = useCallback(() => {
@@ -1989,6 +1999,180 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       
       console.log(`✅ Active path switched successfully`);
       return true;
+    },
+
+    // Initialize with example tree data
+    initializeWithExampleTree: (explorationPath: Array<{
+      sentence_id: number;
+      sentence_content: string;
+      children: number[];
+      parent: number | null;
+    }>) => {
+      console.log(`🌳 Initializing with example tree data (${explorationPath.length} nodes)`);
+      
+      if (!explorationPath.length) {
+        console.log(`⚠️ Empty exploration path provided`);
+        return;
+      }
+
+      // Build the tree structure
+      const nodeIdMap = new Map<number, string>(); // Maps sentence_id to internal node id
+      const sentenceNodes = new Map<string, SentenceNode>();
+      
+      // First pass: Create all nodes and map IDs
+      explorationPath.forEach(pathNode => {
+        const internalNodeId = `node-${pathNode.sentence_id}-${Date.now()}`;
+        nodeIdMap.set(pathNode.sentence_id, internalNodeId);
+        
+        const sentenceNode: SentenceNode = {
+          id: internalNodeId,
+          content: pathNode.sentence_content.trim(),
+          parent: null, // Will be set in second pass
+          children: [],
+          activeChild: null,
+          isCompleted: true,
+          createdTime: Date.now(),
+          pageId: currentPageId,
+          editCount: 0,
+          revisedTime: 0
+        };
+        
+        sentenceNodes.set(internalNodeId, sentenceNode);
+      });
+
+      // Second pass: Set up parent-child relationships
+      explorationPath.forEach(pathNode => {
+        const nodeId = nodeIdMap.get(pathNode.sentence_id);
+        if (!nodeId) return;
+        
+        const node = sentenceNodes.get(nodeId);
+        if (!node) return;
+
+        // Set parent
+        if (pathNode.parent !== null) {
+          const parentId = nodeIdMap.get(pathNode.parent);
+          if (parentId) {
+            node.parent = parentId;
+            
+            // Add this node as a child to parent
+            const parentNode = sentenceNodes.get(parentId);
+            if (parentNode) {
+              parentNode.children.push(nodeId);
+            }
+          }
+        }
+      });
+
+      // Third pass: Set activeChild relationships based on primary path
+      // The primary path is typically the first child of each parent, 
+      // or we can trace through the linear sequence
+      explorationPath.forEach(pathNode => {
+        const nodeId = nodeIdMap.get(pathNode.sentence_id);
+        if (!nodeId) return;
+        
+        const node = sentenceNodes.get(nodeId);
+        if (!node || node.children.length === 0) return;
+
+        // Set the first child as active (can be adjusted based on logic)
+        if (pathNode.children.length > 0) {
+          const firstChildSentenceId = pathNode.children[0];
+          const firstChildNodeId = nodeIdMap.get(firstChildSentenceId);
+          if (firstChildNodeId) {
+            node.activeChild = firstChildNodeId;
+          }
+        }
+      });
+
+      // Find the root node (node with no parent)
+      let rootNodeId: string | null = null;
+      for (const node of sentenceNodes.values()) {
+        if (node.parent === null) {
+          rootNodeId = node.id;
+          break;
+        }
+      }
+
+      // Build the active path by following activeChild links from root
+      const activePath: string[] = [];
+      if (rootNodeId) {
+        let currentId: string | null = rootNodeId;
+        while (currentId) {
+          activePath.push(currentId);
+          const currentNode = sentenceNodes.get(currentId);
+          currentId = currentNode?.activeChild || null;
+        }
+      }
+
+      console.log(`🌳 Built tree with ${sentenceNodes.size} nodes, root: ${rootNodeId}, active path length: ${activePath.length}`);
+      
+      // Update the current page with the new tree structure
+      const currentPage = getCurrentPage();
+      if (currentPage) {
+        setPages(prev => {
+          const newPages = new Map(prev);
+          const updatedPage: NarrativePage = {
+            ...currentPage,
+            sentenceNodes,
+            activePath,
+            rootSentenceNodeId: rootNodeId,
+            hasContent: true,
+            lastModified: Date.now()
+          };
+          newPages.set(currentPageId, updatedPage);
+          
+          // Update tree dictionary
+          updateTreeDict(currentPageId, updatedPage);
+          
+          // Mark the page as having content
+          setPages(prevPages => {
+            const newPages = new Map(prevPages);
+            const pageToUpdate = newPages.get(currentPageId);
+            if (pageToUpdate) {
+              const finalPage = {
+                ...pageToUpdate,
+                hasContent: true,
+                lastModified: Date.now()
+              };
+              newPages.set(currentPageId, finalPage);
+            }
+            return newPages;
+          });
+          
+          return newPages;
+        });
+
+        // Update the narrative editor content and ensure it's properly loaded
+        setTimeout(() => {
+          if (currentNarrativeRef.current) {
+            const narrativeText = activePath
+              .map(nodeId => {
+                const node = sentenceNodes.get(nodeId);
+                let content = node ? node.content.trim() : '';
+                if (content && !/[.!?]$/.test(content)) {
+                  content += '.';
+                }
+                return content;
+              })
+              .filter(content => content.length > 0)
+              .join(' ');
+            
+            console.log(`📝 Setting initial narrative content: "${narrativeText.substring(0, 100)}..."`);
+            console.log(`📝 Full narrative text length: ${narrativeText.length} characters`);
+            
+            // Update the content in the NarrativeLayer
+            currentNarrativeRef.current.updateContent(narrativeText);
+            
+            // Also trigger a content change to ensure page status is updated
+            updatePageContentStatus(currentPageId, true);
+            
+            console.log(`✅ NarrativeLayer updated with example content`);
+          } else {
+            console.warn(`⚠️ currentNarrativeRef.current is null - cannot update content`);
+          }
+        }, 150); // Slightly longer delay to ensure all state updates have propagated
+      }
+      
+      console.log(`✅ Example tree initialization complete`);
     }
   }), [
     currentPageId, pages, pageOrder, getCurrentPage, createNewPage, 

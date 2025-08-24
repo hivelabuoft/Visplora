@@ -1,0 +1,114 @@
+{
+  "category": "statistical_patterns",
+  "dataset": "income",
+  "processed_at": "2025-08-20T18:04:55.530Z",
+  "total_queries": 5,
+  "sql_queries": [
+    {
+      "proposition_id": "income_statistical_patterns_sp1",
+      "dataset": "income",
+      "time_period": "2023",
+      "variables_needed": [
+        "Mean_income"
+      ],
+      "chart_type": "histogram_simple_2D",
+      "example": [
+        {
+          "bin": "",
+          "frequency": 0
+        },
+        {
+          "bin": "",
+          "frequency": 0
+        }
+      ],
+      "sql_query": "SELECT CONCAT(FLOOR(average_income / 10000) * 10000, '-', FLOOR(average_income / 10000) * 10000 + 9999) AS bin, COUNT(*) AS frequency FROM income_data WHERE date BETWEEN '2023-01-01' AND '2023-12-31' GROUP BY FLOOR(average_income / 10000) ORDER BY FLOOR(average_income / 10000);"
+    },
+    {
+      "proposition_id": "income_statistical_patterns_sp2",
+      "dataset": "income",
+      "time_period": "2023",
+      "variables_needed": [
+        "Mean_income",
+        "Median_income"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, AVG(average_income) AS x_value, AVG(median_income) AS y_value FROM income_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY borough_name ORDER BY borough_name;"
+    },
+    {
+      "proposition_id": "income_statistical_patterns_sp3",
+      "dataset": "income",
+      "time_period": "2023",
+      "variables_needed": [
+        "Area",
+        "Mean_income"
+      ],
+      "chart_type": "histogram_simple_2D",
+      "example": [
+        {
+          "bin": "",
+          "frequency": 0
+        },
+        {
+          "bin": "",
+          "frequency": 0
+        }
+      ],
+      "sql_query": "SELECT CONCAT(FLOOR(average_income / 10000) * 10000, '-', FLOOR(average_income / 10000) * 10000 + 9999) AS bin, COUNT(*) AS frequency FROM income_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY bin ORDER BY bin;"
+    },
+    {
+      "proposition_id": "income_statistical_patterns_sp4",
+      "dataset": "income",
+      "time_period": "2010-2023",
+      "variables_needed": [
+        "Median_income",
+        "Year"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, median_income AS value FROM income_data WHERE date BETWEEN '2010-01-01' AND '2023-12-31' GROUP BY date, median_income ORDER BY date;"
+    },
+    {
+      "proposition_id": "income_statistical_patterns_sp5",
+      "dataset": "income",
+      "time_period": "2023",
+      "variables_needed": [
+        "Mean_income",
+        "Median_income"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT 'Mean Income' AS category, AVG(average_income) AS value FROM income_data WHERE date LIKE '2023%' UNION ALL SELECT 'Median Income' AS category, AVG(median_income) AS value FROM income_data WHERE date LIKE '2023%';"
+    }
+  ]
+}

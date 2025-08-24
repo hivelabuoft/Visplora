@@ -1,0 +1,97 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "population",
+  "processed_at": "2025-08-20T18:05:22.214Z",
+  "total_queries": 4,
+  "sql_queries": [
+    {
+      "proposition_id": "population_cross_dimensional_cd1",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "population_cross_dimensional_cd2",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "population_cross_dimensional_cd3",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "population_cross_dimensional_cd4",
+      "dataset": "population",
+      "time_period": "2001-2021",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2001-01-01' AND '2021-12-31' GROUP BY date ORDER BY date;"
+    }
+  ]
+}

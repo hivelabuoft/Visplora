@@ -1,0 +1,641 @@
+{
+  "dataset": "restaurants",
+  "processed_at": "2025-08-20T18:06:24.804Z",
+  "total_queries": 25,
+  "categories": {
+    "categorical_analysis": {
+      "category": "categorical_analysis",
+      "dataset": "restaurants",
+      "processed_at": "2025-08-20T18:06:09.185Z",
+      "total_queries": 5,
+      "sql_queries": [
+        {
+          "proposition_id": "restaurants_categorical_analysis_ca_001",
+          "dataset": "restaurants",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, (SUM(restaurant_count) * 100.0 / (SELECT SUM(restaurant_count) FROM restaurant_data)) AS percentage FROM restaurant_data GROUP BY cuisine_type ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "restaurants_categorical_analysis_ca_002",
+          "dataset": "restaurants",
+          "time_period": "2001-2017",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_3D",
+          "example": [
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            },
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            }
+          ],
+          "sql_query": "SELECT date AS time, restaurant_count AS value, cuisine_type AS dimension FROM restaurant_data WHERE date BETWEEN '2001-01-01' AND '2017-12-31' GROUP BY date, cuisine_type ORDER BY date, cuisine_type;"
+        },
+        {
+          "proposition_id": "restaurants_categorical_analysis_ca_003",
+          "dataset": "restaurants",
+          "time_period": "2010-2017",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value FROM restaurant_data WHERE date BETWEEN '2010-01-01' AND '2017-12-31' GROUP BY cuisine_type ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "restaurants_categorical_analysis_ca_004",
+          "dataset": "restaurants",
+          "time_period": "2017",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, (SUM(restaurant_count) * 100.0 / (SELECT SUM(restaurant_count) FROM restaurant_data WHERE YEAR(date) = 2017)) AS percentage FROM restaurant_data WHERE YEAR(date) = 2017 GROUP BY cuisine_type ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "restaurants_categorical_analysis_ca_005",
+          "dataset": "restaurants",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, (SUM(restaurant_count) * 100.0 / (SELECT SUM(restaurant_count) FROM restaurant_data)) AS percentage FROM restaurant_data GROUP BY cuisine_type ORDER BY value DESC;"
+        }
+      ]
+    },
+    "cross_dimensional": {
+      "category": "cross_dimensional",
+      "dataset": "restaurants",
+      "processed_at": "2025-08-20T18:06:12.153Z",
+      "total_queries": 4,
+      "sql_queries": [
+        {
+          "proposition_id": "restaurants_cross_dimensional_cd_001",
+          "dataset": "restaurants",
+          "time_period": "2005-2015",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(restaurant_count) AS value FROM restaurant_data WHERE date BETWEEN '2005-01-01' AND '2015-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "restaurants_cross_dimensional_cd_002",
+          "dataset": "restaurants",
+          "time_period": "2010-2017",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value FROM restaurant_data WHERE date BETWEEN '2010-01-01' AND '2017-12-31' GROUP BY cuisine_type ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "restaurants_cross_dimensional_cd_003",
+          "dataset": "restaurants",
+          "time_period": "2012-2017",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_3D",
+          "example": [
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            },
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            }
+          ],
+          "sql_query": "SELECT date AS time, restaurant_count AS value, cuisine_type AS dimension FROM restaurant_data WHERE date BETWEEN '2012-01-01' AND '2017-12-31' GROUP BY date, cuisine_type ORDER BY date, cuisine_type;"
+        },
+        {
+          "proposition_id": "restaurants_cross_dimensional_cd_004",
+          "dataset": "restaurants",
+          "time_period": "2010-2017",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "barChart_simple_3D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "dimension": ""
+            },
+            {
+              "category": "",
+              "value": 0,
+              "dimension": ""
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, area_name AS dimension FROM restaurant_data WHERE date BETWEEN '2010-01-01' AND '2017-12-31' GROUP BY cuisine_type, area_name ORDER BY category, dimension;"
+        }
+      ]
+    },
+    "geographic_patterns": {
+      "category": "geographic_patterns",
+      "dataset": "restaurants",
+      "processed_at": "2025-08-20T18:06:18.340Z",
+      "total_queries": 8,
+      "sql_queries": [
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_001",
+          "dataset": "restaurants",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value FROM restaurant_data GROUP BY cuisine_type ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_002",
+          "dataset": "restaurants",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, AVG(SUM(restaurant_count)) OVER () AS mean_value FROM restaurant_data GROUP BY cuisine_type ORDER BY category;"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_003",
+          "dataset": "restaurants",
+          "time_period": "2010-2017",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(restaurant_count) AS value FROM restaurant_data WHERE date BETWEEN '2010-01-01' AND '2017-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_004",
+          "dataset": "restaurants",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value FROM restaurant_data GROUP BY cuisine_type ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_005",
+          "dataset": "restaurants",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS x_bin, cuisine_type AS y_bin, SUM(restaurant_count) AS count FROM restaurant_data GROUP BY area_name, cuisine_type ORDER BY area_name, cuisine_type;"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_006",
+          "dataset": "restaurants",
+          "time_period": "2001-2017",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, AVG(SUM(restaurant_count)) OVER () AS mean_value FROM restaurant_data WHERE date BETWEEN '2001-01-01' AND '2017-12-31' GROUP BY cuisine_type ORDER BY category;"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_007",
+          "dataset": "restaurants",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, (SUM(restaurant_count) * 100.0 / (SELECT SUM(restaurant_count) FROM restaurant_data)) AS percentage FROM restaurant_data GROUP BY cuisine_type ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_008",
+          "dataset": "restaurants",
+          "time_period": "Not applicable",
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value FROM restaurant_data GROUP BY cuisine_type ORDER BY value DESC;"
+        }
+      ]
+    },
+    "temporal_trends": {
+      "category": "temporal_trends",
+      "dataset": "restaurants",
+      "processed_at": "2025-08-20T18:06:24.803Z",
+      "total_queries": 8,
+      "sql_queries": [
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_001",
+          "dataset": "restaurants",
+          "time_period": "2005-2010",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_3D",
+          "example": [
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            },
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            }
+          ],
+          "sql_query": "SELECT date AS time, restaurant_count AS value, cuisine_type AS dimension FROM restaurant_data WHERE date BETWEEN '2005-01-01' AND '2010-12-31' GROUP BY date, cuisine_type ORDER BY date, cuisine_type;"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_002",
+          "dataset": "restaurants",
+          "time_period": "2014-2015",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, AVG(SUM(restaurant_count)) OVER () AS mean_value FROM restaurant_data WHERE date BETWEEN '2014-01-01' AND '2015-12-31' GROUP BY cuisine_type ORDER BY category;"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_003",
+          "dataset": "restaurants",
+          "time_period": "2001-2017",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_3D",
+          "example": [
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            },
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            }
+          ],
+          "sql_query": "SELECT date AS time, restaurant_count AS value, cuisine_type AS dimension FROM restaurant_data WHERE date BETWEEN '2001-01-01' AND '2017-12-31' GROUP BY date, cuisine_type ORDER BY date, cuisine_type;"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_004",
+          "dataset": "restaurants",
+          "time_period": "2008",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_3D",
+          "example": [
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            },
+            {
+              "time": "",
+              "value": 0,
+              "dimension": ""
+            }
+          ],
+          "sql_query": "SELECT date AS time, restaurant_count AS value, cuisine_type AS dimension FROM restaurant_data WHERE EXTRACT(YEAR FROM date) = 2008 GROUP BY date, cuisine_type, restaurant_count ORDER BY date, cuisine_type;"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_005",
+          "dataset": "restaurants",
+          "time_period": "2001-2017",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(restaurant_count) AS value FROM restaurant_data WHERE date BETWEEN '2001-01-01' AND '2017-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_006",
+          "dataset": "restaurants",
+          "time_period": "2010-2015",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "barChart_simple_3D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "dimension": ""
+            },
+            {
+              "category": "",
+              "value": 0,
+              "dimension": ""
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, area_name AS dimension FROM restaurant_data WHERE date BETWEEN '2010-01-01' AND '2015-12-31' GROUP BY cuisine_type, area_name ORDER BY category, dimension;"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_007",
+          "dataset": "restaurants",
+          "time_period": "2001-2017",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(restaurant_count) AS value FROM restaurant_data WHERE date BETWEEN '2001-01-01' AND '2017-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_008",
+          "dataset": "restaurants",
+          "time_period": "2013",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "chart_type": "barChart_simple_3D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "dimension": ""
+            },
+            {
+              "category": "",
+              "value": 0,
+              "dimension": ""
+            }
+          ],
+          "sql_query": "SELECT cuisine_type AS category, SUM(restaurant_count) AS value, area_name AS dimension FROM restaurant_data WHERE DATE_FORMAT(date, '%Y') = '2013' GROUP BY cuisine_type, area_name ORDER BY category, dimension;"
+        }
+      ]
+    }
+  }
+}
