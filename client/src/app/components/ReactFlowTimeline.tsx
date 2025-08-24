@@ -303,14 +303,32 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalPosition, setModalPosition] = useState<{ x: number; y: number } | null>(null);
   const [isSummaryLoading, setIsSummaryLoading] = useState(false);
+  // Add local state to track pending path switches
+  const [pendingActivePath, setPendingActivePath] = useState<string[] | null>(null);
   const { fitView, setCenter } = useReactFlow();
   
-  const activePathSet = useMemo(() => new Set(activePath), [activePath]);
+  // Use pending active path if available, otherwise use the prop
+  const currentActivePath = pendingActivePath || activePath;
+  const activePathSet = useMemo(() => new Set(currentActivePath), [currentActivePath]);
+  
+  // Clear pending path when activePath prop updates (parent has processed the switch)
+  useEffect(() => {
+    if (pendingActivePath && activePath.length > 0) {
+      // Check if the parent has updated to match our pending path
+      const pathsMatch = pendingActivePath.length === activePath.length &&
+        pendingActivePath.every((id, index) => id === activePath[index]);
+      
+      if (pathsMatch) {
+        setPendingActivePath(null); // Clear pending since parent caught up
+        console.log('✅ Timeline active path synchronized with parent');
+      }
+    }
+  }, [activePath, pendingActivePath]);
   
   // Function to get active path before a specific node
   const getPathBeforeNode = useCallback((clickedNodeId: string): string[] => {
-    return getActivePathBeforeNode(clickedNodeId, activePath, nodes);
-  }, [activePath, nodes]);
+    return getActivePathBeforeNode(clickedNodeId, currentActivePath, nodes);
+  }, [currentActivePath, nodes]);
   
   // Function to calculate path to a specific node (for branch switching)
   const getPathToNode = useCallback((targetNodeId: string): string[] => {
@@ -339,7 +357,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     // Check if the node is in the active path
     if (!activePathSet.has(node.sentence_id)) {
       // Node is NOT in active path - switch to this branch
-      console.log(`� Switching to branch: "${node.sentence_content.substring(0, 50)}..."`);
+      console.log(`🔄 Switching to branch: "${node.sentence_content.substring(0, 50)}..."`);
       
       if (onPathSwitch) {
         // Calculate the new active path to this node
@@ -349,7 +367,11 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
           return `${id}: "${n?.sentence_content.substring(0, 30)}..."`;
         }));
         
-        // Call the path switch callback
+        // Immediately update the timeline's active path visualization
+        setPendingActivePath(newActivePath);
+        console.log('⚡ Timeline active path updated immediately for visual feedback');
+        
+        // Call the path switch callback to update parent
         onPathSwitch(node.sentence_id, newActivePath);
       } else {
         console.log(`🚫 No onPathSwitch callback provided, ignoring branch switch`);
@@ -438,7 +460,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
   
   // Function to restore view to current active node
   const restoreViewToCurrentNode = useCallback(() => {
-    if (activePath.length === 0) {
+    if (currentActivePath.length === 0) {
       // If no active path, center on the first node
       if (reactFlowNodes.length > 0) {
         setCenter(reactFlowNodes[0].position.x, reactFlowNodes[0].position.y, { zoom: 1, duration: 800 });
@@ -447,7 +469,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     }
 
     // Get the last 6 nodes from the active path (or all if less than 6)
-    const recentActiveNodes = activePath.slice(-6);
+    const recentActiveNodes = currentActivePath.slice(-6);
     const recentNodePositions = recentActiveNodes
       .map(nodeId => reactFlowNodes.find(node => node.id === nodeId))
       .filter(node => node !== undefined)
@@ -478,7 +500,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     const finalZoom = Math.max(calculatedZoom, 0.3); // Minimum zoom of 0.3
 
     setCenter(centerX, centerY, { zoom: finalZoom, duration: 800 });
-  }, [activePath, reactFlowNodes, setCenter]);
+  }, [currentActivePath, reactFlowNodes, setCenter]);
   
   // Calculate layout and convert to React Flow format
   const calculateFlowLayout = useCallback(() => {
@@ -779,17 +801,17 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     const { nodes: flowNodes, edges: flowEdges } = calculateFlowLayout();
     setReactFlowNodes(flowNodes);
     setReactFlowEdges(flowEdges);
-  }, [nodes, activePath, isLoading, calculateFlowLayout, setReactFlowNodes, setReactFlowEdges]);
+  }, [nodes, currentActivePath, isLoading, calculateFlowLayout, setReactFlowNodes, setReactFlowEdges]);
 
   // Separate effect for centering on active nodes to avoid setTimeout in main effect
   useEffect(() => {
     // Skip if loading, no nodes, or no active path
-    if (isLoading || nodes.length === 0 || activePath.length === 0 || reactFlowNodes.length === 0) {
+    if (isLoading || nodes.length === 0 || currentActivePath.length === 0 || reactFlowNodes.length === 0) {
       return;
     }
     
     // Center on the most recent nodes (last 3-4 nodes of active path)
-    const recentNodes = activePath.slice(-3); // Focus on last 3 nodes
+    const recentNodes = currentActivePath.slice(-3); // Focus on last 3 nodes
     if (recentNodes.length > 0) {
       const lastNodeId = recentNodes[recentNodes.length - 1];
       const lastNode = reactFlowNodes.find(n => n.id === lastNodeId);
@@ -800,7 +822,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
         });
       }
     }
-  }, [activePath, reactFlowNodes, isLoading, nodes.length, setCenter]);
+  }, [currentActivePath, reactFlowNodes, isLoading, nodes.length, setCenter]);
 
   // Show loading overlay when processing LLM response - render conditionally in JSX
   if (isLoading) {

@@ -11,7 +11,7 @@
   {
     "sentence_id": 2,
     "sentence_content": "Barking & Dagenham, Bexley, and Havering came up as the cheapest, but I wanted to understand what sits behind that.",
-    "children": [3],
+    "children": [3, 15, 21],
     "parent": 1,
     "system_shows": "Callout chips on the three lowest bars; tooltip with borough stats",
     "drift_type": "elaboration"
@@ -51,7 +51,7 @@
   {
     "sentence_id": 7,
     "sentence_content": "Lewisham popped up as lively without extreme rents—good energy for the money.",
-    "children": [10],
+    "children": [10, 23],
     "parent": 6,
     "system_shows": "Small multiples: Lewisham vs London median on rent, ratio, gyms/10k, restaurants/10k",
     "drift_type": "elaboration"
@@ -182,7 +182,7 @@
     "sentence_id": 23,
     "sentence_content": "One more angle from the cheap set: what actually drives the safety picture—annoyances versus real danger?",
     "children": [24],
-    "parent": 2,
+    "parent": 7,
     "system_shows": "Stacked bars: crime category mix (theft/ASB/violent) for Barking & Dagenham vs Havering vs London median",
     "drift_type": "topic_change"
   },
