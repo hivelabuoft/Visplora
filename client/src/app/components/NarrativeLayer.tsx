@@ -35,6 +35,8 @@ interface NarrativeLayerProps {
   onGenerateVisualization?: (sentence: string, validation: any) => void; // New callback for visualization generation
   disableInteractions?: boolean; // New prop to disable interactions when info nodes are active
   onContentChange?: (oldContent: string, newContent: string) => void; // New callback for content changes
+  isExampleScenario?: boolean; // New prop to indicate if we're in an example scenario
+  onShowViewForSentence?: (sentence: string, sentenceId?: string, shouldGenerateIfMissing?: boolean) => void; // New callback for showing view for a sentence
   // New simplified props for tree structure
   getBranchesForSentence?: (sentenceContent: string) => Array<{
     id: string;
@@ -78,6 +80,8 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   onGenerateVisualization, 
   disableInteractions = false,
   onContentChange,
+  isExampleScenario = false,
+  onShowViewForSentence,
   getBranchesForSentence,
   onSwitchToBranch,
   onCreateBranch,
@@ -146,12 +150,14 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       isNew?: boolean; // True for newly created branches not yet in tree structure
     }>;
     insertPosition: number; // Position where branch section should be inserted
+    position?: { left: number; top: number }; // Visual position for inline display
   }>({
     isActive: false,
     isDraft: false,
     parentSentence: '',
     branches: [],
-    insertPosition: 0
+    insertPosition: 0,
+    position: undefined
   });
   
   // Suggestion state
@@ -1566,13 +1572,12 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       ...prev, 
       isActive: false, 
       isDraft: false, 
-      branches: [] 
+      branches: [],
+      position: undefined
     }));
     
-    // Clear dropdown if open
-    if (selectedSentence) {
-      clearAllSelectedSentences();
-    }
+    // Clear dropdown and sentence selection when exiting branching mode
+    clearAllSelectedSentences();
   }, [onCreateBranch, onSwitchToBranch, branchingMode.parentSentence, selectedSentence]);
 
   const handleAddNewAlternative = useCallback(() => {
@@ -1628,7 +1633,8 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       isDraft: false, // Existing branches are not drafts
       parentSentence,
       branches,
-      insertPosition: 0 // Will be calculated based on sentence position
+      insertPosition: 0, // Will be calculated based on sentence position
+      position: undefined // Will be set when positioning is needed
     });
     
     // Create editors after DOM update
@@ -1663,16 +1669,51 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     if (!selectedSentence) return;
     
     
-    // Clear selection after action
-    clearAllSelectedSentences();
+    // Clear selection after action (except for branch action which keeps sentence highlighted)
+    if (action !== 'branch') {
+      clearAllSelectedSentences();
+    }
     
     // Handle different actions
     switch (action) {
       case 'show-view':
-        
-        // Validate domain scope for the selected sentence
         const validationSentenceText = selectedSentence.element.textContent?.trim() || '';
         
+        // If we're in an example scenario, don't call LLM - just trigger the callback directly
+        if (isExampleScenario) {
+          console.log('🎯 Example scenario: Showing view for sentence without LLM validation');
+          
+          // Find sentence ID if possible (look for data attributes or other identifiers)
+          const sentenceElement = selectedSentence.element;
+          let sentenceId: string | undefined;
+          
+          // Try to extract sentence ID from various possible sources
+          if (sentenceElement.hasAttribute('data-sentence-id')) {
+            sentenceId = sentenceElement.getAttribute('data-sentence-id') || undefined;
+          } else {
+            // Try to extract from sentence content - look for sentence number patterns
+            const sentenceMatch = validationSentenceText.match(/sentence\s*#?(\d+)/i);
+            if (sentenceMatch) {
+              sentenceId = sentenceMatch[1];
+            } else {
+              // Try to find the sentence index in the document
+              const allSentences = Array.from(selectedSentence.element.parentElement?.querySelectorAll('.completed-sentence, p, .sentence') || []);
+              const sentenceIndex = allSentences.indexOf(sentenceElement);
+              if (sentenceIndex >= 0) {
+                sentenceId = (sentenceIndex + 1).toString(); // 1-based indexing
+              }
+            }
+          }
+          
+          // Call the callback with shouldGenerateIfMissing flag for example scenarios
+          if (onShowViewForSentence) {
+            onShowViewForSentence(validationSentenceText, sentenceId, true); // true = shouldGenerateIfMissing
+          }
+          
+          break;
+        }
+        
+        // Regular flow for non-example scenarios - validate domain scope for the selected sentence
         validateDomain(validationSentenceText)
           .then(domainValidationResult => {
             if (domainValidationResult.success && domainValidationResult.validation) {
@@ -1723,6 +1764,18 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           // Create a draft branch that's not yet committed to tree structure
           const draftBranchId = `draft-branch-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
           
+          // Calculate position to show branch section right below the selected sentence
+          const sentenceElement = selectedSentence.element;
+          const sentenceRect = sentenceElement.getBoundingClientRect();
+          const editorElement = document.querySelector('.narrative-editor');
+          const editorRect = editorElement?.getBoundingClientRect();
+          
+          // Calculate position relative to the editor container
+          const branchPosition = editorRect ? {
+            left: sentenceRect.left - editorRect.left,
+            top: sentenceRect.bottom - editorRect.top + 10 // 10px gap below sentence
+          } : { left: 0, top: 0 };
+          
           // Include existing branches for correct numbering, but mark only the new one as visible
           const draftBranches = [
             // Include existing branches (hidden during draft mode)
@@ -1745,14 +1798,18 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
             }
           ];
           
-          // Initialize draft branching mode
+          // Initialize draft branching mode with position
           setBranchingMode({
             isActive: true,
             isDraft: true, // This is draft mode
             parentSentence: parentText,
             branches: draftBranches,
-            insertPosition: 0
+            insertPosition: 0,
+            position: branchPosition
           });
+          
+          // Keep the sentence highlighted and close only the dropdown
+          setDropdownPosition(null); // Close dropdown but keep sentence selected
           
           // Create editors after DOM update (only for the new branch)
           setTimeout(() => {
@@ -1973,6 +2030,12 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         return;
       }
       
+      // Don't clear if clicking on branch section
+      if (target.closest('.branch-section')) {
+        // console.log('🌿 Click on branch section - keeping sentence highlighted');
+        return;
+      }
+      
       // Clear add-next editor if clicking outside
       if (addNextMode) {
         // console.log('❌ Global click clearing add-next editor');
@@ -2168,9 +2231,25 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           />
         </div>
         
-        {/* Enhanced branching interface */}
+        {/* Enhanced branching interface - positioned inline with selected sentence */}
         {branchingMode.isActive && (
-          <div className="branch-section">
+          <div 
+            className="branch-section inline-branch-section"
+            style={{
+              position: 'absolute',
+              left: `${branchingMode.position?.left || 0}px`,
+              top: `${branchingMode.position?.top || 0}px`,
+              zIndex: 999,
+              backgroundColor: 'white',
+              border: '2px solid #3b82f6',
+              borderRadius: '12px',
+              padding: '16px',
+              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)',
+              minWidth: '500px',
+              maxWidth: '700px',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+            }}
+          >
             {branchingMode.branches
               .filter(branch => {
                 // If we're in draft mode (user clicked "Create New Branch"), only show new branches
@@ -2210,13 +2289,12 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
                             isDraft: false,
                             parentSentence: '',
                             branches: [],
-                            insertPosition: 0
+                            insertPosition: 0,
+                            position: undefined
                           });
                           
-                          // Clear dropdown if open
-                          if (selectedSentence) {
-                            clearAllSelectedSentences();
-                          }
+                          // Clear sentence selection when canceling
+                          clearAllSelectedSentences();
                         }}
                         style={{
                           display: 'flex',

@@ -52,6 +52,8 @@ interface PagedNarrativeSystemProps {
   onSentenceDelete?: (sentenceId: string, pageId: string) => void; // Called when user deletes a sentence
   onPageReset?: (pageId: string) => void; // Called when user resets a page
   maxPages?: number; // Maximum number of pages allowed
+  isExampleScenario?: boolean; // NEW: Indicates if we're in an example scenario
+  onShowViewForSentence?: (sentence: string, sentenceId?: string, shouldGenerateIfMissing?: boolean, pageId?: string) => void; // NEW: Callback for showing view for a sentence
 }
 
 export interface PagedNarrativeSystemRef {
@@ -102,7 +104,9 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
   onBranchDelete,
   onSentenceDelete,
   onPageReset,
-  maxPages = 10
+  maxPages = 10,
+  isExampleScenario = false,
+  onShowViewForSentence
 }, ref) => {
   // Core state
   const [pages, setPages] = useState<Map<string, NarrativePage>>(new Map());
@@ -2322,6 +2326,12 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
           onGenerateVisualization={handleGenerateVisualization}
           disableInteractions={disableInteractions}
           onContentChange={handleContentChange}
+          isExampleScenario={isExampleScenario}
+          onShowViewForSentence={(sentence, sentenceId, shouldGenerateIfMissing) => {
+            if (onShowViewForSentence) {
+              onShowViewForSentence(sentence, sentenceId, shouldGenerateIfMissing, currentPageId);
+            }
+          }}
           getBranchesForSentence={getBranchesForSentence}
           onSwitchToBranch={onSwitchToBranch}
           onCreateBranch={onCreateBranch}

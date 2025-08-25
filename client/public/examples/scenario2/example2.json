@@ -2,7 +2,7 @@
     "exploration_path": [
   {
     "sentence_id": 1,
-    "sentence_content": "I started by getting a feel for what an ‘attainable’ home looks like across London, just a broad scan of where prices sit so I’m not chasing outliers.",
+    "sentence_content": "I started by getting a feel for what an ‘attainable’ home looks like across London, just a broad scan of where the average and median prices sit.",
     "children": [2],
     "parent": null,
     "system_shows": "Dashboard: (a) Choropleth — median housing price by borough; (b) Ranked bar chart — borough price with London median band; (c) Band filters — below-median, near-median toggles",

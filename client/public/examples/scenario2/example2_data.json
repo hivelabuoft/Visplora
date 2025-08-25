@@ -1,0 +1,34 @@
+[
+    {
+        "sentence_id": 1,
+        "charts":[
+            {
+                "chart_type": "Choropleth",
+                "description": "Median housing price by borough",
+                "size": "medium",
+                "data": {}
+            },
+            {
+                "chart_type": "Bar",
+                "description": "Average housing price per borough - Distance from the city center",
+                "variation": ["with_mean", "3d"],
+                "size": "medium",
+                "data": {}
+            },
+            {
+                "chart_type":"Bar",
+                "description": "Top 5 boroughs by average housing price",
+                "variation": ["with_mean"],
+                "size": "medium",
+                "data": {}
+            },
+            {
+                "chart_type":"Bar",
+                "description": "Bottom 5 boroughs by average housing price",
+                "variation": ["with_mean"],
+                "size": "medium",
+                "data": {}
+            }
+        ]
+    }
+]
