@@ -363,12 +363,18 @@ interface InquiryBoardProps {
     activePath: string[];
   };
   pageId?: string;
+  scenario?: string;  // Optional: scenario number for example data
+  example?: string;   // Optional: example number for example data
+  onHighlightSentences?: (sentenceIds: string[]) => void; // New callback for highlighting sentences
 }
 
 const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({ 
   onGoBack,
   treeStructure,
-  pageId 
+  pageId,
+  scenario,
+  example,
+  onHighlightSentences 
 }, ref) => {
   const [nodes, setNodes, onNodesChangeOriginal] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -513,7 +519,9 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
             },
             body: JSON.stringify({
               treeStructure: currentTreeStructure,
-              pageId: pageId || 'default-page'
+              pageId: pageId || 'default-page',
+              scenario: scenario,  // Pass scenario for example data detection
+              example: example     // Pass example for example data detection
             }),
           });
           
@@ -551,6 +559,12 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
           
           // Use enriched issues as final data
           const finalIssues = enrichmentData.enrichedIssues || [];
+          console.log('🔍 Final inquiries loaded:', finalIssues.map((i: InquiryIssue) => ({
+            qid: i.qid,
+            title: i.title,
+            sentenceRefs: i.sentenceRefs,
+            sentenceRefsCount: i.sentenceRefs?.length || 0
+          })));
           setInquiries(finalIssues);
           
         } catch (error) {
@@ -771,16 +785,33 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
     setNodes(newNodes);
   }, [inquiries, layoutMode, setNodes, setEdges]);
 
-  // Handle inquiry node click - log sentence references
+  // Handle inquiry node click - highlight corresponding sentences
   const handleInquiryNodeClick = useCallback((nodeId: string) => {
     const clickedInquiry = inquiries.find(inquiry => inquiry.qid === nodeId);
     if (clickedInquiry) {
+      console.log('🎯 Inquiry Node Clicked:', clickedInquiry.qid, clickedInquiry.title);
+      console.log('🔍 Full inquiry object:', JSON.stringify(clickedInquiry, null, 2));
+      
       if (clickedInquiry.sentenceRefs && clickedInquiry.sentenceRefs.length > 0) {
-        clickedInquiry.sentenceRefs.forEach((sentenceId, index) => {
-        });
-      } 
+        console.log('📝 Found sentence references:', clickedInquiry.sentenceRefs);
+        
+        // Call the highlight callback if provided
+        if (onHighlightSentences) {
+          console.log('🎨 Calling highlight callback for sentences:', clickedInquiry.sentenceRefs);
+          onHighlightSentences(clickedInquiry.sentenceRefs);
+        } else {
+          console.warn('⚠️ No highlight callback provided - cannot highlight sentences');
+        }
+      } else {
+        console.log('❌ No sentence references found for inquiry:', clickedInquiry.qid);
+        console.log('🔍 sentenceRefs value:', clickedInquiry.sentenceRefs);
+        console.log('🔍 sentenceRefs type:', typeof clickedInquiry.sentenceRefs);
+        console.log('🔍 sentenceRefs is array:', Array.isArray(clickedInquiry.sentenceRefs));
+      }
+    } else {
+      console.error('❌ Inquiry node not found:', nodeId);
     }
-  }, [inquiries]);
+  }, [inquiries, onHighlightSentences]);
 
   // Handle go back button
   const handleGoBack = useCallback(() => {

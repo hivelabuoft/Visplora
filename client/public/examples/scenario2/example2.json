@@ -1,125 +1,261 @@
 {
     "exploration_path": [
-        {
-            "sentence_id": 1,
-            "sentence_content": "I wanted to focus on mobility and accessibility, so I started by looking at London boroughs with the best transport links to central areas.",
-            "children": [2],
-            "parent": null,
-            "system_shows": "Bar chart: average commute time to Zone 1 by borough; heatmap overlay showing tube/rail station density",
-            "drift_type": "elaboration"
-        },
-        {
-            "sentence_id": 2,
-            "sentence_content": "Greenwich, Lewisham, and Tower Hamlets showed strong connectivity, but I wanted to understand the cost side of this mobility advantage.",
-            "children": [3],
-            "parent": 1,
-            "system_shows": "Transport cost calculator by borough; monthly zone pass pricing; commute cost vs salary percentage",
-            "drift_type": "context_shift"
-        },
-        {
-            "sentence_id": 3,
-            "sentence_content": "When I factored in transport costs alongside housing costs, the total affordability picture shifted significantly for each area.",
-            "children": [4],
-            "parent": 2,
-            "system_shows": "Stacked bar chart: housing cost + transport cost by borough; total monthly burden visualization",
-            "drift_type": "reframing"
-        },
-        {
-            "sentence_id": 4,
-            "sentence_content": "I then looked at local amenities within walking distance to see which areas offered the best daily convenience without transport dependence.",
-            "children": [5],
-            "parent": 3,
-            "system_shows": "Walkability score by borough; density of shops, cafes, and services within 800m radius",
-            "drift_type": "context_shift"
-        },
-        {
-            "sentence_id": 5,
-            "sentence_content": "The data revealed that some well-connected areas had poor local amenities, making residents more dependent on travel for daily needs.",
-            "children": [],
-            "parent": 4,
-            "system_shows": "Scatter plot: transport connectivity vs local amenity score; quadrant analysis highlighting different lifestyle trade-offs",
-            "drift_type": "elaboration"
-        }
-    ],
+  {
+    "sentence_id": 1,
+    "sentence_content": "I started by getting a feel for what an ‘attainable’ home looks like across London, just a broad scan of where prices sit so I’m not chasing outliers.",
+    "children": [2],
+    "parent": null,
+    "system_shows": "Dashboard: (a) Choropleth — median housing price by borough; (b) Ranked bar chart — borough price with London median band; (c) Band filters — below-median, near-median toggles",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 2,
+    "sentence_content": "Price alone felt blunt, so I reframed it as value: how much access to schools and libraries you effectively get per pound of purchase price.",
+    "children": [3],
+    "parent": 1,
+    "system_shows": "Dashboard: (a) KPI card — Value-per-Service Index = (schools/10k + libraries/10k) ÷ price; (b) Scatter — value index vs price (points=boroughs, color=price band); (c) Shortlist panel — pin top value boroughs within selected bands",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 3,
+    "sentence_content": "Before I lock anything in, I layered the ethnicity diversity and country-of-birth mix onto that shortlist to see how fit lines up with value.",
+    "children": [4, 8],
+    "parent": 2,
+    "system_shows": "Dashboard: (a) Leaderboard — ethnicity diversity (entropy); (b) Gauge — country_of_birth variety score; (c) Overlay — diversity badges on shortlisted boroughs",
+    "drift_type": "context_shift"
+  },
+
+  {
+    "sentence_id": 4,
+    "sentence_content": "I nudged up the boroughs that are already high-diversity and still inside the attainable price bands.",
+    "children": [5],
+    "parent": 3,
+    "system_shows": "Dashboard: (a) Filter — top diversity quartile ∧ (below/near-median price); (b) Chip list — promoted candidates; (c) Note — assumption card ‘diversity ↔ sustained desirability’",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 5,
+    "sentence_content": "Then I tested co-location: do these same places hold up on schools and libraries, or is it a single bright spot hiding the rest?",
+    "children": [6, 7],
+    "parent": 4,
+    "system_shows": "Dashboard: (a) Matrix heatmap — candidates × {diversity, schools quartile pass, library evenness pass}; (b) Drill-through — ward-level detail for any ‘fail’ cells",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 6,
+    "sentence_content": "On the schools side, ward views looked solid overall, though a couple of borders felt brittle if catchment lines shift.",
+    "children": [7],
+    "parent": 5,
+    "system_shows": "Dashboard: (a) Small multiples — schools per 10k by ward (within candidate borough); (b) Overlay — catchment boundary reference; (c) Stability badge — proportion of wards in top quartile",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 7,
+    "sentence_content": "I checked that access isn’t just one shiny central branch, an even spread across neighborhoods matters for the day-to-day.",
+    "children": [],
+    "parent": 5,
+    "system_shows": "Dashboard: (a) Bar chart — branches per ward; (b) Evenness index card (e.g., Gini-style); (c) Pin map — library locations with ward overlays",
+    "drift_type": "elaboration"
+  },
+
+  {
+    "sentence_id": 8,
+    "sentence_content": "I started with top-quartile schools and strong library coverage, then keep the ones that still sit in the attainable bands.",
+    "children": [9],
+    "parent": 3,
+    "system_shows": "Dashboard: (a) Dual filter — schools top quartile ∧ libraries per 10k above median; (b) Overlay — price-band shading; (c) Candidate table — survivors with spark bars for both metrics",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 9,
+    "sentence_content": "That surfaced a borough with excellent schools and libraries but noticeably lower diversity than peers, which is great for education, less obvious for cultural breadth.",
+    "children": [10, 11],
+    "parent": 8,
+    "system_shows": "Dashboard: (a) Side-by-side tiles — schools KPI, libraries KPI, diversity indices; (b) Comparative strip — candidate vs London median",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 10,
+    "sentence_content": "The result seems to be conditional: a strong pick for education-first buyers, but I’d caveat it for anyone prioritizing community breadth.",
+    "children": [],
+    "parent": 9,
+    "system_shows": "Dashboard: (a) Persona toggles — ‘education-first’ vs ‘community-first’; (b) Note card — conditional recommendation rationale",
+    "drift_type": "reframing"
+  },
+
+  {
+    "sentence_id": 11,
+    "sentence_content": "I looked inside that borough to see if there’s a middle path, some wards might balance stronger diversity with the same service strengths.",
+    "children": [12],
+    "parent": 9,
+    "system_shows": "Dashboard: (a) Ward-level heatmaps — ethnicity entropy & country_of_birth variety; (b) Small multiples — ward schools KPIs; (c) Overlay — libraries-per-ward coverage",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 12,
+    "sentence_content": "That micro-fit helped—two wards blended better diversity without losing school/library advantages, so I kept the borough with ward-level guidance for buyers who want education first but still some variety.",
+    "children": [],
+    "parent": 11,
+    "system_shows": "Dashboard: (a) ‘Target wards’ card — list with evidence links; (b) Save to plan — attach ward notes to borough",
+    "drift_type": "elaboration"
+  }
+],
+
     "data_story": [
-        {
-            "data_story_sentence": "Transport connectivity analysis identified Greenwich, Lewisham, and Tower Hamlets as having superior access to central London.",
-            "ref_id": 1
-        },
-        {
-            "data_story_sentence": "However, when transport costs were included in affordability calculations, the true cost of mobility became apparent.",
-            "ref_id": 2
-        },
-        {
-            "data_story_sentence": "Combined housing and transport costs revealed a more nuanced affordability landscape across London boroughs.",
-            "ref_id": 3
-        },
-        {
-            "data_story_sentence": "Local walkability analysis showed that high connectivity areas often compensate for lower neighborhood amenity density.",
-            "ref_id": 4
-        },
-        {
-            "data_story_sentence": "The final analysis revealed trade-offs between transport connectivity and local self-sufficiency across different boroughs.",
-            "ref_id": 5
-        }
-    ],
+  {
+    "data_story_sentence": "We began by establishing an attainable purchase band using borough median housing prices, isolating below- and near-median segments.",
+    "ref_id": 1
+  },
+  {
+    "data_story_sentence": "We defined a value-per-service index—(schools per 10k + libraries per 10k) divided by price—and shortlisted boroughs with high indices within that band.",
+    "ref_id": 2
+  },
+  {
+    "data_story_sentence": "To reflect multi-decade neighborhood fit, we overlaid ethnicity diversity (entropy) and country-of-birth variety on the same shortlist.",
+    "ref_id": 3
+  },
+  {
+    "data_story_sentence": "Within the price band, high-diversity boroughs were prioritized as candidates for long-term resilience.",
+    "ref_id": 4
+  },
+  {
+    "data_story_sentence": "Co-location checks verified that these candidates also met top-quartile school access and exhibited strong library coverage.",
+    "ref_id": 5
+  },
+  {
+    "data_story_sentence": "Ward-level small multiples showed school access was broadly distributed across catchments, indicating stability rather than a single outlier ward.",
+    "ref_id": 6
+  },
+  {
+    "data_story_sentence": "Library evenness metrics—branches per ward with an evenness index—confirmed access was neighborhood-wide, not hub-concentrated.",
+    "ref_id": 7
+  },
+  {
+    "data_story_sentence": "A parallel services-first slice surfaced a borough with excellent schools and libraries yet lower diversity than peers, motivating a conditional, education-first recommendation.",
+    "ref_id": 9
+  }
+],
     "inquiries": [
-        {
-            "qid": "Q0",
-            "title": "Which boroughs have the best transport connectivity to central London?",
-            "status": "resolved", 
-            "sentenceRefs": ["1", "2"],
-            "position_suggested_by": {
-                "text": "Greenwich, Lewisham, and Tower Hamlets emerge as top connectivity areas.",
-                "confidence": "high"
-            },
-            "argument_suggested_by": {
-                "text": "Analysis of commute times and transport infrastructure density.",
-                "basis": "comparison"
-            },
-            "links": []
-        },
-        {
-            "qid": "Q1",
-            "title": "How do transport costs affect overall affordability calculations?",
-            "status": "resolved",
-            "sentenceRefs": ["2", "3"],
-            "position_suggested_by": {
-                "text": "Transport costs significantly alter the affordability ranking of boroughs when combined with housing costs.",
-                "confidence": "high"
-            },
-            "argument_suggested_by": {
-                "text": "Combined analysis of housing costs, transport costs, and income ratios.",
-                "basis": "comparison"
-            },
-            "links": [
-                {
-                    "qid": "Q0",
-                    "type": "suggested_by",
-                    "explanation": "Transport connectivity analysis prompted investigation of associated costs."
-                }
-            ]
-        },
-        {
-            "qid": "Q2", 
-            "title": "What is the relationship between transport connectivity and local amenities?",
-            "status": "resolved",
-            "sentenceRefs": ["4", "5"],
-            "position_suggested_by": {
-                "text": "Well-connected areas often have lower local amenity density, creating lifestyle trade-offs.",
-                "confidence": "medium"
-            },
-            "argument_suggested_by": {
-                "text": "Walkability analysis and local service density mapping.",
-                "basis": "pattern"
-            },
-            "links": [
-                {
-                    "qid": "Q1",
-                    "type": "suggested_by", 
-                    "explanation": "Total cost analysis raised questions about local vs travel-dependent lifestyles."
-                }
-            ]
-        }
+  {
+    "qid": "Q0",
+    "title": "Set attainable purchase band (price baseline)",
+    "status": "resolved",
+    "sentenceRefs": ["1"],
+    "position_suggested_by": {
+      "text": "Below- and near-median price bands define a realistic search space for long-term purchase.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Citywide comparison of borough median prices to anchor analysis in attainable ranges.",
+      "basis": "comparison"
+    },
+    "links": []
+  },
+  {
+    "qid": "Q1",
+    "title": "Value-per-service lens and shortlist within band",
+    "status": "resolved",
+    "sentenceRefs": ["2"],
+    "position_suggested_by": {
+      "text": "The (schools/10k + libraries/10k) ÷ price index surfaces high-service boroughs that remain attainable.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Mechanistic index combining service density with price normalization.",
+      "basis": "mechanism"
+    },
+    "links": [
+      {
+        "qid": "Q0",
+        "type": "suggested_by",
+        "explanation": "Price bands motivated reframing raw price into service-adjusted value."
+      }
     ]
+  },
+  {
+    "qid": "Q2",
+    "title": "Community fit overlay (ethnicity diversity & country_of_birth variety)",
+    "status": "resolved",
+    "sentenceRefs": ["3", "4"],
+    "position_suggested_by": {
+      "text": "High-diversity candidates that remain within the price band are prioritized as resilience-leaning options.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Overlay of diversity indices on the value shortlist, then filter to top diversity quartile within band.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "Q1",
+        "type": "suggested_by",
+        "explanation": "Community fit assessed after value viability."
+      }
+    ]
+  },
+  {
+    "qid": "Q3",
+    "title": "Co-location verification: diversity with schools & library evenness",
+    "status": "resolved",
+    "sentenceRefs": ["5", "6", "7"],
+    "position_suggested_by": {
+      "text": "Promoted candidates sustain top-quartile school access at ward level and show even library coverage rather than a single hub.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Matrix pass/fail across diversity, schools quartile, and library evenness, with ward-level small multiples for outliers.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q2",
+        "type": "specialized_from",
+        "explanation": "Resilience candidates require co-location with core services."
+      }
+    ]
+  },
+  {
+    "qid": "Q4",
+    "title": "Catchment stability risk for school access",
+    "status": "open",
+    "sentenceRefs": ["6"],
+    "position_suggested_by": {
+      "text": "Some ward borders appear brittle; future boundary changes may alter which households qualify for top-quartile schools.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Ward-level variance around the quartile threshold indicates sensitivity to boundary shifts.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "Q3",
+        "type": "suggested_by",
+        "explanation": "Raised during ward-level school consistency checks."
+      }
+    ]
+  },
+  {
+    "qid": "Q5",
+    "title": "Simulate alternate catchment boundaries (robustness test)",
+    "status": "stalled",
+    "sentenceRefs": ["6"],
+    "position_suggested_by": {
+      "text": "Simulation would quantify how boundary changes impact school access, but required layers are unavailable in the current bundle.",
+      "confidence": "low"
+    },
+    "argument_suggested_by": {
+      "text": "Counterfactual boundary scenarios to test robustness of school access claims.",
+      "basis": "other"
+    },
+    "links": [
+      {
+        "qid": "Q4",
+        "type": "specialized_from",
+        "explanation": "Operationalizes the catchment stability concern into a simulation request."
+      }
+    ]
+  }
+]
+
 }

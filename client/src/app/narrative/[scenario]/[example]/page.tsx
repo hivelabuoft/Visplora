@@ -737,10 +737,10 @@ export default function DynamicNarrativePage() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header with example info */}
-      <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 text-sm">
+      <div className="bg-gradient-to-r from-cyan-600 to-cyan-700 text-white px-4 py-2 text-sm">
         <div className="flex justify-between items-center">
           <span>
-            Example Mode • Scenario {scenario} • Example {example}
+            📊 Example Scenario {scenario}.{example} • Go back to main page to start your own exploration
             {isStudyMode && (
               <> • Participant: {userSession.participantId} • {userSession.firstName} {userSession.lastName}</>
             )}
@@ -748,13 +748,13 @@ export default function DynamicNarrativePage() {
           <div className="flex gap-2">
             <button
               onClick={() => router.push('/narrative')}
-              className="px-3 py-1 bg-purple-800 hover:bg-purple-900 rounded text-xs transition-colors"
+              className="px-3 py-1 bg-cyan-800 hover:bg-cyan-900 rounded text-xs transition-colors"
             >
               Return to Main
             </button>
             {isStudyMode && (
               <button
-                className="px-3 py-1 bg-purple-800 hover:bg-purple-900 rounded text-xs transition-colors"
+                className="px-3 py-1 bg-cyan-800 hover:bg-cyan-900 rounded text-xs transition-colors"
                 onClick={async () => {
                   await interactionLogger.logButtonClick('end_session_button', 'End Session');
                   localStorage.removeItem('narrativeUser');
@@ -927,21 +927,141 @@ export default function DynamicNarrativePage() {
                       const hasNarrativeContent = narrativeContent.trim().length > 0;
                       return isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes || !hasNarrativeContent;
                     })()}
-                    className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border bg-green-100 text-green-800 border-green-300 hover:bg-green-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border ${
+                      (() => {
+                        const hasInteractions = interactionCount > 0;
+                        const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                        const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                        const hasNarrativeContent = narrativeContent.trim().length > 0;
+                        const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes || !hasNarrativeContent;
+                        return isDisabled ? 'opacity-60 cursor-not-allowed' : '';
+                      })()
+                    }`}
+                    style={(() => {
+                      const hasInteractions = interactionCount > 0;
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes || !hasNarrativeContent;
+                      return {
+                        backgroundColor: isDisabled ? '#e5e7eb' : '#c5cea180', 
+                        color: isDisabled ? '#6b7280' : '#5a6635',
+                        borderColor: isDisabled ? '#d1d5db' : '#c5cea1'
+                      };
+                    })()}
+                    onMouseEnter={(e) => {
+                      const hasInteractions = interactionCount > 0;
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes || !hasNarrativeContent;
+                      if (!isDisabled) {
+                        e.currentTarget.style.backgroundColor = '#c5cea1b3';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      const hasInteractions = interactionCount > 0;
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = isCapturingInsights || hasPendingSuggestion || !hasInteractions || hasActiveInfoNodes || !hasNarrativeContent;
+                      if (!isDisabled) {
+                        e.currentTarget.style.backgroundColor = '#c5cea180';
+                      }
+                    }}
                   >
-                    {isCapturingInsights ? 'Capturing...' : 'Capture'}
+                    {isCapturingInsights ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-current inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Capturing...
+                      </>
+                    ) : (
+                      'Capture'
+                    )}
                   </button>
+                  {/* Custom tooltip */}
+                  <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-gray-800 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-60">
+                    {(() => {
+                      const hasInteractions = interactionCount > 0;
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      
+                      if (!hasNarrativeContent) {
+                        return 'Write some narrative content first';
+                      } else if (!hasInteractions) {
+                        return 'Interact with the dashboard first to capture insights';
+                      } else if (hasActiveInfoNodes) {
+                        return 'Close info nodes before capturing insights';
+                      } else if (hasPendingSuggestion) {
+                        return 'Resolve current suggestion first';
+                      } else if (isCapturingInsights) {
+                        return 'Processing...';
+                      } else {
+                        return 'Capture insight for recent interactions';
+                      }
+                    })()}
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-800"></div>
+                  </div>
                 </div>
                 
                 <div className="relative group">
                   <button
-                    onClick={handleShowInquiryBoard}
+                    onClick={() => {
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      if (!hasNarrativeContent) return;
+                      
+                      handleShowInquiryBoard();
+                    }}
                     disabled={(() => {
                       const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
                       const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
-                      return !narrativeContent.trim().length;
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      return !hasNarrativeContent;
                     })()}
-                    className="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border bg-orange-100 text-orange-800 border-orange-300 hover:bg-orange-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 border ${
+                      (() => {
+                        const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                        const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                        const hasNarrativeContent = narrativeContent.trim().length > 0;
+                        const isDisabled = !hasNarrativeContent;
+                        return isDisabled ? 'opacity-60 cursor-not-allowed' : '';
+                      })()
+                    }`}
+                    style={(() => {
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = !hasNarrativeContent;
+                      return {
+                        backgroundColor: isDisabled ? '#e5e7eb' : '#f5bc7880', 
+                        color: isDisabled ? '#6b7280' : '#8b5a2b',
+                        borderColor: isDisabled ? '#d1d5db' : '#f5bc78'
+                      };
+                    })()} 
+                    onMouseEnter={(e) => {
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = !hasNarrativeContent;
+                      if (!isDisabled) {
+                        e.currentTarget.style.backgroundColor = '#f5bc78b3';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                      const narrativeContent = narrativeSystemRef.current?.getPageContent(currentPageId) || '';
+                      const hasNarrativeContent = narrativeContent.trim().length > 0;
+                      const isDisabled = !hasNarrativeContent;
+                      if (!isDisabled) {
+                        e.currentTarget.style.backgroundColor = '#f5bc7880';
+                      }
+                    }}
                   >
                     Inquiries
                   </button>
@@ -954,11 +1074,26 @@ export default function DynamicNarrativePage() {
                 ref={inquiryBoardRef}
                 onGoBack={handleBackToViews}
                 pageId={narrativeSystemRef.current?.getCurrentPageId() || 'default-page'}
+                scenario={scenario}
+                example={example}
                 treeStructure={(() => {
                   const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
                   const treeStructure = narrativeSystemRef.current?.getPageTree?.(currentPageId);
                   return treeStructure || { nodes: [], activePath: [] };
                 })()}
+                onHighlightSentences={(sentenceIds: string[]) => {
+                  console.log('🎯 Example Page: Received request to highlight sentences:', sentenceIds);
+                  if (narrativeSystemRef.current) {
+                    const success = narrativeSystemRef.current.highlightSentencesByIds(sentenceIds);
+                    if (success) {
+                      console.log('✅ Example Page: Successfully highlighted sentences');
+                    } else {
+                      console.warn('⚠️ Example Page: Failed to highlight sentences');
+                    }
+                  } else {
+                    console.warn('❌ Example Page: narrativeSystemRef not available');
+                  }
+                }}
               />
             ) : showDashboard && shouldShowLondonDashboard ? (
               <ReactFlowCanvas 
@@ -1042,6 +1177,17 @@ export default function DynamicNarrativePage() {
                     pageId={currentPageId}
                     activePath={currentActivePath}
                     isLoading={isTimelineLoading}
+                    onNodeHighlight={(sentenceContent: string) => {
+                      // Call the narrative system to highlight the sentence
+                      if (narrativeSystemRef.current) {
+                        const success = narrativeSystemRef.current.highlightSentence(sentenceContent);
+                        if (success) {
+                          console.log('✅ Timeline → Narrative: Successfully highlighted sentence');
+                        } else {
+                          console.log('❌ Timeline → Narrative: Failed to highlight sentence');
+                        }
+                      }
+                    }}
                     onPathSwitch={(nodeId: string, newActivePath: string[]) => {
                       console.log(`🔄 Timeline path switch requested for node ${nodeId} on page ${currentPageId}`);
                       console.log(`🛤️ New active path from timeline:`, newActivePath);

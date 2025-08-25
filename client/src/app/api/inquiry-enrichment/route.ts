@@ -54,6 +54,7 @@ export interface EnrichedInquiryIssue {
   qid: string;
   title: string;
   status: 'open' | 'resolved' | 'stalled';
+  sentenceRefs: string[]; // 🔧 FIX: Add sentenceRefs to the enriched issue interface
   position_suggested_by?: {
     text: string;
     confidence: 'low' | 'medium' | 'high';
@@ -250,6 +251,7 @@ Enrich each issue with positions, arguments, and links based on what is present 
         qid: originalIssue.qid,
         title: originalIssue.title,
         status: originalIssue.status,
+        sentenceRefs: originalIssue.sentenceRefs, // 🔧 FIX: Preserve sentenceRefs from original issue
         position_suggested_by: enrichment?.position_suggested_by || undefined,
         argument_suggested_by: enrichment?.argument_suggested_by || undefined,
         links: enrichment?.links || []
@@ -261,7 +263,8 @@ Enrich each issue with positions, arguments, and links based on what is present 
       qid: i.qid, 
       hasPosition: !!i.position_suggested_by,
       hasArgument: !!i.argument_suggested_by,
-      linkCount: i.links.length
+      linkCount: i.links.length,
+      sentenceRefsCount: i.sentenceRefs?.length || 0 // 🔧 FIX: Show sentenceRefs count in logging
     })));
 
     // Return the enriched issues

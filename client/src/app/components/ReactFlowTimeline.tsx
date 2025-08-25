@@ -142,6 +142,7 @@ interface ReactFlowTimelineProps {
   activePath?: string[];
   isLoading?: boolean; // Add loading state
   onPathSwitch?: (nodeId: string, newActivePath: string[]) => void; // Add callback for path switching
+  onNodeHighlight?: (sentenceContent: string) => void; // NEW: Callback to highlight sentence in narrative layer
 }
 
 // Custom node component for timeline nodes
@@ -296,7 +297,7 @@ const nodeTypes = {
   timelineNode: TimelineNodeComponent,
 };
 
-const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageId, activePath = [], isLoading = false, onPathSwitch }) => {
+const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageId, activePath = [], isLoading = false, onPathSwitch, onNodeHighlight }) => {
   const [reactFlowNodes, setReactFlowNodes, onNodesChange] = useNodesState<Node>([]);
   const [reactFlowEdges, setReactFlowEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [selectedNode, setSelectedNode] = useState<TimelineNode | null>(null);
@@ -354,6 +355,12 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
   
   // Handler for node clicks
   const handleNodeClick = useCallback(async (node: TimelineNode, event?: React.MouseEvent) => {
+    // FIRST: Always highlight the corresponding sentence in the narrative layer
+    if (onNodeHighlight) {
+      onNodeHighlight(node.sentence_content);
+      console.log('🎯 Timeline → Narrative: Requesting sentence highlight for:', node.sentence_content.substring(0, 50) + '...');
+    }
+    
     // Check if the node is in the active path
     if (!activePathSet.has(node.sentence_id)) {
       // Node is NOT in active path - switch to this branch
@@ -436,7 +443,7 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     } finally {
       setIsSummaryLoading(false);
     }
-  }, [getPathBeforeNode, activePathSet, onPathSwitch, getPathToNode, nodes]);
+  }, [getPathBeforeNode, activePathSet, onPathSwitch, getPathToNode, nodes, onNodeHighlight]);
   
   // Handler to close modal
   const handleCloseModal = useCallback(() => {
@@ -803,26 +810,40 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
     setReactFlowEdges(flowEdges);
   }, [nodes, currentActivePath, isLoading, calculateFlowLayout, setReactFlowNodes, setReactFlowEdges]);
 
-  // Separate effect for centering on active nodes to avoid setTimeout in main effect
+  // Track the previous active path length to detect when new nodes are added
+  const [previousPathLength, setPreviousPathLength] = useState(0);
+
+  // Separate effect for centering on active nodes - only when new nodes are added
   useEffect(() => {
     // Skip if loading, no nodes, or no active path
     if (isLoading || nodes.length === 0 || currentActivePath.length === 0 || reactFlowNodes.length === 0) {
       return;
     }
     
-    // Center on the most recent nodes (last 3-4 nodes of active path)
-    const recentNodes = currentActivePath.slice(-3); // Focus on last 3 nodes
-    if (recentNodes.length > 0) {
-      const lastNodeId = recentNodes[recentNodes.length - 1];
-      const lastNode = reactFlowNodes.find(n => n.id === lastNodeId);
-      if (lastNode) {
-        // Use requestAnimationFrame instead of setTimeout for better performance
-        requestAnimationFrame(() => {
-          setCenter(lastNode.position.x, lastNode.position.y, { zoom: 1, duration: 800 });
-        });
+    // Only center when new nodes are added (path length increased)
+    const currentPathLength = currentActivePath.length;
+    if (currentPathLength > previousPathLength) {
+      console.log('🎯 Timeline: New nodes added, centering view on recent nodes');
+      
+      // Center on the most recent nodes (last 3-4 nodes of active path)
+      const recentNodes = currentActivePath.slice(-3); // Focus on last 3 nodes
+      if (recentNodes.length > 0) {
+        const lastNodeId = recentNodes[recentNodes.length - 1];
+        const lastNode = reactFlowNodes.find(n => n.id === lastNodeId);
+        if (lastNode) {
+          // Use requestAnimationFrame instead of setTimeout for better performance
+          requestAnimationFrame(() => {
+            setCenter(lastNode.position.x, lastNode.position.y, { zoom: 1, duration: 800 });
+          });
+        }
       }
+    } else {
+      console.log('🔒 Timeline: Path length unchanged, preserving current view');
     }
-  }, [currentActivePath, reactFlowNodes, isLoading, nodes.length, setCenter]);
+    
+    // Update the previous path length for next comparison
+    setPreviousPathLength(currentPathLength);
+  }, [currentActivePath, reactFlowNodes, isLoading, nodes.length, setCenter, previousPathLength]);
 
   // Show loading overlay when processing LLM response - render conditionally in JSX
   if (isLoading) {

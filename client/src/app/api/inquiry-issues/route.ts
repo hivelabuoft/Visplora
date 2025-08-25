@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -35,7 +37,7 @@ export async function POST(request: NextRequest) {
     console.log('🔍 Inquiry Issues API: Processing request');
     
     const body = await request.json();
-    const { treeStructure, pageId } = body;
+    const { treeStructure, pageId, scenario, example } = body;
 
     // Validate input
     if (!treeStructure || !treeStructure.nodes || !Array.isArray(treeStructure.nodes)) {
@@ -61,6 +63,54 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Check if this is example data based on the presence of scenario and example parameters
+    if (scenario && example) {
+      console.log(`🎯 Detected example data request: scenario ${scenario}, example ${example}`);
+      
+      try {
+        // Load the corresponding JSON file
+        const jsonPath = join(process.cwd(), 'public', 'examples', `scenario${scenario}`, `example${example}.json`);
+        console.log(`📄 Loading inquiries from: ${jsonPath}`);
+        
+        const fileContent = readFileSync(jsonPath, 'utf-8');
+        const exampleData = JSON.parse(fileContent);
+        
+        if (exampleData.inquiries && Array.isArray(exampleData.inquiries)) {
+          console.log(`✅ Found ${exampleData.inquiries.length} inquiries in example data`);
+          
+          // Convert the inquiries from the JSON format to the API format
+          const issues = exampleData.inquiries.map((inquiry: any) => ({
+            qid: inquiry.qid,
+            title: inquiry.title,
+            status: inquiry.status,
+            sentenceRefs: inquiry.sentenceRefs
+          }));
+          
+          console.log('🔍 Converted inquiries to issues format:', issues.map((i: any) => ({ qid: i.qid, title: i.title, status: i.status })));
+          
+          return NextResponse.json({ 
+            issues,
+            metadata: {
+              pageId,
+              sentenceCount: treeStructure.activePath.length,
+              issueCount: issues.length,
+              timestamp: new Date().toISOString(),
+              model: 'example-data',
+              source: 'example-json',
+              exampleFile: `scenario${scenario}/example${example}.json`
+            }
+          });
+        } else {
+          console.log('⚠️ No inquiries found in example data, falling back to LLM');
+        }
+      } catch (fileError) {
+        console.warn('⚠️ Failed to load example data, falling back to LLM:', fileError instanceof Error ? fileError.message : 'Unknown error');
+      }
+    }
+
+    // Fall back to original LLM processing if not example data or if loading failed
+    console.log('🤖 Processing with LLM (not example data or fallback)');
 
     // Extract only the active path sentences from the tree structure
     const activePathSentences = treeStructure.activePath

@@ -70,6 +70,8 @@ export interface PagedNarrativeSystemRef {
   hasPendingSuggestion: () => boolean;
   updateSentenceContent: (pageId: string, oldContent: string, newContent: string) => boolean;
   switchActivePath: (pageId: string, targetNodeId: string, newActivePath: string[]) => boolean;
+  highlightSentence: (sentenceContent: string) => boolean; // NEW: Highlight sentence in narrative layer
+  highlightSentencesByIds: (sentenceIds: string[]) => boolean; // NEW: Highlight multiple sentences by their IDs
   // NEW: Initialize with tree structure from example data
   initializeWithExampleTree: (explorationPath: Array<{
     sentence_id: number;
@@ -2173,6 +2175,78 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       }
       
       console.log(`✅ Example tree initialization complete`);
+    },
+
+    highlightSentence: (sentenceContent: string) => {
+      if (!currentNarrativeRef.current) {
+        console.warn('❌ Cannot highlight sentence: NarrativeLayer ref not available');
+        return false;
+      }
+      
+      return currentNarrativeRef.current.highlightSentence(sentenceContent);
+    },
+    
+    highlightSentencesByIds: (sentenceIds: string[]) => {
+      if (!currentNarrativeRef.current) {
+        console.warn('❌ Cannot highlight sentences: NarrativeLayer ref not available');
+        return false;
+      }
+      
+      if (!sentenceIds || sentenceIds.length === 0) {
+        console.warn('❌ Cannot highlight sentences: No sentence IDs provided');
+        return false;
+      }
+      
+      console.log(`🎯 PagedNarrativeSystem: Highlighting ${sentenceIds.length} sentences by IDs:`, sentenceIds);
+      
+      // Get current page to access tree nodes
+      const currentPage = getCurrentPage();
+      if (!currentPage || !currentPage.sentenceNodes) {
+        console.warn('❌ Cannot highlight sentences: No tree structure available');
+        return false;
+      }
+      
+      // Debug: Show available sentence node IDs
+      const availableNodeIds = Array.from(currentPage.sentenceNodes.keys());
+      console.log('🔍 Available sentence node IDs in current page:', availableNodeIds);
+      console.log('🔍 Looking for sentence IDs:', sentenceIds);
+      
+      let highlightedCount = 0;
+      
+      // Map each sentence ID to its content and highlight
+      sentenceIds.forEach((sentenceId) => {
+        // Try direct lookup first
+        let node = currentPage.sentenceNodes.get(sentenceId);
+        
+        // If not found, try to find by extracting number from complex node IDs
+        if (!node) {
+          // Look for a node ID that contains the simple ID pattern
+          for (const [nodeId, nodeData] of currentPage.sentenceNodes.entries()) {
+            // Extract number from complex ID like "node-6-1756090087664" → "6"
+            const match = nodeId.match(/^node-(\d+)-\d+$/);
+            if (match && match[1] === sentenceId) {
+              node = nodeData;
+              console.log(`🔍 Mapped simple ID "${sentenceId}" to complex ID "${nodeId}"`);
+              break;
+            }
+          }
+        }
+        
+        if (node && node.content) {
+          const success = currentNarrativeRef.current!.highlightSentence(node.content);
+          if (success) {
+            highlightedCount++;
+            console.log(`✅ Highlighted sentence ${sentenceId}:`, node.content.substring(0, 50) + '...');
+          } else {
+            console.warn(`⚠️ Failed to highlight sentence ${sentenceId}:`, node.content);
+          }
+        } else {
+          console.warn(`⚠️ Sentence ID ${sentenceId} not found in sentence nodes`);
+        }
+      });
+      
+      console.log(`🎨 PagedNarrativeSystem: Successfully highlighted ${highlightedCount} out of ${sentenceIds.length} sentences`);
+      return highlightedCount > 0;
     }
   }), [
     currentPageId, pages, pageOrder, getCurrentPage, createNewPage, 

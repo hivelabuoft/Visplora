@@ -66,6 +66,7 @@ export interface NarrativeLayerRef {
   showLoadingSuggestion: () => void;
   hideLoadingSuggestion: () => void;
   hasPendingSuggestion: () => boolean;
+  highlightSentence: (sentenceContent: string) => boolean; // New method for timeline integration
 }
 
 const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ 
@@ -1150,6 +1151,91 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     },
     hasPendingSuggestion: () => {
       return isLoadingSuggestion || (currentSuggestion !== null && currentSuggestion.narrative_suggestion !== null);
+    },
+    highlightSentence: (sentenceContent: string) => {
+      if (!editor) {
+        console.log('❌ Timeline → Narrative: No editor available');
+        return false;
+      }
+      
+      // Clear any existing selections first
+      clearAllSelectedSentences();
+      
+      // Find all completed sentences in the editor
+      const editorElement = editor.view.dom;
+      const completedSentences = editorElement.querySelectorAll('.completed-sentence');
+      
+      console.log(`🔍 Timeline → Narrative: Looking for sentence in ${completedSentences.length} completed sentences`);
+      console.log('🎯 Target sentence:', `"${sentenceContent}"`);
+      
+      // Normalize the target content for comparison
+      const normalizeText = (text: string) => {
+        return text
+          .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+          .replace(/[.!?]+$/, '') // Remove trailing punctuation
+          .trim()
+          .toLowerCase(); // Convert to lowercase for case-insensitive comparison
+      };
+      const normalizedTarget = normalizeText(sentenceContent);
+      
+      // Look for a sentence that matches the content
+      for (let i = 0; i < completedSentences.length; i++) {
+        const sentenceElement = completedSentences[i] as HTMLElement;
+        const elementContent = sentenceElement.textContent?.trim();
+        const normalizedContent = normalizeText(elementContent || '');
+        
+        console.log(`📝 Sentence ${i + 1}:`, `"${elementContent}"`);
+        console.log(`📝 Normalized ${i + 1}:`, `"${normalizedContent}"`);
+        
+        // Debug exact character comparison
+        if (i === 1) { // Check the second sentence specifically
+          console.log('🔍 Target length:', normalizedTarget.length);
+          console.log('🔍 Content length:', normalizedContent.length);
+          console.log('🔍 Target chars:', normalizedTarget.split('').map(c => c.charCodeAt(0)));
+          console.log('🔍 Content chars:', normalizedContent.split('').map(c => c.charCodeAt(0)));
+          console.log('🔍 Strings equal?', normalizedContent === normalizedTarget);
+        }
+        
+        if (normalizedContent === normalizedTarget) {
+          // Found the matching sentence - highlight it
+          sentenceElement.setAttribute('data-selected', 'true');
+          
+          // Also set the internal state to maintain the selection
+          const position = editor.view.posAtDOM(sentenceElement, 0);
+          const endPosition = editor.view.posAtDOM(sentenceElement, sentenceElement.childNodes.length);
+          
+          setSelectedSentence({
+            element: sentenceElement,
+            position: {
+              from: position,
+              to: endPosition
+            },
+            sentenceId: null // We don't have the ID in this context
+          });
+          
+          console.log('✅ Timeline → Narrative: Found matching sentence, applying highlight');
+          console.log('🎨 Applied data-selected="true" to element:', sentenceElement);
+          console.log('📍 Updated selectedSentence state to maintain highlighting');
+          
+          // Scroll the sentence into view
+          sentenceElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'nearest'
+          });
+          
+          console.log('🎯 Timeline → Narrative: Highlighted sentence:', sentenceContent.substring(0, 50) + '...');
+          return true;
+        }
+      }
+      
+      console.log('❌ Timeline → Narrative: Could not find matching sentence');
+      console.log('🔍 Available sentences:');
+      for (let i = 0; i < completedSentences.length; i++) {
+        const element = completedSentences[i] as HTMLElement;
+        console.log(`   ${i + 1}. "${element.textContent?.trim()}"`);
+      }
+      return false;
     }
   }), [editor, onSuggestionReceived, isLoadingSuggestion, currentSuggestion]);
   
