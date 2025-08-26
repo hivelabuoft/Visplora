@@ -1,0 +1,57 @@
+country,city,iso3,year,crime_index,homicide_rate_per_100k,political_risk_index,health_risk_index,travel_advisory_level,terrorism_risk_index,source
+USA,New York,USA,2024,50.8,2.75,33.0,10.2,2-Caution,13.7,synthetic
+USA,San Francisco,USA,2024,21.9,0.1,36.1,12.5,1-Low,25.5,synthetic
+Canada,Toronto,CAN,2024,53.3,1.07,33.9,13.4,2-Caution,0.0,synthetic
+Canada,Vancouver,CAN,2024,41.5,1.29,18.4,39.8,2-Caution,0.0,synthetic
+Mexico,Mexico City,MEX,2024,44.6,0.51,38.6,23.0,2-Caution,19.6,synthetic
+Brazil,Rio de Janeiro,BRA,2024,28.7,0.85,38.9,37.7,2-Caution,20.8,synthetic
+Argentina,Buenos Aires,ARG,2024,29.2,2.51,61.4,21.0,2-Caution,32.5,synthetic
+UK,London,GBR,2024,31.1,1.94,34.3,24.0,2-Caution,5.8,synthetic
+Ireland,Dublin,IRL,2024,30.3,3.48,42.9,35.1,2-Caution,36.6,synthetic
+France,Paris,FRA,2024,41.6,1.53,45.3,27.1,2-Caution,3.2,synthetic
+Spain,Barcelona,ESP,2024,27.6,2.74,22.3,19.7,1-Low,27.9,synthetic
+Portugal,Lisbon,PRT,2024,49.1,3.99,5.0,22.5,2-Caution,23.3,synthetic
+Italy,Rome,ITA,2024,21.7,1.02,12.4,20.2,1-Low,34.5,synthetic
+Netherlands,Amsterdam,NLD,2024,64.3,0.78,32.9,25.6,2-Caution,19.7,synthetic
+Germany,Berlin,DEU,2024,44.8,2.46,50.3,31.0,2-Caution,2.3,synthetic
+Switzerland,Zurich,CHE,2024,49.5,3.34,29.7,31.3,2-Caution,17.3,synthetic
+Austria,Vienna,AUT,2024,42.4,2.18,5.0,19.2,1-Low,7.0,synthetic
+Czechia,Prague,CZE,2024,25.8,4.15,32.6,19.7,2-Caution,8.2,synthetic
+Greece,Athens,GRC,2024,43.6,3.49,12.6,20.0,2-Caution,25.4,synthetic
+Turkey,Istanbul,TUR,2024,16.8,1.91,18.6,18.7,1-Low,9.0,synthetic
+UAE,Dubai,ARE,2024,41.7,4.89,20.1,22.9,2-Caution,38.9,synthetic
+Qatar,Doha,QAT,2024,33.4,4.72,25.1,37.8,2-Caution,24.0,synthetic
+India,Delhi,IND,2024,43.7,1.9,15.6,20.8,2-Caution,25.8,synthetic
+India,Mumbai,IND,2024,39.8,1.53,21.2,29.9,2-Caution,29.7,synthetic
+Thailand,Bangkok,THA,2024,32.0,1.0,30.7,35.3,2-Caution,28.8,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,25.0,1.6,11.0,17.3,1-Low,34.3,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,22.9,0.1,12.6,22.9,1-Low,22.4,synthetic
+Singapore,Singapore,SGP,2024,45.2,3.76,5.0,31.9,2-Caution,11.3,synthetic
+Indonesia,Bali,IDN,2024,48.8,0.1,25.1,22.4,2-Caution,28.9,synthetic
+Australia,Sydney,AUS,2024,21.0,2.05,8.7,25.1,1-Low,24.3,synthetic
+New Zealand,Auckland,NZL,2024,55.4,1.2,38.9,33.6,2-Caution,0.0,synthetic
+Japan,Tokyo,JPN,2024,47.3,3.44,21.1,7.9,2-Caution,26.3,synthetic
+South Korea,Seoul,KOR,2024,25.6,1.73,24.4,27.2,2-Caution,7.5,synthetic
+China,Shanghai,CHN,2024,31.8,2.15,40.1,42.9,2-Caution,0.0,synthetic
+Hong Kong,Hong Kong,HKG,2024,43.8,0.37,40.3,10.6,2-Caution,6.9,synthetic
+Taiwan,Taipei,TWN,2024,32.9,1.89,29.8,24.8,2-Caution,14.9,synthetic
+South Africa,Cape Town,ZAF,2024,24.0,3.09,24.2,31.6,2-Caution,6.5,synthetic
+Kenya,Nairobi,KEN,2024,20.8,1.95,44.4,21.6,2-Caution,12.6,synthetic
+Morocco,Marrakesh,MAR,2024,29.6,4.64,9.6,12.7,1-Low,21.8,synthetic
+Egypt,Cairo,EGY,2024,17.7,3.91,34.4,29.0,2-Caution,21.7,synthetic
+Israel,Tel Aviv,ISR,2024,38.1,0.41,22.9,10.2,1-Low,20.8,synthetic
+Jordan,Amman,JOR,2024,49.7,4.22,30.6,29.2,2-Caution,11.4,synthetic
+Saudi Arabia,Riyadh,SAU,2024,34.3,2.71,19.2,22.7,2-Caution,2.3,synthetic
+Russia,Moscow,RUS,2024,29.4,2.95,38.3,10.1,2-Caution,23.0,synthetic
+Norway,Oslo,NOR,2024,33.6,2.02,46.3,28.1,2-Caution,24.6,synthetic
+Sweden,Stockholm,SWE,2024,62.9,0.94,10.2,12.8,2-Caution,11.9,synthetic
+Finland,Helsinki,FIN,2024,11.7,1.69,16.8,27.8,1-Low,19.2,synthetic
+Poland,Krakow,POL,2024,32.8,2.88,35.8,12.3,2-Caution,9.1,synthetic
+Hungary,Budapest,HUN,2024,13.3,0.36,13.9,20.7,1-Low,3.7,synthetic
+Croatia,Dubrovnik,HRV,2024,33.8,0.16,27.6,24.3,2-Caution,19.8,synthetic
+Iceland,Reykjavik,ISL,2024,40.1,0.1,15.7,15.9,1-Low,10.2,synthetic
+Chile,Santiago,CHL,2024,40.9,4.14,37.2,10.1,2-Caution,23.1,synthetic
+Peru,Lima,PER,2024,47.7,0.79,37.7,18.4,2-Caution,0.0,synthetic
+Colombia,Cartagena,COL,2024,45.5,2.33,21.6,19.6,2-Caution,6.4,synthetic
+Dominican Republic,Punta Cana,DOM,2024,47.3,1.93,27.5,23.6,2-Caution,1.1,synthetic
+Puerto Rico,San Juan,PRI,2024,29.3,0.1,33.5,7.9,1-Low,16.6,synthetic

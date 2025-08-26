@@ -1,0 +1,100 @@
+{
+  "categories": [
+    {
+      "name": "cost",
+      "description": "Cost of stay index across destinations (hotel/food/transport)",
+      "files": [
+        {
+          "id": "travel-cost-data",
+          "name": "Travel Cost Data",
+          "path": "/dataset/travel/cost/cost.csv",
+          "description": "Price benchmarks for lodging, meals, and local transport by city and month"
+        }
+      ]
+    },
+    {
+      "name": "safety",
+      "description": "Safety & travel risk (crime, political, health)",
+      "files": [
+        {
+          "id": "travel-safety-data",
+          "name": "Travel Safety Data",
+          "path": "/dataset/travel/safety/safety.csv",
+          "description": "Composite safety metrics at country and city level"
+        }
+      ]
+    },
+    {
+      "name": "access",
+      "description": "Accessibility & convenience (airport time, transit, visa ease)",
+      "files": [
+        {
+          "id": "travel-accessibility-data",
+          "name": "Travel Accessibility Data",
+          "path": "/dataset/travel/access/access.csv",
+          "description": "How easy it is to get in and get around a destination"
+        }
+      ]
+    },
+    {
+      "name": "attractions",
+      "description": "Attractions density & coverage",
+      "files": [
+        {
+          "id": "travel-attractions-data",
+          "name": "Travel Attractions Data",
+          "path": "/dataset/travel/attractions/attractions.csv",
+          "description": "Points of interest by category and density"
+        }
+      ]
+    },
+    {
+      "name": "flow",
+      "description": "Popularity & visitor flow (seasonality/crowdedness)",
+      "files": [
+        {
+          "id": "travel-flow-data",
+          "name": "Travel Flow Data",
+          "path": "/dataset/travel/flow/flow.csv",
+          "description": "Arrivals, occupancy, and seasonality metrics"
+        }
+      ]
+    },
+    {
+      "name": "reviews",
+      "description": "Reviews & satisfaction (mean/volume/dispersion)",
+      "files": [
+        {
+          "id": "travel-reviews-data",
+          "name": "Travel Reviews Data",
+          "path": "/dataset/travel/reviews/reviews.csv",
+          "description": "Aggregated review statistics by destination and period"
+        }
+      ]
+    },
+    {
+      "name": "culture",
+      "description": "Cultural offering & diversity (cuisine/festivals/language)",
+      "files": [
+        {
+          "id": "travel-culture-data",
+          "name": "Travel Culture Data",
+          "path": "/dataset/travel/culture/culture.csv",
+          "description": "Language serviceability, cuisine variety, and festivals"
+        }
+      ]
+    },
+    {
+      "name": "environment",
+      "description": "Environmental quality (AQI/green space)",
+      "files": [
+        {
+          "id": "travel-environment-data",
+          "name": "Travel Environment Data",
+          "path": "/dataset/travel/environment/environment.csv",
+          "description": "Air quality, noise, green space and water quality by city"
+        }
+      ]
+    }
+  ]
+}

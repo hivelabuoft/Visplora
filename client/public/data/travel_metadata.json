@@ -1,0 +1,521 @@
+{
+  "categories": [
+    {
+      "name": "cost",
+      "description": "Cost of stay index across destinations (hotel/food/transport)",
+      "files": [
+        {
+          "id": "global-cost-index-2020-2025",
+          "name": "Global Cost Index 2020-2025",
+          "path": "/dataset/travel/cost/global_cost_index_2020_2025.csv",
+          "description": "Price benchmarks for lodging, meals, and local transport by city and month",
+          "file_summary": {
+            "column_names": [
+              "country",
+              "city",
+              "iso3",
+              "year",
+              "month",
+              "date",
+              "currency",
+              "hotel_price_usd",
+              "meal_price_usd",
+              "transport_pass_usd",
+              "cost_index",
+              "source"
+            ],
+            "column_types": {
+              "country": "categorical",
+              "city": "categorical",
+              "iso3": "categorical",
+              "year": "numeric",
+              "month": "numeric",
+              "date": "datetime",
+              "currency": "categorical",
+              "hotel_price_usd": "numeric",
+              "meal_price_usd": "numeric",
+              "transport_pass_usd": "numeric",
+              "cost_index": "numeric",
+              "source": "categorical"
+            },
+            "value_examples": {
+              "country": ["Japan", "Spain"],
+              "city": ["Tokyo", "Barcelona"],
+              "iso3": ["JPN", "ESP"],
+              "currency": ["JPY", "EUR"],
+              "source": ["OECD", "Numbeo"]
+            },
+            "data_sample": [
+              {
+                "country": "Japan",
+                "city": "Tokyo",
+                "iso3": "JPN",
+                "year": 2024,
+                "month": 6,
+                "date": "2024-06-01",
+                "currency": "JPY",
+                "hotel_price_usd": 148.5,
+                "meal_price_usd": 11.2,
+                "transport_pass_usd": 49.0,
+                "cost_index": 72.4,
+                "source": "Numbeo"
+              }
+            ],
+            "total_rows": 0,
+            "file_size": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "safety",
+      "description": "Safety & travel risk (crime, political, health)",
+      "files": [
+        {
+          "id": "global-safety-risk-2019-2025",
+          "name": "Global Safety & Risk 2019-2025",
+          "path": "/dataset/travel/safety/global_safety_risk_2019_2025.csv",
+          "description": "Composite safety metrics at country and city level",
+          "file_summary": {
+            "column_names": [
+              "country",
+              "city",
+              "iso3",
+              "year",
+              "crime_index",
+              "homicide_rate_per_100k",
+              "political_risk_index",
+              "health_risk_index",
+              "travel_advisory_level",
+              "terrorism_risk_index",
+              "source"
+            ],
+            "column_types": {
+              "country": "categorical",
+              "city": "categorical",
+              "iso3": "categorical",
+              "year": "numeric",
+              "crime_index": "numeric",
+              "homicide_rate_per_100k": "numeric",
+              "political_risk_index": "numeric",
+              "health_risk_index": "numeric",
+              "travel_advisory_level": "categorical",
+              "terrorism_risk_index": "numeric",
+              "source": "categorical"
+            },
+            "value_examples": {
+              "travel_advisory_level": ["1-Low", "2-Caution", "3-Reconsider", "4-DoNotTravel"],
+              "source": ["UNODC", "OSAC", "WHO"]
+            },
+            "data_sample": [
+              {
+                "country": "Portugal",
+                "city": "Lisbon",
+                "iso3": "PRT",
+                "year": 2023,
+                "crime_index": 28.7,
+                "homicide_rate_per_100k": 0.8,
+                "political_risk_index": 14.0,
+                "health_risk_index": 9.3,
+                "travel_advisory_level": "1-Low",
+                "terrorism_risk_index": 5.2,
+                "source": "UNODC"
+              }
+            ],
+            "total_rows": 0,
+            "file_size": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "access",
+      "description": "Accessibility & convenience (airport time, transit, visa ease)",
+      "files": [
+        {
+          "id": "global-accessibility-2020-2025",
+          "name": "Global Accessibility 2020-2025",
+          "path": "/dataset/travel/access/global_accessibility_2020_2025.csv",
+          "description": "How easy it is to get in and get around a destination",
+          "file_summary": {
+            "column_names": [
+              "country",
+              "city",
+              "iso3",
+              "nearest_airport_iata",
+              "airport_travel_time_min",
+              "intl_flight_freq_weekly",
+              "visa_policy",
+              "visa_on_arrival",
+              "evisa_available",
+              "transit_score",
+              "walk_score",
+              "rideshare_availability",
+              "source",
+              "as_of_date"
+            ],
+            "column_types": {
+              "country": "categorical",
+              "city": "categorical",
+              "iso3": "categorical",
+              "nearest_airport_iata": "categorical",
+              "airport_travel_time_min": "numeric",
+              "intl_flight_freq_weekly": "numeric",
+              "visa_policy": "categorical",
+              "visa_on_arrival": "boolean",
+              "evisa_available": "boolean",
+              "transit_score": "numeric",
+              "walk_score": "numeric",
+              "rideshare_availability": "boolean",
+              "source": "categorical",
+              "as_of_date": "datetime"
+            },
+            "value_examples": {
+              "nearest_airport_iata": ["CDG", "SIN", "JFK"],
+              "visa_policy": ["VisaFree", "VisaOnArrival", "eVisa", "VisaRequired"]
+            },
+            "data_sample": [
+              {
+                "country": "Singapore",
+                "city": "Singapore",
+                "iso3": "SGP",
+                "nearest_airport_iata": "SIN",
+                "airport_travel_time_min": 20,
+                "intl_flight_freq_weekly": 3100,
+                "visa_policy": "VisaFree",
+                "visa_on_arrival": false,
+                "evisa_available": false,
+                "transit_score": 88,
+                "walk_score": 75,
+                "rideshare_availability": true,
+                "source": "IATA",
+                "as_of_date": "2025-01-01"
+              }
+            ],
+            "total_rows": 0,
+            "file_size": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "attractions",
+      "description": "Attractions density & coverage",
+      "files": [
+        {
+          "id": "global-attractions-coverage-2020-2025",
+          "name": "Global Attractions Coverage 2020-2025",
+          "path": "/dataset/travel/attractions/global_attractions_coverage_2020_2025.csv",
+          "description": "Points of interest by category and density",
+          "file_summary": {
+            "column_names": [
+              "country",
+              "city",
+              "iso3",
+              "year",
+              "poi_total",
+              "museums_count",
+              "heritage_sites_count",
+              "parks_nature_count",
+              "nightlife_count",
+              "beaches_count",
+              "attraction_density_per_km2",
+              "avg_admission_cost_usd",
+              "source"
+            ],
+            "column_types": {
+              "country": "categorical",
+              "city": "categorical",
+              "iso3": "categorical",
+              "year": "numeric",
+              "poi_total": "numeric",
+              "museums_count": "numeric",
+              "heritage_sites_count": "numeric",
+              "parks_nature_count": "numeric",
+              "nightlife_count": "numeric",
+              "beaches_count": "numeric",
+              "attraction_density_per_km2": "numeric",
+              "avg_admission_cost_usd": "numeric",
+              "source": "categorical"
+            },
+            "value_examples": {
+              "source": ["OpenStreetMap", "UNESCO", "Local Tourism Board"]
+            },
+            "data_sample": [
+              {
+                "country": "Italy",
+                "city": "Rome",
+                "iso3": "ITA",
+                "year": 2024,
+                "poi_total": 4821,
+                "museums_count": 153,
+                "heritage_sites_count": 12,
+                "parks_nature_count": 96,
+                "nightlife_count": 430,
+                "beaches_count": 0,
+                "attraction_density_per_km2": 17.4,
+                "avg_admission_cost_usd": 12.5,
+                "source": "OpenStreetMap"
+              }
+            ],
+            "total_rows": 0,
+            "file_size": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "flow",
+      "description": "Popularity & visitor flow (seasonality/crowdedness)",
+      "files": [
+        {
+          "id": "global-visitor-flow-2018-2025",
+          "name": "Global Visitor Flow 2018-2025",
+          "path": "/dataset/travel/flow/global_visitor_flow_2018_2025.csv",
+          "description": "Arrivals, occupancy, and seasonality metrics",
+          "file_summary": {
+            "column_names": [
+              "country",
+              "city",
+              "iso3",
+              "year",
+              "month",
+              "date",
+              "intl_arrivals",
+              "hotel_occupancy_rate_pct",
+              "peak_crowding_index",
+              "season",
+              "events_flag",
+              "source"
+            ],
+            "column_types": {
+              "country": "categorical",
+              "city": "categorical",
+              "iso3": "categorical",
+              "year": "numeric",
+              "month": "numeric",
+              "date": "datetime",
+              "intl_arrivals": "numeric",
+              "hotel_occupancy_rate_pct": "numeric",
+              "peak_crowding_index": "numeric",
+              "season": "categorical",
+              "events_flag": "boolean",
+              "source": "categorical"
+            },
+            "value_examples": {
+              "season": ["Low", "Shoulder", "High"],
+              "source": ["UNWTO", "National Stats Office"]
+            },
+            "data_sample": [
+              {
+                "country": "Thailand",
+                "city": "Phuket",
+                "iso3": "THA",
+                "year": 2023,
+                "month": 12,
+                "date": "2023-12-01",
+                "intl_arrivals": 612000,
+                "hotel_occupancy_rate_pct": 82.3,
+                "peak_crowding_index": 91.0,
+                "season": "High",
+                "events_flag": true,
+                "source": "UNWTO"
+              }
+            ],
+            "total_rows": 0,
+            "file_size": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "reviews",
+      "description": "Reviews & satisfaction (mean/volume/dispersion)",
+      "files": [
+        {
+          "id": "global-destination-reviews-2020-2025",
+          "name": "Global Destination Reviews 2020-2025",
+          "path": "/dataset/travel/reviews/global_destination_reviews_2020_2025.csv",
+          "description": "Aggregated review statistics by destination and period",
+          "file_summary": {
+            "column_names": [
+              "country",
+              "city",
+              "platform",
+              "year",
+              "month",
+              "date",
+              "avg_rating",
+              "rating_count",
+              "rating_stddev",
+              "recent_review_share_90d",
+              "sentiment_score",
+              "source"
+            ],
+            "column_types": {
+              "country": "categorical",
+              "city": "categorical",
+              "platform": "categorical",
+              "year": "numeric",
+              "month": "numeric",
+              "date": "datetime",
+              "avg_rating": "numeric",
+              "rating_count": "numeric",
+              "rating_stddev": "numeric",
+              "recent_review_share_90d": "numeric",
+              "sentiment_score": "numeric",
+              "source": "categorical"
+            },
+            "value_examples": {
+              "platform": ["Google", "Tripadvisor", "Booking"],
+              "avg_rating": [4.5, 4.2]
+            },
+            "data_sample": [
+              {
+                "country": "USA",
+                "city": "New York",
+                "platform": "Tripadvisor",
+                "year": 2024,
+                "month": 5,
+                "date": "2024-05-01",
+                "avg_rating": 4.3,
+                "rating_count": 184230,
+                "rating_stddev": 0.7,
+                "recent_review_share_90d": 0.34,
+                "sentiment_score": 0.61,
+                "source": "Tripadvisor"
+              }
+            ],
+            "total_rows": 0,
+            "file_size": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "culture",
+      "description": "Cultural offering & diversity (cuisine/festivals/language)",
+      "files": [
+        {
+          "id": "global-cultural-offering-2020-2025",
+          "name": "Global Cultural Offering 2020-2025",
+          "path": "/dataset/travel/culture/global_cultural_offering_2020_2025.csv",
+          "description": "Language serviceability, cuisine variety, and festivals",
+          "file_summary": {
+            "column_names": [
+              "country",
+              "city",
+              "iso3",
+              "year",
+              "english_coverage_pct",
+              "languages_serviceable",
+              "cuisine_variety_index",
+              "restaurants_per_10k",
+              "festivals_per_year",
+              "lgbtq_friendliness_index",
+              "cultural_diversity_index",
+              "source"
+            ],
+            "column_types": {
+              "country": "categorical",
+              "city": "categorical",
+              "iso3": "categorical",
+              "year": "numeric",
+              "english_coverage_pct": "numeric",
+              "languages_serviceable": "numeric",
+              "cuisine_variety_index": "numeric",
+              "restaurants_per_10k": "numeric",
+              "festivals_per_year": "numeric",
+              "lgbtq_friendliness_index": "numeric",
+              "cultural_diversity_index": "numeric",
+              "source": "categorical"
+            },
+            "value_examples": {
+              "languages_serviceable": [2, 3, 5],
+              "cuisine_variety_index": [62.0, 81.5]
+            },
+            "data_sample": [
+              {
+                "country": "Canada",
+                "city": "Toronto",
+                "iso3": "CAN",
+                "year": 2024,
+                "english_coverage_pct": 95.0,
+                "languages_serviceable": 6,
+                "cuisine_variety_index": 88.2,
+                "restaurants_per_10k": 43.7,
+                "festivals_per_year": 67,
+                "lgbtq_friendliness_index": 90.5,
+                "cultural_diversity_index": 86.4,
+                "source": "City Open Data"
+              }
+            ],
+            "total_rows": 0,
+            "file_size": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "environment",
+      "description": "Environmental quality (AQI/green space)",
+      "files": [
+        {
+          "id": "global-environmental-quality-2018-2025",
+          "name": "Global Environmental Quality 2018-2025",
+          "path": "/dataset/travel/environment/global_environmental_quality_2018_2025.csv",
+          "description": "Air quality, noise, green space and water quality by city",
+          "file_summary": {
+            "column_names": [
+              "country",
+              "city",
+              "iso3",
+              "year",
+              "aqi_pm25_annual",
+              "no2_annual",
+              "noise_index",
+              "green_space_pct",
+              "water_quality_index",
+              "climate_risk_score",
+              "source"
+            ],
+            "column_types": {
+              "country": "categorical",
+              "city": "categorical",
+              "iso3": "categorical",
+              "year": "numeric",
+              "aqi_pm25_annual": "numeric",
+              "no2_annual": "numeric",
+              "noise_index": "numeric",
+              "green_space_pct": "numeric",
+              "water_quality_index": "numeric",
+              "climate_risk_score": "numeric",
+              "source": "categorical"
+            },
+            "value_examples": {
+              "aqi_pm25_annual": [10.5, 22.8, 46.2],
+              "green_space_pct": [12.3, 34.7]
+            },
+            "data_sample": [
+              {
+                "country": "Australia",
+                "city": "Melbourne",
+                "iso3": "AUS",
+                "year": 2023,
+                "aqi_pm25_annual": 9.7,
+                "no2_annual": 11.2,
+                "noise_index": 41.3,
+                "green_space_pct": 19.8,
+                "water_quality_index": 82.6,
+                "climate_risk_score": 21.4,
+                "source": "WHO/EEA"
+              }
+            ],
+            "total_rows": 0,
+            "file_size": 0
+          }
+        }
+      ]
+    }
+  ]
+}

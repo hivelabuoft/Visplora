@@ -1,0 +1,1681 @@
+country,city,iso3,year,month,date,currency,hotel_price_usd,meal_price_usd,transport_pass_usd,cost_index,source
+USA,New York,USA,2023,1,2023-01-01,USD,135.92,8.81,54.1,89.3,synthetic
+USA,New York,USA,2023,2,2023-02-01,USD,156.99,9.54,50.42,97.6,synthetic
+USA,New York,USA,2023,3,2023-03-01,USD,172.39,10.0,53.86,105.8,synthetic
+USA,New York,USA,2023,4,2023-04-01,USD,175.59,9.82,50.39,105.5,synthetic
+USA,New York,USA,2023,5,2023-05-01,USD,165.81,9.0,56.91,102.7,synthetic
+USA,New York,USA,2023,6,2023-06-01,USD,192.5,9.45,51.06,111.9,synthetic
+USA,New York,USA,2023,7,2023-07-01,USD,212.18,9.46,52.01,120.1,synthetic
+USA,New York,USA,2023,8,2023-08-01,USD,187.83,9.86,54.99,112.2,synthetic
+USA,New York,USA,2023,9,2023-09-01,USD,166.38,9.8,61.66,106.0,synthetic
+USA,New York,USA,2023,10,2023-10-01,USD,155.82,9.26,50.56,96.7,synthetic
+USA,New York,USA,2023,11,2023-11-01,USD,169.0,10.2,53.19,104.5,synthetic
+USA,New York,USA,2023,12,2023-12-01,USD,180.28,9.08,56.06,108.3,synthetic
+USA,New York,USA,2024,1,2024-01-01,USD,170.64,9.86,51.12,103.9,synthetic
+USA,New York,USA,2024,2,2024-02-01,USD,164.05,9.62,54.44,102.1,synthetic
+USA,New York,USA,2024,3,2024-03-01,USD,172.29,9.68,56.17,106.1,synthetic
+USA,New York,USA,2024,4,2024-04-01,USD,161.93,9.72,55.99,102.0,synthetic
+USA,New York,USA,2024,5,2024-05-01,USD,142.29,9.37,51.85,92.0,synthetic
+USA,New York,USA,2024,6,2024-06-01,USD,183.4,9.39,59.23,111.2,synthetic
+USA,New York,USA,2024,7,2024-07-01,USD,179.89,10.11,47.3,106.5,synthetic
+USA,New York,USA,2024,8,2024-08-01,USD,188.1,9.65,55.82,112.2,synthetic
+USA,New York,USA,2024,9,2024-09-01,USD,170.23,10.01,52.31,104.4,synthetic
+USA,New York,USA,2024,10,2024-10-01,USD,155.1,10.04,52.9,98.6,synthetic
+USA,New York,USA,2024,11,2024-11-01,USD,144.62,8.9,50.17,91.5,synthetic
+USA,New York,USA,2024,12,2024-12-01,USD,200.96,9.63,56.21,117.5,synthetic
+USA,New York,USA,2025,1,2025-01-01,USD,155.56,9.64,55.97,99.3,synthetic
+USA,New York,USA,2025,2,2025-02-01,USD,157.08,9.81,51.13,98.4,synthetic
+USA,New York,USA,2025,3,2025-03-01,USD,156.38,9.33,49.13,96.5,synthetic
+USA,New York,USA,2025,4,2025-04-01,USD,167.34,9.28,53.66,102.5,synthetic
+USA,New York,USA,2025,5,2025-05-01,USD,167.26,9.81,56.11,104.3,synthetic
+USA,New York,USA,2025,6,2025-06-01,USD,191.75,9.31,53.32,112.2,synthetic
+USA,San Francisco,USA,2023,1,2023-01-01,USD,74.62,8.09,25.64,52.9,synthetic
+USA,San Francisco,USA,2023,2,2023-02-01,USD,79.82,8.37,27.7,56.3,synthetic
+USA,San Francisco,USA,2023,3,2023-03-01,USD,66.91,8.45,24.59,50.1,synthetic
+USA,San Francisco,USA,2023,4,2023-04-01,USD,70.35,8.99,23.16,51.8,synthetic
+USA,San Francisco,USA,2023,5,2023-05-01,USD,74.82,8.68,25.25,53.9,synthetic
+USA,San Francisco,USA,2023,6,2023-06-01,USD,76.73,8.59,25.37,54.5,synthetic
+USA,San Francisco,USA,2023,7,2023-07-01,USD,88.39,8.57,29.29,60.6,synthetic
+USA,San Francisco,USA,2023,8,2023-08-01,USD,85.11,8.03,26.67,57.4,synthetic
+USA,San Francisco,USA,2023,9,2023-09-01,USD,73.58,9.25,27.88,55.3,synthetic
+USA,San Francisco,USA,2023,10,2023-10-01,USD,74.37,9.31,24.15,54.3,synthetic
+USA,San Francisco,USA,2023,11,2023-11-01,USD,68.61,8.08,25.62,50.5,synthetic
+USA,San Francisco,USA,2023,12,2023-12-01,USD,77.21,8.88,25.93,55.4,synthetic
+USA,San Francisco,USA,2024,1,2024-01-01,USD,63.8,8.03,26.92,49.0,synthetic
+USA,San Francisco,USA,2024,2,2024-02-01,USD,77.16,9.58,31.71,58.7,synthetic
+USA,San Francisco,USA,2024,3,2024-03-01,USD,74.71,8.05,22.41,51.7,synthetic
+USA,San Francisco,USA,2024,4,2024-04-01,USD,73.86,8.14,25.58,52.7,synthetic
+USA,San Francisco,USA,2024,5,2024-05-01,USD,68.77,8.48,28.31,52.3,synthetic
+USA,San Francisco,USA,2024,6,2024-06-01,USD,87.86,8.47,24.43,58.4,synthetic
+USA,San Francisco,USA,2024,7,2024-07-01,USD,75.15,8.3,26.24,53.7,synthetic
+USA,San Francisco,USA,2024,8,2024-08-01,USD,99.04,8.62,28.15,64.5,synthetic
+USA,San Francisco,USA,2024,9,2024-09-01,USD,69.42,7.95,24.56,50.2,synthetic
+USA,San Francisco,USA,2024,10,2024-10-01,USD,68.11,9.65,24.83,52.6,synthetic
+USA,San Francisco,USA,2024,11,2024-11-01,USD,77.16,8.09,28.06,54.9,synthetic
+USA,San Francisco,USA,2024,12,2024-12-01,USD,89.44,8.47,26.27,59.7,synthetic
+USA,San Francisco,USA,2025,1,2025-01-01,USD,68.52,8.78,25.5,51.6,synthetic
+USA,San Francisco,USA,2025,2,2025-02-01,USD,65.22,7.9,26.66,49.2,synthetic
+USA,San Francisco,USA,2025,3,2025-03-01,USD,81.44,8.64,26.12,56.8,synthetic
+USA,San Francisco,USA,2025,4,2025-04-01,USD,73.96,9.22,26.75,55.0,synthetic
+USA,San Francisco,USA,2025,5,2025-05-01,USD,69.93,9.12,27.13,53.4,synthetic
+USA,San Francisco,USA,2025,6,2025-06-01,USD,97.43,8.65,24.08,62.4,synthetic
+Canada,Toronto,CAN,2023,1,2023-01-01,CAD,56.44,18.05,45.82,69.8,synthetic
+Canada,Toronto,CAN,2023,2,2023-02-01,CAD,54.05,17.23,48.3,68.5,synthetic
+Canada,Toronto,CAN,2023,3,2023-03-01,CAD,58.2,16.43,50.84,69.7,synthetic
+Canada,Toronto,CAN,2023,4,2023-04-01,CAD,64.78,16.68,51.91,73.2,synthetic
+Canada,Toronto,CAN,2023,5,2023-05-01,CAD,48.67,16.55,46.74,64.6,synthetic
+Canada,Toronto,CAN,2023,6,2023-06-01,CAD,63.05,15.72,48.51,69.6,synthetic
+Canada,Toronto,CAN,2023,7,2023-07-01,CAD,74.99,15.27,49.77,74.1,synthetic
+Canada,Toronto,CAN,2023,8,2023-08-01,CAD,67.16,16.27,53.15,73.9,synthetic
+Canada,Toronto,CAN,2023,9,2023-09-01,CAD,60.73,17.93,49.13,72.6,synthetic
+Canada,Toronto,CAN,2023,10,2023-10-01,CAD,54.98,16.37,50.51,68.2,synthetic
+Canada,Toronto,CAN,2023,11,2023-11-01,CAD,59.04,15.51,49.98,68.2,synthetic
+Canada,Toronto,CAN,2023,12,2023-12-01,CAD,71.14,19.1,56.19,81.4,synthetic
+Canada,Toronto,CAN,2024,1,2024-01-01,CAD,54.25,16.31,44.58,65.6,synthetic
+Canada,Toronto,CAN,2024,2,2024-02-01,CAD,55.47,16.91,53.86,70.6,synthetic
+Canada,Toronto,CAN,2024,3,2024-03-01,CAD,54.83,15.94,42.2,64.3,synthetic
+Canada,Toronto,CAN,2024,4,2024-04-01,CAD,57.46,15.54,47.83,66.8,synthetic
+Canada,Toronto,CAN,2024,5,2024-05-01,CAD,54.14,16.5,43.56,65.5,synthetic
+Canada,Toronto,CAN,2024,6,2024-06-01,CAD,61.67,18.71,45.19,72.8,synthetic
+Canada,Toronto,CAN,2024,7,2024-07-01,CAD,63.74,18.42,59.77,78.6,synthetic
+Canada,Toronto,CAN,2024,8,2024-08-01,CAD,63.32,16.23,50.86,71.4,synthetic
+Canada,Toronto,CAN,2024,9,2024-09-01,CAD,66.27,15.61,48.82,70.8,synthetic
+Canada,Toronto,CAN,2024,10,2024-10-01,CAD,61.84,17.03,48.36,71.3,synthetic
+Canada,Toronto,CAN,2024,11,2024-11-01,CAD,57.6,15.23,48.84,66.7,synthetic
+Canada,Toronto,CAN,2024,12,2024-12-01,CAD,68.38,16.83,47.74,73.3,synthetic
+Canada,Toronto,CAN,2025,1,2025-01-01,CAD,60.42,17.6,50.21,72.3,synthetic
+Canada,Toronto,CAN,2025,2,2025-02-01,CAD,59.86,16.65,49.67,70.3,synthetic
+Canada,Toronto,CAN,2025,3,2025-03-01,CAD,54.86,16.91,49.33,68.6,synthetic
+Canada,Toronto,CAN,2025,4,2025-04-01,CAD,67.97,18.16,51.01,76.6,synthetic
+Canada,Toronto,CAN,2025,5,2025-05-01,CAD,54.67,15.49,53.81,67.9,synthetic
+Canada,Toronto,CAN,2025,6,2025-06-01,CAD,71.34,17.07,43.6,73.3,synthetic
+Canada,Vancouver,CAN,2023,1,2023-01-01,CAD,205.52,17.76,27.2,122.0,synthetic
+Canada,Vancouver,CAN,2023,2,2023-02-01,CAD,199.61,17.44,28.07,119.4,synthetic
+Canada,Vancouver,CAN,2023,3,2023-03-01,CAD,224.97,14.98,27.31,125.2,synthetic
+Canada,Vancouver,CAN,2023,4,2023-04-01,CAD,204.12,18.02,27.05,121.8,synthetic
+Canada,Vancouver,CAN,2023,5,2023-05-01,CAD,172.99,18.05,31.13,111.0,synthetic
+Canada,Vancouver,CAN,2023,6,2023-06-01,CAD,211.89,18.62,27.13,126.0,synthetic
+Canada,Vancouver,CAN,2023,7,2023-07-01,CAD,240.35,16.59,27.12,134.0,synthetic
+Canada,Vancouver,CAN,2023,8,2023-08-01,CAD,266.65,18.32,31.14,148.9,synthetic
+Canada,Vancouver,CAN,2023,9,2023-09-01,CAD,220.23,18.17,31.16,130.1,synthetic
+Canada,Vancouver,CAN,2023,10,2023-10-01,CAD,208.34,18.58,27.19,124.5,synthetic
+Canada,Vancouver,CAN,2023,11,2023-11-01,CAD,202.35,16.96,29.69,120.3,synthetic
+Canada,Vancouver,CAN,2023,12,2023-12-01,CAD,218.76,18.53,27.4,128.7,synthetic
+Canada,Vancouver,CAN,2024,1,2024-01-01,CAD,220.14,18.5,31.31,130.6,synthetic
+Canada,Vancouver,CAN,2024,2,2024-02-01,CAD,213.04,16.03,27.64,122.3,synthetic
+Canada,Vancouver,CAN,2024,3,2024-03-01,CAD,182.4,17.15,30.71,113.1,synthetic
+Canada,Vancouver,CAN,2024,4,2024-04-01,CAD,211.54,16.96,25.8,122.6,synthetic
+Canada,Vancouver,CAN,2024,5,2024-05-01,CAD,201.8,16.41,26.47,118.0,synthetic
+Canada,Vancouver,CAN,2024,6,2024-06-01,CAD,247.56,18.93,28.95,141.4,synthetic
+Canada,Vancouver,CAN,2024,7,2024-07-01,CAD,197.26,18.03,27.91,119.4,synthetic
+Canada,Vancouver,CAN,2024,8,2024-08-01,CAD,249.53,19.42,23.76,141.1,synthetic
+Canada,Vancouver,CAN,2024,9,2024-09-01,CAD,191.76,18.33,24.7,116.5,synthetic
+Canada,Vancouver,CAN,2024,10,2024-10-01,CAD,225.04,18.09,29.42,131.2,synthetic
+Canada,Vancouver,CAN,2024,11,2024-11-01,CAD,192.08,18.57,29.85,119.0,synthetic
+Canada,Vancouver,CAN,2024,12,2024-12-01,CAD,246.03,17.95,28.3,138.9,synthetic
+Canada,Vancouver,CAN,2025,1,2025-01-01,CAD,187.37,17.55,27.47,114.5,synthetic
+Canada,Vancouver,CAN,2025,2,2025-02-01,CAD,207.45,18.77,25.71,123.9,synthetic
+Canada,Vancouver,CAN,2025,3,2025-03-01,CAD,199.26,19.28,26.32,121.7,synthetic
+Canada,Vancouver,CAN,2025,4,2025-04-01,CAD,188.04,17.92,29.41,116.1,synthetic
+Canada,Vancouver,CAN,2025,5,2025-05-01,CAD,201.46,19.12,29.44,123.5,synthetic
+Canada,Vancouver,CAN,2025,6,2025-06-01,CAD,257.8,18.29,32.29,145.7,synthetic
+Mexico,Mexico City,MEX,2023,1,2023-01-01,MXN,136.62,5.21,58.36,85.2,synthetic
+Mexico,Mexico City,MEX,2023,2,2023-02-01,MXN,121.89,4.37,62.08,79.3,synthetic
+Mexico,Mexico City,MEX,2023,3,2023-03-01,MXN,140.22,4.98,67.0,89.5,synthetic
+Mexico,Mexico City,MEX,2023,4,2023-04-01,MXN,120.15,4.16,65.98,79.7,synthetic
+Mexico,Mexico City,MEX,2023,5,2023-05-01,MXN,130.34,4.96,68.96,86.3,synthetic
+Mexico,Mexico City,MEX,2023,6,2023-06-01,MXN,164.34,5.05,66.79,99.2,synthetic
+Mexico,Mexico City,MEX,2023,7,2023-07-01,MXN,169.44,4.63,64.91,99.8,synthetic
+Mexico,Mexico City,MEX,2023,8,2023-08-01,MXN,165.11,5.07,63.92,98.5,synthetic
+Mexico,Mexico City,MEX,2023,9,2023-09-01,MXN,141.1,4.75,65.19,88.8,synthetic
+Mexico,Mexico City,MEX,2023,10,2023-10-01,MXN,144.44,4.25,59.77,87.3,synthetic
+Mexico,Mexico City,MEX,2023,11,2023-11-01,MXN,119.39,4.15,62.61,78.2,synthetic
+Mexico,Mexico City,MEX,2023,12,2023-12-01,MXN,172.29,4.75,66.64,101.8,synthetic
+Mexico,Mexico City,MEX,2024,1,2024-01-01,MXN,147.26,5.21,65.42,92.1,synthetic
+Mexico,Mexico City,MEX,2024,2,2024-02-01,MXN,150.12,4.86,61.88,91.3,synthetic
+Mexico,Mexico City,MEX,2024,3,2024-03-01,MXN,129.01,4.4,61.65,82.1,synthetic
+Mexico,Mexico City,MEX,2024,4,2024-04-01,MXN,131.58,5.06,73.65,88.7,synthetic
+Mexico,Mexico City,MEX,2024,5,2024-05-01,MXN,120.48,4.94,60.95,79.3,synthetic
+Mexico,Mexico City,MEX,2024,6,2024-06-01,MXN,168.72,4.79,57.31,97.0,synthetic
+Mexico,Mexico City,MEX,2024,7,2024-07-01,MXN,174.62,4.65,63.28,101.3,synthetic
+Mexico,Mexico City,MEX,2024,8,2024-08-01,MXN,148.64,4.64,67.7,92.6,synthetic
+Mexico,Mexico City,MEX,2024,9,2024-09-01,MXN,133.4,4.92,67.4,86.8,synthetic
+Mexico,Mexico City,MEX,2024,10,2024-10-01,MXN,149.77,4.73,58.94,89.9,synthetic
+Mexico,Mexico City,MEX,2024,11,2024-11-01,MXN,147.02,4.73,70.86,93.3,synthetic
+Mexico,Mexico City,MEX,2024,12,2024-12-01,MXN,167.53,4.79,67.34,100.3,synthetic
+Mexico,Mexico City,MEX,2025,1,2025-01-01,MXN,156.6,5.43,66.05,96.5,synthetic
+Mexico,Mexico City,MEX,2025,2,2025-02-01,MXN,137.19,5.14,61.84,86.6,synthetic
+Mexico,Mexico City,MEX,2025,3,2025-03-01,MXN,139.06,4.82,67.18,88.9,synthetic
+Mexico,Mexico City,MEX,2025,4,2025-04-01,MXN,126.42,4.37,56.2,78.9,synthetic
+Mexico,Mexico City,MEX,2025,5,2025-05-01,MXN,123.35,4.7,64.38,81.3,synthetic
+Mexico,Mexico City,MEX,2025,6,2025-06-01,MXN,187.74,5.15,61.31,106.7,synthetic
+Brazil,Rio de Janeiro,BRA,2023,1,2023-01-01,BRL,167.45,12.11,40.44,102.3,synthetic
+Brazil,Rio de Janeiro,BRA,2023,2,2023-02-01,BRL,144.97,12.36,44.48,95.3,synthetic
+Brazil,Rio de Janeiro,BRA,2023,3,2023-03-01,BRL,162.39,13.42,37.88,101.5,synthetic
+Brazil,Rio de Janeiro,BRA,2023,4,2023-04-01,BRL,166.96,12.32,37.19,101.3,synthetic
+Brazil,Rio de Janeiro,BRA,2023,5,2023-05-01,BRL,149.6,12.68,35.39,94.2,synthetic
+Brazil,Rio de Janeiro,BRA,2023,6,2023-06-01,BRL,201.65,13.16,38.6,117.1,synthetic
+Brazil,Rio de Janeiro,BRA,2023,7,2023-07-01,BRL,187.07,12.69,36.82,109.8,synthetic
+Brazil,Rio de Janeiro,BRA,2023,8,2023-08-01,BRL,205.78,11.0,36.75,114.4,synthetic
+Brazil,Rio de Janeiro,BRA,2023,9,2023-09-01,BRL,134.14,11.25,41.23,87.9,synthetic
+Brazil,Rio de Janeiro,BRA,2023,10,2023-10-01,BRL,170.97,11.82,33.68,100.7,synthetic
+Brazil,Rio de Janeiro,BRA,2023,11,2023-11-01,BRL,121.71,11.95,44.01,85.1,synthetic
+Brazil,Rio de Janeiro,BRA,2023,12,2023-12-01,BRL,198.12,11.94,38.86,113.7,synthetic
+Brazil,Rio de Janeiro,BRA,2024,1,2024-01-01,BRL,139.62,12.14,37.9,90.3,synthetic
+Brazil,Rio de Janeiro,BRA,2024,2,2024-02-01,BRL,158.45,12.94,38.54,99.4,synthetic
+Brazil,Rio de Janeiro,BRA,2024,3,2024-03-01,BRL,168.08,11.85,40.0,102.0,synthetic
+Brazil,Rio de Janeiro,BRA,2024,4,2024-04-01,BRL,180.34,11.64,35.3,104.8,synthetic
+Brazil,Rio de Janeiro,BRA,2024,5,2024-05-01,BRL,176.6,12.22,41.33,106.5,synthetic
+Brazil,Rio de Janeiro,BRA,2024,6,2024-06-01,BRL,184.68,13.44,37.98,110.5,synthetic
+Brazil,Rio de Janeiro,BRA,2024,7,2024-07-01,BRL,195.41,13.52,36.68,114.4,synthetic
+Brazil,Rio de Janeiro,BRA,2024,8,2024-08-01,BRL,177.04,12.02,38.83,105.4,synthetic
+Brazil,Rio de Janeiro,BRA,2024,9,2024-09-01,BRL,139.56,12.83,36.22,90.8,synthetic
+Brazil,Rio de Janeiro,BRA,2024,10,2024-10-01,BRL,174.2,10.58,35.56,100.7,synthetic
+Brazil,Rio de Janeiro,BRA,2024,11,2024-11-01,BRL,138.02,11.74,38.29,89.1,synthetic
+Brazil,Rio de Janeiro,BRA,2024,12,2024-12-01,BRL,188.71,12.17,37.22,109.7,synthetic
+Brazil,Rio de Janeiro,BRA,2025,1,2025-01-01,BRL,162.14,11.61,39.5,99.0,synthetic
+Brazil,Rio de Janeiro,BRA,2025,2,2025-02-01,BRL,168.0,12.64,39.1,102.9,synthetic
+Brazil,Rio de Janeiro,BRA,2025,3,2025-03-01,BRL,163.33,13.87,37.41,102.5,synthetic
+Brazil,Rio de Janeiro,BRA,2025,4,2025-04-01,BRL,155.63,11.8,34.92,95.0,synthetic
+Brazil,Rio de Janeiro,BRA,2025,5,2025-05-01,BRL,143.66,11.7,37.45,91.0,synthetic
+Brazil,Rio de Janeiro,BRA,2025,6,2025-06-01,BRL,196.58,12.4,35.62,112.6,synthetic
+Argentina,Buenos Aires,ARG,2023,1,2023-01-01,ARS,220.9,20.52,40.33,137.7,synthetic
+Argentina,Buenos Aires,ARG,2023,2,2023-02-01,ARS,210.47,20.61,42.05,134.3,synthetic
+Argentina,Buenos Aires,ARG,2023,3,2023-03-01,ARS,214.83,18.52,49.08,135.2,synthetic
+Argentina,Buenos Aires,ARG,2023,4,2023-04-01,ARS,232.75,19.98,46.02,143.7,synthetic
+Argentina,Buenos Aires,ARG,2023,5,2023-05-01,ARS,170.82,18.88,43.96,116.3,synthetic
+Argentina,Buenos Aires,ARG,2023,6,2023-06-01,ARS,232.16,21.16,51.15,147.3,synthetic
+Argentina,Buenos Aires,ARG,2023,7,2023-07-01,ARS,230.04,19.27,45.62,141.2,synthetic
+Argentina,Buenos Aires,ARG,2023,8,2023-08-01,ARS,286.68,18.8,45.66,163.1,synthetic
+Argentina,Buenos Aires,ARG,2023,9,2023-09-01,ARS,242.45,18.28,40.85,142.8,synthetic
+Argentina,Buenos Aires,ARG,2023,10,2023-10-01,ARS,204.45,19.66,47.43,132.3,synthetic
+Argentina,Buenos Aires,ARG,2023,11,2023-11-01,ARS,215.71,18.13,46.5,133.9,synthetic
+Argentina,Buenos Aires,ARG,2023,12,2023-12-01,ARS,242.21,21.84,42.91,149.4,synthetic
+Argentina,Buenos Aires,ARG,2024,1,2024-01-01,ARS,200.84,20.95,47.27,133.0,synthetic
+Argentina,Buenos Aires,ARG,2024,2,2024-02-01,ARS,219.21,18.24,46.57,135.5,synthetic
+Argentina,Buenos Aires,ARG,2024,3,2024-03-01,ARS,194.11,20.58,40.41,127.1,synthetic
+Argentina,Buenos Aires,ARG,2024,4,2024-04-01,ARS,219.18,19.31,40.85,135.2,synthetic
+Argentina,Buenos Aires,ARG,2024,5,2024-05-01,ARS,223.71,20.58,42.95,139.9,synthetic
+Argentina,Buenos Aires,ARG,2024,6,2024-06-01,ARS,283.43,19.75,44.98,163.2,synthetic
+Argentina,Buenos Aires,ARG,2024,7,2024-07-01,ARS,259.41,19.54,46.36,153.7,synthetic
+Argentina,Buenos Aires,ARG,2024,8,2024-08-01,ARS,243.11,19.79,49.16,148.7,synthetic
+Argentina,Buenos Aires,ARG,2024,9,2024-09-01,ARS,194.0,17.35,49.94,125.2,synthetic
+Argentina,Buenos Aires,ARG,2024,10,2024-10-01,ARS,254.78,19.8,38.79,149.5,synthetic
+Argentina,Buenos Aires,ARG,2024,11,2024-11-01,ARS,206.36,19.94,44.28,132.4,synthetic
+Argentina,Buenos Aires,ARG,2024,12,2024-12-01,ARS,231.33,21.0,46.53,145.0,synthetic
+Argentina,Buenos Aires,ARG,2025,1,2025-01-01,ARS,186.32,21.14,51.33,129.0,synthetic
+Argentina,Buenos Aires,ARG,2025,2,2025-02-01,ARS,214.53,19.88,44.43,135.6,synthetic
+Argentina,Buenos Aires,ARG,2025,3,2025-03-01,ARS,222.04,18.18,45.39,136.1,synthetic
+Argentina,Buenos Aires,ARG,2025,4,2025-04-01,ARS,205.01,22.54,44.33,136.2,synthetic
+Argentina,Buenos Aires,ARG,2025,5,2025-05-01,ARS,239.86,18.95,46.72,145.0,synthetic
+Argentina,Buenos Aires,ARG,2025,6,2025-06-01,ARS,260.43,19.23,45.44,153.3,synthetic
+UK,London,GBR,2023,1,2023-01-01,GBP,195.6,13.12,18.28,107.0,synthetic
+UK,London,GBR,2023,2,2023-02-01,GBP,182.06,12.1,19.01,100.1,synthetic
+UK,London,GBR,2023,3,2023-03-01,GBP,202.01,11.33,19.4,107.0,synthetic
+UK,London,GBR,2023,4,2023-04-01,GBP,215.42,12.82,16.69,113.8,synthetic
+UK,London,GBR,2023,5,2023-05-01,GBP,224.92,13.67,21.45,120.8,synthetic
+UK,London,GBR,2023,6,2023-06-01,GBP,261.49,13.71,18.17,134.3,synthetic
+UK,London,GBR,2023,7,2023-07-01,GBP,269.52,13.9,20.0,138.5,synthetic
+UK,London,GBR,2023,8,2023-08-01,GBP,242.44,13.04,17.77,125.4,synthetic
+UK,London,GBR,2023,9,2023-09-01,GBP,224.16,14.6,17.8,120.7,synthetic
+UK,London,GBR,2023,10,2023-10-01,GBP,203.66,13.65,18.07,111.0,synthetic
+UK,London,GBR,2023,11,2023-11-01,GBP,226.88,11.58,17.32,116.6,synthetic
+UK,London,GBR,2023,12,2023-12-01,GBP,237.15,11.53,17.15,120.5,synthetic
+UK,London,GBR,2024,1,2024-01-01,GBP,195.39,13.23,19.82,107.6,synthetic
+UK,London,GBR,2024,2,2024-02-01,GBP,206.69,12.57,18.31,110.5,synthetic
+UK,London,GBR,2024,3,2024-03-01,GBP,228.52,12.61,17.22,118.9,synthetic
+UK,London,GBR,2024,4,2024-04-01,GBP,220.24,13.22,19.22,117.3,synthetic
+UK,London,GBR,2024,5,2024-05-01,GBP,210.59,13.96,17.06,113.9,synthetic
+UK,London,GBR,2024,6,2024-06-01,GBP,252.74,13.22,16.82,129.4,synthetic
+UK,London,GBR,2024,7,2024-07-01,GBP,221.35,13.94,17.94,118.5,synthetic
+UK,London,GBR,2024,8,2024-08-01,GBP,232.3,13.32,19.84,122.6,synthetic
+UK,London,GBR,2024,9,2024-09-01,GBP,172.36,12.19,17.2,95.7,synthetic
+UK,London,GBR,2024,10,2024-10-01,GBP,235.47,13.62,19.38,124.2,synthetic
+UK,London,GBR,2024,11,2024-11-01,GBP,191.59,12.49,18.96,104.6,synthetic
+UK,London,GBR,2024,12,2024-12-01,GBP,254.17,13.83,18.15,131.5,synthetic
+UK,London,GBR,2025,1,2025-01-01,GBP,215.52,13.52,19.39,116.0,synthetic
+UK,London,GBR,2025,2,2025-02-01,GBP,224.44,12.09,15.5,115.7,synthetic
+UK,London,GBR,2025,3,2025-03-01,GBP,227.72,14.35,17.07,121.4,synthetic
+UK,London,GBR,2025,4,2025-04-01,GBP,179.46,13.47,19.59,101.6,synthetic
+UK,London,GBR,2025,5,2025-05-01,GBP,241.14,13.81,17.91,126.2,synthetic
+UK,London,GBR,2025,6,2025-06-01,GBP,234.91,13.4,18.0,123.1,synthetic
+Ireland,Dublin,IRL,2023,1,2023-01-01,EUR,74.79,21.59,59.95,88.4,synthetic
+Ireland,Dublin,IRL,2023,2,2023-02-01,EUR,83.6,22.08,59.93,92.7,synthetic
+Ireland,Dublin,IRL,2023,3,2023-03-01,EUR,85.52,21.32,58.75,91.8,synthetic
+Ireland,Dublin,IRL,2023,4,2023-04-01,EUR,69.22,20.64,55.14,82.8,synthetic
+Ireland,Dublin,IRL,2023,5,2023-05-01,EUR,72.47,22.61,64.32,90.8,synthetic
+Ireland,Dublin,IRL,2023,6,2023-06-01,EUR,107.42,20.85,62.8,101.3,synthetic
+Ireland,Dublin,IRL,2023,7,2023-07-01,EUR,96.98,20.79,52.98,93.3,synthetic
+Ireland,Dublin,IRL,2023,8,2023-08-01,EUR,99.97,20.61,52.14,93.9,synthetic
+Ireland,Dublin,IRL,2023,9,2023-09-01,EUR,80.41,20.44,64.6,90.5,synthetic
+Ireland,Dublin,IRL,2023,10,2023-10-01,EUR,86.52,20.55,58.38,90.7,synthetic
+Ireland,Dublin,IRL,2023,11,2023-11-01,EUR,81.03,20.29,53.03,86.1,synthetic
+Ireland,Dublin,IRL,2023,12,2023-12-01,EUR,95.72,19.62,52.36,90.6,synthetic
+Ireland,Dublin,IRL,2024,1,2024-01-01,EUR,84.04,21.02,50.2,87.5,synthetic
+Ireland,Dublin,IRL,2024,2,2024-02-01,EUR,79.95,21.76,61.63,91.4,synthetic
+Ireland,Dublin,IRL,2024,3,2024-03-01,EUR,87.37,20.58,53.98,89.5,synthetic
+Ireland,Dublin,IRL,2024,4,2024-04-01,EUR,73.74,20.96,58.9,86.5,synthetic
+Ireland,Dublin,IRL,2024,5,2024-05-01,EUR,89.06,21.89,56.85,93.4,synthetic
+Ireland,Dublin,IRL,2024,6,2024-06-01,EUR,87.24,20.14,58.25,90.3,synthetic
+Ireland,Dublin,IRL,2024,7,2024-07-01,EUR,95.32,19.82,58.39,93.1,synthetic
+Ireland,Dublin,IRL,2024,8,2024-08-01,EUR,92.98,19.76,58.63,92.1,synthetic
+Ireland,Dublin,IRL,2024,9,2024-09-01,EUR,78.14,20.84,58.47,87.9,synthetic
+Ireland,Dublin,IRL,2024,10,2024-10-01,EUR,73.38,19.94,63.15,86.3,synthetic
+Ireland,Dublin,IRL,2024,11,2024-11-01,EUR,73.23,17.93,49.9,77.9,synthetic
+Ireland,Dublin,IRL,2024,12,2024-12-01,EUR,97.11,20.57,56.9,94.5,synthetic
+Ireland,Dublin,IRL,2025,1,2025-01-01,EUR,88.58,17.24,58.97,86.3,synthetic
+Ireland,Dublin,IRL,2025,2,2025-02-01,EUR,90.83,19.15,55.85,89.2,synthetic
+Ireland,Dublin,IRL,2025,3,2025-03-01,EUR,75.88,19.43,56.07,83.8,synthetic
+Ireland,Dublin,IRL,2025,4,2025-04-01,EUR,89.96,22.8,56.03,95.0,synthetic
+Ireland,Dublin,IRL,2025,5,2025-05-01,EUR,93.05,20.58,64.42,95.7,synthetic
+Ireland,Dublin,IRL,2025,6,2025-06-01,EUR,96.17,20.7,58.84,95.0,synthetic
+France,Paris,FRA,2023,1,2023-01-01,EUR,278.66,17.36,32.74,152.7,synthetic
+France,Paris,FRA,2023,2,2023-02-01,EUR,287.68,18.19,30.81,156.9,synthetic
+France,Paris,FRA,2023,3,2023-03-01,EUR,294.69,18.34,26.61,158.4,synthetic
+France,Paris,FRA,2023,4,2023-04-01,EUR,302.26,16.83,27.68,159.3,synthetic
+France,Paris,FRA,2023,5,2023-05-01,EUR,285.62,17.98,29.29,155.2,synthetic
+France,Paris,FRA,2023,6,2023-06-01,EUR,367.25,16.45,29.91,185.5,synthetic
+France,Paris,FRA,2023,7,2023-07-01,EUR,328.24,17.84,31.38,172.8,synthetic
+France,Paris,FRA,2023,8,2023-08-01,EUR,316.59,18.66,30.92,169.3,synthetic
+France,Paris,FRA,2023,9,2023-09-01,EUR,243.53,15.78,30.76,135.3,synthetic
+France,Paris,FRA,2023,10,2023-10-01,EUR,281.89,17.78,30.72,153.9,synthetic
+France,Paris,FRA,2023,11,2023-11-01,EUR,292.14,18.9,28.39,159.0,synthetic
+France,Paris,FRA,2023,12,2023-12-01,EUR,312.07,16.71,31.41,164.5,synthetic
+France,Paris,FRA,2024,1,2024-01-01,EUR,315.54,17.42,25.39,164.8,synthetic
+France,Paris,FRA,2024,2,2024-02-01,EUR,247.84,16.99,29.58,138.6,synthetic
+France,Paris,FRA,2024,3,2024-03-01,EUR,277.59,17.93,30.11,152.2,synthetic
+France,Paris,FRA,2024,4,2024-04-01,EUR,311.05,17.16,28.92,163.9,synthetic
+France,Paris,FRA,2024,5,2024-05-01,EUR,297.96,16.24,31.62,158.1,synthetic
+France,Paris,FRA,2024,6,2024-06-01,EUR,347.18,17.73,34.21,181.2,synthetic
+France,Paris,FRA,2024,7,2024-07-01,EUR,327.21,20.1,30.3,175.7,synthetic
+France,Paris,FRA,2024,8,2024-08-01,EUR,309.17,17.96,28.46,164.3,synthetic
+France,Paris,FRA,2024,9,2024-09-01,EUR,269.7,18.31,31.98,150.4,synthetic
+France,Paris,FRA,2024,10,2024-10-01,EUR,272.68,18.95,33.28,153.1,synthetic
+France,Paris,FRA,2024,11,2024-11-01,EUR,319.94,18.45,33.72,171.4,synthetic
+France,Paris,FRA,2024,12,2024-12-01,EUR,292.54,17.55,28.91,157.1,synthetic
+France,Paris,FRA,2025,1,2025-01-01,EUR,289.7,17.27,30.43,156.1,synthetic
+France,Paris,FRA,2025,2,2025-02-01,EUR,330.17,17.7,31.67,173.5,synthetic
+France,Paris,FRA,2025,3,2025-03-01,EUR,281.63,17.97,30.8,154.1,synthetic
+France,Paris,FRA,2025,4,2025-04-01,EUR,297.25,19.14,34.33,163.7,synthetic
+France,Paris,FRA,2025,5,2025-05-01,EUR,294.07,18.52,28.3,159.1,synthetic
+France,Paris,FRA,2025,6,2025-06-01,EUR,341.93,18.9,32.65,180.5,synthetic
+Spain,Barcelona,ESP,2023,1,2023-01-01,EUR,141.82,16.42,45.16,101.0,synthetic
+Spain,Barcelona,ESP,2023,2,2023-02-01,EUR,106.12,17.16,32.85,83.4,synthetic
+Spain,Barcelona,ESP,2023,3,2023-03-01,EUR,119.5,17.23,45.59,93.6,synthetic
+Spain,Barcelona,ESP,2023,4,2023-04-01,EUR,125.72,16.06,48.35,95.2,synthetic
+Spain,Barcelona,ESP,2023,5,2023-05-01,EUR,133.25,19.03,44.11,101.6,synthetic
+Spain,Barcelona,ESP,2023,6,2023-06-01,EUR,171.77,18.4,44.52,116.1,synthetic
+Spain,Barcelona,ESP,2023,7,2023-07-01,EUR,153.0,16.66,44.01,105.5,synthetic
+Spain,Barcelona,ESP,2023,8,2023-08-01,EUR,148.18,16.52,41.83,102.5,synthetic
+Spain,Barcelona,ESP,2023,9,2023-09-01,EUR,148.86,16.81,43.25,103.8,synthetic
+Spain,Barcelona,ESP,2023,10,2023-10-01,EUR,137.44,17.0,46.02,100.6,synthetic
+Spain,Barcelona,ESP,2023,11,2023-11-01,EUR,127.53,15.73,47.53,95.0,synthetic
+Spain,Barcelona,ESP,2023,12,2023-12-01,EUR,160.85,15.35,45.49,107.0,synthetic
+Spain,Barcelona,ESP,2024,1,2024-01-01,EUR,143.75,15.23,44.83,99.7,synthetic
+Spain,Barcelona,ESP,2024,2,2024-02-01,EUR,146.77,17.15,46.07,104.6,synthetic
+Spain,Barcelona,ESP,2024,3,2024-03-01,EUR,123.04,17.11,43.19,93.9,synthetic
+Spain,Barcelona,ESP,2024,4,2024-04-01,EUR,133.26,17.65,48.69,101.0,synthetic
+Spain,Barcelona,ESP,2024,5,2024-05-01,EUR,158.51,18.1,43.78,110.0,synthetic
+Spain,Barcelona,ESP,2024,6,2024-06-01,EUR,171.03,17.55,44.49,114.3,synthetic
+Spain,Barcelona,ESP,2024,7,2024-07-01,EUR,168.08,17.6,43.94,113.0,synthetic
+Spain,Barcelona,ESP,2024,8,2024-08-01,EUR,156.63,16.36,46.08,107.2,synthetic
+Spain,Barcelona,ESP,2024,9,2024-09-01,EUR,138.65,17.12,46.19,101.3,synthetic
+Spain,Barcelona,ESP,2024,10,2024-10-01,EUR,134.46,17.53,45.29,100.0,synthetic
+Spain,Barcelona,ESP,2024,11,2024-11-01,EUR,124.92,18.23,42.57,96.3,synthetic
+Spain,Barcelona,ESP,2024,12,2024-12-01,EUR,144.31,15.72,40.97,99.3,synthetic
+Spain,Barcelona,ESP,2025,1,2025-01-01,EUR,139.19,16.5,43.08,99.3,synthetic
+Spain,Barcelona,ESP,2025,2,2025-02-01,EUR,145.49,17.12,45.1,103.6,synthetic
+Spain,Barcelona,ESP,2025,3,2025-03-01,EUR,143.16,17.39,37.61,100.4,synthetic
+Spain,Barcelona,ESP,2025,4,2025-04-01,EUR,134.57,14.58,44.23,94.7,synthetic
+Spain,Barcelona,ESP,2025,5,2025-05-01,EUR,138.56,17.83,47.79,103.1,synthetic
+Spain,Barcelona,ESP,2025,6,2025-06-01,EUR,169.04,16.27,45.62,111.8,synthetic
+Portugal,Lisbon,PRT,2023,1,2023-01-01,EUR,112.24,13.31,46.6,84.6,synthetic
+Portugal,Lisbon,PRT,2023,2,2023-02-01,EUR,113.66,13.33,50.3,86.5,synthetic
+Portugal,Lisbon,PRT,2023,3,2023-03-01,EUR,99.02,12.13,48.06,77.8,synthetic
+Portugal,Lisbon,PRT,2023,4,2023-04-01,EUR,110.02,12.06,51.47,83.4,synthetic
+Portugal,Lisbon,PRT,2023,5,2023-05-01,EUR,94.97,12.63,50.33,77.9,synthetic
+Portugal,Lisbon,PRT,2023,6,2023-06-01,EUR,151.29,11.73,55.09,100.7,synthetic
+Portugal,Lisbon,PRT,2023,7,2023-07-01,EUR,128.05,13.11,50.36,91.9,synthetic
+Portugal,Lisbon,PRT,2023,8,2023-08-01,EUR,131.04,12.67,55.03,94.2,synthetic
+Portugal,Lisbon,PRT,2023,9,2023-09-01,EUR,101.6,13.66,47.69,81.3,synthetic
+Portugal,Lisbon,PRT,2023,10,2023-10-01,EUR,104.94,11.97,51.53,81.2,synthetic
+Portugal,Lisbon,PRT,2023,11,2023-11-01,EUR,117.64,12.73,49.25,86.7,synthetic
+Portugal,Lisbon,PRT,2023,12,2023-12-01,EUR,115.25,12.61,44.37,83.8,synthetic
+Portugal,Lisbon,PRT,2024,1,2024-01-01,EUR,97.75,12.96,54.55,81.2,synthetic
+Portugal,Lisbon,PRT,2024,2,2024-02-01,EUR,129.14,12.34,54.96,92.8,synthetic
+Portugal,Lisbon,PRT,2024,3,2024-03-01,EUR,107.5,12.67,51.45,83.4,synthetic
+Portugal,Lisbon,PRT,2024,4,2024-04-01,EUR,105.97,12.88,48.51,82.0,synthetic
+Portugal,Lisbon,PRT,2024,5,2024-05-01,EUR,93.65,11.61,52.23,76.4,synthetic
+Portugal,Lisbon,PRT,2024,6,2024-06-01,EUR,123.73,12.33,49.97,88.8,synthetic
+Portugal,Lisbon,PRT,2024,7,2024-07-01,EUR,134.58,12.93,47.65,93.2,synthetic
+Portugal,Lisbon,PRT,2024,8,2024-08-01,EUR,138.95,14.0,51.67,98.3,synthetic
+Portugal,Lisbon,PRT,2024,9,2024-09-01,EUR,113.66,13.74,53.89,88.6,synthetic
+Portugal,Lisbon,PRT,2024,10,2024-10-01,EUR,110.63,13.25,51.76,85.7,synthetic
+Portugal,Lisbon,PRT,2024,11,2024-11-01,EUR,96.19,13.33,45.2,77.6,synthetic
+Portugal,Lisbon,PRT,2024,12,2024-12-01,EUR,118.49,13.79,52.88,90.2,synthetic
+Portugal,Lisbon,PRT,2025,1,2025-01-01,EUR,117.99,12.58,45.91,85.4,synthetic
+Portugal,Lisbon,PRT,2025,2,2025-02-01,EUR,103.42,12.87,50.22,81.6,synthetic
+Portugal,Lisbon,PRT,2025,3,2025-03-01,EUR,115.01,12.51,51.17,86.0,synthetic
+Portugal,Lisbon,PRT,2025,4,2025-04-01,EUR,97.11,13.14,49.95,79.5,synthetic
+Portugal,Lisbon,PRT,2025,5,2025-05-01,EUR,99.12,12.61,49.3,79.2,synthetic
+Portugal,Lisbon,PRT,2025,6,2025-06-01,EUR,123.8,14.15,49.6,91.7,synthetic
+Italy,Rome,ITA,2023,1,2023-01-01,EUR,117.05,4.39,26.95,64.2,synthetic
+Italy,Rome,ITA,2023,2,2023-02-01,EUR,136.61,4.07,27.33,71.7,synthetic
+Italy,Rome,ITA,2023,3,2023-03-01,EUR,122.96,4.06,30.54,67.4,synthetic
+Italy,Rome,ITA,2023,4,2023-04-01,EUR,100.86,3.57,26.23,56.1,synthetic
+Italy,Rome,ITA,2023,5,2023-05-01,EUR,123.99,4.22,28.17,67.2,synthetic
+Italy,Rome,ITA,2023,6,2023-06-01,EUR,144.04,4.3,29.23,75.8,synthetic
+Italy,Rome,ITA,2023,7,2023-07-01,EUR,150.8,4.29,27.78,77.9,synthetic
+Italy,Rome,ITA,2023,8,2023-08-01,EUR,141.94,4.23,27.47,74.1,synthetic
+Italy,Rome,ITA,2023,9,2023-09-01,EUR,123.86,4.41,22.59,65.4,synthetic
+Italy,Rome,ITA,2023,10,2023-10-01,EUR,109.8,3.77,26.57,60.2,synthetic
+Italy,Rome,ITA,2023,11,2023-11-01,EUR,121.32,3.69,25.38,64.2,synthetic
+Italy,Rome,ITA,2023,12,2023-12-01,EUR,138.38,4.65,30.7,74.6,synthetic
+Italy,Rome,ITA,2024,1,2024-01-01,EUR,119.77,3.97,25.07,63.9,synthetic
+Italy,Rome,ITA,2024,2,2024-02-01,EUR,104.94,4.03,25.36,58.2,synthetic
+Italy,Rome,ITA,2024,3,2024-03-01,EUR,123.0,3.67,25.81,65.0,synthetic
+Italy,Rome,ITA,2024,4,2024-04-01,EUR,125.32,4.14,28.06,67.6,synthetic
+Italy,Rome,ITA,2024,5,2024-05-01,EUR,110.76,4.26,25.74,61.1,synthetic
+Italy,Rome,ITA,2024,6,2024-06-01,EUR,156.14,4.05,24.64,78.4,synthetic
+Italy,Rome,ITA,2024,7,2024-07-01,EUR,144.85,4.14,28.43,75.5,synthetic
+Italy,Rome,ITA,2024,8,2024-08-01,EUR,146.94,4.43,29.19,77.1,synthetic
+Italy,Rome,ITA,2024,9,2024-09-01,EUR,121.3,4.24,30.95,67.2,synthetic
+Italy,Rome,ITA,2024,10,2024-10-01,EUR,143.27,3.76,25.5,73.1,synthetic
+Italy,Rome,ITA,2024,11,2024-11-01,EUR,138.56,3.8,24.74,71.0,synthetic
+Italy,Rome,ITA,2024,12,2024-12-01,EUR,142.83,4.16,27.07,74.2,synthetic
+Italy,Rome,ITA,2025,1,2025-01-01,EUR,117.4,3.89,25.9,63.2,synthetic
+Italy,Rome,ITA,2025,2,2025-02-01,EUR,115.13,4.61,27.83,64.2,synthetic
+Italy,Rome,ITA,2025,3,2025-03-01,EUR,132.63,3.94,26.91,69.7,synthetic
+Italy,Rome,ITA,2025,4,2025-04-01,EUR,116.77,3.41,24.63,61.6,synthetic
+Italy,Rome,ITA,2025,5,2025-05-01,EUR,105.91,3.51,24.98,57.6,synthetic
+Italy,Rome,ITA,2025,6,2025-06-01,EUR,164.37,4.04,29.73,83.6,synthetic
+Netherlands,Amsterdam,NLD,2023,1,2023-01-01,EUR,150.28,15.2,26.16,95.3,synthetic
+Netherlands,Amsterdam,NLD,2023,2,2023-02-01,EUR,148.43,15.23,23.2,93.5,synthetic
+Netherlands,Amsterdam,NLD,2023,3,2023-03-01,EUR,128.55,15.83,25.75,87.5,synthetic
+Netherlands,Amsterdam,NLD,2023,4,2023-04-01,EUR,133.0,15.77,26.18,89.3,synthetic
+Netherlands,Amsterdam,NLD,2023,5,2023-05-01,EUR,149.02,17.21,27.43,98.6,synthetic
+Netherlands,Amsterdam,NLD,2023,6,2023-06-01,EUR,156.75,17.34,24.24,100.7,synthetic
+Netherlands,Amsterdam,NLD,2023,7,2023-07-01,EUR,184.64,15.81,24.45,109.4,synthetic
+Netherlands,Amsterdam,NLD,2023,8,2023-08-01,EUR,145.76,15.58,22.43,92.7,synthetic
+Netherlands,Amsterdam,NLD,2023,9,2023-09-01,EUR,152.99,17.18,23.77,98.7,synthetic
+Netherlands,Amsterdam,NLD,2023,10,2023-10-01,EUR,145.43,15.06,24.07,92.3,synthetic
+Netherlands,Amsterdam,NLD,2023,11,2023-11-01,EUR,150.8,15.71,28.24,97.1,synthetic
+Netherlands,Amsterdam,NLD,2023,12,2023-12-01,EUR,163.83,16.69,25.35,102.9,synthetic
+Netherlands,Amsterdam,NLD,2024,1,2024-01-01,EUR,151.04,15.32,25.09,95.4,synthetic
+Netherlands,Amsterdam,NLD,2024,2,2024-02-01,EUR,140.69,14.96,26.34,91.1,synthetic
+Netherlands,Amsterdam,NLD,2024,3,2024-03-01,EUR,149.39,16.31,27.88,97.4,synthetic
+Netherlands,Amsterdam,NLD,2024,4,2024-04-01,EUR,158.47,15.39,25.83,98.7,synthetic
+Netherlands,Amsterdam,NLD,2024,5,2024-05-01,EUR,134.92,15.77,24.12,89.3,synthetic
+Netherlands,Amsterdam,NLD,2024,6,2024-06-01,EUR,192.49,16.09,24.79,113.1,synthetic
+Netherlands,Amsterdam,NLD,2024,7,2024-07-01,EUR,186.67,13.7,21.63,105.6,synthetic
+Netherlands,Amsterdam,NLD,2024,8,2024-08-01,EUR,181.25,15.8,25.62,108.4,synthetic
+Netherlands,Amsterdam,NLD,2024,9,2024-09-01,EUR,126.93,15.72,28.71,87.7,synthetic
+Netherlands,Amsterdam,NLD,2024,10,2024-10-01,EUR,151.36,15.91,24.4,96.2,synthetic
+Netherlands,Amsterdam,NLD,2024,11,2024-11-01,EUR,137.52,13.74,25.63,87.5,synthetic
+Netherlands,Amsterdam,NLD,2024,12,2024-12-01,EUR,181.93,14.26,24.01,105.5,synthetic
+Netherlands,Amsterdam,NLD,2025,1,2025-01-01,EUR,128.85,14.83,25.27,85.7,synthetic
+Netherlands,Amsterdam,NLD,2025,2,2025-02-01,EUR,118.32,16.33,26.5,84.5,synthetic
+Netherlands,Amsterdam,NLD,2025,3,2025-03-01,EUR,139.15,13.4,23.42,86.8,synthetic
+Netherlands,Amsterdam,NLD,2025,4,2025-04-01,EUR,156.01,13.12,24.56,93.5,synthetic
+Netherlands,Amsterdam,NLD,2025,5,2025-05-01,EUR,128.6,16.51,23.99,87.9,synthetic
+Netherlands,Amsterdam,NLD,2025,6,2025-06-01,EUR,175.91,16.28,28.41,108.2,synthetic
+Germany,Berlin,DEU,2023,1,2023-01-01,EUR,127.57,15.84,20.82,85.2,synthetic
+Germany,Berlin,DEU,2023,2,2023-02-01,EUR,118.85,16.62,22.27,83.6,synthetic
+Germany,Berlin,DEU,2023,3,2023-03-01,EUR,139.02,14.83,20.68,88.1,synthetic
+Germany,Berlin,DEU,2023,4,2023-04-01,EUR,143.9,14.55,19.29,89.0,synthetic
+Germany,Berlin,DEU,2023,5,2023-05-01,EUR,145.36,16.66,21.46,94.0,synthetic
+Germany,Berlin,DEU,2023,6,2023-06-01,EUR,187.25,16.86,21.82,111.2,synthetic
+Germany,Berlin,DEU,2023,7,2023-07-01,EUR,198.35,16.18,19.69,113.7,synthetic
+Germany,Berlin,DEU,2023,8,2023-08-01,EUR,168.58,16.83,20.09,103.0,synthetic
+Germany,Berlin,DEU,2023,9,2023-09-01,EUR,124.61,18.67,21.33,89.0,synthetic
+Germany,Berlin,DEU,2023,10,2023-10-01,EUR,127.88,17.3,20.7,87.7,synthetic
+Germany,Berlin,DEU,2023,11,2023-11-01,EUR,133.09,16.95,18.97,88.6,synthetic
+Germany,Berlin,DEU,2023,12,2023-12-01,EUR,167.6,18.28,21.54,105.6,synthetic
+Germany,Berlin,DEU,2024,1,2024-01-01,EUR,131.75,15.9,20.26,86.8,synthetic
+Germany,Berlin,DEU,2024,2,2024-02-01,EUR,133.07,16.02,22.19,88.3,synthetic
+Germany,Berlin,DEU,2024,3,2024-03-01,EUR,117.0,17.24,20.3,83.2,synthetic
+Germany,Berlin,DEU,2024,4,2024-04-01,EUR,139.93,15.29,22.8,90.0,synthetic
+Germany,Berlin,DEU,2024,5,2024-05-01,EUR,149.37,17.34,18.65,95.6,synthetic
+Germany,Berlin,DEU,2024,6,2024-06-01,EUR,173.81,16.79,18.51,104.5,synthetic
+Germany,Berlin,DEU,2024,7,2024-07-01,EUR,162.68,16.75,21.67,101.1,synthetic
+Germany,Berlin,DEU,2024,8,2024-08-01,EUR,165.31,16.68,23.01,102.6,synthetic
+Germany,Berlin,DEU,2024,9,2024-09-01,EUR,149.16,13.57,20.39,89.9,synthetic
+Germany,Berlin,DEU,2024,10,2024-10-01,EUR,134.04,14.67,20.99,85.9,synthetic
+Germany,Berlin,DEU,2024,11,2024-11-01,EUR,149.4,15.33,21.35,93.3,synthetic
+Germany,Berlin,DEU,2024,12,2024-12-01,EUR,151.06,15.73,23.01,95.3,synthetic
+Germany,Berlin,DEU,2025,1,2025-01-01,EUR,129.94,16.85,18.13,86.9,synthetic
+Germany,Berlin,DEU,2025,2,2025-02-01,EUR,156.07,16.99,20.59,98.5,synthetic
+Germany,Berlin,DEU,2025,3,2025-03-01,EUR,142.09,15.01,22.58,90.3,synthetic
+Germany,Berlin,DEU,2025,4,2025-04-01,EUR,132.31,16.19,20.14,87.5,synthetic
+Germany,Berlin,DEU,2025,5,2025-05-01,EUR,129.52,17.08,21.23,88.2,synthetic
+Germany,Berlin,DEU,2025,6,2025-06-01,EUR,171.5,16.39,21.61,104.0,synthetic
+Switzerland,Zurich,CHE,2023,1,2023-01-01,CHF,156.85,27.18,25.62,117.6,synthetic
+Switzerland,Zurich,CHE,2023,2,2023-02-01,CHF,152.63,30.31,22.21,119.9,synthetic
+Switzerland,Zurich,CHE,2023,3,2023-03-01,CHF,138.92,28.28,22.77,111.2,synthetic
+Switzerland,Zurich,CHE,2023,4,2023-04-01,CHF,157.22,28.96,20.75,118.9,synthetic
+Switzerland,Zurich,CHE,2023,5,2023-05-01,CHF,150.7,30.23,23.18,119.4,synthetic
+Switzerland,Zurich,CHE,2023,6,2023-06-01,CHF,179.77,28.18,20.72,126.6,synthetic
+Switzerland,Zurich,CHE,2023,7,2023-07-01,CHF,157.87,25.83,22.53,114.7,synthetic
+Switzerland,Zurich,CHE,2023,8,2023-08-01,CHF,168.52,27.89,17.58,120.5,synthetic
+Switzerland,Zurich,CHE,2023,9,2023-09-01,CHF,127.27,30.57,21.13,109.8,synthetic
+Switzerland,Zurich,CHE,2023,10,2023-10-01,CHF,145.45,26.25,24.39,111.1,synthetic
+Switzerland,Zurich,CHE,2023,11,2023-11-01,CHF,139.75,29.14,25.77,114.1,synthetic
+Switzerland,Zurich,CHE,2023,12,2023-12-01,CHF,190.23,28.12,21.24,130.9,synthetic
+Switzerland,Zurich,CHE,2024,1,2024-01-01,CHF,137.69,29.52,22.0,112.5,synthetic
+Switzerland,Zurich,CHE,2024,2,2024-02-01,CHF,136.91,31.17,21.98,114.9,synthetic
+Switzerland,Zurich,CHE,2024,3,2024-03-01,CHF,167.38,28.8,24.93,124.3,synthetic
+Switzerland,Zurich,CHE,2024,4,2024-04-01,CHF,145.42,30.3,21.04,116.6,synthetic
+Switzerland,Zurich,CHE,2024,5,2024-05-01,CHF,131.72,29.43,23.7,110.6,synthetic
+Switzerland,Zurich,CHE,2024,6,2024-06-01,CHF,170.2,26.43,20.05,119.7,synthetic
+Switzerland,Zurich,CHE,2024,7,2024-07-01,CHF,150.28,25.61,22.33,111.2,synthetic
+Switzerland,Zurich,CHE,2024,8,2024-08-01,CHF,184.92,28.62,18.66,128.7,synthetic
+Switzerland,Zurich,CHE,2024,9,2024-09-01,CHF,139.22,28.36,25.41,112.5,synthetic
+Switzerland,Zurich,CHE,2024,10,2024-10-01,CHF,124.9,27.97,24.81,105.9,synthetic
+Switzerland,Zurich,CHE,2024,11,2024-11-01,CHF,146.46,29.61,22.34,116.3,synthetic
+Switzerland,Zurich,CHE,2024,12,2024-12-01,CHF,174.13,29.98,20.91,127.5,synthetic
+Switzerland,Zurich,CHE,2025,1,2025-01-01,CHF,151.31,26.28,22.67,112.8,synthetic
+Switzerland,Zurich,CHE,2025,2,2025-02-01,CHF,143.4,27.59,22.13,111.6,synthetic
+Switzerland,Zurich,CHE,2025,3,2025-03-01,CHF,134.33,26.8,21.61,106.5,synthetic
+Switzerland,Zurich,CHE,2025,4,2025-04-01,CHF,128.89,29.2,20.38,107.9,synthetic
+Switzerland,Zurich,CHE,2025,5,2025-05-01,CHF,149.43,26.61,21.28,112.1,synthetic
+Switzerland,Zurich,CHE,2025,6,2025-06-01,CHF,161.17,30.92,22.67,124.5,synthetic
+Austria,Vienna,AUT,2023,1,2023-01-01,EUR,161.83,17.65,12.21,98.7,synthetic
+Austria,Vienna,AUT,2023,2,2023-02-01,EUR,145.65,18.45,10.45,92.9,synthetic
+Austria,Vienna,AUT,2023,3,2023-03-01,EUR,120.75,17.73,11.54,82.2,synthetic
+Austria,Vienna,AUT,2023,4,2023-04-01,EUR,154.18,17.18,10.51,94.2,synthetic
+Austria,Vienna,AUT,2023,5,2023-05-01,EUR,125.38,14.62,11.95,79.0,synthetic
+Austria,Vienna,AUT,2023,6,2023-06-01,EUR,164.92,17.06,13.07,99.3,synthetic
+Austria,Vienna,AUT,2023,7,2023-07-01,EUR,183.49,17.33,10.34,106.2,synthetic
+Austria,Vienna,AUT,2023,8,2023-08-01,EUR,175.71,18.09,12.42,105.1,synthetic
+Austria,Vienna,AUT,2023,9,2023-09-01,EUR,150.49,16.28,13.86,92.5,synthetic
+Austria,Vienna,AUT,2023,10,2023-10-01,EUR,128.82,18.3,10.72,86.0,synthetic
+Austria,Vienna,AUT,2023,11,2023-11-01,EUR,129.15,19.1,11.93,88.0,synthetic
+Austria,Vienna,AUT,2023,12,2023-12-01,EUR,178.69,17.76,12.06,105.6,synthetic
+Austria,Vienna,AUT,2024,1,2024-01-01,EUR,154.76,17.26,10.64,94.7,synthetic
+Austria,Vienna,AUT,2024,2,2024-02-01,EUR,130.57,18.09,12.49,87.1,synthetic
+Austria,Vienna,AUT,2024,3,2024-03-01,EUR,122.04,16.75,11.66,81.1,synthetic
+Austria,Vienna,AUT,2024,4,2024-04-01,EUR,135.45,16.06,11.62,85.3,synthetic
+Austria,Vienna,AUT,2024,5,2024-05-01,EUR,131.4,18.32,12.84,87.9,synthetic
+Austria,Vienna,AUT,2024,6,2024-06-01,EUR,165.49,17.1,12.27,99.3,synthetic
+Austria,Vienna,AUT,2024,7,2024-07-01,EUR,156.5,16.3,11.35,94.0,synthetic
+Austria,Vienna,AUT,2024,8,2024-08-01,EUR,158.94,16.29,12.29,95.3,synthetic
+Austria,Vienna,AUT,2024,9,2024-09-01,EUR,147.68,15.84,12.17,90.0,synthetic
+Austria,Vienna,AUT,2024,10,2024-10-01,EUR,137.08,17.87,12.14,89.2,synthetic
+Austria,Vienna,AUT,2024,11,2024-11-01,EUR,123.31,16.18,12.18,80.9,synthetic
+Austria,Vienna,AUT,2024,12,2024-12-01,EUR,181.22,15.18,12.45,102.5,synthetic
+Austria,Vienna,AUT,2025,1,2025-01-01,EUR,152.81,17.35,12.62,94.8,synthetic
+Austria,Vienna,AUT,2025,2,2025-02-01,EUR,131.68,17.38,10.77,85.7,synthetic
+Austria,Vienna,AUT,2025,3,2025-03-01,EUR,113.36,18.5,11.31,80.4,synthetic
+Austria,Vienna,AUT,2025,4,2025-04-01,EUR,134.45,16.05,10.95,84.6,synthetic
+Austria,Vienna,AUT,2025,5,2025-05-01,EUR,137.59,16.74,12.47,87.6,synthetic
+Austria,Vienna,AUT,2025,6,2025-06-01,EUR,173.5,17.85,12.36,103.8,synthetic
+Czechia,Prague,CZE,2023,1,2023-01-01,CZK,173.14,6.07,28.84,90.2,synthetic
+Czechia,Prague,CZE,2023,2,2023-02-01,CZK,174.32,6.84,29.89,92.3,synthetic
+Czechia,Prague,CZE,2023,3,2023-03-01,CZK,154.49,6.48,30.08,83.9,synthetic
+Czechia,Prague,CZE,2023,4,2023-04-01,CZK,154.06,6.62,29.65,83.8,synthetic
+Czechia,Prague,CZE,2023,5,2023-05-01,CZK,148.7,6.85,35.5,84.2,synthetic
+Czechia,Prague,CZE,2023,6,2023-06-01,CZK,161.86,6.77,27.92,86.5,synthetic
+Czechia,Prague,CZE,2023,7,2023-07-01,CZK,197.39,6.66,31.06,101.7,synthetic
+Czechia,Prague,CZE,2023,8,2023-08-01,CZK,206.42,6.71,31.82,105.7,synthetic
+Czechia,Prague,CZE,2023,9,2023-09-01,CZK,127.74,7.27,30.26,74.6,synthetic
+Czechia,Prague,CZE,2023,10,2023-10-01,CZK,170.79,6.15,27.77,89.0,synthetic
+Czechia,Prague,CZE,2023,11,2023-11-01,CZK,159.07,6.63,30.07,86.0,synthetic
+Czechia,Prague,CZE,2023,12,2023-12-01,CZK,205.05,5.93,31.5,103.7,synthetic
+Czechia,Prague,CZE,2024,1,2024-01-01,CZK,157.34,6.56,26.45,83.8,synthetic
+Czechia,Prague,CZE,2024,2,2024-02-01,CZK,163.56,5.68,30.83,86.4,synthetic
+Czechia,Prague,CZE,2024,3,2024-03-01,CZK,138.46,6.66,29.24,77.4,synthetic
+Czechia,Prague,CZE,2024,4,2024-04-01,CZK,171.94,6.57,28.05,90.2,synthetic
+Czechia,Prague,CZE,2024,5,2024-05-01,CZK,150.86,7.14,30.59,83.7,synthetic
+Czechia,Prague,CZE,2024,6,2024-06-01,CZK,182.86,6.54,26.25,93.9,synthetic
+Czechia,Prague,CZE,2024,7,2024-07-01,CZK,194.54,5.94,31.04,99.4,synthetic
+Czechia,Prague,CZE,2024,8,2024-08-01,CZK,190.62,7.59,27.22,99.1,synthetic
+Czechia,Prague,CZE,2024,9,2024-09-01,CZK,155.94,7.35,31.95,86.6,synthetic
+Czechia,Prague,CZE,2024,10,2024-10-01,CZK,148.47,6.73,29.49,81.7,synthetic
+Czechia,Prague,CZE,2024,11,2024-11-01,CZK,160.78,6.36,29.3,85.9,synthetic
+Czechia,Prague,CZE,2024,12,2024-12-01,CZK,164.56,6.69,30.42,88.4,synthetic
+Czechia,Prague,CZE,2025,1,2025-01-01,CZK,154.37,5.99,31.53,83.6,synthetic
+Czechia,Prague,CZE,2025,2,2025-02-01,CZK,161.82,6.35,28.91,86.1,synthetic
+Czechia,Prague,CZE,2025,3,2025-03-01,CZK,138.36,6.23,28.38,76.4,synthetic
+Czechia,Prague,CZE,2025,4,2025-04-01,CZK,172.68,6.38,30.81,91.3,synthetic
+Czechia,Prague,CZE,2025,5,2025-05-01,CZK,150.46,6.74,29.2,82.4,synthetic
+Czechia,Prague,CZE,2025,6,2025-06-01,CZK,201.86,6.42,26.24,101.3,synthetic
+Greece,Athens,GRC,2023,1,2023-01-01,EUR,69.71,12.62,19.66,56.3,synthetic
+Greece,Athens,GRC,2023,2,2023-02-01,EUR,73.59,10.3,21.61,54.7,synthetic
+Greece,Athens,GRC,2023,3,2023-03-01,EUR,73.23,9.5,22.76,53.7,synthetic
+Greece,Athens,GRC,2023,4,2023-04-01,EUR,83.43,10.74,22.8,59.8,synthetic
+Greece,Athens,GRC,2023,5,2023-05-01,EUR,78.35,10.94,21.48,57.6,synthetic
+Greece,Athens,GRC,2023,6,2023-06-01,EUR,71.07,11.47,22.21,55.9,synthetic
+Greece,Athens,GRC,2023,7,2023-07-01,EUR,79.85,11.13,21.47,58.5,synthetic
+Greece,Athens,GRC,2023,8,2023-08-01,EUR,83.22,11.45,20.29,60.0,synthetic
+Greece,Athens,GRC,2023,9,2023-09-01,EUR,78.48,10.12,21.35,56.3,synthetic
+Greece,Athens,GRC,2023,10,2023-10-01,EUR,83.55,11.79,22.54,61.5,synthetic
+Greece,Athens,GRC,2023,11,2023-11-01,EUR,66.96,10.69,22.5,53.0,synthetic
+Greece,Athens,GRC,2023,12,2023-12-01,EUR,87.15,10.98,22.34,61.5,synthetic
+Greece,Athens,GRC,2024,1,2024-01-01,EUR,71.17,10.09,21.58,53.4,synthetic
+Greece,Athens,GRC,2024,2,2024-02-01,EUR,77.71,10.14,22.09,56.3,synthetic
+Greece,Athens,GRC,2024,3,2024-03-01,EUR,67.66,11.12,21.78,53.8,synthetic
+Greece,Athens,GRC,2024,4,2024-04-01,EUR,80.97,11.38,20.33,59.0,synthetic
+Greece,Athens,GRC,2024,5,2024-05-01,EUR,76.3,10.53,21.48,56.1,synthetic
+Greece,Athens,GRC,2024,6,2024-06-01,EUR,89.07,10.72,23.79,62.4,synthetic
+Greece,Athens,GRC,2024,7,2024-07-01,EUR,81.51,10.63,21.36,58.3,synthetic
+Greece,Athens,GRC,2024,8,2024-08-01,EUR,82.96,11.77,23.37,61.6,synthetic
+Greece,Athens,GRC,2024,9,2024-09-01,EUR,82.31,12.55,20.77,61.6,synthetic
+Greece,Athens,GRC,2024,10,2024-10-01,EUR,72.82,10.27,21.17,54.2,synthetic
+Greece,Athens,GRC,2024,11,2024-11-01,EUR,68.76,10.34,20.74,52.5,synthetic
+Greece,Athens,GRC,2024,12,2024-12-01,EUR,85.89,10.24,23.71,60.3,synthetic
+Greece,Athens,GRC,2025,1,2025-01-01,EUR,67.09,12.91,21.68,56.5,synthetic
+Greece,Athens,GRC,2025,2,2025-02-01,EUR,72.83,10.19,25.06,55.5,synthetic
+Greece,Athens,GRC,2025,3,2025-03-01,EUR,78.89,11.24,20.28,57.9,synthetic
+Greece,Athens,GRC,2025,4,2025-04-01,EUR,73.63,10.3,24.68,55.9,synthetic
+Greece,Athens,GRC,2025,5,2025-05-01,EUR,77.1,11.11,18.57,56.3,synthetic
+Greece,Athens,GRC,2025,6,2025-06-01,EUR,80.06,11.5,24.29,60.3,synthetic
+Turkey,Istanbul,TUR,2023,1,2023-01-01,TRY,132.6,5.24,36.61,75.5,synthetic
+Turkey,Istanbul,TUR,2023,2,2023-02-01,TRY,149.21,4.66,35.1,80.6,synthetic
+Turkey,Istanbul,TUR,2023,3,2023-03-01,TRY,148.88,5.19,34.5,81.1,synthetic
+Turkey,Istanbul,TUR,2023,4,2023-04-01,TRY,147.47,5.23,37.03,81.6,synthetic
+Turkey,Istanbul,TUR,2023,5,2023-05-01,TRY,149.16,5.11,36.15,81.7,synthetic
+Turkey,Istanbul,TUR,2023,6,2023-06-01,TRY,155.27,5.39,35.92,84.6,synthetic
+Turkey,Istanbul,TUR,2023,7,2023-07-01,TRY,184.05,5.54,31.01,94.5,synthetic
+Turkey,Istanbul,TUR,2023,8,2023-08-01,TRY,154.49,5.32,35.9,84.1,synthetic
+Turkey,Istanbul,TUR,2023,9,2023-09-01,TRY,154.97,5.09,37.59,84.6,synthetic
+Turkey,Istanbul,TUR,2023,10,2023-10-01,TRY,164.29,5.39,35.27,87.9,synthetic
+Turkey,Istanbul,TUR,2023,11,2023-11-01,TRY,127.11,5.48,38.99,74.6,synthetic
+Turkey,Istanbul,TUR,2023,12,2023-12-01,TRY,192.92,4.96,37.62,99.5,synthetic
+Turkey,Istanbul,TUR,2024,1,2024-01-01,TRY,163.41,5.73,33.72,87.6,synthetic
+Turkey,Istanbul,TUR,2024,2,2024-02-01,TRY,150.12,5.47,36.07,82.7,synthetic
+Turkey,Istanbul,TUR,2024,3,2024-03-01,TRY,139.22,5.37,37.38,78.7,synthetic
+Turkey,Istanbul,TUR,2024,4,2024-04-01,TRY,153.96,5.31,35.27,83.7,synthetic
+Turkey,Istanbul,TUR,2024,5,2024-05-01,TRY,170.97,4.96,34.44,89.6,synthetic
+Turkey,Istanbul,TUR,2024,6,2024-06-01,TRY,183.62,5.51,32.16,94.7,synthetic
+Turkey,Istanbul,TUR,2024,7,2024-07-01,TRY,164.23,4.6,36.0,86.9,synthetic
+Turkey,Istanbul,TUR,2024,8,2024-08-01,TRY,167.05,5.12,37.58,89.4,synthetic
+Turkey,Istanbul,TUR,2024,9,2024-09-01,TRY,145.04,5.31,35.17,80.1,synthetic
+Turkey,Istanbul,TUR,2024,10,2024-10-01,TRY,161.11,5.39,34.18,86.2,synthetic
+Turkey,Istanbul,TUR,2024,11,2024-11-01,TRY,150.82,5.57,36.91,83.4,synthetic
+Turkey,Istanbul,TUR,2024,12,2024-12-01,TRY,162.96,5.44,33.19,86.7,synthetic
+Turkey,Istanbul,TUR,2025,1,2025-01-01,TRY,170.16,5.56,36.65,91.1,synthetic
+Turkey,Istanbul,TUR,2025,2,2025-02-01,TRY,154.81,5.17,37.63,84.7,synthetic
+Turkey,Istanbul,TUR,2025,3,2025-03-01,TRY,148.35,5.31,38.11,82.5,synthetic
+Turkey,Istanbul,TUR,2025,4,2025-04-01,TRY,146.01,5.04,32.92,79.2,synthetic
+Turkey,Istanbul,TUR,2025,5,2025-05-01,TRY,139.87,4.66,37.76,77.9,synthetic
+Turkey,Istanbul,TUR,2025,6,2025-06-01,TRY,210.01,5.69,31.83,105.4,synthetic
+UAE,Dubai,ARE,2023,1,2023-01-01,AED,101.43,14.58,22.16,73.2,synthetic
+UAE,Dubai,ARE,2023,2,2023-02-01,AED,122.77,13.0,24.85,80.1,synthetic
+UAE,Dubai,ARE,2023,3,2023-03-01,AED,130.75,13.67,22.04,83.3,synthetic
+UAE,Dubai,ARE,2023,4,2023-04-01,AED,100.0,14.12,22.97,72.1,synthetic
+UAE,Dubai,ARE,2023,5,2023-05-01,AED,105.85,14.74,23.19,75.6,synthetic
+UAE,Dubai,ARE,2023,6,2023-06-01,AED,132.53,13.87,25.74,85.8,synthetic
+UAE,Dubai,ARE,2023,7,2023-07-01,AED,152.01,14.23,24.98,93.9,synthetic
+UAE,Dubai,ARE,2023,8,2023-08-01,AED,131.54,14.37,24.19,85.6,synthetic
+UAE,Dubai,ARE,2023,9,2023-09-01,AED,116.3,14.72,22.63,79.5,synthetic
+UAE,Dubai,ARE,2023,10,2023-10-01,AED,125.77,14.82,19.05,82.2,synthetic
+UAE,Dubai,ARE,2023,11,2023-11-01,AED,132.35,11.72,22.91,81.1,synthetic
+UAE,Dubai,ARE,2023,12,2023-12-01,AED,156.91,14.07,21.48,94.3,synthetic
+UAE,Dubai,ARE,2024,1,2024-01-01,AED,110.27,15.23,20.72,77.3,synthetic
+UAE,Dubai,ARE,2024,2,2024-02-01,AED,131.76,14.3,21.94,84.8,synthetic
+UAE,Dubai,ARE,2024,3,2024-03-01,AED,115.21,13.47,25.39,78.1,synthetic
+UAE,Dubai,ARE,2024,4,2024-04-01,AED,127.92,12.87,23.26,81.3,synthetic
+UAE,Dubai,ARE,2024,5,2024-05-01,AED,112.5,15.46,21.68,78.9,synthetic
+UAE,Dubai,ARE,2024,6,2024-06-01,AED,163.62,14.32,21.99,97.6,synthetic
+UAE,Dubai,ARE,2024,7,2024-07-01,AED,137.16,13.66,21.81,85.8,synthetic
+UAE,Dubai,ARE,2024,8,2024-08-01,AED,146.11,13.29,20.29,88.2,synthetic
+UAE,Dubai,ARE,2024,9,2024-09-01,AED,117.17,12.79,22.68,76.7,synthetic
+UAE,Dubai,ARE,2024,10,2024-10-01,AED,112.05,13.6,27.29,77.7,synthetic
+UAE,Dubai,ARE,2024,11,2024-11-01,AED,121.39,14.56,20.96,80.7,synthetic
+UAE,Dubai,ARE,2024,12,2024-12-01,AED,137.43,14.53,22.22,87.5,synthetic
+UAE,Dubai,ARE,2025,1,2025-01-01,AED,129.62,13.31,23.46,82.8,synthetic
+UAE,Dubai,ARE,2025,2,2025-02-01,AED,115.18,14.49,22.87,78.8,synthetic
+UAE,Dubai,ARE,2025,3,2025-03-01,AED,118.22,14.14,22.71,79.4,synthetic
+UAE,Dubai,ARE,2025,4,2025-04-01,AED,125.53,14.55,23.79,83.4,synthetic
+UAE,Dubai,ARE,2025,5,2025-05-01,AED,116.68,15.03,23.55,80.6,synthetic
+UAE,Dubai,ARE,2025,6,2025-06-01,AED,141.45,14.44,26.78,90.7,synthetic
+Qatar,Doha,QAT,2023,1,2023-01-01,QAR,60.42,12.55,10.05,48.8,synthetic
+Qatar,Doha,QAT,2023,2,2023-02-01,QAR,51.25,12.21,9.75,44.5,synthetic
+Qatar,Doha,QAT,2023,3,2023-03-01,QAR,50.28,11.98,10.06,43.8,synthetic
+Qatar,Doha,QAT,2023,4,2023-04-01,QAR,50.36,11.6,8.98,42.8,synthetic
+Qatar,Doha,QAT,2023,5,2023-05-01,QAR,55.33,12.59,10.09,46.9,synthetic
+Qatar,Doha,QAT,2023,6,2023-06-01,QAR,69.36,12.25,10.2,52.0,synthetic
+Qatar,Doha,QAT,2023,7,2023-07-01,QAR,65.95,12.12,9.56,50.2,synthetic
+Qatar,Doha,QAT,2023,8,2023-08-01,QAR,75.79,11.86,9.46,53.6,synthetic
+Qatar,Doha,QAT,2023,9,2023-09-01,QAR,55.52,12.37,8.95,46.2,synthetic
+Qatar,Doha,QAT,2023,10,2023-10-01,QAR,58.48,12.12,9.16,47.0,synthetic
+Qatar,Doha,QAT,2023,11,2023-11-01,QAR,58.76,12.65,9.05,48.0,synthetic
+Qatar,Doha,QAT,2023,12,2023-12-01,QAR,73.54,12.67,9.92,54.3,synthetic
+Qatar,Doha,QAT,2024,1,2024-01-01,QAR,60.48,12.3,9.91,48.4,synthetic
+Qatar,Doha,QAT,2024,2,2024-02-01,QAR,50.82,12.61,10.26,45.2,synthetic
+Qatar,Doha,QAT,2024,3,2024-03-01,QAR,53.72,11.61,10.02,44.6,synthetic
+Qatar,Doha,QAT,2024,4,2024-04-01,QAR,53.36,11.21,8.9,43.4,synthetic
+Qatar,Doha,QAT,2024,5,2024-05-01,QAR,56.08,10.29,10.07,43.4,synthetic
+Qatar,Doha,QAT,2024,6,2024-06-01,QAR,61.93,13.14,9.58,50.3,synthetic
+Qatar,Doha,QAT,2024,7,2024-07-01,QAR,67.79,11.9,10.01,50.7,synthetic
+Qatar,Doha,QAT,2024,8,2024-08-01,QAR,68.18,11.85,10.62,51.0,synthetic
+Qatar,Doha,QAT,2024,9,2024-09-01,QAR,49.39,12.4,10.57,44.4,synthetic
+Qatar,Doha,QAT,2024,10,2024-10-01,QAR,56.49,13.59,9.4,48.8,synthetic
+Qatar,Doha,QAT,2024,11,2024-11-01,QAR,47.74,11.46,10.39,42.1,synthetic
+Qatar,Doha,QAT,2024,12,2024-12-01,QAR,66.95,12.26,9.15,50.6,synthetic
+Qatar,Doha,QAT,2025,1,2025-01-01,QAR,56.95,11.29,10.73,45.6,synthetic
+Qatar,Doha,QAT,2025,2,2025-02-01,QAR,65.92,12.46,10.33,51.0,synthetic
+Qatar,Doha,QAT,2025,3,2025-03-01,QAR,51.54,10.86,9.51,42.3,synthetic
+Qatar,Doha,QAT,2025,4,2025-04-01,QAR,48.97,11.13,11.12,42.3,synthetic
+Qatar,Doha,QAT,2025,5,2025-05-01,QAR,54.83,12.47,9.71,46.4,synthetic
+Qatar,Doha,QAT,2025,6,2025-06-01,QAR,63.5,12.89,9.9,50.6,synthetic
+India,Delhi,IND,2023,1,2023-01-01,INR,102.83,9.55,26.83,67.1,synthetic
+India,Delhi,IND,2023,2,2023-02-01,INR,109.59,9.68,26.82,70.0,synthetic
+India,Delhi,IND,2023,3,2023-03-01,INR,101.09,9.17,27.48,66.0,synthetic
+India,Delhi,IND,2023,4,2023-04-01,INR,125.94,9.03,27.02,75.6,synthetic
+India,Delhi,IND,2023,5,2023-05-01,INR,132.15,10.15,26.54,79.7,synthetic
+India,Delhi,IND,2023,6,2023-06-01,INR,141.1,9.33,27.6,82.3,synthetic
+India,Delhi,IND,2023,7,2023-07-01,INR,148.87,10.07,26.97,86.4,synthetic
+India,Delhi,IND,2023,8,2023-08-01,INR,156.19,9.76,28.19,89.3,synthetic
+India,Delhi,IND,2023,9,2023-09-01,INR,130.66,9.23,23.34,76.4,synthetic
+India,Delhi,IND,2023,10,2023-10-01,INR,137.24,9.85,23.51,80.1,synthetic
+India,Delhi,IND,2023,11,2023-11-01,INR,115.18,10.15,26.2,72.8,synthetic
+India,Delhi,IND,2023,12,2023-12-01,INR,140.58,10.52,24.76,83.0,synthetic
+India,Delhi,IND,2024,1,2024-01-01,INR,114.36,9.82,27.45,72.4,synthetic
+India,Delhi,IND,2024,2,2024-02-01,INR,127.01,10.23,27.09,78.0,synthetic
+India,Delhi,IND,2024,3,2024-03-01,INR,126.94,9.55,26.84,76.8,synthetic
+India,Delhi,IND,2024,4,2024-04-01,INR,123.21,9.83,28.17,76.2,synthetic
+India,Delhi,IND,2024,5,2024-05-01,INR,127.58,9.73,25.21,76.7,synthetic
+India,Delhi,IND,2024,6,2024-06-01,INR,147.38,9.68,27.08,85.2,synthetic
+India,Delhi,IND,2024,7,2024-07-01,INR,172.46,9.4,27.51,95.0,synthetic
+India,Delhi,IND,2024,8,2024-08-01,INR,159.12,9.76,31.09,91.6,synthetic
+India,Delhi,IND,2024,9,2024-09-01,INR,118.46,9.89,25.23,73.3,synthetic
+India,Delhi,IND,2024,10,2024-10-01,INR,118.72,9.85,28.3,74.5,synthetic
+India,Delhi,IND,2024,11,2024-11-01,INR,125.27,10.43,26.54,77.5,synthetic
+India,Delhi,IND,2024,12,2024-12-01,INR,142.69,11.28,27.46,86.2,synthetic
+India,Delhi,IND,2025,1,2025-01-01,INR,115.12,9.3,24.96,70.9,synthetic
+India,Delhi,IND,2025,2,2025-02-01,INR,131.31,9.49,26.96,78.4,synthetic
+India,Delhi,IND,2025,3,2025-03-01,INR,121.53,10.13,25.14,74.9,synthetic
+India,Delhi,IND,2025,4,2025-04-01,INR,111.64,9.83,27.85,71.5,synthetic
+India,Delhi,IND,2025,5,2025-05-01,INR,125.4,9.23,27.99,76.0,synthetic
+India,Delhi,IND,2025,6,2025-06-01,INR,137.86,9.4,24.96,80.2,synthetic
+India,Mumbai,IND,2023,1,2023-01-01,INR,179.7,11.12,34.17,103.2,synthetic
+India,Mumbai,IND,2023,2,2023-02-01,INR,139.47,11.76,33.32,87.9,synthetic
+India,Mumbai,IND,2023,3,2023-03-01,INR,143.18,11.49,36.88,90.2,synthetic
+India,Mumbai,IND,2023,4,2023-04-01,INR,147.3,12.75,37.31,94.2,synthetic
+India,Mumbai,IND,2023,5,2023-05-01,INR,153.77,12.11,41.38,97.2,synthetic
+India,Mumbai,IND,2023,6,2023-06-01,INR,179.34,11.01,33.5,102.6,synthetic
+India,Mumbai,IND,2023,7,2023-07-01,INR,151.52,12.41,35.73,94.7,synthetic
+India,Mumbai,IND,2023,8,2023-08-01,INR,169.44,13.89,37.42,105.0,synthetic
+India,Mumbai,IND,2023,9,2023-09-01,INR,155.22,11.7,33.51,94.2,synthetic
+India,Mumbai,IND,2023,10,2023-10-01,INR,147.13,12.52,31.35,91.5,synthetic
+India,Mumbai,IND,2023,11,2023-11-01,INR,144.58,12.4,35.49,91.8,synthetic
+India,Mumbai,IND,2023,12,2023-12-01,INR,164.58,11.99,35.59,99.2,synthetic
+India,Mumbai,IND,2024,1,2024-01-01,INR,147.76,12.84,38.76,95.0,synthetic
+India,Mumbai,IND,2024,2,2024-02-01,INR,143.24,12.05,37.14,91.3,synthetic
+India,Mumbai,IND,2024,3,2024-03-01,INR,153.86,12.07,38.03,95.9,synthetic
+India,Mumbai,IND,2024,4,2024-04-01,INR,158.19,13.35,40.52,100.7,synthetic
+India,Mumbai,IND,2024,5,2024-05-01,INR,136.53,12.4,36.06,88.8,synthetic
+India,Mumbai,IND,2024,6,2024-06-01,INR,174.65,11.91,32.29,101.8,synthetic
+India,Mumbai,IND,2024,7,2024-07-01,INR,177.34,11.82,36.25,104.2,synthetic
+India,Mumbai,IND,2024,8,2024-08-01,INR,164.85,11.57,36.62,99.0,synthetic
+India,Mumbai,IND,2024,9,2024-09-01,INR,148.47,12.82,41.55,96.3,synthetic
+India,Mumbai,IND,2024,10,2024-10-01,INR,149.95,12.75,33.32,93.7,synthetic
+India,Mumbai,IND,2024,11,2024-11-01,INR,131.59,13.57,33.7,87.9,synthetic
+India,Mumbai,IND,2024,12,2024-12-01,INR,161.33,12.36,35.81,98.6,synthetic
+India,Mumbai,IND,2025,1,2025-01-01,INR,136.1,12.17,39.13,89.4,synthetic
+India,Mumbai,IND,2025,2,2025-02-01,INR,137.24,11.36,38.41,88.2,synthetic
+India,Mumbai,IND,2025,3,2025-03-01,INR,152.47,11.93,32.04,92.9,synthetic
+India,Mumbai,IND,2025,4,2025-04-01,INR,137.96,12.35,38.97,90.4,synthetic
+India,Mumbai,IND,2025,5,2025-05-01,INR,134.53,12.33,37.74,88.5,synthetic
+India,Mumbai,IND,2025,6,2025-06-01,INR,142.5,13.16,33.05,91.3,synthetic
+Thailand,Bangkok,THA,2023,1,2023-01-01,THB,144.51,16.57,64.91,109.8,synthetic
+Thailand,Bangkok,THA,2023,2,2023-02-01,THB,175.66,17.89,67.84,125.5,synthetic
+Thailand,Bangkok,THA,2023,3,2023-03-01,THB,187.13,17.16,55.98,124.5,synthetic
+Thailand,Bangkok,THA,2023,4,2023-04-01,THB,171.94,17.82,59.38,120.7,synthetic
+Thailand,Bangkok,THA,2023,5,2023-05-01,THB,187.46,18.34,64.86,129.9,synthetic
+Thailand,Bangkok,THA,2023,6,2023-06-01,THB,161.65,16.05,72.77,118.7,synthetic
+Thailand,Bangkok,THA,2023,7,2023-07-01,THB,204.77,15.32,69.84,133.6,synthetic
+Thailand,Bangkok,THA,2023,8,2023-08-01,THB,214.36,18.54,65.53,141.2,synthetic
+Thailand,Bangkok,THA,2023,9,2023-09-01,THB,184.99,17.77,67.42,128.9,synthetic
+Thailand,Bangkok,THA,2023,10,2023-10-01,THB,210.96,18.4,57.17,136.5,synthetic
+Thailand,Bangkok,THA,2023,11,2023-11-01,THB,184.82,18.58,69.7,131.0,synthetic
+Thailand,Bangkok,THA,2023,12,2023-12-01,THB,206.83,18.6,68.46,139.4,synthetic
+Thailand,Bangkok,THA,2024,1,2024-01-01,THB,215.17,16.61,62.0,137.0,synthetic
+Thailand,Bangkok,THA,2024,2,2024-02-01,THB,174.07,16.88,60.28,120.4,synthetic
+Thailand,Bangkok,THA,2024,3,2024-03-01,THB,139.01,16.93,65.95,108.6,synthetic
+Thailand,Bangkok,THA,2024,4,2024-04-01,THB,171.4,19.41,64.35,125.0,synthetic
+Thailand,Bangkok,THA,2024,5,2024-05-01,THB,196.87,17.66,68.0,133.7,synthetic
+Thailand,Bangkok,THA,2024,6,2024-06-01,THB,218.92,18.82,64.54,143.1,synthetic
+Thailand,Bangkok,THA,2024,7,2024-07-01,THB,222.63,17.77,62.99,142.3,synthetic
+Thailand,Bangkok,THA,2024,8,2024-08-01,THB,221.07,19.72,63.07,144.9,synthetic
+Thailand,Bangkok,THA,2024,9,2024-09-01,THB,184.43,18.7,69.42,131.0,synthetic
+Thailand,Bangkok,THA,2024,10,2024-10-01,THB,178.61,14.9,66.61,121.3,synthetic
+Thailand,Bangkok,THA,2024,11,2024-11-01,THB,146.76,18.92,65.05,114.6,synthetic
+Thailand,Bangkok,THA,2024,12,2024-12-01,THB,231.26,16.45,57.3,141.4,synthetic
+Thailand,Bangkok,THA,2025,1,2025-01-01,THB,182.17,17.35,62.07,125.1,synthetic
+Thailand,Bangkok,THA,2025,2,2025-02-01,THB,179.65,20.27,68.04,131.2,synthetic
+Thailand,Bangkok,THA,2025,3,2025-03-01,THB,193.43,18.27,70.94,134.4,synthetic
+Thailand,Bangkok,THA,2025,4,2025-04-01,THB,175.73,15.24,63.44,119.5,synthetic
+Thailand,Bangkok,THA,2025,5,2025-05-01,THB,190.03,16.38,63.49,127.1,synthetic
+Thailand,Bangkok,THA,2025,6,2025-06-01,THB,202.28,18.95,67.66,137.9,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,1,2023-01-01,VND,176.57,16.81,46.63,116.1,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,2,2023-02-01,VND,200.12,20.75,51.22,133.8,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,3,2023-03-01,VND,219.57,18.19,45.01,135.0,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,4,2023-04-01,VND,202.56,22.29,50.93,137.3,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,5,2023-05-01,VND,212.54,18.9,43.29,132.7,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,6,2023-06-01,VND,248.86,18.07,45.38,146.7,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,7,2023-07-01,VND,231.93,21.2,45.0,145.0,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,8,2023-08-01,VND,188.4,19.93,43.89,125.0,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,9,2023-09-01,VND,195.73,19.25,45.26,127.3,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,10,2023-10-01,VND,207.4,17.57,44.48,128.9,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,11,2023-11-01,VND,205.74,18.63,40.95,128.7,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,12,2023-12-01,VND,246.6,20.65,46.0,150.3,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,1,2024-01-01,VND,164.47,20.17,40.78,114.7,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,2,2024-02-01,VND,199.89,18.32,42.4,126.4,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,3,2024-03-01,VND,188.17,19.13,44.07,123.7,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,4,2024-04-01,VND,204.26,18.83,49.31,131.6,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,5,2024-05-01,VND,199.46,18.54,43.35,126.9,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,6,2024-06-01,VND,203.23,19.68,45.0,131.0,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,7,2024-07-01,VND,189.66,18.73,43.24,123.3,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,8,2024-08-01,VND,263.59,17.37,41.49,149.9,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,9,2024-09-01,VND,212.39,20.92,43.74,136.2,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,10,2024-10-01,VND,185.2,20.06,38.63,122.0,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,11,2024-11-01,VND,166.02,19.02,51.15,117.3,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,12,2024-12-01,VND,225.92,19.46,49.81,141.5,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,1,2025-01-01,VND,227.95,18.68,46.09,139.6,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,2,2025-02-01,VND,223.5,17.58,49.47,137.3,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,3,2025-03-01,VND,179.18,19.47,45.36,121.1,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,4,2025-04-01,VND,180.12,18.21,47.04,120.0,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,5,2025-05-01,VND,210.6,19.2,46.37,133.6,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,6,2025-06-01,VND,244.78,18.22,48.54,146.5,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,1,2023-01-01,MYR,196.2,28.45,35.5,139.2,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,2,2023-02-01,MYR,178.87,28.0,34.75,131.2,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,3,2023-03-01,MYR,178.76,27.26,39.45,131.7,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,4,2023-04-01,MYR,175.89,24.12,31.93,122.5,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,5,2023-05-01,MYR,166.21,24.98,36.48,121.8,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,6,2023-06-01,MYR,200.7,25.97,34.88,136.7,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,7,2023-07-01,MYR,213.98,29.27,38.59,148.8,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,8,2023-08-01,MYR,222.08,26.37,35.76,146.2,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,9,2023-09-01,MYR,189.67,28.07,34.54,135.6,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,10,2023-10-01,MYR,185.37,23.81,37.43,127.9,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,11,2023-11-01,MYR,196.1,26.66,41.57,138.5,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,12,2023-12-01,MYR,206.16,27.47,36.79,142.0,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,1,2024-01-01,MYR,183.34,26.93,37.16,132.2,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,2,2024-02-01,MYR,197.37,29.36,36.88,141.7,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,3,2024-03-01,MYR,196.88,25.98,38.86,136.6,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,4,2024-04-01,MYR,173.56,28.89,42.59,133.5,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,5,2024-05-01,MYR,183.02,23.55,35.47,125.8,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,6,2024-06-01,MYR,243.65,28.02,37.53,158.2,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,7,2024-07-01,MYR,239.69,27.91,40.03,157.4,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,8,2024-08-01,MYR,238.11,29.59,37.81,158.7,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,9,2024-09-01,MYR,198.21,26.62,35.33,136.9,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,10,2024-10-01,MYR,210.06,27.47,38.96,144.4,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,11,2024-11-01,MYR,186.66,26.16,36.91,132.1,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,12,2024-12-01,MYR,247.27,28.02,32.46,157.8,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,1,2025-01-01,MYR,181.64,30.02,36.33,136.3,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,2,2025-02-01,MYR,158.2,30.2,38.64,128.1,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,3,2025-03-01,MYR,183.79,26.51,39.68,132.6,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,4,2025-04-01,MYR,176.81,28.99,38.28,133.4,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,5,2025-05-01,MYR,188.44,27.35,36.43,134.6,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,6,2025-06-01,MYR,240.35,25.71,32.7,151.2,synthetic
+Singapore,Singapore,SGP,2023,1,2023-01-01,SGD,147.45,15.92,42.53,101.5,synthetic
+Singapore,Singapore,SGP,2023,2,2023-02-01,SGD,145.44,14.92,48.7,101.3,synthetic
+Singapore,Singapore,SGP,2023,3,2023-03-01,SGD,130.33,15.66,37.65,92.3,synthetic
+Singapore,Singapore,SGP,2023,4,2023-04-01,SGD,150.02,14.81,36.44,98.4,synthetic
+Singapore,Singapore,SGP,2023,5,2023-05-01,SGD,156.04,14.86,36.4,100.8,synthetic
+Singapore,Singapore,SGP,2023,6,2023-06-01,SGD,193.8,16.51,47.12,122.7,synthetic
+Singapore,Singapore,SGP,2023,7,2023-07-01,SGD,186.81,15.25,46.63,117.6,synthetic
+Singapore,Singapore,SGP,2023,8,2023-08-01,SGD,206.04,16.24,39.86,124.4,synthetic
+Singapore,Singapore,SGP,2023,9,2023-09-01,SGD,153.77,15.6,37.26,101.5,synthetic
+Singapore,Singapore,SGP,2023,10,2023-10-01,SGD,157.01,17.28,44.58,108.3,synthetic
+Singapore,Singapore,SGP,2023,11,2023-11-01,SGD,169.17,15.37,42.45,109.2,synthetic
+Singapore,Singapore,SGP,2023,12,2023-12-01,SGD,187.14,14.46,39.79,113.9,synthetic
+Singapore,Singapore,SGP,2024,1,2024-01-01,SGD,166.66,16.46,39.71,109.0,synthetic
+Singapore,Singapore,SGP,2024,2,2024-02-01,SGD,163.05,15.12,43.68,106.8,synthetic
+Singapore,Singapore,SGP,2024,3,2024-03-01,SGD,156.9,16.11,42.91,105.7,synthetic
+Singapore,Singapore,SGP,2024,4,2024-04-01,SGD,168.4,15.49,44.53,109.9,synthetic
+Singapore,Singapore,SGP,2024,5,2024-05-01,SGD,141.24,17.17,44.07,101.6,synthetic
+Singapore,Singapore,SGP,2024,6,2024-06-01,SGD,191.96,13.74,40.21,114.8,synthetic
+Singapore,Singapore,SGP,2024,7,2024-07-01,SGD,199.58,15.47,36.95,119.5,synthetic
+Singapore,Singapore,SGP,2024,8,2024-08-01,SGD,196.68,14.71,46.88,120.8,synthetic
+Singapore,Singapore,SGP,2024,9,2024-09-01,SGD,150.27,15.39,46.19,103.1,synthetic
+Singapore,Singapore,SGP,2024,10,2024-10-01,SGD,140.47,14.3,42.08,95.8,synthetic
+Singapore,Singapore,SGP,2024,11,2024-11-01,SGD,161.35,13.99,37.69,102.0,synthetic
+Singapore,Singapore,SGP,2024,12,2024-12-01,SGD,193.57,14.65,41.5,117.4,synthetic
+Singapore,Singapore,SGP,2025,1,2025-01-01,SGD,128.85,14.58,42.64,91.8,synthetic
+Singapore,Singapore,SGP,2025,2,2025-02-01,SGD,162.6,14.5,47.62,107.1,synthetic
+Singapore,Singapore,SGP,2025,3,2025-03-01,SGD,143.04,14.58,47.26,99.2,synthetic
+Singapore,Singapore,SGP,2025,4,2025-04-01,SGD,153.89,14.7,42.2,101.9,synthetic
+Singapore,Singapore,SGP,2025,5,2025-05-01,SGD,167.71,16.54,40.23,109.7,synthetic
+Singapore,Singapore,SGP,2025,6,2025-06-01,SGD,180.98,15.29,39.72,112.8,synthetic
+Indonesia,Bali,IDN,2023,1,2023-01-01,IDR,164.62,17.08,63.01,117.9,synthetic
+Indonesia,Bali,IDN,2023,2,2023-02-01,IDR,153.37,16.56,61.86,112.1,synthetic
+Indonesia,Bali,IDN,2023,3,2023-03-01,IDR,163.39,15.84,60.12,114.3,synthetic
+Indonesia,Bali,IDN,2023,4,2023-04-01,IDR,144.09,17.31,63.79,110.4,synthetic
+Indonesia,Bali,IDN,2023,5,2023-05-01,IDR,176.51,15.44,65.81,121.0,synthetic
+Indonesia,Bali,IDN,2023,6,2023-06-01,IDR,223.09,14.92,55.93,135.1,synthetic
+Indonesia,Bali,IDN,2023,7,2023-07-01,IDR,206.52,15.14,64.41,132.0,synthetic
+Indonesia,Bali,IDN,2023,8,2023-08-01,IDR,178.47,16.18,60.21,120.9,synthetic
+Indonesia,Bali,IDN,2023,9,2023-09-01,IDR,153.79,16.36,59.95,111.3,synthetic
+Indonesia,Bali,IDN,2023,10,2023-10-01,IDR,147.3,15.6,58.05,106.7,synthetic
+Indonesia,Bali,IDN,2023,11,2023-11-01,IDR,150.76,16.04,62.7,110.6,synthetic
+Indonesia,Bali,IDN,2023,12,2023-12-01,IDR,183.18,15.91,61.54,122.9,synthetic
+Indonesia,Bali,IDN,2024,1,2024-01-01,IDR,164.66,17.3,62.4,118.1,synthetic
+Indonesia,Bali,IDN,2024,2,2024-02-01,IDR,162.09,15.7,66.15,115.8,synthetic
+Indonesia,Bali,IDN,2024,3,2024-03-01,IDR,175.58,16.41,56.49,118.8,synthetic
+Indonesia,Bali,IDN,2024,4,2024-04-01,IDR,161.71,17.11,63.5,117.0,synthetic
+Indonesia,Bali,IDN,2024,5,2024-05-01,IDR,168.47,15.27,57.79,114.5,synthetic
+Indonesia,Bali,IDN,2024,6,2024-06-01,IDR,189.36,14.25,63.42,123.3,synthetic
+Indonesia,Bali,IDN,2024,7,2024-07-01,IDR,206.52,14.1,58.72,128.1,synthetic
+Indonesia,Bali,IDN,2024,8,2024-08-01,IDR,171.79,15.87,62.85,118.7,synthetic
+Indonesia,Bali,IDN,2024,9,2024-09-01,IDR,173.5,16.84,66.74,122.5,synthetic
+Indonesia,Bali,IDN,2024,10,2024-10-01,IDR,157.86,16.3,60.61,113.0,synthetic
+Indonesia,Bali,IDN,2024,11,2024-11-01,IDR,166.74,14.86,68.27,117.1,synthetic
+Indonesia,Bali,IDN,2024,12,2024-12-01,IDR,205.01,16.13,63.7,132.8,synthetic
+Indonesia,Bali,IDN,2025,1,2025-01-01,IDR,161.04,13.19,65.86,111.1,synthetic
+Indonesia,Bali,IDN,2025,2,2025-02-01,IDR,154.62,15.88,67.69,113.7,synthetic
+Indonesia,Bali,IDN,2025,3,2025-03-01,IDR,155.1,14.84,63.86,110.7,synthetic
+Indonesia,Bali,IDN,2025,4,2025-04-01,IDR,156.88,16.04,65.23,113.9,synthetic
+Indonesia,Bali,IDN,2025,5,2025-05-01,IDR,169.01,14.89,65.29,116.9,synthetic
+Indonesia,Bali,IDN,2025,6,2025-06-01,IDR,206.57,14.27,65.31,130.9,synthetic
+Australia,Sydney,AUS,2023,1,2023-01-01,AUD,114.27,10.02,22.86,71.0,synthetic
+Australia,Sydney,AUS,2023,2,2023-02-01,AUD,89.23,11.97,24.09,64.7,synthetic
+Australia,Sydney,AUS,2023,3,2023-03-01,AUD,99.4,10.58,23.25,66.1,synthetic
+Australia,Sydney,AUS,2023,4,2023-04-01,AUD,97.73,12.45,27.32,70.1,synthetic
+Australia,Sydney,AUS,2023,5,2023-05-01,AUD,92.81,11.27,23.45,64.7,synthetic
+Australia,Sydney,AUS,2023,6,2023-06-01,AUD,102.54,11.51,26.92,70.3,synthetic
+Australia,Sydney,AUS,2023,7,2023-07-01,AUD,129.53,10.54,24.61,78.6,synthetic
+Australia,Sydney,AUS,2023,8,2023-08-01,AUD,126.69,11.1,24.21,78.3,synthetic
+Australia,Sydney,AUS,2023,9,2023-09-01,AUD,86.7,10.92,26.78,62.9,synthetic
+Australia,Sydney,AUS,2023,10,2023-10-01,AUD,90.06,11.26,25.47,64.3,synthetic
+Australia,Sydney,AUS,2023,11,2023-11-01,AUD,105.58,11.41,23.69,70.1,synthetic
+Australia,Sydney,AUS,2023,12,2023-12-01,AUD,104.06,10.5,26.45,69.0,synthetic
+Australia,Sydney,AUS,2024,1,2024-01-01,AUD,95.28,10.39,21.72,63.6,synthetic
+Australia,Sydney,AUS,2024,2,2024-02-01,AUD,113.57,11.38,26.24,74.2,synthetic
+Australia,Sydney,AUS,2024,3,2024-03-01,AUD,107.31,11.22,24.47,70.8,synthetic
+Australia,Sydney,AUS,2024,4,2024-04-01,AUD,98.3,10.57,29.49,68.0,synthetic
+Australia,Sydney,AUS,2024,5,2024-05-01,AUD,104.03,10.54,25.71,68.8,synthetic
+Australia,Sydney,AUS,2024,6,2024-06-01,AUD,109.86,11.82,23.74,72.6,synthetic
+Australia,Sydney,AUS,2024,7,2024-07-01,AUD,124.31,11.54,25.57,78.5,synthetic
+Australia,Sydney,AUS,2024,8,2024-08-01,AUD,120.43,10.85,24.8,75.6,synthetic
+Australia,Sydney,AUS,2024,9,2024-09-01,AUD,95.01,10.55,27.48,65.9,synthetic
+Australia,Sydney,AUS,2024,10,2024-10-01,AUD,98.74,10.33,24.0,65.7,synthetic
+Australia,Sydney,AUS,2024,11,2024-11-01,AUD,108.37,11.29,25.87,71.9,synthetic
+Australia,Sydney,AUS,2024,12,2024-12-01,AUD,117.06,11.22,23.78,74.4,synthetic
+Australia,Sydney,AUS,2025,1,2025-01-01,AUD,97.53,11.48,26.42,68.0,synthetic
+Australia,Sydney,AUS,2025,2,2025-02-01,AUD,91.78,10.29,25.09,63.3,synthetic
+Australia,Sydney,AUS,2025,3,2025-03-01,AUD,113.36,9.6,25.38,70.9,synthetic
+Australia,Sydney,AUS,2025,4,2025-04-01,AUD,88.64,10.43,24.26,61.9,synthetic
+Australia,Sydney,AUS,2025,5,2025-05-01,AUD,96.25,10.5,24.91,65.3,synthetic
+Australia,Sydney,AUS,2025,6,2025-06-01,AUD,114.41,9.89,26.26,72.1,synthetic
+New Zealand,Auckland,NZL,2023,1,2023-01-01,NZD,128.89,11.75,13.46,76.2,synthetic
+New Zealand,Auckland,NZL,2023,2,2023-02-01,NZD,121.14,13.91,15.26,77.4,synthetic
+New Zealand,Auckland,NZL,2023,3,2023-03-01,NZD,105.99,14.4,12.59,71.1,synthetic
+New Zealand,Auckland,NZL,2023,4,2023-04-01,NZD,131.87,13.25,12.51,79.5,synthetic
+New Zealand,Auckland,NZL,2023,5,2023-05-01,NZD,127.1,12.44,13.97,76.8,synthetic
+New Zealand,Auckland,NZL,2023,6,2023-06-01,NZD,149.44,13.42,13.52,87.2,synthetic
+New Zealand,Auckland,NZL,2023,7,2023-07-01,NZD,144.76,13.35,14.0,85.4,synthetic
+New Zealand,Auckland,NZL,2023,8,2023-08-01,NZD,155.32,12.02,12.46,86.8,synthetic
+New Zealand,Auckland,NZL,2023,9,2023-09-01,NZD,116.72,12.06,14.19,72.1,synthetic
+New Zealand,Auckland,NZL,2023,10,2023-10-01,NZD,131.82,12.41,14.8,79.0,synthetic
+New Zealand,Auckland,NZL,2023,11,2023-11-01,NZD,135.66,12.7,12.68,80.2,synthetic
+New Zealand,Auckland,NZL,2023,12,2023-12-01,NZD,165.22,12.48,13.57,92.0,synthetic
+New Zealand,Auckland,NZL,2024,1,2024-01-01,NZD,118.95,11.85,12.07,71.9,synthetic
+New Zealand,Auckland,NZL,2024,2,2024-02-01,NZD,128.46,11.93,16.33,77.4,synthetic
+New Zealand,Auckland,NZL,2024,3,2024-03-01,NZD,111.65,11.58,13.93,69.2,synthetic
+New Zealand,Auckland,NZL,2024,4,2024-04-01,NZD,137.23,12.57,13.99,81.1,synthetic
+New Zealand,Auckland,NZL,2024,5,2024-05-01,NZD,104.24,12.01,12.44,66.4,synthetic
+New Zealand,Auckland,NZL,2024,6,2024-06-01,NZD,124.48,12.61,11.34,75.1,synthetic
+New Zealand,Auckland,NZL,2024,7,2024-07-01,NZD,131.21,12.12,12.67,77.4,synthetic
+New Zealand,Auckland,NZL,2024,8,2024-08-01,NZD,151.38,12.75,14.29,87.2,synthetic
+New Zealand,Auckland,NZL,2024,9,2024-09-01,NZD,129.63,13.38,13.45,79.2,synthetic
+New Zealand,Auckland,NZL,2024,10,2024-10-01,NZD,125.24,12.91,13.58,76.7,synthetic
+New Zealand,Auckland,NZL,2024,11,2024-11-01,NZD,118.39,12.27,12.68,72.6,synthetic
+New Zealand,Auckland,NZL,2024,12,2024-12-01,NZD,151.68,12.45,12.82,86.2,synthetic
+New Zealand,Auckland,NZL,2025,1,2025-01-01,NZD,115.8,11.61,14.37,71.1,synthetic
+New Zealand,Auckland,NZL,2025,2,2025-02-01,NZD,123.04,11.87,14.21,74.3,synthetic
+New Zealand,Auckland,NZL,2025,3,2025-03-01,NZD,116.79,11.46,14.41,71.2,synthetic
+New Zealand,Auckland,NZL,2025,4,2025-04-01,NZD,117.02,12.21,13.49,72.2,synthetic
+New Zealand,Auckland,NZL,2025,5,2025-05-01,NZD,133.45,12.54,12.32,78.9,synthetic
+New Zealand,Auckland,NZL,2025,6,2025-06-01,NZD,153.11,12.16,15.23,87.2,synthetic
+Japan,Tokyo,JPN,2023,1,2023-01-01,JPY,116.13,3.0,31.37,63.2,synthetic
+Japan,Tokyo,JPN,2023,2,2023-02-01,JPY,110.65,3.0,34.31,62.1,synthetic
+Japan,Tokyo,JPN,2023,3,2023-03-01,JPY,92.62,3.0,32.18,54.1,synthetic
+Japan,Tokyo,JPN,2023,4,2023-04-01,JPY,110.54,3.0,34.43,62.1,synthetic
+Japan,Tokyo,JPN,2023,5,2023-05-01,JPY,91.99,3.0,32.01,53.8,synthetic
+Japan,Tokyo,JPN,2023,6,2023-06-01,JPY,132.36,3.0,36.27,71.5,synthetic
+Japan,Tokyo,JPN,2023,7,2023-07-01,JPY,116.27,3.0,29.6,62.6,synthetic
+Japan,Tokyo,JPN,2023,8,2023-08-01,JPY,137.83,3.0,32.0,72.1,synthetic
+Japan,Tokyo,JPN,2023,9,2023-09-01,JPY,116.68,3.0,33.83,64.4,synthetic
+Japan,Tokyo,JPN,2023,10,2023-10-01,JPY,100.71,3.0,34.31,58.1,synthetic
+Japan,Tokyo,JPN,2023,11,2023-11-01,JPY,116.33,3.0,35.49,64.8,synthetic
+Japan,Tokyo,JPN,2023,12,2023-12-01,JPY,135.33,3.0,35.56,72.5,synthetic
+Japan,Tokyo,JPN,2024,1,2024-01-01,JPY,100.7,3.0,28.74,56.1,synthetic
+Japan,Tokyo,JPN,2024,2,2024-02-01,JPY,94.73,3.0,34.05,55.7,synthetic
+Japan,Tokyo,JPN,2024,3,2024-03-01,JPY,104.65,3.0,30.78,58.4,synthetic
+Japan,Tokyo,JPN,2024,4,2024-04-01,JPY,102.9,3.0,32.04,58.2,synthetic
+Japan,Tokyo,JPN,2024,5,2024-05-01,JPY,103.36,3.0,37.11,60.3,synthetic
+Japan,Tokyo,JPN,2024,6,2024-06-01,JPY,117.0,3.0,33.7,64.4,synthetic
+Japan,Tokyo,JPN,2024,7,2024-07-01,JPY,133.93,3.0,33.7,71.2,synthetic
+Japan,Tokyo,JPN,2024,8,2024-08-01,JPY,117.97,3.0,34.53,65.1,synthetic
+Japan,Tokyo,JPN,2024,9,2024-09-01,JPY,96.66,3.0,32.33,55.8,synthetic
+Japan,Tokyo,JPN,2024,10,2024-10-01,JPY,122.1,3.0,37.43,67.9,synthetic
+Japan,Tokyo,JPN,2024,11,2024-11-01,JPY,101.51,3.0,30.65,57.1,synthetic
+Japan,Tokyo,JPN,2024,12,2024-12-01,JPY,119.33,3.0,37.53,66.8,synthetic
+Japan,Tokyo,JPN,2025,1,2025-01-01,JPY,104.96,3.0,35.29,60.2,synthetic
+Japan,Tokyo,JPN,2025,2,2025-02-01,JPY,116.55,3.0,39.43,66.4,synthetic
+Japan,Tokyo,JPN,2025,3,2025-03-01,JPY,99.12,3.0,30.92,56.2,synthetic
+Japan,Tokyo,JPN,2025,4,2025-04-01,JPY,122.36,3.0,32.99,66.3,synthetic
+Japan,Tokyo,JPN,2025,5,2025-05-01,JPY,113.43,3.0,38.43,64.8,synthetic
+Japan,Tokyo,JPN,2025,6,2025-06-01,JPY,108.43,3.0,32.68,60.6,synthetic
+South Korea,Seoul,KOR,2023,1,2023-01-01,KRW,45.54,14.83,28.76,53.7,synthetic
+South Korea,Seoul,KOR,2023,2,2023-02-01,KRW,38.67,16.05,28.46,52.9,synthetic
+South Korea,Seoul,KOR,2023,3,2023-03-01,KRW,36.38,16.12,30.42,52.8,synthetic
+South Korea,Seoul,KOR,2023,4,2023-04-01,KRW,32.04,14.04,32.75,48.5,synthetic
+South Korea,Seoul,KOR,2023,5,2023-05-01,KRW,39.54,14.46,29.28,50.9,synthetic
+South Korea,Seoul,KOR,2023,6,2023-06-01,KRW,46.02,15.82,26.82,54.8,synthetic
+South Korea,Seoul,KOR,2023,7,2023-07-01,KRW,42.88,15.4,29.43,53.9,synthetic
+South Korea,Seoul,KOR,2023,8,2023-08-01,KRW,48.07,14.04,30.37,54.0,synthetic
+South Korea,Seoul,KOR,2023,9,2023-09-01,KRW,41.65,15.6,29.92,53.9,synthetic
+South Korea,Seoul,KOR,2023,10,2023-10-01,KRW,38.02,14.4,29.48,50.3,synthetic
+South Korea,Seoul,KOR,2023,11,2023-11-01,KRW,42.17,15.05,27.79,52.4,synthetic
+South Korea,Seoul,KOR,2023,12,2023-12-01,KRW,44.16,15.34,28.86,54.1,synthetic
+South Korea,Seoul,KOR,2024,1,2024-01-01,KRW,39.8,15.63,31.48,53.8,synthetic
+South Korea,Seoul,KOR,2024,2,2024-02-01,KRW,42.67,16.06,27.7,54.2,synthetic
+South Korea,Seoul,KOR,2024,3,2024-03-01,KRW,35.54,15.09,28.7,50.1,synthetic
+South Korea,Seoul,KOR,2024,4,2024-04-01,KRW,34.82,14.75,28.65,49.3,synthetic
+South Korea,Seoul,KOR,2024,5,2024-05-01,KRW,36.25,14.87,32.08,51.3,synthetic
+South Korea,Seoul,KOR,2024,6,2024-06-01,KRW,46.7,17.4,29.99,58.9,synthetic
+South Korea,Seoul,KOR,2024,7,2024-07-01,KRW,44.9,15.16,30.17,54.5,synthetic
+South Korea,Seoul,KOR,2024,8,2024-08-01,KRW,47.57,17.04,27.88,57.9,synthetic
+South Korea,Seoul,KOR,2024,9,2024-09-01,KRW,40.94,15.34,26.37,51.8,synthetic
+South Korea,Seoul,KOR,2024,10,2024-10-01,KRW,40.67,16.31,27.86,53.9,synthetic
+South Korea,Seoul,KOR,2024,11,2024-11-01,KRW,38.28,13.59,27.02,48.1,synthetic
+South Korea,Seoul,KOR,2024,12,2024-12-01,KRW,49.83,14.73,27.33,54.7,synthetic
+South Korea,Seoul,KOR,2025,1,2025-01-01,KRW,39.01,14.68,28.66,50.8,synthetic
+South Korea,Seoul,KOR,2025,2,2025-02-01,KRW,40.58,14.1,27.76,50.1,synthetic
+South Korea,Seoul,KOR,2025,3,2025-03-01,KRW,38.78,16.04,32.2,54.3,synthetic
+South Korea,Seoul,KOR,2025,4,2025-04-01,KRW,36.27,16.01,28.01,51.7,synthetic
+South Korea,Seoul,KOR,2025,5,2025-05-01,KRW,43.91,14.12,32.39,53.2,synthetic
+South Korea,Seoul,KOR,2025,6,2025-06-01,KRW,43.56,16.99,30.86,57.3,synthetic
+China,Shanghai,CHN,2023,1,2023-01-01,CNY,80.39,10.12,47.61,66.9,synthetic
+China,Shanghai,CHN,2023,2,2023-02-01,CNY,81.7,9.31,42.64,64.2,synthetic
+China,Shanghai,CHN,2023,3,2023-03-01,CNY,82.37,10.83,50.32,69.9,synthetic
+China,Shanghai,CHN,2023,4,2023-04-01,CNY,85.89,10.27,47.58,69.3,synthetic
+China,Shanghai,CHN,2023,5,2023-05-01,CNY,76.54,10.0,42.6,63.3,synthetic
+China,Shanghai,CHN,2023,6,2023-06-01,CNY,87.33,10.3,45.8,69.3,synthetic
+China,Shanghai,CHN,2023,7,2023-07-01,CNY,102.36,10.43,45.98,75.6,synthetic
+China,Shanghai,CHN,2023,8,2023-08-01,CNY,101.34,10.07,46.52,74.8,synthetic
+China,Shanghai,CHN,2023,9,2023-09-01,CNY,76.16,10.32,47.32,65.4,synthetic
+China,Shanghai,CHN,2023,10,2023-10-01,CNY,76.52,10.13,43.24,63.7,synthetic
+China,Shanghai,CHN,2023,11,2023-11-01,CNY,77.45,9.42,49.21,65.1,synthetic
+China,Shanghai,CHN,2023,12,2023-12-01,CNY,105.29,10.42,51.45,78.8,synthetic
+China,Shanghai,CHN,2024,1,2024-01-01,CNY,79.63,11.93,44.49,68.4,synthetic
+China,Shanghai,CHN,2024,2,2024-02-01,CNY,82.5,9.86,46.39,66.8,synthetic
+China,Shanghai,CHN,2024,3,2024-03-01,CNY,86.26,10.03,50.83,70.3,synthetic
+China,Shanghai,CHN,2024,4,2024-04-01,CNY,82.4,10.26,42.33,65.9,synthetic
+China,Shanghai,CHN,2024,5,2024-05-01,CNY,83.56,10.02,43.28,66.3,synthetic
+China,Shanghai,CHN,2024,6,2024-06-01,CNY,91.0,11.72,44.37,72.6,synthetic
+China,Shanghai,CHN,2024,7,2024-07-01,CNY,85.71,9.67,45.05,67.3,synthetic
+China,Shanghai,CHN,2024,8,2024-08-01,CNY,101.27,10.43,47.35,75.7,synthetic
+China,Shanghai,CHN,2024,9,2024-09-01,CNY,76.68,10.3,42.44,63.8,synthetic
+China,Shanghai,CHN,2024,10,2024-10-01,CNY,76.84,9.54,41.45,62.2,synthetic
+China,Shanghai,CHN,2024,11,2024-11-01,CNY,87.74,10.51,48.3,70.7,synthetic
+China,Shanghai,CHN,2024,12,2024-12-01,CNY,97.33,10.57,39.63,71.4,synthetic
+China,Shanghai,CHN,2025,1,2025-01-01,CNY,86.43,10.2,47.19,69.3,synthetic
+China,Shanghai,CHN,2025,2,2025-02-01,CNY,83.31,9.5,40.47,64.3,synthetic
+China,Shanghai,CHN,2025,3,2025-03-01,CNY,76.25,10.44,47.39,65.7,synthetic
+China,Shanghai,CHN,2025,4,2025-04-01,CNY,72.0,9.5,42.92,60.7,synthetic
+China,Shanghai,CHN,2025,5,2025-05-01,CNY,78.54,9.27,40.71,62.1,synthetic
+China,Shanghai,CHN,2025,6,2025-06-01,CNY,90.64,10.15,41.47,68.7,synthetic
+Hong Kong,Hong Kong,HKG,2023,1,2023-01-01,HKD,147.92,18.75,22.04,98.7,synthetic
+Hong Kong,Hong Kong,HKG,2023,2,2023-02-01,HKD,149.44,18.88,24.74,100.5,synthetic
+Hong Kong,Hong Kong,HKG,2023,3,2023-03-01,HKD,141.4,18.84,23.73,96.9,synthetic
+Hong Kong,Hong Kong,HKG,2023,4,2023-04-01,HKD,140.22,20.42,22.08,98.4,synthetic
+Hong Kong,Hong Kong,HKG,2023,5,2023-05-01,HKD,137.16,19.17,24.1,95.8,synthetic
+Hong Kong,Hong Kong,HKG,2023,6,2023-06-01,HKD,150.6,20.41,23.71,103.2,synthetic
+Hong Kong,Hong Kong,HKG,2023,7,2023-07-01,HKD,146.77,20.63,26.55,103.1,synthetic
+Hong Kong,Hong Kong,HKG,2023,8,2023-08-01,HKD,177.2,20.88,23.1,114.4,synthetic
+Hong Kong,Hong Kong,HKG,2023,9,2023-09-01,HKD,118.54,17.11,23.37,84.7,synthetic
+Hong Kong,Hong Kong,HKG,2023,10,2023-10-01,HKD,130.24,18.18,22.86,91.0,synthetic
+Hong Kong,Hong Kong,HKG,2023,11,2023-11-01,HKD,143.44,17.56,22.24,95.0,synthetic
+Hong Kong,Hong Kong,HKG,2023,12,2023-12-01,HKD,183.87,18.0,24.36,112.7,synthetic
+Hong Kong,Hong Kong,HKG,2024,1,2024-01-01,HKD,131.41,19.87,24.73,94.9,synthetic
+Hong Kong,Hong Kong,HKG,2024,2,2024-02-01,HKD,144.82,20.29,21.11,99.7,synthetic
+Hong Kong,Hong Kong,HKG,2024,3,2024-03-01,HKD,148.89,18.25,23.38,98.7,synthetic
+Hong Kong,Hong Kong,HKG,2024,4,2024-04-01,HKD,139.53,19.8,23.51,97.6,synthetic
+Hong Kong,Hong Kong,HKG,2024,5,2024-05-01,HKD,127.48,17.68,24.37,89.6,synthetic
+Hong Kong,Hong Kong,HKG,2024,6,2024-06-01,HKD,166.49,20.56,22.89,109.5,synthetic
+Hong Kong,Hong Kong,HKG,2024,7,2024-07-01,HKD,145.61,20.35,22.37,100.6,synthetic
+Hong Kong,Hong Kong,HKG,2024,8,2024-08-01,HKD,168.54,18.49,25.61,107.8,synthetic
+Hong Kong,Hong Kong,HKG,2024,9,2024-09-01,HKD,127.12,18.85,23.14,90.9,synthetic
+Hong Kong,Hong Kong,HKG,2024,10,2024-10-01,HKD,124.77,19.62,25.55,92.2,synthetic
+Hong Kong,Hong Kong,HKG,2024,11,2024-11-01,HKD,131.35,19.69,18.54,92.3,synthetic
+Hong Kong,Hong Kong,HKG,2024,12,2024-12-01,HKD,163.54,18.88,21.65,105.0,synthetic
+Hong Kong,Hong Kong,HKG,2025,1,2025-01-01,HKD,148.54,18.86,22.68,99.4,synthetic
+Hong Kong,Hong Kong,HKG,2025,2,2025-02-01,HKD,132.59,17.02,21.14,89.3,synthetic
+Hong Kong,Hong Kong,HKG,2025,3,2025-03-01,HKD,147.22,16.8,21.73,95.0,synthetic
+Hong Kong,Hong Kong,HKG,2025,4,2025-04-01,HKD,132.34,21.25,24.2,97.4,synthetic
+Hong Kong,Hong Kong,HKG,2025,5,2025-05-01,HKD,130.62,20.74,21.77,95.0,synthetic
+Hong Kong,Hong Kong,HKG,2025,6,2025-06-01,HKD,177.3,17.67,24.69,109.6,synthetic
+Taiwan,Taipei,TWN,2023,1,2023-01-01,TWD,87.79,7.18,27.38,57.3,synthetic
+Taiwan,Taipei,TWN,2023,2,2023-02-01,TWD,95.95,7.13,28.42,60.9,synthetic
+Taiwan,Taipei,TWN,2023,3,2023-03-01,TWD,88.18,7.01,29.64,58.1,synthetic
+Taiwan,Taipei,TWN,2023,4,2023-04-01,TWD,106.49,7.34,30.49,66.3,synthetic
+Taiwan,Taipei,TWN,2023,5,2023-05-01,TWD,114.0,7.16,29.51,68.6,synthetic
+Taiwan,Taipei,TWN,2023,6,2023-06-01,TWD,115.87,6.53,27.65,67.6,synthetic
+Taiwan,Taipei,TWN,2023,7,2023-07-01,TWD,105.25,7.22,28.19,64.7,synthetic
+Taiwan,Taipei,TWN,2023,8,2023-08-01,TWD,110.91,7.4,30.26,68.0,synthetic
+Taiwan,Taipei,TWN,2023,9,2023-09-01,TWD,90.23,6.67,30.81,58.8,synthetic
+Taiwan,Taipei,TWN,2023,10,2023-10-01,TWD,97.07,6.28,27.91,59.8,synthetic
+Taiwan,Taipei,TWN,2023,11,2023-11-01,TWD,92.62,7.27,30.36,60.6,synthetic
+Taiwan,Taipei,TWN,2023,12,2023-12-01,TWD,112.18,7.19,28.67,67.6,synthetic
+Taiwan,Taipei,TWN,2024,1,2024-01-01,TWD,86.48,6.84,28.58,56.7,synthetic
+Taiwan,Taipei,TWN,2024,2,2024-02-01,TWD,91.16,6.16,27.75,57.1,synthetic
+Taiwan,Taipei,TWN,2024,3,2024-03-01,TWD,91.82,6.83,28.05,58.6,synthetic
+Taiwan,Taipei,TWN,2024,4,2024-04-01,TWD,94.98,6.5,25.29,58.3,synthetic
+Taiwan,Taipei,TWN,2024,5,2024-05-01,TWD,88.86,7.27,31.91,59.6,synthetic
+Taiwan,Taipei,TWN,2024,6,2024-06-01,TWD,116.56,6.34,28.08,67.7,synthetic
+Taiwan,Taipei,TWN,2024,7,2024-07-01,TWD,111.95,7.02,29.62,67.6,synthetic
+Taiwan,Taipei,TWN,2024,8,2024-08-01,TWD,101.65,6.97,29.38,63.3,synthetic
+Taiwan,Taipei,TWN,2024,9,2024-09-01,TWD,97.45,6.61,27.85,60.4,synthetic
+Taiwan,Taipei,TWN,2024,10,2024-10-01,TWD,71.64,6.69,27.49,50.1,synthetic
+Taiwan,Taipei,TWN,2024,11,2024-11-01,TWD,83.95,7.02,28.43,55.9,synthetic
+Taiwan,Taipei,TWN,2024,12,2024-12-01,TWD,89.87,7.04,26.69,57.7,synthetic
+Taiwan,Taipei,TWN,2025,1,2025-01-01,TWD,94.96,6.41,28.6,59.4,synthetic
+Taiwan,Taipei,TWN,2025,2,2025-02-01,TWD,89.34,7.07,28.79,58.3,synthetic
+Taiwan,Taipei,TWN,2025,3,2025-03-01,TWD,89.55,6.31,25.59,55.9,synthetic
+Taiwan,Taipei,TWN,2025,4,2025-04-01,TWD,87.14,6.94,27.33,56.7,synthetic
+Taiwan,Taipei,TWN,2025,5,2025-05-01,TWD,95.98,6.83,26.61,59.8,synthetic
+Taiwan,Taipei,TWN,2025,6,2025-06-01,TWD,107.25,7.04,29.19,65.6,synthetic
+South Africa,Cape Town,ZAF,2023,1,2023-01-01,ZAR,189.5,8.8,29.59,101.6,synthetic
+South Africa,Cape Town,ZAF,2023,2,2023-02-01,ZAR,182.09,8.49,29.18,97.9,synthetic
+South Africa,Cape Town,ZAF,2023,3,2023-03-01,ZAR,177.77,8.5,34.55,98.2,synthetic
+South Africa,Cape Town,ZAF,2023,4,2023-04-01,ZAR,198.98,8.58,32.59,106.1,synthetic
+South Africa,Cape Town,ZAF,2023,5,2023-05-01,ZAR,161.63,8.8,34.12,92.1,synthetic
+South Africa,Cape Town,ZAF,2023,6,2023-06-01,ZAR,242.86,8.68,35.64,125.0,synthetic
+South Africa,Cape Town,ZAF,2023,7,2023-07-01,ZAR,200.2,8.39,34.84,107.1,synthetic
+South Africa,Cape Town,ZAF,2023,8,2023-08-01,ZAR,258.28,9.34,33.1,131.3,synthetic
+South Africa,Cape Town,ZAF,2023,9,2023-09-01,ZAR,156.51,7.97,33.5,88.4,synthetic
+South Africa,Cape Town,ZAF,2023,10,2023-10-01,ZAR,184.41,8.47,33.35,100.4,synthetic
+South Africa,Cape Town,ZAF,2023,11,2023-11-01,ZAR,191.6,9.59,33.51,105.2,synthetic
+South Africa,Cape Town,ZAF,2023,12,2023-12-01,ZAR,250.21,9.08,32.93,127.6,synthetic
+South Africa,Cape Town,ZAF,2024,1,2024-01-01,ZAR,206.02,8.54,39.73,111.5,synthetic
+South Africa,Cape Town,ZAF,2024,2,2024-02-01,ZAR,195.55,9.28,34.41,106.6,synthetic
+South Africa,Cape Town,ZAF,2024,3,2024-03-01,ZAR,218.36,9.5,29.46,114.2,synthetic
+South Africa,Cape Town,ZAF,2024,4,2024-04-01,ZAR,211.17,8.89,33.44,111.8,synthetic
+South Africa,Cape Town,ZAF,2024,5,2024-05-01,ZAR,170.42,9.36,31.68,95.6,synthetic
+South Africa,Cape Town,ZAF,2024,6,2024-06-01,ZAR,229.65,8.92,37.67,120.8,synthetic
+South Africa,Cape Town,ZAF,2024,7,2024-07-01,ZAR,263.95,9.1,33.34,133.2,synthetic
+South Africa,Cape Town,ZAF,2024,8,2024-08-01,ZAR,221.01,9.67,32.43,116.7,synthetic
+South Africa,Cape Town,ZAF,2024,9,2024-09-01,ZAR,183.45,9.6,31.94,101.4,synthetic
+South Africa,Cape Town,ZAF,2024,10,2024-10-01,ZAR,189.28,8.21,34.83,102.5,synthetic
+South Africa,Cape Town,ZAF,2024,11,2024-11-01,ZAR,219.33,9.46,36.59,117.2,synthetic
+South Africa,Cape Town,ZAF,2024,12,2024-12-01,ZAR,212.4,9.2,31.0,111.9,synthetic
+South Africa,Cape Town,ZAF,2025,1,2025-01-01,ZAR,186.39,9.49,33.43,102.9,synthetic
+South Africa,Cape Town,ZAF,2025,2,2025-02-01,ZAR,168.4,8.36,29.99,92.5,synthetic
+South Africa,Cape Town,ZAF,2025,3,2025-03-01,ZAR,197.32,10.2,36.36,109.6,synthetic
+South Africa,Cape Town,ZAF,2025,4,2025-04-01,ZAR,161.05,9.85,35.37,94.1,synthetic
+South Africa,Cape Town,ZAF,2025,5,2025-05-01,ZAR,166.38,8.91,35.74,94.8,synthetic
+South Africa,Cape Town,ZAF,2025,6,2025-06-01,ZAR,237.85,8.36,34.61,122.1,synthetic
+Kenya,Nairobi,KEN,2023,1,2023-01-01,KES,36.51,12.9,57.3,57.6,synthetic
+Kenya,Nairobi,KEN,2023,2,2023-02-01,KES,42.02,12.89,57.7,59.9,synthetic
+Kenya,Nairobi,KEN,2023,3,2023-03-01,KES,40.26,12.44,53.97,57.1,synthetic
+Kenya,Nairobi,KEN,2023,4,2023-04-01,KES,37.31,11.36,50.05,52.6,synthetic
+Kenya,Nairobi,KEN,2023,5,2023-05-01,KES,37.17,12.42,59.05,57.7,synthetic
+Kenya,Nairobi,KEN,2023,6,2023-06-01,KES,45.49,12.98,57.69,61.5,synthetic
+Kenya,Nairobi,KEN,2023,7,2023-07-01,KES,44.79,12.68,52.72,58.8,synthetic
+Kenya,Nairobi,KEN,2023,8,2023-08-01,KES,50.46,12.71,49.17,59.8,synthetic
+Kenya,Nairobi,KEN,2023,9,2023-09-01,KES,38.52,13.46,52.96,57.7,synthetic
+Kenya,Nairobi,KEN,2023,10,2023-10-01,KES,39.39,12.65,49.74,55.5,synthetic
+Kenya,Nairobi,KEN,2023,11,2023-11-01,KES,39.59,11.22,51.29,53.8,synthetic
+Kenya,Nairobi,KEN,2023,12,2023-12-01,KES,49.57,12.51,52.49,60.4,synthetic
+Kenya,Nairobi,KEN,2024,1,2024-01-01,KES,39.39,12.2,53.68,56.2,synthetic
+Kenya,Nairobi,KEN,2024,2,2024-02-01,KES,40.03,11.71,53.79,55.7,synthetic
+Kenya,Nairobi,KEN,2024,3,2024-03-01,KES,37.08,11.08,50.18,52.1,synthetic
+Kenya,Nairobi,KEN,2024,4,2024-04-01,KES,42.8,12.53,48.67,56.3,synthetic
+Kenya,Nairobi,KEN,2024,5,2024-05-01,KES,33.34,12.16,59.5,55.9,synthetic
+Kenya,Nairobi,KEN,2024,6,2024-06-01,KES,44.96,13.21,54.96,60.6,synthetic
+Kenya,Nairobi,KEN,2024,7,2024-07-01,KES,47.36,11.26,57.16,59.2,synthetic
+Kenya,Nairobi,KEN,2024,8,2024-08-01,KES,44.41,12.88,50.58,58.2,synthetic
+Kenya,Nairobi,KEN,2024,9,2024-09-01,KES,38.57,12.5,53.06,56.2,synthetic
+Kenya,Nairobi,KEN,2024,10,2024-10-01,KES,39.26,12.05,51.2,55.0,synthetic
+Kenya,Nairobi,KEN,2024,11,2024-11-01,KES,42.92,13.02,50.78,57.9,synthetic
+Kenya,Nairobi,KEN,2024,12,2024-12-01,KES,47.71,11.7,49.19,57.0,synthetic
+Kenya,Nairobi,KEN,2025,1,2025-01-01,KES,41.18,10.99,57.12,56.2,synthetic
+Kenya,Nairobi,KEN,2025,2,2025-02-01,KES,37.26,12.09,55.17,55.7,synthetic
+Kenya,Nairobi,KEN,2025,3,2025-03-01,KES,39.8,11.64,56.33,56.4,synthetic
+Kenya,Nairobi,KEN,2025,4,2025-04-01,KES,38.38,11.32,53.0,54.1,synthetic
+Kenya,Nairobi,KEN,2025,5,2025-05-01,KES,42.23,13.48,56.33,60.5,synthetic
+Kenya,Nairobi,KEN,2025,6,2025-06-01,KES,41.29,12.61,56.83,58.8,synthetic
+Morocco,Marrakesh,MAR,2023,1,2023-01-01,MAD,155.95,15.32,35.84,101.4,synthetic
+Morocco,Marrakesh,MAR,2023,2,2023-02-01,MAD,160.77,16.08,42.95,107.2,synthetic
+Morocco,Marrakesh,MAR,2023,3,2023-03-01,MAD,139.77,16.52,47.28,101.2,synthetic
+Morocco,Marrakesh,MAR,2023,4,2023-04-01,MAD,157.5,15.84,42.23,105.2,synthetic
+Morocco,Marrakesh,MAR,2023,5,2023-05-01,MAD,181.96,14.92,41.92,113.4,synthetic
+Morocco,Marrakesh,MAR,2023,6,2023-06-01,MAD,175.8,15.38,41.19,111.4,synthetic
+Morocco,Marrakesh,MAR,2023,7,2023-07-01,MAD,208.06,17.62,42.63,128.6,synthetic
+Morocco,Marrakesh,MAR,2023,8,2023-08-01,MAD,182.16,18.28,40.1,118.4,synthetic
+Morocco,Marrakesh,MAR,2023,9,2023-09-01,MAD,149.36,14.21,45.38,100.4,synthetic
+Morocco,Marrakesh,MAR,2023,10,2023-10-01,MAD,168.64,18.21,37.32,111.8,synthetic
+Morocco,Marrakesh,MAR,2023,11,2023-11-01,MAD,174.77,15.97,43.67,112.9,synthetic
+Morocco,Marrakesh,MAR,2023,12,2023-12-01,MAD,163.06,17.3,43.61,110.4,synthetic
+Morocco,Marrakesh,MAR,2024,1,2024-01-01,MAD,156.03,16.52,39.12,104.6,synthetic
+Morocco,Marrakesh,MAR,2024,2,2024-02-01,MAD,149.26,15.46,35.98,99.0,synthetic
+Morocco,Marrakesh,MAR,2024,3,2024-03-01,MAD,167.3,17.04,39.31,110.1,synthetic
+Morocco,Marrakesh,MAR,2024,4,2024-04-01,MAD,160.87,15.65,42.29,106.3,synthetic
+Morocco,Marrakesh,MAR,2024,5,2024-05-01,MAD,148.66,15.06,44.38,101.2,synthetic
+Morocco,Marrakesh,MAR,2024,6,2024-06-01,MAD,186.86,17.83,41.47,120.0,synthetic
+Morocco,Marrakesh,MAR,2024,7,2024-07-01,MAD,173.9,17.07,43.16,114.2,synthetic
+Morocco,Marrakesh,MAR,2024,8,2024-08-01,MAD,198.74,17.04,39.45,122.7,synthetic
+Morocco,Marrakesh,MAR,2024,9,2024-09-01,MAD,154.92,15.74,37.6,102.3,synthetic
+Morocco,Marrakesh,MAR,2024,10,2024-10-01,MAD,153.21,17.18,42.02,105.7,synthetic
+Morocco,Marrakesh,MAR,2024,11,2024-11-01,MAD,139.66,14.42,46.15,97.2,synthetic
+Morocco,Marrakesh,MAR,2024,12,2024-12-01,MAD,186.46,15.28,40.54,115.3,synthetic
+Morocco,Marrakesh,MAR,2025,1,2025-01-01,MAD,138.02,17.26,40.2,99.0,synthetic
+Morocco,Marrakesh,MAR,2025,2,2025-02-01,MAD,173.64,15.95,45.47,113.1,synthetic
+Morocco,Marrakesh,MAR,2025,3,2025-03-01,MAD,159.73,16.71,43.42,108.0,synthetic
+Morocco,Marrakesh,MAR,2025,4,2025-04-01,MAD,164.32,16.23,40.66,108.0,synthetic
+Morocco,Marrakesh,MAR,2025,5,2025-05-01,MAD,180.5,15.04,41.35,112.8,synthetic
+Morocco,Marrakesh,MAR,2025,6,2025-06-01,MAD,188.04,16.28,40.09,117.4,synthetic
+Egypt,Cairo,EGY,2023,1,2023-01-01,EGP,151.24,12.69,20.23,89.2,synthetic
+Egypt,Cairo,EGY,2023,2,2023-02-01,EGP,172.31,14.61,20.83,101.1,synthetic
+Egypt,Cairo,EGY,2023,3,2023-03-01,EGP,140.2,13.01,22.8,86.3,synthetic
+Egypt,Cairo,EGY,2023,4,2023-04-01,EGP,151.95,14.68,19.07,92.4,synthetic
+Egypt,Cairo,EGY,2023,5,2023-05-01,EGP,166.9,13.63,20.82,97.3,synthetic
+Egypt,Cairo,EGY,2023,6,2023-06-01,EGP,201.19,13.78,18.56,110.4,synthetic
+Egypt,Cairo,EGY,2023,7,2023-07-01,EGP,203.27,13.13,20.63,110.9,synthetic
+Egypt,Cairo,EGY,2023,8,2023-08-01,EGP,240.83,15.31,21.04,129.7,synthetic
+Egypt,Cairo,EGY,2023,9,2023-09-01,EGP,164.71,12.52,18.18,93.6,synthetic
+Egypt,Cairo,EGY,2023,10,2023-10-01,EGP,182.86,13.49,19.05,102.8,synthetic
+Egypt,Cairo,EGY,2023,11,2023-11-01,EGP,163.64,13.26,18.31,94.4,synthetic
+Egypt,Cairo,EGY,2023,12,2023-12-01,EGP,198.21,13.41,18.99,108.8,synthetic
+Egypt,Cairo,EGY,2024,1,2024-01-01,EGP,155.48,14.61,19.71,93.9,synthetic
+Egypt,Cairo,EGY,2024,2,2024-02-01,EGP,163.47,14.67,19.83,97.3,synthetic
+Egypt,Cairo,EGY,2024,3,2024-03-01,EGP,162.15,14.56,20.97,97.0,synthetic
+Egypt,Cairo,EGY,2024,4,2024-04-01,EGP,163.89,14.23,18.94,96.4,synthetic
+Egypt,Cairo,EGY,2024,5,2024-05-01,EGP,154.42,14.82,20.66,94.2,synthetic
+Egypt,Cairo,EGY,2024,6,2024-06-01,EGP,206.26,14.4,20.1,114.0,synthetic
+Egypt,Cairo,EGY,2024,7,2024-07-01,EGP,210.1,14.96,21.31,117.0,synthetic
+Egypt,Cairo,EGY,2024,8,2024-08-01,EGP,197.41,15.34,20.35,112.2,synthetic
+Egypt,Cairo,EGY,2024,9,2024-09-01,EGP,174.23,14.4,20.38,101.3,synthetic
+Egypt,Cairo,EGY,2024,10,2024-10-01,EGP,156.08,14.76,24.02,96.0,synthetic
+Egypt,Cairo,EGY,2024,11,2024-11-01,EGP,160.87,14.23,19.41,95.3,synthetic
+Egypt,Cairo,EGY,2024,12,2024-12-01,EGP,191.24,15.48,19.09,109.5,synthetic
+Egypt,Cairo,EGY,2025,1,2025-01-01,EGP,159.55,12.82,18.97,92.3,synthetic
+Egypt,Cairo,EGY,2025,2,2025-02-01,EGP,143.18,14.7,23.96,90.8,synthetic
+Egypt,Cairo,EGY,2025,3,2025-03-01,EGP,160.98,12.75,21.3,93.6,synthetic
+Egypt,Cairo,EGY,2025,4,2025-04-01,EGP,156.2,15.27,19.64,95.3,synthetic
+Egypt,Cairo,EGY,2025,5,2025-05-01,EGP,157.46,14.01,21.1,94.3,synthetic
+Egypt,Cairo,EGY,2025,6,2025-06-01,EGP,195.39,13.74,19.75,108.5,synthetic
+Israel,Tel Aviv,ISR,2023,1,2023-01-01,ILS,71.12,13.42,13.7,56.0,synthetic
+Israel,Tel Aviv,ISR,2023,2,2023-02-01,ILS,66.7,14.11,14.0,55.4,synthetic
+Israel,Tel Aviv,ISR,2023,3,2023-03-01,ILS,69.44,13.91,13.84,56.2,synthetic
+Israel,Tel Aviv,ISR,2023,4,2023-04-01,ILS,64.69,12.12,13.54,51.2,synthetic
+Israel,Tel Aviv,ISR,2023,5,2023-05-01,ILS,69.98,14.04,12.29,56.0,synthetic
+Israel,Tel Aviv,ISR,2023,6,2023-06-01,ILS,74.63,13.54,13.09,57.3,synthetic
+Israel,Tel Aviv,ISR,2023,7,2023-07-01,ILS,68.32,13.48,11.45,54.1,synthetic
+Israel,Tel Aviv,ISR,2023,8,2023-08-01,ILS,74.38,14.25,14.83,59.1,synthetic
+Israel,Tel Aviv,ISR,2023,9,2023-09-01,ILS,60.53,12.92,13.19,50.7,synthetic
+Israel,Tel Aviv,ISR,2023,10,2023-10-01,ILS,76.61,12.79,12.71,56.7,synthetic
+Israel,Tel Aviv,ISR,2023,11,2023-11-01,ILS,75.36,12.88,13.82,56.8,synthetic
+Israel,Tel Aviv,ISR,2023,12,2023-12-01,ILS,70.95,13.04,11.62,54.5,synthetic
+Israel,Tel Aviv,ISR,2024,1,2024-01-01,ILS,61.39,13.84,13.11,52.5,synthetic
+Israel,Tel Aviv,ISR,2024,2,2024-02-01,ILS,65.34,12.59,12.95,52.0,synthetic
+Israel,Tel Aviv,ISR,2024,3,2024-03-01,ILS,68.67,13.96,10.74,54.8,synthetic
+Israel,Tel Aviv,ISR,2024,4,2024-04-01,ILS,62.59,13.31,13.06,52.1,synthetic
+Israel,Tel Aviv,ISR,2024,5,2024-05-01,ILS,69.21,13.39,12.87,54.8,synthetic
+Israel,Tel Aviv,ISR,2024,6,2024-06-01,ILS,77.07,12.99,14.21,57.8,synthetic
+Israel,Tel Aviv,ISR,2024,7,2024-07-01,ILS,75.75,13.13,13.32,57.2,synthetic
+Israel,Tel Aviv,ISR,2024,8,2024-08-01,ILS,90.5,12.94,14.04,63.0,synthetic
+Israel,Tel Aviv,ISR,2024,9,2024-09-01,ILS,73.66,13.13,12.96,56.2,synthetic
+Israel,Tel Aviv,ISR,2024,10,2024-10-01,ILS,65.29,12.98,13.94,53.0,synthetic
+Israel,Tel Aviv,ISR,2024,11,2024-11-01,ILS,68.29,13.37,12.12,54.1,synthetic
+Israel,Tel Aviv,ISR,2024,12,2024-12-01,ILS,74.23,14.88,12.99,59.4,synthetic
+Israel,Tel Aviv,ISR,2025,1,2025-01-01,ILS,62.89,14.31,13.41,54.0,synthetic
+Israel,Tel Aviv,ISR,2025,2,2025-02-01,ILS,70.15,13.07,12.86,54.7,synthetic
+Israel,Tel Aviv,ISR,2025,3,2025-03-01,ILS,66.14,12.09,13.07,51.5,synthetic
+Israel,Tel Aviv,ISR,2025,4,2025-04-01,ILS,68.64,14.64,13.23,56.8,synthetic
+Israel,Tel Aviv,ISR,2025,5,2025-05-01,ILS,54.53,13.11,15.67,49.5,synthetic
+Israel,Tel Aviv,ISR,2025,6,2025-06-01,ILS,86.04,12.54,13.7,60.4,synthetic
+Jordan,Amman,JOR,2023,1,2023-01-01,JOD,102.06,8.15,40.99,69.8,synthetic
+Jordan,Amman,JOR,2023,2,2023-02-01,JOD,116.12,8.96,37.48,75.4,synthetic
+Jordan,Amman,JOR,2023,3,2023-03-01,JOD,126.9,8.13,45.67,81.4,synthetic
+Jordan,Amman,JOR,2023,4,2023-04-01,JOD,103.56,8.18,42.16,70.9,synthetic
+Jordan,Amman,JOR,2023,5,2023-05-01,JOD,136.02,8.92,42.57,85.2,synthetic
+Jordan,Amman,JOR,2023,6,2023-06-01,JOD,144.25,8.21,39.55,86.2,synthetic
+Jordan,Amman,JOR,2023,7,2023-07-01,JOD,130.08,8.08,42.11,81.3,synthetic
+Jordan,Amman,JOR,2023,8,2023-08-01,JOD,131.1,8.92,37.23,81.3,synthetic
+Jordan,Amman,JOR,2023,9,2023-09-01,JOD,122.88,8.49,44.99,80.2,synthetic
+Jordan,Amman,JOR,2023,10,2023-10-01,JOD,123.15,9.4,38.79,79.5,synthetic
+Jordan,Amman,JOR,2023,11,2023-11-01,JOD,120.58,8.24,39.77,76.9,synthetic
+Jordan,Amman,JOR,2023,12,2023-12-01,JOD,141.02,8.37,37.48,84.4,synthetic
+Jordan,Amman,JOR,2024,1,2024-01-01,JOD,106.46,7.52,37.93,69.3,synthetic
+Jordan,Amman,JOR,2024,2,2024-02-01,JOD,126.06,7.91,37.04,77.5,synthetic
+Jordan,Amman,JOR,2024,3,2024-03-01,JOD,137.24,8.42,41.88,84.6,synthetic
+Jordan,Amman,JOR,2024,4,2024-04-01,JOD,126.21,9.1,36.6,79.4,synthetic
+Jordan,Amman,JOR,2024,5,2024-05-01,JOD,117.82,7.9,47.97,78.3,synthetic
+Jordan,Amman,JOR,2024,6,2024-06-01,JOD,125.67,8.2,37.98,78.2,synthetic
+Jordan,Amman,JOR,2024,7,2024-07-01,JOD,126.8,9.46,47.91,84.5,synthetic
+Jordan,Amman,JOR,2024,8,2024-08-01,JOD,138.56,8.06,34.55,81.8,synthetic
+Jordan,Amman,JOR,2024,9,2024-09-01,JOD,117.69,8.59,39.09,76.0,synthetic
+Jordan,Amman,JOR,2024,10,2024-10-01,JOD,122.16,8.96,41.89,79.5,synthetic
+Jordan,Amman,JOR,2024,11,2024-11-01,JOD,117.0,8.17,42.87,76.5,synthetic
+Jordan,Amman,JOR,2024,12,2024-12-01,JOD,144.19,9.22,43.23,89.2,synthetic
+Jordan,Amman,JOR,2025,1,2025-01-01,JOD,106.38,8.0,38.79,70.4,synthetic
+Jordan,Amman,JOR,2025,2,2025-02-01,JOD,109.89,9.15,41.97,74.9,synthetic
+Jordan,Amman,JOR,2025,3,2025-03-01,JOD,130.59,8.96,41.56,82.8,synthetic
+Jordan,Amman,JOR,2025,4,2025-04-01,JOD,131.56,9.0,41.16,83.1,synthetic
+Jordan,Amman,JOR,2025,5,2025-05-01,JOD,134.25,8.81,40.09,83.4,synthetic
+Jordan,Amman,JOR,2025,6,2025-06-01,JOD,134.39,9.12,44.51,85.6,synthetic
+Saudi Arabia,Riyadh,SAU,2023,1,2023-01-01,SAR,147.24,20.63,16.6,99.5,synthetic
+Saudi Arabia,Riyadh,SAU,2023,2,2023-02-01,SAR,146.94,21.05,14.25,99.2,synthetic
+Saudi Arabia,Riyadh,SAU,2023,3,2023-03-01,SAR,124.05,20.59,15.2,89.6,synthetic
+Saudi Arabia,Riyadh,SAU,2023,4,2023-04-01,SAR,140.29,20.5,15.53,96.1,synthetic
+Saudi Arabia,Riyadh,SAU,2023,5,2023-05-01,SAR,163.56,22.25,13.77,107.7,synthetic
+Saudi Arabia,Riyadh,SAU,2023,6,2023-06-01,SAR,173.87,20.53,13.23,108.7,synthetic
+Saudi Arabia,Riyadh,SAU,2023,7,2023-07-01,SAR,162.45,20.78,13.19,104.6,synthetic
+Saudi Arabia,Riyadh,SAU,2023,8,2023-08-01,SAR,155.09,21.86,14.46,103.9,synthetic
+Saudi Arabia,Riyadh,SAU,2023,9,2023-09-01,SAR,167.82,20.71,14.52,107.1,synthetic
+Saudi Arabia,Riyadh,SAU,2023,10,2023-10-01,SAR,151.41,21.25,14.96,101.6,synthetic
+Saudi Arabia,Riyadh,SAU,2023,11,2023-11-01,SAR,156.88,22.0,13.97,104.7,synthetic
+Saudi Arabia,Riyadh,SAU,2023,12,2023-12-01,SAR,172.19,19.81,13.42,106.9,synthetic
+Saudi Arabia,Riyadh,SAU,2024,1,2024-01-01,SAR,140.37,20.12,14.66,95.2,synthetic
+Saudi Arabia,Riyadh,SAU,2024,2,2024-02-01,SAR,161.86,20.4,14.51,104.2,synthetic
+Saudi Arabia,Riyadh,SAU,2024,3,2024-03-01,SAR,135.5,21.18,13.54,94.6,synthetic
+Saudi Arabia,Riyadh,SAU,2024,4,2024-04-01,SAR,154.83,20.7,15.23,102.1,synthetic
+Saudi Arabia,Riyadh,SAU,2024,5,2024-05-01,SAR,144.81,20.73,12.98,97.3,synthetic
+Saudi Arabia,Riyadh,SAU,2024,6,2024-06-01,SAR,180.85,22.73,14.5,115.7,synthetic
+Saudi Arabia,Riyadh,SAU,2024,7,2024-07-01,SAR,209.01,23.43,13.92,127.9,synthetic
+Saudi Arabia,Riyadh,SAU,2024,8,2024-08-01,SAR,172.75,22.18,13.39,111.1,synthetic
+Saudi Arabia,Riyadh,SAU,2024,9,2024-09-01,SAR,161.5,22.04,14.48,106.8,synthetic
+Saudi Arabia,Riyadh,SAU,2024,10,2024-10-01,SAR,155.84,23.81,14.39,107.4,synthetic
+Saudi Arabia,Riyadh,SAU,2024,11,2024-11-01,SAR,146.38,23.53,15.19,103.5,synthetic
+Saudi Arabia,Riyadh,SAU,2024,12,2024-12-01,SAR,172.71,21.58,14.42,110.5,synthetic
+Saudi Arabia,Riyadh,SAU,2025,1,2025-01-01,SAR,151.99,19.82,12.69,98.6,synthetic
+Saudi Arabia,Riyadh,SAU,2025,2,2025-02-01,SAR,137.23,20.33,13.58,93.9,synthetic
+Saudi Arabia,Riyadh,SAU,2025,3,2025-03-01,SAR,155.22,21.36,14.42,103.1,synthetic
+Saudi Arabia,Riyadh,SAU,2025,4,2025-04-01,SAR,133.25,20.98,14.81,93.8,synthetic
+Saudi Arabia,Riyadh,SAU,2025,5,2025-05-01,SAR,154.75,20.64,14.38,101.7,synthetic
+Saudi Arabia,Riyadh,SAU,2025,6,2025-06-01,SAR,208.44,21.55,13.53,124.4,synthetic
+Russia,Moscow,RUS,2023,1,2023-01-01,RUB,110.18,12.84,36.18,79.0,synthetic
+Russia,Moscow,RUS,2023,2,2023-02-01,RUB,122.91,13.17,36.11,84.6,synthetic
+Russia,Moscow,RUS,2023,3,2023-03-01,RUB,125.17,14.36,36.31,87.6,synthetic
+Russia,Moscow,RUS,2023,4,2023-04-01,RUB,128.54,13.19,38.03,87.7,synthetic
+Russia,Moscow,RUS,2023,5,2023-05-01,RUB,128.31,14.34,38.39,89.6,synthetic
+Russia,Moscow,RUS,2023,6,2023-06-01,RUB,156.51,13.55,37.19,99.1,synthetic
+Russia,Moscow,RUS,2023,7,2023-07-01,RUB,162.19,13.09,34.96,99.8,synthetic
+Russia,Moscow,RUS,2023,8,2023-08-01,RUB,151.64,13.97,34.46,96.9,synthetic
+Russia,Moscow,RUS,2023,9,2023-09-01,RUB,123.82,13.55,30.9,83.7,synthetic
+Russia,Moscow,RUS,2023,10,2023-10-01,RUB,122.37,13.5,36.15,85.0,synthetic
+Russia,Moscow,RUS,2023,11,2023-11-01,RUB,138.67,12.63,34.45,89.4,synthetic
+Russia,Moscow,RUS,2023,12,2023-12-01,RUB,118.24,13.23,35.55,82.7,synthetic
+Russia,Moscow,RUS,2024,1,2024-01-01,RUB,119.48,14.53,38.77,86.6,synthetic
+Russia,Moscow,RUS,2024,2,2024-02-01,RUB,125.34,13.33,39.19,87.0,synthetic
+Russia,Moscow,RUS,2024,3,2024-03-01,RUB,124.36,12.96,32.17,83.4,synthetic
+Russia,Moscow,RUS,2024,4,2024-04-01,RUB,120.16,14.25,42.39,87.7,synthetic
+Russia,Moscow,RUS,2024,5,2024-05-01,RUB,125.17,13.0,33.53,84.3,synthetic
+Russia,Moscow,RUS,2024,6,2024-06-01,RUB,156.07,12.19,37.97,97.0,synthetic
+Russia,Moscow,RUS,2024,7,2024-07-01,RUB,159.25,13.98,36.0,100.5,synthetic
+Russia,Moscow,RUS,2024,8,2024-08-01,RUB,156.23,13.77,34.57,98.4,synthetic
+Russia,Moscow,RUS,2024,9,2024-09-01,RUB,143.0,13.34,38.55,93.9,synthetic
+Russia,Moscow,RUS,2024,10,2024-10-01,RUB,100.46,14.67,40.32,79.8,synthetic
+Russia,Moscow,RUS,2024,11,2024-11-01,RUB,124.86,14.09,37.99,87.7,synthetic
+Russia,Moscow,RUS,2024,12,2024-12-01,RUB,141.79,14.08,34.5,93.1,synthetic
+Russia,Moscow,RUS,2025,1,2025-01-01,RUB,118.49,14.55,39.06,86.3,synthetic
+Russia,Moscow,RUS,2025,2,2025-02-01,RUB,117.52,13.03,34.91,81.8,synthetic
+Russia,Moscow,RUS,2025,3,2025-03-01,RUB,131.86,12.81,37.48,88.1,synthetic
+Russia,Moscow,RUS,2025,4,2025-04-01,RUB,132.0,13.56,39.15,90.1,synthetic
+Russia,Moscow,RUS,2025,5,2025-05-01,RUB,121.53,13.45,34.06,83.8,synthetic
+Russia,Moscow,RUS,2025,6,2025-06-01,RUB,161.64,13.0,37.46,100.4,synthetic
+Norway,Oslo,NOR,2023,1,2023-01-01,NOK,147.53,9.07,35.05,87.3,synthetic
+Norway,Oslo,NOR,2023,2,2023-02-01,NOK,143.49,11.65,35.0,89.9,synthetic
+Norway,Oslo,NOR,2023,3,2023-03-01,NOK,140.77,10.48,29.9,85.0,synthetic
+Norway,Oslo,NOR,2023,4,2023-04-01,NOK,146.29,10.81,34.04,89.3,synthetic
+Norway,Oslo,NOR,2023,5,2023-05-01,NOK,125.06,9.42,37.81,79.9,synthetic
+Norway,Oslo,NOR,2023,6,2023-06-01,NOK,179.47,9.17,32.67,99.3,synthetic
+Norway,Oslo,NOR,2023,7,2023-07-01,NOK,166.43,9.86,37.53,97.1,synthetic
+Norway,Oslo,NOR,2023,8,2023-08-01,NOK,188.9,9.92,31.12,103.8,synthetic
+Norway,Oslo,NOR,2023,9,2023-09-01,NOK,129.77,9.96,31.09,80.2,synthetic
+Norway,Oslo,NOR,2023,10,2023-10-01,NOK,142.57,9.83,31.59,85.3,synthetic
+Norway,Oslo,NOR,2023,11,2023-11-01,NOK,133.29,9.6,35.53,82.6,synthetic
+Norway,Oslo,NOR,2023,12,2023-12-01,NOK,189.03,10.01,34.5,105.2,synthetic
+Norway,Oslo,NOR,2024,1,2024-01-01,NOK,136.52,9.03,33.09,82.1,synthetic
+Norway,Oslo,NOR,2024,2,2024-02-01,NOK,149.95,9.85,29.27,87.4,synthetic
+Norway,Oslo,NOR,2024,3,2024-03-01,NOK,136.07,10.35,34.51,84.6,synthetic
+Norway,Oslo,NOR,2024,4,2024-04-01,NOK,128.73,11.02,34.25,82.7,synthetic
+Norway,Oslo,NOR,2024,5,2024-05-01,NOK,149.66,9.88,33.44,88.9,synthetic
+Norway,Oslo,NOR,2024,6,2024-06-01,NOK,164.09,10.88,36.73,97.5,synthetic
+Norway,Oslo,NOR,2024,7,2024-07-01,NOK,185.69,9.99,31.91,102.9,synthetic
+Norway,Oslo,NOR,2024,8,2024-08-01,NOK,192.04,9.17,35.0,105.2,synthetic
+Norway,Oslo,NOR,2024,9,2024-09-01,NOK,126.15,8.47,35.08,77.7,synthetic
+Norway,Oslo,NOR,2024,10,2024-10-01,NOK,135.79,8.5,35.62,81.8,synthetic
+Norway,Oslo,NOR,2024,11,2024-11-01,NOK,169.82,10.46,33.7,98.0,synthetic
+Norway,Oslo,NOR,2024,12,2024-12-01,NOK,174.35,10.17,37.02,100.6,synthetic
+Norway,Oslo,NOR,2025,1,2025-01-01,NOK,141.2,9.67,35.04,85.7,synthetic
+Norway,Oslo,NOR,2025,2,2025-02-01,NOK,151.62,9.58,34.03,89.4,synthetic
+Norway,Oslo,NOR,2025,3,2025-03-01,NOK,161.22,10.35,35.47,95.0,synthetic
+Norway,Oslo,NOR,2025,4,2025-04-01,NOK,165.16,9.43,38.22,96.1,synthetic
+Norway,Oslo,NOR,2025,5,2025-05-01,NOK,151.49,11.55,31.45,91.6,synthetic
+Norway,Oslo,NOR,2025,6,2025-06-01,NOK,164.62,9.9,35.27,95.6,synthetic
+Sweden,Stockholm,SWE,2023,1,2023-01-01,SEK,180.11,7.57,43.38,100.9,synthetic
+Sweden,Stockholm,SWE,2023,2,2023-02-01,SEK,187.26,8.32,40.05,103.8,synthetic
+Sweden,Stockholm,SWE,2023,3,2023-03-01,SEK,173.58,7.99,41.26,98.2,synthetic
+Sweden,Stockholm,SWE,2023,4,2023-04-01,SEK,170.92,7.62,36.59,94.8,synthetic
+Sweden,Stockholm,SWE,2023,5,2023-05-01,SEK,160.24,8.14,39.41,92.4,synthetic
+Sweden,Stockholm,SWE,2023,6,2023-06-01,SEK,208.12,8.27,37.75,111.2,synthetic
+Sweden,Stockholm,SWE,2023,7,2023-07-01,SEK,228.58,7.9,38.29,119.0,synthetic
+Sweden,Stockholm,SWE,2023,8,2023-08-01,SEK,212.49,7.15,37.3,110.9,synthetic
+Sweden,Stockholm,SWE,2023,9,2023-09-01,SEK,183.88,7.19,42.58,101.5,synthetic
+Sweden,Stockholm,SWE,2023,10,2023-10-01,SEK,191.11,7.85,40.29,104.6,synthetic
+Sweden,Stockholm,SWE,2023,11,2023-11-01,SEK,185.76,7.81,41.89,103.0,synthetic
+Sweden,Stockholm,SWE,2023,12,2023-12-01,SEK,193.61,7.8,37.28,104.4,synthetic
+Sweden,Stockholm,SWE,2024,1,2024-01-01,SEK,175.17,8.59,38.98,99.0,synthetic
+Sweden,Stockholm,SWE,2024,2,2024-02-01,SEK,153.16,7.51,40.58,89.0,synthetic
+Sweden,Stockholm,SWE,2024,3,2024-03-01,SEK,195.65,8.22,38.42,106.4,synthetic
+Sweden,Stockholm,SWE,2024,4,2024-04-01,SEK,180.95,7.92,38.44,100.0,synthetic
+Sweden,Stockholm,SWE,2024,5,2024-05-01,SEK,157.42,8.71,32.47,89.7,synthetic
+Sweden,Stockholm,SWE,2024,6,2024-06-01,SEK,217.65,7.81,38.35,114.5,synthetic
+Sweden,Stockholm,SWE,2024,7,2024-07-01,SEK,232.29,7.69,37.61,119.8,synthetic
+Sweden,Stockholm,SWE,2024,8,2024-08-01,SEK,202.46,8.23,38.27,109.1,synthetic
+Sweden,Stockholm,SWE,2024,9,2024-09-01,SEK,149.03,7.61,43.03,88.4,synthetic
+Sweden,Stockholm,SWE,2024,10,2024-10-01,SEK,171.51,8.25,38.76,96.9,synthetic
+Sweden,Stockholm,SWE,2024,11,2024-11-01,SEK,161.5,8.84,38.97,93.9,synthetic
+Sweden,Stockholm,SWE,2024,12,2024-12-01,SEK,197.34,8.56,37.49,107.3,synthetic
+Sweden,Stockholm,SWE,2025,1,2025-01-01,SEK,162.38,8.04,39.49,93.2,synthetic
+Sweden,Stockholm,SWE,2025,2,2025-02-01,SEK,174.04,9.04,40.42,99.8,synthetic
+Sweden,Stockholm,SWE,2025,3,2025-03-01,SEK,138.06,8.19,39.59,83.7,synthetic
+Sweden,Stockholm,SWE,2025,4,2025-04-01,SEK,171.09,8.15,39.41,96.8,synthetic
+Sweden,Stockholm,SWE,2025,5,2025-05-01,SEK,169.78,8.33,37.99,96.0,synthetic
+Sweden,Stockholm,SWE,2025,6,2025-06-01,SEK,189.08,9.49,37.51,105.5,synthetic
+Finland,Helsinki,FIN,2023,1,2023-01-01,EUR,112.69,6.02,35.42,68.4,synthetic
+Finland,Helsinki,FIN,2023,2,2023-02-01,EUR,122.14,5.07,38.7,71.8,synthetic
+Finland,Helsinki,FIN,2023,3,2023-03-01,EUR,105.69,6.19,36.74,66.4,synthetic
+Finland,Helsinki,FIN,2023,4,2023-04-01,EUR,122.22,5.38,34.65,70.8,synthetic
+Finland,Helsinki,FIN,2023,5,2023-05-01,EUR,112.43,5.68,33.69,67.1,synthetic
+Finland,Helsinki,FIN,2023,6,2023-06-01,EUR,117.33,6.05,34.1,69.8,synthetic
+Finland,Helsinki,FIN,2023,7,2023-07-01,EUR,134.76,5.48,35.15,76.2,synthetic
+Finland,Helsinki,FIN,2023,8,2023-08-01,EUR,130.17,4.9,35.27,73.5,synthetic
+Finland,Helsinki,FIN,2023,9,2023-09-01,EUR,121.68,5.6,31.54,69.8,synthetic
+Finland,Helsinki,FIN,2023,10,2023-10-01,EUR,117.66,5.17,31.83,67.6,synthetic
+Finland,Helsinki,FIN,2023,11,2023-11-01,EUR,109.81,5.96,33.42,66.4,synthetic
+Finland,Helsinki,FIN,2023,12,2023-12-01,EUR,135.17,6.33,35.14,77.8,synthetic
+Finland,Helsinki,FIN,2024,1,2024-01-01,EUR,120.0,5.54,32.86,69.6,synthetic
+Finland,Helsinki,FIN,2024,2,2024-02-01,EUR,96.39,6.0,35.37,61.8,synthetic
+Finland,Helsinki,FIN,2024,3,2024-03-01,EUR,115.15,5.62,36.06,69.0,synthetic
+Finland,Helsinki,FIN,2024,4,2024-04-01,EUR,102.3,5.47,31.56,61.9,synthetic
+Finland,Helsinki,FIN,2024,5,2024-05-01,EUR,133.38,5.97,29.0,74.2,synthetic
+Finland,Helsinki,FIN,2024,6,2024-06-01,EUR,123.22,5.62,33.16,71.1,synthetic
+Finland,Helsinki,FIN,2024,7,2024-07-01,EUR,125.34,6.33,35.04,73.8,synthetic
+Finland,Helsinki,FIN,2024,8,2024-08-01,EUR,145.52,5.43,36.02,80.8,synthetic
+Finland,Helsinki,FIN,2024,9,2024-09-01,EUR,113.27,5.57,35.76,68.0,synthetic
+Finland,Helsinki,FIN,2024,10,2024-10-01,EUR,101.6,6.21,34.73,64.0,synthetic
+Finland,Helsinki,FIN,2024,11,2024-11-01,EUR,128.8,5.3,32.07,72.4,synthetic
+Finland,Helsinki,FIN,2024,12,2024-12-01,EUR,127.16,5.75,34.45,73.4,synthetic
+Finland,Helsinki,FIN,2025,1,2025-01-01,EUR,112.49,5.32,31.25,65.6,synthetic
+Finland,Helsinki,FIN,2025,2,2025-02-01,EUR,116.37,5.51,32.65,68.0,synthetic
+Finland,Helsinki,FIN,2025,3,2025-03-01,EUR,131.29,5.64,37.34,75.9,synthetic
+Finland,Helsinki,FIN,2025,4,2025-04-01,EUR,111.84,5.75,34.16,67.1,synthetic
+Finland,Helsinki,FIN,2025,5,2025-05-01,EUR,100.96,6.15,33.97,63.4,synthetic
+Finland,Helsinki,FIN,2025,6,2025-06-01,EUR,148.56,5.41,33.9,81.2,synthetic
+Poland,Krakow,POL,2023,1,2023-01-01,PLN,119.57,22.9,51.59,105.3,synthetic
+Poland,Krakow,POL,2023,2,2023-02-01,PLN,95.59,20.52,45.52,89.5,synthetic
+Poland,Krakow,POL,2023,3,2023-03-01,PLN,114.13,21.64,44.2,98.3,synthetic
+Poland,Krakow,POL,2023,4,2023-04-01,PLN,106.23,19.5,48.78,93.3,synthetic
+Poland,Krakow,POL,2023,5,2023-05-01,PLN,93.57,22.1,50.26,93.1,synthetic
+Poland,Krakow,POL,2023,6,2023-06-01,PLN,149.18,22.51,47.51,115.0,synthetic
+Poland,Krakow,POL,2023,7,2023-07-01,PLN,137.9,19.62,45.67,105.0,synthetic
+Poland,Krakow,POL,2023,8,2023-08-01,PLN,132.87,18.64,48.84,102.5,synthetic
+Poland,Krakow,POL,2023,9,2023-09-01,PLN,99.05,21.55,45.27,92.5,synthetic
+Poland,Krakow,POL,2023,10,2023-10-01,PLN,111.51,21.44,53.76,100.5,synthetic
+Poland,Krakow,POL,2023,11,2023-11-01,PLN,107.91,20.43,48.12,95.3,synthetic
+Poland,Krakow,POL,2023,12,2023-12-01,PLN,115.51,21.94,50.99,101.9,synthetic
+Poland,Krakow,POL,2024,1,2024-01-01,PLN,129.16,20.62,48.05,104.0,synthetic
+Poland,Krakow,POL,2024,2,2024-02-01,PLN,102.89,21.69,50.27,96.2,synthetic
+Poland,Krakow,POL,2024,3,2024-03-01,PLN,107.39,22.81,46.85,98.5,synthetic
+Poland,Krakow,POL,2024,4,2024-04-01,PLN,116.36,22.11,48.92,101.7,synthetic
+Poland,Krakow,POL,2024,5,2024-05-01,PLN,105.14,24.54,46.16,100.3,synthetic
+Poland,Krakow,POL,2024,6,2024-06-01,PLN,132.51,20.45,55.08,107.8,synthetic
+Poland,Krakow,POL,2024,7,2024-07-01,PLN,138.61,20.55,50.72,108.7,synthetic
+Poland,Krakow,POL,2024,8,2024-08-01,PLN,132.09,20.75,51.56,106.8,synthetic
+Poland,Krakow,POL,2024,9,2024-09-01,PLN,111.21,21.69,48.82,99.0,synthetic
+Poland,Krakow,POL,2024,10,2024-10-01,PLN,111.57,21.71,49.17,99.3,synthetic
+Poland,Krakow,POL,2024,11,2024-11-01,PLN,102.32,23.59,45.36,97.3,synthetic
+Poland,Krakow,POL,2024,12,2024-12-01,PLN,133.85,21.01,55.0,109.2,synthetic
+Poland,Krakow,POL,2025,1,2025-01-01,PLN,100.06,20.47,45.64,91.3,synthetic
+Poland,Krakow,POL,2025,2,2025-02-01,PLN,110.65,19.65,47.32,94.8,synthetic
+Poland,Krakow,POL,2025,3,2025-03-01,PLN,89.28,21.73,47.25,89.6,synthetic
+Poland,Krakow,POL,2025,4,2025-04-01,PLN,95.01,22.81,44.48,92.7,synthetic
+Poland,Krakow,POL,2025,5,2025-05-01,PLN,114.73,20.52,54.45,100.5,synthetic
+Poland,Krakow,POL,2025,6,2025-06-01,PLN,137.19,20.12,45.82,105.6,synthetic
+Hungary,Budapest,HUN,2023,1,2023-01-01,HUF,153.15,12.44,39.73,96.9,synthetic
+Hungary,Budapest,HUN,2023,2,2023-02-01,HUF,173.46,12.25,36.49,103.5,synthetic
+Hungary,Budapest,HUN,2023,3,2023-03-01,HUF,140.25,11.59,38.07,89.7,synthetic
+Hungary,Budapest,HUN,2023,4,2023-04-01,HUF,161.11,12.43,39.95,100.1,synthetic
+Hungary,Budapest,HUN,2023,5,2023-05-01,HUF,147.44,12.19,37.73,93.4,synthetic
+Hungary,Budapest,HUN,2023,6,2023-06-01,HUF,184.48,13.43,39.61,111.0,synthetic
+Hungary,Budapest,HUN,2023,7,2023-07-01,HUF,200.03,13.7,33.33,115.3,synthetic
+Hungary,Budapest,HUN,2023,8,2023-08-01,HUF,195.37,12.64,34.86,112.3,synthetic
+Hungary,Budapest,HUN,2023,9,2023-09-01,HUF,166.83,11.55,39.04,100.6,synthetic
+Hungary,Budapest,HUN,2023,10,2023-10-01,HUF,176.7,12.57,32.41,103.8,synthetic
+Hungary,Budapest,HUN,2023,11,2023-11-01,HUF,150.31,12.79,37.3,95.4,synthetic
+Hungary,Budapest,HUN,2023,12,2023-12-01,HUF,153.36,13.29,37.6,97.6,synthetic
+Hungary,Budapest,HUN,2024,1,2024-01-01,HUF,152.24,13.11,35.47,96.0,synthetic
+Hungary,Budapest,HUN,2024,2,2024-02-01,HUF,153.94,12.64,41.88,98.3,synthetic
+Hungary,Budapest,HUN,2024,3,2024-03-01,HUF,184.07,12.64,38.45,109.1,synthetic
+Hungary,Budapest,HUN,2024,4,2024-04-01,HUF,173.23,11.44,38.92,102.9,synthetic
+Hungary,Budapest,HUN,2024,5,2024-05-01,HUF,153.34,12.61,36.65,96.1,synthetic
+Hungary,Budapest,HUN,2024,6,2024-06-01,HUF,203.33,12.46,29.23,113.1,synthetic
+Hungary,Budapest,HUN,2024,7,2024-07-01,HUF,198.29,12.85,38.4,115.1,synthetic
+Hungary,Budapest,HUN,2024,8,2024-08-01,HUF,193.89,13.59,38.05,114.5,synthetic
+Hungary,Budapest,HUN,2024,9,2024-09-01,HUF,168.61,13.14,38.19,103.7,synthetic
+Hungary,Budapest,HUN,2024,10,2024-10-01,HUF,151.21,10.56,36.0,91.6,synthetic
+Hungary,Budapest,HUN,2024,11,2024-11-01,HUF,172.83,12.11,39.33,104.1,synthetic
+Hungary,Budapest,HUN,2024,12,2024-12-01,HUF,197.82,13.33,36.47,115.0,synthetic
+Hungary,Budapest,HUN,2025,1,2025-01-01,HUF,169.01,12.75,41.15,104.3,synthetic
+Hungary,Budapest,HUN,2025,2,2025-02-01,HUF,140.67,12.03,39.45,91.1,synthetic
+Hungary,Budapest,HUN,2025,3,2025-03-01,HUF,183.06,12.55,36.48,107.8,synthetic
+Hungary,Budapest,HUN,2025,4,2025-04-01,HUF,172.78,13.01,36.3,104.4,synthetic
+Hungary,Budapest,HUN,2025,5,2025-05-01,HUF,167.22,13.25,42.17,104.8,synthetic
+Hungary,Budapest,HUN,2025,6,2025-06-01,HUF,207.11,12.4,37.1,117.4,synthetic
+Croatia,Dubrovnik,HRV,2023,1,2023-01-01,EUR,183.36,12.55,42.2,110.1,synthetic
+Croatia,Dubrovnik,HRV,2023,2,2023-02-01,EUR,167.42,15.08,42.23,107.9,synthetic
+Croatia,Dubrovnik,HRV,2023,3,2023-03-01,EUR,157.27,13.02,48.57,102.8,synthetic
+Croatia,Dubrovnik,HRV,2023,4,2023-04-01,EUR,128.75,12.66,51.84,92.0,synthetic
+Croatia,Dubrovnik,HRV,2023,5,2023-05-01,EUR,173.98,12.58,43.39,106.8,synthetic
+Croatia,Dubrovnik,HRV,2023,6,2023-06-01,EUR,200.43,14.15,49.12,122.2,synthetic
+Croatia,Dubrovnik,HRV,2023,7,2023-07-01,EUR,205.55,13.03,45.92,121.2,synthetic
+Croatia,Dubrovnik,HRV,2023,8,2023-08-01,EUR,188.22,12.63,38.16,110.7,synthetic
+Croatia,Dubrovnik,HRV,2023,9,2023-09-01,EUR,145.33,12.74,39.93,94.3,synthetic
+Croatia,Dubrovnik,HRV,2023,10,2023-10-01,EUR,170.29,12.5,33.94,101.7,synthetic
+Croatia,Dubrovnik,HRV,2023,11,2023-11-01,EUR,152.25,13.09,41.67,98.3,synthetic
+Croatia,Dubrovnik,HRV,2023,12,2023-12-01,EUR,223.58,12.97,46.2,128.4,synthetic
+Croatia,Dubrovnik,HRV,2024,1,2024-01-01,EUR,165.87,13.44,40.97,104.1,synthetic
+Croatia,Dubrovnik,HRV,2024,2,2024-02-01,EUR,165.34,12.85,44.04,104.1,synthetic
+Croatia,Dubrovnik,HRV,2024,3,2024-03-01,EUR,162.99,12.71,46.54,103.8,synthetic
+Croatia,Dubrovnik,HRV,2024,4,2024-04-01,EUR,171.8,13.11,43.96,107.1,synthetic
+Croatia,Dubrovnik,HRV,2024,5,2024-05-01,EUR,165.01,12.77,43.73,103.7,synthetic
+Croatia,Dubrovnik,HRV,2024,6,2024-06-01,EUR,189.45,12.71,38.57,111.4,synthetic
+Croatia,Dubrovnik,HRV,2024,7,2024-07-01,EUR,193.63,13.93,41.4,116.2,synthetic
+Croatia,Dubrovnik,HRV,2024,8,2024-08-01,EUR,239.55,14.19,47.49,137.3,synthetic
+Croatia,Dubrovnik,HRV,2024,9,2024-09-01,EUR,176.69,14.97,41.12,111.0,synthetic
+Croatia,Dubrovnik,HRV,2024,10,2024-10-01,EUR,132.09,13.11,45.22,91.6,synthetic
+Croatia,Dubrovnik,HRV,2024,11,2024-11-01,EUR,168.14,13.69,47.54,107.9,synthetic
+Croatia,Dubrovnik,HRV,2024,12,2024-12-01,EUR,205.44,14.12,40.66,120.9,synthetic
+Croatia,Dubrovnik,HRV,2025,1,2025-01-01,EUR,151.57,14.77,43.83,101.7,synthetic
+Croatia,Dubrovnik,HRV,2025,2,2025-02-01,EUR,157.84,12.97,41.54,100.3,synthetic
+Croatia,Dubrovnik,HRV,2025,3,2025-03-01,EUR,156.7,12.43,38.95,98.0,synthetic
+Croatia,Dubrovnik,HRV,2025,4,2025-04-01,EUR,163.53,12.99,46.89,104.6,synthetic
+Croatia,Dubrovnik,HRV,2025,5,2025-05-01,EUR,170.02,13.68,41.25,106.3,synthetic
+Croatia,Dubrovnik,HRV,2025,6,2025-06-01,EUR,197.42,13.76,45.7,119.0,synthetic
+Iceland,Reykjavik,ISL,2023,1,2023-01-01,ISK,125.58,16.35,40.2,92.6,synthetic
+Iceland,Reykjavik,ISL,2023,2,2023-02-01,ISK,138.28,18.98,40.63,102.2,synthetic
+Iceland,Reykjavik,ISL,2023,3,2023-03-01,ISK,127.05,17.46,40.98,95.3,synthetic
+Iceland,Reykjavik,ISL,2023,4,2023-04-01,ISK,135.16,17.73,42.52,99.6,synthetic
+Iceland,Reykjavik,ISL,2023,5,2023-05-01,ISK,121.47,17.7,43.98,94.6,synthetic
+Iceland,Reykjavik,ISL,2023,6,2023-06-01,ISK,167.74,17.95,40.25,112.1,synthetic
+Iceland,Reykjavik,ISL,2023,7,2023-07-01,ISK,158.78,15.32,36.96,102.9,synthetic
+Iceland,Reykjavik,ISL,2023,8,2023-08-01,ISK,156.2,17.95,40.14,107.5,synthetic
+Iceland,Reykjavik,ISL,2023,9,2023-09-01,ISK,142.51,17.99,36.54,100.7,synthetic
+Iceland,Reykjavik,ISL,2023,10,2023-10-01,ISK,134.1,17.99,39.03,98.3,synthetic
+Iceland,Reykjavik,ISL,2023,11,2023-11-01,ISK,127.65,20.81,33.27,98.2,synthetic
+Iceland,Reykjavik,ISL,2023,12,2023-12-01,ISK,151.97,18.34,37.3,105.3,synthetic
+Iceland,Reykjavik,ISL,2024,1,2024-01-01,ISK,140.11,19.24,39.33,102.9,synthetic
+Iceland,Reykjavik,ISL,2024,2,2024-02-01,ISK,127.87,18.22,39.17,96.2,synthetic
+Iceland,Reykjavik,ISL,2024,3,2024-03-01,ISK,129.88,18.14,40.16,97.2,synthetic
+Iceland,Reykjavik,ISL,2024,4,2024-04-01,ISK,138.57,16.99,36.56,97.5,synthetic
+Iceland,Reykjavik,ISL,2024,5,2024-05-01,ISK,112.42,19.3,40.15,92.2,synthetic
+Iceland,Reykjavik,ISL,2024,6,2024-06-01,ISK,163.18,16.77,44.39,109.9,synthetic
+Iceland,Reykjavik,ISL,2024,7,2024-07-01,ISK,149.2,18.53,41.82,106.2,synthetic
+Iceland,Reykjavik,ISL,2024,8,2024-08-01,ISK,144.45,17.74,39.95,102.3,synthetic
+Iceland,Reykjavik,ISL,2024,9,2024-09-01,ISK,160.58,18.68,43.9,111.8,synthetic
+Iceland,Reykjavik,ISL,2024,10,2024-10-01,ISK,143.3,18.75,36.73,102.3,synthetic
+Iceland,Reykjavik,ISL,2024,11,2024-11-01,ISK,141.78,16.7,43.88,101.0,synthetic
+Iceland,Reykjavik,ISL,2024,12,2024-12-01,ISK,159.35,15.43,38.52,103.9,synthetic
+Iceland,Reykjavik,ISL,2025,1,2025-01-01,ISK,137.54,18.08,41.43,100.7,synthetic
+Iceland,Reykjavik,ISL,2025,2,2025-02-01,ISK,121.81,16.91,39.26,91.6,synthetic
+Iceland,Reykjavik,ISL,2025,3,2025-03-01,ISK,131.03,17.96,42.85,98.4,synthetic
+Iceland,Reykjavik,ISL,2025,4,2025-04-01,ISK,121.81,18.69,39.65,94.7,synthetic
+Iceland,Reykjavik,ISL,2025,5,2025-05-01,ISK,114.42,16.89,39.49,88.7,synthetic
+Iceland,Reykjavik,ISL,2025,6,2025-06-01,ISK,181.7,18.98,34.69,117.3,synthetic
+Chile,Santiago,CHL,2023,1,2023-01-01,CLP,25.0,20.81,48.92,63.0,synthetic
+Chile,Santiago,CHL,2023,2,2023-02-01,CLP,25.0,19.86,46.27,60.4,synthetic
+Chile,Santiago,CHL,2023,3,2023-03-01,CLP,25.0,20.36,49.34,62.4,synthetic
+Chile,Santiago,CHL,2023,4,2023-04-01,CLP,25.0,18.75,52.58,61.0,synthetic
+Chile,Santiago,CHL,2023,5,2023-05-01,CLP,25.0,19.68,45.98,60.0,synthetic
+Chile,Santiago,CHL,2023,6,2023-06-01,CLP,25.0,19.91,46.13,60.5,synthetic
+Chile,Santiago,CHL,2023,7,2023-07-01,CLP,25.0,20.59,38.57,58.8,synthetic
+Chile,Santiago,CHL,2023,8,2023-08-01,CLP,25.0,20.2,48.07,61.7,synthetic
+Chile,Santiago,CHL,2023,9,2023-09-01,CLP,25.0,19.8,44.02,59.5,synthetic
+Chile,Santiago,CHL,2023,10,2023-10-01,CLP,25.0,19.66,48.64,61.0,synthetic
+Chile,Santiago,CHL,2023,11,2023-11-01,CLP,25.0,19.82,45.4,60.1,synthetic
+Chile,Santiago,CHL,2023,12,2023-12-01,CLP,25.0,18.07,41.94,55.8,synthetic
+Chile,Santiago,CHL,2024,1,2024-01-01,CLP,25.0,19.05,43.56,58.1,synthetic
+Chile,Santiago,CHL,2024,2,2024-02-01,CLP,25.0,19.48,39.67,57.3,synthetic
+Chile,Santiago,CHL,2024,3,2024-03-01,CLP,25.0,21.85,47.49,64.2,synthetic
+Chile,Santiago,CHL,2024,4,2024-04-01,CLP,25.0,19.15,41.22,57.4,synthetic
+Chile,Santiago,CHL,2024,5,2024-05-01,CLP,25.0,20.33,49.0,62.2,synthetic
+Chile,Santiago,CHL,2024,6,2024-06-01,CLP,25.0,21.15,43.8,61.7,synthetic
+Chile,Santiago,CHL,2024,7,2024-07-01,CLP,25.0,19.99,45.54,60.4,synthetic
+Chile,Santiago,CHL,2024,8,2024-08-01,CLP,25.0,18.22,45.43,57.4,synthetic
+Chile,Santiago,CHL,2024,9,2024-09-01,CLP,25.0,18.59,44.11,57.5,synthetic
+Chile,Santiago,CHL,2024,10,2024-10-01,CLP,25.0,20.11,41.03,58.9,synthetic
+Chile,Santiago,CHL,2024,11,2024-11-01,CLP,25.0,21.19,47.83,63.3,synthetic
+Chile,Santiago,CHL,2024,12,2024-12-01,CLP,25.0,20.48,43.28,60.4,synthetic
+Chile,Santiago,CHL,2025,1,2025-01-01,CLP,25.0,23.01,46.5,65.8,synthetic
+Chile,Santiago,CHL,2025,2,2025-02-01,CLP,25.0,20.6,41.82,60.0,synthetic
+Chile,Santiago,CHL,2025,3,2025-03-01,CLP,25.0,19.11,44.75,58.6,synthetic
+Chile,Santiago,CHL,2025,4,2025-04-01,CLP,25.0,21.09,47.88,63.1,synthetic
+Chile,Santiago,CHL,2025,5,2025-05-01,CLP,25.0,19.72,47.07,60.5,synthetic
+Chile,Santiago,CHL,2025,6,2025-06-01,CLP,25.0,20.04,47.62,61.3,synthetic
+Peru,Lima,PER,2023,1,2023-01-01,PEN,120.89,13.89,50.58,90.5,synthetic
+Peru,Lima,PER,2023,2,2023-02-01,PEN,100.73,12.77,53.0,81.4,synthetic
+Peru,Lima,PER,2023,3,2023-03-01,PEN,109.67,13.94,61.32,90.1,synthetic
+Peru,Lima,PER,2023,4,2023-04-01,PEN,113.2,13.08,48.15,85.1,synthetic
+Peru,Lima,PER,2023,5,2023-05-01,PEN,111.1,13.46,57.09,88.3,synthetic
+Peru,Lima,PER,2023,6,2023-06-01,PEN,154.9,14.44,59.47,108.3,synthetic
+Peru,Lima,PER,2023,7,2023-07-01,PEN,122.36,13.03,56.0,91.7,synthetic
+Peru,Lima,PER,2023,8,2023-08-01,PEN,124.34,13.85,57.78,94.5,synthetic
+Peru,Lima,PER,2023,9,2023-09-01,PEN,100.85,14.41,56.77,85.6,synthetic
+Peru,Lima,PER,2023,10,2023-10-01,PEN,95.19,13.4,57.48,82.0,synthetic
+Peru,Lima,PER,2023,11,2023-11-01,PEN,119.07,13.17,59.64,91.9,synthetic
+Peru,Lima,PER,2023,12,2023-12-01,PEN,134.55,12.38,50.79,93.5,synthetic
+Peru,Lima,PER,2024,1,2024-01-01,PEN,120.39,14.41,57.64,93.8,synthetic
+Peru,Lima,PER,2024,2,2024-02-01,PEN,123.69,14.29,59.07,95.5,synthetic
+Peru,Lima,PER,2024,3,2024-03-01,PEN,102.42,14.84,58.49,87.6,synthetic
+Peru,Lima,PER,2024,4,2024-04-01,PEN,107.06,12.9,57.38,85.8,synthetic
+Peru,Lima,PER,2024,5,2024-05-01,PEN,95.7,14.01,52.61,81.4,synthetic
+Peru,Lima,PER,2024,6,2024-06-01,PEN,136.5,13.02,55.33,97.0,synthetic
+Peru,Lima,PER,2024,7,2024-07-01,PEN,124.54,13.31,63.82,95.9,synthetic
+Peru,Lima,PER,2024,8,2024-08-01,PEN,147.26,13.73,56.27,102.9,synthetic
+Peru,Lima,PER,2024,9,2024-09-01,PEN,117.93,14.35,53.1,91.0,synthetic
+Peru,Lima,PER,2024,10,2024-10-01,PEN,109.79,11.97,60.8,86.7,synthetic
+Peru,Lima,PER,2024,11,2024-11-01,PEN,128.72,13.51,47.98,92.0,synthetic
+Peru,Lima,PER,2024,12,2024-12-01,PEN,139.02,12.71,53.75,97.0,synthetic
+Peru,Lima,PER,2025,1,2025-01-01,PEN,116.01,13.65,54.44,89.6,synthetic
+Peru,Lima,PER,2025,2,2025-02-01,PEN,104.73,13.54,54.75,85.0,synthetic
+Peru,Lima,PER,2025,3,2025-03-01,PEN,100.67,13.17,57.71,83.9,synthetic
+Peru,Lima,PER,2025,4,2025-04-01,PEN,108.9,12.3,60.27,86.7,synthetic
+Peru,Lima,PER,2025,5,2025-05-01,PEN,86.27,13.08,53.92,76.5,synthetic
+Peru,Lima,PER,2025,6,2025-06-01,PEN,134.14,13.9,60.82,99.6,synthetic
+Colombia,Cartagena,COL,2023,1,2023-01-01,COP,123.19,15.32,44.93,91.7,synthetic
+Colombia,Cartagena,COL,2023,2,2023-02-01,COP,110.27,17.04,42.14,88.3,synthetic
+Colombia,Cartagena,COL,2023,3,2023-03-01,COP,114.01,15.2,43.45,87.2,synthetic
+Colombia,Cartagena,COL,2023,4,2023-04-01,COP,102.11,16.08,44.96,84.5,synthetic
+Colombia,Cartagena,COL,2023,5,2023-05-01,COP,116.15,16.42,46.03,91.1,synthetic
+Colombia,Cartagena,COL,2023,6,2023-06-01,COP,128.83,15.87,42.86,94.1,synthetic
+Colombia,Cartagena,COL,2023,7,2023-07-01,COP,125.25,16.06,44.96,93.7,synthetic
+Colombia,Cartagena,COL,2023,8,2023-08-01,COP,130.73,15.17,38.6,92.0,synthetic
+Colombia,Cartagena,COL,2023,9,2023-09-01,COP,110.57,15.95,44.57,87.5,synthetic
+Colombia,Cartagena,COL,2023,10,2023-10-01,COP,113.62,15.49,39.34,86.0,synthetic
+Colombia,Cartagena,COL,2023,11,2023-11-01,COP,121.26,17.12,42.37,92.9,synthetic
+Colombia,Cartagena,COL,2023,12,2023-12-01,COP,118.73,16.25,40.01,89.6,synthetic
+Colombia,Cartagena,COL,2024,1,2024-01-01,COP,114.49,15.98,46.99,90.1,synthetic
+Colombia,Cartagena,COL,2024,2,2024-02-01,COP,103.51,15.72,42.35,83.5,synthetic
+Colombia,Cartagena,COL,2024,3,2024-03-01,COP,84.49,16.64,43.13,77.7,synthetic
+Colombia,Cartagena,COL,2024,4,2024-04-01,COP,113.99,14.87,47.2,88.1,synthetic
+Colombia,Cartagena,COL,2024,5,2024-05-01,COP,113.96,18.03,43.49,91.9,synthetic
+Colombia,Cartagena,COL,2024,6,2024-06-01,COP,138.73,15.29,45.83,98.2,synthetic
+Colombia,Cartagena,COL,2024,7,2024-07-01,COP,120.41,15.1,40.21,88.4,synthetic
+Colombia,Cartagena,COL,2024,8,2024-08-01,COP,128.38,15.94,44.8,94.7,synthetic
+Colombia,Cartagena,COL,2024,9,2024-09-01,COP,91.47,14.63,47.84,78.9,synthetic
+Colombia,Cartagena,COL,2024,10,2024-10-01,COP,114.67,15.71,43.64,88.4,synthetic
+Colombia,Cartagena,COL,2024,11,2024-11-01,COP,115.66,17.19,44.1,91.4,synthetic
+Colombia,Cartagena,COL,2024,12,2024-12-01,COP,139.56,16.03,43.74,98.9,synthetic
+Colombia,Cartagena,COL,2025,1,2025-01-01,COP,106.78,16.49,42.46,86.1,synthetic
+Colombia,Cartagena,COL,2025,2,2025-02-01,COP,107.56,16.8,40.45,86.2,synthetic
+Colombia,Cartagena,COL,2025,3,2025-03-01,COP,113.79,15.78,42.98,87.9,synthetic
+Colombia,Cartagena,COL,2025,4,2025-04-01,COP,104.41,17.13,37.17,84.2,synthetic
+Colombia,Cartagena,COL,2025,5,2025-05-01,COP,114.56,16.08,47.38,90.4,synthetic
+Colombia,Cartagena,COL,2025,6,2025-06-01,COP,123.41,16.72,49.5,95.8,synthetic
+Dominican Republic,Punta Cana,DOM,2023,1,2023-01-01,DOP,123.28,20.06,38.01,97.0,synthetic
+Dominican Republic,Punta Cana,DOM,2023,2,2023-02-01,DOP,112.95,18.36,40.21,90.8,synthetic
+Dominican Republic,Punta Cana,DOM,2023,3,2023-03-01,DOP,120.43,19.9,43.57,97.7,synthetic
+Dominican Republic,Punta Cana,DOM,2023,4,2023-04-01,DOP,113.03,18.25,35.91,89.1,synthetic
+Dominican Republic,Punta Cana,DOM,2023,5,2023-05-01,DOP,142.51,19.44,41.27,104.9,synthetic
+Dominican Republic,Punta Cana,DOM,2023,6,2023-06-01,DOP,131.34,19.09,41.35,99.9,synthetic
+Dominican Republic,Punta Cana,DOM,2023,7,2023-07-01,DOP,144.14,20.32,46.39,108.9,synthetic
+Dominican Republic,Punta Cana,DOM,2023,8,2023-08-01,DOP,135.97,17.92,37.47,98.3,synthetic
+Dominican Republic,Punta Cana,DOM,2023,9,2023-09-01,DOP,138.35,20.28,39.55,104.0,synthetic
+Dominican Republic,Punta Cana,DOM,2023,10,2023-10-01,DOP,122.96,18.15,42.42,95.3,synthetic
+Dominican Republic,Punta Cana,DOM,2023,11,2023-11-01,DOP,118.87,18.79,41.63,94.5,synthetic
+Dominican Republic,Punta Cana,DOM,2023,12,2023-12-01,DOP,144.91,18.82,39.96,104.3,synthetic
+Dominican Republic,Punta Cana,DOM,2024,1,2024-01-01,DOP,130.4,20.97,41.56,102.7,synthetic
+Dominican Republic,Punta Cana,DOM,2024,2,2024-02-01,DOP,130.48,18.86,37.95,97.9,synthetic
+Dominican Republic,Punta Cana,DOM,2024,3,2024-03-01,DOP,129.01,19.28,35.95,97.2,synthetic
+Dominican Republic,Punta Cana,DOM,2024,4,2024-04-01,DOP,119.38,18.99,38.5,93.8,synthetic
+Dominican Republic,Punta Cana,DOM,2024,5,2024-05-01,DOP,137.13,19.64,43.77,104.0,synthetic
+Dominican Republic,Punta Cana,DOM,2024,6,2024-06-01,DOP,150.22,19.18,37.31,106.0,synthetic
+Dominican Republic,Punta Cana,DOM,2024,7,2024-07-01,DOP,147.26,19.1,36.11,104.3,synthetic
+Dominican Republic,Punta Cana,DOM,2024,8,2024-08-01,DOP,140.77,18.72,41.08,102.9,synthetic
+Dominican Republic,Punta Cana,DOM,2024,9,2024-09-01,DOP,127.12,18.42,41.24,97.0,synthetic
+Dominican Republic,Punta Cana,DOM,2024,10,2024-10-01,DOP,120.81,15.8,38.57,89.1,synthetic
+Dominican Republic,Punta Cana,DOM,2024,11,2024-11-01,DOP,133.18,17.16,40.24,97.0,synthetic
+Dominican Republic,Punta Cana,DOM,2024,12,2024-12-01,DOP,165.78,18.22,39.93,111.6,synthetic
+Dominican Republic,Punta Cana,DOM,2025,1,2025-01-01,DOP,109.81,20.95,39.69,93.7,synthetic
+Dominican Republic,Punta Cana,DOM,2025,2,2025-02-01,DOP,123.06,20.64,41.78,99.3,synthetic
+Dominican Republic,Punta Cana,DOM,2025,3,2025-03-01,DOP,114.01,18.35,41.31,91.7,synthetic
+Dominican Republic,Punta Cana,DOM,2025,4,2025-04-01,DOP,116.48,16.66,39.78,89.3,synthetic
+Dominican Republic,Punta Cana,DOM,2025,5,2025-05-01,DOP,108.08,20.94,40.42,93.3,synthetic
+Dominican Republic,Punta Cana,DOM,2025,6,2025-06-01,DOP,136.46,18.29,34.65,98.1,synthetic
+Puerto Rico,San Juan,PRI,2023,1,2023-01-01,USD,90.62,18.79,69.23,93.5,synthetic
+Puerto Rico,San Juan,PRI,2023,2,2023-02-01,USD,106.34,19.07,85.18,106.3,synthetic
+Puerto Rico,San Juan,PRI,2023,3,2023-03-01,USD,101.47,17.28,70.73,95.9,synthetic
+Puerto Rico,San Juan,PRI,2023,4,2023-04-01,USD,86.41,19.2,73.88,94.3,synthetic
+Puerto Rico,San Juan,PRI,2023,5,2023-05-01,USD,113.18,18.05,75.38,103.6,synthetic
+Puerto Rico,San Juan,PRI,2023,6,2023-06-01,USD,114.96,19.29,74.77,106.2,synthetic
+Puerto Rico,San Juan,PRI,2023,7,2023-07-01,USD,100.4,19.42,76.85,101.3,synthetic
+Puerto Rico,San Juan,PRI,2023,8,2023-08-01,USD,112.42,19.95,81.53,108.8,synthetic
+Puerto Rico,San Juan,PRI,2023,9,2023-09-01,USD,98.14,19.38,68.11,97.1,synthetic
+Puerto Rico,San Juan,PRI,2023,10,2023-10-01,USD,86.91,19.04,75.5,94.8,synthetic
+Puerto Rico,San Juan,PRI,2023,11,2023-11-01,USD,87.8,18.21,68.02,91.0,synthetic
+Puerto Rico,San Juan,PRI,2023,12,2023-12-01,USD,95.08,19.02,66.56,94.7,synthetic
+Puerto Rico,San Juan,PRI,2024,1,2024-01-01,USD,83.99,18.84,67.26,90.2,synthetic
+Puerto Rico,San Juan,PRI,2024,2,2024-02-01,USD,94.07,20.15,71.34,98.0,synthetic
+Puerto Rico,San Juan,PRI,2024,3,2024-03-01,USD,88.1,19.91,70.49,94.9,synthetic
+Puerto Rico,San Juan,PRI,2024,4,2024-04-01,USD,85.58,20.68,78.79,98.2,synthetic
+Puerto Rico,San Juan,PRI,2024,5,2024-05-01,USD,95.69,20.36,63.92,96.2,synthetic
+Puerto Rico,San Juan,PRI,2024,6,2024-06-01,USD,121.42,19.75,79.44,111.3,synthetic
+Puerto Rico,San Juan,PRI,2024,7,2024-07-01,USD,112.95,19.35,72.76,104.7,synthetic
+Puerto Rico,San Juan,PRI,2024,8,2024-08-01,USD,112.77,18.93,78.7,106.2,synthetic
+Puerto Rico,San Juan,PRI,2024,9,2024-09-01,USD,79.71,18.67,84.81,94.8,synthetic
+Puerto Rico,San Juan,PRI,2024,10,2024-10-01,USD,86.72,19.02,69.61,92.5,synthetic
+Puerto Rico,San Juan,PRI,2024,11,2024-11-01,USD,93.75,18.44,73.23,95.7,synthetic
+Puerto Rico,San Juan,PRI,2024,12,2024-12-01,USD,116.99,18.48,78.29,107.0,synthetic
+Puerto Rico,San Juan,PRI,2025,1,2025-01-01,USD,97.3,20.51,74.92,101.2,synthetic
+Puerto Rico,San Juan,PRI,2025,2,2025-02-01,USD,114.97,20.51,75.88,108.6,synthetic
+Puerto Rico,San Juan,PRI,2025,3,2025-03-01,USD,84.9,19.18,81.6,96.5,synthetic
+Puerto Rico,San Juan,PRI,2025,4,2025-04-01,USD,103.78,21.0,78.27,105.9,synthetic
+Puerto Rico,San Juan,PRI,2025,5,2025-05-01,USD,82.12,19.86,67.75,91.3,synthetic
+Puerto Rico,San Juan,PRI,2025,6,2025-06-01,USD,96.52,19.57,76.91,100.1,synthetic

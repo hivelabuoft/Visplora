@@ -1,0 +1,1681 @@
+country,city,iso3,year,month,date,intl_arrivals,hotel_occupancy_rate_pct,peak_crowding_index,season,events_flag,source
+USA,New York,USA,2023,1,2023-01-01,154545,44.2,1.3,Low,False,synthetic
+USA,New York,USA,2023,2,2023-02-01,165539,46.5,11.3,Low,False,synthetic
+USA,New York,USA,2023,3,2023-03-01,184939,36.6,1.3,Low,False,synthetic
+USA,New York,USA,2023,4,2023-04-01,229288,62.4,40.6,Shoulder,False,synthetic
+USA,New York,USA,2023,5,2023-05-01,199540,55.0,26.6,Shoulder,False,synthetic
+USA,New York,USA,2023,6,2023-06-01,266455,76.9,58.0,High,False,synthetic
+USA,New York,USA,2023,7,2023-07-01,229958,84.6,60.6,High,False,synthetic
+USA,New York,USA,2023,8,2023-08-01,276044,72.2,60.3,High,False,synthetic
+USA,New York,USA,2023,9,2023-09-01,241497,62.0,37.2,Shoulder,False,synthetic
+USA,New York,USA,2023,10,2023-10-01,210928,62.7,32.9,Shoulder,False,synthetic
+USA,New York,USA,2023,11,2023-11-01,156151,41.0,8.6,Low,False,synthetic
+USA,New York,USA,2023,12,2023-12-01,290815,75.8,64.6,High,False,synthetic
+USA,New York,USA,2024,1,2024-01-01,160813,41.0,9.6,Low,False,synthetic
+USA,New York,USA,2024,2,2024-02-01,208379,40.4,8.2,Low,False,synthetic
+USA,New York,USA,2024,3,2024-03-01,131544,37.5,0.0,Low,False,synthetic
+USA,New York,USA,2024,4,2024-04-01,233004,56.2,36.9,Shoulder,False,synthetic
+USA,New York,USA,2024,5,2024-05-01,278263,54.5,30.7,Shoulder,False,synthetic
+USA,New York,USA,2024,6,2024-06-01,315429,74.4,64.4,High,False,synthetic
+USA,New York,USA,2024,7,2024-07-01,278324,77.4,65.3,High,False,synthetic
+USA,New York,USA,2024,8,2024-08-01,304982,69.2,48.7,High,False,synthetic
+USA,New York,USA,2024,9,2024-09-01,250926,57.0,30.2,Shoulder,True,synthetic
+USA,New York,USA,2024,10,2024-10-01,193880,60.5,37.6,Shoulder,False,synthetic
+USA,New York,USA,2024,11,2024-11-01,158934,42.2,0.0,Low,False,synthetic
+USA,New York,USA,2024,12,2024-12-01,446059,75.3,74.3,High,False,synthetic
+USA,New York,USA,2025,1,2025-01-01,204372,44.1,2.6,Low,False,synthetic
+USA,New York,USA,2025,2,2025-02-01,227155,43.0,8.5,Low,False,synthetic
+USA,New York,USA,2025,3,2025-03-01,132428,45.0,2.4,Low,False,synthetic
+USA,New York,USA,2025,4,2025-04-01,204038,55.9,34.9,Shoulder,False,synthetic
+USA,New York,USA,2025,5,2025-05-01,214525,53.1,15.8,Shoulder,False,synthetic
+USA,New York,USA,2025,6,2025-06-01,309530,82.0,66.5,High,False,synthetic
+USA,San Francisco,USA,2023,1,2023-01-01,242406,47.1,25.7,Low,False,synthetic
+USA,San Francisco,USA,2023,2,2023-02-01,190368,60.2,22.4,Low,False,synthetic
+USA,San Francisco,USA,2023,3,2023-03-01,299072,45.6,27.4,Low,True,synthetic
+USA,San Francisco,USA,2023,4,2023-04-01,363329,76.8,77.4,Shoulder,False,synthetic
+USA,San Francisco,USA,2023,5,2023-05-01,355777,70.5,55.5,Shoulder,False,synthetic
+USA,San Francisco,USA,2023,6,2023-06-01,370788,93.8,90.1,High,False,synthetic
+USA,San Francisco,USA,2023,7,2023-07-01,486445,98.0,100.0,High,False,synthetic
+USA,San Francisco,USA,2023,8,2023-08-01,537952,97.5,100.0,High,True,synthetic
+USA,San Francisco,USA,2023,9,2023-09-01,345734,63.1,42.2,Shoulder,False,synthetic
+USA,San Francisco,USA,2023,10,2023-10-01,379550,65.6,62.9,Shoulder,False,synthetic
+USA,San Francisco,USA,2023,11,2023-11-01,242173,48.0,25.0,Low,True,synthetic
+USA,San Francisco,USA,2023,12,2023-12-01,397847,98.0,99.2,High,False,synthetic
+USA,San Francisco,USA,2024,1,2024-01-01,275567,51.6,31.3,Low,False,synthetic
+USA,San Francisco,USA,2024,2,2024-02-01,329450,49.1,39.7,Low,False,synthetic
+USA,San Francisco,USA,2024,3,2024-03-01,281814,54.5,39.4,Low,False,synthetic
+USA,San Francisco,USA,2024,4,2024-04-01,417057,84.5,81.8,Shoulder,False,synthetic
+USA,San Francisco,USA,2024,5,2024-05-01,330919,71.6,67.5,Shoulder,False,synthetic
+USA,San Francisco,USA,2024,6,2024-06-01,400876,98.0,100.0,High,False,synthetic
+USA,San Francisco,USA,2024,7,2024-07-01,435307,96.7,96.2,High,False,synthetic
+USA,San Francisco,USA,2024,8,2024-08-01,342615,98.0,93.5,High,False,synthetic
+USA,San Francisco,USA,2024,9,2024-09-01,338088,68.3,59.5,Shoulder,False,synthetic
+USA,San Francisco,USA,2024,10,2024-10-01,386690,85.8,89.1,Shoulder,False,synthetic
+USA,San Francisco,USA,2024,11,2024-11-01,231142,53.3,26.7,Low,False,synthetic
+USA,San Francisco,USA,2024,12,2024-12-01,493833,95.6,100.0,High,False,synthetic
+USA,San Francisco,USA,2025,1,2025-01-01,295423,46.3,20.0,Low,False,synthetic
+USA,San Francisco,USA,2025,2,2025-02-01,292245,47.6,26.4,Low,False,synthetic
+USA,San Francisco,USA,2025,3,2025-03-01,244547,55.0,28.2,Low,False,synthetic
+USA,San Francisco,USA,2025,4,2025-04-01,298256,69.8,62.4,Shoulder,False,synthetic
+USA,San Francisco,USA,2025,5,2025-05-01,305124,71.8,48.6,Shoulder,False,synthetic
+USA,San Francisco,USA,2025,6,2025-06-01,562112,94.6,100.0,High,False,synthetic
+Canada,Toronto,CAN,2023,1,2023-01-01,194961,59.5,30.7,Low,False,synthetic
+Canada,Toronto,CAN,2023,2,2023-02-01,372506,53.3,47.4,Low,False,synthetic
+Canada,Toronto,CAN,2023,3,2023-03-01,281269,59.5,38.5,Low,True,synthetic
+Canada,Toronto,CAN,2023,4,2023-04-01,488635,85.0,95.4,Shoulder,True,synthetic
+Canada,Toronto,CAN,2023,5,2023-05-01,519525,93.2,100.0,Shoulder,True,synthetic
+Canada,Toronto,CAN,2023,6,2023-06-01,716681,98.0,100.0,High,True,synthetic
+Canada,Toronto,CAN,2023,7,2023-07-01,751378,98.0,100.0,High,False,synthetic
+Canada,Toronto,CAN,2023,8,2023-08-01,676907,98.0,100.0,High,False,synthetic
+Canada,Toronto,CAN,2023,9,2023-09-01,463369,79.2,82.0,Shoulder,False,synthetic
+Canada,Toronto,CAN,2023,10,2023-10-01,438705,89.7,98.0,Shoulder,False,synthetic
+Canada,Toronto,CAN,2023,11,2023-11-01,311933,62.1,46.1,Low,False,synthetic
+Canada,Toronto,CAN,2023,12,2023-12-01,665332,98.0,100.0,High,False,synthetic
+Canada,Toronto,CAN,2024,1,2024-01-01,360131,59.7,48.5,Low,False,synthetic
+Canada,Toronto,CAN,2024,2,2024-02-01,240533,54.5,29.2,Low,True,synthetic
+Canada,Toronto,CAN,2024,3,2024-03-01,298848,57.4,37.7,Low,False,synthetic
+Canada,Toronto,CAN,2024,4,2024-04-01,441068,95.2,100.0,Shoulder,False,synthetic
+Canada,Toronto,CAN,2024,5,2024-05-01,460116,83.5,82.3,Shoulder,False,synthetic
+Canada,Toronto,CAN,2024,6,2024-06-01,695954,98.0,100.0,High,False,synthetic
+Canada,Toronto,CAN,2024,7,2024-07-01,615045,91.6,100.0,High,False,synthetic
+Canada,Toronto,CAN,2024,8,2024-08-01,645252,98.0,100.0,High,False,synthetic
+Canada,Toronto,CAN,2024,9,2024-09-01,660139,88.7,100.0,Shoulder,False,synthetic
+Canada,Toronto,CAN,2024,10,2024-10-01,425886,84.4,80.6,Shoulder,False,synthetic
+Canada,Toronto,CAN,2024,11,2024-11-01,293596,55.4,37.8,Low,False,synthetic
+Canada,Toronto,CAN,2024,12,2024-12-01,429613,96.1,92.6,High,False,synthetic
+Canada,Toronto,CAN,2025,1,2025-01-01,345647,59.6,51.4,Low,False,synthetic
+Canada,Toronto,CAN,2025,2,2025-02-01,377740,61.4,52.5,Low,False,synthetic
+Canada,Toronto,CAN,2025,3,2025-03-01,370297,60.3,55.8,Low,False,synthetic
+Canada,Toronto,CAN,2025,4,2025-04-01,444628,81.6,88.2,Shoulder,False,synthetic
+Canada,Toronto,CAN,2025,5,2025-05-01,363758,93.1,82.3,Shoulder,False,synthetic
+Canada,Toronto,CAN,2025,6,2025-06-01,583109,98.0,100.0,High,False,synthetic
+Canada,Vancouver,CAN,2023,1,2023-01-01,26501,34.6,0.0,Low,False,synthetic
+Canada,Vancouver,CAN,2023,2,2023-02-01,28677,27.7,0.0,Low,False,synthetic
+Canada,Vancouver,CAN,2023,3,2023-03-01,19157,35.1,0.0,Low,False,synthetic
+Canada,Vancouver,CAN,2023,4,2023-04-01,33007,53.8,6.6,Shoulder,True,synthetic
+Canada,Vancouver,CAN,2023,5,2023-05-01,31878,51.2,0.0,Shoulder,False,synthetic
+Canada,Vancouver,CAN,2023,6,2023-06-01,39623,73.3,34.8,High,True,synthetic
+Canada,Vancouver,CAN,2023,7,2023-07-01,36053,64.6,14.9,High,False,synthetic
+Canada,Vancouver,CAN,2023,8,2023-08-01,50480,74.5,28.7,High,True,synthetic
+Canada,Vancouver,CAN,2023,9,2023-09-01,32317,53.6,0.0,Shoulder,False,synthetic
+Canada,Vancouver,CAN,2023,10,2023-10-01,35091,43.2,0.0,Shoulder,True,synthetic
+Canada,Vancouver,CAN,2023,11,2023-11-01,24310,35.4,0.0,Low,False,synthetic
+Canada,Vancouver,CAN,2023,12,2023-12-01,44316,63.1,20.3,High,False,synthetic
+Canada,Vancouver,CAN,2024,1,2024-01-01,28781,38.1,0.0,Low,False,synthetic
+Canada,Vancouver,CAN,2024,2,2024-02-01,21084,35.2,0.0,Low,False,synthetic
+Canada,Vancouver,CAN,2024,3,2024-03-01,27229,38.4,0.0,Low,False,synthetic
+Canada,Vancouver,CAN,2024,4,2024-04-01,33784,54.1,1.6,Shoulder,False,synthetic
+Canada,Vancouver,CAN,2024,5,2024-05-01,32406,53.7,4.6,Shoulder,False,synthetic
+Canada,Vancouver,CAN,2024,6,2024-06-01,35602,66.2,23.3,High,False,synthetic
+Canada,Vancouver,CAN,2024,7,2024-07-01,46213,67.0,24.8,High,False,synthetic
+Canada,Vancouver,CAN,2024,8,2024-08-01,38736,65.8,17.4,High,False,synthetic
+Canada,Vancouver,CAN,2024,9,2024-09-01,44509,52.8,4.3,Shoulder,False,synthetic
+Canada,Vancouver,CAN,2024,10,2024-10-01,35190,50.2,1.0,Shoulder,False,synthetic
+Canada,Vancouver,CAN,2024,11,2024-11-01,24047,34.8,0.0,Low,False,synthetic
+Canada,Vancouver,CAN,2024,12,2024-12-01,42993,65.6,21.4,High,False,synthetic
+Canada,Vancouver,CAN,2025,1,2025-01-01,25451,37.8,0.0,Low,False,synthetic
+Canada,Vancouver,CAN,2025,2,2025-02-01,20937,32.8,0.0,Low,False,synthetic
+Canada,Vancouver,CAN,2025,3,2025-03-01,20184,36.1,0.0,Low,False,synthetic
+Canada,Vancouver,CAN,2025,4,2025-04-01,36709,49.2,0.0,Shoulder,False,synthetic
+Canada,Vancouver,CAN,2025,5,2025-05-01,34765,56.8,9.6,Shoulder,True,synthetic
+Canada,Vancouver,CAN,2025,6,2025-06-01,49329,56.9,23.1,High,False,synthetic
+Mexico,Mexico City,MEX,2023,1,2023-01-01,298920,37.9,13.3,Low,True,synthetic
+Mexico,Mexico City,MEX,2023,2,2023-02-01,329396,35.9,15.1,Low,False,synthetic
+Mexico,Mexico City,MEX,2023,3,2023-03-01,275562,33.6,17.9,Low,False,synthetic
+Mexico,Mexico City,MEX,2023,4,2023-04-01,468786,53.5,53.9,Shoulder,False,synthetic
+Mexico,Mexico City,MEX,2023,5,2023-05-01,520285,48.6,43.4,Shoulder,False,synthetic
+Mexico,Mexico City,MEX,2023,6,2023-06-01,597206,62.0,78.2,High,False,synthetic
+Mexico,Mexico City,MEX,2023,7,2023-07-01,761621,82.4,100.0,High,False,synthetic
+Mexico,Mexico City,MEX,2023,8,2023-08-01,507256,75.5,78.8,High,False,synthetic
+Mexico,Mexico City,MEX,2023,9,2023-09-01,457874,53.2,48.0,Shoulder,False,synthetic
+Mexico,Mexico City,MEX,2023,10,2023-10-01,422265,63.0,51.2,Shoulder,False,synthetic
+Mexico,Mexico City,MEX,2023,11,2023-11-01,283965,38.7,12.4,Low,False,synthetic
+Mexico,Mexico City,MEX,2023,12,2023-12-01,697038,80.5,100.0,High,False,synthetic
+Mexico,Mexico City,MEX,2024,1,2024-01-01,344313,36.3,13.0,Low,False,synthetic
+Mexico,Mexico City,MEX,2024,2,2024-02-01,313062,39.5,9.1,Low,False,synthetic
+Mexico,Mexico City,MEX,2024,3,2024-03-01,411246,42.2,28.8,Low,False,synthetic
+Mexico,Mexico City,MEX,2024,4,2024-04-01,511662,45.0,50.8,Shoulder,True,synthetic
+Mexico,Mexico City,MEX,2024,5,2024-05-01,610130,47.7,62.8,Shoulder,False,synthetic
+Mexico,Mexico City,MEX,2024,6,2024-06-01,591343,64.0,78.9,High,False,synthetic
+Mexico,Mexico City,MEX,2024,7,2024-07-01,788859,77.7,100.0,High,False,synthetic
+Mexico,Mexico City,MEX,2024,8,2024-08-01,494512,80.4,82.0,High,False,synthetic
+Mexico,Mexico City,MEX,2024,9,2024-09-01,516346,56.8,58.2,Shoulder,False,synthetic
+Mexico,Mexico City,MEX,2024,10,2024-10-01,477537,53.7,55.6,Shoulder,False,synthetic
+Mexico,Mexico City,MEX,2024,11,2024-11-01,294930,40.6,17.9,Low,False,synthetic
+Mexico,Mexico City,MEX,2024,12,2024-12-01,579880,64.9,84.6,High,False,synthetic
+Mexico,Mexico City,MEX,2025,1,2025-01-01,379470,37.5,21.5,Low,False,synthetic
+Mexico,Mexico City,MEX,2025,2,2025-02-01,317270,36.8,25.2,Low,False,synthetic
+Mexico,Mexico City,MEX,2025,3,2025-03-01,423931,34.4,26.2,Low,False,synthetic
+Mexico,Mexico City,MEX,2025,4,2025-04-01,480784,54.1,47.2,Shoulder,False,synthetic
+Mexico,Mexico City,MEX,2025,5,2025-05-01,423354,54.9,42.0,Shoulder,False,synthetic
+Mexico,Mexico City,MEX,2025,6,2025-06-01,730035,71.7,93.3,High,False,synthetic
+Brazil,Rio de Janeiro,BRA,2023,1,2023-01-01,295579,34.0,7.1,Low,False,synthetic
+Brazil,Rio de Janeiro,BRA,2023,2,2023-02-01,321216,41.9,20.6,Low,True,synthetic
+Brazil,Rio de Janeiro,BRA,2023,3,2023-03-01,315874,39.8,28.9,Low,False,synthetic
+Brazil,Rio de Janeiro,BRA,2023,4,2023-04-01,535356,49.4,60.5,Shoulder,False,synthetic
+Brazil,Rio de Janeiro,BRA,2023,5,2023-05-01,585931,56.0,68.8,Shoulder,False,synthetic
+Brazil,Rio de Janeiro,BRA,2023,6,2023-06-01,613362,79.9,93.4,High,False,synthetic
+Brazil,Rio de Janeiro,BRA,2023,7,2023-07-01,619505,75.5,90.3,High,False,synthetic
+Brazil,Rio de Janeiro,BRA,2023,8,2023-08-01,551944,74.9,85.3,High,True,synthetic
+Brazil,Rio de Janeiro,BRA,2023,9,2023-09-01,501990,57.1,55.7,Shoulder,False,synthetic
+Brazil,Rio de Janeiro,BRA,2023,10,2023-10-01,429822,67.1,68.8,Shoulder,False,synthetic
+Brazil,Rio de Janeiro,BRA,2023,11,2023-11-01,416613,33.3,8.8,Low,False,synthetic
+Brazil,Rio de Janeiro,BRA,2023,12,2023-12-01,521951,72.1,79.7,High,False,synthetic
+Brazil,Rio de Janeiro,BRA,2024,1,2024-01-01,293822,40.8,18.5,Low,False,synthetic
+Brazil,Rio de Janeiro,BRA,2024,2,2024-02-01,326693,43.9,24.9,Low,False,synthetic
+Brazil,Rio de Janeiro,BRA,2024,3,2024-03-01,312310,41.9,21.2,Low,True,synthetic
+Brazil,Rio de Janeiro,BRA,2024,4,2024-04-01,554177,55.2,48.3,Shoulder,False,synthetic
+Brazil,Rio de Janeiro,BRA,2024,5,2024-05-01,602778,62.1,84.2,Shoulder,False,synthetic
+Brazil,Rio de Janeiro,BRA,2024,6,2024-06-01,530432,71.0,78.3,High,False,synthetic
+Brazil,Rio de Janeiro,BRA,2024,7,2024-07-01,820738,86.7,100.0,High,False,synthetic
+Brazil,Rio de Janeiro,BRA,2024,8,2024-08-01,530202,82.6,92.5,High,False,synthetic
+Brazil,Rio de Janeiro,BRA,2024,9,2024-09-01,542702,53.9,59.7,Shoulder,False,synthetic
+Brazil,Rio de Janeiro,BRA,2024,10,2024-10-01,588706,56.1,71.9,Shoulder,False,synthetic
+Brazil,Rio de Janeiro,BRA,2024,11,2024-11-01,347079,35.7,21.4,Low,False,synthetic
+Brazil,Rio de Janeiro,BRA,2024,12,2024-12-01,610008,73.5,89.8,High,False,synthetic
+Brazil,Rio de Janeiro,BRA,2025,1,2025-01-01,342051,42.1,22.8,Low,False,synthetic
+Brazil,Rio de Janeiro,BRA,2025,2,2025-02-01,362949,39.2,18.1,Low,False,synthetic
+Brazil,Rio de Janeiro,BRA,2025,3,2025-03-01,407151,36.2,22.3,Low,False,synthetic
+Brazil,Rio de Janeiro,BRA,2025,4,2025-04-01,577643,56.1,60.8,Shoulder,False,synthetic
+Brazil,Rio de Janeiro,BRA,2025,5,2025-05-01,477485,51.1,43.9,Shoulder,False,synthetic
+Brazil,Rio de Janeiro,BRA,2025,6,2025-06-01,552725,81.5,89.4,High,False,synthetic
+Argentina,Buenos Aires,ARG,2023,1,2023-01-01,133405,53.9,18.3,Low,False,synthetic
+Argentina,Buenos Aires,ARG,2023,2,2023-02-01,172583,51.2,22.1,Low,False,synthetic
+Argentina,Buenos Aires,ARG,2023,3,2023-03-01,119130,50.1,10.9,Low,False,synthetic
+Argentina,Buenos Aires,ARG,2023,4,2023-04-01,214004,68.8,51.0,Shoulder,False,synthetic
+Argentina,Buenos Aires,ARG,2023,5,2023-05-01,218482,83.2,61.6,Shoulder,False,synthetic
+Argentina,Buenos Aires,ARG,2023,6,2023-06-01,233582,98.0,77.2,High,False,synthetic
+Argentina,Buenos Aires,ARG,2023,7,2023-07-01,231264,98.0,81.3,High,False,synthetic
+Argentina,Buenos Aires,ARG,2023,8,2023-08-01,356117,96.3,87.6,High,False,synthetic
+Argentina,Buenos Aires,ARG,2023,9,2023-09-01,218742,76.2,49.2,Shoulder,False,synthetic
+Argentina,Buenos Aires,ARG,2023,10,2023-10-01,206294,79.0,56.1,Shoulder,False,synthetic
+Argentina,Buenos Aires,ARG,2023,11,2023-11-01,203921,57.0,35.7,Low,False,synthetic
+Argentina,Buenos Aires,ARG,2023,12,2023-12-01,367925,98.0,99.1,High,False,synthetic
+Argentina,Buenos Aires,ARG,2024,1,2024-01-01,152818,53.6,17.9,Low,False,synthetic
+Argentina,Buenos Aires,ARG,2024,2,2024-02-01,140635,52.9,5.8,Low,False,synthetic
+Argentina,Buenos Aires,ARG,2024,3,2024-03-01,152458,55.7,29.4,Low,False,synthetic
+Argentina,Buenos Aires,ARG,2024,4,2024-04-01,274047,69.2,62.4,Shoulder,False,synthetic
+Argentina,Buenos Aires,ARG,2024,5,2024-05-01,232315,85.6,60.1,Shoulder,False,synthetic
+Argentina,Buenos Aires,ARG,2024,6,2024-06-01,356257,84.9,80.3,High,False,synthetic
+Argentina,Buenos Aires,ARG,2024,7,2024-07-01,379315,87.2,90.6,High,False,synthetic
+Argentina,Buenos Aires,ARG,2024,8,2024-08-01,273187,90.1,70.0,High,False,synthetic
+Argentina,Buenos Aires,ARG,2024,9,2024-09-01,187664,81.3,53.1,Shoulder,False,synthetic
+Argentina,Buenos Aires,ARG,2024,10,2024-10-01,207413,78.9,54.0,Shoulder,False,synthetic
+Argentina,Buenos Aires,ARG,2024,11,2024-11-01,174138,58.4,26.0,Low,False,synthetic
+Argentina,Buenos Aires,ARG,2024,12,2024-12-01,296163,98.0,79.9,High,False,synthetic
+Argentina,Buenos Aires,ARG,2025,1,2025-01-01,140663,52.9,13.7,Low,False,synthetic
+Argentina,Buenos Aires,ARG,2025,2,2025-02-01,119709,47.0,6.7,Low,False,synthetic
+Argentina,Buenos Aires,ARG,2025,3,2025-03-01,123269,51.1,11.7,Low,False,synthetic
+Argentina,Buenos Aires,ARG,2025,4,2025-04-01,230378,72.7,57.7,Shoulder,False,synthetic
+Argentina,Buenos Aires,ARG,2025,5,2025-05-01,197977,77.4,53.3,Shoulder,False,synthetic
+Argentina,Buenos Aires,ARG,2025,6,2025-06-01,266450,98.0,84.5,High,False,synthetic
+UK,London,GBR,2023,1,2023-01-01,487144,47.5,48.2,Low,False,synthetic
+UK,London,GBR,2023,2,2023-02-01,592422,48.8,55.8,Low,False,synthetic
+UK,London,GBR,2023,3,2023-03-01,387068,50.6,35.4,Low,False,synthetic
+UK,London,GBR,2023,4,2023-04-01,544854,70.0,84.2,Shoulder,False,synthetic
+UK,London,GBR,2023,5,2023-05-01,880584,66.9,100.0,Shoulder,False,synthetic
+UK,London,GBR,2023,6,2023-06-01,974443,92.0,100.0,High,False,synthetic
+UK,London,GBR,2023,7,2023-07-01,1110833,93.8,100.0,High,False,synthetic
+UK,London,GBR,2023,8,2023-08-01,640716,98.0,100.0,High,False,synthetic
+UK,London,GBR,2023,9,2023-09-01,678664,75.1,94.6,Shoulder,False,synthetic
+UK,London,GBR,2023,10,2023-10-01,650276,78.0,100.0,Shoulder,False,synthetic
+UK,London,GBR,2023,11,2023-11-01,319569,48.2,31.8,Low,False,synthetic
+UK,London,GBR,2023,12,2023-12-01,1005422,87.4,100.0,High,False,synthetic
+UK,London,GBR,2024,1,2024-01-01,311434,50.8,30.4,Low,False,synthetic
+UK,London,GBR,2024,2,2024-02-01,497049,53.2,58.8,Low,False,synthetic
+UK,London,GBR,2024,3,2024-03-01,535318,51.8,55.3,Low,False,synthetic
+UK,London,GBR,2024,4,2024-04-01,611540,73.9,89.6,Shoulder,False,synthetic
+UK,London,GBR,2024,5,2024-05-01,505116,73.9,76.4,Shoulder,True,synthetic
+UK,London,GBR,2024,6,2024-06-01,1042137,80.6,100.0,High,False,synthetic
+UK,London,GBR,2024,7,2024-07-01,928786,98.0,100.0,High,False,synthetic
+UK,London,GBR,2024,8,2024-08-01,1014697,88.7,100.0,High,False,synthetic
+UK,London,GBR,2024,9,2024-09-01,710909,72.5,100.0,Shoulder,False,synthetic
+UK,London,GBR,2024,10,2024-10-01,776353,75.7,100.0,Shoulder,False,synthetic
+UK,London,GBR,2024,11,2024-11-01,465019,49.2,39.9,Low,False,synthetic
+UK,London,GBR,2024,12,2024-12-01,692963,94.4,100.0,High,False,synthetic
+UK,London,GBR,2025,1,2025-01-01,498108,48.3,50.3,Low,False,synthetic
+UK,London,GBR,2025,2,2025-02-01,416278,45.5,33.5,Low,False,synthetic
+UK,London,GBR,2025,3,2025-03-01,483664,47.7,43.5,Low,False,synthetic
+UK,London,GBR,2025,4,2025-04-01,930211,65.0,100.0,Shoulder,False,synthetic
+UK,London,GBR,2025,5,2025-05-01,718635,61.6,90.0,Shoulder,True,synthetic
+UK,London,GBR,2025,6,2025-06-01,998555,88.5,100.0,High,False,synthetic
+Ireland,Dublin,IRL,2023,1,2023-01-01,334085,56.5,44.3,Low,False,synthetic
+Ireland,Dublin,IRL,2023,2,2023-02-01,319963,67.1,56.7,Low,False,synthetic
+Ireland,Dublin,IRL,2023,3,2023-03-01,325456,59.2,37.4,Low,False,synthetic
+Ireland,Dublin,IRL,2023,4,2023-04-01,462900,80.9,85.1,Shoulder,False,synthetic
+Ireland,Dublin,IRL,2023,5,2023-05-01,500032,88.2,96.6,Shoulder,False,synthetic
+Ireland,Dublin,IRL,2023,6,2023-06-01,738896,98.0,100.0,High,True,synthetic
+Ireland,Dublin,IRL,2023,7,2023-07-01,539775,98.0,100.0,High,False,synthetic
+Ireland,Dublin,IRL,2023,8,2023-08-01,573054,98.0,100.0,High,False,synthetic
+Ireland,Dublin,IRL,2023,9,2023-09-01,470758,80.8,85.3,Shoulder,False,synthetic
+Ireland,Dublin,IRL,2023,10,2023-10-01,488556,79.6,87.9,Shoulder,False,synthetic
+Ireland,Dublin,IRL,2023,11,2023-11-01,286689,56.1,30.7,Low,False,synthetic
+Ireland,Dublin,IRL,2023,12,2023-12-01,497783,98.0,100.0,High,False,synthetic
+Ireland,Dublin,IRL,2024,1,2024-01-01,304774,53.9,39.3,Low,False,synthetic
+Ireland,Dublin,IRL,2024,2,2024-02-01,348388,61.1,48.6,Low,False,synthetic
+Ireland,Dublin,IRL,2024,3,2024-03-01,275285,64.7,48.9,Low,False,synthetic
+Ireland,Dublin,IRL,2024,4,2024-04-01,450712,81.7,77.5,Shoulder,False,synthetic
+Ireland,Dublin,IRL,2024,5,2024-05-01,420112,77.3,67.4,Shoulder,False,synthetic
+Ireland,Dublin,IRL,2024,6,2024-06-01,549996,98.0,100.0,High,False,synthetic
+Ireland,Dublin,IRL,2024,7,2024-07-01,593314,98.0,100.0,High,False,synthetic
+Ireland,Dublin,IRL,2024,8,2024-08-01,566466,98.0,100.0,High,False,synthetic
+Ireland,Dublin,IRL,2024,9,2024-09-01,484289,77.4,86.0,Shoulder,False,synthetic
+Ireland,Dublin,IRL,2024,10,2024-10-01,519443,76.2,80.0,Shoulder,False,synthetic
+Ireland,Dublin,IRL,2024,11,2024-11-01,368689,66.4,56.8,Low,False,synthetic
+Ireland,Dublin,IRL,2024,12,2024-12-01,557139,98.0,100.0,High,False,synthetic
+Ireland,Dublin,IRL,2025,1,2025-01-01,203463,53.3,26.7,Low,False,synthetic
+Ireland,Dublin,IRL,2025,2,2025-02-01,333710,62.9,46.3,Low,False,synthetic
+Ireland,Dublin,IRL,2025,3,2025-03-01,291317,54.1,33.5,Low,True,synthetic
+Ireland,Dublin,IRL,2025,4,2025-04-01,427470,94.9,93.1,Shoulder,False,synthetic
+Ireland,Dublin,IRL,2025,5,2025-05-01,378059,84.2,84.8,Shoulder,False,synthetic
+Ireland,Dublin,IRL,2025,6,2025-06-01,545730,98.0,100.0,High,False,synthetic
+France,Paris,FRA,2023,1,2023-01-01,190327,43.9,21.0,Low,False,synthetic
+France,Paris,FRA,2023,2,2023-02-01,227032,44.1,8.3,Low,False,synthetic
+France,Paris,FRA,2023,3,2023-03-01,177341,39.9,16.4,Low,False,synthetic
+France,Paris,FRA,2023,4,2023-04-01,265747,65.3,40.2,Shoulder,False,synthetic
+France,Paris,FRA,2023,5,2023-05-01,354945,60.0,39.7,Shoulder,False,synthetic
+France,Paris,FRA,2023,6,2023-06-01,365507,87.3,78.3,High,False,synthetic
+France,Paris,FRA,2023,7,2023-07-01,492128,72.4,75.2,High,False,synthetic
+France,Paris,FRA,2023,8,2023-08-01,338641,79.4,68.0,High,False,synthetic
+France,Paris,FRA,2023,9,2023-09-01,301131,60.1,43.1,Shoulder,False,synthetic
+France,Paris,FRA,2023,10,2023-10-01,274042,59.2,38.2,Shoulder,False,synthetic
+France,Paris,FRA,2023,11,2023-11-01,219423,35.8,1.2,Low,False,synthetic
+France,Paris,FRA,2023,12,2023-12-01,338712,87.8,79.4,High,False,synthetic
+France,Paris,FRA,2024,1,2024-01-01,194088,41.8,3.5,Low,False,synthetic
+France,Paris,FRA,2024,2,2024-02-01,179844,40.9,0.0,Low,False,synthetic
+France,Paris,FRA,2024,3,2024-03-01,255206,44.6,25.7,Low,False,synthetic
+France,Paris,FRA,2024,4,2024-04-01,329114,57.6,36.9,Shoulder,False,synthetic
+France,Paris,FRA,2024,5,2024-05-01,301832,71.7,54.4,Shoulder,False,synthetic
+France,Paris,FRA,2024,6,2024-06-01,379478,86.0,89.7,High,False,synthetic
+France,Paris,FRA,2024,7,2024-07-01,360346,71.3,55.4,High,False,synthetic
+France,Paris,FRA,2024,8,2024-08-01,377156,78.0,74.1,High,True,synthetic
+France,Paris,FRA,2024,9,2024-09-01,356636,58.1,48.1,Shoulder,False,synthetic
+France,Paris,FRA,2024,10,2024-10-01,360404,59.3,36.6,Shoulder,False,synthetic
+France,Paris,FRA,2024,11,2024-11-01,215555,38.4,8.4,Low,False,synthetic
+France,Paris,FRA,2024,12,2024-12-01,310345,81.9,66.5,High,False,synthetic
+France,Paris,FRA,2025,1,2025-01-01,194736,46.0,14.4,Low,False,synthetic
+France,Paris,FRA,2025,2,2025-02-01,195425,43.4,18.4,Low,False,synthetic
+France,Paris,FRA,2025,3,2025-03-01,230815,43.9,8.8,Low,False,synthetic
+France,Paris,FRA,2025,4,2025-04-01,289745,56.3,31.2,Shoulder,False,synthetic
+France,Paris,FRA,2025,5,2025-05-01,238557,58.6,33.8,Shoulder,True,synthetic
+France,Paris,FRA,2025,6,2025-06-01,393218,75.0,74.8,High,False,synthetic
+Spain,Barcelona,ESP,2023,1,2023-01-01,72229,33.4,0.0,Low,False,synthetic
+Spain,Barcelona,ESP,2023,2,2023-02-01,81243,34.6,0.0,Low,False,synthetic
+Spain,Barcelona,ESP,2023,3,2023-03-01,57975,35.2,0.0,Low,False,synthetic
+Spain,Barcelona,ESP,2023,4,2023-04-01,131013,48.7,19.3,Shoulder,False,synthetic
+Spain,Barcelona,ESP,2023,5,2023-05-01,112808,58.8,20.5,Shoulder,False,synthetic
+Spain,Barcelona,ESP,2023,6,2023-06-01,155022,48.6,15.0,High,False,synthetic
+Spain,Barcelona,ESP,2023,7,2023-07-01,146636,60.1,31.4,High,False,synthetic
+Spain,Barcelona,ESP,2023,8,2023-08-01,136192,61.3,23.4,High,False,synthetic
+Spain,Barcelona,ESP,2023,9,2023-09-01,105896,48.8,8.5,Shoulder,False,synthetic
+Spain,Barcelona,ESP,2023,10,2023-10-01,134593,48.8,4.8,Shoulder,False,synthetic
+Spain,Barcelona,ESP,2023,11,2023-11-01,86926,33.2,0.0,Low,False,synthetic
+Spain,Barcelona,ESP,2023,12,2023-12-01,204293,69.6,47.8,High,False,synthetic
+Spain,Barcelona,ESP,2024,1,2024-01-01,61470,36.5,0.0,Low,False,synthetic
+Spain,Barcelona,ESP,2024,2,2024-02-01,107567,31.3,0.0,Low,True,synthetic
+Spain,Barcelona,ESP,2024,3,2024-03-01,76187,33.3,0.0,Low,False,synthetic
+Spain,Barcelona,ESP,2024,4,2024-04-01,155115,52.4,18.4,Shoulder,False,synthetic
+Spain,Barcelona,ESP,2024,5,2024-05-01,108992,51.0,4.3,Shoulder,True,synthetic
+Spain,Barcelona,ESP,2024,6,2024-06-01,178490,69.8,38.7,High,False,synthetic
+Spain,Barcelona,ESP,2024,7,2024-07-01,168529,64.2,33.1,High,False,synthetic
+Spain,Barcelona,ESP,2024,8,2024-08-01,149503,63.0,32.8,High,True,synthetic
+Spain,Barcelona,ESP,2024,9,2024-09-01,147124,48.6,17.0,Shoulder,False,synthetic
+Spain,Barcelona,ESP,2024,10,2024-10-01,138043,45.6,5.4,Shoulder,False,synthetic
+Spain,Barcelona,ESP,2024,11,2024-11-01,100185,30.9,0.0,Low,False,synthetic
+Spain,Barcelona,ESP,2024,12,2024-12-01,155241,67.2,35.6,High,False,synthetic
+Spain,Barcelona,ESP,2025,1,2025-01-01,50081,32.6,0.0,Low,False,synthetic
+Spain,Barcelona,ESP,2025,2,2025-02-01,104669,33.1,0.0,Low,False,synthetic
+Spain,Barcelona,ESP,2025,3,2025-03-01,88660,30.2,0.0,Low,False,synthetic
+Spain,Barcelona,ESP,2025,4,2025-04-01,160236,47.0,13.5,Shoulder,False,synthetic
+Spain,Barcelona,ESP,2025,5,2025-05-01,95571,51.6,0.6,Shoulder,False,synthetic
+Spain,Barcelona,ESP,2025,6,2025-06-01,168474,63.6,29.5,High,False,synthetic
+Portugal,Lisbon,PRT,2023,1,2023-01-01,473143,44.9,46.0,Low,False,synthetic
+Portugal,Lisbon,PRT,2023,2,2023-02-01,557071,48.5,58.7,Low,False,synthetic
+Portugal,Lisbon,PRT,2023,3,2023-03-01,596259,47.2,58.4,Low,False,synthetic
+Portugal,Lisbon,PRT,2023,4,2023-04-01,460106,70.4,72.7,Shoulder,False,synthetic
+Portugal,Lisbon,PRT,2023,5,2023-05-01,701484,76.5,99.7,Shoulder,True,synthetic
+Portugal,Lisbon,PRT,2023,6,2023-06-01,1078164,98.0,100.0,High,False,synthetic
+Portugal,Lisbon,PRT,2023,7,2023-07-01,767426,98.0,100.0,High,False,synthetic
+Portugal,Lisbon,PRT,2023,8,2023-08-01,1452642,91.2,100.0,High,False,synthetic
+Portugal,Lisbon,PRT,2023,9,2023-09-01,650104,66.2,82.4,Shoulder,False,synthetic
+Portugal,Lisbon,PRT,2023,10,2023-10-01,602304,77.1,94.2,Shoulder,False,synthetic
+Portugal,Lisbon,PRT,2023,11,2023-11-01,593582,49.7,60.3,Low,False,synthetic
+Portugal,Lisbon,PRT,2023,12,2023-12-01,1009758,93.6,100.0,High,False,synthetic
+Portugal,Lisbon,PRT,2024,1,2024-01-01,515387,53.7,53.6,Low,False,synthetic
+Portugal,Lisbon,PRT,2024,2,2024-02-01,566100,45.5,47.2,Low,False,synthetic
+Portugal,Lisbon,PRT,2024,3,2024-03-01,493654,42.3,36.8,Low,False,synthetic
+Portugal,Lisbon,PRT,2024,4,2024-04-01,906031,71.4,100.0,Shoulder,False,synthetic
+Portugal,Lisbon,PRT,2024,5,2024-05-01,697690,70.8,94.7,Shoulder,False,synthetic
+Portugal,Lisbon,PRT,2024,6,2024-06-01,974691,88.7,100.0,High,False,synthetic
+Portugal,Lisbon,PRT,2024,7,2024-07-01,1151053,95.6,100.0,High,True,synthetic
+Portugal,Lisbon,PRT,2024,8,2024-08-01,1155670,85.6,100.0,High,False,synthetic
+Portugal,Lisbon,PRT,2024,9,2024-09-01,626085,79.2,92.8,Shoulder,False,synthetic
+Portugal,Lisbon,PRT,2024,10,2024-10-01,774965,66.1,96.6,Shoulder,False,synthetic
+Portugal,Lisbon,PRT,2024,11,2024-11-01,531908,43.7,43.7,Low,False,synthetic
+Portugal,Lisbon,PRT,2024,12,2024-12-01,1027614,78.3,100.0,High,False,synthetic
+Portugal,Lisbon,PRT,2025,1,2025-01-01,489659,50.7,49.0,Low,False,synthetic
+Portugal,Lisbon,PRT,2025,2,2025-02-01,680742,47.8,65.0,Low,False,synthetic
+Portugal,Lisbon,PRT,2025,3,2025-03-01,627347,45.8,50.0,Low,False,synthetic
+Portugal,Lisbon,PRT,2025,4,2025-04-01,912978,72.9,100.0,Shoulder,False,synthetic
+Portugal,Lisbon,PRT,2025,5,2025-05-01,846866,66.9,100.0,Shoulder,False,synthetic
+Portugal,Lisbon,PRT,2025,6,2025-06-01,866352,88.9,100.0,High,False,synthetic
+Italy,Rome,ITA,2023,1,2023-01-01,30484,42.6,0.0,Low,False,synthetic
+Italy,Rome,ITA,2023,2,2023-02-01,30215,49.8,11.7,Low,False,synthetic
+Italy,Rome,ITA,2023,3,2023-03-01,24786,50.9,1.8,Low,False,synthetic
+Italy,Rome,ITA,2023,4,2023-04-01,30191,66.7,25.3,Shoulder,False,synthetic
+Italy,Rome,ITA,2023,5,2023-05-01,25268,79.2,36.9,Shoulder,False,synthetic
+Italy,Rome,ITA,2023,6,2023-06-01,26964,81.4,40.3,High,False,synthetic
+Italy,Rome,ITA,2023,7,2023-07-01,53709,88.7,46.3,High,False,synthetic
+Italy,Rome,ITA,2023,8,2023-08-01,49297,94.5,54.4,High,False,synthetic
+Italy,Rome,ITA,2023,9,2023-09-01,34214,66.4,20.4,Shoulder,False,synthetic
+Italy,Rome,ITA,2023,10,2023-10-01,36979,67.4,29.2,Shoulder,False,synthetic
+Italy,Rome,ITA,2023,11,2023-11-01,27242,54.9,13.8,Low,True,synthetic
+Italy,Rome,ITA,2023,12,2023-12-01,49246,83.3,43.8,High,False,synthetic
+Italy,Rome,ITA,2024,1,2024-01-01,24815,47.0,0.0,Low,True,synthetic
+Italy,Rome,ITA,2024,2,2024-02-01,25938,42.5,0.0,Low,False,synthetic
+Italy,Rome,ITA,2024,3,2024-03-01,27378,52.0,6.4,Low,False,synthetic
+Italy,Rome,ITA,2024,4,2024-04-01,39128,68.7,20.6,Shoulder,False,synthetic
+Italy,Rome,ITA,2024,5,2024-05-01,42360,76.8,33.3,Shoulder,False,synthetic
+Italy,Rome,ITA,2024,6,2024-06-01,45418,97.6,59.2,High,False,synthetic
+Italy,Rome,ITA,2024,7,2024-07-01,31236,90.5,52.2,High,False,synthetic
+Italy,Rome,ITA,2024,8,2024-08-01,61971,84.2,44.4,High,False,synthetic
+Italy,Rome,ITA,2024,9,2024-09-01,34540,77.3,43.6,Shoulder,False,synthetic
+Italy,Rome,ITA,2024,10,2024-10-01,33639,64.8,27.6,Shoulder,False,synthetic
+Italy,Rome,ITA,2024,11,2024-11-01,25991,44.4,0.0,Low,False,synthetic
+Italy,Rome,ITA,2024,12,2024-12-01,53092,77.4,36.6,High,False,synthetic
+Italy,Rome,ITA,2025,1,2025-01-01,25549,55.9,12.9,Low,False,synthetic
+Italy,Rome,ITA,2025,2,2025-02-01,25252,49.4,0.0,Low,False,synthetic
+Italy,Rome,ITA,2025,3,2025-03-01,32381,46.1,3.9,Low,False,synthetic
+Italy,Rome,ITA,2025,4,2025-04-01,37585,74.6,30.3,Shoulder,False,synthetic
+Italy,Rome,ITA,2025,5,2025-05-01,26148,73.9,18.9,Shoulder,False,synthetic
+Italy,Rome,ITA,2025,6,2025-06-01,55335,97.4,55.9,High,False,synthetic
+Netherlands,Amsterdam,NLD,2023,1,2023-01-01,328582,30.3,9.2,Low,False,synthetic
+Netherlands,Amsterdam,NLD,2023,2,2023-02-01,306082,37.7,17.0,Low,False,synthetic
+Netherlands,Amsterdam,NLD,2023,3,2023-03-01,226817,36.6,1.8,Low,False,synthetic
+Netherlands,Amsterdam,NLD,2023,4,2023-04-01,489466,57.6,57.8,Shoulder,True,synthetic
+Netherlands,Amsterdam,NLD,2023,5,2023-05-01,357705,52.7,38.7,Shoulder,False,synthetic
+Netherlands,Amsterdam,NLD,2023,6,2023-06-01,545516,65.9,79.0,High,False,synthetic
+Netherlands,Amsterdam,NLD,2023,7,2023-07-01,494904,80.9,81.2,High,False,synthetic
+Netherlands,Amsterdam,NLD,2023,8,2023-08-01,624513,68.7,83.9,High,False,synthetic
+Netherlands,Amsterdam,NLD,2023,9,2023-09-01,440555,47.1,51.3,Shoulder,False,synthetic
+Netherlands,Amsterdam,NLD,2023,10,2023-10-01,497536,50.3,48.4,Shoulder,False,synthetic
+Netherlands,Amsterdam,NLD,2023,11,2023-11-01,245341,35.7,5.4,Low,False,synthetic
+Netherlands,Amsterdam,NLD,2023,12,2023-12-01,487080,64.1,61.2,High,True,synthetic
+Netherlands,Amsterdam,NLD,2024,1,2024-01-01,277967,37.8,18.0,Low,False,synthetic
+Netherlands,Amsterdam,NLD,2024,2,2024-02-01,253638,32.2,8.4,Low,False,synthetic
+Netherlands,Amsterdam,NLD,2024,3,2024-03-01,338450,36.5,19.6,Low,False,synthetic
+Netherlands,Amsterdam,NLD,2024,4,2024-04-01,392694,47.7,40.1,Shoulder,False,synthetic
+Netherlands,Amsterdam,NLD,2024,5,2024-05-01,268270,54.4,26.9,Shoulder,False,synthetic
+Netherlands,Amsterdam,NLD,2024,6,2024-06-01,717668,67.3,97.5,High,False,synthetic
+Netherlands,Amsterdam,NLD,2024,7,2024-07-01,734997,61.5,87.3,High,False,synthetic
+Netherlands,Amsterdam,NLD,2024,8,2024-08-01,576686,73.4,83.6,High,False,synthetic
+Netherlands,Amsterdam,NLD,2024,9,2024-09-01,602012,52.9,66.4,Shoulder,False,synthetic
+Netherlands,Amsterdam,NLD,2024,10,2024-10-01,375328,46.3,39.4,Shoulder,False,synthetic
+Netherlands,Amsterdam,NLD,2024,11,2024-11-01,308793,36.2,2.4,Low,False,synthetic
+Netherlands,Amsterdam,NLD,2024,12,2024-12-01,526586,72.2,84.2,High,False,synthetic
+Netherlands,Amsterdam,NLD,2025,1,2025-01-01,338615,31.9,15.0,Low,False,synthetic
+Netherlands,Amsterdam,NLD,2025,2,2025-02-01,379358,42.3,20.3,Low,False,synthetic
+Netherlands,Amsterdam,NLD,2025,3,2025-03-01,284063,36.7,12.5,Low,False,synthetic
+Netherlands,Amsterdam,NLD,2025,4,2025-04-01,527036,47.2,44.1,Shoulder,False,synthetic
+Netherlands,Amsterdam,NLD,2025,5,2025-05-01,431966,46.6,38.9,Shoulder,False,synthetic
+Netherlands,Amsterdam,NLD,2025,6,2025-06-01,523606,71.9,78.4,High,False,synthetic
+Germany,Berlin,DEU,2023,1,2023-01-01,203586,35.1,6.0,Low,False,synthetic
+Germany,Berlin,DEU,2023,2,2023-02-01,239647,32.8,7.1,Low,False,synthetic
+Germany,Berlin,DEU,2023,3,2023-03-01,250763,35.2,15.0,Low,False,synthetic
+Germany,Berlin,DEU,2023,4,2023-04-01,247316,47.6,15.0,Shoulder,True,synthetic
+Germany,Berlin,DEU,2023,5,2023-05-01,347268,50.1,32.4,Shoulder,False,synthetic
+Germany,Berlin,DEU,2023,6,2023-06-01,375954,73.7,62.4,High,False,synthetic
+Germany,Berlin,DEU,2023,7,2023-07-01,462258,64.0,73.2,High,True,synthetic
+Germany,Berlin,DEU,2023,8,2023-08-01,465351,70.8,68.9,High,False,synthetic
+Germany,Berlin,DEU,2023,9,2023-09-01,352977,52.4,31.1,Shoulder,False,synthetic
+Germany,Berlin,DEU,2023,10,2023-10-01,196797,52.5,21.4,Shoulder,False,synthetic
+Germany,Berlin,DEU,2023,11,2023-11-01,165941,32.0,0.0,Low,False,synthetic
+Germany,Berlin,DEU,2023,12,2023-12-01,420247,68.2,75.2,High,False,synthetic
+Germany,Berlin,DEU,2024,1,2024-01-01,259559,32.7,0.0,Low,False,synthetic
+Germany,Berlin,DEU,2024,2,2024-02-01,169067,35.1,0.0,Low,False,synthetic
+Germany,Berlin,DEU,2024,3,2024-03-01,280259,33.6,0.1,Low,False,synthetic
+Germany,Berlin,DEU,2024,4,2024-04-01,282936,54.5,30.0,Shoulder,False,synthetic
+Germany,Berlin,DEU,2024,5,2024-05-01,334083,52.5,40.2,Shoulder,False,synthetic
+Germany,Berlin,DEU,2024,6,2024-06-01,445692,69.0,68.4,High,False,synthetic
+Germany,Berlin,DEU,2024,7,2024-07-01,323423,68.3,54.5,High,False,synthetic
+Germany,Berlin,DEU,2024,8,2024-08-01,492096,57.7,66.7,High,False,synthetic
+Germany,Berlin,DEU,2024,9,2024-09-01,332782,48.5,23.2,Shoulder,False,synthetic
+Germany,Berlin,DEU,2024,10,2024-10-01,333602,52.8,35.7,Shoulder,False,synthetic
+Germany,Berlin,DEU,2024,11,2024-11-01,170937,40.8,0.6,Low,False,synthetic
+Germany,Berlin,DEU,2024,12,2024-12-01,355089,64.2,55.6,High,False,synthetic
+Germany,Berlin,DEU,2025,1,2025-01-01,275463,35.3,12.2,Low,False,synthetic
+Germany,Berlin,DEU,2025,2,2025-02-01,244327,39.5,11.2,Low,False,synthetic
+Germany,Berlin,DEU,2025,3,2025-03-01,201958,37.2,7.3,Low,True,synthetic
+Germany,Berlin,DEU,2025,4,2025-04-01,327840,50.1,28.7,Shoulder,False,synthetic
+Germany,Berlin,DEU,2025,5,2025-05-01,324623,49.8,31.9,Shoulder,False,synthetic
+Germany,Berlin,DEU,2025,6,2025-06-01,390172,65.9,54.8,High,False,synthetic
+Switzerland,Zurich,CHE,2023,1,2023-01-01,83122,41.1,0.0,Low,False,synthetic
+Switzerland,Zurich,CHE,2023,2,2023-02-01,84532,44.5,3.1,Low,False,synthetic
+Switzerland,Zurich,CHE,2023,3,2023-03-01,124952,47.3,7.0,Low,True,synthetic
+Switzerland,Zurich,CHE,2023,4,2023-04-01,108474,62.0,21.3,Shoulder,False,synthetic
+Switzerland,Zurich,CHE,2023,5,2023-05-01,112511,63.5,19.0,Shoulder,False,synthetic
+Switzerland,Zurich,CHE,2023,6,2023-06-01,159737,74.6,51.2,High,False,synthetic
+Switzerland,Zurich,CHE,2023,7,2023-07-01,229495,90.0,67.0,High,False,synthetic
+Switzerland,Zurich,CHE,2023,8,2023-08-01,152720,84.8,54.5,High,False,synthetic
+Switzerland,Zurich,CHE,2023,9,2023-09-01,164456,66.2,40.4,Shoulder,False,synthetic
+Switzerland,Zurich,CHE,2023,10,2023-10-01,153558,64.1,33.8,Shoulder,False,synthetic
+Switzerland,Zurich,CHE,2023,11,2023-11-01,108629,46.0,0.0,Low,False,synthetic
+Switzerland,Zurich,CHE,2023,12,2023-12-01,155117,81.8,61.8,High,False,synthetic
+Switzerland,Zurich,CHE,2024,1,2024-01-01,107416,45.7,0.0,Low,True,synthetic
+Switzerland,Zurich,CHE,2024,2,2024-02-01,111167,33.1,0.0,Low,False,synthetic
+Switzerland,Zurich,CHE,2024,3,2024-03-01,121262,44.4,9.8,Low,False,synthetic
+Switzerland,Zurich,CHE,2024,4,2024-04-01,163122,60.0,28.9,Shoulder,False,synthetic
+Switzerland,Zurich,CHE,2024,5,2024-05-01,179115,69.0,47.6,Shoulder,False,synthetic
+Switzerland,Zurich,CHE,2024,6,2024-06-01,167746,88.2,65.3,High,False,synthetic
+Switzerland,Zurich,CHE,2024,7,2024-07-01,177146,82.7,51.5,High,False,synthetic
+Switzerland,Zurich,CHE,2024,8,2024-08-01,236239,90.4,75.7,High,False,synthetic
+Switzerland,Zurich,CHE,2024,9,2024-09-01,155035,72.1,37.6,Shoulder,False,synthetic
+Switzerland,Zurich,CHE,2024,10,2024-10-01,182504,64.6,48.1,Shoulder,False,synthetic
+Switzerland,Zurich,CHE,2024,11,2024-11-01,89755,47.3,0.0,Low,False,synthetic
+Switzerland,Zurich,CHE,2024,12,2024-12-01,193823,86.6,66.4,High,False,synthetic
+Switzerland,Zurich,CHE,2025,1,2025-01-01,99041,47.3,26.7,Low,False,synthetic
+Switzerland,Zurich,CHE,2025,2,2025-02-01,106980,38.6,0.0,Low,False,synthetic
+Switzerland,Zurich,CHE,2025,3,2025-03-01,96952,43.0,10.2,Low,False,synthetic
+Switzerland,Zurich,CHE,2025,4,2025-04-01,146990,55.6,28.1,Shoulder,False,synthetic
+Switzerland,Zurich,CHE,2025,5,2025-05-01,111582,65.0,34.3,Shoulder,False,synthetic
+Switzerland,Zurich,CHE,2025,6,2025-06-01,171540,79.3,56.0,High,True,synthetic
+Austria,Vienna,AUT,2023,1,2023-01-01,104569,38.8,0.0,Low,False,synthetic
+Austria,Vienna,AUT,2023,2,2023-02-01,125212,38.0,2.7,Low,True,synthetic
+Austria,Vienna,AUT,2023,3,2023-03-01,99056,41.3,0.0,Low,False,synthetic
+Austria,Vienna,AUT,2023,4,2023-04-01,192497,56.8,24.0,Shoulder,False,synthetic
+Austria,Vienna,AUT,2023,5,2023-05-01,155609,47.7,8.0,Shoulder,False,synthetic
+Austria,Vienna,AUT,2023,6,2023-06-01,229218,63.3,42.3,High,False,synthetic
+Austria,Vienna,AUT,2023,7,2023-07-01,256179,72.3,57.7,High,False,synthetic
+Austria,Vienna,AUT,2023,8,2023-08-01,239575,62.0,37.8,High,False,synthetic
+Austria,Vienna,AUT,2023,9,2023-09-01,154797,55.1,24.7,Shoulder,False,synthetic
+Austria,Vienna,AUT,2023,10,2023-10-01,156407,50.1,21.2,Shoulder,False,synthetic
+Austria,Vienna,AUT,2023,11,2023-11-01,95285,36.7,0.0,Low,False,synthetic
+Austria,Vienna,AUT,2023,12,2023-12-01,224761,68.0,41.3,High,False,synthetic
+Austria,Vienna,AUT,2024,1,2024-01-01,92965,39.3,7.4,Low,True,synthetic
+Austria,Vienna,AUT,2024,2,2024-02-01,111938,33.9,0.0,Low,False,synthetic
+Austria,Vienna,AUT,2024,3,2024-03-01,100880,35.1,0.0,Low,False,synthetic
+Austria,Vienna,AUT,2024,4,2024-04-01,172365,47.9,11.3,Shoulder,False,synthetic
+Austria,Vienna,AUT,2024,5,2024-05-01,155960,61.0,30.0,Shoulder,True,synthetic
+Austria,Vienna,AUT,2024,6,2024-06-01,221975,72.2,48.2,High,False,synthetic
+Austria,Vienna,AUT,2024,7,2024-07-01,263955,63.2,45.6,High,False,synthetic
+Austria,Vienna,AUT,2024,8,2024-08-01,227697,78.6,59.9,High,True,synthetic
+Austria,Vienna,AUT,2024,9,2024-09-01,187327,50.5,20.2,Shoulder,False,synthetic
+Austria,Vienna,AUT,2024,10,2024-10-01,135769,53.4,19.5,Shoulder,False,synthetic
+Austria,Vienna,AUT,2024,11,2024-11-01,120859,34.8,0.2,Low,False,synthetic
+Austria,Vienna,AUT,2024,12,2024-12-01,173669,69.6,36.3,High,False,synthetic
+Austria,Vienna,AUT,2025,1,2025-01-01,112479,36.8,0.0,Low,True,synthetic
+Austria,Vienna,AUT,2025,2,2025-02-01,90721,38.4,0.0,Low,False,synthetic
+Austria,Vienna,AUT,2025,3,2025-03-01,126586,38.8,0.0,Low,False,synthetic
+Austria,Vienna,AUT,2025,4,2025-04-01,138891,60.7,31.3,Shoulder,False,synthetic
+Austria,Vienna,AUT,2025,5,2025-05-01,174558,47.4,11.0,Shoulder,True,synthetic
+Austria,Vienna,AUT,2025,6,2025-06-01,223042,68.6,45.9,High,False,synthetic
+Czechia,Prague,CZE,2023,1,2023-01-01,178861,51.6,21.0,Low,False,synthetic
+Czechia,Prague,CZE,2023,2,2023-02-01,192745,48.4,12.4,Low,False,synthetic
+Czechia,Prague,CZE,2023,3,2023-03-01,228495,54.1,25.7,Low,False,synthetic
+Czechia,Prague,CZE,2023,4,2023-04-01,221797,84.4,64.3,Shoulder,False,synthetic
+Czechia,Prague,CZE,2023,5,2023-05-01,260703,73.1,60.4,Shoulder,False,synthetic
+Czechia,Prague,CZE,2023,6,2023-06-01,355713,98.0,89.5,High,False,synthetic
+Czechia,Prague,CZE,2023,7,2023-07-01,361921,86.9,81.8,High,False,synthetic
+Czechia,Prague,CZE,2023,8,2023-08-01,354388,98.0,94.3,High,False,synthetic
+Czechia,Prague,CZE,2023,9,2023-09-01,220085,74.3,54.5,Shoulder,True,synthetic
+Czechia,Prague,CZE,2023,10,2023-10-01,285820,93.2,83.5,Shoulder,False,synthetic
+Czechia,Prague,CZE,2023,11,2023-11-01,178554,49.2,15.3,Low,False,synthetic
+Czechia,Prague,CZE,2023,12,2023-12-01,368824,98.0,93.4,High,False,synthetic
+Czechia,Prague,CZE,2024,1,2024-01-01,182126,56.6,30.3,Low,False,synthetic
+Czechia,Prague,CZE,2024,2,2024-02-01,208579,50.7,24.0,Low,False,synthetic
+Czechia,Prague,CZE,2024,3,2024-03-01,231137,51.7,26.0,Low,False,synthetic
+Czechia,Prague,CZE,2024,4,2024-04-01,232340,75.9,53.0,Shoulder,False,synthetic
+Czechia,Prague,CZE,2024,5,2024-05-01,249757,83.2,61.8,Shoulder,False,synthetic
+Czechia,Prague,CZE,2024,6,2024-06-01,364015,88.2,84.8,High,False,synthetic
+Czechia,Prague,CZE,2024,7,2024-07-01,380362,95.2,92.4,High,False,synthetic
+Czechia,Prague,CZE,2024,8,2024-08-01,353993,98.0,89.0,High,False,synthetic
+Czechia,Prague,CZE,2024,9,2024-09-01,285628,79.3,51.5,Shoulder,False,synthetic
+Czechia,Prague,CZE,2024,10,2024-10-01,288593,80.6,64.9,Shoulder,False,synthetic
+Czechia,Prague,CZE,2024,11,2024-11-01,206119,51.0,24.6,Low,False,synthetic
+Czechia,Prague,CZE,2024,12,2024-12-01,360024,93.1,92.1,High,False,synthetic
+Czechia,Prague,CZE,2025,1,2025-01-01,250223,63.0,48.8,Low,True,synthetic
+Czechia,Prague,CZE,2025,2,2025-02-01,184801,58.4,28.1,Low,False,synthetic
+Czechia,Prague,CZE,2025,3,2025-03-01,229380,58.3,32.7,Low,False,synthetic
+Czechia,Prague,CZE,2025,4,2025-04-01,243882,65.2,47.4,Shoulder,False,synthetic
+Czechia,Prague,CZE,2025,5,2025-05-01,278898,71.2,46.2,Shoulder,False,synthetic
+Czechia,Prague,CZE,2025,6,2025-06-01,330207,98.0,84.3,High,False,synthetic
+Greece,Athens,GRC,2023,1,2023-01-01,343887,45.8,39.8,Low,False,synthetic
+Greece,Athens,GRC,2023,2,2023-02-01,448267,39.1,36.1,Low,False,synthetic
+Greece,Athens,GRC,2023,3,2023-03-01,529703,40.0,38.1,Low,False,synthetic
+Greece,Athens,GRC,2023,4,2023-04-01,762823,52.7,81.8,Shoulder,True,synthetic
+Greece,Athens,GRC,2023,5,2023-05-01,744634,63.5,89.8,Shoulder,False,synthetic
+Greece,Athens,GRC,2023,6,2023-06-01,694545,71.5,95.4,High,False,synthetic
+Greece,Athens,GRC,2023,7,2023-07-01,670620,73.8,100.0,High,False,synthetic
+Greece,Athens,GRC,2023,8,2023-08-01,919551,76.3,100.0,High,False,synthetic
+Greece,Athens,GRC,2023,9,2023-09-01,779828,63.3,92.1,Shoulder,False,synthetic
+Greece,Athens,GRC,2023,10,2023-10-01,705935,51.9,75.3,Shoulder,False,synthetic
+Greece,Athens,GRC,2023,11,2023-11-01,459932,41.6,30.2,Low,False,synthetic
+Greece,Athens,GRC,2023,12,2023-12-01,881723,81.2,100.0,High,False,synthetic
+Greece,Athens,GRC,2024,1,2024-01-01,525248,42.4,44.0,Low,True,synthetic
+Greece,Athens,GRC,2024,2,2024-02-01,588868,39.8,50.5,Low,False,synthetic
+Greece,Athens,GRC,2024,3,2024-03-01,452144,37.1,33.0,Low,False,synthetic
+Greece,Athens,GRC,2024,4,2024-04-01,833308,56.4,96.1,Shoulder,True,synthetic
+Greece,Athens,GRC,2024,5,2024-05-01,762237,55.5,84.0,Shoulder,False,synthetic
+Greece,Athens,GRC,2024,6,2024-06-01,942152,77.5,100.0,High,False,synthetic
+Greece,Athens,GRC,2024,7,2024-07-01,1195431,81.5,100.0,High,False,synthetic
+Greece,Athens,GRC,2024,8,2024-08-01,849873,73.3,100.0,High,False,synthetic
+Greece,Athens,GRC,2024,9,2024-09-01,812790,52.1,88.7,Shoulder,False,synthetic
+Greece,Athens,GRC,2024,10,2024-10-01,622499,63.3,85.5,Shoulder,False,synthetic
+Greece,Athens,GRC,2024,11,2024-11-01,565851,42.5,54.6,Low,True,synthetic
+Greece,Athens,GRC,2024,12,2024-12-01,760706,86.3,100.0,High,False,synthetic
+Greece,Athens,GRC,2025,1,2025-01-01,432478,41.6,31.8,Low,False,synthetic
+Greece,Athens,GRC,2025,2,2025-02-01,568507,38.2,37.1,Low,False,synthetic
+Greece,Athens,GRC,2025,3,2025-03-01,470550,40.5,28.9,Low,False,synthetic
+Greece,Athens,GRC,2025,4,2025-04-01,809034,60.0,88.9,Shoulder,False,synthetic
+Greece,Athens,GRC,2025,5,2025-05-01,732402,59.8,87.0,Shoulder,False,synthetic
+Greece,Athens,GRC,2025,6,2025-06-01,992312,83.3,100.0,High,False,synthetic
+Turkey,Istanbul,TUR,2023,1,2023-01-01,643362,47.8,61.8,Low,False,synthetic
+Turkey,Istanbul,TUR,2023,2,2023-02-01,499478,54.1,60.5,Low,False,synthetic
+Turkey,Istanbul,TUR,2023,3,2023-03-01,586734,52.8,60.2,Low,False,synthetic
+Turkey,Istanbul,TUR,2023,4,2023-04-01,511696,77.8,94.7,Shoulder,False,synthetic
+Turkey,Istanbul,TUR,2023,5,2023-05-01,775885,73.6,100.0,Shoulder,False,synthetic
+Turkey,Istanbul,TUR,2023,6,2023-06-01,1189979,98.0,100.0,High,False,synthetic
+Turkey,Istanbul,TUR,2023,7,2023-07-01,943217,92.9,100.0,High,False,synthetic
+Turkey,Istanbul,TUR,2023,8,2023-08-01,921282,96.6,100.0,High,True,synthetic
+Turkey,Istanbul,TUR,2023,9,2023-09-01,669825,68.9,87.9,Shoulder,False,synthetic
+Turkey,Istanbul,TUR,2023,10,2023-10-01,638360,81.7,92.4,Shoulder,False,synthetic
+Turkey,Istanbul,TUR,2023,11,2023-11-01,492639,53.7,55.7,Low,False,synthetic
+Turkey,Istanbul,TUR,2023,12,2023-12-01,788541,98.0,100.0,High,False,synthetic
+Turkey,Istanbul,TUR,2024,1,2024-01-01,468449,53.0,62.9,Low,False,synthetic
+Turkey,Istanbul,TUR,2024,2,2024-02-01,533474,56.0,64.2,Low,False,synthetic
+Turkey,Istanbul,TUR,2024,3,2024-03-01,506713,53.7,52.2,Low,False,synthetic
+Turkey,Istanbul,TUR,2024,4,2024-04-01,917473,83.4,100.0,Shoulder,False,synthetic
+Turkey,Istanbul,TUR,2024,5,2024-05-01,611714,74.5,95.3,Shoulder,False,synthetic
+Turkey,Istanbul,TUR,2024,6,2024-06-01,808713,95.1,100.0,High,False,synthetic
+Turkey,Istanbul,TUR,2024,7,2024-07-01,1164557,98.0,100.0,High,False,synthetic
+Turkey,Istanbul,TUR,2024,8,2024-08-01,1043739,98.0,100.0,High,False,synthetic
+Turkey,Istanbul,TUR,2024,9,2024-09-01,799977,75.3,100.0,Shoulder,False,synthetic
+Turkey,Istanbul,TUR,2024,10,2024-10-01,819853,73.3,100.0,Shoulder,True,synthetic
+Turkey,Istanbul,TUR,2024,11,2024-11-01,426257,53.8,47.3,Low,False,synthetic
+Turkey,Istanbul,TUR,2024,12,2024-12-01,816242,90.5,100.0,High,False,synthetic
+Turkey,Istanbul,TUR,2025,1,2025-01-01,417682,45.3,38.2,Low,False,synthetic
+Turkey,Istanbul,TUR,2025,2,2025-02-01,494740,60.2,70.1,Low,False,synthetic
+Turkey,Istanbul,TUR,2025,3,2025-03-01,514437,49.0,44.3,Low,False,synthetic
+Turkey,Istanbul,TUR,2025,4,2025-04-01,833025,79.7,100.0,Shoulder,False,synthetic
+Turkey,Istanbul,TUR,2025,5,2025-05-01,466682,71.5,68.3,Shoulder,False,synthetic
+Turkey,Istanbul,TUR,2025,6,2025-06-01,886629,97.8,100.0,High,False,synthetic
+UAE,Dubai,ARE,2023,1,2023-01-01,521822,55.1,62.4,Low,False,synthetic
+UAE,Dubai,ARE,2023,2,2023-02-01,540214,58.4,58.5,Low,False,synthetic
+UAE,Dubai,ARE,2023,3,2023-03-01,435580,51.9,41.1,Low,False,synthetic
+UAE,Dubai,ARE,2023,4,2023-04-01,719881,73.2,98.0,Shoulder,False,synthetic
+UAE,Dubai,ARE,2023,5,2023-05-01,740310,75.5,86.9,Shoulder,False,synthetic
+UAE,Dubai,ARE,2023,6,2023-06-01,1014978,98.0,100.0,High,False,synthetic
+UAE,Dubai,ARE,2023,7,2023-07-01,1136212,90.4,100.0,High,True,synthetic
+UAE,Dubai,ARE,2023,8,2023-08-01,832388,97.7,100.0,High,False,synthetic
+UAE,Dubai,ARE,2023,9,2023-09-01,953464,71.7,100.0,Shoulder,False,synthetic
+UAE,Dubai,ARE,2023,10,2023-10-01,804991,77.6,100.0,Shoulder,False,synthetic
+UAE,Dubai,ARE,2023,11,2023-11-01,484634,57.2,65.7,Low,False,synthetic
+UAE,Dubai,ARE,2023,12,2023-12-01,733610,98.0,100.0,High,False,synthetic
+UAE,Dubai,ARE,2024,1,2024-01-01,590544,51.4,59.4,Low,False,synthetic
+UAE,Dubai,ARE,2024,2,2024-02-01,665239,53.5,64.6,Low,False,synthetic
+UAE,Dubai,ARE,2024,3,2024-03-01,556454,48.6,46.1,Low,True,synthetic
+UAE,Dubai,ARE,2024,4,2024-04-01,858623,74.0,100.0,Shoulder,False,synthetic
+UAE,Dubai,ARE,2024,5,2024-05-01,849036,80.0,100.0,Shoulder,False,synthetic
+UAE,Dubai,ARE,2024,6,2024-06-01,1090914,95.9,100.0,High,False,synthetic
+UAE,Dubai,ARE,2024,7,2024-07-01,1024562,98.0,100.0,High,False,synthetic
+UAE,Dubai,ARE,2024,8,2024-08-01,982203,76.5,100.0,High,False,synthetic
+UAE,Dubai,ARE,2024,9,2024-09-01,804512,77.2,100.0,Shoulder,False,synthetic
+UAE,Dubai,ARE,2024,10,2024-10-01,775604,90.2,100.0,Shoulder,True,synthetic
+UAE,Dubai,ARE,2024,11,2024-11-01,499115,51.8,55.0,Low,False,synthetic
+UAE,Dubai,ARE,2024,12,2024-12-01,967029,97.9,100.0,High,False,synthetic
+UAE,Dubai,ARE,2025,1,2025-01-01,597505,58.4,68.1,Low,False,synthetic
+UAE,Dubai,ARE,2025,2,2025-02-01,433549,47.5,34.2,Low,False,synthetic
+UAE,Dubai,ARE,2025,3,2025-03-01,643378,50.8,62.9,Low,False,synthetic
+UAE,Dubai,ARE,2025,4,2025-04-01,845579,73.4,100.0,Shoulder,False,synthetic
+UAE,Dubai,ARE,2025,5,2025-05-01,711895,83.5,100.0,Shoulder,False,synthetic
+UAE,Dubai,ARE,2025,6,2025-06-01,1199972,94.5,100.0,High,False,synthetic
+Qatar,Doha,QAT,2023,1,2023-01-01,105068,49.9,12.3,Low,False,synthetic
+Qatar,Doha,QAT,2023,2,2023-02-01,154972,44.5,15.5,Low,False,synthetic
+Qatar,Doha,QAT,2023,3,2023-03-01,142009,38.1,3.3,Low,False,synthetic
+Qatar,Doha,QAT,2023,4,2023-04-01,221373,61.6,35.3,Shoulder,False,synthetic
+Qatar,Doha,QAT,2023,5,2023-05-01,168404,64.0,41.1,Shoulder,False,synthetic
+Qatar,Doha,QAT,2023,6,2023-06-01,272606,81.0,64.5,High,False,synthetic
+Qatar,Doha,QAT,2023,7,2023-07-01,202564,73.4,37.6,High,False,synthetic
+Qatar,Doha,QAT,2023,8,2023-08-01,265590,78.1,49.3,High,False,synthetic
+Qatar,Doha,QAT,2023,9,2023-09-01,193552,69.7,39.5,Shoulder,False,synthetic
+Qatar,Doha,QAT,2023,10,2023-10-01,179683,60.5,36.6,Shoulder,False,synthetic
+Qatar,Doha,QAT,2023,11,2023-11-01,121504,46.9,8.7,Low,False,synthetic
+Qatar,Doha,QAT,2023,12,2023-12-01,225834,87.1,68.4,High,True,synthetic
+Qatar,Doha,QAT,2024,1,2024-01-01,138210,40.4,2.3,Low,False,synthetic
+Qatar,Doha,QAT,2024,2,2024-02-01,155042,41.5,0.0,Low,False,synthetic
+Qatar,Doha,QAT,2024,3,2024-03-01,100430,44.2,0.0,Low,True,synthetic
+Qatar,Doha,QAT,2024,4,2024-04-01,197587,59.9,33.8,Shoulder,False,synthetic
+Qatar,Doha,QAT,2024,5,2024-05-01,114921,58.6,24.0,Shoulder,False,synthetic
+Qatar,Doha,QAT,2024,6,2024-06-01,315381,69.7,53.5,High,False,synthetic
+Qatar,Doha,QAT,2024,7,2024-07-01,309092,84.6,74.2,High,True,synthetic
+Qatar,Doha,QAT,2024,8,2024-08-01,303834,85.8,79.2,High,False,synthetic
+Qatar,Doha,QAT,2024,9,2024-09-01,183478,63.9,39.1,Shoulder,False,synthetic
+Qatar,Doha,QAT,2024,10,2024-10-01,183419,65.7,45.5,Shoulder,False,synthetic
+Qatar,Doha,QAT,2024,11,2024-11-01,130180,43.3,7.4,Low,False,synthetic
+Qatar,Doha,QAT,2024,12,2024-12-01,322821,80.9,72.0,High,False,synthetic
+Qatar,Doha,QAT,2025,1,2025-01-01,126405,41.8,0.0,Low,True,synthetic
+Qatar,Doha,QAT,2025,2,2025-02-01,105264,44.7,6.2,Low,False,synthetic
+Qatar,Doha,QAT,2025,3,2025-03-01,133493,44.7,1.3,Low,False,synthetic
+Qatar,Doha,QAT,2025,4,2025-04-01,213936,51.6,26.8,Shoulder,True,synthetic
+Qatar,Doha,QAT,2025,5,2025-05-01,190205,54.6,31.7,Shoulder,False,synthetic
+Qatar,Doha,QAT,2025,6,2025-06-01,189402,79.1,51.8,High,False,synthetic
+India,Delhi,IND,2023,1,2023-01-01,318885,32.4,14.8,Low,False,synthetic
+India,Delhi,IND,2023,2,2023-02-01,440031,33.6,12.2,Low,True,synthetic
+India,Delhi,IND,2023,3,2023-03-01,460862,37.4,33.2,Low,False,synthetic
+India,Delhi,IND,2023,4,2023-04-01,496890,56.1,49.9,Shoulder,False,synthetic
+India,Delhi,IND,2023,5,2023-05-01,615652,46.9,51.9,Shoulder,False,synthetic
+India,Delhi,IND,2023,6,2023-06-01,749704,61.2,82.7,High,False,synthetic
+India,Delhi,IND,2023,7,2023-07-01,698637,70.2,98.6,High,True,synthetic
+India,Delhi,IND,2023,8,2023-08-01,647257,70.4,96.6,High,True,synthetic
+India,Delhi,IND,2023,9,2023-09-01,583874,48.1,50.9,Shoulder,False,synthetic
+India,Delhi,IND,2023,10,2023-10-01,430197,46.8,35.1,Shoulder,False,synthetic
+India,Delhi,IND,2023,11,2023-11-01,373526,31.2,22.7,Low,False,synthetic
+India,Delhi,IND,2023,12,2023-12-01,889964,62.3,100.0,High,False,synthetic
+India,Delhi,IND,2024,1,2024-01-01,344835,33.5,18.3,Low,False,synthetic
+India,Delhi,IND,2024,2,2024-02-01,417859,35.6,30.8,Low,False,synthetic
+India,Delhi,IND,2024,3,2024-03-01,451200,33.7,21.2,Low,False,synthetic
+India,Delhi,IND,2024,4,2024-04-01,415868,43.0,36.0,Shoulder,False,synthetic
+India,Delhi,IND,2024,5,2024-05-01,554728,52.5,48.4,Shoulder,False,synthetic
+India,Delhi,IND,2024,6,2024-06-01,504105,67.1,63.2,High,False,synthetic
+India,Delhi,IND,2024,7,2024-07-01,755275,68.5,96.9,High,False,synthetic
+India,Delhi,IND,2024,8,2024-08-01,757774,62.1,84.8,High,False,synthetic
+India,Delhi,IND,2024,9,2024-09-01,588996,52.0,62.9,Shoulder,False,synthetic
+India,Delhi,IND,2024,10,2024-10-01,595246,48.6,55.4,Shoulder,False,synthetic
+India,Delhi,IND,2024,11,2024-11-01,338480,36.4,10.5,Low,False,synthetic
+India,Delhi,IND,2024,12,2024-12-01,666628,71.3,97.5,High,False,synthetic
+India,Delhi,IND,2025,1,2025-01-01,454109,37.7,24.7,Low,False,synthetic
+India,Delhi,IND,2025,2,2025-02-01,373484,37.1,29.8,Low,False,synthetic
+India,Delhi,IND,2025,3,2025-03-01,476799,27.9,19.4,Low,False,synthetic
+India,Delhi,IND,2025,4,2025-04-01,632626,53.6,72.4,Shoulder,False,synthetic
+India,Delhi,IND,2025,5,2025-05-01,609185,50.5,53.2,Shoulder,False,synthetic
+India,Delhi,IND,2025,6,2025-06-01,637525,68.4,84.9,High,False,synthetic
+India,Mumbai,IND,2023,1,2023-01-01,245532,32.0,0.0,Low,False,synthetic
+India,Mumbai,IND,2023,2,2023-02-01,267889,31.3,2.9,Low,False,synthetic
+India,Mumbai,IND,2023,3,2023-03-01,193369,33.0,0.0,Low,False,synthetic
+India,Mumbai,IND,2023,4,2023-04-01,274299,41.9,25.9,Shoulder,False,synthetic
+India,Mumbai,IND,2023,5,2023-05-01,342946,38.6,17.6,Shoulder,False,synthetic
+India,Mumbai,IND,2023,6,2023-06-01,444969,49.5,44.9,High,False,synthetic
+India,Mumbai,IND,2023,7,2023-07-01,515639,56.7,48.3,High,False,synthetic
+India,Mumbai,IND,2023,8,2023-08-01,361226,63.3,38.5,High,True,synthetic
+India,Mumbai,IND,2023,9,2023-09-01,403731,46.0,40.1,Shoulder,False,synthetic
+India,Mumbai,IND,2023,10,2023-10-01,252675,51.3,27.3,Shoulder,False,synthetic
+India,Mumbai,IND,2023,11,2023-11-01,193770,32.5,0.0,Low,False,synthetic
+India,Mumbai,IND,2023,12,2023-12-01,609297,62.1,72.3,High,False,synthetic
+India,Mumbai,IND,2024,1,2024-01-01,173992,36.2,0.0,Low,True,synthetic
+India,Mumbai,IND,2024,2,2024-02-01,255705,36.0,7.8,Low,False,synthetic
+India,Mumbai,IND,2024,3,2024-03-01,235320,30.6,0.0,Low,False,synthetic
+India,Mumbai,IND,2024,4,2024-04-01,341843,53.8,41.0,Shoulder,False,synthetic
+India,Mumbai,IND,2024,5,2024-05-01,279152,47.9,21.8,Shoulder,False,synthetic
+India,Mumbai,IND,2024,6,2024-06-01,477033,60.0,71.8,High,False,synthetic
+India,Mumbai,IND,2024,7,2024-07-01,508731,63.4,75.8,High,False,synthetic
+India,Mumbai,IND,2024,8,2024-08-01,521250,55.0,55.4,High,False,synthetic
+India,Mumbai,IND,2024,9,2024-09-01,394124,41.7,26.9,Shoulder,False,synthetic
+India,Mumbai,IND,2024,10,2024-10-01,323301,49.1,48.5,Shoulder,True,synthetic
+India,Mumbai,IND,2024,11,2024-11-01,207144,28.9,0.0,Low,False,synthetic
+India,Mumbai,IND,2024,12,2024-12-01,462702,61.9,58.3,High,False,synthetic
+India,Mumbai,IND,2025,1,2025-01-01,207135,31.9,2.2,Low,False,synthetic
+India,Mumbai,IND,2025,2,2025-02-01,277435,33.3,13.0,Low,True,synthetic
+India,Mumbai,IND,2025,3,2025-03-01,264881,34.5,15.5,Low,False,synthetic
+India,Mumbai,IND,2025,4,2025-04-01,287339,49.0,14.3,Shoulder,True,synthetic
+India,Mumbai,IND,2025,5,2025-05-01,385472,43.9,29.0,Shoulder,True,synthetic
+India,Mumbai,IND,2025,6,2025-06-01,398552,57.4,45.4,High,True,synthetic
+Thailand,Bangkok,THA,2023,1,2023-01-01,178034,41.1,8.9,Low,True,synthetic
+Thailand,Bangkok,THA,2023,2,2023-02-01,126677,36.7,0.0,Low,False,synthetic
+Thailand,Bangkok,THA,2023,3,2023-03-01,142797,46.1,0.7,Low,False,synthetic
+Thailand,Bangkok,THA,2023,4,2023-04-01,157821,59.4,32.5,Shoulder,False,synthetic
+Thailand,Bangkok,THA,2023,5,2023-05-01,197110,67.8,43.3,Shoulder,False,synthetic
+Thailand,Bangkok,THA,2023,6,2023-06-01,264235,73.7,56.9,High,True,synthetic
+Thailand,Bangkok,THA,2023,7,2023-07-01,205157,80.0,55.9,High,False,synthetic
+Thailand,Bangkok,THA,2023,8,2023-08-01,290267,81.9,65.8,High,True,synthetic
+Thailand,Bangkok,THA,2023,9,2023-09-01,172527,54.3,6.4,Shoulder,False,synthetic
+Thailand,Bangkok,THA,2023,10,2023-10-01,174061,62.6,22.7,Shoulder,False,synthetic
+Thailand,Bangkok,THA,2023,11,2023-11-01,148771,39.0,3.7,Low,True,synthetic
+Thailand,Bangkok,THA,2023,12,2023-12-01,256813,82.7,69.6,High,False,synthetic
+Thailand,Bangkok,THA,2024,1,2024-01-01,121999,40.9,4.5,Low,False,synthetic
+Thailand,Bangkok,THA,2024,2,2024-02-01,135256,41.2,2.4,Low,False,synthetic
+Thailand,Bangkok,THA,2024,3,2024-03-01,100363,44.3,8.0,Low,False,synthetic
+Thailand,Bangkok,THA,2024,4,2024-04-01,209512,66.0,43.1,Shoulder,False,synthetic
+Thailand,Bangkok,THA,2024,5,2024-05-01,170429,61.1,31.6,Shoulder,False,synthetic
+Thailand,Bangkok,THA,2024,6,2024-06-01,251110,72.1,53.7,High,False,synthetic
+Thailand,Bangkok,THA,2024,7,2024-07-01,265858,79.6,70.5,High,False,synthetic
+Thailand,Bangkok,THA,2024,8,2024-08-01,307691,74.3,65.4,High,False,synthetic
+Thailand,Bangkok,THA,2024,9,2024-09-01,189799,68.8,43.8,Shoulder,False,synthetic
+Thailand,Bangkok,THA,2024,10,2024-10-01,187384,66.2,42.8,Shoulder,False,synthetic
+Thailand,Bangkok,THA,2024,11,2024-11-01,136065,43.2,2.9,Low,False,synthetic
+Thailand,Bangkok,THA,2024,12,2024-12-01,267129,78.5,66.9,High,False,synthetic
+Thailand,Bangkok,THA,2025,1,2025-01-01,159968,36.8,0.0,Low,False,synthetic
+Thailand,Bangkok,THA,2025,2,2025-02-01,171699,39.9,0.5,Low,False,synthetic
+Thailand,Bangkok,THA,2025,3,2025-03-01,125980,41.6,6.9,Low,False,synthetic
+Thailand,Bangkok,THA,2025,4,2025-04-01,139997,54.4,19.3,Shoulder,False,synthetic
+Thailand,Bangkok,THA,2025,5,2025-05-01,189676,53.9,31.9,Shoulder,False,synthetic
+Thailand,Bangkok,THA,2025,6,2025-06-01,217118,80.5,53.5,High,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,1,2023-01-01,99685,57.5,14.2,Low,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,2,2023-02-01,54721,56.7,13.3,Low,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,3,2023-03-01,121074,64.5,22.4,Low,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,4,2023-04-01,120436,92.7,64.0,Shoulder,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,5,2023-05-01,143725,83.8,56.0,Shoulder,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,6,2023-06-01,192080,98.0,70.7,High,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,7,2023-07-01,164728,98.0,76.2,High,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,8,2023-08-01,258020,89.9,76.1,High,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,9,2023-09-01,171863,88.9,63.0,Shoulder,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,10,2023-10-01,136037,88.2,50.0,Shoulder,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,11,2023-11-01,106817,56.5,17.4,Low,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,12,2023-12-01,237803,98.0,87.5,High,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,1,2024-01-01,117315,62.0,21.5,Low,True,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,2,2024-02-01,106172,62.6,17.7,Low,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,3,2024-03-01,116396,59.0,29.5,Low,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,4,2024-04-01,207155,73.7,39.0,Shoulder,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,5,2024-05-01,127070,83.8,52.9,Shoulder,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,6,2024-06-01,173912,98.0,73.4,High,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,7,2024-07-01,193680,98.0,68.5,High,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,8,2024-08-01,161168,97.4,75.7,High,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,9,2024-09-01,185564,85.1,60.5,Shoulder,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,10,2024-10-01,170685,84.0,54.5,Shoulder,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,11,2024-11-01,80133,51.1,3.8,Low,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,12,2024-12-01,198969,98.0,72.9,High,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,1,2025-01-01,105358,54.4,17.7,Low,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,2,2025-02-01,97074,59.0,19.9,Low,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,3,2025-03-01,100555,52.7,13.6,Low,True,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,4,2025-04-01,129691,82.4,55.5,Shoulder,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,5,2025-05-01,140928,80.2,53.5,Shoulder,False,synthetic
+Vietnam,Ho Chi Minh City,VNM,2025,6,2025-06-01,222875,92.9,66.6,High,True,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,1,2023-01-01,121853,59.9,14.7,Low,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,2,2023-02-01,101101,54.4,16.2,Low,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,3,2023-03-01,124544,49.2,11.9,Low,True,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,4,2023-04-01,147725,85.2,51.4,Shoulder,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,5,2023-05-01,152383,78.8,47.4,Shoulder,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,6,2023-06-01,181049,98.0,74.3,High,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,7,2023-07-01,253412,98.0,81.0,High,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,8,2023-08-01,173100,98.0,73.3,High,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,9,2023-09-01,166542,79.8,50.6,Shoulder,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,10,2023-10-01,227259,78.7,46.9,Shoulder,True,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,11,2023-11-01,122726,64.4,26.2,Low,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,12,2023-12-01,227377,98.0,79.0,High,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,1,2024-01-01,124679,60.1,21.2,Low,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,2,2024-02-01,142921,59.4,29.9,Low,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,3,2024-03-01,114695,58.7,26.4,Low,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,4,2024-04-01,163627,78.5,52.5,Shoulder,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,5,2024-05-01,150119,98.0,64.9,Shoulder,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,6,2024-06-01,178138,98.0,88.3,High,True,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,7,2024-07-01,182398,98.0,71.6,High,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,8,2024-08-01,188210,98.0,69.8,High,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,9,2024-09-01,151990,72.7,50.1,Shoulder,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,10,2024-10-01,132897,85.9,53.4,Shoulder,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,11,2024-11-01,143891,53.5,17.7,Low,True,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,12,2024-12-01,226417,98.0,76.1,High,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,1,2025-01-01,106427,61.7,18.8,Low,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,2,2025-02-01,97631,58.2,13.8,Low,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,3,2025-03-01,95726,53.7,11.9,Low,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,4,2025-04-01,129529,76.6,48.4,Shoulder,True,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,5,2025-05-01,136294,80.5,55.2,Shoulder,False,synthetic
+Malaysia,Kuala Lumpur,MYS,2025,6,2025-06-01,201556,95.7,69.3,High,False,synthetic
+Singapore,Singapore,SGP,2023,1,2023-01-01,596449,54.5,62.2,Low,False,synthetic
+Singapore,Singapore,SGP,2023,2,2023-02-01,479067,60.7,59.3,Low,True,synthetic
+Singapore,Singapore,SGP,2023,3,2023-03-01,656100,64.7,86.6,Low,False,synthetic
+Singapore,Singapore,SGP,2023,4,2023-04-01,860029,81.3,100.0,Shoulder,False,synthetic
+Singapore,Singapore,SGP,2023,5,2023-05-01,820318,84.5,100.0,Shoulder,False,synthetic
+Singapore,Singapore,SGP,2023,6,2023-06-01,1308957,98.0,100.0,High,False,synthetic
+Singapore,Singapore,SGP,2023,7,2023-07-01,771967,98.0,100.0,High,False,synthetic
+Singapore,Singapore,SGP,2023,8,2023-08-01,1200597,98.0,100.0,High,False,synthetic
+Singapore,Singapore,SGP,2023,9,2023-09-01,743280,98.0,100.0,Shoulder,False,synthetic
+Singapore,Singapore,SGP,2023,10,2023-10-01,716841,83.3,100.0,Shoulder,False,synthetic
+Singapore,Singapore,SGP,2023,11,2023-11-01,596407,54.1,59.7,Low,False,synthetic
+Singapore,Singapore,SGP,2023,12,2023-12-01,846175,98.0,100.0,High,False,synthetic
+Singapore,Singapore,SGP,2024,1,2024-01-01,561555,50.6,60.4,Low,True,synthetic
+Singapore,Singapore,SGP,2024,2,2024-02-01,705883,63.6,81.6,Low,False,synthetic
+Singapore,Singapore,SGP,2024,3,2024-03-01,489903,52.8,61.5,Low,False,synthetic
+Singapore,Singapore,SGP,2024,4,2024-04-01,899764,81.7,100.0,Shoulder,False,synthetic
+Singapore,Singapore,SGP,2024,5,2024-05-01,920259,85.7,100.0,Shoulder,False,synthetic
+Singapore,Singapore,SGP,2024,6,2024-06-01,980969,98.0,100.0,High,False,synthetic
+Singapore,Singapore,SGP,2024,7,2024-07-01,1041581,98.0,100.0,High,False,synthetic
+Singapore,Singapore,SGP,2024,8,2024-08-01,969155,98.0,100.0,High,False,synthetic
+Singapore,Singapore,SGP,2024,9,2024-09-01,901601,83.1,100.0,Shoulder,False,synthetic
+Singapore,Singapore,SGP,2024,10,2024-10-01,628322,85.2,97.3,Shoulder,False,synthetic
+Singapore,Singapore,SGP,2024,11,2024-11-01,385187,57.7,55.8,Low,False,synthetic
+Singapore,Singapore,SGP,2024,12,2024-12-01,1125086,98.0,100.0,High,False,synthetic
+Singapore,Singapore,SGP,2025,1,2025-01-01,500472,58.5,57.1,Low,False,synthetic
+Singapore,Singapore,SGP,2025,2,2025-02-01,634130,63.3,71.2,Low,False,synthetic
+Singapore,Singapore,SGP,2025,3,2025-03-01,514027,61.3,70.7,Low,True,synthetic
+Singapore,Singapore,SGP,2025,4,2025-04-01,734127,80.9,100.0,Shoulder,False,synthetic
+Singapore,Singapore,SGP,2025,5,2025-05-01,772569,80.9,100.0,Shoulder,False,synthetic
+Singapore,Singapore,SGP,2025,6,2025-06-01,997969,98.0,100.0,High,False,synthetic
+Indonesia,Bali,IDN,2023,1,2023-01-01,315404,40.1,18.4,Low,False,synthetic
+Indonesia,Bali,IDN,2023,2,2023-02-01,271700,37.4,9.7,Low,True,synthetic
+Indonesia,Bali,IDN,2023,3,2023-03-01,424302,40.1,38.2,Low,False,synthetic
+Indonesia,Bali,IDN,2023,4,2023-04-01,660846,49.9,60.6,Shoulder,False,synthetic
+Indonesia,Bali,IDN,2023,5,2023-05-01,426311,57.0,51.5,Shoulder,False,synthetic
+Indonesia,Bali,IDN,2023,6,2023-06-01,709378,71.1,98.8,High,False,synthetic
+Indonesia,Bali,IDN,2023,7,2023-07-01,639939,73.5,92.0,High,False,synthetic
+Indonesia,Bali,IDN,2023,8,2023-08-01,706872,79.8,100.0,High,False,synthetic
+Indonesia,Bali,IDN,2023,9,2023-09-01,409571,54.3,49.4,Shoulder,False,synthetic
+Indonesia,Bali,IDN,2023,10,2023-10-01,559522,58.6,70.0,Shoulder,False,synthetic
+Indonesia,Bali,IDN,2023,11,2023-11-01,442313,42.9,34.9,Low,False,synthetic
+Indonesia,Bali,IDN,2023,12,2023-12-01,787020,75.2,100.0,High,False,synthetic
+Indonesia,Bali,IDN,2024,1,2024-01-01,497880,40.0,39.0,Low,False,synthetic
+Indonesia,Bali,IDN,2024,2,2024-02-01,403220,36.4,25.1,Low,False,synthetic
+Indonesia,Bali,IDN,2024,3,2024-03-01,412681,37.8,31.3,Low,False,synthetic
+Indonesia,Bali,IDN,2024,4,2024-04-01,566276,59.7,77.6,Shoulder,False,synthetic
+Indonesia,Bali,IDN,2024,5,2024-05-01,689735,55.2,75.2,Shoulder,False,synthetic
+Indonesia,Bali,IDN,2024,6,2024-06-01,715417,66.4,88.6,High,True,synthetic
+Indonesia,Bali,IDN,2024,7,2024-07-01,772489,70.9,100.0,High,False,synthetic
+Indonesia,Bali,IDN,2024,8,2024-08-01,655690,67.6,89.2,High,False,synthetic
+Indonesia,Bali,IDN,2024,9,2024-09-01,457218,48.9,49.1,Shoulder,False,synthetic
+Indonesia,Bali,IDN,2024,10,2024-10-01,595800,61.5,81.5,Shoulder,False,synthetic
+Indonesia,Bali,IDN,2024,11,2024-11-01,399706,40.4,32.0,Low,False,synthetic
+Indonesia,Bali,IDN,2024,12,2024-12-01,465130,68.2,72.6,High,False,synthetic
+Indonesia,Bali,IDN,2025,1,2025-01-01,457082,38.0,32.0,Low,False,synthetic
+Indonesia,Bali,IDN,2025,2,2025-02-01,355202,36.5,20.6,Low,False,synthetic
+Indonesia,Bali,IDN,2025,3,2025-03-01,440515,40.1,37.7,Low,False,synthetic
+Indonesia,Bali,IDN,2025,4,2025-04-01,410229,54.5,60.9,Shoulder,False,synthetic
+Indonesia,Bali,IDN,2025,5,2025-05-01,504794,56.3,61.7,Shoulder,False,synthetic
+Indonesia,Bali,IDN,2025,6,2025-06-01,862809,69.9,100.0,High,False,synthetic
+Australia,Sydney,AUS,2023,1,2023-01-01,450176,35.1,28.8,Low,True,synthetic
+Australia,Sydney,AUS,2023,2,2023-02-01,484756,44.5,44.8,Low,False,synthetic
+Australia,Sydney,AUS,2023,3,2023-03-01,554927,48.5,50.7,Low,False,synthetic
+Australia,Sydney,AUS,2023,4,2023-04-01,677602,62.5,82.5,Shoulder,True,synthetic
+Australia,Sydney,AUS,2023,5,2023-05-01,667518,64.6,87.3,Shoulder,False,synthetic
+Australia,Sydney,AUS,2023,6,2023-06-01,1019561,77.1,100.0,High,False,synthetic
+Australia,Sydney,AUS,2023,7,2023-07-01,843622,73.5,100.0,High,False,synthetic
+Australia,Sydney,AUS,2023,8,2023-08-01,768160,74.2,100.0,High,False,synthetic
+Australia,Sydney,AUS,2023,9,2023-09-01,532201,57.6,64.7,Shoulder,True,synthetic
+Australia,Sydney,AUS,2023,10,2023-10-01,871487,54.3,82.0,Shoulder,False,synthetic
+Australia,Sydney,AUS,2023,11,2023-11-01,466785,34.9,27.8,Low,False,synthetic
+Australia,Sydney,AUS,2023,12,2023-12-01,764187,89.6,100.0,High,False,synthetic
+Australia,Sydney,AUS,2024,1,2024-01-01,414845,40.8,29.8,Low,False,synthetic
+Australia,Sydney,AUS,2024,2,2024-02-01,722881,39.0,56.7,Low,False,synthetic
+Australia,Sydney,AUS,2024,3,2024-03-01,645847,44.3,51.8,Low,False,synthetic
+Australia,Sydney,AUS,2024,4,2024-04-01,520591,62.3,58.6,Shoulder,True,synthetic
+Australia,Sydney,AUS,2024,5,2024-05-01,724917,60.1,83.4,Shoulder,False,synthetic
+Australia,Sydney,AUS,2024,6,2024-06-01,1045131,79.4,100.0,High,False,synthetic
+Australia,Sydney,AUS,2024,7,2024-07-01,829270,86.0,100.0,High,False,synthetic
+Australia,Sydney,AUS,2024,8,2024-08-01,1088800,56.9,100.0,High,False,synthetic
+Australia,Sydney,AUS,2024,9,2024-09-01,825843,52.4,84.0,Shoulder,False,synthetic
+Australia,Sydney,AUS,2024,10,2024-10-01,770195,49.3,81.9,Shoulder,False,synthetic
+Australia,Sydney,AUS,2024,11,2024-11-01,471561,42.3,36.9,Low,False,synthetic
+Australia,Sydney,AUS,2024,12,2024-12-01,780592,79.3,100.0,High,False,synthetic
+Australia,Sydney,AUS,2025,1,2025-01-01,498401,40.0,39.2,Low,False,synthetic
+Australia,Sydney,AUS,2025,2,2025-02-01,651287,41.2,55.7,Low,False,synthetic
+Australia,Sydney,AUS,2025,3,2025-03-01,584060,42.5,51.6,Low,False,synthetic
+Australia,Sydney,AUS,2025,4,2025-04-01,526766,49.8,52.0,Shoulder,False,synthetic
+Australia,Sydney,AUS,2025,5,2025-05-01,788343,58.2,91.5,Shoulder,False,synthetic
+Australia,Sydney,AUS,2025,6,2025-06-01,941326,67.4,100.0,High,False,synthetic
+New Zealand,Auckland,NZL,2023,1,2023-01-01,241480,54.9,34.5,Low,True,synthetic
+New Zealand,Auckland,NZL,2023,2,2023-02-01,233272,53.6,20.1,Low,False,synthetic
+New Zealand,Auckland,NZL,2023,3,2023-03-01,315195,59.1,44.7,Low,False,synthetic
+New Zealand,Auckland,NZL,2023,4,2023-04-01,441679,79.1,73.7,Shoulder,False,synthetic
+New Zealand,Auckland,NZL,2023,5,2023-05-01,354771,75.4,66.4,Shoulder,False,synthetic
+New Zealand,Auckland,NZL,2023,6,2023-06-01,839640,93.8,100.0,High,False,synthetic
+New Zealand,Auckland,NZL,2023,7,2023-07-01,541752,98.0,100.0,High,False,synthetic
+New Zealand,Auckland,NZL,2023,8,2023-08-01,558703,98.0,100.0,High,True,synthetic
+New Zealand,Auckland,NZL,2023,9,2023-09-01,417120,81.3,82.1,Shoulder,False,synthetic
+New Zealand,Auckland,NZL,2023,10,2023-10-01,425732,69.7,68.9,Shoulder,False,synthetic
+New Zealand,Auckland,NZL,2023,11,2023-11-01,344439,62.6,48.6,Low,False,synthetic
+New Zealand,Auckland,NZL,2023,12,2023-12-01,573770,98.0,100.0,High,False,synthetic
+New Zealand,Auckland,NZL,2024,1,2024-01-01,335910,58.9,42.5,Low,False,synthetic
+New Zealand,Auckland,NZL,2024,2,2024-02-01,330932,53.1,37.9,Low,False,synthetic
+New Zealand,Auckland,NZL,2024,3,2024-03-01,221969,57.0,33.1,Low,False,synthetic
+New Zealand,Auckland,NZL,2024,4,2024-04-01,450259,68.1,73.1,Shoulder,False,synthetic
+New Zealand,Auckland,NZL,2024,5,2024-05-01,362605,75.8,68.3,Shoulder,False,synthetic
+New Zealand,Auckland,NZL,2024,6,2024-06-01,533108,98.0,100.0,High,False,synthetic
+New Zealand,Auckland,NZL,2024,7,2024-07-01,397094,97.6,100.0,High,False,synthetic
+New Zealand,Auckland,NZL,2024,8,2024-08-01,595451,98.0,100.0,High,False,synthetic
+New Zealand,Auckland,NZL,2024,9,2024-09-01,338734,77.2,73.6,Shoulder,False,synthetic
+New Zealand,Auckland,NZL,2024,10,2024-10-01,392756,80.9,77.8,Shoulder,False,synthetic
+New Zealand,Auckland,NZL,2024,11,2024-11-01,313304,59.4,52.4,Low,False,synthetic
+New Zealand,Auckland,NZL,2024,12,2024-12-01,571647,98.0,100.0,High,False,synthetic
+New Zealand,Auckland,NZL,2025,1,2025-01-01,321355,61.5,47.7,Low,False,synthetic
+New Zealand,Auckland,NZL,2025,2,2025-02-01,438301,50.0,43.6,Low,False,synthetic
+New Zealand,Auckland,NZL,2025,3,2025-03-01,252392,55.5,29.9,Low,False,synthetic
+New Zealand,Auckland,NZL,2025,4,2025-04-01,458924,83.7,88.5,Shoulder,False,synthetic
+New Zealand,Auckland,NZL,2025,5,2025-05-01,333225,82.6,69.9,Shoulder,False,synthetic
+New Zealand,Auckland,NZL,2025,6,2025-06-01,737809,98.0,100.0,High,False,synthetic
+Japan,Tokyo,JPN,2023,1,2023-01-01,588817,39.3,52.4,Low,False,synthetic
+Japan,Tokyo,JPN,2023,2,2023-02-01,538837,35.4,39.6,Low,False,synthetic
+Japan,Tokyo,JPN,2023,3,2023-03-01,565536,41.2,46.9,Low,False,synthetic
+Japan,Tokyo,JPN,2023,4,2023-04-01,844367,56.8,85.3,Shoulder,False,synthetic
+Japan,Tokyo,JPN,2023,5,2023-05-01,663604,51.6,63.2,Shoulder,False,synthetic
+Japan,Tokyo,JPN,2023,6,2023-06-01,967616,62.2,100.0,High,False,synthetic
+Japan,Tokyo,JPN,2023,7,2023-07-01,915367,74.0,100.0,High,False,synthetic
+Japan,Tokyo,JPN,2023,8,2023-08-01,1132309,58.4,100.0,High,False,synthetic
+Japan,Tokyo,JPN,2023,9,2023-09-01,1034111,54.1,99.5,Shoulder,True,synthetic
+Japan,Tokyo,JPN,2023,10,2023-10-01,724058,60.7,90.7,Shoulder,False,synthetic
+Japan,Tokyo,JPN,2023,11,2023-11-01,509589,42.1,40.2,Low,False,synthetic
+Japan,Tokyo,JPN,2023,12,2023-12-01,1134575,82.6,100.0,High,False,synthetic
+Japan,Tokyo,JPN,2024,1,2024-01-01,358989,39.9,20.0,Low,True,synthetic
+Japan,Tokyo,JPN,2024,2,2024-02-01,475459,40.3,30.7,Low,False,synthetic
+Japan,Tokyo,JPN,2024,3,2024-03-01,625640,37.3,47.3,Low,True,synthetic
+Japan,Tokyo,JPN,2024,4,2024-04-01,858834,61.4,100.0,Shoulder,False,synthetic
+Japan,Tokyo,JPN,2024,5,2024-05-01,910809,59.7,93.5,Shoulder,False,synthetic
+Japan,Tokyo,JPN,2024,6,2024-06-01,1084389,71.3,100.0,High,False,synthetic
+Japan,Tokyo,JPN,2024,7,2024-07-01,994386,81.8,100.0,High,False,synthetic
+Japan,Tokyo,JPN,2024,8,2024-08-01,1114249,66.2,100.0,High,False,synthetic
+Japan,Tokyo,JPN,2024,9,2024-09-01,762686,64.5,85.8,Shoulder,False,synthetic
+Japan,Tokyo,JPN,2024,10,2024-10-01,842451,61.7,97.3,Shoulder,True,synthetic
+Japan,Tokyo,JPN,2024,11,2024-11-01,587774,37.8,40.6,Low,False,synthetic
+Japan,Tokyo,JPN,2024,12,2024-12-01,1114980,68.0,100.0,High,False,synthetic
+Japan,Tokyo,JPN,2025,1,2025-01-01,561823,40.4,41.9,Low,False,synthetic
+Japan,Tokyo,JPN,2025,2,2025-02-01,485914,39.5,28.0,Low,False,synthetic
+Japan,Tokyo,JPN,2025,3,2025-03-01,569604,41.4,49.7,Low,False,synthetic
+Japan,Tokyo,JPN,2025,4,2025-04-01,991768,54.3,96.2,Shoulder,False,synthetic
+Japan,Tokyo,JPN,2025,5,2025-05-01,675539,53.2,71.9,Shoulder,False,synthetic
+Japan,Tokyo,JPN,2025,6,2025-06-01,1208584,78.1,100.0,High,False,synthetic
+South Korea,Seoul,KOR,2023,1,2023-01-01,106044,41.1,2.6,Low,False,synthetic
+South Korea,Seoul,KOR,2023,2,2023-02-01,142233,39.6,1.7,Low,False,synthetic
+South Korea,Seoul,KOR,2023,3,2023-03-01,146866,40.9,0.0,Low,True,synthetic
+South Korea,Seoul,KOR,2023,4,2023-04-01,221493,64.2,35.2,Shoulder,False,synthetic
+South Korea,Seoul,KOR,2023,5,2023-05-01,222361,58.0,35.3,Shoulder,False,synthetic
+South Korea,Seoul,KOR,2023,6,2023-06-01,231640,82.3,73.7,High,False,synthetic
+South Korea,Seoul,KOR,2023,7,2023-07-01,277494,83.6,59.3,High,False,synthetic
+South Korea,Seoul,KOR,2023,8,2023-08-01,169515,92.5,75.6,High,False,synthetic
+South Korea,Seoul,KOR,2023,9,2023-09-01,213422,54.8,26.0,Shoulder,False,synthetic
+South Korea,Seoul,KOR,2023,10,2023-10-01,213306,59.7,24.2,Shoulder,False,synthetic
+South Korea,Seoul,KOR,2023,11,2023-11-01,144888,37.6,0.0,Low,False,synthetic
+South Korea,Seoul,KOR,2023,12,2023-12-01,266563,82.6,63.3,High,False,synthetic
+South Korea,Seoul,KOR,2024,1,2024-01-01,148158,47.5,10.0,Low,False,synthetic
+South Korea,Seoul,KOR,2024,2,2024-02-01,134029,40.6,0.0,Low,False,synthetic
+South Korea,Seoul,KOR,2024,3,2024-03-01,108659,44.8,0.0,Low,False,synthetic
+South Korea,Seoul,KOR,2024,4,2024-04-01,166784,60.6,32.4,Shoulder,False,synthetic
+South Korea,Seoul,KOR,2024,5,2024-05-01,175358,61.8,28.0,Shoulder,False,synthetic
+South Korea,Seoul,KOR,2024,6,2024-06-01,242773,86.6,65.8,High,False,synthetic
+South Korea,Seoul,KOR,2024,7,2024-07-01,288905,74.7,56.7,High,False,synthetic
+South Korea,Seoul,KOR,2024,8,2024-08-01,304573,70.6,48.5,High,False,synthetic
+South Korea,Seoul,KOR,2024,9,2024-09-01,230612,68.7,52.4,Shoulder,False,synthetic
+South Korea,Seoul,KOR,2024,10,2024-10-01,206582,66.5,34.7,Shoulder,False,synthetic
+South Korea,Seoul,KOR,2024,11,2024-11-01,156018,40.2,3.6,Low,False,synthetic
+South Korea,Seoul,KOR,2024,12,2024-12-01,282058,87.4,77.2,High,True,synthetic
+South Korea,Seoul,KOR,2025,1,2025-01-01,136719,44.1,3.7,Low,False,synthetic
+South Korea,Seoul,KOR,2025,2,2025-02-01,203934,44.4,15.9,Low,False,synthetic
+South Korea,Seoul,KOR,2025,3,2025-03-01,168833,46.4,16.4,Low,False,synthetic
+South Korea,Seoul,KOR,2025,4,2025-04-01,241633,68.9,48.2,Shoulder,False,synthetic
+South Korea,Seoul,KOR,2025,5,2025-05-01,237252,58.0,29.7,Shoulder,False,synthetic
+South Korea,Seoul,KOR,2025,6,2025-06-01,200906,86.7,59.3,High,False,synthetic
+China,Shanghai,CHN,2023,1,2023-01-01,478819,37.9,33.0,Low,False,synthetic
+China,Shanghai,CHN,2023,2,2023-02-01,444095,36.6,33.7,Low,True,synthetic
+China,Shanghai,CHN,2023,3,2023-03-01,461325,37.5,33.2,Low,False,synthetic
+China,Shanghai,CHN,2023,4,2023-04-01,629040,55.2,74.5,Shoulder,False,synthetic
+China,Shanghai,CHN,2023,5,2023-05-01,559300,53.5,64.6,Shoulder,False,synthetic
+China,Shanghai,CHN,2023,6,2023-06-01,873597,72.3,100.0,High,False,synthetic
+China,Shanghai,CHN,2023,7,2023-07-01,829296,75.0,100.0,High,False,synthetic
+China,Shanghai,CHN,2023,8,2023-08-01,999495,69.0,100.0,High,False,synthetic
+China,Shanghai,CHN,2023,9,2023-09-01,563287,60.3,65.9,Shoulder,False,synthetic
+China,Shanghai,CHN,2023,10,2023-10-01,860091,52.1,87.3,Shoulder,False,synthetic
+China,Shanghai,CHN,2023,11,2023-11-01,465893,38.5,26.6,Low,False,synthetic
+China,Shanghai,CHN,2023,12,2023-12-01,861962,74.5,100.0,High,False,synthetic
+China,Shanghai,CHN,2024,1,2024-01-01,477460,33.2,29.9,Low,True,synthetic
+China,Shanghai,CHN,2024,2,2024-02-01,616937,39.0,43.8,Low,False,synthetic
+China,Shanghai,CHN,2024,3,2024-03-01,452608,40.3,33.8,Low,False,synthetic
+China,Shanghai,CHN,2024,4,2024-04-01,513169,56.9,66.5,Shoulder,False,synthetic
+China,Shanghai,CHN,2024,5,2024-05-01,762978,60.2,89.9,Shoulder,False,synthetic
+China,Shanghai,CHN,2024,6,2024-06-01,909924,79.4,100.0,High,False,synthetic
+China,Shanghai,CHN,2024,7,2024-07-01,822690,71.2,100.0,High,False,synthetic
+China,Shanghai,CHN,2024,8,2024-08-01,1038901,58.8,100.0,High,False,synthetic
+China,Shanghai,CHN,2024,9,2024-09-01,540122,58.7,60.8,Shoulder,False,synthetic
+China,Shanghai,CHN,2024,10,2024-10-01,868601,60.2,100.0,Shoulder,False,synthetic
+China,Shanghai,CHN,2024,11,2024-11-01,464255,45.2,44.7,Low,False,synthetic
+China,Shanghai,CHN,2024,12,2024-12-01,698366,75.7,100.0,High,False,synthetic
+China,Shanghai,CHN,2025,1,2025-01-01,506615,38.1,39.1,Low,False,synthetic
+China,Shanghai,CHN,2025,2,2025-02-01,432582,40.9,29.9,Low,False,synthetic
+China,Shanghai,CHN,2025,3,2025-03-01,438008,42.5,33.4,Low,False,synthetic
+China,Shanghai,CHN,2025,4,2025-04-01,861940,52.4,74.5,Shoulder,False,synthetic
+China,Shanghai,CHN,2025,5,2025-05-01,645137,51.8,63.8,Shoulder,False,synthetic
+China,Shanghai,CHN,2025,6,2025-06-01,1056038,73.3,100.0,High,True,synthetic
+Hong Kong,Hong Kong,HKG,2023,1,2023-01-01,505283,55.0,61.5,Low,False,synthetic
+Hong Kong,Hong Kong,HKG,2023,2,2023-02-01,478272,54.0,50.7,Low,False,synthetic
+Hong Kong,Hong Kong,HKG,2023,3,2023-03-01,409663,50.6,45.0,Low,False,synthetic
+Hong Kong,Hong Kong,HKG,2023,4,2023-04-01,530331,70.2,75.4,Shoulder,False,synthetic
+Hong Kong,Hong Kong,HKG,2023,5,2023-05-01,613011,71.2,79.6,Shoulder,True,synthetic
+Hong Kong,Hong Kong,HKG,2023,6,2023-06-01,844521,90.8,100.0,High,True,synthetic
+Hong Kong,Hong Kong,HKG,2023,7,2023-07-01,735019,89.3,100.0,High,False,synthetic
+Hong Kong,Hong Kong,HKG,2023,8,2023-08-01,952423,98.0,100.0,High,False,synthetic
+Hong Kong,Hong Kong,HKG,2023,9,2023-09-01,748791,80.5,100.0,Shoulder,False,synthetic
+Hong Kong,Hong Kong,HKG,2023,10,2023-10-01,796061,71.6,100.0,Shoulder,False,synthetic
+Hong Kong,Hong Kong,HKG,2023,11,2023-11-01,524123,53.8,55.7,Low,False,synthetic
+Hong Kong,Hong Kong,HKG,2023,12,2023-12-01,883631,91.4,100.0,High,False,synthetic
+Hong Kong,Hong Kong,HKG,2024,1,2024-01-01,460256,45.9,45.3,Low,False,synthetic
+Hong Kong,Hong Kong,HKG,2024,2,2024-02-01,577320,45.8,51.8,Low,False,synthetic
+Hong Kong,Hong Kong,HKG,2024,3,2024-03-01,397839,49.6,48.1,Low,False,synthetic
+Hong Kong,Hong Kong,HKG,2024,4,2024-04-01,586688,62.9,65.5,Shoulder,False,synthetic
+Hong Kong,Hong Kong,HKG,2024,5,2024-05-01,602468,72.4,75.7,Shoulder,False,synthetic
+Hong Kong,Hong Kong,HKG,2024,6,2024-06-01,998896,98.0,100.0,High,False,synthetic
+Hong Kong,Hong Kong,HKG,2024,7,2024-07-01,754577,96.9,100.0,High,False,synthetic
+Hong Kong,Hong Kong,HKG,2024,8,2024-08-01,871125,94.8,100.0,High,False,synthetic
+Hong Kong,Hong Kong,HKG,2024,9,2024-09-01,705725,69.3,86.8,Shoulder,False,synthetic
+Hong Kong,Hong Kong,HKG,2024,10,2024-10-01,884146,77.4,100.0,Shoulder,False,synthetic
+Hong Kong,Hong Kong,HKG,2024,11,2024-11-01,529724,46.0,40.3,Low,True,synthetic
+Hong Kong,Hong Kong,HKG,2024,12,2024-12-01,1119209,98.0,100.0,High,False,synthetic
+Hong Kong,Hong Kong,HKG,2025,1,2025-01-01,351357,51.9,38.2,Low,True,synthetic
+Hong Kong,Hong Kong,HKG,2025,2,2025-02-01,529686,50.8,56.7,Low,False,synthetic
+Hong Kong,Hong Kong,HKG,2025,3,2025-03-01,503566,49.5,52.0,Low,False,synthetic
+Hong Kong,Hong Kong,HKG,2025,4,2025-04-01,672620,78.4,93.5,Shoulder,False,synthetic
+Hong Kong,Hong Kong,HKG,2025,5,2025-05-01,638781,65.2,80.1,Shoulder,False,synthetic
+Hong Kong,Hong Kong,HKG,2025,6,2025-06-01,1035499,96.9,100.0,High,False,synthetic
+Taiwan,Taipei,TWN,2023,1,2023-01-01,210913,54.0,31.9,Low,False,synthetic
+Taiwan,Taipei,TWN,2023,2,2023-02-01,155668,44.0,6.8,Low,False,synthetic
+Taiwan,Taipei,TWN,2023,3,2023-03-01,262440,53.5,27.2,Low,False,synthetic
+Taiwan,Taipei,TWN,2023,4,2023-04-01,340932,66.4,48.7,Shoulder,False,synthetic
+Taiwan,Taipei,TWN,2023,5,2023-05-01,300434,76.5,67.8,Shoulder,False,synthetic
+Taiwan,Taipei,TWN,2023,6,2023-06-01,384038,98.0,92.6,High,False,synthetic
+Taiwan,Taipei,TWN,2023,7,2023-07-01,345337,88.7,77.8,High,False,synthetic
+Taiwan,Taipei,TWN,2023,8,2023-08-01,357434,98.0,100.0,High,False,synthetic
+Taiwan,Taipei,TWN,2023,9,2023-09-01,238324,68.3,49.6,Shoulder,False,synthetic
+Taiwan,Taipei,TWN,2023,10,2023-10-01,263296,77.1,63.6,Shoulder,False,synthetic
+Taiwan,Taipei,TWN,2023,11,2023-11-01,181451,52.1,19.6,Low,False,synthetic
+Taiwan,Taipei,TWN,2023,12,2023-12-01,354480,98.0,94.3,High,False,synthetic
+Taiwan,Taipei,TWN,2024,1,2024-01-01,248212,52.9,25.8,Low,False,synthetic
+Taiwan,Taipei,TWN,2024,2,2024-02-01,221208,61.7,37.7,Low,False,synthetic
+Taiwan,Taipei,TWN,2024,3,2024-03-01,215773,50.6,21.0,Low,True,synthetic
+Taiwan,Taipei,TWN,2024,4,2024-04-01,318471,79.6,69.0,Shoulder,True,synthetic
+Taiwan,Taipei,TWN,2024,5,2024-05-01,280898,65.2,54.6,Shoulder,False,synthetic
+Taiwan,Taipei,TWN,2024,6,2024-06-01,439717,96.9,100.0,High,False,synthetic
+Taiwan,Taipei,TWN,2024,7,2024-07-01,338617,87.4,87.4,High,False,synthetic
+Taiwan,Taipei,TWN,2024,8,2024-08-01,448808,98.0,100.0,High,False,synthetic
+Taiwan,Taipei,TWN,2024,9,2024-09-01,297374,66.2,48.2,Shoulder,True,synthetic
+Taiwan,Taipei,TWN,2024,10,2024-10-01,273269,71.0,51.7,Shoulder,False,synthetic
+Taiwan,Taipei,TWN,2024,11,2024-11-01,149883,53.1,17.4,Low,False,synthetic
+Taiwan,Taipei,TWN,2024,12,2024-12-01,367988,98.0,98.0,High,False,synthetic
+Taiwan,Taipei,TWN,2025,1,2025-01-01,240657,56.2,35.6,Low,False,synthetic
+Taiwan,Taipei,TWN,2025,2,2025-02-01,222101,53.1,21.8,Low,False,synthetic
+Taiwan,Taipei,TWN,2025,3,2025-03-01,144029,51.3,17.5,Low,False,synthetic
+Taiwan,Taipei,TWN,2025,4,2025-04-01,341726,73.8,69.5,Shoulder,True,synthetic
+Taiwan,Taipei,TWN,2025,5,2025-05-01,248133,75.6,58.9,Shoulder,False,synthetic
+Taiwan,Taipei,TWN,2025,6,2025-06-01,300930,95.5,79.7,High,False,synthetic
+South Africa,Cape Town,ZAF,2023,1,2023-01-01,89782,45.0,10.1,Low,False,synthetic
+South Africa,Cape Town,ZAF,2023,2,2023-02-01,128619,43.1,1.1,Low,False,synthetic
+South Africa,Cape Town,ZAF,2023,3,2023-03-01,106162,44.1,6.1,Low,False,synthetic
+South Africa,Cape Town,ZAF,2023,4,2023-04-01,159995,68.8,42.3,Shoulder,False,synthetic
+South Africa,Cape Town,ZAF,2023,5,2023-05-01,151697,58.8,28.4,Shoulder,False,synthetic
+South Africa,Cape Town,ZAF,2023,6,2023-06-01,273709,80.5,59.4,High,False,synthetic
+South Africa,Cape Town,ZAF,2023,7,2023-07-01,224393,83.9,55.4,High,False,synthetic
+South Africa,Cape Town,ZAF,2023,8,2023-08-01,281759,77.9,65.8,High,False,synthetic
+South Africa,Cape Town,ZAF,2023,9,2023-09-01,172442,62.7,41.2,Shoulder,False,synthetic
+South Africa,Cape Town,ZAF,2023,10,2023-10-01,207182,69.0,39.9,Shoulder,False,synthetic
+South Africa,Cape Town,ZAF,2023,11,2023-11-01,134565,39.2,0.0,Low,False,synthetic
+South Africa,Cape Town,ZAF,2023,12,2023-12-01,263892,81.6,64.9,High,False,synthetic
+South Africa,Cape Town,ZAF,2024,1,2024-01-01,147032,42.5,13.4,Low,False,synthetic
+South Africa,Cape Town,ZAF,2024,2,2024-02-01,145151,41.5,0.0,Low,False,synthetic
+South Africa,Cape Town,ZAF,2024,3,2024-03-01,132966,38.2,1.6,Low,False,synthetic
+South Africa,Cape Town,ZAF,2024,4,2024-04-01,204514,60.2,28.7,Shoulder,False,synthetic
+South Africa,Cape Town,ZAF,2024,5,2024-05-01,183908,65.9,40.4,Shoulder,False,synthetic
+South Africa,Cape Town,ZAF,2024,6,2024-06-01,203152,84.1,59.5,High,False,synthetic
+South Africa,Cape Town,ZAF,2024,7,2024-07-01,276437,89.1,81.6,High,False,synthetic
+South Africa,Cape Town,ZAF,2024,8,2024-08-01,240669,81.0,52.6,High,False,synthetic
+South Africa,Cape Town,ZAF,2024,9,2024-09-01,179148,66.2,40.7,Shoulder,False,synthetic
+South Africa,Cape Town,ZAF,2024,10,2024-10-01,162165,71.5,43.4,Shoulder,False,synthetic
+South Africa,Cape Town,ZAF,2024,11,2024-11-01,129268,48.4,15.7,Low,False,synthetic
+South Africa,Cape Town,ZAF,2024,12,2024-12-01,304696,89.1,76.6,High,True,synthetic
+South Africa,Cape Town,ZAF,2025,1,2025-01-01,152598,46.2,3.4,Low,False,synthetic
+South Africa,Cape Town,ZAF,2025,2,2025-02-01,193554,44.6,9.1,Low,False,synthetic
+South Africa,Cape Town,ZAF,2025,3,2025-03-01,166791,47.5,20.8,Low,False,synthetic
+South Africa,Cape Town,ZAF,2025,4,2025-04-01,223644,59.3,34.3,Shoulder,True,synthetic
+South Africa,Cape Town,ZAF,2025,5,2025-05-01,227271,65.2,37.9,Shoulder,False,synthetic
+South Africa,Cape Town,ZAF,2025,6,2025-06-01,183173,67.3,43.3,High,False,synthetic
+Kenya,Nairobi,KEN,2023,1,2023-01-01,317481,35.8,17.3,Low,False,synthetic
+Kenya,Nairobi,KEN,2023,2,2023-02-01,303581,32.9,11.1,Low,False,synthetic
+Kenya,Nairobi,KEN,2023,3,2023-03-01,322776,25.9,0.4,Low,True,synthetic
+Kenya,Nairobi,KEN,2023,4,2023-04-01,355504,44.3,37.9,Shoulder,False,synthetic
+Kenya,Nairobi,KEN,2023,5,2023-05-01,361792,44.2,22.9,Shoulder,False,synthetic
+Kenya,Nairobi,KEN,2023,6,2023-06-01,504623,50.3,51.4,High,False,synthetic
+Kenya,Nairobi,KEN,2023,7,2023-07-01,600003,59.4,69.4,High,False,synthetic
+Kenya,Nairobi,KEN,2023,8,2023-08-01,494325,69.2,72.5,High,False,synthetic
+Kenya,Nairobi,KEN,2023,9,2023-09-01,370641,48.5,28.0,Shoulder,False,synthetic
+Kenya,Nairobi,KEN,2023,10,2023-10-01,330188,43.7,31.7,Shoulder,False,synthetic
+Kenya,Nairobi,KEN,2023,11,2023-11-01,312709,36.1,14.4,Low,False,synthetic
+Kenya,Nairobi,KEN,2023,12,2023-12-01,566026,60.3,72.7,High,False,synthetic
+Kenya,Nairobi,KEN,2024,1,2024-01-01,255310,29.7,0.0,Low,False,synthetic
+Kenya,Nairobi,KEN,2024,2,2024-02-01,330117,30.8,0.0,Low,False,synthetic
+Kenya,Nairobi,KEN,2024,3,2024-03-01,305493,32.0,9.8,Low,False,synthetic
+Kenya,Nairobi,KEN,2024,4,2024-04-01,464623,47.2,46.0,Shoulder,False,synthetic
+Kenya,Nairobi,KEN,2024,5,2024-05-01,434999,47.6,36.0,Shoulder,False,synthetic
+Kenya,Nairobi,KEN,2024,6,2024-06-01,586506,65.3,79.0,High,False,synthetic
+Kenya,Nairobi,KEN,2024,7,2024-07-01,460461,57.7,56.2,High,False,synthetic
+Kenya,Nairobi,KEN,2024,8,2024-08-01,435893,54.3,38.3,High,False,synthetic
+Kenya,Nairobi,KEN,2024,9,2024-09-01,393085,45.5,45.5,Shoulder,False,synthetic
+Kenya,Nairobi,KEN,2024,10,2024-10-01,344103,46.5,22.9,Shoulder,False,synthetic
+Kenya,Nairobi,KEN,2024,11,2024-11-01,231589,31.6,0.1,Low,False,synthetic
+Kenya,Nairobi,KEN,2024,12,2024-12-01,576417,58.1,67.6,High,False,synthetic
+Kenya,Nairobi,KEN,2025,1,2025-01-01,225363,28.3,0.0,Low,False,synthetic
+Kenya,Nairobi,KEN,2025,2,2025-02-01,203064,32.0,0.0,Low,False,synthetic
+Kenya,Nairobi,KEN,2025,3,2025-03-01,257785,33.9,11.9,Low,False,synthetic
+Kenya,Nairobi,KEN,2025,4,2025-04-01,407879,48.0,38.9,Shoulder,False,synthetic
+Kenya,Nairobi,KEN,2025,5,2025-05-01,322847,48.0,27.4,Shoulder,False,synthetic
+Kenya,Nairobi,KEN,2025,6,2025-06-01,596610,62.9,76.9,High,False,synthetic
+Morocco,Marrakesh,MAR,2023,1,2023-01-01,209761,58.5,35.8,Low,False,synthetic
+Morocco,Marrakesh,MAR,2023,2,2023-02-01,168609,60.0,27.8,Low,False,synthetic
+Morocco,Marrakesh,MAR,2023,3,2023-03-01,226667,64.3,31.7,Low,False,synthetic
+Morocco,Marrakesh,MAR,2023,4,2023-04-01,186573,79.8,63.7,Shoulder,False,synthetic
+Morocco,Marrakesh,MAR,2023,5,2023-05-01,305260,87.5,66.9,Shoulder,False,synthetic
+Morocco,Marrakesh,MAR,2023,6,2023-06-01,395327,98.0,91.0,High,False,synthetic
+Morocco,Marrakesh,MAR,2023,7,2023-07-01,337030,98.0,96.9,High,False,synthetic
+Morocco,Marrakesh,MAR,2023,8,2023-08-01,358925,98.0,90.7,High,False,synthetic
+Morocco,Marrakesh,MAR,2023,9,2023-09-01,244069,80.8,59.5,Shoulder,False,synthetic
+Morocco,Marrakesh,MAR,2023,10,2023-10-01,308201,84.1,68.9,Shoulder,False,synthetic
+Morocco,Marrakesh,MAR,2023,11,2023-11-01,279105,67.5,43.7,Low,False,synthetic
+Morocco,Marrakesh,MAR,2023,12,2023-12-01,329333,98.0,88.5,High,False,synthetic
+Morocco,Marrakesh,MAR,2024,1,2024-01-01,273993,57.7,40.1,Low,False,synthetic
+Morocco,Marrakesh,MAR,2024,2,2024-02-01,192235,62.6,30.1,Low,False,synthetic
+Morocco,Marrakesh,MAR,2024,3,2024-03-01,192259,55.5,20.4,Low,False,synthetic
+Morocco,Marrakesh,MAR,2024,4,2024-04-01,281915,66.4,46.7,Shoulder,False,synthetic
+Morocco,Marrakesh,MAR,2024,5,2024-05-01,330827,87.7,80.4,Shoulder,False,synthetic
+Morocco,Marrakesh,MAR,2024,6,2024-06-01,364623,98.0,100.0,High,True,synthetic
+Morocco,Marrakesh,MAR,2024,7,2024-07-01,349282,97.5,84.6,High,False,synthetic
+Morocco,Marrakesh,MAR,2024,8,2024-08-01,403473,98.0,100.0,High,False,synthetic
+Morocco,Marrakesh,MAR,2024,9,2024-09-01,297859,80.8,60.2,Shoulder,False,synthetic
+Morocco,Marrakesh,MAR,2024,10,2024-10-01,306552,86.8,69.1,Shoulder,False,synthetic
+Morocco,Marrakesh,MAR,2024,11,2024-11-01,217327,58.4,28.4,Low,False,synthetic
+Morocco,Marrakesh,MAR,2024,12,2024-12-01,511977,97.7,100.0,High,False,synthetic
+Morocco,Marrakesh,MAR,2025,1,2025-01-01,231983,49.1,19.5,Low,False,synthetic
+Morocco,Marrakesh,MAR,2025,2,2025-02-01,204019,61.6,25.0,Low,False,synthetic
+Morocco,Marrakesh,MAR,2025,3,2025-03-01,194602,65.0,39.7,Low,False,synthetic
+Morocco,Marrakesh,MAR,2025,4,2025-04-01,279904,92.7,82.8,Shoulder,False,synthetic
+Morocco,Marrakesh,MAR,2025,5,2025-05-01,289130,80.9,63.3,Shoulder,False,synthetic
+Morocco,Marrakesh,MAR,2025,6,2025-06-01,351757,98.0,90.9,High,False,synthetic
+Egypt,Cairo,EGY,2023,1,2023-01-01,382571,35.6,26.5,Low,True,synthetic
+Egypt,Cairo,EGY,2023,2,2023-02-01,275890,35.6,6.5,Low,False,synthetic
+Egypt,Cairo,EGY,2023,3,2023-03-01,325298,33.3,12.5,Low,False,synthetic
+Egypt,Cairo,EGY,2023,4,2023-04-01,359370,55.3,42.7,Shoulder,False,synthetic
+Egypt,Cairo,EGY,2023,5,2023-05-01,286559,49.3,29.7,Shoulder,False,synthetic
+Egypt,Cairo,EGY,2023,6,2023-06-01,578524,72.1,78.3,High,False,synthetic
+Egypt,Cairo,EGY,2023,7,2023-07-01,630730,61.4,81.6,High,False,synthetic
+Egypt,Cairo,EGY,2023,8,2023-08-01,555080,64.4,67.8,High,False,synthetic
+Egypt,Cairo,EGY,2023,9,2023-09-01,448953,52.2,45.5,Shoulder,False,synthetic
+Egypt,Cairo,EGY,2023,10,2023-10-01,420218,52.5,48.7,Shoulder,False,synthetic
+Egypt,Cairo,EGY,2023,11,2023-11-01,223909,35.8,0.0,Low,True,synthetic
+Egypt,Cairo,EGY,2023,12,2023-12-01,492393,68.7,81.6,High,False,synthetic
+Egypt,Cairo,EGY,2024,1,2024-01-01,384984,34.9,22.2,Low,True,synthetic
+Egypt,Cairo,EGY,2024,2,2024-02-01,329984,35.7,15.5,Low,False,synthetic
+Egypt,Cairo,EGY,2024,3,2024-03-01,290237,38.0,13.4,Low,False,synthetic
+Egypt,Cairo,EGY,2024,4,2024-04-01,479773,48.2,53.8,Shoulder,False,synthetic
+Egypt,Cairo,EGY,2024,5,2024-05-01,413145,51.3,43.2,Shoulder,False,synthetic
+Egypt,Cairo,EGY,2024,6,2024-06-01,518277,58.9,70.6,High,True,synthetic
+Egypt,Cairo,EGY,2024,7,2024-07-01,601238,64.8,72.9,High,False,synthetic
+Egypt,Cairo,EGY,2024,8,2024-08-01,688458,62.4,72.0,High,True,synthetic
+Egypt,Cairo,EGY,2024,9,2024-09-01,502386,57.6,64.6,Shoulder,False,synthetic
+Egypt,Cairo,EGY,2024,10,2024-10-01,413342,42.4,32.4,Shoulder,False,synthetic
+Egypt,Cairo,EGY,2024,11,2024-11-01,281235,35.1,5.4,Low,False,synthetic
+Egypt,Cairo,EGY,2024,12,2024-12-01,680102,76.0,99.2,High,False,synthetic
+Egypt,Cairo,EGY,2025,1,2025-01-01,244825,37.4,18.2,Low,False,synthetic
+Egypt,Cairo,EGY,2025,2,2025-02-01,307034,37.1,17.9,Low,False,synthetic
+Egypt,Cairo,EGY,2025,3,2025-03-01,374729,34.9,22.8,Low,False,synthetic
+Egypt,Cairo,EGY,2025,4,2025-04-01,371202,52.0,42.8,Shoulder,False,synthetic
+Egypt,Cairo,EGY,2025,5,2025-05-01,355881,49.0,32.1,Shoulder,False,synthetic
+Egypt,Cairo,EGY,2025,6,2025-06-01,558184,68.3,82.7,High,False,synthetic
+Israel,Tel Aviv,ISR,2023,1,2023-01-01,203038,41.5,9.2,Low,False,synthetic
+Israel,Tel Aviv,ISR,2023,2,2023-02-01,244766,45.1,18.7,Low,True,synthetic
+Israel,Tel Aviv,ISR,2023,3,2023-03-01,268292,44.2,17.6,Low,False,synthetic
+Israel,Tel Aviv,ISR,2023,4,2023-04-01,273500,65.8,53.7,Shoulder,False,synthetic
+Israel,Tel Aviv,ISR,2023,5,2023-05-01,323344,62.8,60.8,Shoulder,False,synthetic
+Israel,Tel Aviv,ISR,2023,6,2023-06-01,469686,77.0,73.1,High,False,synthetic
+Israel,Tel Aviv,ISR,2023,7,2023-07-01,386753,70.3,64.7,High,False,synthetic
+Israel,Tel Aviv,ISR,2023,8,2023-08-01,400424,73.5,67.5,High,False,synthetic
+Israel,Tel Aviv,ISR,2023,9,2023-09-01,307087,64.4,49.3,Shoulder,False,synthetic
+Israel,Tel Aviv,ISR,2023,10,2023-10-01,272308,59.9,44.7,Shoulder,False,synthetic
+Israel,Tel Aviv,ISR,2023,11,2023-11-01,263591,41.8,20.4,Low,False,synthetic
+Israel,Tel Aviv,ISR,2023,12,2023-12-01,411540,70.2,65.1,High,False,synthetic
+Israel,Tel Aviv,ISR,2024,1,2024-01-01,217653,38.5,10.0,Low,True,synthetic
+Israel,Tel Aviv,ISR,2024,2,2024-02-01,178174,48.3,21.2,Low,False,synthetic
+Israel,Tel Aviv,ISR,2024,3,2024-03-01,195939,40.4,15.7,Low,True,synthetic
+Israel,Tel Aviv,ISR,2024,4,2024-04-01,159872,70.6,41.6,Shoulder,False,synthetic
+Israel,Tel Aviv,ISR,2024,5,2024-05-01,345869,61.3,51.9,Shoulder,False,synthetic
+Israel,Tel Aviv,ISR,2024,6,2024-06-01,315293,78.6,73.0,High,True,synthetic
+Israel,Tel Aviv,ISR,2024,7,2024-07-01,344391,84.4,73.4,High,False,synthetic
+Israel,Tel Aviv,ISR,2024,8,2024-08-01,364971,76.5,60.4,High,False,synthetic
+Israel,Tel Aviv,ISR,2024,9,2024-09-01,307669,60.2,48.8,Shoulder,True,synthetic
+Israel,Tel Aviv,ISR,2024,10,2024-10-01,364863,63.4,51.9,Shoulder,False,synthetic
+Israel,Tel Aviv,ISR,2024,11,2024-11-01,208733,43.3,17.0,Low,False,synthetic
+Israel,Tel Aviv,ISR,2024,12,2024-12-01,379583,81.7,82.3,High,False,synthetic
+Israel,Tel Aviv,ISR,2025,1,2025-01-01,207175,38.6,2.8,Low,True,synthetic
+Israel,Tel Aviv,ISR,2025,2,2025-02-01,216202,43.1,6.3,Low,False,synthetic
+Israel,Tel Aviv,ISR,2025,3,2025-03-01,215771,38.4,9.8,Low,False,synthetic
+Israel,Tel Aviv,ISR,2025,4,2025-04-01,265121,59.4,39.7,Shoulder,False,synthetic
+Israel,Tel Aviv,ISR,2025,5,2025-05-01,286570,61.3,38.4,Shoulder,False,synthetic
+Israel,Tel Aviv,ISR,2025,6,2025-06-01,297502,74.3,52.3,High,False,synthetic
+Jordan,Amman,JOR,2023,1,2023-01-01,43387,53.7,19.5,Low,False,synthetic
+Jordan,Amman,JOR,2023,2,2023-02-01,51680,54.3,12.5,Low,False,synthetic
+Jordan,Amman,JOR,2023,3,2023-03-01,50342,51.6,0.1,Low,False,synthetic
+Jordan,Amman,JOR,2023,4,2023-04-01,61663,75.6,32.4,Shoulder,False,synthetic
+Jordan,Amman,JOR,2023,5,2023-05-01,72181,81.0,36.4,Shoulder,False,synthetic
+Jordan,Amman,JOR,2023,6,2023-06-01,83249,98.0,77.0,High,True,synthetic
+Jordan,Amman,JOR,2023,7,2023-07-01,99625,98.0,63.0,High,False,synthetic
+Jordan,Amman,JOR,2023,8,2023-08-01,78228,98.0,58.7,High,False,synthetic
+Jordan,Amman,JOR,2023,9,2023-09-01,78796,76.6,45.3,Shoulder,False,synthetic
+Jordan,Amman,JOR,2023,10,2023-10-01,81971,83.7,41.2,Shoulder,False,synthetic
+Jordan,Amman,JOR,2023,11,2023-11-01,55139,57.7,21.9,Low,False,synthetic
+Jordan,Amman,JOR,2023,12,2023-12-01,96759,95.0,65.3,High,True,synthetic
+Jordan,Amman,JOR,2024,1,2024-01-01,52449,54.6,13.5,Low,False,synthetic
+Jordan,Amman,JOR,2024,2,2024-02-01,48362,56.9,0.0,Low,True,synthetic
+Jordan,Amman,JOR,2024,3,2024-03-01,45251,60.3,14.6,Low,False,synthetic
+Jordan,Amman,JOR,2024,4,2024-04-01,77570,74.8,35.5,Shoulder,False,synthetic
+Jordan,Amman,JOR,2024,5,2024-05-01,73193,75.8,33.3,Shoulder,False,synthetic
+Jordan,Amman,JOR,2024,6,2024-06-01,102505,98.0,60.7,High,True,synthetic
+Jordan,Amman,JOR,2024,7,2024-07-01,113224,98.0,70.4,High,False,synthetic
+Jordan,Amman,JOR,2024,8,2024-08-01,134875,98.0,65.9,High,False,synthetic
+Jordan,Amman,JOR,2024,9,2024-09-01,98718,89.7,52.8,Shoulder,False,synthetic
+Jordan,Amman,JOR,2024,10,2024-10-01,74342,86.2,44.5,Shoulder,False,synthetic
+Jordan,Amman,JOR,2024,11,2024-11-01,72481,56.4,17.1,Low,True,synthetic
+Jordan,Amman,JOR,2024,12,2024-12-01,108679,89.7,54.3,High,True,synthetic
+Jordan,Amman,JOR,2025,1,2025-01-01,36066,53.6,6.2,Low,False,synthetic
+Jordan,Amman,JOR,2025,2,2025-02-01,50176,50.6,0.0,Low,False,synthetic
+Jordan,Amman,JOR,2025,3,2025-03-01,52235,48.9,4.3,Low,False,synthetic
+Jordan,Amman,JOR,2025,4,2025-04-01,84304,75.6,28.4,Shoulder,False,synthetic
+Jordan,Amman,JOR,2025,5,2025-05-01,63687,78.9,37.1,Shoulder,False,synthetic
+Jordan,Amman,JOR,2025,6,2025-06-01,119139,98.0,75.2,High,False,synthetic
+Saudi Arabia,Riyadh,SAU,2023,1,2023-01-01,350993,54.6,46.7,Low,True,synthetic
+Saudi Arabia,Riyadh,SAU,2023,2,2023-02-01,383188,56.6,52.0,Low,False,synthetic
+Saudi Arabia,Riyadh,SAU,2023,3,2023-03-01,393120,59.3,41.9,Low,True,synthetic
+Saudi Arabia,Riyadh,SAU,2023,4,2023-04-01,346169,84.4,79.3,Shoulder,False,synthetic
+Saudi Arabia,Riyadh,SAU,2023,5,2023-05-01,473000,75.9,77.7,Shoulder,False,synthetic
+Saudi Arabia,Riyadh,SAU,2023,6,2023-06-01,858342,98.0,100.0,High,False,synthetic
+Saudi Arabia,Riyadh,SAU,2023,7,2023-07-01,658177,98.0,100.0,High,False,synthetic
+Saudi Arabia,Riyadh,SAU,2023,8,2023-08-01,666475,94.0,100.0,High,False,synthetic
+Saudi Arabia,Riyadh,SAU,2023,9,2023-09-01,639393,69.1,96.3,Shoulder,False,synthetic
+Saudi Arabia,Riyadh,SAU,2023,10,2023-10-01,431859,75.5,80.3,Shoulder,False,synthetic
+Saudi Arabia,Riyadh,SAU,2023,11,2023-11-01,355067,52.1,31.1,Low,False,synthetic
+Saudi Arabia,Riyadh,SAU,2023,12,2023-12-01,766437,98.0,100.0,High,False,synthetic
+Saudi Arabia,Riyadh,SAU,2024,1,2024-01-01,299743,57.7,37.3,Low,True,synthetic
+Saudi Arabia,Riyadh,SAU,2024,2,2024-02-01,307557,59.8,44.8,Low,False,synthetic
+Saudi Arabia,Riyadh,SAU,2024,3,2024-03-01,333519,56.4,34.3,Low,False,synthetic
+Saudi Arabia,Riyadh,SAU,2024,4,2024-04-01,326853,69.5,54.4,Shoulder,False,synthetic
+Saudi Arabia,Riyadh,SAU,2024,5,2024-05-01,384282,71.5,65.4,Shoulder,False,synthetic
+Saudi Arabia,Riyadh,SAU,2024,6,2024-06-01,705199,98.0,100.0,High,False,synthetic
+Saudi Arabia,Riyadh,SAU,2024,7,2024-07-01,692881,97.8,100.0,High,True,synthetic
+Saudi Arabia,Riyadh,SAU,2024,8,2024-08-01,775815,98.0,100.0,High,False,synthetic
+Saudi Arabia,Riyadh,SAU,2024,9,2024-09-01,449116,87.1,88.3,Shoulder,False,synthetic
+Saudi Arabia,Riyadh,SAU,2024,10,2024-10-01,457034,79.3,73.9,Shoulder,False,synthetic
+Saudi Arabia,Riyadh,SAU,2024,11,2024-11-01,389036,57.0,42.8,Low,False,synthetic
+Saudi Arabia,Riyadh,SAU,2024,12,2024-12-01,739595,98.0,100.0,High,False,synthetic
+Saudi Arabia,Riyadh,SAU,2025,1,2025-01-01,315973,60.4,38.3,Low,False,synthetic
+Saudi Arabia,Riyadh,SAU,2025,2,2025-02-01,407694,53.3,38.7,Low,False,synthetic
+Saudi Arabia,Riyadh,SAU,2025,3,2025-03-01,334541,57.9,37.6,Low,False,synthetic
+Saudi Arabia,Riyadh,SAU,2025,4,2025-04-01,409895,78.0,68.8,Shoulder,False,synthetic
+Saudi Arabia,Riyadh,SAU,2025,5,2025-05-01,486922,71.9,71.6,Shoulder,False,synthetic
+Saudi Arabia,Riyadh,SAU,2025,6,2025-06-01,549547,98.0,100.0,High,False,synthetic
+Russia,Moscow,RUS,2023,1,2023-01-01,57569,45.1,7.4,Low,False,synthetic
+Russia,Moscow,RUS,2023,2,2023-02-01,54445,52.0,10.1,Low,False,synthetic
+Russia,Moscow,RUS,2023,3,2023-03-01,43466,52.5,3.3,Low,False,synthetic
+Russia,Moscow,RUS,2023,4,2023-04-01,67651,69.4,23.1,Shoulder,False,synthetic
+Russia,Moscow,RUS,2023,5,2023-05-01,62823,69.8,30.6,Shoulder,False,synthetic
+Russia,Moscow,RUS,2023,6,2023-06-01,87097,82.6,48.7,High,False,synthetic
+Russia,Moscow,RUS,2023,7,2023-07-01,109222,88.4,55.3,High,False,synthetic
+Russia,Moscow,RUS,2023,8,2023-08-01,92937,77.4,36.8,High,False,synthetic
+Russia,Moscow,RUS,2023,9,2023-09-01,73228,59.4,20.3,Shoulder,False,synthetic
+Russia,Moscow,RUS,2023,10,2023-10-01,62832,62.3,26.1,Shoulder,False,synthetic
+Russia,Moscow,RUS,2023,11,2023-11-01,44263,48.5,10.5,Low,False,synthetic
+Russia,Moscow,RUS,2023,12,2023-12-01,82083,98.0,59.0,High,False,synthetic
+Russia,Moscow,RUS,2024,1,2024-01-01,54327,44.6,2.5,Low,False,synthetic
+Russia,Moscow,RUS,2024,2,2024-02-01,55901,41.0,0.0,Low,False,synthetic
+Russia,Moscow,RUS,2024,3,2024-03-01,59353,47.9,9.6,Low,False,synthetic
+Russia,Moscow,RUS,2024,4,2024-04-01,70935,72.9,38.6,Shoulder,False,synthetic
+Russia,Moscow,RUS,2024,5,2024-05-01,47452,63.2,27.5,Shoulder,False,synthetic
+Russia,Moscow,RUS,2024,6,2024-06-01,106459,94.2,60.1,High,False,synthetic
+Russia,Moscow,RUS,2024,7,2024-07-01,85991,98.0,61.9,High,False,synthetic
+Russia,Moscow,RUS,2024,8,2024-08-01,79946,97.9,64.2,High,True,synthetic
+Russia,Moscow,RUS,2024,9,2024-09-01,87652,71.8,30.3,Shoulder,False,synthetic
+Russia,Moscow,RUS,2024,10,2024-10-01,84882,68.7,23.2,Shoulder,True,synthetic
+Russia,Moscow,RUS,2024,11,2024-11-01,42148,43.3,0.0,Low,False,synthetic
+Russia,Moscow,RUS,2024,12,2024-12-01,81053,85.9,59.6,High,False,synthetic
+Russia,Moscow,RUS,2025,1,2025-01-01,49350,50.0,3.7,Low,False,synthetic
+Russia,Moscow,RUS,2025,2,2025-02-01,52754,48.5,17.3,Low,True,synthetic
+Russia,Moscow,RUS,2025,3,2025-03-01,42409,49.4,0.0,Low,False,synthetic
+Russia,Moscow,RUS,2025,4,2025-04-01,57401,62.5,22.5,Shoulder,False,synthetic
+Russia,Moscow,RUS,2025,5,2025-05-01,77771,73.3,37.6,Shoulder,False,synthetic
+Russia,Moscow,RUS,2025,6,2025-06-01,86911,95.0,67.8,High,False,synthetic
+Norway,Oslo,NOR,2023,1,2023-01-01,380163,38.0,26.0,Low,False,synthetic
+Norway,Oslo,NOR,2023,2,2023-02-01,334408,38.9,19.9,Low,False,synthetic
+Norway,Oslo,NOR,2023,3,2023-03-01,426431,35.9,29.4,Low,False,synthetic
+Norway,Oslo,NOR,2023,4,2023-04-01,651758,51.6,68.1,Shoulder,True,synthetic
+Norway,Oslo,NOR,2023,5,2023-05-01,549538,50.1,57.9,Shoulder,False,synthetic
+Norway,Oslo,NOR,2023,6,2023-06-01,844714,70.0,100.0,High,False,synthetic
+Norway,Oslo,NOR,2023,7,2023-07-01,623821,76.2,99.2,High,False,synthetic
+Norway,Oslo,NOR,2023,8,2023-08-01,748195,67.4,96.2,High,False,synthetic
+Norway,Oslo,NOR,2023,9,2023-09-01,498988,59.7,64.4,Shoulder,False,synthetic
+Norway,Oslo,NOR,2023,10,2023-10-01,698617,54.3,69.6,Shoulder,False,synthetic
+Norway,Oslo,NOR,2023,11,2023-11-01,466432,43.2,43.6,Low,False,synthetic
+Norway,Oslo,NOR,2023,12,2023-12-01,837426,73.2,100.0,High,False,synthetic
+Norway,Oslo,NOR,2024,1,2024-01-01,423431,35.5,28.6,Low,False,synthetic
+Norway,Oslo,NOR,2024,2,2024-02-01,369527,36.8,23.5,Low,False,synthetic
+Norway,Oslo,NOR,2024,3,2024-03-01,306010,41.2,17.8,Low,False,synthetic
+Norway,Oslo,NOR,2024,4,2024-04-01,494904,59.4,65.1,Shoulder,False,synthetic
+Norway,Oslo,NOR,2024,5,2024-05-01,448345,52.4,50.6,Shoulder,False,synthetic
+Norway,Oslo,NOR,2024,6,2024-06-01,719777,71.3,100.0,High,False,synthetic
+Norway,Oslo,NOR,2024,7,2024-07-01,755992,64.5,100.0,High,False,synthetic
+Norway,Oslo,NOR,2024,8,2024-08-01,729815,73.3,98.8,High,False,synthetic
+Norway,Oslo,NOR,2024,9,2024-09-01,544406,50.0,56.6,Shoulder,False,synthetic
+Norway,Oslo,NOR,2024,10,2024-10-01,687980,57.3,80.8,Shoulder,False,synthetic
+Norway,Oslo,NOR,2024,11,2024-11-01,335999,41.9,44.7,Low,False,synthetic
+Norway,Oslo,NOR,2024,12,2024-12-01,818340,73.0,100.0,High,False,synthetic
+Norway,Oslo,NOR,2025,1,2025-01-01,318343,34.1,6.4,Low,False,synthetic
+Norway,Oslo,NOR,2025,2,2025-02-01,378047,38.0,23.4,Low,False,synthetic
+Norway,Oslo,NOR,2025,3,2025-03-01,342966,35.9,10.3,Low,False,synthetic
+Norway,Oslo,NOR,2025,4,2025-04-01,456402,56.4,56.6,Shoulder,False,synthetic
+Norway,Oslo,NOR,2025,5,2025-05-01,520521,61.9,61.4,Shoulder,False,synthetic
+Norway,Oslo,NOR,2025,6,2025-06-01,719397,76.2,100.0,High,False,synthetic
+Sweden,Stockholm,SWE,2023,1,2023-01-01,25621,54.1,7.9,Low,False,synthetic
+Sweden,Stockholm,SWE,2023,2,2023-02-01,21973,59.2,18.6,Low,False,synthetic
+Sweden,Stockholm,SWE,2023,3,2023-03-01,26158,52.9,0.3,Low,False,synthetic
+Sweden,Stockholm,SWE,2023,4,2023-04-01,35197,74.7,26.0,Shoulder,False,synthetic
+Sweden,Stockholm,SWE,2023,5,2023-05-01,45960,82.1,42.5,Shoulder,False,synthetic
+Sweden,Stockholm,SWE,2023,6,2023-06-01,56335,98.0,65.4,High,False,synthetic
+Sweden,Stockholm,SWE,2023,7,2023-07-01,44579,77.0,31.6,High,False,synthetic
+Sweden,Stockholm,SWE,2023,8,2023-08-01,51079,90.3,46.3,High,False,synthetic
+Sweden,Stockholm,SWE,2023,9,2023-09-01,31819,80.1,37.3,Shoulder,False,synthetic
+Sweden,Stockholm,SWE,2023,10,2023-10-01,34682,78.5,37.9,Shoulder,False,synthetic
+Sweden,Stockholm,SWE,2023,11,2023-11-01,28133,53.5,1.9,Low,False,synthetic
+Sweden,Stockholm,SWE,2023,12,2023-12-01,47862,98.0,55.6,High,False,synthetic
+Sweden,Stockholm,SWE,2024,1,2024-01-01,27797,52.5,11.2,Low,False,synthetic
+Sweden,Stockholm,SWE,2024,2,2024-02-01,26430,57.4,20.5,Low,True,synthetic
+Sweden,Stockholm,SWE,2024,3,2024-03-01,26832,53.6,7.3,Low,False,synthetic
+Sweden,Stockholm,SWE,2024,4,2024-04-01,34159,82.7,43.7,Shoulder,False,synthetic
+Sweden,Stockholm,SWE,2024,5,2024-05-01,31672,77.3,26.5,Shoulder,False,synthetic
+Sweden,Stockholm,SWE,2024,6,2024-06-01,46577,98.0,71.7,High,False,synthetic
+Sweden,Stockholm,SWE,2024,7,2024-07-01,61927,98.0,69.4,High,True,synthetic
+Sweden,Stockholm,SWE,2024,8,2024-08-01,45289,93.6,60.2,High,False,synthetic
+Sweden,Stockholm,SWE,2024,9,2024-09-01,40427,75.4,31.5,Shoulder,False,synthetic
+Sweden,Stockholm,SWE,2024,10,2024-10-01,32677,81.2,43.3,Shoulder,True,synthetic
+Sweden,Stockholm,SWE,2024,11,2024-11-01,23980,51.0,6.4,Low,False,synthetic
+Sweden,Stockholm,SWE,2024,12,2024-12-01,50221,88.3,62.7,High,False,synthetic
+Sweden,Stockholm,SWE,2025,1,2025-01-01,29444,51.5,1.5,Low,False,synthetic
+Sweden,Stockholm,SWE,2025,2,2025-02-01,19517,55.0,2.0,Low,True,synthetic
+Sweden,Stockholm,SWE,2025,3,2025-03-01,24771,49.6,2.2,Low,False,synthetic
+Sweden,Stockholm,SWE,2025,4,2025-04-01,37282,76.4,28.6,Shoulder,False,synthetic
+Sweden,Stockholm,SWE,2025,5,2025-05-01,35644,75.5,31.2,Shoulder,False,synthetic
+Sweden,Stockholm,SWE,2025,6,2025-06-01,60856,98.0,67.4,High,False,synthetic
+Finland,Helsinki,FIN,2023,1,2023-01-01,647625,41.7,55.6,Low,False,synthetic
+Finland,Helsinki,FIN,2023,2,2023-02-01,380956,40.2,18.6,Low,False,synthetic
+Finland,Helsinki,FIN,2023,3,2023-03-01,539329,35.8,36.8,Low,False,synthetic
+Finland,Helsinki,FIN,2023,4,2023-04-01,769367,52.0,83.8,Shoulder,False,synthetic
+Finland,Helsinki,FIN,2023,5,2023-05-01,798349,50.7,79.8,Shoulder,True,synthetic
+Finland,Helsinki,FIN,2023,6,2023-06-01,1115111,68.2,100.0,High,False,synthetic
+Finland,Helsinki,FIN,2023,7,2023-07-01,877601,64.7,100.0,High,False,synthetic
+Finland,Helsinki,FIN,2023,8,2023-08-01,858817,72.4,100.0,High,True,synthetic
+Finland,Helsinki,FIN,2023,9,2023-09-01,680112,53.5,68.0,Shoulder,False,synthetic
+Finland,Helsinki,FIN,2023,10,2023-10-01,808245,55.5,87.7,Shoulder,True,synthetic
+Finland,Helsinki,FIN,2023,11,2023-11-01,628899,34.1,47.0,Low,False,synthetic
+Finland,Helsinki,FIN,2023,12,2023-12-01,906048,74.8,100.0,High,True,synthetic
+Finland,Helsinki,FIN,2024,1,2024-01-01,564652,36.5,37.4,Low,False,synthetic
+Finland,Helsinki,FIN,2024,2,2024-02-01,499480,37.7,28.6,Low,False,synthetic
+Finland,Helsinki,FIN,2024,3,2024-03-01,624552,39.2,47.9,Low,False,synthetic
+Finland,Helsinki,FIN,2024,4,2024-04-01,746601,51.2,72.9,Shoulder,False,synthetic
+Finland,Helsinki,FIN,2024,5,2024-05-01,776683,56.1,86.1,Shoulder,True,synthetic
+Finland,Helsinki,FIN,2024,6,2024-06-01,1070582,72.9,100.0,High,False,synthetic
+Finland,Helsinki,FIN,2024,7,2024-07-01,1020679,89.4,100.0,High,False,synthetic
+Finland,Helsinki,FIN,2024,8,2024-08-01,829341,81.8,100.0,High,False,synthetic
+Finland,Helsinki,FIN,2024,9,2024-09-01,695616,55.2,68.7,Shoulder,False,synthetic
+Finland,Helsinki,FIN,2024,10,2024-10-01,717604,50.6,78.8,Shoulder,False,synthetic
+Finland,Helsinki,FIN,2024,11,2024-11-01,550473,41.9,47.7,Low,False,synthetic
+Finland,Helsinki,FIN,2024,12,2024-12-01,1074983,72.3,100.0,High,False,synthetic
+Finland,Helsinki,FIN,2025,1,2025-01-01,397576,39.9,20.8,Low,False,synthetic
+Finland,Helsinki,FIN,2025,2,2025-02-01,536451,42.6,40.7,Low,False,synthetic
+Finland,Helsinki,FIN,2025,3,2025-03-01,598610,37.9,39.8,Low,False,synthetic
+Finland,Helsinki,FIN,2025,4,2025-04-01,779330,52.8,87.2,Shoulder,False,synthetic
+Finland,Helsinki,FIN,2025,5,2025-05-01,647642,57.1,69.9,Shoulder,False,synthetic
+Finland,Helsinki,FIN,2025,6,2025-06-01,1117420,73.6,100.0,High,False,synthetic
+Poland,Krakow,POL,2023,1,2023-01-01,146553,56.2,26.6,Low,False,synthetic
+Poland,Krakow,POL,2023,2,2023-02-01,134225,60.1,24.1,Low,True,synthetic
+Poland,Krakow,POL,2023,3,2023-03-01,131957,57.6,20.4,Low,False,synthetic
+Poland,Krakow,POL,2023,4,2023-04-01,257576,84.8,75.3,Shoulder,True,synthetic
+Poland,Krakow,POL,2023,5,2023-05-01,155580,77.3,48.5,Shoulder,False,synthetic
+Poland,Krakow,POL,2023,6,2023-06-01,193742,98.0,87.7,High,False,synthetic
+Poland,Krakow,POL,2023,7,2023-07-01,298919,98.0,83.3,High,False,synthetic
+Poland,Krakow,POL,2023,8,2023-08-01,338252,98.0,89.2,High,False,synthetic
+Poland,Krakow,POL,2023,9,2023-09-01,232552,73.9,50.6,Shoulder,False,synthetic
+Poland,Krakow,POL,2023,10,2023-10-01,199807,86.3,59.5,Shoulder,False,synthetic
+Poland,Krakow,POL,2023,11,2023-11-01,140528,65.8,34.6,Low,True,synthetic
+Poland,Krakow,POL,2023,12,2023-12-01,279222,98.0,76.5,High,False,synthetic
+Poland,Krakow,POL,2024,1,2024-01-01,133096,48.4,11.1,Low,False,synthetic
+Poland,Krakow,POL,2024,2,2024-02-01,131199,56.6,21.5,Low,False,synthetic
+Poland,Krakow,POL,2024,3,2024-03-01,136642,52.0,16.1,Low,False,synthetic
+Poland,Krakow,POL,2024,4,2024-04-01,171037,81.0,55.6,Shoulder,False,synthetic
+Poland,Krakow,POL,2024,5,2024-05-01,269550,78.4,59.6,Shoulder,True,synthetic
+Poland,Krakow,POL,2024,6,2024-06-01,219623,98.0,76.1,High,True,synthetic
+Poland,Krakow,POL,2024,7,2024-07-01,236307,95.0,68.8,High,False,synthetic
+Poland,Krakow,POL,2024,8,2024-08-01,290737,98.0,94.5,High,False,synthetic
+Poland,Krakow,POL,2024,9,2024-09-01,213281,91.2,70.3,Shoulder,False,synthetic
+Poland,Krakow,POL,2024,10,2024-10-01,197399,89.1,66.7,Shoulder,False,synthetic
+Poland,Krakow,POL,2024,11,2024-11-01,150619,51.9,20.0,Low,False,synthetic
+Poland,Krakow,POL,2024,12,2024-12-01,249758,98.0,75.1,High,False,synthetic
+Poland,Krakow,POL,2025,1,2025-01-01,128809,68.2,35.5,Low,False,synthetic
+Poland,Krakow,POL,2025,2,2025-02-01,109800,61.3,22.8,Low,False,synthetic
+Poland,Krakow,POL,2025,3,2025-03-01,145400,58.4,27.8,Low,False,synthetic
+Poland,Krakow,POL,2025,4,2025-04-01,202461,80.8,58.8,Shoulder,False,synthetic
+Poland,Krakow,POL,2025,5,2025-05-01,230202,79.7,54.5,Shoulder,False,synthetic
+Poland,Krakow,POL,2025,6,2025-06-01,286127,88.3,65.7,High,False,synthetic
+Hungary,Budapest,HUN,2023,1,2023-01-01,233296,33.3,2.0,Low,False,synthetic
+Hungary,Budapest,HUN,2023,2,2023-02-01,185261,31.3,0.0,Low,False,synthetic
+Hungary,Budapest,HUN,2023,3,2023-03-01,191015,36.6,0.9,Low,False,synthetic
+Hungary,Budapest,HUN,2023,4,2023-04-01,342253,48.6,36.7,Shoulder,False,synthetic
+Hungary,Budapest,HUN,2023,5,2023-05-01,259511,47.9,23.7,Shoulder,False,synthetic
+Hungary,Budapest,HUN,2023,6,2023-06-01,337982,64.8,47.8,High,False,synthetic
+Hungary,Budapest,HUN,2023,7,2023-07-01,488638,60.6,67.4,High,False,synthetic
+Hungary,Budapest,HUN,2023,8,2023-08-01,445704,62.8,46.6,High,False,synthetic
+Hungary,Budapest,HUN,2023,9,2023-09-01,322141,50.6,23.9,Shoulder,False,synthetic
+Hungary,Budapest,HUN,2023,10,2023-10-01,273061,50.0,27.3,Shoulder,False,synthetic
+Hungary,Budapest,HUN,2023,11,2023-11-01,266611,35.6,13.7,Low,False,synthetic
+Hungary,Budapest,HUN,2023,12,2023-12-01,607582,57.6,67.3,High,False,synthetic
+Hungary,Budapest,HUN,2024,1,2024-01-01,255783,35.7,11.8,Low,False,synthetic
+Hungary,Budapest,HUN,2024,2,2024-02-01,284624,33.8,15.3,Low,False,synthetic
+Hungary,Budapest,HUN,2024,3,2024-03-01,238678,32.8,6.1,Low,False,synthetic
+Hungary,Budapest,HUN,2024,4,2024-04-01,346360,45.0,28.3,Shoulder,False,synthetic
+Hungary,Budapest,HUN,2024,5,2024-05-01,352726,53.0,39.6,Shoulder,True,synthetic
+Hungary,Budapest,HUN,2024,6,2024-06-01,433720,77.2,84.2,High,False,synthetic
+Hungary,Budapest,HUN,2024,7,2024-07-01,444524,48.7,43.2,High,False,synthetic
+Hungary,Budapest,HUN,2024,8,2024-08-01,415159,61.5,54.0,High,False,synthetic
+Hungary,Budapest,HUN,2024,9,2024-09-01,271770,53.8,31.4,Shoulder,False,synthetic
+Hungary,Budapest,HUN,2024,10,2024-10-01,383707,43.0,27.3,Shoulder,False,synthetic
+Hungary,Budapest,HUN,2024,11,2024-11-01,303745,32.5,0.0,Low,True,synthetic
+Hungary,Budapest,HUN,2024,12,2024-12-01,455999,67.9,78.4,High,False,synthetic
+Hungary,Budapest,HUN,2025,1,2025-01-01,236311,31.9,10.1,Low,False,synthetic
+Hungary,Budapest,HUN,2025,2,2025-02-01,207143,33.2,0.0,Low,False,synthetic
+Hungary,Budapest,HUN,2025,3,2025-03-01,221796,36.4,3.9,Low,True,synthetic
+Hungary,Budapest,HUN,2025,4,2025-04-01,249347,49.9,25.2,Shoulder,False,synthetic
+Hungary,Budapest,HUN,2025,5,2025-05-01,305310,50.6,38.3,Shoulder,False,synthetic
+Hungary,Budapest,HUN,2025,6,2025-06-01,432524,68.8,61.9,High,False,synthetic
+Croatia,Dubrovnik,HRV,2023,1,2023-01-01,329218,53.3,37.0,Low,True,synthetic
+Croatia,Dubrovnik,HRV,2023,2,2023-02-01,336866,52.6,43.8,Low,False,synthetic
+Croatia,Dubrovnik,HRV,2023,3,2023-03-01,432304,58.0,46.9,Low,False,synthetic
+Croatia,Dubrovnik,HRV,2023,4,2023-04-01,543040,76.8,82.6,Shoulder,False,synthetic
+Croatia,Dubrovnik,HRV,2023,5,2023-05-01,555215,79.5,92.3,Shoulder,False,synthetic
+Croatia,Dubrovnik,HRV,2023,6,2023-06-01,785812,98.0,100.0,High,False,synthetic
+Croatia,Dubrovnik,HRV,2023,7,2023-07-01,770575,98.0,100.0,High,True,synthetic
+Croatia,Dubrovnik,HRV,2023,8,2023-08-01,772858,96.0,100.0,High,False,synthetic
+Croatia,Dubrovnik,HRV,2023,9,2023-09-01,541058,74.2,79.3,Shoulder,True,synthetic
+Croatia,Dubrovnik,HRV,2023,10,2023-10-01,636775,73.9,82.3,Shoulder,False,synthetic
+Croatia,Dubrovnik,HRV,2023,11,2023-11-01,417217,48.4,43.7,Low,False,synthetic
+Croatia,Dubrovnik,HRV,2023,12,2023-12-01,880463,97.2,100.0,High,True,synthetic
+Croatia,Dubrovnik,HRV,2024,1,2024-01-01,384859,50.2,35.1,Low,False,synthetic
+Croatia,Dubrovnik,HRV,2024,2,2024-02-01,380002,44.8,38.1,Low,False,synthetic
+Croatia,Dubrovnik,HRV,2024,3,2024-03-01,364834,47.8,37.7,Low,False,synthetic
+Croatia,Dubrovnik,HRV,2024,4,2024-04-01,597237,71.6,83.0,Shoulder,False,synthetic
+Croatia,Dubrovnik,HRV,2024,5,2024-05-01,530994,75.2,84.5,Shoulder,False,synthetic
+Croatia,Dubrovnik,HRV,2024,6,2024-06-01,750730,98.0,100.0,High,False,synthetic
+Croatia,Dubrovnik,HRV,2024,7,2024-07-01,652564,89.4,100.0,High,False,synthetic
+Croatia,Dubrovnik,HRV,2024,8,2024-08-01,622193,98.0,100.0,High,False,synthetic
+Croatia,Dubrovnik,HRV,2024,9,2024-09-01,455985,78.7,78.6,Shoulder,False,synthetic
+Croatia,Dubrovnik,HRV,2024,10,2024-10-01,639598,76.9,91.2,Shoulder,False,synthetic
+Croatia,Dubrovnik,HRV,2024,11,2024-11-01,331402,58.1,44.9,Low,True,synthetic
+Croatia,Dubrovnik,HRV,2024,12,2024-12-01,852979,98.0,100.0,High,False,synthetic
+Croatia,Dubrovnik,HRV,2025,1,2025-01-01,383283,52.9,34.3,Low,True,synthetic
+Croatia,Dubrovnik,HRV,2025,2,2025-02-01,412508,60.2,44.5,Low,False,synthetic
+Croatia,Dubrovnik,HRV,2025,3,2025-03-01,489016,51.6,49.9,Low,False,synthetic
+Croatia,Dubrovnik,HRV,2025,4,2025-04-01,503568,64.2,64.2,Shoulder,False,synthetic
+Croatia,Dubrovnik,HRV,2025,5,2025-05-01,595837,70.4,81.7,Shoulder,False,synthetic
+Croatia,Dubrovnik,HRV,2025,6,2025-06-01,755613,93.5,100.0,High,True,synthetic
+Iceland,Reykjavik,ISL,2023,1,2023-01-01,472134,38.3,23.0,Low,False,synthetic
+Iceland,Reykjavik,ISL,2023,2,2023-02-01,488462,35.8,28.1,Low,False,synthetic
+Iceland,Reykjavik,ISL,2023,3,2023-03-01,597032,42.1,45.6,Low,False,synthetic
+Iceland,Reykjavik,ISL,2023,4,2023-04-01,687532,58.9,80.2,Shoulder,False,synthetic
+Iceland,Reykjavik,ISL,2023,5,2023-05-01,802103,52.7,90.2,Shoulder,False,synthetic
+Iceland,Reykjavik,ISL,2023,6,2023-06-01,841195,70.6,100.0,High,False,synthetic
+Iceland,Reykjavik,ISL,2023,7,2023-07-01,1102564,68.3,100.0,High,False,synthetic
+Iceland,Reykjavik,ISL,2023,8,2023-08-01,838580,76.6,100.0,High,False,synthetic
+Iceland,Reykjavik,ISL,2023,9,2023-09-01,734430,52.9,78.7,Shoulder,True,synthetic
+Iceland,Reykjavik,ISL,2023,10,2023-10-01,701105,57.7,79.4,Shoulder,False,synthetic
+Iceland,Reykjavik,ISL,2023,11,2023-11-01,506792,36.1,35.6,Low,True,synthetic
+Iceland,Reykjavik,ISL,2023,12,2023-12-01,834118,77.7,100.0,High,False,synthetic
+Iceland,Reykjavik,ISL,2024,1,2024-01-01,624128,33.0,48.4,Low,False,synthetic
+Iceland,Reykjavik,ISL,2024,2,2024-02-01,536159,36.9,33.3,Low,False,synthetic
+Iceland,Reykjavik,ISL,2024,3,2024-03-01,664363,38.0,53.8,Low,False,synthetic
+Iceland,Reykjavik,ISL,2024,4,2024-04-01,935091,46.0,90.6,Shoulder,False,synthetic
+Iceland,Reykjavik,ISL,2024,5,2024-05-01,480030,53.7,61.7,Shoulder,False,synthetic
+Iceland,Reykjavik,ISL,2024,6,2024-06-01,1079577,78.8,100.0,High,False,synthetic
+Iceland,Reykjavik,ISL,2024,7,2024-07-01,716641,67.8,97.6,High,False,synthetic
+Iceland,Reykjavik,ISL,2024,8,2024-08-01,1018280,72.7,100.0,High,False,synthetic
+Iceland,Reykjavik,ISL,2024,9,2024-09-01,921161,55.9,100.0,Shoulder,False,synthetic
+Iceland,Reykjavik,ISL,2024,10,2024-10-01,762948,53.6,81.3,Shoulder,False,synthetic
+Iceland,Reykjavik,ISL,2024,11,2024-11-01,549198,42.5,42.6,Low,False,synthetic
+Iceland,Reykjavik,ISL,2024,12,2024-12-01,967433,71.7,100.0,High,False,synthetic
+Iceland,Reykjavik,ISL,2025,1,2025-01-01,613105,37.6,53.6,Low,False,synthetic
+Iceland,Reykjavik,ISL,2025,2,2025-02-01,570215,40.5,41.4,Low,False,synthetic
+Iceland,Reykjavik,ISL,2025,3,2025-03-01,669984,39.5,58.9,Low,False,synthetic
+Iceland,Reykjavik,ISL,2025,4,2025-04-01,776578,56.1,87.8,Shoulder,False,synthetic
+Iceland,Reykjavik,ISL,2025,5,2025-05-01,591811,56.4,66.0,Shoulder,False,synthetic
+Iceland,Reykjavik,ISL,2025,6,2025-06-01,1152712,67.7,100.0,High,False,synthetic
+Chile,Santiago,CHL,2023,1,2023-01-01,93750,47.0,6.5,Low,False,synthetic
+Chile,Santiago,CHL,2023,2,2023-02-01,123140,38.9,0.0,Low,False,synthetic
+Chile,Santiago,CHL,2023,3,2023-03-01,106720,44.9,2.2,Low,False,synthetic
+Chile,Santiago,CHL,2023,4,2023-04-01,192803,64.5,39.2,Shoulder,False,synthetic
+Chile,Santiago,CHL,2023,5,2023-05-01,193618,63.8,23.7,Shoulder,False,synthetic
+Chile,Santiago,CHL,2023,6,2023-06-01,250453,85.0,60.6,High,False,synthetic
+Chile,Santiago,CHL,2023,7,2023-07-01,204840,86.2,56.9,High,False,synthetic
+Chile,Santiago,CHL,2023,8,2023-08-01,264576,77.2,54.5,High,False,synthetic
+Chile,Santiago,CHL,2023,9,2023-09-01,215204,66.2,45.2,Shoulder,False,synthetic
+Chile,Santiago,CHL,2023,10,2023-10-01,182636,59.3,30.3,Shoulder,False,synthetic
+Chile,Santiago,CHL,2023,11,2023-11-01,123325,45.9,13.3,Low,False,synthetic
+Chile,Santiago,CHL,2023,12,2023-12-01,310870,76.8,54.0,High,False,synthetic
+Chile,Santiago,CHL,2024,1,2024-01-01,116623,42.8,0.0,Low,False,synthetic
+Chile,Santiago,CHL,2024,2,2024-02-01,102173,42.3,0.0,Low,False,synthetic
+Chile,Santiago,CHL,2024,3,2024-03-01,156419,46.2,2.9,Low,False,synthetic
+Chile,Santiago,CHL,2024,4,2024-04-01,191577,62.1,33.5,Shoulder,False,synthetic
+Chile,Santiago,CHL,2024,5,2024-05-01,168864,61.7,36.8,Shoulder,False,synthetic
+Chile,Santiago,CHL,2024,6,2024-06-01,207104,80.9,52.2,High,False,synthetic
+Chile,Santiago,CHL,2024,7,2024-07-01,232288,90.8,72.0,High,False,synthetic
+Chile,Santiago,CHL,2024,8,2024-08-01,166679,84.2,58.2,High,False,synthetic
+Chile,Santiago,CHL,2024,9,2024-09-01,193507,63.4,30.2,Shoulder,False,synthetic
+Chile,Santiago,CHL,2024,10,2024-10-01,222253,61.4,31.6,Shoulder,True,synthetic
+Chile,Santiago,CHL,2024,11,2024-11-01,148800,39.5,5.2,Low,False,synthetic
+Chile,Santiago,CHL,2024,12,2024-12-01,253838,77.7,55.8,High,False,synthetic
+Chile,Santiago,CHL,2025,1,2025-01-01,104015,45.5,13.7,Low,False,synthetic
+Chile,Santiago,CHL,2025,2,2025-02-01,105558,39.3,0.0,Low,False,synthetic
+Chile,Santiago,CHL,2025,3,2025-03-01,136363,39.3,0.0,Low,False,synthetic
+Chile,Santiago,CHL,2025,4,2025-04-01,183310,72.5,40.7,Shoulder,False,synthetic
+Chile,Santiago,CHL,2025,5,2025-05-01,156393,65.8,34.3,Shoulder,False,synthetic
+Chile,Santiago,CHL,2025,6,2025-06-01,231614,76.2,56.1,High,False,synthetic
+Peru,Lima,PER,2023,1,2023-01-01,454715,37.6,34.3,Low,False,synthetic
+Peru,Lima,PER,2023,2,2023-02-01,469782,46.3,42.6,Low,True,synthetic
+Peru,Lima,PER,2023,3,2023-03-01,527538,41.6,37.9,Low,False,synthetic
+Peru,Lima,PER,2023,4,2023-04-01,812706,57.8,92.8,Shoulder,True,synthetic
+Peru,Lima,PER,2023,5,2023-05-01,805996,61.8,88.7,Shoulder,False,synthetic
+Peru,Lima,PER,2023,6,2023-06-01,1069096,70.4,100.0,High,False,synthetic
+Peru,Lima,PER,2023,7,2023-07-01,1238208,74.1,100.0,High,False,synthetic
+Peru,Lima,PER,2023,8,2023-08-01,855088,79.3,100.0,High,False,synthetic
+Peru,Lima,PER,2023,9,2023-09-01,541759,60.1,70.8,Shoulder,False,synthetic
+Peru,Lima,PER,2023,10,2023-10-01,839598,63.1,99.3,Shoulder,False,synthetic
+Peru,Lima,PER,2023,11,2023-11-01,468255,37.2,30.2,Low,False,synthetic
+Peru,Lima,PER,2023,12,2023-12-01,1179406,81.6,100.0,High,False,synthetic
+Peru,Lima,PER,2024,1,2024-01-01,489447,44.9,41.7,Low,True,synthetic
+Peru,Lima,PER,2024,2,2024-02-01,491374,44.6,34.7,Low,False,synthetic
+Peru,Lima,PER,2024,3,2024-03-01,420810,44.9,34.6,Low,False,synthetic
+Peru,Lima,PER,2024,4,2024-04-01,663922,59.1,78.6,Shoulder,False,synthetic
+Peru,Lima,PER,2024,5,2024-05-01,836118,67.0,100.0,Shoulder,False,synthetic
+Peru,Lima,PER,2024,6,2024-06-01,951118,85.1,100.0,High,True,synthetic
+Peru,Lima,PER,2024,7,2024-07-01,963537,81.5,100.0,High,False,synthetic
+Peru,Lima,PER,2024,8,2024-08-01,1059798,78.2,100.0,High,False,synthetic
+Peru,Lima,PER,2024,9,2024-09-01,689357,56.3,70.9,Shoulder,False,synthetic
+Peru,Lima,PER,2024,10,2024-10-01,660657,56.7,70.7,Shoulder,True,synthetic
+Peru,Lima,PER,2024,11,2024-11-01,658926,45.0,65.4,Low,False,synthetic
+Peru,Lima,PER,2024,12,2024-12-01,952764,81.0,100.0,High,False,synthetic
+Peru,Lima,PER,2025,1,2025-01-01,569841,45.9,52.4,Low,False,synthetic
+Peru,Lima,PER,2025,2,2025-02-01,482701,37.3,33.4,Low,False,synthetic
+Peru,Lima,PER,2025,3,2025-03-01,484586,43.0,42.1,Low,False,synthetic
+Peru,Lima,PER,2025,4,2025-04-01,591519,59.0,72.0,Shoulder,False,synthetic
+Peru,Lima,PER,2025,5,2025-05-01,692135,62.9,89.1,Shoulder,False,synthetic
+Peru,Lima,PER,2025,6,2025-06-01,1099624,85.9,100.0,High,False,synthetic
+Colombia,Cartagena,COL,2023,1,2023-01-01,164751,65.2,38.6,Low,False,synthetic
+Colombia,Cartagena,COL,2023,2,2023-02-01,172789,59.5,35.9,Low,False,synthetic
+Colombia,Cartagena,COL,2023,3,2023-03-01,177055,46.2,12.3,Low,False,synthetic
+Colombia,Cartagena,COL,2023,4,2023-04-01,250819,98.0,91.3,Shoulder,False,synthetic
+Colombia,Cartagena,COL,2023,5,2023-05-01,280903,84.8,68.1,Shoulder,False,synthetic
+Colombia,Cartagena,COL,2023,6,2023-06-01,351029,92.4,80.8,High,True,synthetic
+Colombia,Cartagena,COL,2023,7,2023-07-01,342101,97.7,87.5,High,False,synthetic
+Colombia,Cartagena,COL,2023,8,2023-08-01,319398,98.0,89.2,High,False,synthetic
+Colombia,Cartagena,COL,2023,9,2023-09-01,232226,80.9,58.5,Shoulder,False,synthetic
+Colombia,Cartagena,COL,2023,10,2023-10-01,228890,91.9,64.8,Shoulder,True,synthetic
+Colombia,Cartagena,COL,2023,11,2023-11-01,183952,58.2,34.9,Low,False,synthetic
+Colombia,Cartagena,COL,2023,12,2023-12-01,300164,98.0,97.0,High,False,synthetic
+Colombia,Cartagena,COL,2024,1,2024-01-01,239177,57.5,30.7,Low,False,synthetic
+Colombia,Cartagena,COL,2024,2,2024-02-01,175423,47.0,11.9,Low,False,synthetic
+Colombia,Cartagena,COL,2024,3,2024-03-01,152251,59.1,25.1,Low,False,synthetic
+Colombia,Cartagena,COL,2024,4,2024-04-01,246635,81.9,63.3,Shoulder,False,synthetic
+Colombia,Cartagena,COL,2024,5,2024-05-01,264176,79.3,55.9,Shoulder,False,synthetic
+Colombia,Cartagena,COL,2024,6,2024-06-01,366367,98.0,93.1,High,False,synthetic
+Colombia,Cartagena,COL,2024,7,2024-07-01,287527,95.7,82.3,High,False,synthetic
+Colombia,Cartagena,COL,2024,8,2024-08-01,345329,98.0,99.9,High,False,synthetic
+Colombia,Cartagena,COL,2024,9,2024-09-01,311731,93.9,81.3,Shoulder,False,synthetic
+Colombia,Cartagena,COL,2024,10,2024-10-01,252818,78.1,54.9,Shoulder,False,synthetic
+Colombia,Cartagena,COL,2024,11,2024-11-01,190177,57.8,26.1,Low,False,synthetic
+Colombia,Cartagena,COL,2024,12,2024-12-01,327033,98.0,95.4,High,True,synthetic
+Colombia,Cartagena,COL,2025,1,2025-01-01,150387,54.7,27.4,Low,False,synthetic
+Colombia,Cartagena,COL,2025,2,2025-02-01,192832,55.9,32.8,Low,False,synthetic
+Colombia,Cartagena,COL,2025,3,2025-03-01,201539,54.9,30.6,Low,False,synthetic
+Colombia,Cartagena,COL,2025,4,2025-04-01,260237,79.0,55.8,Shoulder,False,synthetic
+Colombia,Cartagena,COL,2025,5,2025-05-01,236714,80.5,56.5,Shoulder,False,synthetic
+Colombia,Cartagena,COL,2025,6,2025-06-01,241727,98.0,86.9,High,False,synthetic
+Dominican Republic,Punta Cana,DOM,2023,1,2023-01-01,146696,49.2,21.9,Low,False,synthetic
+Dominican Republic,Punta Cana,DOM,2023,2,2023-02-01,145022,63.6,27.5,Low,False,synthetic
+Dominican Republic,Punta Cana,DOM,2023,3,2023-03-01,126459,51.8,26.4,Low,False,synthetic
+Dominican Republic,Punta Cana,DOM,2023,4,2023-04-01,176106,69.9,47.2,Shoulder,True,synthetic
+Dominican Republic,Punta Cana,DOM,2023,5,2023-05-01,187454,64.0,29.9,Shoulder,False,synthetic
+Dominican Republic,Punta Cana,DOM,2023,6,2023-06-01,289986,98.0,95.9,High,True,synthetic
+Dominican Republic,Punta Cana,DOM,2023,7,2023-07-01,261413,97.8,80.5,High,False,synthetic
+Dominican Republic,Punta Cana,DOM,2023,8,2023-08-01,204232,86.2,55.3,High,False,synthetic
+Dominican Republic,Punta Cana,DOM,2023,9,2023-09-01,154825,87.1,56.3,Shoulder,False,synthetic
+Dominican Republic,Punta Cana,DOM,2023,10,2023-10-01,191106,65.9,44.6,Shoulder,False,synthetic
+Dominican Republic,Punta Cana,DOM,2023,11,2023-11-01,122289,51.3,9.3,Low,False,synthetic
+Dominican Republic,Punta Cana,DOM,2023,12,2023-12-01,267081,95.1,71.8,High,True,synthetic
+Dominican Republic,Punta Cana,DOM,2024,1,2024-01-01,156458,51.8,16.2,Low,False,synthetic
+Dominican Republic,Punta Cana,DOM,2024,2,2024-02-01,128573,58.7,17.5,Low,False,synthetic
+Dominican Republic,Punta Cana,DOM,2024,3,2024-03-01,142522,53.7,15.1,Low,True,synthetic
+Dominican Republic,Punta Cana,DOM,2024,4,2024-04-01,202003,72.2,48.5,Shoulder,False,synthetic
+Dominican Republic,Punta Cana,DOM,2024,5,2024-05-01,268067,77.0,49.6,Shoulder,False,synthetic
+Dominican Republic,Punta Cana,DOM,2024,6,2024-06-01,254792,98.0,90.4,High,False,synthetic
+Dominican Republic,Punta Cana,DOM,2024,7,2024-07-01,291290,93.2,81.0,High,False,synthetic
+Dominican Republic,Punta Cana,DOM,2024,8,2024-08-01,306709,98.0,88.6,High,False,synthetic
+Dominican Republic,Punta Cana,DOM,2024,9,2024-09-01,191107,65.6,30.8,Shoulder,False,synthetic
+Dominican Republic,Punta Cana,DOM,2024,10,2024-10-01,199852,76.3,48.8,Shoulder,True,synthetic
+Dominican Republic,Punta Cana,DOM,2024,11,2024-11-01,124814,54.7,17.6,Low,True,synthetic
+Dominican Republic,Punta Cana,DOM,2024,12,2024-12-01,276212,94.6,73.8,High,False,synthetic
+Dominican Republic,Punta Cana,DOM,2025,1,2025-01-01,205775,58.9,38.0,Low,False,synthetic
+Dominican Republic,Punta Cana,DOM,2025,2,2025-02-01,141725,49.3,6.7,Low,True,synthetic
+Dominican Republic,Punta Cana,DOM,2025,3,2025-03-01,169676,56.3,19.6,Low,False,synthetic
+Dominican Republic,Punta Cana,DOM,2025,4,2025-04-01,224895,71.9,49.1,Shoulder,False,synthetic
+Dominican Republic,Punta Cana,DOM,2025,5,2025-05-01,214032,76.8,50.3,Shoulder,False,synthetic
+Dominican Republic,Punta Cana,DOM,2025,6,2025-06-01,218136,85.7,64.0,High,False,synthetic
+Puerto Rico,San Juan,PRI,2023,1,2023-01-01,260582,37.2,1.5,Low,False,synthetic
+Puerto Rico,San Juan,PRI,2023,2,2023-02-01,312147,36.5,5.7,Low,False,synthetic
+Puerto Rico,San Juan,PRI,2023,3,2023-03-01,222255,36.9,3.1,Low,True,synthetic
+Puerto Rico,San Juan,PRI,2023,4,2023-04-01,328782,50.0,30.0,Shoulder,True,synthetic
+Puerto Rico,San Juan,PRI,2023,5,2023-05-01,294555,51.9,32.7,Shoulder,False,synthetic
+Puerto Rico,San Juan,PRI,2023,6,2023-06-01,534144,64.0,71.1,High,False,synthetic
+Puerto Rico,San Juan,PRI,2023,7,2023-07-01,487793,71.0,72.5,High,False,synthetic
+Puerto Rico,San Juan,PRI,2023,8,2023-08-01,473475,67.6,70.5,High,False,synthetic
+Puerto Rico,San Juan,PRI,2023,9,2023-09-01,396316,48.2,34.3,Shoulder,False,synthetic
+Puerto Rico,San Juan,PRI,2023,10,2023-10-01,316844,45.8,16.0,Shoulder,False,synthetic
+Puerto Rico,San Juan,PRI,2023,11,2023-11-01,324884,33.1,21.8,Low,False,synthetic
+Puerto Rico,San Juan,PRI,2023,12,2023-12-01,461433,57.2,54.8,High,False,synthetic
+Puerto Rico,San Juan,PRI,2024,1,2024-01-01,308821,35.7,8.0,Low,False,synthetic
+Puerto Rico,San Juan,PRI,2024,2,2024-02-01,218317,38.6,16.3,Low,False,synthetic
+Puerto Rico,San Juan,PRI,2024,3,2024-03-01,238951,39.3,6.2,Low,False,synthetic
+Puerto Rico,San Juan,PRI,2024,4,2024-04-01,382452,46.5,30.9,Shoulder,False,synthetic
+Puerto Rico,San Juan,PRI,2024,5,2024-05-01,433615,57.6,53.1,Shoulder,False,synthetic
+Puerto Rico,San Juan,PRI,2024,6,2024-06-01,423073,65.0,57.5,High,False,synthetic
+Puerto Rico,San Juan,PRI,2024,7,2024-07-01,493720,62.9,63.9,High,False,synthetic
+Puerto Rico,San Juan,PRI,2024,8,2024-08-01,442757,62.7,63.3,High,False,synthetic
+Puerto Rico,San Juan,PRI,2024,9,2024-09-01,442066,50.5,47.9,Shoulder,False,synthetic
+Puerto Rico,San Juan,PRI,2024,10,2024-10-01,319635,46.3,22.4,Shoulder,False,synthetic
+Puerto Rico,San Juan,PRI,2024,11,2024-11-01,276587,33.3,10.7,Low,False,synthetic
+Puerto Rico,San Juan,PRI,2024,12,2024-12-01,438015,71.0,68.2,High,False,synthetic
+Puerto Rico,San Juan,PRI,2025,1,2025-01-01,225668,26.5,0.0,Low,False,synthetic
+Puerto Rico,San Juan,PRI,2025,2,2025-02-01,228455,33.7,0.0,Low,False,synthetic
+Puerto Rico,San Juan,PRI,2025,3,2025-03-01,295018,36.7,7.1,Low,True,synthetic
+Puerto Rico,San Juan,PRI,2025,4,2025-04-01,356053,45.2,19.8,Shoulder,False,synthetic
+Puerto Rico,San Juan,PRI,2025,5,2025-05-01,388334,52.3,46.0,Shoulder,False,synthetic
+Puerto Rico,San Juan,PRI,2025,6,2025-06-01,468941,63.6,62.7,High,True,synthetic
