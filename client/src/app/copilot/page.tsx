@@ -36,6 +36,7 @@ export default function CopilotPage() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showCanvas, setShowCanvas] = useState(false);
   const [currentPrompt, setCurrentPrompt] = useState('');
+  const [initialPrompt, setInitialPrompt] = useState(''); // New state for the initial prompt from dataset explorer
   const [selectedFiles, setSelectedFiles] = useState<DatasetFile[]>([]);
   const [fileSummaries, setFileSummaries] = useState<FileSummary[]>([]);
   const [summaryLoading, setSummaryLoading] = useState(false);
@@ -144,12 +145,34 @@ export default function CopilotPage() {
     }
   }, [userSession, isStudyMode]);
 
-  // Handle analysis request from chat panel
-  const handleGenerateDashboard = async (prompt: string) => {
-    console.log('🚀 Starting dashboard generation for prompt:', prompt);
+  // Handle analysis request from dataset explorer - shows canvas with London dashboard only
+  const handleInitialDashboardRequest = async (prompt: string) => {
+    console.log('🚀 Starting initial dashboard request for prompt:', prompt);
     
-    setCurrentPrompt(prompt);
-    setIsAnalyzing(true);
+    setCurrentPrompt(''); // Clear any previous prompt to prevent dashboard generation
+    setInitialPrompt(prompt); // Store the initial prompt for the chat panel
+    setShowCanvas(true); // Show canvas with London dashboard only
+    
+    // Log the generate dashboard interaction
+    try {
+      console.log('📊 Logging initial dashboard request with:', {
+        prompt,
+        userContext: interactionLogger.userContext,
+        isStudyMode: interactionLogger.isStudyMode
+      });
+      
+      await interactionLogger.logDashboardGeneration(prompt);
+      console.log('✅ Initial dashboard request logged successfully');
+    } catch (error) {
+      console.error('❌ Failed to log initial dashboard request:', error);
+    }
+  };
+
+  // Handle dashboard generation from chat panel suggested prompts
+  const handleGenerateDashboard = async (prompt: string) => {
+    console.log('🚀 Generating additional dashboard for prompt:', prompt);
+    
+    setCurrentPrompt(prompt); // This will trigger dashboard generation in CopilotCanvas
     
     // Log the generate dashboard interaction
     try {
@@ -164,17 +187,6 @@ export default function CopilotPage() {
     } catch (error) {
       console.error('❌ Failed to log dashboard generation:', error);
     }
-    
-    // Simulate analysis time (3 seconds)
-    const analysisTime = 3000;
-    
-    const timeoutId = setTimeout(() => {
-      setIsAnalyzing(false);
-      setShowCanvas(true);
-      setAnalysisTimeoutId(null);
-    }, analysisTime);
-    
-    setAnalysisTimeoutId(timeoutId);
   };
 
   // Handle canceling the analysis
@@ -271,22 +283,29 @@ export default function CopilotPage() {
       <div className="flex h-screen" style={{ height: isStudyMode ? 'calc(100vh - 40px)' : '100vh' }}>
         {/* Left Section - Chat Panel (30%) */}
         <div className="w-[30%] border-r border-gray-200">
-          {showCanvas ? (
-            <CopilotChatPanel 
-              onGenerateDashboard={handleGenerateDashboard}
-              isGenerating={isAnalyzing}
-              selectedFiles={selectedFiles}
-              fileSummaries={fileSummaries}
-              summaryLoading={summaryLoading}
-              summaryError={summaryError}
-            />
-          ) : (
-            <DatasetExplorer 
-              onAnalysisRequest={handleGenerateDashboard}
-              onFileSelection={handleFileSelection}
-              isAnalyzing={summaryLoading}
-            />
-          )}
+          <div className="flex flex-col h-full">
+            {/* Always show dataset explorer at the top */}
+            {!showCanvas && (
+              <DatasetExplorer 
+                onAnalysisRequest={handleInitialDashboardRequest}
+                onFileSelection={handleFileSelection}
+                isAnalyzing={summaryLoading}
+              />
+            )}
+            
+            {/* Show chat panel when canvas is active */}
+            {showCanvas && (
+              <CopilotChatPanel 
+                onGenerateDashboard={handleGenerateDashboard}
+                isGenerating={isAnalyzing}
+                selectedFiles={selectedFiles}
+                fileSummaries={fileSummaries}
+                summaryLoading={summaryLoading}
+                summaryError={summaryError}
+                initialPrompt={initialPrompt}
+              />
+            )}
+          </div>
         </div>
 
         {/* Right Section - Canvas (70%) */}

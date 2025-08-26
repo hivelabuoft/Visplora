@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FiSend, FiUser, FiCpu, FiZap, FiX, FiFile, FiDatabase, FiBarChart } from 'react-icons/fi';
 import { FileSummary } from '../../utils/londonDataLoader';
+import { getAllQuestions } from './PremadeQuestions';
 
 interface Message {
   id: string;
@@ -19,6 +20,7 @@ interface CopilotChatPanelProps {
   fileSummaries?: FileSummary[];
   summaryLoading?: boolean;
   summaryError?: string;
+  initialPrompt?: string; // New prop for initial prompt from dataset explorer
 }
 
 const CopilotChatPanel: React.FC<CopilotChatPanelProps> = ({
@@ -28,7 +30,8 @@ const CopilotChatPanel: React.FC<CopilotChatPanelProps> = ({
   selectedFiles = [],
   fileSummaries = [],
   summaryLoading = false,
-  summaryError = ''
+  summaryError = '',
+  initialPrompt = ''
 }) => {
   const [userInput, setUserInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
@@ -40,16 +43,40 @@ const CopilotChatPanel: React.FC<CopilotChatPanelProps> = ({
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasProcessedInitialPrompt, setHasProcessedInitialPrompt] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // Suggested prompts for getting started
-  const suggestedPrompts = [
+  // Handle initial prompt from dataset explorer
+  useEffect(() => {
+    if (initialPrompt && !hasProcessedInitialPrompt) {
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        role: 'user',
+        content: initialPrompt,
+        timestamp: Date.now()
+      };
+
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant', 
+        content: 'I\'ve loaded the London dashboard for you! You can now explore various aspects of London data by selecting from the suggested prompts below, or ask me any specific questions.',
+        timestamp: Date.now()
+      };
+
+      setMessages(prev => [...prev, userMessage, assistantMessage]);
+      setHasProcessedInitialPrompt(true);
+    }
+  }, [initialPrompt, hasProcessedInitialPrompt]);
+
+  // Get premade questions for suggestions
+  const premadeQuestions = getAllQuestions();
+  
+  // Also include some custom prompts
+  const customPrompts = [
     "Create a London housing analysis dashboard",
     "Show population and demographics trends", 
-    "Generate crime statistics visualization",
-    "Analyze income patterns across boroughs",
-    "Build a comprehensive London overview"
+    "Generate crime statistics visualization"
   ];
 
   const scrollToBottom = () => {
@@ -114,13 +141,8 @@ const CopilotChatPanel: React.FC<CopilotChatPanelProps> = ({
 
     setMessages(prev => [...prev, userMessage]);
 
-    // Check if the user is asking to generate a dashboard
-    const dashboardKeywords = ['dashboard', 'generate', 'create', 'build', 'show', 'visualize', 'analyze'];
-    const shouldGenerateDashboard = dashboardKeywords.some(keyword => 
-      message.toLowerCase().includes(keyword)
-    );
-
-    if (shouldGenerateDashboard && onGenerateDashboard) {
+    // Always generate dashboard for any question (not requiring specific keywords)
+    if (onGenerateDashboard) {
       // Call the dashboard generation function
       onGenerateDashboard(message);
       
@@ -128,32 +150,18 @@ const CopilotChatPanel: React.FC<CopilotChatPanelProps> = ({
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: 'Perfect! I\'m generating a London dashboard based on your request. You\'ll see the interactive visualization appear on the canvas.',
+        content: 'I\'m analyzing your question and generating a relevant dashboard visualization. You\'ll see the interactive charts appear on the canvas.',
         timestamp: Date.now()
       };
       
       setMessages(prev => [...prev, assistantMessage]);
     } else {
-      // Simulate AI response for other queries
+      // Fallback response
       setTimeout(() => {
-        let responseContent = '';
-        
-        if (selectedFiles.length > 0) {
-          responseContent = `I can help you explore the ${selectedFiles.length} dataset(s) you've selected. `;
-          
-          if (message.toLowerCase().includes('question') || message.toLowerCase().includes('what')) {
-            responseContent += `Based on your data, you could ask about population trends, crime statistics, housing prices, or demographic patterns. Would you like me to generate a dashboard to visualize these insights?`;
-          } else {
-            responseContent += `Your question "${message}" is interesting. Would you like me to create a dashboard visualization to explore this further?`;
-          }
-        } else {
-          responseContent = `I understand you're asking about "${message}". To provide the best analysis, please select some datasets first, then I can generate a comprehensive dashboard for you.`;
-        }
-
         const assistantMessage: Message = {
           id: (Date.now() + 1).toString(),
           role: 'assistant',
-          content: responseContent,
+          content: `That's an interesting question about "${message}". I can analyze London data to provide insights on topics like demographics, crime, housing, education, and geography.`,
           timestamp: Date.now()
         };
         
@@ -162,9 +170,7 @@ const CopilotChatPanel: React.FC<CopilotChatPanelProps> = ({
       }, 1000);
     }
 
-    if (!shouldGenerateDashboard) {
-      setIsLoading(false);
-    }
+    setIsLoading(false);
   };
 
   const handlePromptClick = (prompt: string) => {
@@ -311,27 +317,26 @@ const CopilotChatPanel: React.FC<CopilotChatPanelProps> = ({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Suggested Prompts (show when there are few messages) */}
-      {messages.length <= 3 && selectedFiles.length > 0 && (
-        <div className="px-4 pb-2">
-          <p className="text-xs text-gray-500 mb-2 flex items-center">
-            <FiBarChart className="mr-1" size={12} />
-            Try asking:
-          </p>
-          <div className="space-y-1">
-            {suggestedPrompts.slice(0, 3).map((prompt, index) => (
-              <button
-                key={index}
-                onClick={() => handlePromptClick(prompt)}
-                className="w-full text-left text-xs p-2 bg-gray-50 hover:bg-gray-100 rounded-md text-gray-700 transition-colors flex items-center justify-between group"
-              >
-                <span>{prompt}</span>
-                <FiZap className="text-gray-400 group-hover:text-blue-500" size={12} />
-              </button>
-            ))}
-          </div>
+      {/* Suggested Prompts - Always show premade questions */}
+      <div className="px-4 pb-2 max-h-80 overflow-y-auto">
+        <p className="text-xs text-gray-500 mb-2 flex items-center">
+          <FiBarChart className="mr-1" size={12} />
+          Suggested Questions:
+        </p>
+        <div className="space-y-1">
+          {/* Show premade questions */}
+          {premadeQuestions.map((question, index) => (
+            <button
+              key={`premade-${index}`}
+              onClick={() => handlePromptClick(question)}
+              className="w-full text-left text-xs p-2 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-md text-blue-800 transition-colors flex items-center justify-between group"
+            >
+              <span className="truncate pr-2">{question}</span>
+              <FiZap className="text-blue-400 group-hover:text-blue-600" size={12} />
+            </button>
+          ))}
         </div>
-      )}
+      </div>
 
       {/* Input Area */}
       <div className="p-4 border-t border-gray-200 bg-gray-50">

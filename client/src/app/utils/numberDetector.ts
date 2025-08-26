@@ -62,7 +62,7 @@ export function detectNumbers(text: string): NumberDetectionResult {
     }
     
     let value: number;
-    let text = match[0];
+    const text = match[0];
     
     if (rawValue !== undefined) {
       value = rawValue;
