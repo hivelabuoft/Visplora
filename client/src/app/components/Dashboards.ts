@@ -1,4 +1,5 @@
 import { CHARTS, ChartSpec } from './Charts';
+import { DASHBOARD1_CHARTS } from './copilotDashboardCharts/dashboard1charts';
 import { CRIME_SAFETY_DASHBOARDS } from './copilotDashboards/CrimeSafetyDashboards';
 import { DEMOGRAPHICS_DASHBOARDS } from './copilotDashboards/DemographicsDashboards';
 import { HOUSING_ECONOMY_DASHBOARDS } from './copilotDashboards/HousingEconomyDashboards';
@@ -43,7 +44,9 @@ export const getDashboardWithCharts = (dashboardId: string): DashboardWithCharts
   const dashboard = getDashboardById(dashboardId);
   if (!dashboard) return undefined;
 
-  const charts = dashboard.chartIds.map(chartId => CHARTS[chartId]).filter(Boolean);
+  // Combine charts from both sources
+  const allCharts = { ...CHARTS, ...DASHBOARD1_CHARTS };
+  const charts = dashboard.chartIds.map(chartId => allCharts[chartId]).filter(Boolean);
   
   return {
     id: dashboard.id,

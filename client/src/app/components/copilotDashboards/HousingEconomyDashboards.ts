@@ -51,5 +51,26 @@ export const HOUSING_ECONOMY_DASHBOARDS: Dashboard[] = [
       "Different areas experience different market dynamics",
       "External factors significantly influence price movements"
     ]
+  },
+  {
+    id: "covid_housing_affordability",
+    title: "Which London boroughs have become less affordable since COVID due to stagnant wages and rising rents, and where do incomes still keep up with housing costs?",
+    category: "COVID & Housing",
+    chartIds: [
+      "covid_affordability_heatmap",
+      "income_vs_rent_scatter", 
+      "affordability_timeline",
+      "borough_affordability_map",
+      "affordability_ranking",
+      "housing_stress_demographics"
+    ],
+    insights: [
+      "COVID-19 has significantly impacted housing affordability across London boroughs",
+      "Some boroughs experienced 30%+ price increases while wages remained stagnant",
+      "Central London areas show the most severe affordability deterioration",
+      "Outer London boroughs like Croydon and Barking show better affordability retention",
+      "Income inequality has widened, with high-income areas becoming even less accessible",
+      "Geographic patterns reveal stark north-south and inner-outer affordability divides"
+    ]
   }
 ];

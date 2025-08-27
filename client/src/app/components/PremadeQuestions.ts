@@ -79,6 +79,12 @@ export const QUESTIONS: Question[] = [
     dashboardId: "property_market_trends",
     category: "Housing & Economy"
   },
+  {
+    id: "covid_housing_affordability_question",
+    text: "Which London boroughs have become less affordable since COVID due to stagnant wages and rising rents, and where do incomes still keep up with housing costs?",
+    dashboardId: "covid_housing_affordability",
+    category: "COVID & Housing"
+  },
 
   // Education
   {

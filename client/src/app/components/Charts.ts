@@ -60,6 +60,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "Crime Categories Distribution",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/crime-rates/london_crime_data_2022_2023.csv"
       },
@@ -95,6 +98,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "Crime Trends Over Time (2022-2023)",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/crime-rates/london_crime_data_2022_2023.csv"
       },
@@ -147,6 +153,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "Borough Safety Overview (Lower is Safer)",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/crime-rates/london_crime_data_2022_2023.csv"
       },
@@ -198,6 +207,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "Top 10 Most Populated Boroughs (2021)",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/population/population 1801 to 2021.csv"
       },
@@ -238,6 +250,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "London Population Growth (1801-2021)",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/population/population 1801 to 2021.csv"
       },
@@ -285,6 +300,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "London Ethnicity Distribution",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/ethnicity/Ethnic group.csv"
       },
@@ -321,6 +339,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "Country of Birth Distribution by Borough",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/country-of-births/cob-borough.csv"
       },
@@ -357,6 +378,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "Top 10 Most Expensive Boroughs (Latest Prices)",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/house-prices/land-registry-house-prices-borough.csv"
       },
@@ -404,6 +428,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "House Price Trends Over Time",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/house-prices/land-registry-house-prices-borough.csv"
       },
@@ -436,6 +463,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "Income Distribution by Borough (2022-23)",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/income/income-of-tax-payers.csv"
       },
@@ -478,6 +508,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "School Performance by Ofsted Rating",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/schools-colleges/2022-2023_england_school_information.csv"
       },
@@ -518,6 +551,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "Number of Schools by Borough",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/schools-colleges/2022-2023_england_school_information.csv"
       },
@@ -547,6 +583,9 @@ export const CHARTS: { [key: string]: ChartSpec } = {
       title: "Library Usage Trends (2017-2023)",
       width: 240,
       height: 180,
+      config: {
+        view: { renderer: 'svg' }
+      },
       data: {
         url: "/dataset/london/libraries/libraries-by-areas-chart.csv"
       },
