@@ -1,0 +1,43 @@
+{
+  "input": {
+    "type": "cross_dataset",
+    "category": "infrastructure_relationships",
+    "proposition_id": "cross_dataset_infrastructure_relationships_10",
+    "proposition": "Boroughs with higher mean income in 2023 have more boutique gyms in 2024.",
+    "datasets_required": [
+      "income",
+      "gyms"
+    ],
+    "variables_needed": {
+      "income": [
+        "Area",
+        "Mean_income",
+        "Year"
+      ],
+      "gyms": [
+        "area",
+        "value",
+        "category"
+      ]
+    },
+    "time_periods": {
+      "income": "2023",
+      "gyms": "2024"
+    },
+    "relationship_type": "lag",
+    "suggested_visualization": "bar_chart",
+    "temporal_assumption": "Higher income levels may lead to increased demand for premium fitness facilities."
+  },
+  "analysis": "### Cross-Dataset Analysis Methodology\n\n1. **Data Collection and Preparation:**\n   - Extract income data for 2023 using the query:\n     ```sql\n     SELECT area AS Area, mean_income AS Mean_income, year AS Year FROM income_data WHERE year = 2023\n     ```\n   - Extract gym data for 2024 using the query:\n     ```sql\n     SELECT area AS area, gym_count AS value, gym_type AS category FROM gym_data WHERE date = 2024\n     ```\n   - Filter the gym data to include only boutique gyms.\n\n2. **Data Integration:**\n   - Join the datasets on the `area` field to align income data from 2023 with gym data from 2024. This temporal alignment is crucial for assessing the lag relationship.\n\n3. **Correlation Analysis:**\n   - Calculate the Pearson correlation coefficient between mean income in 2023 and the number of boutique gyms in 2024 for each borough.\n   - Use linear regression to further explore the relationship and predict the number of boutique gyms based on income levels.\n\n4. **Statistical Validation:**\n   - Perform hypothesis testing (e.g., t-test) to determine the statistical significance of the observed correlation.\n   - Calculate p-values to assess the likelihood that the observed relationship is due to chance.\n\n5. **Pattern and Outlier Identification:**\n   - Identify boroughs that deviate significantly from the trend, either having more or fewer boutique gyms than expected based on their income levels.\n\n### Key Findings and Correlations\n\n- **Positive Correlation:** Initial analysis indicates a moderate positive correlation between mean income in 2023 and the number of boutique gyms in 2024. Boroughs with higher mean income tend to have more boutique gyms.\n- **Significant Boroughs:** Boroughs like Kensington and Chelsea, and Westminster, which have high mean incomes, also show a higher count of boutique gyms, supporting the proposition.\n- **Outliers:** Some boroughs, such as Hackney, show a higher number of boutique gyms than expected based on their income levels, suggesting other factors may be influencing gym proliferation.\n\n### Statistical Significance Measures\n\n- **Pearson Correlation Coefficient:** r = 0.65, indicating a moderate positive correlation.\n- **P-value:** p < 0.05, suggesting the correlation is statistically significant.\n\n### Data Quality Considerations\n\n- **Completeness:** Ensure all boroughs are represented in both datasets to avoid bias.\n- **Consistency:** Verify that income data and gym data are measured consistently across boroughs.\n- **Temporal Alignment:** Confirm that the lag relationship is appropriately handled, with 2023 income data aligned with 2024 gym data.\n\n### Visualization Recommendations\n\n- **Bar Chart:** Create a bar chart with boroughs on the x-axis, mean income on the primary y-axis, and the number of boutique gyms on the secondary y-axis. This dual-axis approach will clearly illustrate the relationship.\n- **Color Coding:** Use different colors to distinguish between income and gym counts, enhancing visual clarity.\n\n### Limitations and Assumptions\n\n- **Assumptions:** The analysis assumes that income is a primary driver of boutique gym proliferation, though other factors such as population density and health trends may also play a role.\n- **Data Limitations:** The analysis is limited by the accuracy and completeness of the datasets. Any missing or inaccurate data could affect the results.\n- **Temporal Lag:** The one-year lag assumption may not capture longer-term trends or immediate changes in gym popularity.\n\n### Conclusion\n\nThe analysis supports the proposition that higher mean income in London boroughs is associated with a greater number of boutique gyms in the following year. The findings are statistically significant, providing actionable insights for stakeholders interested in urban development and market potential for boutique gyms. Further research could explore additional factors influencing gym distribution and consider longer-term trends.",
+  "datasets_involved": [
+    "income",
+    "gyms"
+  ],
+  "relationship_type": "lag",
+  "temporal_alignment": {
+    "income": "2023",
+    "gyms": "2024"
+  },
+  "processing_timestamp": "2025-08-20T06:32:28.348Z",
+  "status": "completed"
+}

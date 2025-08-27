@@ -1,0 +1,109 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "gyms",
+  "processed_at": "2025-08-20T04:09:57.139Z",
+  "total_propositions": 4,
+  "propositions": [
+    {
+      "proposition_id": "gyms_cross_dimensional_cross_01",
+      "dataset": "gyms",
+      "category": "cross_dimensional",
+      "original_proposition": "From 2023 to 2024, premium gym memberships increased by 20% in Central London boroughs, while budget gym memberships remained stable.",
+      "reworded_proposition": "In Central London boroughs, premium gym memberships have shown a noticeable increase, while budget memberships have remained unchanged over the past year.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Trends in Gym Memberships in Central London",
+      "chart_description": "Explore changes in premium and budget gym memberships from 2023 to 2024.",
+      "reasoning": "The lineChart_simple_3D is ideal for illustrating the trend over time and comparing changes across different membership types and boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest increase in premium gym memberships?",
+        "How do premium and budget gym memberships compare in 2024?",
+        "What is the trend in gym memberships from 2023 to 2024?"
+      ],
+      "3d_dimension": "category",
+      "variables_needed": [
+        "category",
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2023-2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "gyms_cross_dimensional_cross_02",
+      "dataset": "gyms",
+      "category": "cross_dimensional",
+      "original_proposition": "In 2024, the introduction of new gym categories in East London boroughs led to a 15% increase in overall gym memberships.",
+      "reworded_proposition": "In 2024, the introduction of new gym categories in East London boroughs sparked a noticeable rise in gym memberships.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Impact of New Gym Categories on Memberships in 2024",
+      "chart_description": "Comparison of gym membership growth across East London boroughs in 2024.",
+      "reasoning": "A bar chart effectively displays the comparison of gym membership growth across different boroughs, highlighting the impact of new categories.",
+      "tapas_questions": [
+        "Which borough had the highest increase in gym memberships?",
+        "What percentage of total gym memberships is in each borough?",
+        "How does gym membership growth in East London compare to other areas?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "gyms_cross_dimensional_cross_03",
+      "dataset": "gyms",
+      "category": "cross_dimensional",
+      "original_proposition": "Seasonal analysis shows that gym attendance peaks in January and February across all categories in 2024, with a 25% higher attendance than the yearly average.",
+      "reworded_proposition": "Gym attendance consistently reaches its highest levels in January and February, surpassing the yearly average across all categories in 2024.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Peak Gym Attendance in Early 2024",
+      "chart_description": "January and February show highest gym attendance in 2024.",
+      "reasoning": "A line chart effectively illustrates the trend of gym attendance over time, highlighting the peak months.",
+      "tapas_questions": [
+        "Which month has the highest gym attendance?",
+        "How does January compare to the yearly average in terms of attendance?",
+        "What percentage of the yearly gym attendance occurs in February?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "date",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "gyms_cross_dimensional_cross_04",
+      "dataset": "gyms",
+      "category": "cross_dimensional",
+      "original_proposition": "In 2024, the growth of boutique gyms in Inner London correlates with a 10% increase in average income levels in those areas.",
+      "reworded_proposition": "In 2024, the expansion of boutique gyms in Inner London seems to align with rising average income levels in those areas.",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Boutique Gym Growth vs. Income Levels in Inner London",
+      "chart_description": "Exploring the relationship between gym growth and income in 2024.",
+      "reasoning": "A scatter plot is ideal for visualizing the relationship between two continuous variables, such as gym growth and income levels.",
+      "tapas_questions": [
+        "Is there a correlation between gym growth and income levels?",
+        "Which boroughs show the strongest relationship between gym growth and income?",
+        "How do income levels compare across boroughs with high gym growth?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

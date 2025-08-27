@@ -1,0 +1,1206 @@
+{
+  "chart_type": "comboBarLine",
+  "total_generated": 50,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_001",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Westminster experiences a surge in crime during the summer months with stable crime rates per capita throughout the year",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Seasonal Crime Volume vs Rate in Westminster",
+      "chart_description": "Bar chart shows monthly crime counts, line chart shows monthly crime rate per 1000 residents",
+      "reasoning": "This combination separates seasonal volume changes from population-adjusted rates, highlighting Westminster's unique seasonal crime trends",
+      "tapas_questions": [
+        "What is the trend in crime volume across different months?",
+        "Does the crime rate per capita change with the volume?",
+        "Which season shows the highest discrepancy between volume and rate?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "count",
+        "borough_name",
+        "month"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_002",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Newham and Tower Hamlets have the highest concentration of Asian populations",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Asian Population Distribution in Newham and Tower Hamlets",
+      "chart_description": "Bar chart shows number of Asian residents, line chart shows percentage of total population",
+      "reasoning": "This chart type effectively highlights both the absolute number and the relative percentage of Asian populations",
+      "tapas_questions": [
+        "Which borough has the largest Asian population?",
+        "How does the percentage compare to other ethnic groups?",
+        "What is the trend in Asian population growth?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local authority name",
+        "All usual residents",
+        "Broad_group"
+      ],
+      "time_period": "2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_comboBarLine_003",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Immigrant population from Europe peaked in London boroughs in 2022",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "European Immigrant Population Trends in London",
+      "chart_description": "Bar chart shows number of European-born residents, line chart shows percentage of total immigrant population",
+      "reasoning": "The chart provides a clear comparison of absolute numbers and relative percentages of European immigrants",
+      "tapas_questions": [
+        "Which boroughs have the highest European immigrant population?",
+        "How does the percentage of European immigrants compare to other groups?",
+        "What is the trend over recent years?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_chart_analysis_comboBarLine_004",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Population density in central London boroughs surpasses outer boroughs significantly",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Central vs Outer London Population Density",
+      "chart_description": "Bar chart shows population count, line chart shows population density per square kilometer",
+      "reasoning": "This chart highlights the stark contrast between central and outer boroughs in both population numbers and density",
+      "tapas_questions": [
+        "Which boroughs have the highest population density?",
+        "How does the population count correlate with density?",
+        "What are the implications for urban planning?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "population",
+        "density"
+      ],
+      "time_period": "2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_chart_analysis_comboBarLine_005",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income levels in Kensington and Chelsea are the highest among London boroughs",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Income Levels in Kensington and Chelsea",
+      "chart_description": "Bar chart shows average income, line chart shows income growth rate",
+      "reasoning": "This chart type effectively contrasts absolute income levels with growth trends",
+      "tapas_questions": [
+        "How does Kensington and Chelsea's income compare to other boroughs?",
+        "What is the trend in income growth over time?",
+        "What factors might contribute to the high income levels?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "average_income",
+        "growth_rate"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_comboBarLine_006",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House prices in Westminster have consistently surpassed the London average",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Westminster House Prices vs London Average",
+      "chart_description": "Bar chart shows average house prices, line chart shows percentage difference from London average",
+      "reasoning": "This chart highlights both the absolute price levels and their relative position to the London average",
+      "tapas_questions": [
+        "What is the trend in house prices in Westminster?",
+        "How do Westminster's prices compare to the London average?",
+        "What are the implications for potential homebuyers?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_comboBarLine_007",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "London boroughs show varied school performance with independent schools outperforming state schools",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "School Performance by Type in London",
+      "chart_description": "Bar chart shows average performance scores, line chart shows percentage of schools achieving above-average results",
+      "reasoning": "The chart effectively contrasts performance scores with the percentage of high-performing schools",
+      "tapas_questions": [
+        "Which type of school has the highest performance scores?",
+        "How does the percentage of high-performing schools vary by type?",
+        "What factors might contribute to these differences?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LANAME",
+        "SCHNAME",
+        "performance_score"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_comboBarLine_008",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Vehicle ownership surged in outer London boroughs after 2020",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Growth in Vehicle Ownership in Outer London",
+      "chart_description": "Bar chart shows number of registered vehicles, line chart shows growth rate post-2020",
+      "reasoning": "The chart highlights both the absolute increase in vehicle numbers and the growth rate trend",
+      "tapas_questions": [
+        "Which outer boroughs experienced the largest increase in vehicle ownership?",
+        "How does the growth rate compare to the inner boroughs?",
+        "What are the potential implications for traffic and infrastructure?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Local Authority",
+        "Cars",
+        "growth_rate"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_comboBarLine_009",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Central London sees highest growth in licensed restaurant units since 2019",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Growth of Licensed Restaurants in Central London",
+      "chart_description": "Bar chart shows number of licensed restaurant units, line chart shows growth rate since 2019",
+      "reasoning": "The chart highlights both the absolute number of units and the growth trend, providing a comprehensive view of the restaurant landscape",
+      "tapas_questions": [
+        "Which central boroughs have the most licensed restaurant units?",
+        "How has the growth rate changed since 2019?",
+        "What might be driving this growth in central London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area name",
+        "licensed_units",
+        "growth_rate"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_comboBarLine_010",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Private rents in London have seen a steady increase, with central boroughs showing the highest median rents",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Private Rent Trends in Central London",
+      "chart_description": "Bar chart shows average rent prices, line chart shows median rent trends",
+      "reasoning": "This chart effectively compares average rents with median trends, highlighting central boroughs' rental market dynamics",
+      "tapas_questions": [
+        "Which central boroughs have the highest median rents?",
+        "How do average rent prices compare to the median?",
+        "What might be influencing these rent trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Average (£)",
+        "Median (£)"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_comboBarLine_011",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Fitness facilities in London boroughs have expanded, with significant growth in budget gyms",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Growth of Budget Gyms in London",
+      "chart_description": "Bar chart shows number of gym facilities, line chart shows growth rate of budget gyms",
+      "reasoning": "The chart highlights the expansion in the number of facilities and the rapid growth of budget gym options",
+      "tapas_questions": [
+        "Which London boroughs have the most gym facilities?",
+        "How has the growth rate of budget gyms changed over time?",
+        "What factors might be contributing to this trend?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "gym_type",
+        "facility_count"
+      ],
+      "time_period": "2020-2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_comboBarLine_012",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Library visits per capita are highest in Camden, reflecting strong community engagement",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Library Visits per Capita in Camden",
+      "chart_description": "Bar chart shows total library visits, line chart shows visits per 1000 residents",
+      "reasoning": "This chart highlights both the total number of visits and their per capita distribution, emphasizing community engagement",
+      "tapas_questions": [
+        "How does Camden compare to other boroughs in library visits?",
+        "What is the trend in library visits per capita over time?",
+        "What might contribute to Camden's high engagement levels?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "Library visits per 1,000 population"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_013",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Violent crime rates peaked in summer months across London boroughs",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Seasonal Trends in Violent Crime Rates",
+      "chart_description": "Bar chart shows monthly crime counts, line chart shows crime rate per 1000 residents with month as 3D dimension",
+      "reasoning": "The 3D chart provides depth by showing monthly trends, crucial for understanding seasonal crime dynamics",
+      "tapas_questions": [
+        "Which months have the highest violent crime rates?",
+        "How do crime counts change seasonally?",
+        "What patterns emerge from the 3D analysis?"
+      ],
+      "3d_dimension": "month",
+      "variables_needed": [
+        "crime_category",
+        "count",
+        "borough_name",
+        "month"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_014",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Diversity in London boroughs is highest in Hackney and Haringey",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Diversity Levels in Hackney and Haringey",
+      "chart_description": "Bar chart shows number of ethnic groups, line chart shows diversity index with mean overlay",
+      "reasoning": "The mean overlay helps compare borough diversity against the average, emphasizing Hackney and Haringey's diversity",
+      "tapas_questions": [
+        "Which boroughs have the most diverse populations?",
+        "How does the diversity index compare to the mean?",
+        "What factors influence these diversity levels?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local authority name",
+        "Broad_group"
+      ],
+      "time_period": "2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_comboBarLine_015",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "South Asian communities dominate in certain London boroughs since 2020",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Dominance of South Asian Communities in London",
+      "chart_description": "Bar chart shows number of South Asian-born residents, line chart shows percentage of total population with threshold",
+      "reasoning": "The threshold line highlights boroughs where South Asian communities surpass a significant population percentage",
+      "tapas_questions": [
+        "Which boroughs have the largest South Asian communities?",
+        "How does the population percentage compare to the threshold?",
+        "What might be driving these demographic trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_chart_analysis_comboBarLine_016",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Population growth in London boroughs concentrated in outer regions from 2015 to 2021",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Outer London Population Growth",
+      "chart_description": "Bar chart shows population count, line chart shows growth rate with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for growth rates, highlighting outer boroughs' rapid expansion",
+      "tapas_questions": [
+        "Which outer boroughs show the most significant population growth?",
+        "How does growth compare to the mean?",
+        "What are the implications for urban development?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "population",
+        "growth_rate"
+      ],
+      "time_period": "2015-2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_chart_analysis_comboBarLine_017",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income disparity widens in London boroughs with significant differences in growth rates",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Income Disparity and Growth in London",
+      "chart_description": "Bar chart shows average income, line chart shows growth rate with threshold",
+      "reasoning": "The threshold line highlights boroughs with significant income growth disparities, providing insight into economic inequality",
+      "tapas_questions": [
+        "Which boroughs have the highest income disparity?",
+        "How does growth rate compare to the threshold?",
+        "What might be contributing to these disparities?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "average_income",
+        "growth_rate"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_comboBarLine_018",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "North London house prices have consistently outpaced the city's average since 2018",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "North London House Prices vs City Average",
+      "chart_description": "Bar chart shows average house prices, line chart shows percentage difference with mean overlay",
+      "reasoning": "The mean overlay helps compare North London's prices against the city average, highlighting regional price dynamics",
+      "tapas_questions": [
+        "Which North London boroughs have the highest house prices?",
+        "How do prices compare to the city average?",
+        "What might be driving these pricing trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_comboBarLine_019",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "The gap between independent and state school performance widens in London",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Performance Gap in London Schools",
+      "chart_description": "Bar chart shows average performance scores, line chart shows percentage difference with threshold",
+      "reasoning": "The threshold line highlights significant performance gaps, providing insight into educational inequality",
+      "tapas_questions": [
+        "Which schools show the largest performance gaps?",
+        "How does performance compare to the threshold?",
+        "What factors might contribute to these gaps?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LANAME",
+        "SCHNAME",
+        "performance_score"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_comboBarLine_020",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Electric vehicle registrations in London boroughs have surged since 2021",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Electric Vehicle Registration Trends in London",
+      "chart_description": "Bar chart shows number of registered electric vehicles, line chart shows growth rate with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for growth rates, highlighting the rapid adoption of electric vehicles",
+      "tapas_questions": [
+        "Which boroughs have the highest number of electric vehicle registrations?",
+        "How does growth compare to the mean?",
+        "What factors might be driving the adoption of electric vehicles?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Local Authority",
+        "Electric Vehicles",
+        "growth_rate"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_comboBarLine_021",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Unlicensed restaurant units in London have grown significantly post-2020",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Growth of Unlicensed Restaurants in London",
+      "chart_description": "Bar chart shows number of unlicensed restaurant units, line chart shows growth rate with year as 3D dimension",
+      "reasoning": "The 3D chart adds depth by showing yearly growth trends, crucial for understanding the expansion of unlicensed units",
+      "tapas_questions": [
+        "Which boroughs have the most unlicensed restaurant units?",
+        "How has the growth rate changed over the years?",
+        "What might be contributing to this growth trend?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Area name",
+        "unlicensed_units",
+        "year"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_comboBarLine_022",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Rent increases in London have been most pronounced in eastern boroughs",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Rent Increase Trends in Eastern London",
+      "chart_description": "Bar chart shows average rent prices, line chart shows increase rate with threshold",
+      "reasoning": "The threshold line highlights boroughs with significant rent increases, providing insight into regional housing market pressures",
+      "tapas_questions": [
+        "Which eastern boroughs have the highest rent increases?",
+        "How does the increase rate compare to the threshold?",
+        "What might be driving these rent trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Average (£)",
+        "Increase Rate"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_comboBarLine_023",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "High-end gym facilities in central London have increased significantly in the past two years",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Increase in High-End Gym Facilities in Central London",
+      "chart_description": "Bar chart shows number of high-end gym facilities, line chart shows growth rate with borough as 3D dimension",
+      "reasoning": "The 3D chart provides depth by showing borough-specific growth trends, important for understanding market dynamics",
+      "tapas_questions": [
+        "Which central boroughs have the most high-end gym facilities?",
+        "How has the growth rate varied across boroughs?",
+        "What factors might be influencing this growth?"
+      ],
+      "3d_dimension": "borough_name",
+      "variables_needed": [
+        "borough_name",
+        "gym_type",
+        "facility_count"
+      ],
+      "time_period": "2022-2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_comboBarLine_024",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Digital library visits have surpassed physical visits in London",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Digital vs Physical Library Visits in London",
+      "chart_description": "Bar chart shows number of digital visits, line chart shows physical visits with library type as 3D dimension",
+      "reasoning": "The 3D chart provides depth by comparing different library visit types, crucial for understanding shifts in usage patterns",
+      "tapas_questions": [
+        "Which libraries have the highest digital visit rates?",
+        "How do digital visits compare to physical visits?",
+        "What might be driving the shift towards digital?"
+      ],
+      "3d_dimension": "library_type",
+      "variables_needed": [
+        "area",
+        "digital_visits",
+        "physical_visits"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_025",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Theft remains the most common crime category in London boroughs",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Theft Incidents in London Boroughs",
+      "chart_description": "Bar chart shows theft incidents, line chart shows percentage of total crimes with mean overlay",
+      "reasoning": "The mean overlay highlights the prevalence of theft compared to other crime categories",
+      "tapas_questions": [
+        "Which boroughs have the highest theft incidents?",
+        "How does theft compare to other crime categories?",
+        "What might be contributing to high theft rates?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category_name",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_026",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "White British population shows a decline in London boroughs over the last decade",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Decline of White British Population in London",
+      "chart_description": "Bar chart shows population count, line chart shows decline rate with threshold",
+      "reasoning": "The threshold line highlights significant declines, providing insight into demographic shifts",
+      "tapas_questions": [
+        "Which boroughs have seen the largest decline in White British population?",
+        "How does the decline rate compare to the threshold?",
+        "What factors might be contributing to these demographic changes?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "decline_rate"
+      ],
+      "time_period": "2011-2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_comboBarLine_027",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "The African-born population in London has increased steadily since 2015",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Growth of African-Born Population in London",
+      "chart_description": "Bar chart shows number of African-born residents, line chart shows growth rate with year as 3D dimension",
+      "reasoning": "The 3D chart adds depth by showing yearly growth trends, important for understanding demographic changes",
+      "tapas_questions": [
+        "Which boroughs have the largest African-born populations?",
+        "How has the growth rate changed year over year?",
+        "What factors might be influencing this growth?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_chart_analysis_comboBarLine_028",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Inner London boroughs show a significant population decline post-Brexit",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Post-Brexit Population Decline in Inner London",
+      "chart_description": "Bar chart shows population count, line chart shows decline rate with threshold",
+      "reasoning": "The threshold line highlights significant declines, providing insight into post-Brexit demographic shifts",
+      "tapas_questions": [
+        "Which inner boroughs have experienced the largest population declines?",
+        "How does the decline rate compare to the threshold?",
+        "What might be influencing these demographic trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "population",
+        "decline_rate"
+      ],
+      "time_period": "2016-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_chart_analysis_comboBarLine_029",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income growth in London is highest in tech-driven boroughs",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Income Growth in Tech-Driven London Boroughs",
+      "chart_description": "Bar chart shows average income, line chart shows growth rate with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for growth rates, highlighting tech-driven economic impacts",
+      "tapas_questions": [
+        "Which boroughs have the highest income growth?",
+        "How does growth compare to the mean?",
+        "What role does the tech industry play in these trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "average_income",
+        "growth_rate"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_comboBarLine_030",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "South London boroughs have seen the fastest house price growth since 2020",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "House Price Growth in South London",
+      "chart_description": "Bar chart shows average house prices, line chart shows growth rate with threshold",
+      "reasoning": "The threshold line highlights significant price growth, providing insight into regional housing market dynamics",
+      "tapas_questions": [
+        "Which South London boroughs have the highest house price growth?",
+        "How does growth rate compare to the threshold?",
+        "What factors might be influencing these price trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_comboBarLine_031",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "STEM-focused schools in London show higher performance scores",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Performance of STEM-Focused Schools in London",
+      "chart_description": "Bar chart shows average performance scores, line chart shows percentage of STEM subjects with school type as 3D dimension",
+      "reasoning": "The 3D chart adds depth by comparing different school types, crucial for understanding educational outcomes",
+      "tapas_questions": [
+        "Which schools have the highest performance scores in STEM?",
+        "How does performance vary across different school types?",
+        "What factors contribute to the success of STEM-focused schools?"
+      ],
+      "3d_dimension": "school_type",
+      "variables_needed": [
+        "LANAME",
+        "SCHNAME",
+        "performance_score"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_comboBarLine_032",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Public transport reliance reduces vehicle ownership in central London",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Vehicle Ownership vs Public Transport in Central London",
+      "chart_description": "Bar chart shows number of registered vehicles, line chart shows percentage reliance on public transport with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for public transport reliance, highlighting its impact on vehicle ownership",
+      "tapas_questions": [
+        "Which central boroughs have the lowest vehicle ownership?",
+        "How does public transport reliance compare to the mean?",
+        "What factors contribute to these trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Local Authority",
+        "Cars",
+        "public_transport_reliance"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_comboBarLine_033",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Vegan restaurant units in London have seen rapid growth post-2021",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Growth of Vegan Restaurants in London",
+      "chart_description": "Bar chart shows number of vegan restaurant units, line chart shows growth rate with threshold",
+      "reasoning": "The threshold line highlights significant growth, providing insight into changing dietary preferences",
+      "tapas_questions": [
+        "Which boroughs have the most vegan restaurant units?",
+        "How does growth rate compare to the threshold?",
+        "What factors might be driving this dietary shift?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area name",
+        "vegan_units",
+        "growth_rate"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_comboBarLine_034",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Luxury apartment rents in central London have surged since 2020",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Luxury Apartment Rent Trends in Central London",
+      "chart_description": "Bar chart shows average luxury apartment rents, line chart shows growth rate with year as 3D dimension",
+      "reasoning": "The 3D chart adds depth by showing yearly growth trends, important for understanding luxury market dynamics",
+      "tapas_questions": [
+        "Which central boroughs have the highest luxury rents?",
+        "How has the growth rate changed year over year?",
+        "What factors might be influencing these rent trends?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Area",
+        "Average (£)",
+        "luxury_growth_rate"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_comboBarLine_035",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Community gym participation in East London surpasses other regions",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Community Gym Participation in East London",
+      "chart_description": "Bar chart shows number of gym members, line chart shows participation rate with threshold",
+      "reasoning": "The threshold line highlights significant participation, providing insight into community engagement",
+      "tapas_questions": [
+        "Which East London boroughs have the highest gym participation?",
+        "How does participation rate compare to the threshold?",
+        "What factors might be contributing to high engagement?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "community_gym_members",
+        "participation_rate"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_comboBarLine_036",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Library digital services usage has increased significantly in suburban boroughs",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Increase in Digital Library Services in Suburban London",
+      "chart_description": "Bar chart shows digital service usage, line chart shows growth rate with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for growth rates, highlighting the rise in digital service usage",
+      "tapas_questions": [
+        "Which suburban boroughs have the highest digital service usage?",
+        "How does growth compare to the mean?",
+        "What factors might be influencing the shift towards digital?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "digital_service_usage",
+        "growth_rate"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_037",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "London boroughs show a decline in burglary incidents post-2020",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Decline in Burglary Incidents in London",
+      "chart_description": "Bar chart shows burglary incidents, line chart shows decline rate with threshold",
+      "reasoning": "The threshold line highlights significant declines, providing insight into changing crime dynamics",
+      "tapas_questions": [
+        "Which boroughs have seen the largest decline in burglary incidents?",
+        "How does the decline rate compare to the threshold?",
+        "What factors might be contributing to these changes?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category_name",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_038",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Mixed ethnicity populations are growing rapidly in London boroughs",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Growth of Mixed Ethnicity Populations in London",
+      "chart_description": "Bar chart shows number of mixed ethnicity residents, line chart shows growth rate with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for growth rates, highlighting demographic shifts",
+      "tapas_questions": [
+        "Which boroughs have the largest mixed ethnicity populations?",
+        "How does growth compare to the mean?",
+        "What factors might be influencing these demographic trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local authority name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_comboBarLine_039",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "European-born populations in London have declined since Brexit",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Decline of European-Born Populations Post-Brexit",
+      "chart_description": "Bar chart shows number of European-born residents, line chart shows decline rate with threshold",
+      "reasoning": "The threshold line highlights significant declines, providing insight into post-Brexit demographic shifts",
+      "tapas_questions": [
+        "Which boroughs have seen the largest decline in European-born populations?",
+        "How does the decline rate compare to the threshold?",
+        "What factors might be contributing to these demographic changes?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2016-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_chart_analysis_comboBarLine_040",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Population density in East London has increased sharply since 2018",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Population Density Increase in East London",
+      "chart_description": "Bar chart shows population count, line chart shows density increase rate with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for density increases, highlighting rapid urbanization",
+      "tapas_questions": [
+        "Which East London boroughs have seen the most significant density increases?",
+        "How does the density increase compare to the mean?",
+        "What are the implications for urban planning?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "population",
+        "density"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_chart_analysis_comboBarLine_041",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income levels in central London have stabilized post-pandemic",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Stabilization of Income Levels in Central London",
+      "chart_description": "Bar chart shows average income, line chart shows stabilization rate with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for stabilization, highlighting post-pandemic economic resilience",
+      "tapas_questions": [
+        "Which central boroughs have the most stable income levels?",
+        "How does stabilization compare to the mean?",
+        "What factors might be contributing to this economic resilience?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "average_income",
+        "stabilization_rate"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_comboBarLine_042",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House price growth in outer London boroughs surpasses central areas",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "House Price Growth in Outer London",
+      "chart_description": "Bar chart shows average house prices, line chart shows growth rate with threshold",
+      "reasoning": "The threshold line highlights significant growth, providing insight into regional housing market shifts",
+      "tapas_questions": [
+        "Which outer boroughs have the highest house price growth?",
+        "How does growth rate compare to the threshold?",
+        "What factors might be driving these price trends?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_comboBarLine_043",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Arts-focused schools in London show a rise in student enrollment",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Enrollment Trends in Arts-Focused Schools",
+      "chart_description": "Bar chart shows enrollment numbers, line chart shows growth rate with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for enrollment growth, highlighting the popularity of arts education",
+      "tapas_questions": [
+        "Which arts-focused schools have the highest enrollment?",
+        "How does enrollment growth compare to the mean?",
+        "What factors might be contributing to the rise in arts education?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LANAME",
+        "SCHNAME",
+        "enrollment"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_comboBarLine_044",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Hybrid vehicle registrations in London have doubled since 2019",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Doubling of Hybrid Vehicle Registrations in London",
+      "chart_description": "Bar chart shows number of registered hybrid vehicles, line chart shows growth rate with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for growth rates, highlighting the adoption of hybrid technology",
+      "tapas_questions": [
+        "Which boroughs have the highest hybrid vehicle registrations?",
+        "How does growth compare to the mean?",
+        "What factors might be influencing the shift towards hybrid vehicles?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Local Authority",
+        "Hybrid Vehicles",
+        "growth_rate"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_comboBarLine_045",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Fine dining restaurant units in London have expanded significantly in the last five years",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Expansion of Fine Dining in London",
+      "chart_description": "Bar chart shows number of fine dining units, line chart shows growth rate with threshold",
+      "reasoning": "The threshold line highlights significant expansion, providing insight into luxury dining market trends",
+      "tapas_questions": [
+        "Which boroughs have the most fine dining restaurants?",
+        "How does growth rate compare to the threshold?",
+        "What factors might be driving this market expansion?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area name",
+        "fine_dining_units",
+        "growth_rate"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_comboBarLine_046",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Student accommodation rents in London have stabilized post-2021",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Stabilization of Student Accommodation Rents",
+      "chart_description": "Bar chart shows average student rents, line chart shows stabilization rate with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for stabilization, highlighting post-pandemic rent dynamics",
+      "tapas_questions": [
+        "Which boroughs have the most stable student rents?",
+        "How does stabilization compare to the mean?",
+        "What factors might be contributing to rent stabilization?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Average (£)",
+        "stabilization_rate"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_comboBarLine_047",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Boutique fitness studios in London have increased by 50% since 2021",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Growth of Boutique Fitness Studios in London",
+      "chart_description": "Bar chart shows number of boutique studios, line chart shows growth rate with threshold",
+      "reasoning": "The threshold line highlights significant growth, providing insight into fitness industry trends",
+      "tapas_questions": [
+        "Which boroughs have the most boutique fitness studios?",
+        "How does growth rate compare to the threshold?",
+        "What factors might be driving this trend in boutique fitness?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "boutique_studios",
+        "growth_rate"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_comboBarLine_048",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Community engagement through libraries is highest in outer London boroughs",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Community Engagement via Libraries in Outer London",
+      "chart_description": "Bar chart shows library visits, line chart shows engagement rate with mean overlay",
+      "reasoning": "The mean overlay provides a benchmark for engagement rates, highlighting community involvement",
+      "tapas_questions": [
+        "Which outer boroughs have the highest library engagement?",
+        "How does engagement compare to the mean?",
+        "What factors might be contributing to high community involvement?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "Library visits per 1,000 population"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_049",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Cybercrime incidents have risen sharply in London post-pandemic",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Rise of Cybercrime in London Post-Pandemic",
+      "chart_description": "Bar chart shows number of cybercrime incidents, line chart shows growth rate with year as 3D dimension",
+      "reasoning": "The 3D chart adds depth by showing yearly growth trends, important for understanding cybercrime dynamics",
+      "tapas_questions": [
+        "Which boroughs have the highest cybercrime incidents?",
+        "How has the growth rate changed year over year?",
+        "What factors might be influencing the rise in cybercrime?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "crime_category_name",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_050",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "The Hispanic population in London has grown steadily since 2017",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Growth of Hispanic Population in London",
+      "chart_description": "Bar chart shows number of Hispanic residents, line chart shows growth rate with year as 3D dimension",
+      "reasoning": "The 3D chart adds depth by showing yearly growth trends, important for understanding demographic changes",
+      "tapas_questions": [
+        "Which boroughs have the largest Hispanic populations?",
+        "How has the growth rate changed year over year?",
+        "What factors might be influencing this demographic growth?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "local authority name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2017-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ],
+  "generation_timestamp": "2025-08-20T15:46:55.909Z"
+}

@@ -1,0 +1,202 @@
+{
+  "dataset_name": "libraries",
+  "complexity_score": 3,
+  "total_propositions": 15,
+  "proposition_breakdown": {
+    "geographic_patterns": 8,
+    "categorical_analysis": 4,
+    "statistical_patterns": 3
+  },
+  "generated_at": "2025-08-18T17:26:54.465Z",
+  "categories": {
+    "geographic_patterns": [
+      {
+        "id": "geo_01",
+        "proposition": "In 2022-2023, the boroughs of Camden and Westminster have the highest library density, accounting for 25% of all libraries in London.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "geo_02",
+        "proposition": "Outer London boroughs collectively host 40% of the libraries despite covering 60% of the geographic area in 2022-2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_03",
+        "proposition": "The North London region has seen a 10% increase in library visits from 2022 to 2023, compared to a 5% increase in the South.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_04",
+        "proposition": "Libraries in East London boroughs have a 15% higher average visitor count compared to West London in 2022-2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "geo_05",
+        "proposition": "In 2022-2023, the top three boroughs with the most library events are Hackney, Lambeth, and Southwark, hosting 50% of all events.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "geo_06",
+        "proposition": "Library funding per capita is highest in Kensington and Chelsea, 30% above the London average in 2022-2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_07",
+        "proposition": "In 2022-2023, libraries in the boroughs of Greenwich and Lewisham have the lowest average book circulation, 20% below the London average.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "geo_08",
+        "proposition": "Central London boroughs, including Westminster and Camden, show a clustering of libraries with high digital resource usage in 2022-2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "heatmap",
+        "complexity_level": "Advanced"
+      }
+    ],
+    "categorical_analysis": [
+      {
+        "id": "cat_01",
+        "proposition": "In 2022-2023, 'Community Events' is the most common category of library activities, representing 40% of all activities.",
+        "variables_needed": [
+          "category",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "cat_02",
+        "proposition": "Educational programs in libraries are more concentrated in Inner London boroughs, accounting for 60% of such programs in 2022-2023.",
+        "variables_needed": [
+          "category",
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_03",
+        "proposition": "Digital resource usage is the least common category, making up only 10% of library activities in Outer London in 2022-2023.",
+        "variables_needed": [
+          "category",
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "cat_04",
+        "proposition": "In 2022-2023, 'Reading Clubs' are twice as prevalent in South London boroughs compared to North London.",
+        "variables_needed": [
+          "category",
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "statistical_patterns": [
+      {
+        "id": "stat_01",
+        "proposition": "The distribution of library visits across London boroughs in 2022-2023 is positively skewed, with a few boroughs having significantly higher visits.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "histogram",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "stat_02",
+        "proposition": "There is a strong positive correlation between library funding and visitor numbers in 2022-2023, with a correlation coefficient of 0.75.",
+        "variables_needed": [
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "scatter_plot",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "stat_03",
+        "proposition": "In 2022-2023, the variance in library event attendance is highest in Inner London boroughs, indicating diverse engagement levels.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "box_plot",
+        "complexity_level": "Intermediate"
+      }
+    ]
+  }
+}

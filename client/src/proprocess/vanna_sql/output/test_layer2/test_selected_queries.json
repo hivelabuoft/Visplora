@@ -1,0 +1,720 @@
+{
+  "processed_at": "2025-08-20T15:27:06.116676",
+  "test_mode": true,
+  "selection_strategy": "one_per_chart_type",
+  "processing_summary": {
+    "total_queries": 29,
+    "chart_types_tested": 29
+  },
+  "all_sql_queries": [
+    {
+      "proposition_id": "crime-rates_chart_analysis_areaChart_simple_2D_001",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "month"
+      ],
+      "chart_type": "areaChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT DATE_TRUNC('month', date) AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY time ORDER BY time;"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_areaChart_simple_3D_011",
+      "dataset": "crime-rates",
+      "time_period": "2022",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "month"
+      ],
+      "chart_type": "areaChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT DATE_FORMAT(date, '%Y-%m') AS time, SUM(count) AS value, crime_category AS dimension FROM crime_data WHERE YEAR(date) = 2022 GROUP BY time, dimension ORDER BY time, dimension;"
+    },
+    {
+      "proposition_id": "population_chart_analysis_areaChart_stacked_2D_004",
+      "dataset": "population",
+      "time_period": "2000-2020",
+      "variables_needed": [
+        "area",
+        "year",
+        "age_group",
+        "population"
+      ],
+      "chart_type": "areaChart_stacked_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2000-01-01' AND '2020-12-31' GROUP BY date, area, age_group ORDER BY date;"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_005",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT country_of_birth AS category, SUM(population_count) AS value FROM birth_country_data WHERE date = '2018' GROUP BY country_of_birth ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_012",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT country_of_birth AS category, SUM(population_count) AS value, area_name AS dimension FROM birth_country_data WHERE date = '2018' GROUP BY country_of_birth, area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_003",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT country_of_birth AS category, SUM(population_count) AS value, AVG(SUM(population_count)) OVER () AS mean_value FROM birth_country_data WHERE date = '2018' GROUP BY country_of_birth ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_001",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "count",
+        "borough_name",
+        "month"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS bar_value, EXTRACT(MONTH FROM date) AS line_value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category, EXTRACT(MONTH FROM date) ORDER BY crime_category, line_value;"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_013",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "count",
+        "borough_name",
+        "month"
+      ],
+      "chart_type": "comboBarLine_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS bar_value, AVG(count) AS line_value, borough_name AS dimension FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category, borough_name ORDER BY category, dimension;"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_014",
+      "dataset": "ethnicity",
+      "time_period": "2021",
+      "variables_needed": [
+        "local authority name",
+        "Broad_group"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS bar_value, AVG(population_count) AS line_value FROM ethnicity_data WHERE date LIKE '2021%' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_comboBarLine_015",
+      "dataset": "country-of-births",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT Area_Name AS category, SUM(CASE WHEN Broad_group = 'Bar' THEN Estimate ELSE 0 END) AS bar_value, SUM(CASE WHEN Broad_group = 'Line' THEN Estimate ELSE 0 END) AS line_value FROM birth_country_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY Area_Name ORDER BY Area_Name;"
+    },
+    {
+      "proposition_id": "crime-rates_crime_category_divergentBarChart_simple_2D_001",
+      "dataset": "crime-rates",
+      "time_period": "2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "crime_category_name"
+      ],
+      "chart_type": "divergentBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        },
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(CASE WHEN count >= 0 THEN count ELSE 0 END) AS positive_value, SUM(CASE WHEN count < 0 THEN count ELSE 0 END) AS negative_value FROM crime_data WHERE YEAR(date) = 2023 GROUP BY crime_category ORDER BY category;"
+    },
+    {
+      "proposition_id": "vehicles_registration_trends_divergentBarChart_simple_3D_004",
+      "dataset": "vehicles",
+      "time_period": "2023",
+      "variables_needed": [
+        "Local Authority",
+        "year",
+        "Cars",
+        "Electric"
+      ],
+      "chart_type": "divergentBarChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, SUM(CASE WHEN vehicle_type = 'Cars' THEN registration_count ELSE 0 END) AS positive_value, SUM(CASE WHEN vehicle_type = 'Electric' THEN registration_count ELSE 0 END) AS negative_value, 'year' AS dimension FROM vehicle_data WHERE date LIKE '2023%' GROUP BY borough_name ORDER BY borough_name;"
+    },
+    {
+      "proposition_id": "income_wage_trends_divergentBarChart_with_mean_2D_002",
+      "dataset": "income",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "income"
+      ],
+      "chart_type": "divergentBarChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        },
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, AVG(CASE WHEN income_level = 'high' THEN average_income ELSE 0 END) AS positive_value, AVG(CASE WHEN income_level = 'low' THEN average_income ELSE 0 END) AS negative_value FROM income_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY borough_name ORDER BY borough_name;"
+    },
+    {
+      "proposition_id": "house-prices_property_value_divergentBarChart_with_threshold_2D_003",
+      "dataset": "house-prices",
+      "time_period": "2023",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "value"
+      ],
+      "chart_type": "divergentBarChart_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        },
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, AVG(CASE WHEN average_price >= 0 THEN average_price ELSE 0 END) AS positive_value, AVG(CASE WHEN average_price < 0 THEN average_price ELSE 0 END) AS negative_value FROM house_price_data WHERE YEAR(date) = 2023 GROUP BY borough_name ORDER BY category;"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_001",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT country_of_birth AS category, SUM(population_count) AS value, (SUM(population_count) / (SELECT SUM(population_count) FROM birth_country_data WHERE date = '2018')) * 100 AS percentage FROM birth_country_data WHERE date = '2018' GROUP BY country_of_birth ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_groupedBarChart_simple_2D_001",
+      "dataset": "crime-rates",
+      "time_period": "2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "count"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, borough_name AS series, SUM(count) AS value FROM crime_data WHERE YEAR(date) = 2023 GROUP BY crime_category, borough_name ORDER BY crime_category, borough_name;"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_groupedBarChart_simple_3D_002",
+      "dataset": "ethnicity",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "Asian",
+        "Black",
+        "Mixed"
+      ],
+      "chart_type": "groupedBarChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, ethnic_group AS series, population_count AS value, 'ethnicity' AS dimension FROM ethnicity_data WHERE ethnic_group IN ('White British', 'Asian', 'Black', 'Mixed') GROUP BY area_name, ethnic_group ORDER BY area_name, ethnic_group;"
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_005",
+      "dataset": "crime-rates",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "chart_type": "histogramHeatmap_simple_2D",
+      "example": [
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        },
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS x_bin, borough_name AS y_bin, SUM(count) AS count FROM crime_data GROUP BY crime_category, borough_name ORDER BY crime_category, borough_name;"
+    },
+    {
+      "proposition_id": "crime-rates_statistical_patterns_stat_001",
+      "dataset": "crime-rates",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "count"
+      ],
+      "chart_type": "histogram_simple_2D",
+      "example": [
+        {
+          "bin": "",
+          "frequency": 0
+        },
+        {
+          "bin": "",
+          "frequency": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS bin, SUM(count) AS frequency FROM crime_data GROUP BY crime_category ORDER BY frequency DESC;"
+    },
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_001",
+      "dataset": "country-of-births",
+      "time_period": "2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM birth_country_data WHERE date BETWEEN '2018-01-01' AND '2018-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_009",
+      "dataset": "country-of-births",
+      "time_period": "2017-2018",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT date AS time, population_count AS value, country_of_birth AS dimension FROM birth_country_data WHERE date BETWEEN '2017-01-01' AND '2018-12-31' GROUP BY date, country_of_birth ORDER BY date, country_of_birth;"
+    },
+    {
+      "proposition_id": "crime-rates_trend_lineChart_with_mean_2D_016",
+      "dataset": "crime-rates",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category_name",
+        "year",
+        "crime_rate"
+      ],
+      "chart_type": "lineChart_with_mean_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT EXTRACT(YEAR FROM date) AS time, AVG(count) AS value FROM crime_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY EXTRACT(YEAR FROM date) ORDER BY time;"
+    },
+    {
+      "proposition_id": "restaurants_trend_lineChart_with_threshold_2D_020",
+      "dataset": "restaurants",
+      "time_period": "2010-2023",
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Licensed Restaurants Employment"
+      ],
+      "chart_type": "lineChart_with_threshold_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT YEAR(date) AS time, SUM(restaurant_count) AS value FROM restaurant_data WHERE date BETWEEN '2010-01-01' AND '2023-12-31' GROUP BY YEAR(date) ORDER BY YEAR(date);"
+    },
+    {
+      "proposition_id": "crime-rates_trends_multiLineChart_simple_2D_001",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "crime_rate"
+      ],
+      "chart_type": "multiLineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT DATE_FORMAT(date, '%Y') AS time, CONCAT(borough_name, ' - ', crime_category) AS series, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY DATE_FORMAT(date, '%Y'), borough_name, crime_category ORDER BY time, series;"
+    },
+    {
+      "proposition_id": "crime-rates_trends_multiLineChart_simple_3D_013",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "month",
+        "crime_rate"
+      ],
+      "chart_type": "multiLineChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT DATE_FORMAT(date, '%Y-%m') AS time, crime_category AS series, SUM(count) AS value, borough_name AS dimension FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY DATE_FORMAT(date, '%Y-%m'), crime_category, borough_name ORDER BY time, series, dimension;"
+    },
+    {
+      "proposition_id": "crime-rates_statistical_patterns_stat_004",
+      "dataset": "crime-rates",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "crime_category",
+        "area_name",
+        "count"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, area_name AS x_value, SUM(count) AS y_value FROM crime_data GROUP BY crime_category, area_name ORDER BY crime_category, area_name;"
+    },
+    {
+      "proposition_id": "vehicles_registration_trend_scatterPlot_simple_3D_008",
+      "dataset": "vehicles",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Local Authority",
+        "Vehicle Type",
+        "Year"
+      ],
+      "chart_type": "scatterPlot_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, YEAR(date) AS x_value, COUNT(vehicle_type) AS y_value, vehicle_type AS dimension FROM vehicle_data WHERE YEAR(date) BETWEEN 2020 AND 2023 GROUP BY area_name, YEAR(date), vehicle_type ORDER BY area_name, YEAR(date), vehicle_type;"
+    },
+    {
+      "proposition_id": "country-of-births_borough_origin_scatterPlot_with_mean_2D_003",
+      "dataset": "country-of-births",
+      "time_period": "2022",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "scatterPlot_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT Area_Name AS category, AVG(population_count) AS x_value, AVG(percentage) AS y_value FROM birth_country_data WHERE date LIKE '2022%' GROUP BY Area_Name ORDER BY Area_Name;"
+    },
+    {
+      "proposition_id": "income_borough_variation_scatterPlot_with_threshold_2D_005",
+      "dataset": "income",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, YEAR(date) AS x_value, average_income AS y_value FROM income_data WHERE YEAR(date) BETWEEN 2022 AND 2023 GROUP BY area_name, YEAR(date), average_income ORDER BY area_name, x_value;"
+    }
+  ]
+}

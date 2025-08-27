@@ -1,0 +1,127 @@
+{
+  "category": "statistical_patterns",
+  "dataset": "income",
+  "processed_at": "2025-08-20T04:07:05.339Z",
+  "total_propositions": 5,
+  "propositions": [
+    {
+      "proposition_id": "income_statistical_patterns_sp1",
+      "dataset": "income",
+      "category": "statistical_patterns",
+      "original_proposition": "The distribution of mean income across London boroughs is positively skewed in 2023.",
+      "reworded_proposition": "In 2023, London boroughs show a concentration of lower mean incomes, with fewer boroughs having higher incomes.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Distribution of Mean Income in London Boroughs",
+      "chart_description": "Visualizing the skewed distribution of mean income across London boroughs in 2023.",
+      "reasoning": "A histogram is ideal for showing the skewness in the distribution of mean incomes across boroughs, highlighting the concentration of values.",
+      "tapas_questions": [
+        "Which borough has the highest mean income?",
+        "What percentage of boroughs have a mean income above a certain threshold?",
+        "How does the mean income distribution compare to a normal distribution?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Mean_income"
+      ],
+      "time_period": "2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "income_statistical_patterns_sp2",
+      "dataset": "income",
+      "category": "statistical_patterns",
+      "original_proposition": "A correlation of 0.85 exists between mean and median income across all boroughs in 2023.",
+      "reworded_proposition": "There is a strong positive relationship between mean and median income levels across boroughs in 2023.",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Income Correlation Across Boroughs",
+      "chart_description": "Exploring the relationship between mean and median income in 2023.",
+      "reasoning": "A scatter plot is ideal for visualizing the correlation between two continuous variables, such as mean and median income.",
+      "tapas_questions": [
+        "Is there a correlation between mean income and median income?",
+        "Which borough has the highest mean income?",
+        "Which borough has the highest median income?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Mean_income",
+        "Median_income"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_statistical_patterns_sp3",
+      "dataset": "income",
+      "category": "statistical_patterns",
+      "original_proposition": "Outliers in mean income are observed in Kensington and Chelsea, with values 30% higher than the London average in 2023.",
+      "reworded_proposition": "Kensington and Chelsea stand out with notably higher mean incomes compared to the London average in 2023.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Income Distribution in London Boroughs",
+      "chart_description": "Visualizing mean income variations across London boroughs in 2023",
+      "reasoning": "A histogram effectively highlights the distribution of mean incomes across boroughs, showcasing outliers like Kensington and Chelsea.",
+      "tapas_questions": [
+        "Which borough has the highest mean income?",
+        "What is the average mean income across all boroughs?",
+        "How does Kensington and Chelsea compare to the London average in terms of mean income?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Mean_income"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_statistical_patterns_sp4",
+      "dataset": "income",
+      "category": "statistical_patterns",
+      "original_proposition": "The variance in median income across London boroughs decreased by 10% from 2010 to 2023.",
+      "reworded_proposition": "The disparity in median income among London's boroughs has shown a noticeable reduction over the years from 2010 to 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trend of Median Income Variance in London Boroughs",
+      "chart_description": "Shows the decreasing variance in median income from 2010 to 2023.",
+      "reasoning": "A line chart effectively illustrates the trend of decreasing variance over time, highlighting changes in disparity.",
+      "tapas_questions": [
+        "How did the median income variance change from 2010 to 2023?",
+        "Which year had the lowest variance in median income?",
+        "What is the average variance in median income across the years?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Median_income",
+        "Year"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_statistical_patterns_sp5",
+      "dataset": "income",
+      "category": "statistical_patterns",
+      "original_proposition": "The Gini coefficient for income inequality in London boroughs was 0.35 in 2023.",
+      "reworded_proposition": "Income inequality in London boroughs shows notable variation, as reflected by the Gini coefficient in 2023.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Income Inequality Across London Boroughs",
+      "chart_description": "Visualize the Gini coefficient for income inequality in 2023.",
+      "reasoning": "A simple bar chart effectively compares the Gini coefficient across boroughs, highlighting variations in income inequality.",
+      "tapas_questions": [
+        "Which borough has the highest Gini coefficient?",
+        "What is the average Gini coefficient across all boroughs?",
+        "How does income inequality in the highest borough compare to the lowest?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Mean_income",
+        "Median_income"
+      ],
+      "time_period": "2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

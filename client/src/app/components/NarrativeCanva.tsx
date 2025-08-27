@@ -20,11 +20,11 @@ import LondonDashboard from '../dashboard3/page';
 import { DashboardState } from './dashboards/DashboardDatabase';
 import { getDefaultDashboard } from './dashboards/DefaultDashboards';
 import { userStudyTracker } from '@/lib/userStudyTracker';
+import ViewGenerator from '../viewGenerator/page';
 
 // Custom Node Types for Dashboards
 const DashboardNode = ({ data }: { data: any }) => {
   // Special handling for LondonDashboard
-  //TODO: ask Fatir to create a seperate tsx file that only include the dashboard, not the whole canva
   if (data.component === LondonDashboard) {
     return (
       <div className="w-[1200px] h-[900px] shadow-lg rounded-lg bg-black border-2 border-blue-200 hover:border-blue-400 transition-colors overflow-hidden">
@@ -104,11 +104,30 @@ const WidgetNode = ({ data }: { data: any }) => {
   );
 };
 
+const ViewGeneratorNode = ({ data }: { data: any }) => {
+  return (
+    <div className="w-80 h-60 shadow-lg rounded-lg bg-white border-2 border-purple-200 hover:border-purple-400 transition-colors overflow-hidden">
+      <div className="bg-purple-50 px-4 py-2 border-b border-purple-100">
+        <div className="text-sm font-bold text-gray-800">{data.title}</div>
+        <div className="text-xs text-gray-500">Sentence #{data.sentence_id}</div>
+      </div>
+      <div className="p-4 h-full">
+        <ViewGenerator
+          sentence_id={data.sentence_id}
+          charts={data.charts || []}
+          onInteraction={data.onInteraction}
+        />
+      </div>
+    </div>
+  );
+};
+
 // Node types configuration
 const nodeTypes = {
   dashboard: DashboardNode,
   chart: ChartNode,
   widget: WidgetNode,
+  viewGenerator: ViewGeneratorNode,
 };
 
 const NarrativeCanva: React.FC = () => {
@@ -279,6 +298,58 @@ const NarrativeCanva: React.FC = () => {
     }
   }, [setNodes, isStudyMode]);
 
+  const addViewGenerator = useCallback(async () => {
+    // Sample data from example2_data.json format
+    const sampleData = {
+      sentence_id: Math.floor(Math.random() * 10) + 1,
+      charts: [
+        {
+          chart_type: "Choropleth",
+          description: "Median housing price by borough",
+          size: "large",
+          data: {}
+        },
+        {
+          chart_type: "Bar",
+          description: "Average housing price per borough - Distance from the city center",
+          variation: ["with_mean", "3d"],
+          size: "medium",
+          data: {}
+        },
+        {
+          chart_type: "Bar",
+          description: "Top 5 boroughs by average housing price",
+          variation: ["with_mean"],
+          size: "medium",
+          data: {}
+        }
+      ]
+    };
+    
+    // Position new ViewGenerators below the large London dashboard (1200x782px)
+    const position = { x: Math.random() * 400 + 50, y: Math.random() * 200 + 900 };
+    const newNode: Node = {
+      id: `viewGenerator-${Date.now()}`,
+      type: 'viewGenerator',
+      position,
+      data: { 
+        title: `Sentence #${sampleData.sentence_id} Charts`, 
+        sentence_id: sampleData.sentence_id,
+        charts: sampleData.charts,
+        onInteraction: (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => {
+          console.log('ViewGenerator interaction:', { elementId, elementName, elementType, action, metadata });
+        }
+      },
+    };
+    
+    setNodes((nds) => nds.concat(newNode));
+    
+    // Log node addition for user study
+    if (isStudyMode) {
+      await userStudyTracker.logNodeAdd('viewGenerator', newNode.id, position);
+    }
+  }, [setNodes, isStudyMode]);
+
   return (
     <div className="w-full h-full flex flex-col">
       {/* Canvas Area */}
@@ -301,29 +372,36 @@ const NarrativeCanva: React.FC = () => {
           }}
         >
         {/* Top Add Dashboard Element Buttons */}
-        {/* <div className="absolute top-2 left-2 flex gap-2 bg-white rounded-lg shadow-lg border border-gray-200 p-2 z-20">
+        <div className="absolute top-2 left-2 flex gap-2 bg-white rounded-lg shadow-lg border border-gray-200 p-2 z-20">
           <button
             onClick={addDashboard}
             className="px-3 py-2 text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-md transition-colors flex items-center gap-2"
           >
-            <span>�</span>
+            <span>🏢</span>
             Dashboard
           </button>
           <button
             onClick={addChart}
             className="px-3 py-2 text-xs bg-orange-50 hover:bg-orange-100 text-orange-700 rounded-md transition-colors flex items-center gap-2"
           >
-            <span>�</span>
+            <span>📊</span>
             Chart
           </button>
           <button
             onClick={addWidget}
             className="px-3 py-2 text-xs bg-green-50 hover:bg-green-100 text-green-700 rounded-md transition-colors flex items-center gap-2"
           >
-            <span>�</span>
+            <span>🔢</span>
             Widget
           </button>
-        </div> */}
+          <button
+            onClick={addViewGenerator}
+            className="px-3 py-2 text-xs bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-md transition-colors flex items-center gap-2"
+          >
+            <span>🚀</span>
+            ViewGen
+          </button>
+        </div>
 
         {/* Original React Flow Controls - Moved to Top */}
         <Controls 

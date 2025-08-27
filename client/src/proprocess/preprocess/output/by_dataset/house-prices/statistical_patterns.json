@@ -1,0 +1,150 @@
+{
+  "category": "statistical_patterns",
+  "dataset": "house-prices",
+  "processed_at": "2025-08-20T04:07:32.226Z",
+  "total_propositions": 6,
+  "propositions": [
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_001",
+      "dataset": "house-prices",
+      "category": "statistical_patterns",
+      "original_proposition": "House prices across London boroughs exhibit a right-skewed distribution in 2023.",
+      "reworded_proposition": "In 2023, house prices in London boroughs tend to be concentrated at lower values, with a few boroughs showing much higher prices.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Distribution of House Prices in London Boroughs, 2023",
+      "chart_description": "Visualizing the skewed distribution of house prices across London boroughs in 2023.",
+      "reasoning": "A histogram is ideal for showing the distribution and skewness of house prices across different boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest house prices?",
+        "What percentage of house prices are in the highest range?",
+        "How do house prices compare between the most and least expensive boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_002",
+      "dataset": "house-prices",
+      "category": "statistical_patterns",
+      "original_proposition": "The variance in house prices is highest in the borough of Westminster compared to other boroughs in 2023.",
+      "reworded_proposition": "Westminster exhibits the most pronounced variation in house prices compared to other boroughs in 2023.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "House Price Variance in Westminster vs Other Boroughs",
+      "chart_description": "Comparison of house price variance across boroughs in 2023.",
+      "reasoning": "A histogram is ideal for visualizing the distribution and variance of house prices across different boroughs, highlighting Westminster's distinct pattern.",
+      "tapas_questions": [
+        "Which borough has the highest variance in house prices?",
+        "How does the variance in house prices in Westminster compare to other boroughs?",
+        "What is the average variance in house prices across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_003",
+      "dataset": "house-prices",
+      "category": "statistical_patterns",
+      "original_proposition": "A strong positive correlation exists between house prices and the proximity to central London in 2023.",
+      "reworded_proposition": "House prices tend to increase as one gets closer to central London in 2023, indicating a strong positive relationship.",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "House Prices vs. Proximity to Central London",
+      "chart_description": "Explores the relationship between house prices and distance to central London in 2023.",
+      "reasoning": "A scatter plot is ideal for visualizing the correlation between two continuous variables, such as house prices and distance to central London.",
+      "tapas_questions": [
+        "Is there a correlation between house prices and proximity to central London?",
+        "Which area has the highest house prices?",
+        "How do house prices vary by area in 2023?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_004",
+      "dataset": "house-prices",
+      "category": "statistical_patterns",
+      "original_proposition": "In 2023, the top 10% of boroughs account for 40% of the total house value in London.",
+      "reworded_proposition": "In 2023, a small number of boroughs hold a disproportionately large share of London's total house value.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "House Value Concentration in London Boroughs",
+      "chart_description": "Distribution of total house value across London boroughs in 2023.",
+      "reasoning": "A bar chart effectively illustrates the distribution and allows for easy comparison of house values across boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest total house value?",
+        "What percentage of the total house value is held by the top borough?",
+        "How does the house value of the top borough compare to the average?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_005",
+      "dataset": "house-prices",
+      "category": "statistical_patterns",
+      "original_proposition": "House prices in London show a bimodal distribution pattern in 2023.",
+      "reworded_proposition": "In 2023, London house prices exhibit a distinct pattern with two prominent peaks.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Bimodal Distribution of London House Prices in 2023",
+      "chart_description": "Visualizing the two peaks in house prices across London for 2023.",
+      "reasoning": "A histogram is ideal for showing the frequency distribution of house prices, highlighting the bimodal pattern.",
+      "tapas_questions": [
+        "What are the price ranges for the peaks in the distribution?",
+        "How many properties fall within each peak range?",
+        "What is the overall distribution of house prices in London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_statistical_patterns_sp_006",
+      "dataset": "house-prices",
+      "category": "statistical_patterns",
+      "original_proposition": "The borough of Kensington and Chelsea has the highest concentration ratio of house prices in 2023.",
+      "reworded_proposition": "Kensington and Chelsea stand out with the highest concentration of house prices in 2023 compared to other boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "House Price Concentration by Borough in 2023",
+      "chart_description": "Comparison of house price concentration across boroughs in 2023.",
+      "reasoning": "A simple bar chart effectively highlights the comparison of house price concentration across different boroughs, making it easy to identify the highest concentration.",
+      "tapas_questions": [
+        "Which borough has the highest house price concentration?",
+        "How does Kensington and Chelsea compare to other boroughs in terms of house prices?",
+        "What is the average house price concentration across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

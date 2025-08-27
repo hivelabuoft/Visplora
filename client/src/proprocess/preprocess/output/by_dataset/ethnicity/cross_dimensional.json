@@ -1,0 +1,154 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "ethnicity",
+  "processed_at": "2025-08-20T04:05:30.084Z",
+  "total_propositions": 6,
+  "propositions": [
+    {
+      "proposition_id": "ethnicity_cross_dimensional_cross_001",
+      "dataset": "ethnicity",
+      "category": "cross_dimensional",
+      "original_proposition": "The proportion of White British residents in Outer London has decreased by 5% over the last decade, while the Asian Indian population has increased by 8%.",
+      "reworded_proposition": "Over the past decade, Outer London has seen a noticeable decline in its White British population, while the Asian Indian community has experienced significant growth.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Ethnic Population Trends in Outer London (2011-2021)",
+      "chart_description": "Changes in White British and Asian Indian populations over a decade.",
+      "reasoning": "A line chart effectively illustrates the trends over time for two ethnic groups, highlighting changes in population proportions.",
+      "tapas_questions": [
+        "How did the White British population change from 2011 to 2021?",
+        "What percentage of the population was Asian Indian in 2021?",
+        "Which ethnic group had the largest change in Outer London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "White_British",
+        "Asian_Indian"
+      ],
+      "time_period": "2011-2021",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_cross_dimensional_cross_002",
+      "dataset": "ethnicity",
+      "category": "cross_dimensional",
+      "original_proposition": "In the borough of Ealing, the Asian Indian population peaks during the Diwali festival period, showing a 10% increase in community events.",
+      "reworded_proposition": "During the Diwali festival, Ealing experiences a noticeable rise in Asian Indian community events, reflecting a vibrant cultural engagement.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Ealing's Asian Indian Community Events During Diwali",
+      "chart_description": "Trends in Asian Indian events in Ealing during Diwali period.",
+      "reasoning": "A line chart effectively shows the trend of community events over time, highlighting peaks during the Diwali period.",
+      "tapas_questions": [
+        "How do community events in Ealing change during Diwali?",
+        "What is the trend of Asian Indian events in Ealing over time?",
+        "Which borough has the highest increase in events during Diwali?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "Asian_Indian"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_cross_dimensional_cross_003",
+      "dataset": "ethnicity",
+      "category": "cross_dimensional",
+      "original_proposition": "The LSOAs in Southwark show a seasonal increase in Black African community activities during the summer months.",
+      "reworded_proposition": "Southwark's LSOAs experience a noticeable rise in activities within the Black African community during the summer.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Seasonal Activity Patterns in Southwark's Black African Community",
+      "chart_description": "Visualizing summer activity increases in Southwark's Black African community by LSOA.",
+      "reasoning": "A histogram heatmap effectively shows seasonal variations across multiple LSOAs, highlighting patterns in community activities.",
+      "tapas_questions": [
+        "Which LSOA has the highest increase in activities during summer?",
+        "What percentage of activities occur in summer months?",
+        "How do summer activities compare to other seasons in Southwark?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LSOA_code",
+        "Black_African"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_cross_dimensional_cross_004",
+      "dataset": "ethnicity",
+      "category": "cross_dimensional",
+      "original_proposition": "The ethnic composition of Inner London boroughs has shifted over the past decade, with a 10% decrease in White British and a 15% increase in Asian Indian residents.",
+      "reworded_proposition": "Inner London boroughs have experienced a notable shift in ethnic composition over the past decade, with a decline in White British residents and a rise in Asian Indian residents.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Ethnic Composition Changes in Inner London (2011-2021)",
+      "chart_description": "Trends in White British and Asian Indian populations over a decade.",
+      "reasoning": "A line chart effectively illustrates changes over time, highlighting trends in ethnic composition across boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of Asian Indian residents?",
+        "How did the percentage of White British residents change from 2011 to 2021?",
+        "What is the average percentage of Asian Indian residents across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "White_British",
+        "Asian_Indian"
+      ],
+      "time_period": "2011-2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_cross_dimensional_cross_005",
+      "dataset": "ethnicity",
+      "category": "cross_dimensional",
+      "original_proposition": "During the Notting Hill Carnival, the borough of Kensington and Chelsea sees a 20% increase in Black African cultural representation.",
+      "reworded_proposition": "Kensington and Chelsea experience a noticeable rise in Black African cultural presence during the Notting Hill Carnival.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Cultural Representation Trends at Notting Hill Carnival",
+      "chart_description": "Explore changes in Black African representation during the carnival.",
+      "reasoning": "A line chart effectively illustrates the trend of increasing cultural representation over time, highlighting the changes during the carnival period.",
+      "tapas_questions": [
+        "How does Black African representation in Kensington and Chelsea compare to other boroughs?",
+        "What is the average Black African representation across all boroughs during the carnival?",
+        "Which boroughs show an increase in Black African representation during the carnival?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "Black_African"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_cross_dimensional_cross_006",
+      "dataset": "ethnicity",
+      "category": "cross_dimensional",
+      "original_proposition": "The borough of Hounslow has experienced a 12% increase in Asian Indian residents over the last decade, correlating with economic growth in the area.",
+      "reworded_proposition": "Hounslow has seen a notable rise in Asian Indian residents over the past decade, aligning with the area's economic expansion.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Growth of Asian Indian Population in Hounslow",
+      "chart_description": "Trends in Asian Indian population in Hounslow from 2011 to 2021",
+      "reasoning": "A line chart effectively illustrates the trend of population growth over a decade, highlighting changes over time.",
+      "tapas_questions": [
+        "How did the Asian Indian population change in Hounslow from 2011 to 2021?",
+        "What is the percentage of Asian Indian residents in Hounslow in 2021?",
+        "How does Hounslow compare to other boroughs in terms of Asian Indian population growth?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "Asian_Indian"
+      ],
+      "time_period": "2011-2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

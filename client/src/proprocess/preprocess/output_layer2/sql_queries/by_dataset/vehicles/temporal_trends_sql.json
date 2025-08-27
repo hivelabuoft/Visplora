@@ -1,0 +1,141 @@
+{
+  "category": "temporal_trends",
+  "dataset": "vehicles",
+  "processed_at": "2025-08-20T18:07:08.260Z",
+  "total_queries": 6,
+  "sql_queries": [
+    {
+      "proposition_id": "vehicles_temporal_trends_tt1",
+      "dataset": "vehicles",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(registration_count) AS value FROM vehicle_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "vehicles_temporal_trends_tt2",
+      "dataset": "vehicles",
+      "time_period": "2022",
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT vehicle_type AS category, SUM(registration_count) AS value, AVG(SUM(registration_count)) OVER () AS mean_value FROM vehicle_data WHERE date BETWEEN '2022-01-01' AND '2022-12-31' GROUP BY vehicle_type ORDER BY category;"
+    },
+    {
+      "proposition_id": "vehicles_temporal_trends_tt3",
+      "dataset": "vehicles",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(registration_count) AS value FROM vehicle_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "vehicles_temporal_trends_tt4",
+      "dataset": "vehicles",
+      "time_period": "2020-2021",
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(registration_count) AS value FROM vehicle_data WHERE date BETWEEN '2020-01-01' AND '2021-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "vehicles_temporal_trends_tt5",
+      "dataset": "vehicles",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(registration_count) AS value FROM vehicle_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "vehicles_temporal_trends_tt6",
+      "dataset": "vehicles",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(registration_count) AS value FROM vehicle_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    }
+  ]
+}

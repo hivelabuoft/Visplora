@@ -1,0 +1,189 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "gyms",
+  "processed_at": "2025-08-20T18:04:16.688Z",
+  "total_queries": 8,
+  "sql_queries": [
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_01",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(membership_count) AS value FROM gym_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2024 GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_02",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(membership_count) AS value FROM gym_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2024 GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_03",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT facility_type AS category, SUM(membership_count) AS value, (SUM(membership_count) * 100.0 / (SELECT SUM(membership_count) FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024)) AS percentage FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024 GROUP BY facility_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_04",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "chart_type": "histogramHeatmap_simple_2D",
+      "example": [
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        },
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS x_bin, facility_type AS y_bin, COUNT(*) AS count FROM gym_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2024 GROUP BY area_name, facility_type ORDER BY area_name, facility_type;"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_05",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(membership_count) AS value, AVG(SUM(membership_count)) OVER () AS mean_value FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024 GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_06",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(membership_count) AS value FROM gym_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2024 GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_07",
+      "dataset": "gyms",
+      "time_period": "2023-2024",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(membership_count) AS value FROM gym_data WHERE date BETWEEN '2023-01-01' AND '2024-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_08",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(membership_count) AS value, AVG(SUM(membership_count)) OVER () AS mean_value FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024 GROUP BY area_name ORDER BY area_name;"
+    }
+  ]
+}

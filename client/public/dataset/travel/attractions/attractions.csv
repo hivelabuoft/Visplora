@@ -1,0 +1,57 @@
+country,city,iso3,year,poi_total,museums_count,heritage_sites_count,parks_nature_count,nightlife_count,beaches_count,attraction_density_per_km2,avg_admission_cost_usd,source
+USA,New York,USA,2024,1632,42,12,112,537,17,4.85,11.67,synthetic
+USA,San Francisco,USA,2024,1352,148,7,128,542,18,0.93,8.4,synthetic
+Canada,Toronto,CAN,2024,1848,6,1,83,486,22,1.54,6.53,synthetic
+Canada,Vancouver,CAN,2024,1167,108,10,121,389,16,3.08,6.04,synthetic
+Mexico,Mexico City,MEX,2024,2267,139,6,65,602,4,3.99,16.21,synthetic
+Brazil,Rio de Janeiro,BRA,2024,1840,49,4,52,462,3,1.93,5.93,synthetic
+Argentina,Buenos Aires,ARG,2024,1799,76,8,181,692,4,2.78,10.39,synthetic
+UK,London,GBR,2024,1345,71,4,26,536,6,1.52,0.66,synthetic
+Ireland,Dublin,IRL,2024,1514,93,16,92,365,0,2.66,13.21,synthetic
+France,Paris,FRA,2024,1769,53,0,184,307,7,8.3,3.44,synthetic
+Spain,Barcelona,ESP,2024,2054,50,5,153,859,13,5.61,20.68,synthetic
+Portugal,Lisbon,PRT,2024,1958,58,10,195,662,0,9.43,6.95,synthetic
+Italy,Rome,ITA,2024,1736,87,5,199,828,17,1.26,5.78,synthetic
+Netherlands,Amsterdam,NLD,2024,1465,43,7,77,87,5,4.72,19.95,synthetic
+Germany,Berlin,DEU,2024,1835,130,6,291,544,8,1.52,18.66,synthetic
+Switzerland,Zurich,CHE,2024,1305,37,11,201,783,5,3.61,11.69,synthetic
+Austria,Vienna,AUT,2024,1640,87,12,145,993,15,1.23,16.97,synthetic
+Czechia,Prague,CZE,2024,1060,129,10,121,445,12,1.38,22.04,synthetic
+Greece,Athens,GRC,2024,1547,75,6,97,459,9,2.13,10.56,synthetic
+Turkey,Istanbul,TUR,2024,1401,29,8,215,906,9,1.69,15.45,synthetic
+UAE,Dubai,ARE,2024,1248,78,7,124,534,11,3.77,10.55,synthetic
+Qatar,Doha,QAT,2024,769,154,1,31,260,7,1.28,17.37,synthetic
+India,Delhi,IND,2024,1605,66,8,71,438,7,7.36,5.03,synthetic
+India,Mumbai,IND,2024,894,86,6,162,40,0,0.68,15.98,synthetic
+Thailand,Bangkok,THA,2024,745,102,0,179,277,16,0.92,0.0,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,1608,2,7,105,532,0,1.1,16.68,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,1193,103,4,21,898,7,0.92,19.33,synthetic
+Singapore,Singapore,SGP,2024,1521,57,6,226,609,9,5.75,10.8,synthetic
+Indonesia,Bali,IDN,2024,911,105,6,92,358,3,2.78,7.5,synthetic
+Australia,Sydney,AUS,2024,1291,52,8,5,642,6,2.23,9.11,synthetic
+New Zealand,Auckland,NZL,2024,1117,42,0,184,560,5,2.21,3.18,synthetic
+Japan,Tokyo,JPN,2024,1431,116,6,23,556,7,3.96,17.18,synthetic
+South Korea,Seoul,KOR,2024,1490,2,8,49,144,6,1.07,2.16,synthetic
+China,Shanghai,CHN,2024,1113,86,6,59,255,16,1.47,2.93,synthetic
+Hong Kong,Hong Kong,HKG,2024,1566,54,5,5,463,12,1.7,14.99,synthetic
+Taiwan,Taipei,TWN,2024,2130,37,9,5,586,20,3.13,20.64,synthetic
+South Africa,Cape Town,ZAF,2024,1009,49,3,98,635,1,1.38,24.8,synthetic
+Kenya,Nairobi,KEN,2024,1805,12,0,174,485,15,3.58,8.8,synthetic
+Morocco,Marrakesh,MAR,2024,543,54,3,91,200,23,2.59,15.87,synthetic
+Egypt,Cairo,EGY,2024,1403,23,5,197,369,1,4.02,12.93,synthetic
+Israel,Tel Aviv,ISR,2024,1490,63,7,234,588,13,1.28,5.08,synthetic
+Jordan,Amman,JOR,2024,1850,22,0,175,572,8,2.5,0.0,synthetic
+Saudi Arabia,Riyadh,SAU,2024,1804,28,14,18,296,0,2.24,5.39,synthetic
+Russia,Moscow,RUS,2024,2389,11,9,169,953,2,3.82,13.31,synthetic
+Norway,Oslo,NOR,2024,1956,48,3,152,754,15,5.02,17.99,synthetic
+Sweden,Stockholm,SWE,2024,2524,48,3,80,935,10,3.82,13.05,synthetic
+Finland,Helsinki,FIN,2024,1683,145,11,69,431,6,1.64,7.79,synthetic
+Poland,Krakow,POL,2024,710,110,0,41,379,4,0.93,23.99,synthetic
+Hungary,Budapest,HUN,2024,1367,93,4,99,137,14,3.05,19.72,synthetic
+Croatia,Dubrovnik,HRV,2024,1406,55,6,182,132,13,1.18,11.88,synthetic
+Iceland,Reykjavik,ISL,2024,2583,2,5,221,918,10,1.77,11.74,synthetic
+Chile,Santiago,CHL,2024,1644,44,3,72,20,18,1.34,8.15,synthetic
+Peru,Lima,PER,2024,2589,18,5,243,1023,0,2.3,5.79,synthetic
+Colombia,Cartagena,COL,2024,917,70,3,125,380,20,0.64,15.28,synthetic
+Dominican Republic,Punta Cana,DOM,2024,1727,2,5,265,831,0,1.8,4.79,synthetic
+Puerto Rico,San Juan,PRI,2024,570,68,2,122,20,0,0.61,12.22,synthetic

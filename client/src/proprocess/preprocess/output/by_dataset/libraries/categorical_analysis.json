@@ -1,0 +1,107 @@
+{
+  "category": "categorical_analysis",
+  "dataset": "libraries",
+  "processed_at": "2025-08-20T04:10:08.021Z",
+  "total_propositions": 4,
+  "propositions": [
+    {
+      "proposition_id": "libraries_categorical_analysis_cat_01",
+      "dataset": "libraries",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2022-2023, 'Community Events' is the most common category of library activities, representing 40% of all activities.",
+      "reworded_proposition": "During 2022-2023, 'Community Events' emerged as the predominant category of library activities, making up a substantial portion of all activities.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Dominance of 'Community Events' in Library Activities",
+      "chart_description": "Visual representation of activity categories in libraries for 2022-2023.",
+      "reasoning": "A donut chart effectively shows the proportion of each category, highlighting the dominance of 'Community Events'.",
+      "tapas_questions": [
+        "Which category has the highest representation in library activities?",
+        "What percentage of library activities are 'Community Events'?",
+        "How does 'Community Events' compare to other categories in terms of activity representation?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "libraries_categorical_analysis_cat_02",
+      "dataset": "libraries",
+      "category": "categorical_analysis",
+      "original_proposition": "Educational programs in libraries are more concentrated in Inner London boroughs, accounting for 60% of such programs in 2022-2023.",
+      "reworded_proposition": "Educational programs in libraries are predominantly found in Inner London boroughs, making up a significant portion of such initiatives in recent years.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Distribution of Library Programs in London",
+      "chart_description": "Shows concentration of educational programs across London boroughs in 2022-2023.",
+      "reasoning": "A simple bar chart effectively highlights the distribution and concentration of educational programs across different boroughs, making it easy to compare Inner and Outer London.",
+      "tapas_questions": [
+        "Which borough has the highest number of educational programs?",
+        "What percentage of educational programs are in Inner London?",
+        "How does Inner London compare to Outer London in terms of educational programs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "libraries_categorical_analysis_cat_03",
+      "dataset": "libraries",
+      "category": "categorical_analysis",
+      "original_proposition": "Digital resource usage is the least common category, making up only 10% of library activities in Outer London in 2022-2023.",
+      "reworded_proposition": "Digital resources are the least utilized category, representing a small fraction of library activities in Outer London during the past year.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Library Activity Categories in Outer London",
+      "chart_description": "Comparison of library activity categories in Outer London for 2022-2023",
+      "reasoning": "A simple bar chart effectively highlights the comparison between different categories, emphasizing the low usage of digital resources.",
+      "tapas_questions": [
+        "Which category has the lowest usage in Outer London?",
+        "What percentage of library activities are digital resources?",
+        "How does digital resource usage compare to other categories?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "libraries_categorical_analysis_cat_04",
+      "dataset": "libraries",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2022-2023, 'Reading Clubs' are twice as prevalent in South London boroughs compared to North London.",
+      "reworded_proposition": "Reading Clubs are notably more common in South London boroughs than in North London during 2022-2023.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Distribution of Reading Clubs in London Boroughs",
+      "chart_description": "Comparison of Reading Club prevalence between South and North London boroughs in 2022-2023.",
+      "reasoning": "A bar chart with a mean line effectively highlights the disparity in Reading Club prevalence between the two regions, while also providing an average for context.",
+      "tapas_questions": [
+        "Which borough has the highest number of Reading Clubs?",
+        "What is the average number of Reading Clubs across all boroughs?",
+        "How does the prevalence of Reading Clubs in South London compare to North London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

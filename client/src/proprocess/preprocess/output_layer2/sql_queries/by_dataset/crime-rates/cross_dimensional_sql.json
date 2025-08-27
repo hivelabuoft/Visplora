@@ -1,0 +1,204 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "crime-rates",
+  "processed_at": "2025-08-20T18:03:04.555Z",
+  "total_queries": 8,
+  "sql_queries": [
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_001",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_002",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "lineChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT date AS time, count AS value, crime_category AS dimension FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date, crime_category, borough_name ORDER BY date, crime_category, borough_name;"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_003",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS value, AVG(SUM(count)) OVER (PARTITION BY crime_category) AS mean_value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category ORDER BY category;"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_004",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_005",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "area_name",
+        "count"
+      ],
+      "chart_type": "histogramHeatmap_simple_2D",
+      "example": [
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        },
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS x_bin, area_name AS y_bin, SUM(count) AS count FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category, area_name ORDER BY x_bin, y_bin;"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_006",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "area_name",
+        "count"
+      ],
+      "chart_type": "histogramHeatmap_simple_2D",
+      "example": [
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        },
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS x_bin, area_name AS y_bin, SUM(count) AS count FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category, area_name ORDER BY x_bin, y_bin;"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_007",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS value, AVG(SUM(count)) OVER (PARTITION BY crime_category) AS mean_value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category ORDER BY category;"
+    },
+    {
+      "proposition_id": "crime-rates_cross_dimensional_cross_008",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "area_name"
+      ],
+      "chart_type": "histogramHeatmap_simple_2D",
+      "example": [
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        },
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS x_bin, area_name AS y_bin, SUM(count) AS count FROM crime_data JOIN ethnicity_data ON crime_data.borough_name = ethnicity_data.borough_name WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category, area_name ORDER BY x_bin, y_bin;"
+    }
+  ]
+}

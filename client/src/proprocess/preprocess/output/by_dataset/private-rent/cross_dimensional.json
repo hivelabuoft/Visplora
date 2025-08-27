@@ -1,0 +1,85 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "private-rent",
+  "processed_at": "2025-08-20T04:09:38.480Z",
+  "total_propositions": 3,
+  "propositions": [
+    {
+      "proposition_id": "private-rent_cross_dimensional_cd1",
+      "dataset": "private-rent",
+      "category": "cross_dimensional",
+      "original_proposition": "Rent values for 'Luxury Apartments' in central London boroughs peaked during Q3 2022, showing a 25% increase from Q2.",
+      "reworded_proposition": "Luxury apartment rents in central London boroughs surged notably in the third quarter of 2022 compared to the previous quarter.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Luxury Apartment Rent Surge in Central London",
+      "chart_description": "Comparison of rent values for luxury apartments in central London boroughs during Q2 and Q3 2022.",
+      "reasoning": "A bar chart effectively highlights the comparison of rent values across different boroughs and time periods, making it easy to visualize the increase.",
+      "tapas_questions": [
+        "Which borough had the highest rent increase for luxury apartments?",
+        "How do Q3 rent values compare to Q2 for luxury apartments?",
+        "What is the average rent value for luxury apartments in Q3 2022?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "private-rent_cross_dimensional_cd2",
+      "dataset": "private-rent",
+      "category": "cross_dimensional",
+      "original_proposition": "From 2011 to 2023, 'Family Homes' in outer London boroughs experienced a 30% increase in rent values, with the highest growth in 2020.",
+      "reworded_proposition": "Rent values for 'Family Homes' in outer London boroughs have shown a notable upward trend since 2011, with a peak growth observed in 2020.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trend in Family Home Rents in Outer London",
+      "chart_description": "Line chart showing rent value trends from 2011 to 2023 in outer London boroughs.",
+      "reasoning": "A line chart effectively illustrates trends over time, highlighting changes in rent values across the specified period.",
+      "tapas_questions": [
+        "Which year had the highest growth in rent values?",
+        "How do rent values in 2023 compare to those in 2011?",
+        "What is the average rent value increase over the years?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2011-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "private-rent_cross_dimensional_cd3",
+      "dataset": "private-rent",
+      "category": "cross_dimensional",
+      "original_proposition": "In 2023, 'Studio' apartments in North London boroughs showed a 10% higher rent value compared to South London.",
+      "reworded_proposition": "In 2023, 'Studio' apartments in North London boroughs tended to have higher rent values compared to those in the South.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Rent Comparison of Studio Apartments in London",
+      "chart_description": "Comparing 2023 rent values of studio apartments in North vs. South London boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the comparison of rent values between two geographic regions, North and South London, for a specific category of apartments.",
+      "tapas_questions": [
+        "Which borough has the highest rent for studio apartments?",
+        "How does the average rent in North London compare to South London?",
+        "What is the average rent for studio apartments across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

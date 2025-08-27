@@ -1,0 +1,143 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "house-prices",
+  "processed_at": "2025-08-20T18:04:20.629Z",
+  "total_queries": 6,
+  "sql_queries": [
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_001",
+      "dataset": "house-prices",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date, area_name ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_002",
+      "dataset": "house-prices",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT property_type AS category, AVG(average_price) AS value FROM house_price_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY property_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_003",
+      "dataset": "house-prices",
+      "time_period": "2015-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2015-01-01' AND '2023-12-31' GROUP BY date, average_price ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_004",
+      "dataset": "house-prices",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date, area_name ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_005",
+      "dataset": "house-prices",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT property_type AS category, AVG(average_price) AS value FROM house_price_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY property_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "house-prices_cross_dimensional_cd_006",
+      "dataset": "house-prices",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date, average_price ORDER BY date;"
+    }
+  ]
+}

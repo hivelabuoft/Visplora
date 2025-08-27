@@ -1,0 +1,328 @@
+{
+  "dataset_id": "population-1801-2021",
+  "dataset_name": "Population 1801 to 2021",
+  "category": "population",
+  "description": "Historical population data from 1801 to 2021",
+  "file_path": "/dataset/london/population/population 1801 to 2021.csv",
+  "field_roles": [
+    {
+      "name": "area",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "City of London",
+        "Barking and Dagenham",
+        "Barnet"
+      ]
+    },
+    {
+      "name": "1801",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "129,000",
+        "3,000",
+        "8,000"
+      ]
+    },
+    {
+      "name": "1811",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "121,000",
+        "4,000",
+        "9,000"
+      ]
+    },
+    {
+      "name": "1821",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "125,000",
+        "5,000",
+        "11,000"
+      ]
+    },
+    {
+      "name": "1831",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "123,000",
+        "6,000",
+        "13,000"
+      ]
+    },
+    {
+      "name": "1841",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "124,000",
+        "7,000",
+        "14,000"
+      ]
+    },
+    {
+      "name": "1851",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "128,000",
+        "8,000",
+        "15,000"
+      ]
+    },
+    {
+      "name": "1861",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "112,000",
+        "8,000",
+        "20,000"
+      ]
+    },
+    {
+      "name": "1871",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "75,000",
+        "10,000",
+        "29,000"
+      ]
+    },
+    {
+      "name": "1881",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "51,000",
+        "13,000",
+        "41,000"
+      ]
+    },
+    {
+      "name": "1891",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "38,000",
+        "19,000",
+        "58,000"
+      ]
+    },
+    {
+      "name": "1901",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "27,000",
+        "27,000",
+        "76,000"
+      ]
+    },
+    {
+      "name": "1911",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "20,000",
+        "39,000",
+        "118,000"
+      ]
+    },
+    {
+      "name": "1921",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "14,000",
+        "44,000",
+        "147,000"
+      ]
+    },
+    {
+      "name": "1931",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "10,999",
+        "138,000",
+        "231,081"
+      ]
+    },
+    {
+      "name": "1939",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "9,000",
+        "184,000",
+        "296,000"
+      ]
+    },
+    {
+      "name": "1951",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "5,324",
+        "189,430",
+        "320,438"
+      ]
+    },
+    {
+      "name": "1961",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "4,767",
+        "177,092",
+        "318,373"
+      ]
+    },
+    {
+      "name": "1971",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "4,246",
+        "160,798",
+        "306,561"
+      ]
+    },
+    {
+      "name": "1981",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "4,701",
+        "148,979",
+        "290,197"
+      ]
+    },
+    {
+      "name": "1991",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "4,142",
+        "143,681",
+        "293,564"
+      ]
+    },
+    {
+      "name": "2001",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "7,181",
+        "163,944",
+        "314,565"
+      ]
+    },
+    {
+      "name": "2011",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "7,375",
+        "185,911",
+        "356,386"
+      ]
+    },
+    {
+      "name": "2021",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "8,583",
+        "218,869",
+        "389,344"
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "area",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "City of London",
+            "Barking and Dagenham",
+            "Barnet"
+          ]
+        },
+        "y": {
+          "name": "count",
+          "roles": [
+            "metric"
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.715Z"
+}

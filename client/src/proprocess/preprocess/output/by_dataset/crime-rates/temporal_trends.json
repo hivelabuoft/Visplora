@@ -1,0 +1,211 @@
+{
+  "category": "temporal_trends",
+  "dataset": "crime-rates",
+  "processed_at": "2025-08-20T04:04:16.441Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_001",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Theft-from-the-person incidents increased by 10% from January 2022 to January 2023 across London.",
+      "reworded_proposition": "Theft-from-the-person incidents have shown a noticeable increase over the past year across London.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Yearly Trend of Theft-from-the-Person Incidents in London",
+      "chart_description": "Visualize the increase in theft-from-the-person incidents from 2022 to 2023 in London.",
+      "reasoning": "A line chart effectively displays temporal trends, making it easy to observe changes over time.",
+      "tapas_questions": [
+        "How did theft-from-the-person incidents change from January 2022 to January 2023?",
+        "What is the average number of theft-from-the-person incidents per month in 2022?",
+        "Which month had the highest number of theft-from-the-person incidents in 2022?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_002",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Burglary incidents show a seasonal peak in December 2022 in Westminster.",
+      "reworded_proposition": "Burglary incidents in Westminster tend to rise noticeably during December.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Seasonal Trend of Burglary in Westminster",
+      "chart_description": "Visualizes monthly burglary trends in Westminster for 2022.",
+      "reasoning": "A simple 2D bar chart effectively highlights the seasonal pattern of burglary incidents over the months.",
+      "tapas_questions": [
+        "How did burglary incidents change from November to December 2022?",
+        "Which month had the highest burglary incidents in Westminster?",
+        "What percentage of annual burglary incidents occurred in December 2022?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_003",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Violent crime rates remained stable from 2022 to 2023 in Camden, with less than 2% variation.",
+      "reworded_proposition": "Violent crime rates in Camden showed remarkable stability from 2022 to 2023, with minimal fluctuations.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Stability of Violent Crime Rates in Camden",
+      "chart_description": "Camden's violent crime rates remained stable from 2022 to 2023.",
+      "reasoning": "A simple 2D line chart effectively illustrates the stability or changes in crime rates over time, highlighting any trends or lack thereof.",
+      "tapas_questions": [
+        "How did violent crime rates change from 2022 to 2023 in Camden?",
+        "What is the average violent crime rate in Camden for 2022 and 2023?",
+        "Which borough had the lowest violent crime rate in 2023?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_004",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Overall crime rates in Tower Hamlets decreased by 5% from Q1 2022 to Q1 2023.",
+      "reworded_proposition": "Crime rates in Tower Hamlets have shown a notable decline from early 2022 to early 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Crime Rate Trend in Tower Hamlets",
+      "chart_description": "Visualizing the decline in crime rates from Q1 2022 to Q1 2023.",
+      "reasoning": "A simple 2D line chart effectively illustrates the temporal trend of decreasing crime rates over the specified period.",
+      "tapas_questions": [
+        "How did crime rates change from Q1 2022 to Q1 2023 in Tower Hamlets?",
+        "What is the average crime rate in Tower Hamlets over the period?",
+        "Which quarter had the lowest crime rate in Tower Hamlets?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_005",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Crime incidents in London show a cyclical pattern with peaks in summer months of 2022 and 2023.",
+      "reworded_proposition": "Crime incidents in London tend to rise during the summer months, showing a recurring seasonal pattern over 2022 and 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Crime Patterns in London (2022-2023)",
+      "chart_description": "Visualizing cyclical crime peaks during summer months in London.",
+      "reasoning": "A simple line chart effectively illustrates temporal trends, highlighting cyclical patterns over time.",
+      "tapas_questions": [
+        "How did crime incidents change from summer 2022 to summer 2023?",
+        "Which month had the highest crime incidents in 2022?",
+        "Is there a noticeable pattern in crime incidents over the months?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "date",
+        "count"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_006",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "The number of theft-from-the-person incidents in Camden increased by 15% from February 2022 to February 2023.",
+      "reworded_proposition": "Camden has seen a noticeable rise in theft-from-the-person incidents over the past year.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Rise in Theft-from-the-Person Incidents in Camden",
+      "chart_description": "Tracking the increase in theft incidents in Camden from 2022 to 2023.",
+      "reasoning": "A 3D line chart effectively illustrates the temporal trend of theft incidents in Camden, allowing for monthly breakdowns.",
+      "tapas_questions": [
+        "How did theft-from-the-person incidents change from February 2022 to February 2023 in Camden?",
+        "What is the average number of theft-from-the-person incidents in Camden during this period?",
+        "Which months had the highest theft-from-the-person incidents in Camden?"
+      ],
+      "3d_dimension": "time_subdivision",
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_007",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Violent crime incidents in London decreased by 8% from March 2022 to March 2023.",
+      "reworded_proposition": "Violent crime incidents in London have shown a notable decline over the past year.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trend of Violent Crime Incidents in London",
+      "chart_description": "Illustrates the decline in violent crime from March 2022 to March 2023.",
+      "reasoning": "A line chart effectively shows the temporal trend of decreasing violent crime incidents over the specified period.",
+      "tapas_questions": [
+        "How did violent crime incidents change from March 2022 to March 2023?",
+        "What is the average number of violent crime incidents per month?",
+        "Which month had the lowest number of violent crime incidents?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_temporal_trends_temp_008",
+      "dataset": "crime-rates",
+      "category": "temporal_trends",
+      "original_proposition": "Burglary incidents in Tower Hamlets show a 20% increase during the winter months of 2022.",
+      "reworded_proposition": "Burglary incidents in Tower Hamlets tend to rise noticeably during the winter months.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Burglary Trends in Tower Hamlets by Season",
+      "chart_description": "Visualizing burglary incidents in Tower Hamlets across 2022 seasons.",
+      "reasoning": "A simple 2D bar chart effectively shows seasonal variations in burglary incidents, highlighting increases during specific periods.",
+      "tapas_questions": [
+        "How do burglary incidents in winter compare to other seasons in Tower Hamlets?",
+        "What is the trend of burglary incidents over the months in 2022?",
+        "Which season had the highest number of burglary incidents in Tower Hamlets?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "date",
+        "count",
+        "borough_name"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    }
+  ]
+}

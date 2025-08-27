@@ -1,0 +1,23 @@
+{
+  "generated_at": "2025-08-18T17:20:59.391Z",
+  "summary": {
+    "individual_dataset_propositions": 330,
+    "cross_dataset_propositions": 100,
+    "grand_total": 430,
+    "processing_time_seconds": 520
+  },
+  "dataset_list": [
+    "crime-rates",
+    "ethnicity",
+    "country-of-births",
+    "population",
+    "income",
+    "house-prices",
+    "schools-colleges",
+    "vehicles",
+    "restaurants",
+    "private-rent",
+    "gyms",
+    "libraries"
+  ]
+}

@@ -1,0 +1,398 @@
+{
+  "dataset_name": "house-prices",
+  "complexity_score": 6,
+  "total_propositions": 30,
+  "proposition_breakdown": {
+    "temporal_trends": 10,
+    "geographic_patterns": 8,
+    "statistical_patterns": 6,
+    "cross_dimensional": 6
+  },
+  "generated_at": "2025-08-18T17:24:14.615Z",
+  "categories": {
+    "temporal_trends": [
+      {
+        "id": "tt_001",
+        "proposition": "House prices increased by 20% from 2020 to 2023 in the borough of Kensington and Chelsea.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_002",
+        "proposition": "The average house price in London rose by 5% each year from 1995 to 2005.",
+        "variables_needed": [
+          "value",
+          "date"
+        ],
+        "time_period": "1995-2005",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt_003",
+        "proposition": "From 2010 to 2015, house prices in the borough of Hackney experienced a peak growth of 30% in 2013.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2010-2015",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_004",
+        "proposition": "House prices in outer London boroughs have shown a cyclical pattern with peaks every 5 years from 1995 to 2023.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "1995-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt_005",
+        "proposition": "The period from 2008 to 2010 saw a 15% decline in house prices across London due to the financial crisis.",
+        "variables_needed": [
+          "value",
+          "date"
+        ],
+        "time_period": "2008-2010",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_006",
+        "proposition": "In 2022, house prices in the borough of Westminster increased by 10% compared to 2021.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2021-2022",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt_007",
+        "proposition": "House prices in the borough of Camden have consistently risen by 7% annually from 2015 to 2023.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2015-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_008",
+        "proposition": "The year 1999 marked the lowest average house prices in London during the period from 1995 to 2005.",
+        "variables_needed": [
+          "value",
+          "date"
+        ],
+        "time_period": "1995-2005",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt_009",
+        "proposition": "From 2018 to 2023, house prices in Southwark borough have shown a seasonal increase during the summer months.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2018-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt_010",
+        "proposition": "The borough of Richmond upon Thames experienced a 25% increase in house prices from 2000 to 2005.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2000-2005",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "geographic_patterns": [
+      {
+        "id": "gp_001",
+        "proposition": "In 2023, the boroughs of Kensington and Chelsea, and Westminster have the highest average house prices in London.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp_002",
+        "proposition": "House prices in East London boroughs are generally 20% lower than those in West London as of 2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_003",
+        "proposition": "The borough of Hackney shows a clustering of high house prices compared to surrounding areas in 2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "gp_004",
+        "proposition": "In 2023, house prices in North London boroughs are 15% higher on average than those in South London.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_005",
+        "proposition": "The boroughs of Camden and Islington have shown a consistent pattern of high house prices from 2010 to 2023.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2010-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_006",
+        "proposition": "In 2023, outer London boroughs such as Bromley and Croydon have lower house prices compared to inner London boroughs.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp_007",
+        "proposition": "House prices in the borough of Haringey are significantly higher than those in Enfield in 2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp_008",
+        "proposition": "The borough of Lambeth has experienced a notable increase in house prices compared to neighboring boroughs from 2015 to 2023.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2015-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "statistical_patterns": [
+      {
+        "id": "sp_001",
+        "proposition": "House prices across London boroughs exhibit a right-skewed distribution in 2023.",
+        "variables_needed": [
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "histogram",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "sp_002",
+        "proposition": "The variance in house prices is highest in the borough of Westminster compared to other boroughs in 2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "box_plot",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "sp_003",
+        "proposition": "A strong positive correlation exists between house prices and the proximity to central London in 2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "scatter_plot",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "sp_004",
+        "proposition": "In 2023, the top 10% of boroughs account for 40% of the total house value in London.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pareto_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "sp_005",
+        "proposition": "House prices in London show a bimodal distribution pattern in 2023.",
+        "variables_needed": [
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "histogram",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "sp_006",
+        "proposition": "The borough of Kensington and Chelsea has the highest concentration ratio of house prices in 2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "cross_dimensional": [
+      {
+        "id": "cd_001",
+        "proposition": "House prices in the borough of Greenwich peak during the summer months from 2020 to 2023.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd_002",
+        "proposition": "In 2023, the category of 'luxury homes' shows higher prices in central London boroughs compared to suburban areas.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cd_003",
+        "proposition": "From 2015 to 2023, the boroughs of Camden and Islington show a significant increase in house prices in the 'family homes' category.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2015-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd_004",
+        "proposition": "The 'apartments' category in the borough of Tower Hamlets has seen a 25% increase in prices from 2020 to 2023.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cd_005",
+        "proposition": "In 2023, house prices in the 'detached homes' category are highest in the borough of Richmond upon Thames.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "cd_006",
+        "proposition": "The borough of Hammersmith and Fulham shows a 30% increase in 'luxury homes' prices during winter months from 2020 to 2023.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      }
+    ]
+  }
+}

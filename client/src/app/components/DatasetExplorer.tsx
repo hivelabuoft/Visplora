@@ -28,13 +28,27 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, on
   const [isLoading, setIsLoading] = useState(true);
   const [expandedCategories, setExpandedCategories] = useState<{[key: string]: boolean}>({});
   const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set());
+  const [datasetType, setDatasetType] = useState<'london' | 'travel'>('london');
 
   // Load dataset information
   useEffect(() => {
     const loadDatasets = async () => {
       try {
-        console.log('Loading datasets from /data/london_datasets.json...');
-        const response = await fetch('/data/london_datasets.json');
+        // Check the environment variable to determine which dataset to load
+        const defaultDashboard = process.env.NEXT_PUBLIC_DEFAULT_DASHBOARD || '1';
+        let datasetPath = '/data/london_datasets.json';
+        
+        if (defaultDashboard === '2') {
+          datasetPath = '/data/travel_datasets.json';
+          setDatasetType('travel');
+          console.log('Loading datasets from /data/travel_datasets.json...');
+        } else {
+          datasetPath = '/data/london_datasets.json';
+          setDatasetType('london');
+          console.log('Loading datasets from /data/london_datasets.json...');
+        }
+        
+        const response = await fetch(datasetPath);
         
         if (!response.ok) {
           console.error('Failed to fetch datasets:', response.status, response.statusText);
@@ -125,7 +139,9 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, on
     <div className="data-explorer h-full flex flex-col overflow-hidden">
       {/* Header */}
       <div className="data-explorer-header flex-shrink-0">
-        <h1 className="data-explorer-title">Data Explorer</h1>
+        <h1 className="data-explorer-title">
+          {datasetType === 'travel' ? 'Travel Data Explorer' : 'Data Explorer'}
+        </h1>
       </div>
 
       {/* Datasets Grid */}
@@ -231,7 +247,16 @@ const DatasetExplorer: React.FC<DatasetExplorerProps> = ({ onAnalysisRequest, on
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder={`Ask me anything about London data... 
+            placeholder={datasetType === 'travel' 
+              ? `Ask me anything about travel data... 
+
+Examples:
+• Show me cost differences across destinations
+• Compare safety ratings with visitor satisfaction
+• Analyze the relationship between accessibility and visitor flow
+• What destinations have the best cultural offerings?
+• Find patterns in environmental quality vs tourism`
+              : `Ask me anything about London data... 
 
 Examples:
 • Show me crime rates across different boroughs

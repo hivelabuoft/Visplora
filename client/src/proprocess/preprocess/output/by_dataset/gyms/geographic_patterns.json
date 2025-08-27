@@ -1,0 +1,203 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "gyms",
+  "processed_at": "2025-08-20T04:09:45.796Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_01",
+      "dataset": "gyms",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2024, the boroughs of Hackney and Tower Hamlets account for 25% of all gym facilities in East London.",
+      "reworded_proposition": "Hackney and Tower Hamlets are prominent hubs for gym facilities, comprising a significant portion of East London's total.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Distribution of Gym Facilities in East London",
+      "chart_description": "Comparison of gym facilities across boroughs in East London for 2024.",
+      "reasoning": "A simple bar chart effectively highlights the distribution of gym facilities across different boroughs, making it easy to compare their relative prominence.",
+      "tapas_questions": [
+        "Which borough has the highest number of gym facilities?",
+        "What percentage of gym facilities are in Hackney?",
+        "How does Tower Hamlets compare to other boroughs in terms of gym facilities?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_02",
+      "dataset": "gyms",
+      "category": "geographic_patterns",
+      "original_proposition": "Gym density in Inner London is twice as high as in Outer London in 2024.",
+      "reworded_proposition": "Inner London consistently exhibits a much higher gym density compared to Outer London in 2024.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Gym Density Comparison: Inner vs Outer London",
+      "chart_description": "Visual comparison of gym density between Inner and Outer London in 2024.",
+      "reasoning": "A simple bar chart effectively highlights the stark contrast in gym density between the two regions, making it easy to compare.",
+      "tapas_questions": [
+        "Which area has the highest gym density?",
+        "What is the average gym density across all areas?",
+        "How does Inner London compare to Outer London in terms of gym density?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_03",
+      "dataset": "gyms",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Kensington and Chelsea has the highest concentration of premium gyms, representing 30% of its total gym facilities in 2024.",
+      "reworded_proposition": "Kensington and Chelsea stands out with a notably high proportion of premium gyms compared to its total gym facilities.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Premium Gym Distribution in Kensington and Chelsea",
+      "chart_description": "Visualizing the share of premium gyms in Kensington and Chelsea for 2024.",
+      "reasoning": "A donut chart effectively highlights the proportion of premium gyms within the total gym facilities, making it easy to compare against other categories.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of premium gyms?",
+        "What percentage of gyms in Kensington and Chelsea are premium?",
+        "How does Kensington and Chelsea compare to other boroughs in terms of premium gym concentration?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_04",
+      "dataset": "gyms",
+      "category": "geographic_patterns",
+      "original_proposition": "LSOAs in Southwark show a clustering of budget gyms, with 40% of the area's gym facilities being budget gyms in 2024.",
+      "reworded_proposition": "Southwark's LSOAs exhibit a notable concentration of budget gyms, with a significant portion of gym facilities falling into this category in 2024.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Concentration of Budget Gyms in Southwark LSOAs",
+      "chart_description": "Visualizing the distribution of budget gyms across Southwark's LSOAs in 2024.",
+      "reasoning": "A histogram heatmap effectively shows the distribution and concentration of budget gyms across geographic areas, highlighting clusters.",
+      "tapas_questions": [
+        "Which LSOA has the highest concentration of budget gyms?",
+        "What percentage of gym facilities are budget gyms in each LSOA?",
+        "How does the number of budget gyms compare across different LSOAs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_05",
+      "dataset": "gyms",
+      "category": "geographic_patterns",
+      "original_proposition": "North London boroughs have a 15% higher average gym membership rate compared to South London in 2024.",
+      "reworded_proposition": "North London boroughs exhibit a noticeably higher gym membership rate compared to their southern counterparts in 2024.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Gym Membership Rates in North vs. South London",
+      "chart_description": "Comparison of gym membership rates between North and South London boroughs in 2024.",
+      "reasoning": "A bar chart with a mean line effectively highlights the comparison between North and South London boroughs while showing how each borough's rate compares to the overall average.",
+      "tapas_questions": [
+        "Which London borough has the highest gym membership rate?",
+        "What is the average gym membership rate across all London boroughs?",
+        "How does the gym membership rate in North London compare to South London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_06",
+      "dataset": "gyms",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2024, the borough of Westminster has the highest number of gyms per capita, with a rate of 1 gym per 1,000 residents.",
+      "reworded_proposition": "In 2024, Westminster stands out for having the most gyms relative to its population compared to other boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Gyms Per Capita by Borough in 2024",
+      "chart_description": "Comparison of gym availability per 1,000 residents across boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the comparison of gym availability across different boroughs, making it easy to identify which has the highest rate.",
+      "tapas_questions": [
+        "Which borough has the highest number of gyms per capita?",
+        "How does Westminster compare to other boroughs in terms of gyms per capita?",
+        "What is the average number of gyms per capita across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_07",
+      "dataset": "gyms",
+      "category": "geographic_patterns",
+      "original_proposition": "East London boroughs exhibit a 20% increase in gym facilities compared to 2023.",
+      "reworded_proposition": "East London boroughs are experiencing a notable rise in gym facilities compared to the previous year.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Growth of Gym Facilities in East London",
+      "chart_description": "Trends in gym facilities in East London boroughs from 2023 to 2024.",
+      "reasoning": "A line chart effectively illustrates the trend of increasing gym facilities over time, highlighting changes between 2023 and 2024.",
+      "tapas_questions": [
+        "Which borough has the highest increase in gym facilities?",
+        "How does the growth in gym facilities in East London compare to other regions?",
+        "What is the average increase in gym facilities across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2023-2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "gyms_geographic_patterns_geo_08",
+      "dataset": "gyms",
+      "category": "geographic_patterns",
+      "original_proposition": "Boroughs in West London have the lowest average gym membership fees, 10% below the London average in 2024.",
+      "reworded_proposition": "West London boroughs tend to have gym membership fees that are notably lower than the London average.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Gym Membership Fees in West London Boroughs",
+      "chart_description": "Comparison of gym fees in West London vs. London average in 2024",
+      "reasoning": "A bar chart with a mean line effectively highlights how each borough's fees compare to the London average, emphasizing the lower fees in West London.",
+      "tapas_questions": [
+        "Which borough has the lowest gym membership fees?",
+        "What is the average gym membership fee across all boroughs?",
+        "How do gym membership fees in West London compare to the London average?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

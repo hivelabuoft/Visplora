@@ -1,0 +1,627 @@
+{
+  "chart_type": "groupedBar",
+  "category": "chart_specific_analysis",
+  "processed_at": "2025-08-20T18:09:06.326Z",
+  "total_queries": 25,
+  "sql_queries": [
+    {
+      "proposition_id": "crime-rates_chart_analysis_groupedBarChart_simple_2D_001",
+      "dataset": "crime-rates",
+      "time_period": "2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "count"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, borough_name AS series, SUM(count) AS value FROM crime_data WHERE YEAR(date) = 2023 GROUP BY crime_category, borough_name ORDER BY crime_category, borough_name;"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_groupedBarChart_simple_3D_002",
+      "dataset": "ethnicity",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "Asian",
+        "Black",
+        "Mixed"
+      ],
+      "chart_type": "groupedBarChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, ethnic_group AS series, population_count AS value, 'ethnicity' AS dimension FROM ethnicity_data WHERE ethnic_group IN ('White British', 'Asian', 'Black', 'Mixed') GROUP BY area_name, ethnic_group ORDER BY area_name, ethnic_group;"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_groupedBarChart_simple_2D_003",
+      "dataset": "country-of-births",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "Year",
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT YEAR(date) AS category, area_name AS series, SUM(population_count) AS value FROM birth_country_data WHERE YEAR(date) BETWEEN 2019 AND 2023 GROUP BY YEAR(date), area_name ORDER BY category, series;"
+    },
+    {
+      "proposition_id": "population_chart_analysis_groupedBarChart_simple_2D_004",
+      "dataset": "population",
+      "time_period": "2000-2020",
+      "variables_needed": [
+        "area",
+        "2000",
+        "2010",
+        "2020"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, date AS series, SUM(population_count) AS value FROM population_data WHERE date IN ('2000', '2010', '2020') GROUP BY area_name, date ORDER BY area_name, date;"
+    },
+    {
+      "proposition_id": "income_chart_analysis_groupedBarChart_simple_3D_005",
+      "dataset": "income",
+      "time_period": "1999-2002",
+      "variables_needed": [
+        "borough_name",
+        "1999-00",
+        "2000-01",
+        "2001-02"
+      ],
+      "chart_type": "groupedBarChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, date AS series, average_income AS value, 'income' AS dimension FROM income_data WHERE date IN ('1999-00', '2000-01', '2001-02') GROUP BY borough_name, date, average_income ORDER BY borough_name, date;"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_groupedBarChart_simple_2D_006",
+      "dataset": "house-prices",
+      "time_period": "2018-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, EXTRACT(YEAR FROM date) AS series, average_price AS value FROM house_price_data WHERE date BETWEEN '2018-01-01' AND '2023-12-31' GROUP BY area_name, EXTRACT(YEAR FROM date), average_price ORDER BY area_name, series;"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_groupedBarChart_simple_3D_007",
+      "dataset": "schools-colleges",
+      "time_period": "2023",
+      "variables_needed": [
+        "LANAME",
+        "SCHNAME",
+        "performance_score"
+      ],
+      "chart_type": "groupedBarChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT SCHNAME AS category, LANAME AS series, performance_score AS value, '2023' AS dimension FROM education_data WHERE YEAR(date) = 2023 GROUP BY SCHNAME, LANAME, performance_score ORDER BY SCHNAME, LANAME;"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_groupedBarChart_simple_2D_008",
+      "dataset": "vehicles",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Local Authority",
+        "Cars",
+        "Electric"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, vehicle_type AS series, SUM(registration_count) AS value FROM vehicle_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' AND vehicle_type IN ('Cars', 'Electric') GROUP BY borough_name, vehicle_type ORDER BY borough_name, vehicle_type;"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_groupedBarChart_simple_2D_009",
+      "dataset": "restaurants",
+      "time_period": "2023",
+      "variables_needed": [
+        "Area name",
+        "Licensed Restaurants Employment",
+        "Unlicensed Restaurants Employment"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, CASE WHEN cuisine_type = 'Licensed' THEN 'Licensed Restaurants Employment' ELSE 'Unlicensed Restaurants Employment' END AS series, SUM(restaurant_count) AS value FROM restaurant_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2023 GROUP BY area_name, series ORDER BY area_name, series;"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_groupedBarChart_simple_3D_010",
+      "dataset": "private-rent",
+      "time_period": "2023",
+      "variables_needed": [
+        "Area",
+        "Average (£)",
+        "Year"
+      ],
+      "chart_type": "groupedBarChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, property_type AS series, AVG(average_rent) AS value, '2023' AS dimension FROM rent_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY area_name, property_type ORDER BY area_name, property_type;"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_groupedBarChart_simple_2D_011",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "borough_name",
+        "gym_type",
+        "facility_count"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, facility_type AS series, COUNT(*) AS value FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024 GROUP BY borough_name, facility_type ORDER BY borough_name, facility_type;"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_groupedBarChart_simple_2D_012",
+      "dataset": "libraries",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "Library visits per 1,000 population"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, library_name AS series, (visitor_count / 1000.0) AS value FROM library_data GROUP BY area_name, library_name ORDER BY area_name, library_name;"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_groupedBarChart_simple_3D_013",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "month",
+        "count"
+      ],
+      "chart_type": "groupedBarChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, borough_name AS series, SUM(count) AS value, DATE_FORMAT(date, '%Y-%m') AS dimension FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category, borough_name, DATE_FORMAT(date, '%Y-%m') ORDER BY crime_category, borough_name, dimension;"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_groupedBarChart_simple_2D_014",
+      "dataset": "ethnicity",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "All usual residents"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, ethnic_group AS series, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group IN ('White British', 'All usual residents') GROUP BY area_name, ethnic_group ORDER BY area_name, ethnic_group;"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_groupedBarChart_simple_3D_015",
+      "dataset": "country-of-births",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "groupedBarChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT Area_Name AS category, Broad_group AS series, SUM(Estimate) AS value, '3D' AS dimension FROM birth_country_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' GROUP BY Area_Name, Broad_group ORDER BY Area_Name, Broad_group;"
+    },
+    {
+      "proposition_id": "population_chart_analysis_groupedBarChart_simple_2D_016",
+      "dataset": "population",
+      "time_period": "2010-2020",
+      "variables_needed": [
+        "area",
+        "2010",
+        "2020"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, date AS series, SUM(population_count) AS value FROM population_data WHERE date IN (2010, 2020) GROUP BY area_name, date ORDER BY area_name, date;"
+    },
+    {
+      "proposition_id": "income_chart_analysis_groupedBarChart_simple_2D_017",
+      "dataset": "income",
+      "time_period": "2023",
+      "variables_needed": [
+        "borough_name",
+        "average_income",
+        "London_average"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, 'Average Income' AS series, average_income AS value FROM income_data WHERE date = '2023' UNION ALL SELECT borough_name AS category, 'London Average' AS series, London_average AS value FROM income_data WHERE date = '2023' ORDER BY category, series;"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_groupedBarChart_simple_3D_018",
+      "dataset": "house-prices",
+      "time_period": "2018-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "groupedBarChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, YEAR(date) AS series, AVG(average_price) AS value, 'Year' AS dimension FROM house_price_data WHERE date BETWEEN '2018-01-01' AND '2023-12-31' GROUP BY area_name, YEAR(date) ORDER BY area_name, YEAR(date);"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_groupedBarChart_simple_2D_019",
+      "dataset": "schools-colleges",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "LANAME",
+        "enrolment_numbers"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, institution_name AS series, SUM(student_count) AS value FROM education_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY borough_name, institution_name ORDER BY borough_name, institution_name;"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_groupedBarChart_simple_3D_020",
+      "dataset": "vehicles",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "Local Authority",
+        "Hybrid"
+      ],
+      "chart_type": "groupedBarChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, vehicle_type AS series, SUM(registration_count) AS value, '2019-2023' AS dimension FROM vehicle_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' AND vehicle_type = 'Hybrid' GROUP BY borough_name, vehicle_type ORDER BY borough_name, vehicle_type;"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_groupedBarChart_simple_2D_021",
+      "dataset": "restaurants",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Area name",
+        "Licensed Restaurants Employment"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, 'Licensed Restaurants Employment' AS series, SUM(restaurant_count) AS value FROM restaurant_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_groupedBarChart_simple_2D_022",
+      "dataset": "private-rent",
+      "time_period": "2023",
+      "variables_needed": [
+        "Area",
+        "Median (£)"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, property_type AS series, AVG(median_rent) AS value FROM rent_data WHERE DATE_FORMAT(date, '%Y') = '2023' GROUP BY area_name, property_type ORDER BY area_name, property_type;"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_groupedBarChart_simple_3D_023",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "borough_name",
+        "gym_type",
+        "facility_count"
+      ],
+      "chart_type": "groupedBarChart_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, facility_type AS series, COUNT(gym_name) AS value, '2024' AS dimension FROM gym_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2024 GROUP BY borough_name, facility_type ORDER BY borough_name, facility_type;"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_groupedBarChart_simple_2D_024",
+      "dataset": "libraries",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "Library visits per 1,000 population"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, library_name AS series, SUM(visitor_count) AS value FROM library_data GROUP BY area_name, library_name ORDER BY area_name, library_name;"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_groupedBarChart_simple_2D_025",
+      "dataset": "crime-rates",
+      "time_period": "2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "count"
+      ],
+      "chart_type": "groupedBarChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, borough_name AS series, SUM(count) AS value FROM crime_data WHERE YEAR(date) = 2023 GROUP BY crime_category, borough_name ORDER BY crime_category, borough_name;"
+    }
+  ]
+}

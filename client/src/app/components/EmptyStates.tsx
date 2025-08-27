@@ -110,9 +110,10 @@ interface TimelineVisualizationProps {
   activePath?: string[]; // Active path for highlighting
   isLoading?: boolean; // Loading state for LLM processing
   onPathSwitch?: (nodeId: string, newActivePath: string[]) => void; // Add callback for path switching
+  onNodeHighlight?: (sentenceContent: string) => void; // NEW: Callback to highlight sentence in narrative layer
 }
 
-export const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({ nodes, pageId, activePath = [], isLoading = false, onPathSwitch }) => {
+export const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({ nodes, pageId, activePath = [], isLoading = false, onPathSwitch, onNodeHighlight }) => {
   // Use React Flow for better zoom/pan control and automatic layout management
   return (
     <div className="h-full w-full">
@@ -122,6 +123,7 @@ export const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({ no
         activePath={activePath}
         isLoading={isLoading}
         onPathSwitch={onPathSwitch}
+        onNodeHighlight={onNodeHighlight}
       />
     </div>
   );

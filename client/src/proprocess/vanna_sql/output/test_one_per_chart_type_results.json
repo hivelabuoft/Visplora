@@ -1,0 +1,1876 @@
+{
+  "consolidation_metadata": {
+    "processed_at": "2025-08-20T15:29:39.757168",
+    "total_propositions": 29,
+    "propositions_with_mean_sql": 5,
+    "propositions_with_threshold": 4,
+    "chart_types_processed": 29
+  },
+  "statistics": {
+    "by_chart_type": {
+      "scatterPlot_with_mean_2D": 1,
+      "donutChart_simple_2D": 1,
+      "barChart_with_mean_2D": 1,
+      "barChart_simple_2D": 1,
+      "lineChart_simple_3D": 1,
+      "barChart_simple_3D": 1,
+      "comboBarLine_with_threshold_2D": 1,
+      "lineChart_simple_2D": 1,
+      "histogramHeatmap_simple_2D": 1,
+      "areaChart_simple_2D": 1,
+      "areaChart_simple_3D": 1,
+      "comboBarLine_simple_2D": 1,
+      "comboBarLine_simple_3D": 1,
+      "groupedBarChart_simple_2D": 1,
+      "divergentBarChart_simple_2D": 1,
+      "histogram_simple_2D": 1,
+      "scatterPlot_simple_2D": 1,
+      "lineChart_with_mean_2D": 1,
+      "multiLineChart_simple_2D": 1,
+      "multiLineChart_simple_3D": 1,
+      "comboBarLine_with_mean_2D": 1,
+      "groupedBarChart_simple_3D": 1,
+      "divergentBarChart_with_threshold_2D": 1,
+      "scatterPlot_with_threshold_2D": 1,
+      "divergentBarChart_with_mean_2D": 1,
+      "areaChart_stacked_2D": 1,
+      "lineChart_with_threshold_2D": 1,
+      "scatterPlot_simple_3D": 1,
+      "divergentBarChart_simple_3D": 1
+    },
+    "enhancement_breakdown": {
+      "with_mean_sql": 5,
+      "with_threshold_only": 4,
+      "with_both_mean_and_threshold": 0,
+      "simple_charts": 20
+    }
+  },
+  "consolidated_propositions": [
+    {
+      "proposition_id": "country-of-births_borough_origin_scatterPlot_with_mean_2D_003",
+      "proposition_description": "Westminster has a diverse population with significant representation from European countries",
+      "reasoning": "The mean overlay provides a baseline to understand the diversity level compared to other boroughs",
+      "chart_type": "scatterPlot_with_mean_2D",
+      "chart_title": "Diverse Origins in Westminster",
+      "chart_description": "Scatter plot showing the country of birth distribution in Westminster with a mean overlay",
+      "sql_query": "```sql\nSELECT Area_Name AS category, \n       AVG(CAST(Estimate AS INTEGER)) AS x_value, \n       COUNT(*) AS y_value \nFROM birth_country_data \nWHERE Year = 2022 \nGROUP BY Area_Name \nORDER BY Area_Name;\n```",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "with_mean": "SELECT AVG(value) as mean_value FROM birth_country_data;",
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_001",
+      "proposition_description": "In 2018, European countries emerged as the predominant birth origin, representing a significant portion of all births.",
+      "reasoning": "A donut chart effectively illustrates the proportion of births by origin, emphasizing Europe's share within the total distribution.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Birth Origins in 2018: European Dominance",
+      "chart_description": "Visualizing the distribution of birth origins in 2018, highlighting Europe's prominence.",
+      "sql_query": "```sql\nSELECT \n    Area_Name AS category, \n    SUM(CASE WHEN Estimate != ':' THEN CAST(Estimate AS INTEGER) ELSE 0 END) AS value, \n    (SUM(CASE WHEN Estimate != ':' THEN CAST(Estimate AS INTEGER) ELSE 0 END) / \n    (SELECT SUM(CASE WHEN Estimate != ':' THEN CAST(Estimate AS INTEGER) ELSE 0 END) FROM dataset_name WHERE Year = 2018)) * 100 AS percentage \nFROM \n    dataset_name \nWHERE \n    Year = 2018 \nGROUP BY \n    Area_Name \nORDER BY \n    value DESC;\n```\n\nNote: Replace `dataset_name` with the actual table name used in your database.",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "London-wide",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_003",
+      "proposition_description": "Asian countries have a noticeably higher birth rate in inner London compared to outer London during 2018.",
+      "reasoning": "A bar chart with a mean line effectively highlights the difference in birth rates between two geographic areas, allowing for easy comparison against the average.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Birth Rate Comparison: Inner vs Outer London",
+      "chart_description": "Explore how birth rates differ between inner and outer London for Asian countries in 2018.",
+      "sql_query": "```sql\nSELECT \n    Area_Name AS category, \n    SUM(CAST(Estimate AS INTEGER)) AS value, \n    AVG(SUM(CAST(Estimate AS INTEGER))) OVER () AS mean_value \nFROM \n    birth_country_data \nWHERE \n    Year = 2018 \nGROUP BY \n    Area_Name \nORDER BY \n    value DESC;\n```",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "with_mean": "SELECT AVG(value) as mean_value FROM birth_country_data;",
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_005",
+      "proposition_description": "In 2018, births in Lambeth and Southwark showed a notable contribution from South American countries.",
+      "reasoning": "A bar chart effectively compares categorical data, highlighting the contribution of different regions to births.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Births by Region in Lambeth and Southwark, 2018",
+      "chart_description": "Visualizing the contribution of South American births in 2018.",
+      "sql_query": "```sql\nSELECT Area_Name AS category, SUM(CAST(Estimate AS INTEGER)) AS value \nFROM birth_country_data \nWHERE Year = 2018 AND Area_Name IN ('Lambeth', 'Southwark') \nGROUP BY Area_Name \nORDER BY value DESC;\n```",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_009",
+      "proposition_description": "There was a noticeable rise in the proportion of births from Middle Eastern countries between 2017 and 2018.",
+      "reasoning": "A line chart effectively illustrates trends over time, and the 3D aspect allows for additional breakdowns, such as by specific countries or demographic details, enhancing the analysis.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Trends in Births from Middle Eastern Countries",
+      "chart_description": "Explore the increase in births from Middle Eastern origins from 2017 to 2018.",
+      "sql_query": "```sql\nSELECT Year AS time, Estimate AS value, Area_Name AS dimension \nFROM country_of_births \nWHERE Year BETWEEN 2017 AND 2018 \nAND Broad_group = 'Middle Eastern' \nGROUP BY Year, Area_Name \nORDER BY Year, Area_Name;\n```",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017-2018",
+      "geographic_level": "London-wide",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_012",
+      "proposition_description": "In 2018, births from Asian countries were distributed quite evenly across London, with no borough dominating the total share.",
+      "reasoning": "A 3D bar chart effectively illustrates the distribution across boroughs and can include an additional dimension for deeper analysis.",
+      "chart_type": "barChart_simple_3D",
+      "chart_title": "Distribution of Asian Births Across London Boroughs",
+      "chart_description": "Visualizing the even spread of Asian births in London boroughs for 2018.",
+      "sql_query": "```sql\nSELECT Detailed_group AS category, SUM(CAST(Estimate AS INTEGER)) AS value, Area_Name AS dimension\nFROM country_of_births\nWHERE Year = 2018 AND Broad_group = 'Asian'\nGROUP BY Detailed_group, Area_Name\nORDER BY value DESC;\n```",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_comboBarLine_015",
+      "proposition_description": "South Asian communities dominate in certain London boroughs since 2020",
+      "reasoning": "The threshold line highlights boroughs where South Asian communities surpass a significant population percentage",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Dominance of South Asian Communities in London",
+      "chart_description": "Bar chart shows number of South Asian-born residents, line chart shows percentage of total population with threshold",
+      "sql_query": "```sql\nSELECT \n    Area_Name AS category, \n    SUM(CASE WHEN Broad_group = 'Bar' THEN CAST(Estimate AS INTEGER) ELSE 0 END) AS bar_value, \n    SUM(CASE WHEN Broad_group = 'Line' THEN CAST(Estimate AS INTEGER) ELSE 0 END) AS line_value \nFROM \n    birth_country_data \nWHERE \n    Year BETWEEN 2020 AND 2023 \nGROUP BY \n    Area_Name \nORDER BY \n    Area_Name;\n```",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": true
+    },
+    {
+      "proposition_id": "country-of-births_cross_dimensional_cd_001",
+      "proposition_description": "During the spring months of 2018, inner London boroughs experienced a noticeably higher number of births from European countries compared to other times of the year.",
+      "reasoning": "A line chart effectively illustrates the temporal trend of births across different months, highlighting seasonal variations.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Birth Trends in Inner London, 2018",
+      "chart_description": "Births from European countries peaked in spring in inner London.",
+      "sql_query": "```sql\nSELECT Year AS time, SUM(CAST(Estimate AS INTEGER)) AS value\nFROM country_of_births\nWHERE Year = 2018\nGROUP BY Year\nORDER BY Year;\n```",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_categorical_analysis_cat_005",
+      "proposition_description": "Violent crime incidents show a more uniform distribution across boroughs, whereas theft-from-the-person is concentrated in specific areas.",
+      "reasoning": "A histogram heatmap effectively shows the distribution and concentration of different crime types across boroughs, highlighting patterns and disparities.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Distribution of Crime Types Across Boroughs",
+      "chart_description": "Visualize how violent crimes and thefts are spread across different boroughs.",
+      "sql_query": "```sql\nSELECT crime_category AS x_bin, borough_name AS y_bin, COUNT(*) AS count \nFROM crime_data \nGROUP BY crime_category, borough_name \nORDER BY crime_category, borough_name;\n```",
+      "example": [
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        },
+        {
+          "x_bin": "",
+          "y_bin": "",
+          "count": 0
+        }
+      ],
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_areaChart_simple_2D_001",
+      "proposition_description": "Knife crime incidents in Lambeth surged by 30% from 2022 to 2023",
+      "reasoning": "The area chart effectively illustrates the growing number of incidents over time, highlighting periods of steep increase.",
+      "chart_type": "areaChart_simple_2D",
+      "chart_title": "Knife Crime Trend in Lambeth",
+      "chart_description": "The area chart shows the increase in knife crime incidents in Lambeth over the past two years.",
+      "sql_query": "```sql\nSELECT DATE_TRUNC('month', TO_DATE(date || '-01', 'YYYY-MM-DD')) AS time, COUNT(*) AS value \nFROM crime_data \nWHERE date BETWEEN '2022-01' AND '2023-12' \nAND borough_name = 'Lambeth' \nAND crime_category = 'knife-crime' \nGROUP BY time \nORDER BY time;\n```",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "month"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_areaChart_simple_3D_011",
+      "proposition_description": "Theft and burglary incidents in Croydon peaked during winter months in 2022",
+      "reasoning": "The 3D aspect allows for a detailed view of seasonal variations across multiple categories.",
+      "chart_type": "areaChart_simple_3D",
+      "chart_title": "Seasonal Peaks in Theft and Burglary in Croydon",
+      "chart_description": "This 3D area chart illustrates the peak in theft and burglary incidents during winter months.",
+      "sql_query": "```sql\nSELECT date AS time, COUNT(*) AS value, crime_category AS dimension \nFROM crime_data \nWHERE year = 2022 \nAND borough_name = 'Croydon' \nAND crime_category IN ('theft', 'burglary') \nGROUP BY date, crime_category \nORDER BY date, crime_category;\n```",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "month"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_001",
+      "proposition_description": "Westminster experiences a surge in crime during the summer months with stable crime rates per capita throughout the year",
+      "reasoning": "This combination separates seasonal volume changes from population-adjusted rates, highlighting Westminster's unique seasonal crime trends",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Seasonal Crime Volume vs Rate in Westminster",
+      "chart_description": "Bar chart shows monthly crime counts, line chart shows monthly crime rate per 1000 residents",
+      "sql_query": "```sql\nSELECT \n    crime_category AS category, \n    COUNT(*) AS bar_value, \n    month AS line_value \nFROM \n    crime_data \nWHERE \n    borough_name = 'Westminster' AND \n    date BETWEEN '2022-01' AND '2023-12' \nGROUP BY \n    crime_category, month \nORDER BY \n    crime_category, line_value;\n```",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "variables_needed": [
+        "crime_category",
+        "count",
+        "borough_name",
+        "month"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_013",
+      "proposition_description": "Violent crime rates peaked in summer months across London boroughs",
+      "reasoning": "The 3D chart provides depth by showing monthly trends, crucial for understanding seasonal crime dynamics",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Seasonal Trends in Violent Crime Rates",
+      "chart_description": "Bar chart shows monthly crime counts, line chart shows crime rate per 1000 residents with month as 3D dimension",
+      "sql_query": "```sql\nSELECT crime_category_name AS category, \n       COUNT(*) AS bar_value, \n       AVG(COUNT(*)) OVER (PARTITION BY crime_category_name, borough_name) AS line_value, \n       borough_name AS dimension \nFROM crime_data \nWHERE date BETWEEN '2022-01' AND '2023-12' \nGROUP BY crime_category_name, borough_name \nORDER BY category, dimension;\n```",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        }
+      ],
+      "variables_needed": [
+        "crime_category",
+        "count",
+        "borough_name",
+        "month"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_groupedBarChart_simple_2D_001",
+      "proposition_description": "Hackney reports the highest theft rates in 2023 among London boroughs",
+      "reasoning": "A grouped bar chart allows for a clear side-by-side comparison of theft rates in each borough",
+      "chart_type": "groupedBarChart_simple_2D",
+      "chart_title": "Theft Rates Across London Boroughs in 2023",
+      "chart_description": "Comparative analysis of theft incidents reported by each borough in 2023",
+      "sql_query": "```sql\nSELECT \n    crime_category AS category, \n    borough_name AS series, \n    COUNT(*) AS value \nFROM \n    crime_data \nWHERE \n    year = 2023 \nGROUP BY \n    crime_category, \n    borough_name \nORDER BY \n    crime_category, \n    borough_name;\n```",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "count"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_crime_category_divergentBarChart_simple_2D_001",
+      "proposition_description": "Knife crime incidents in Lambeth exceeded the London average in 2023",
+      "reasoning": "This chart highlights deviations from the average, effectively showing areas with higher crime rates",
+      "chart_type": "divergentBarChart_simple_2D",
+      "chart_title": "Knife Crime Deviations in Lambeth",
+      "chart_description": "A divergent bar chart showing how knife crime incidents in Lambeth compare to the London average",
+      "sql_query": "```sql\nSELECT \n    crime_category AS category, \n    COUNT(*) AS positive_value, \n    0 AS negative_value \nFROM \n    crime_data \nWHERE \n    year = 2023 \n    AND borough_name = 'Lambeth' \n    AND crime_category = 'knife-crime' \nGROUP BY \n    crime_category \nORDER BY \n    category;\n```",
+      "example": [
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        },
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        }
+      ],
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "crime_category_name"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_statistical_patterns_stat_001",
+      "proposition_description": "Crime incidents in London are generally distributed around a central value, with a tendency for more incidents to occur at higher counts.",
+      "reasoning": "A histogram is ideal for showing the distribution of crime incidents, highlighting the central tendency and any skewness.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Distribution of Crime Incidents in London",
+      "chart_description": "Visualizing the frequency of crime incidents across different count ranges in London.",
+      "sql_query": "```sql\nSELECT crime_category AS bin, COUNT(*) AS frequency \nFROM crime_data \nGROUP BY crime_category \nORDER BY frequency DESC;\n```",
+      "example": [
+        {
+          "bin": "",
+          "frequency": 0
+        },
+        {
+          "bin": "",
+          "frequency": 0
+        }
+      ],
+      "variables_needed": [
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "London-wide",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_statistical_patterns_stat_004",
+      "proposition_description": "Higher population density areas in London tend to experience more incidents of violent crime.",
+      "reasoning": "A scatter plot effectively illustrates the relationship between two quantitative variables, such as population density and crime incidents.",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Population Density vs. Violent Crime in London",
+      "chart_description": "Exploring the relationship between population density and violent crime incidents across London.",
+      "sql_query": "```sql\nSELECT \n    crime_category AS category, \n    area_name AS x_value, \n    COUNT(*) AS y_value \nFROM \n    crime_data \nWHERE \n    date BETWEEN '2022-01' AND '2023-12'\nGROUP BY \n    crime_category, area_name \nORDER BY \n    crime_category, area_name;\n```",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "variables_needed": [
+        "crime_category",
+        "area_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "LSOA",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_trend_lineChart_with_mean_2D_016",
+      "proposition_description": "Violent crime rates in Westminster consistently above London average from 2020 to 2023",
+      "reasoning": "Adding a mean line provides context by showing how Westminster compares to the overall average.",
+      "chart_type": "lineChart_with_mean_2D",
+      "chart_title": "Violent Crime Rates in Westminster vs London Average",
+      "chart_description": "This chart compares violent crime rates in Westminster to the London average over recent years.",
+      "sql_query": "```sql\nSELECT year AS time, AVG(crime_rate) AS value \nFROM crime_data \nWHERE date BETWEEN '2020-01' AND '2023-12' \nAND borough_name = 'Westminster' \nAND crime_category_name = 'Violent crime'\nGROUP BY year \nORDER BY time;\n```",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "variables_needed": [
+        "borough_name",
+        "crime_category_name",
+        "year",
+        "crime_rate"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "with_mean": "SELECT AVG(value) as mean_value FROM crime_data;",
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_trends_multiLineChart_simple_2D_001",
+      "proposition_description": "London's violent crime rates surged in 2023 compared to previous years",
+      "reasoning": "A multi-line chart is suitable for visualizing trends across multiple boroughs over time.",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Trends in Violent Crime Rates Across London",
+      "chart_description": "This chart compares violent crime rates over time across various London boroughs.",
+      "sql_query": "```sql\nSELECT \n    year AS time, \n    CONCAT(borough_name, ' - ', crime_category) AS series, \n    COUNT(*) AS value \nFROM \n    crime_data \nWHERE \n    year BETWEEN 2022 AND 2023 \nGROUP BY \n    year, borough_name, crime_category \nORDER BY \n    time, series;\n```",
+      "example": [
+        {
+          "time": "",
+          "series": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "series": "",
+          "value": 0
+        }
+      ],
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "crime_rate"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "crime-rates_trends_multiLineChart_simple_3D_013",
+      "proposition_description": "Theft-related crimes peak in December across London boroughs",
+      "reasoning": "A 3D chart allows for the visualization of monthly crime patterns across multiple boroughs.",
+      "chart_type": "multiLineChart_simple_3D",
+      "chart_title": "Seasonal Peaks in Theft-related Crimes in London",
+      "chart_description": "This 3D chart shows theft-related crime trends across London boroughs, highlighting peaks in December.",
+      "sql_query": "```sql\nSELECT \n    date AS time, \n    crime_category_name AS series, \n    COUNT(*) AS value, \n    borough_name AS dimension \nFROM \n    crime_data \nWHERE \n    date BETWEEN '2022-01' AND '2023-12' \n    AND crime_category_name LIKE '%theft%' \nGROUP BY \n    date, crime_category_name, borough_name \nORDER BY \n    time, series, dimension;\n```",
+      "example": [
+        {
+          "time": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "month",
+        "crime_rate"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_014",
+      "proposition_description": "Diversity in London boroughs is highest in Hackney and Haringey",
+      "reasoning": "The mean overlay helps compare borough diversity against the average, emphasizing Hackney and Haringey's diversity",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Diversity Levels in Hackney and Haringey",
+      "chart_description": "Bar chart shows number of ethnic groups, line chart shows diversity index with mean overlay",
+      "sql_query": "```sql\nSELECT \n    \"local authority name\" AS category, \n    SUM(\"All usual residents\") AS bar_value, \n    AVG(\"All usual residents\") AS line_value \nFROM \n    (SELECT \n        \"local authority name\", \n        \"All usual residents\", \n        CASE \n            WHEN \"White British\" + \"White Irish\" + \"White Gypsy/Irish Traveller\" + \"White Roma\" + \"White Other\" > 0 THEN 'White'\n            WHEN \"Mixed White and Asian\" + \"Mixed White and Black African\" + \"Mixed White and Black Caribbean\" + \"Mixed Other\" > 0 THEN 'Mixed'\n            WHEN \"Asian Bangladeshi\" + \"Asian Chinese\" + \"Asian Indian\" + \"Asian Pakistani\" + \"Asian Other\" > 0 THEN 'Asian'\n            WHEN \"Black African\" + \"Black Caribbean\" + \"Black Other\" > 0 THEN 'Black'\n            WHEN \"Other Arab\" + \"Other Any other\" > 0 THEN 'Other'\n            ELSE 'Unknown'\n        END AS Broad_group\n    FROM \n        ethnicity_data\n    ) AS subquery\nWHERE \n    \"local authority name\" IN ('Hackney', 'Haringey')\nGROUP BY \n    \"local authority name\"\nORDER BY \n    \"local authority name\";\n```",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "variables_needed": [
+        "local authority name",
+        "Broad_group"
+      ],
+      "time_period": "2021",
+      "geographic_level": "Borough",
+      "with_mean": "SELECT AVG(value) as mean_value FROM ethnicity_data;",
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_groupedBarChart_simple_3D_002",
+      "proposition_description": "Ethnic diversity peaks in Newham and Tower Hamlets with significant White and Asian populations",
+      "reasoning": "3D visualization highlights the diversity within boroughs by displaying multiple ethnic groups",
+      "chart_type": "groupedBarChart_simple_3D",
+      "chart_title": "Ethnic Group Distribution in Newham and Tower Hamlets",
+      "chart_description": "3D grouped bar chart showing the ethnic composition of Newham and Tower Hamlets",
+      "sql_query": "```sql\nSELECT \n    \"local authority name\" AS category, \n    'White British' AS series, \n    SUM(\"White British\") AS value, \n    'ethnicity' AS dimension \nFROM \n    ethnicity_data \nGROUP BY \n    \"local authority name\"\nUNION ALL\nSELECT \n    \"local authority name\" AS category, \n    'Asian' AS series, \n    SUM(\"Asian Bangladeshi\" + \"Asian Chinese\" + \"Asian Indian\" + \"Asian Pakistani\" + \"Asian Other\") AS value, \n    'ethnicity' AS dimension \nFROM \n    ethnicity_data \nGROUP BY \n    \"local authority name\"\nUNION ALL\nSELECT \n    \"local authority name\" AS category, \n    'Black' AS series, \n    SUM(\"Black African\" + \"Black Caribbean\" + \"Black Other\") AS value, \n    'ethnicity' AS dimension \nFROM \n    ethnicity_data \nGROUP BY \n    \"local authority name\"\nUNION ALL\nSELECT \n    \"local authority name\" AS category, \n    'Mixed' AS series, \n    SUM(\"Mixed White and Asian\" + \"Mixed White and Black African\" + \"Mixed White and Black Caribbean\" + \"Mixed Other\") AS value, \n    'ethnicity' AS dimension \nFROM \n    ethnicity_data \nGROUP BY \n    \"local authority name\"\nORDER BY \n    category, series;\n```",
+      "example": [
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "series": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "Asian",
+        "Black",
+        "Mixed"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "house-prices_property_value_divergentBarChart_with_threshold_2D_003",
+      "proposition_description": "House prices in Kensington and Chelsea remain significantly above the London threshold in 2023",
+      "reasoning": "Highlights deviations above a defined threshold, useful for emphasizing high property values",
+      "chart_type": "divergentBarChart_with_threshold_2D",
+      "chart_title": "Kensington and Chelsea House Prices vs London Threshold",
+      "chart_description": "A divergent bar chart showing property prices in Kensington and Chelsea in comparison to a set threshold",
+      "sql_query": "```sql\nSELECT \n    Area AS category, \n    AVG(CASE WHEN CAST(REPLACE(Value, ',', '') AS DECIMAL) >= 0 THEN CAST(REPLACE(Value, ',', '') AS DECIMAL) ELSE 0 END) AS positive_value, \n    AVG(CASE WHEN CAST(REPLACE(Value, ',', '') AS DECIMAL) < 0 THEN CAST(REPLACE(Value, ',', '') AS DECIMAL) ELSE 0 END) AS negative_value \nFROM \n    house_prices \nWHERE \n    Year = 'Year ending Dec 2023' \nGROUP BY \n    Area \nORDER BY \n    category;\n```",
+      "example": [
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        },
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        }
+      ],
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": true
+    },
+    {
+      "proposition_id": "income_borough_variation_scatterPlot_with_threshold_2D_005",
+      "proposition_description": "Income levels in Kensington and Chelsea consistently exceed London averages",
+      "reasoning": "Threshold lines help to visualize how income levels compare to a standard benchmark",
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "chart_title": "Kensington and Chelsea Income Levels",
+      "chart_description": "Scatter plot showing income levels in Kensington and Chelsea with a threshold line indicating London averages",
+      "sql_query": "```sql\nSELECT \n    \"Unnamed: 1\" AS category, \n    '2022-23' AS x_value, \n    \"Unnamed: 69\" AS y_value \nFROM \n    income_data \nWHERE \n    \"Unnamed: 1\" = 'Kensington and Chelsea'\nUNION ALL\nSELECT \n    \"Unnamed: 1\" AS category, \n    '2022-23' AS x_value, \n    AVG(\"Unnamed: 69\") AS y_value \nFROM \n    income_data \nWHERE \n    \"Unnamed: 1\" LIKE '%London%'\nGROUP BY \n    \"Unnamed: 1\";\n```\n\nThis query selects the income data for the year `2022-23` for Kensington and Chelsea and compares it to the average income for areas containing 'London' in their name. The column names are adjusted to match the dataset's structure.",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": true
+    },
+    {
+      "proposition_id": "income_wage_trends_divergentBarChart_with_mean_2D_002",
+      "proposition_description": "Inner London boroughs show a significant income rise above the mean from 2020 to 2023",
+      "reasoning": "Visualizes income changes against the mean, highlighting areas of significant economic growth",
+      "chart_type": "divergentBarChart_with_mean_2D",
+      "chart_title": "Income Growth Above Mean in Inner London",
+      "chart_description": "Divergent bar chart comparing income changes in Inner London boroughs against the average",
+      "sql_query": "```sql\nSELECT \n    \"Unnamed: 1\" AS category, \n    AVG(CASE WHEN \"Unnamed: 63\" > (SELECT AVG(\"Unnamed: 63\") FROM income_data) THEN \"Unnamed: 63\" ELSE 0 END) AS positive_value, \n    AVG(CASE WHEN \"Unnamed: 63\" <= (SELECT AVG(\"Unnamed: 63\") FROM income_data) THEN \"Unnamed: 63\" ELSE 0 END) AS negative_value \nFROM \n    income_data \nWHERE \n    \"Unnamed: 1\" IS NOT NULL \nGROUP BY \n    \"Unnamed: 1\" \nORDER BY \n    \"Unnamed: 1\";\n```\n\nExplanation:\n- The `borough_name` is replaced with `\"Unnamed: 1\"` which corresponds to the `Area` column.\n- The income data for the year 2020-21 is in the column `\"Unnamed: 63\"`.\n- The query calculates the average income for each area, categorizing them based on whether they are above or below the average income for that year.\n- The date filtering is not needed as the dataset is structured by year columns.",
+      "example": [
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        },
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0
+        }
+      ],
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "income"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "with_mean": "SELECT AVG(value) as mean_value FROM income_data;",
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "population_chart_analysis_areaChart_stacked_2D_004",
+      "proposition_description": "Overall population in Croydon grew by 15% between 2000 and 2020 with significant youth increase",
+      "reasoning": "Stacked area charts display the contribution of each age group to the total population growth.",
+      "chart_type": "areaChart_stacked_2D",
+      "chart_title": "Population Growth in Croydon by Age Group",
+      "chart_description": "The stacked area chart shows the growth in Croydon's population, highlighting the youth demographic.",
+      "sql_query": "```sql\nSELECT \n    '2000-2020' AS time, \n    SUM(CAST(REPLACE(\"2001\", ',', '') AS INTEGER) + CAST(REPLACE(\"2011\", ',', '') AS INTEGER)) AS value \nFROM \n    population_data \nWHERE \n    area = 'Croydon';\n```",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "variables_needed": [
+        "area",
+        "year",
+        "age_group",
+        "population"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "restaurants_trend_lineChart_with_threshold_2D_020",
+      "proposition_description": "Licensed restaurant employment in Westminster surpassed 10,000 jobs in 2022",
+      "reasoning": "A threshold line emphasizes the significant milestone in employment figures.",
+      "chart_type": "lineChart_with_threshold_2D",
+      "chart_title": "Restaurant Employment Growth in Westminster",
+      "chart_description": "This chart shows the growth of employment in licensed restaurants in Westminster, highlighting when it surpassed 10,000 jobs.",
+      "sql_query": "```sql\nSELECT \n    '2010' AS time, SUM(\"2010\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2010\" > 10000\nUNION ALL\nSELECT \n    '2011' AS time, SUM(\"2011\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2011\" > 10000\nUNION ALL\nSELECT \n    '2012' AS time, SUM(\"2012\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2012\" > 10000\nUNION ALL\nSELECT \n    '2013' AS time, SUM(\"2013\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2013\" > 10000\nUNION ALL\nSELECT \n    '2014' AS time, SUM(\"2014\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2014\" > 10000\nUNION ALL\nSELECT \n    '2015' AS time, SUM(\"2015\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2015\" > 10000\nUNION ALL\nSELECT \n    '2016' AS time, SUM(\"2016\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2016\" > 10000\nUNION ALL\nSELECT \n    '2017' AS time, SUM(\"201",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Licensed Restaurants Employment"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": true
+    },
+    {
+      "proposition_id": "vehicles_registration_trend_scatterPlot_simple_3D_008",
+      "proposition_description": "Electric vehicle registrations have surged in London since 2020, with the highest growth in Westminster",
+      "reasoning": "A 3D scatter plot can effectively show trends over time and across categories",
+      "chart_type": "scatterPlot_simple_3D",
+      "chart_title": "Electric Vehicle Registration Surge",
+      "chart_description": "3D scatter plot showing electric vehicle registration trends across London boroughs, focusing on Westminster",
+      "sql_query": "```sql\nSELECT \n    \"Local Authority\" AS category, \n    '2020-2023' AS x_value, \n    SUM(\"Cars\" + \"Motor cycles\" + \"Light goods\" + \"Heavy goods\" + \"Buses and coaches\" + \"Other vehicles\") AS y_value, \n    'Total Vehicles' AS dimension \nFROM \n    vehicle_data \nGROUP BY \n    \"Local Authority\" \nORDER BY \n    \"Local Authority\";\n```\n\nNote: Since there is no date or year information in the dataset, the query assumes a static period ('2020-2023') for `x_value`. The `dimension` is set to 'Total Vehicles' as a placeholder since individual vehicle types are not aggregated in the original query structure.",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        }
+      ],
+      "variables_needed": [
+        "Local Authority",
+        "Vehicle Type",
+        "Year"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    },
+    {
+      "proposition_id": "vehicles_registration_trends_divergentBarChart_simple_3D_004",
+      "proposition_description": "Electric vehicle registrations surged in 2023, surpassing diesel vehicles in Outer London",
+      "reasoning": "3D chart effectively shows the transition and comparison between different vehicle types over time",
+      "chart_type": "divergentBarChart_simple_3D",
+      "chart_title": "Electric vs Diesel Vehicle Registrations in Outer London",
+      "chart_description": "A 3D divergent bar chart depicting the shift in vehicle registrations from diesel to electric",
+      "sql_query": "```sql\nSELECT \n    \"Local Authority\" AS category, \n    SUM(\"Cars\") AS positive_value, \n    0 AS negative_value, \n    '2023' AS dimension \nFROM \n    vehicle_data \nGROUP BY \n    \"Local Authority\" \nORDER BY \n    \"Local Authority\";\n```\n\nNote: Since there is no `Electric` column or `year` information in the dataset, the `negative_value` is set to 0, and the `dimension` is hardcoded to '2023' based on the query purpose.",
+      "example": [
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "positive_value": 0,
+          "negative_value": 0,
+          "dimension": ""
+        }
+      ],
+      "variables_needed": [
+        "Local Authority",
+        "year",
+        "Cars",
+        "Electric"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "with_mean": null,
+      "with_threshold": false
+    }
+  ],
+  "propositions_by_chart_type": {
+    "scatterPlot_with_mean_2D": [
+      {
+        "proposition_id": "country-of-births_borough_origin_scatterPlot_with_mean_2D_003",
+        "proposition_description": "Westminster has a diverse population with significant representation from European countries",
+        "reasoning": "The mean overlay provides a baseline to understand the diversity level compared to other boroughs",
+        "chart_type": "scatterPlot_with_mean_2D",
+        "chart_title": "Diverse Origins in Westminster",
+        "chart_description": "Scatter plot showing the country of birth distribution in Westminster with a mean overlay",
+        "sql_query": "```sql\nSELECT Area_Name AS category, \n       AVG(CAST(Estimate AS INTEGER)) AS x_value, \n       COUNT(*) AS y_value \nFROM birth_country_data \nWHERE Year = 2022 \nGROUP BY Area_Name \nORDER BY Area_Name;\n```",
+        "example": [
+          {
+            "category": "",
+            "x_value": 0,
+            "y_value": 0
+          },
+          {
+            "category": "",
+            "x_value": 0,
+            "y_value": 0
+          }
+        ],
+        "variables_needed": [
+          "Area_Name",
+          "Broad_group",
+          "Estimate"
+        ],
+        "time_period": "2022",
+        "geographic_level": "Borough",
+        "with_mean": "SELECT AVG(value) as mean_value FROM birth_country_data;",
+        "with_threshold": false
+      }
+    ],
+    "donutChart_simple_2D": [
+      {
+        "proposition_id": "country-of-births_categorical_analysis_ca_001",
+        "proposition_description": "In 2018, European countries emerged as the predominant birth origin, representing a significant portion of all births.",
+        "reasoning": "A donut chart effectively illustrates the proportion of births by origin, emphasizing Europe's share within the total distribution.",
+        "chart_type": "donutChart_simple_2D",
+        "chart_title": "Birth Origins in 2018: European Dominance",
+        "chart_description": "Visualizing the distribution of birth origins in 2018, highlighting Europe's prominence.",
+        "sql_query": "```sql\nSELECT \n    Area_Name AS category, \n    SUM(CASE WHEN Estimate != ':' THEN CAST(Estimate AS INTEGER) ELSE 0 END) AS value, \n    (SUM(CASE WHEN Estimate != ':' THEN CAST(Estimate AS INTEGER) ELSE 0 END) / \n    (SELECT SUM(CASE WHEN Estimate != ':' THEN CAST(Estimate AS INTEGER) ELSE 0 END) FROM dataset_name WHERE Year = 2018)) * 100 AS percentage \nFROM \n    dataset_name \nWHERE \n    Year = 2018 \nGROUP BY \n    Area_Name \nORDER BY \n    value DESC;\n```\n\nNote: Replace `dataset_name` with the actual table name used in your database.",
+        "example": [
+          {
+            "category": "",
+            "value": 0,
+            "percentage": 0
+          },
+          {
+            "category": "",
+            "value": 0,
+            "percentage": 0
+          }
+        ],
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "London-wide",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "barChart_with_mean_2D": [
+      {
+        "proposition_id": "country-of-births_categorical_analysis_ca_003",
+        "proposition_description": "Asian countries have a noticeably higher birth rate in inner London compared to outer London during 2018.",
+        "reasoning": "A bar chart with a mean line effectively highlights the difference in birth rates between two geographic areas, allowing for easy comparison against the average.",
+        "chart_type": "barChart_with_mean_2D",
+        "chart_title": "Birth Rate Comparison: Inner vs Outer London",
+        "chart_description": "Explore how birth rates differ between inner and outer London for Asian countries in 2018.",
+        "sql_query": "```sql\nSELECT \n    Area_Name AS category, \n    SUM(CAST(Estimate AS INTEGER)) AS value, \n    AVG(SUM(CAST(Estimate AS INTEGER))) OVER () AS mean_value \nFROM \n    birth_country_data \nWHERE \n    Year = 2018 \nGROUP BY \n    Area_Name \nORDER BY \n    value DESC;\n```",
+        "example": [
+          {
+            "category": "",
+            "value": 0
+          },
+          {
+            "category": "",
+            "value": 0
+          },
+          {
+            "mean_value": 0
+          }
+        ],
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "with_mean": "SELECT AVG(value) as mean_value FROM birth_country_data;",
+        "with_threshold": false
+      }
+    ],
+    "barChart_simple_2D": [
+      {
+        "proposition_id": "country-of-births_categorical_analysis_ca_005",
+        "proposition_description": "In 2018, births in Lambeth and Southwark showed a notable contribution from South American countries.",
+        "reasoning": "A bar chart effectively compares categorical data, highlighting the contribution of different regions to births.",
+        "chart_type": "barChart_simple_2D",
+        "chart_title": "Births by Region in Lambeth and Southwark, 2018",
+        "chart_description": "Visualizing the contribution of South American births in 2018.",
+        "sql_query": "```sql\nSELECT Area_Name AS category, SUM(CAST(Estimate AS INTEGER)) AS value \nFROM birth_country_data \nWHERE Year = 2018 AND Area_Name IN ('Lambeth', 'Southwark') \nGROUP BY Area_Name \nORDER BY value DESC;\n```",
+        "example": [
+          {
+            "category": "",
+            "value": 0
+          },
+          {
+            "category": "",
+            "value": 0
+          }
+        ],
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "lineChart_simple_3D": [
+      {
+        "proposition_id": "country-of-births_categorical_analysis_ca_009",
+        "proposition_description": "There was a noticeable rise in the proportion of births from Middle Eastern countries between 2017 and 2018.",
+        "reasoning": "A line chart effectively illustrates trends over time, and the 3D aspect allows for additional breakdowns, such as by specific countries or demographic details, enhancing the analysis.",
+        "chart_type": "lineChart_simple_3D",
+        "chart_title": "Trends in Births from Middle Eastern Countries",
+        "chart_description": "Explore the increase in births from Middle Eastern origins from 2017 to 2018.",
+        "sql_query": "```sql\nSELECT Year AS time, Estimate AS value, Area_Name AS dimension \nFROM country_of_births \nWHERE Year BETWEEN 2017 AND 2018 \nAND Broad_group = 'Middle Eastern' \nGROUP BY Year, Area_Name \nORDER BY Year, Area_Name;\n```",
+        "example": [
+          {
+            "time": "",
+            "value": 0,
+            "dimension": ""
+          },
+          {
+            "time": "",
+            "value": 0,
+            "dimension": ""
+          }
+        ],
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017-2018",
+        "geographic_level": "London-wide",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "barChart_simple_3D": [
+      {
+        "proposition_id": "country-of-births_categorical_analysis_ca_012",
+        "proposition_description": "In 2018, births from Asian countries were distributed quite evenly across London, with no borough dominating the total share.",
+        "reasoning": "A 3D bar chart effectively illustrates the distribution across boroughs and can include an additional dimension for deeper analysis.",
+        "chart_type": "barChart_simple_3D",
+        "chart_title": "Distribution of Asian Births Across London Boroughs",
+        "chart_description": "Visualizing the even spread of Asian births in London boroughs for 2018.",
+        "sql_query": "```sql\nSELECT Detailed_group AS category, SUM(CAST(Estimate AS INTEGER)) AS value, Area_Name AS dimension\nFROM country_of_births\nWHERE Year = 2018 AND Broad_group = 'Asian'\nGROUP BY Detailed_group, Area_Name\nORDER BY value DESC;\n```",
+        "example": [
+          {
+            "category": "",
+            "value": 0,
+            "dimension": ""
+          },
+          {
+            "category": "",
+            "value": 0,
+            "dimension": ""
+          }
+        ],
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "comboBarLine_with_threshold_2D": [
+      {
+        "proposition_id": "country-of-births_chart_analysis_comboBarLine_015",
+        "proposition_description": "South Asian communities dominate in certain London boroughs since 2020",
+        "reasoning": "The threshold line highlights boroughs where South Asian communities surpass a significant population percentage",
+        "chart_type": "comboBarLine_with_threshold_2D",
+        "chart_title": "Dominance of South Asian Communities in London",
+        "chart_description": "Bar chart shows number of South Asian-born residents, line chart shows percentage of total population with threshold",
+        "sql_query": "```sql\nSELECT \n    Area_Name AS category, \n    SUM(CASE WHEN Broad_group = 'Bar' THEN CAST(Estimate AS INTEGER) ELSE 0 END) AS bar_value, \n    SUM(CASE WHEN Broad_group = 'Line' THEN CAST(Estimate AS INTEGER) ELSE 0 END) AS line_value \nFROM \n    birth_country_data \nWHERE \n    Year BETWEEN 2020 AND 2023 \nGROUP BY \n    Area_Name \nORDER BY \n    Area_Name;\n```",
+        "example": [
+          {
+            "category": "",
+            "bar_value": 0,
+            "line_value": 0
+          },
+          {
+            "category": "",
+            "bar_value": 0,
+            "line_value": 0
+          }
+        ],
+        "variables_needed": [
+          "Area_Name",
+          "Broad_group",
+          "Estimate"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": true
+      }
+    ],
+    "lineChart_simple_2D": [
+      {
+        "proposition_id": "country-of-births_cross_dimensional_cd_001",
+        "proposition_description": "During the spring months of 2018, inner London boroughs experienced a noticeably higher number of births from European countries compared to other times of the year.",
+        "reasoning": "A line chart effectively illustrates the temporal trend of births across different months, highlighting seasonal variations.",
+        "chart_type": "lineChart_simple_2D",
+        "chart_title": "Seasonal Birth Trends in Inner London, 2018",
+        "chart_description": "Births from European countries peaked in spring in inner London.",
+        "sql_query": "```sql\nSELECT Year AS time, SUM(CAST(Estimate AS INTEGER)) AS value\nFROM country_of_births\nWHERE Year = 2018\nGROUP BY Year\nORDER BY Year;\n```",
+        "example": [
+          {
+            "time": "",
+            "value": 0
+          },
+          {
+            "time": "",
+            "value": 0
+          }
+        ],
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "histogramHeatmap_simple_2D": [
+      {
+        "proposition_id": "crime-rates_categorical_analysis_cat_005",
+        "proposition_description": "Violent crime incidents show a more uniform distribution across boroughs, whereas theft-from-the-person is concentrated in specific areas.",
+        "reasoning": "A histogram heatmap effectively shows the distribution and concentration of different crime types across boroughs, highlighting patterns and disparities.",
+        "chart_type": "histogramHeatmap_simple_2D",
+        "chart_title": "Distribution of Crime Types Across Boroughs",
+        "chart_description": "Visualize how violent crimes and thefts are spread across different boroughs.",
+        "sql_query": "```sql\nSELECT crime_category AS x_bin, borough_name AS y_bin, COUNT(*) AS count \nFROM crime_data \nGROUP BY crime_category, borough_name \nORDER BY crime_category, borough_name;\n```",
+        "example": [
+          {
+            "x_bin": "",
+            "y_bin": "",
+            "count": 0
+          },
+          {
+            "x_bin": "",
+            "y_bin": "",
+            "count": 0
+          }
+        ],
+        "variables_needed": [
+          "crime_category",
+          "borough_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "areaChart_simple_2D": [
+      {
+        "proposition_id": "crime-rates_chart_analysis_areaChart_simple_2D_001",
+        "proposition_description": "Knife crime incidents in Lambeth surged by 30% from 2022 to 2023",
+        "reasoning": "The area chart effectively illustrates the growing number of incidents over time, highlighting periods of steep increase.",
+        "chart_type": "areaChart_simple_2D",
+        "chart_title": "Knife Crime Trend in Lambeth",
+        "chart_description": "The area chart shows the increase in knife crime incidents in Lambeth over the past two years.",
+        "sql_query": "```sql\nSELECT DATE_TRUNC('month', TO_DATE(date || '-01', 'YYYY-MM-DD')) AS time, COUNT(*) AS value \nFROM crime_data \nWHERE date BETWEEN '2022-01' AND '2023-12' \nAND borough_name = 'Lambeth' \nAND crime_category = 'knife-crime' \nGROUP BY time \nORDER BY time;\n```",
+        "example": [
+          {
+            "time": "",
+            "value": 0
+          },
+          {
+            "time": "",
+            "value": 0
+          }
+        ],
+        "variables_needed": [
+          "borough_name",
+          "crime_category",
+          "year",
+          "month"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "areaChart_simple_3D": [
+      {
+        "proposition_id": "crime-rates_chart_analysis_areaChart_simple_3D_011",
+        "proposition_description": "Theft and burglary incidents in Croydon peaked during winter months in 2022",
+        "reasoning": "The 3D aspect allows for a detailed view of seasonal variations across multiple categories.",
+        "chart_type": "areaChart_simple_3D",
+        "chart_title": "Seasonal Peaks in Theft and Burglary in Croydon",
+        "chart_description": "This 3D area chart illustrates the peak in theft and burglary incidents during winter months.",
+        "sql_query": "```sql\nSELECT date AS time, COUNT(*) AS value, crime_category AS dimension \nFROM crime_data \nWHERE year = 2022 \nAND borough_name = 'Croydon' \nAND crime_category IN ('theft', 'burglary') \nGROUP BY date, crime_category \nORDER BY date, crime_category;\n```",
+        "example": [
+          {
+            "time": "",
+            "value": 0,
+            "dimension": ""
+          },
+          {
+            "time": "",
+            "value": 0,
+            "dimension": ""
+          }
+        ],
+        "variables_needed": [
+          "borough_name",
+          "crime_category",
+          "year",
+          "month"
+        ],
+        "time_period": "2022",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "comboBarLine_simple_2D": [
+      {
+        "proposition_id": "crime-rates_chart_analysis_comboBarLine_001",
+        "proposition_description": "Westminster experiences a surge in crime during the summer months with stable crime rates per capita throughout the year",
+        "reasoning": "This combination separates seasonal volume changes from population-adjusted rates, highlighting Westminster's unique seasonal crime trends",
+        "chart_type": "comboBarLine_simple_2D",
+        "chart_title": "Seasonal Crime Volume vs Rate in Westminster",
+        "chart_description": "Bar chart shows monthly crime counts, line chart shows monthly crime rate per 1000 residents",
+        "sql_query": "```sql\nSELECT \n    crime_category AS category, \n    COUNT(*) AS bar_value, \n    month AS line_value \nFROM \n    crime_data \nWHERE \n    borough_name = 'Westminster' AND \n    date BETWEEN '2022-01' AND '2023-12' \nGROUP BY \n    crime_category, month \nORDER BY \n    crime_category, line_value;\n```",
+        "example": [
+          {
+            "category": "",
+            "bar_value": 0,
+            "line_value": 0
+          },
+          {
+            "category": "",
+            "bar_value": 0,
+            "line_value": 0
+          }
+        ],
+        "variables_needed": [
+          "crime_category",
+          "count",
+          "borough_name",
+          "month"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "comboBarLine_simple_3D": [
+      {
+        "proposition_id": "crime-rates_chart_analysis_comboBarLine_013",
+        "proposition_description": "Violent crime rates peaked in summer months across London boroughs",
+        "reasoning": "The 3D chart provides depth by showing monthly trends, crucial for understanding seasonal crime dynamics",
+        "chart_type": "comboBarLine_simple_3D",
+        "chart_title": "Seasonal Trends in Violent Crime Rates",
+        "chart_description": "Bar chart shows monthly crime counts, line chart shows crime rate per 1000 residents with month as 3D dimension",
+        "sql_query": "```sql\nSELECT crime_category_name AS category, \n       COUNT(*) AS bar_value, \n       AVG(COUNT(*)) OVER (PARTITION BY crime_category_name, borough_name) AS line_value, \n       borough_name AS dimension \nFROM crime_data \nWHERE date BETWEEN '2022-01' AND '2023-12' \nGROUP BY crime_category_name, borough_name \nORDER BY category, dimension;\n```",
+        "example": [
+          {
+            "category": "",
+            "bar_value": 0,
+            "line_value": 0,
+            "dimension": ""
+          },
+          {
+            "category": "",
+            "bar_value": 0,
+            "line_value": 0,
+            "dimension": ""
+          }
+        ],
+        "variables_needed": [
+          "crime_category",
+          "count",
+          "borough_name",
+          "month"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "groupedBarChart_simple_2D": [
+      {
+        "proposition_id": "crime-rates_chart_analysis_groupedBarChart_simple_2D_001",
+        "proposition_description": "Hackney reports the highest theft rates in 2023 among London boroughs",
+        "reasoning": "A grouped bar chart allows for a clear side-by-side comparison of theft rates in each borough",
+        "chart_type": "groupedBarChart_simple_2D",
+        "chart_title": "Theft Rates Across London Boroughs in 2023",
+        "chart_description": "Comparative analysis of theft incidents reported by each borough in 2023",
+        "sql_query": "```sql\nSELECT \n    crime_category AS category, \n    borough_name AS series, \n    COUNT(*) AS value \nFROM \n    crime_data \nWHERE \n    year = 2023 \nGROUP BY \n    crime_category, \n    borough_name \nORDER BY \n    crime_category, \n    borough_name;\n```",
+        "example": [
+          {
+            "category": "",
+            "series": "",
+            "value": 0
+          },
+          {
+            "category": "",
+            "series": "",
+            "value": 0
+          }
+        ],
+        "variables_needed": [
+          "borough_name",
+          "crime_category",
+          "year",
+          "count"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "divergentBarChart_simple_2D": [
+      {
+        "proposition_id": "crime-rates_crime_category_divergentBarChart_simple_2D_001",
+        "proposition_description": "Knife crime incidents in Lambeth exceeded the London average in 2023",
+        "reasoning": "This chart highlights deviations from the average, effectively showing areas with higher crime rates",
+        "chart_type": "divergentBarChart_simple_2D",
+        "chart_title": "Knife Crime Deviations in Lambeth",
+        "chart_description": "A divergent bar chart showing how knife crime incidents in Lambeth compare to the London average",
+        "sql_query": "```sql\nSELECT \n    crime_category AS category, \n    COUNT(*) AS positive_value, \n    0 AS negative_value \nFROM \n    crime_data \nWHERE \n    year = 2023 \n    AND borough_name = 'Lambeth' \n    AND crime_category = 'knife-crime' \nGROUP BY \n    crime_category \nORDER BY \n    category;\n```",
+        "example": [
+          {
+            "category": "",
+            "positive_value": 0,
+            "negative_value": 0
+          },
+          {
+            "category": "",
+            "positive_value": 0,
+            "negative_value": 0
+          }
+        ],
+        "variables_needed": [
+          "borough_name",
+          "crime_category",
+          "year",
+          "crime_category_name"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "histogram_simple_2D": [
+      {
+        "proposition_id": "crime-rates_statistical_patterns_stat_001",
+        "proposition_description": "Crime incidents in London are generally distributed around a central value, with a tendency for more incidents to occur at higher counts.",
+        "reasoning": "A histogram is ideal for showing the distribution of crime incidents, highlighting the central tendency and any skewness.",
+        "chart_type": "histogram_simple_2D",
+        "chart_title": "Distribution of Crime Incidents in London",
+        "chart_description": "Visualizing the frequency of crime incidents across different count ranges in London.",
+        "sql_query": "```sql\nSELECT crime_category AS bin, COUNT(*) AS frequency \nFROM crime_data \nGROUP BY crime_category \nORDER BY frequency DESC;\n```",
+        "example": [
+          {
+            "bin": "",
+            "frequency": 0
+          },
+          {
+            "bin": "",
+            "frequency": 0
+          }
+        ],
+        "variables_needed": [
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "London-wide",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "scatterPlot_simple_2D": [
+      {
+        "proposition_id": "crime-rates_statistical_patterns_stat_004",
+        "proposition_description": "Higher population density areas in London tend to experience more incidents of violent crime.",
+        "reasoning": "A scatter plot effectively illustrates the relationship between two quantitative variables, such as population density and crime incidents.",
+        "chart_type": "scatterPlot_simple_2D",
+        "chart_title": "Population Density vs. Violent Crime in London",
+        "chart_description": "Exploring the relationship between population density and violent crime incidents across London.",
+        "sql_query": "```sql\nSELECT \n    crime_category AS category, \n    area_name AS x_value, \n    COUNT(*) AS y_value \nFROM \n    crime_data \nWHERE \n    date BETWEEN '2022-01' AND '2023-12'\nGROUP BY \n    crime_category, area_name \nORDER BY \n    crime_category, area_name;\n```",
+        "example": [
+          {
+            "category": "",
+            "x_value": 0,
+            "y_value": 0
+          },
+          {
+            "category": "",
+            "x_value": 0,
+            "y_value": 0
+          }
+        ],
+        "variables_needed": [
+          "crime_category",
+          "area_name",
+          "count"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "LSOA",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "lineChart_with_mean_2D": [
+      {
+        "proposition_id": "crime-rates_trend_lineChart_with_mean_2D_016",
+        "proposition_description": "Violent crime rates in Westminster consistently above London average from 2020 to 2023",
+        "reasoning": "Adding a mean line provides context by showing how Westminster compares to the overall average.",
+        "chart_type": "lineChart_with_mean_2D",
+        "chart_title": "Violent Crime Rates in Westminster vs London Average",
+        "chart_description": "This chart compares violent crime rates in Westminster to the London average over recent years.",
+        "sql_query": "```sql\nSELECT year AS time, AVG(crime_rate) AS value \nFROM crime_data \nWHERE date BETWEEN '2020-01' AND '2023-12' \nAND borough_name = 'Westminster' \nAND crime_category_name = 'Violent crime'\nGROUP BY year \nORDER BY time;\n```",
+        "example": [
+          {
+            "time": "",
+            "value": 0
+          },
+          {
+            "time": "",
+            "value": 0
+          }
+        ],
+        "variables_needed": [
+          "borough_name",
+          "crime_category_name",
+          "year",
+          "crime_rate"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "with_mean": "SELECT AVG(value) as mean_value FROM crime_data;",
+        "with_threshold": false
+      }
+    ],
+    "multiLineChart_simple_2D": [
+      {
+        "proposition_id": "crime-rates_trends_multiLineChart_simple_2D_001",
+        "proposition_description": "London's violent crime rates surged in 2023 compared to previous years",
+        "reasoning": "A multi-line chart is suitable for visualizing trends across multiple boroughs over time.",
+        "chart_type": "multiLineChart_simple_2D",
+        "chart_title": "Trends in Violent Crime Rates Across London",
+        "chart_description": "This chart compares violent crime rates over time across various London boroughs.",
+        "sql_query": "```sql\nSELECT \n    year AS time, \n    CONCAT(borough_name, ' - ', crime_category) AS series, \n    COUNT(*) AS value \nFROM \n    crime_data \nWHERE \n    year BETWEEN 2022 AND 2023 \nGROUP BY \n    year, borough_name, crime_category \nORDER BY \n    time, series;\n```",
+        "example": [
+          {
+            "time": "",
+            "series": "",
+            "value": 0
+          },
+          {
+            "time": "",
+            "series": "",
+            "value": 0
+          }
+        ],
+        "variables_needed": [
+          "borough_name",
+          "crime_category",
+          "year",
+          "crime_rate"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "multiLineChart_simple_3D": [
+      {
+        "proposition_id": "crime-rates_trends_multiLineChart_simple_3D_013",
+        "proposition_description": "Theft-related crimes peak in December across London boroughs",
+        "reasoning": "A 3D chart allows for the visualization of monthly crime patterns across multiple boroughs.",
+        "chart_type": "multiLineChart_simple_3D",
+        "chart_title": "Seasonal Peaks in Theft-related Crimes in London",
+        "chart_description": "This 3D chart shows theft-related crime trends across London boroughs, highlighting peaks in December.",
+        "sql_query": "```sql\nSELECT \n    date AS time, \n    crime_category_name AS series, \n    COUNT(*) AS value, \n    borough_name AS dimension \nFROM \n    crime_data \nWHERE \n    date BETWEEN '2022-01' AND '2023-12' \n    AND crime_category_name LIKE '%theft%' \nGROUP BY \n    date, crime_category_name, borough_name \nORDER BY \n    time, series, dimension;\n```",
+        "example": [
+          {
+            "time": "",
+            "series": "",
+            "value": 0,
+            "dimension": ""
+          },
+          {
+            "time": "",
+            "series": "",
+            "value": 0,
+            "dimension": ""
+          }
+        ],
+        "variables_needed": [
+          "borough_name",
+          "crime_category",
+          "month",
+          "crime_rate"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "comboBarLine_with_mean_2D": [
+      {
+        "proposition_id": "ethnicity_chart_analysis_comboBarLine_014",
+        "proposition_description": "Diversity in London boroughs is highest in Hackney and Haringey",
+        "reasoning": "The mean overlay helps compare borough diversity against the average, emphasizing Hackney and Haringey's diversity",
+        "chart_type": "comboBarLine_with_mean_2D",
+        "chart_title": "Diversity Levels in Hackney and Haringey",
+        "chart_description": "Bar chart shows number of ethnic groups, line chart shows diversity index with mean overlay",
+        "sql_query": "```sql\nSELECT \n    \"local authority name\" AS category, \n    SUM(\"All usual residents\") AS bar_value, \n    AVG(\"All usual residents\") AS line_value \nFROM \n    (SELECT \n        \"local authority name\", \n        \"All usual residents\", \n        CASE \n            WHEN \"White British\" + \"White Irish\" + \"White Gypsy/Irish Traveller\" + \"White Roma\" + \"White Other\" > 0 THEN 'White'\n            WHEN \"Mixed White and Asian\" + \"Mixed White and Black African\" + \"Mixed White and Black Caribbean\" + \"Mixed Other\" > 0 THEN 'Mixed'\n            WHEN \"Asian Bangladeshi\" + \"Asian Chinese\" + \"Asian Indian\" + \"Asian Pakistani\" + \"Asian Other\" > 0 THEN 'Asian'\n            WHEN \"Black African\" + \"Black Caribbean\" + \"Black Other\" > 0 THEN 'Black'\n            WHEN \"Other Arab\" + \"Other Any other\" > 0 THEN 'Other'\n            ELSE 'Unknown'\n        END AS Broad_group\n    FROM \n        ethnicity_data\n    ) AS subquery\nWHERE \n    \"local authority name\" IN ('Hackney', 'Haringey')\nGROUP BY \n    \"local authority name\"\nORDER BY \n    \"local authority name\";\n```",
+        "example": [
+          {
+            "category": "",
+            "bar_value": 0,
+            "line_value": 0
+          },
+          {
+            "category": "",
+            "bar_value": 0,
+            "line_value": 0
+          }
+        ],
+        "variables_needed": [
+          "local authority name",
+          "Broad_group"
+        ],
+        "time_period": "2021",
+        "geographic_level": "Borough",
+        "with_mean": "SELECT AVG(value) as mean_value FROM ethnicity_data;",
+        "with_threshold": false
+      }
+    ],
+    "groupedBarChart_simple_3D": [
+      {
+        "proposition_id": "ethnicity_chart_analysis_groupedBarChart_simple_3D_002",
+        "proposition_description": "Ethnic diversity peaks in Newham and Tower Hamlets with significant White and Asian populations",
+        "reasoning": "3D visualization highlights the diversity within boroughs by displaying multiple ethnic groups",
+        "chart_type": "groupedBarChart_simple_3D",
+        "chart_title": "Ethnic Group Distribution in Newham and Tower Hamlets",
+        "chart_description": "3D grouped bar chart showing the ethnic composition of Newham and Tower Hamlets",
+        "sql_query": "```sql\nSELECT \n    \"local authority name\" AS category, \n    'White British' AS series, \n    SUM(\"White British\") AS value, \n    'ethnicity' AS dimension \nFROM \n    ethnicity_data \nGROUP BY \n    \"local authority name\"\nUNION ALL\nSELECT \n    \"local authority name\" AS category, \n    'Asian' AS series, \n    SUM(\"Asian Bangladeshi\" + \"Asian Chinese\" + \"Asian Indian\" + \"Asian Pakistani\" + \"Asian Other\") AS value, \n    'ethnicity' AS dimension \nFROM \n    ethnicity_data \nGROUP BY \n    \"local authority name\"\nUNION ALL\nSELECT \n    \"local authority name\" AS category, \n    'Black' AS series, \n    SUM(\"Black African\" + \"Black Caribbean\" + \"Black Other\") AS value, \n    'ethnicity' AS dimension \nFROM \n    ethnicity_data \nGROUP BY \n    \"local authority name\"\nUNION ALL\nSELECT \n    \"local authority name\" AS category, \n    'Mixed' AS series, \n    SUM(\"Mixed White and Asian\" + \"Mixed White and Black African\" + \"Mixed White and Black Caribbean\" + \"Mixed Other\") AS value, \n    'ethnicity' AS dimension \nFROM \n    ethnicity_data \nGROUP BY \n    \"local authority name\"\nORDER BY \n    category, series;\n```",
+        "example": [
+          {
+            "category": "",
+            "series": "",
+            "value": 0,
+            "dimension": ""
+          },
+          {
+            "category": "",
+            "series": "",
+            "value": 0,
+            "dimension": ""
+          }
+        ],
+        "variables_needed": [
+          "local authority name",
+          "White British",
+          "Asian",
+          "Black",
+          "Mixed"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "divergentBarChart_with_threshold_2D": [
+      {
+        "proposition_id": "house-prices_property_value_divergentBarChart_with_threshold_2D_003",
+        "proposition_description": "House prices in Kensington and Chelsea remain significantly above the London threshold in 2023",
+        "reasoning": "Highlights deviations above a defined threshold, useful for emphasizing high property values",
+        "chart_type": "divergentBarChart_with_threshold_2D",
+        "chart_title": "Kensington and Chelsea House Prices vs London Threshold",
+        "chart_description": "A divergent bar chart showing property prices in Kensington and Chelsea in comparison to a set threshold",
+        "sql_query": "```sql\nSELECT \n    Area AS category, \n    AVG(CASE WHEN CAST(REPLACE(Value, ',', '') AS DECIMAL) >= 0 THEN CAST(REPLACE(Value, ',', '') AS DECIMAL) ELSE 0 END) AS positive_value, \n    AVG(CASE WHEN CAST(REPLACE(Value, ',', '') AS DECIMAL) < 0 THEN CAST(REPLACE(Value, ',', '') AS DECIMAL) ELSE 0 END) AS negative_value \nFROM \n    house_prices \nWHERE \n    Year = 'Year ending Dec 2023' \nGROUP BY \n    Area \nORDER BY \n    category;\n```",
+        "example": [
+          {
+            "category": "",
+            "positive_value": 0,
+            "negative_value": 0
+          },
+          {
+            "category": "",
+            "positive_value": 0,
+            "negative_value": 0
+          }
+        ],
+        "variables_needed": [
+          "borough_name",
+          "year",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": true
+      }
+    ],
+    "scatterPlot_with_threshold_2D": [
+      {
+        "proposition_id": "income_borough_variation_scatterPlot_with_threshold_2D_005",
+        "proposition_description": "Income levels in Kensington and Chelsea consistently exceed London averages",
+        "reasoning": "Threshold lines help to visualize how income levels compare to a standard benchmark",
+        "chart_type": "scatterPlot_with_threshold_2D",
+        "chart_title": "Kensington and Chelsea Income Levels",
+        "chart_description": "Scatter plot showing income levels in Kensington and Chelsea with a threshold line indicating London averages",
+        "sql_query": "```sql\nSELECT \n    \"Unnamed: 1\" AS category, \n    '2022-23' AS x_value, \n    \"Unnamed: 69\" AS y_value \nFROM \n    income_data \nWHERE \n    \"Unnamed: 1\" = 'Kensington and Chelsea'\nUNION ALL\nSELECT \n    \"Unnamed: 1\" AS category, \n    '2022-23' AS x_value, \n    AVG(\"Unnamed: 69\") AS y_value \nFROM \n    income_data \nWHERE \n    \"Unnamed: 1\" LIKE '%London%'\nGROUP BY \n    \"Unnamed: 1\";\n```\n\nThis query selects the income data for the year `2022-23` for Kensington and Chelsea and compares it to the average income for areas containing 'London' in their name. The column names are adjusted to match the dataset's structure.",
+        "example": [
+          {
+            "category": "",
+            "x_value": 0,
+            "y_value": 0
+          },
+          {
+            "category": "",
+            "x_value": 0,
+            "y_value": 0
+          }
+        ],
+        "variables_needed": [
+          "Area",
+          "Year",
+          "Value"
+        ],
+        "time_period": "2022-2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": true
+      }
+    ],
+    "divergentBarChart_with_mean_2D": [
+      {
+        "proposition_id": "income_wage_trends_divergentBarChart_with_mean_2D_002",
+        "proposition_description": "Inner London boroughs show a significant income rise above the mean from 2020 to 2023",
+        "reasoning": "Visualizes income changes against the mean, highlighting areas of significant economic growth",
+        "chart_type": "divergentBarChart_with_mean_2D",
+        "chart_title": "Income Growth Above Mean in Inner London",
+        "chart_description": "Divergent bar chart comparing income changes in Inner London boroughs against the average",
+        "sql_query": "```sql\nSELECT \n    \"Unnamed: 1\" AS category, \n    AVG(CASE WHEN \"Unnamed: 63\" > (SELECT AVG(\"Unnamed: 63\") FROM income_data) THEN \"Unnamed: 63\" ELSE 0 END) AS positive_value, \n    AVG(CASE WHEN \"Unnamed: 63\" <= (SELECT AVG(\"Unnamed: 63\") FROM income_data) THEN \"Unnamed: 63\" ELSE 0 END) AS negative_value \nFROM \n    income_data \nWHERE \n    \"Unnamed: 1\" IS NOT NULL \nGROUP BY \n    \"Unnamed: 1\" \nORDER BY \n    \"Unnamed: 1\";\n```\n\nExplanation:\n- The `borough_name` is replaced with `\"Unnamed: 1\"` which corresponds to the `Area` column.\n- The income data for the year 2020-21 is in the column `\"Unnamed: 63\"`.\n- The query calculates the average income for each area, categorizing them based on whether they are above or below the average income for that year.\n- The date filtering is not needed as the dataset is structured by year columns.",
+        "example": [
+          {
+            "category": "",
+            "positive_value": 0,
+            "negative_value": 0
+          },
+          {
+            "category": "",
+            "positive_value": 0,
+            "negative_value": 0
+          }
+        ],
+        "variables_needed": [
+          "borough_name",
+          "year",
+          "income"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "with_mean": "SELECT AVG(value) as mean_value FROM income_data;",
+        "with_threshold": false
+      }
+    ],
+    "areaChart_stacked_2D": [
+      {
+        "proposition_id": "population_chart_analysis_areaChart_stacked_2D_004",
+        "proposition_description": "Overall population in Croydon grew by 15% between 2000 and 2020 with significant youth increase",
+        "reasoning": "Stacked area charts display the contribution of each age group to the total population growth.",
+        "chart_type": "areaChart_stacked_2D",
+        "chart_title": "Population Growth in Croydon by Age Group",
+        "chart_description": "The stacked area chart shows the growth in Croydon's population, highlighting the youth demographic.",
+        "sql_query": "```sql\nSELECT \n    '2000-2020' AS time, \n    SUM(CAST(REPLACE(\"2001\", ',', '') AS INTEGER) + CAST(REPLACE(\"2011\", ',', '') AS INTEGER)) AS value \nFROM \n    population_data \nWHERE \n    area = 'Croydon';\n```",
+        "example": [
+          {
+            "time": "",
+            "value": 0
+          },
+          {
+            "time": "",
+            "value": 0
+          }
+        ],
+        "variables_needed": [
+          "area",
+          "year",
+          "age_group",
+          "population"
+        ],
+        "time_period": "2000-2020",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "lineChart_with_threshold_2D": [
+      {
+        "proposition_id": "restaurants_trend_lineChart_with_threshold_2D_020",
+        "proposition_description": "Licensed restaurant employment in Westminster surpassed 10,000 jobs in 2022",
+        "reasoning": "A threshold line emphasizes the significant milestone in employment figures.",
+        "chart_type": "lineChart_with_threshold_2D",
+        "chart_title": "Restaurant Employment Growth in Westminster",
+        "chart_description": "This chart shows the growth of employment in licensed restaurants in Westminster, highlighting when it surpassed 10,000 jobs.",
+        "sql_query": "```sql\nSELECT \n    '2010' AS time, SUM(\"2010\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2010\" > 10000\nUNION ALL\nSELECT \n    '2011' AS time, SUM(\"2011\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2011\" > 10000\nUNION ALL\nSELECT \n    '2012' AS time, SUM(\"2012\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2012\" > 10000\nUNION ALL\nSELECT \n    '2013' AS time, SUM(\"2013\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2013\" > 10000\nUNION ALL\nSELECT \n    '2014' AS time, SUM(\"2014\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2014\" > 10000\nUNION ALL\nSELECT \n    '2015' AS time, SUM(\"2015\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2015\" > 10000\nUNION ALL\nSELECT \n    '2016' AS time, SUM(\"2016\") AS value \nFROM \n    your_table_name \nWHERE \n    \"Area name\" = 'Westminster' AND \"2016\" > 10000\nUNION ALL\nSELECT \n    '2017' AS time, SUM(\"201",
+        "example": [
+          {
+            "time": "",
+            "value": 0
+          },
+          {
+            "time": "",
+            "value": 0
+          }
+        ],
+        "variables_needed": [
+          "Area name",
+          "Year",
+          "Licensed Restaurants Employment"
+        ],
+        "time_period": "2010-2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": true
+      }
+    ],
+    "scatterPlot_simple_3D": [
+      {
+        "proposition_id": "vehicles_registration_trend_scatterPlot_simple_3D_008",
+        "proposition_description": "Electric vehicle registrations have surged in London since 2020, with the highest growth in Westminster",
+        "reasoning": "A 3D scatter plot can effectively show trends over time and across categories",
+        "chart_type": "scatterPlot_simple_3D",
+        "chart_title": "Electric Vehicle Registration Surge",
+        "chart_description": "3D scatter plot showing electric vehicle registration trends across London boroughs, focusing on Westminster",
+        "sql_query": "```sql\nSELECT \n    \"Local Authority\" AS category, \n    '2020-2023' AS x_value, \n    SUM(\"Cars\" + \"Motor cycles\" + \"Light goods\" + \"Heavy goods\" + \"Buses and coaches\" + \"Other vehicles\") AS y_value, \n    'Total Vehicles' AS dimension \nFROM \n    vehicle_data \nGROUP BY \n    \"Local Authority\" \nORDER BY \n    \"Local Authority\";\n```\n\nNote: Since there is no date or year information in the dataset, the query assumes a static period ('2020-2023') for `x_value`. The `dimension` is set to 'Total Vehicles' as a placeholder since individual vehicle types are not aggregated in the original query structure.",
+        "example": [
+          {
+            "category": "",
+            "x_value": 0,
+            "y_value": 0,
+            "dimension": ""
+          },
+          {
+            "category": "",
+            "x_value": 0,
+            "y_value": 0,
+            "dimension": ""
+          }
+        ],
+        "variables_needed": [
+          "Local Authority",
+          "Vehicle Type",
+          "Year"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ],
+    "divergentBarChart_simple_3D": [
+      {
+        "proposition_id": "vehicles_registration_trends_divergentBarChart_simple_3D_004",
+        "proposition_description": "Electric vehicle registrations surged in 2023, surpassing diesel vehicles in Outer London",
+        "reasoning": "3D chart effectively shows the transition and comparison between different vehicle types over time",
+        "chart_type": "divergentBarChart_simple_3D",
+        "chart_title": "Electric vs Diesel Vehicle Registrations in Outer London",
+        "chart_description": "A 3D divergent bar chart depicting the shift in vehicle registrations from diesel to electric",
+        "sql_query": "```sql\nSELECT \n    \"Local Authority\" AS category, \n    SUM(\"Cars\") AS positive_value, \n    0 AS negative_value, \n    '2023' AS dimension \nFROM \n    vehicle_data \nGROUP BY \n    \"Local Authority\" \nORDER BY \n    \"Local Authority\";\n```\n\nNote: Since there is no `Electric` column or `year` information in the dataset, the `negative_value` is set to 0, and the `dimension` is hardcoded to '2023' based on the query purpose.",
+        "example": [
+          {
+            "category": "",
+            "positive_value": 0,
+            "negative_value": 0,
+            "dimension": ""
+          },
+          {
+            "category": "",
+            "positive_value": 0,
+            "negative_value": 0,
+            "dimension": ""
+          }
+        ],
+        "variables_needed": [
+          "Local Authority",
+          "year",
+          "Cars",
+          "Electric"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "with_mean": null,
+        "with_threshold": false
+      }
+    ]
+  }
+}

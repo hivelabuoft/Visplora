@@ -1,0 +1,155 @@
+{
+  "category": "statistical_patterns",
+  "dataset": "crime-rates",
+  "processed_at": "2025-08-20T04:04:47.874Z",
+  "total_propositions": 6,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_statistical_patterns_stat_001",
+      "dataset": "crime-rates",
+      "category": "statistical_patterns",
+      "original_proposition": "The distribution of crime incidents in London follows a normal distribution with a slight right skew.",
+      "reworded_proposition": "Crime incidents in London are generally distributed around a central value, with a tendency for more incidents to occur at higher counts.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Distribution of Crime Incidents in London",
+      "chart_description": "Visualizing the frequency of crime incidents across different count ranges in London.",
+      "reasoning": "A histogram is ideal for showing the distribution of crime incidents, highlighting the central tendency and any skewness.",
+      "tapas_questions": [
+        "What is the most common range of crime incidents in London?",
+        "How does the frequency of lower crime counts compare to higher counts?",
+        "Which range of crime incidents has the highest occurrence?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_statistical_patterns_stat_002",
+      "dataset": "crime-rates",
+      "category": "statistical_patterns",
+      "original_proposition": "The variance in burglary incidents is higher in outer London boroughs compared to inner boroughs.",
+      "reworded_proposition": "Outer London boroughs exhibit a greater variability in burglary incidents compared to their inner counterparts.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Burglary Incident Variability in London Boroughs",
+      "chart_description": "Comparing burglary incident variance between outer and inner London boroughs.",
+      "reasoning": "A histogram effectively displays the distribution and variability of burglary incidents across different boroughs, highlighting differences between outer and inner areas.",
+      "tapas_questions": [
+        "Which borough has the highest variance in burglary incidents?",
+        "How does the variance in burglary incidents compare between outer and inner boroughs?",
+        "What is the average variance in burglary incidents across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_statistical_patterns_stat_003",
+      "dataset": "crime-rates",
+      "category": "statistical_patterns",
+      "original_proposition": "The top 10% of LSOAs account for 50% of all theft-from-the-person incidents in London.",
+      "reworded_proposition": "A small fraction of LSOAs are responsible for a disproportionately large share of theft-from-the-person incidents in London.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Concentration of Theft Incidents in London LSOAs",
+      "chart_description": "Visualizing the distribution of theft incidents across top LSOAs in London.",
+      "reasoning": "A bar chart effectively highlights the concentration of incidents across a few LSOAs, making it easy to see how a small number of areas account for a large share of incidents.",
+      "tapas_questions": [
+        "Which LSOA has the highest number of theft incidents?",
+        "What percentage of theft incidents occur in the top LSOA?",
+        "How does the top LSOA compare to the average in terms of theft incidents?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "area_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_statistical_patterns_stat_004",
+      "dataset": "crime-rates",
+      "category": "statistical_patterns",
+      "original_proposition": "There is a positive correlation between population density and violent crime incidents in London.",
+      "reworded_proposition": "Higher population density areas in London tend to experience more incidents of violent crime.",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Population Density vs. Violent Crime in London",
+      "chart_description": "Exploring the relationship between population density and violent crime incidents across London.",
+      "reasoning": "A scatter plot effectively illustrates the relationship between two quantitative variables, such as population density and crime incidents.",
+      "tapas_questions": [
+        "Which area has the highest violent crime incidents?",
+        "Is there a correlation between population density and violent crime?",
+        "How does violent crime in densely populated areas compare to less dense areas?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "area_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_statistical_patterns_stat_005",
+      "dataset": "crime-rates",
+      "category": "statistical_patterns",
+      "original_proposition": "Outlier analysis shows that certain LSOAs in Westminster have significantly higher crime rates compared to the average.",
+      "reworded_proposition": "Certain areas within Westminster exhibit notably higher crime rates compared to the typical levels observed across the region.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Crime Rate Distribution in Westminster LSOAs",
+      "chart_description": "Visualizing crime rate variations across Westminster's LSOAs.",
+      "reasoning": "A histogram is ideal for displaying the distribution of crime rates across different LSOAs, highlighting areas with significantly higher rates.",
+      "tapas_questions": [
+        "Which LSOA has the highest crime rate?",
+        "How many LSOAs have crime rates above the average?",
+        "What is the average crime rate across all LSOAs in Westminster?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_statistical_patterns_stat_006",
+      "dataset": "crime-rates",
+      "category": "statistical_patterns",
+      "original_proposition": "The distribution of violent crime incidents across London is bimodal, with peaks in central and outer boroughs.",
+      "reworded_proposition": "Violent crime incidents in London show a dual pattern, with notable concentrations in both central and outer boroughs.",
+      "chart_type": "histogram_simple_2D",
+      "chart_title": "Bimodal Distribution of Violent Crime in London",
+      "chart_description": "Visualizing peaks in violent crime across central and outer boroughs.",
+      "reasoning": "A histogram is suitable for showing the distribution of crime incidents across boroughs, highlighting the bimodal pattern.",
+      "tapas_questions": [
+        "Which borough has the highest count of violent crime incidents?",
+        "What percentage of violent crime incidents occur in central boroughs?",
+        "How do outer boroughs compare to central boroughs in terms of violent crime incidents?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "crime_category",
+        "borough_name",
+        "count"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

@@ -1,0 +1,897 @@
+{
+  "dataset": "population",
+  "processed_at": "2025-08-20T04:06:46.193Z",
+  "total_propositions": 35,
+  "categories": {
+    "temporal_trends": {
+      "category": "temporal_trends",
+      "dataset": "population",
+      "processed_at": "2025-08-20T04:06:25.110Z",
+      "total_propositions": 15,
+      "propositions": [
+        {
+          "proposition_id": "population_temporal_trends_tt1",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "The population density in the borough of Westminster increased by 25% from 2000 to 2020.",
+          "reworded_proposition": "Westminster has experienced a notable rise in population density over the past two decades.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Population Density Trends in Westminster",
+          "chart_description": "Illustrates the increase in population density from 2000 to 2020.",
+          "reasoning": "A line chart effectively shows the trend of population density over time, highlighting changes and patterns.",
+          "tapas_questions": [
+            "How did the population density change from 2000 to 2020?",
+            "What is the average population density across all boroughs?",
+            "Which boroughs have a higher population density than Westminster?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "2000-2020",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt2",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "From 1801 to 2021, the population in London has grown steadily, with a notable spike during the 1940s.",
+          "reworded_proposition": "London's population has shown a steady increase over the years, with a significant rise observed during the 1940s.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Population Growth in London (1801-2021)",
+          "chart_description": "Visualize London's population trends with a notable 1940s spike.",
+          "reasoning": "A simple 2D line chart effectively illustrates the temporal trend of population growth over a long period, highlighting any significant changes.",
+          "tapas_questions": [
+            "How did the population change from 1801 to 2021?",
+            "What was the population trend during the 1940s?",
+            "Which decade saw the highest growth in population?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "value",
+            "date"
+          ],
+          "time_period": "1801-2021",
+          "geographic_level": "London-wide",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt3",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "The borough of Camden experienced a 10% decrease in population from 1910 to 1920.",
+          "reworded_proposition": "Camden saw a noticeable decline in its population during the decade from 1910 to 1920.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Change in Camden (1910-1920)",
+          "chart_description": "Visualize Camden's population trend over the decade.",
+          "reasoning": "A simple bar chart effectively illustrates the population trend over a specific time period, highlighting the decrease.",
+          "tapas_questions": [
+            "How did Camden's population change from 1910 to 1920?",
+            "What is the average population in Camden during this period?",
+            "Which year had the lowest population in Camden?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "1910-1920",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt4",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "Population density in inner London boroughs has increased by 30% from 1990 to 2010.",
+          "reworded_proposition": "Inner London boroughs have experienced a notable rise in population density over the two decades from 1990 to 2010.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Population Density Growth in Inner London (1990-2010)",
+          "chart_description": "Tracks the increase in population density in inner London boroughs over two decades.",
+          "reasoning": "A line chart effectively illustrates changes over time, making it ideal for showing trends in population density across multiple boroughs over a 20-year period.",
+          "tapas_questions": [
+            "How did population density change from 1990 to 2010 in each borough?",
+            "Which borough had the highest increase in population density?",
+            "What is the average population density increase across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "1990-2010",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt5",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "The population of outer London boroughs remained relatively stable between 1950 and 1970.",
+          "reworded_proposition": "The population in outer London boroughs showed little variation from 1950 to 1970.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Stability of Outer London Borough Populations (1950-1970)",
+          "chart_description": "Explore the stable population trends in outer London boroughs over two decades.",
+          "reasoning": "A simple line chart effectively illustrates the stability or changes in population over time, highlighting trends across multiple boroughs.",
+          "tapas_questions": [
+            "Which borough had the most stable population?",
+            "How did the population change from 1950 to 1970 in each borough?",
+            "What was the average population across all boroughs in 1960?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "1950-1970",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt6",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "Population growth in London was highest during the 19th century, particularly from 1850 to 1900.",
+          "reworded_proposition": "London experienced its most rapid population expansion during the latter half of the 19th century.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "London Population Growth in the 19th Century",
+          "chart_description": "Explore London's population trends from 1850 to 1900.",
+          "reasoning": "A line chart effectively illustrates changes over time, making it ideal for showing population growth trends across decades.",
+          "tapas_questions": [
+            "How did the population change from 1850 to 1900?",
+            "Which decade saw the highest population growth?",
+            "What was the population trend during the 19th century?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "value",
+            "date"
+          ],
+          "time_period": "1850-1900",
+          "geographic_level": "London-wide",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt7",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "The population in the borough of Hackney increased by 15% from 2010 to 2020.",
+          "reworded_proposition": "Hackney has experienced a notable population growth over the past decade.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Growth in Hackney (2010-2020)",
+          "chart_description": "Visualizing the population increase in Hackney over a decade.",
+          "reasoning": "A bar chart effectively highlights changes over time, making it suitable for illustrating population growth.",
+          "tapas_questions": [
+            "How did the population change in Hackney from 2010 to 2020?",
+            "What is the average population growth across all boroughs?",
+            "Which borough had the highest population growth from 2010 to 2020?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "2010-2020",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt8",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "Between 1980 and 2000, the population in the borough of Islington grew by 20%.",
+          "reworded_proposition": "The borough of Islington experienced a notable increase in population over the two decades from 1980 to 2000.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Population Growth in Islington (1980-2000)",
+          "chart_description": "Visualizing the population trend in Islington over two decades.",
+          "reasoning": "A line chart effectively shows changes over time, making it ideal for illustrating population growth trends.",
+          "tapas_questions": [
+            "How did the population change from 1980 to 2000 in Islington?",
+            "What is the average population in Islington during this period?",
+            "Which year had the highest population in Islington?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "1980-2000",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt9",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "The 1960s saw a decline in population across most London boroughs, averaging a 5% decrease.",
+          "reworded_proposition": "During the 1960s, most London boroughs experienced a noticeable decline in population.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Decline in London Boroughs (1960s)",
+          "chart_description": "Visualizing population changes across London boroughs from 1960 to 1970.",
+          "reasoning": "A simple bar chart effectively highlights the population decline across different boroughs over the decade.",
+          "tapas_questions": [
+            "Which borough had the largest population decrease?",
+            "How did the population change from 1960 to 1970 in each borough?",
+            "What is the average population change across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "1960-1970",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt10",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "Population density in the borough of Kensington and Chelsea increased by 40% from 1995 to 2005.",
+          "reworded_proposition": "The borough of Kensington and Chelsea experienced a notable rise in population density over the decade from 1995 to 2005.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Population Density Growth in Kensington and Chelsea",
+          "chart_description": "Trends in population density from 1995 to 2005 in Kensington and Chelsea.",
+          "reasoning": "A line chart effectively illustrates changes over time, making it ideal for showing the trend in population density across a decade.",
+          "tapas_questions": [
+            "How did population density change from 1995 to 2005 in Kensington and Chelsea?",
+            "What is the average population density in Kensington and Chelsea over the period?",
+            "Which year had the highest population density in Kensington and Chelsea?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "1995-2005",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt11",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "The population in the borough of Lambeth grew by 18% between 2005 and 2015.",
+          "reworded_proposition": "Lambeth experienced a notable population increase over the decade from 2005 to 2015.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Growth in Lambeth (2005-2015)",
+          "chart_description": "Visualizing the population trend in Lambeth over a decade.",
+          "reasoning": "A simple bar chart effectively illustrates changes in population over time, highlighting trends and comparisons.",
+          "tapas_questions": [
+            "How did the population change in Lambeth from 2005 to 2015?",
+            "What is the average population growth across all boroughs?",
+            "Which borough had the highest population growth between 2005 and 2015?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "2005-2015",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt12",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "From 1970 to 1990, the population in the borough of Southwark increased by 12%.",
+          "reworded_proposition": "Between 1970 and 1990, Southwark experienced a noticeable growth in population.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Population Growth in Southwark (1970-1990)",
+          "chart_description": "Visualizing the population increase in Southwark over two decades.",
+          "reasoning": "A line chart effectively illustrates trends over time, making it ideal for showing population growth across years.",
+          "tapas_questions": [
+            "How did the population change from 1970 to 1990 in Southwark?",
+            "What is the average population growth rate across all boroughs?",
+            "Which borough had the highest population increase from 1970 to 1990?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "1970-1990",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt13",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "The population of the borough of Haringey increased by 22% from 2000 to 2020.",
+          "reworded_proposition": "Haringey has experienced a notable population growth over the past two decades.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Growth in Haringey (2000-2020)",
+          "chart_description": "Visualizing the increase in Haringey's population from 2000 to 2020.",
+          "reasoning": "A simple bar chart effectively illustrates the population growth over time, highlighting changes in a clear and straightforward manner.",
+          "tapas_questions": [
+            "How did the population in Haringey change from 2000 to 2020?",
+            "What is the average population in Haringey over the years?",
+            "Which year had the highest population in Haringey?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "2000-2020",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt14",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "Population growth in the borough of Barnet was 5% higher than the London average from 1990 to 2010.",
+          "reworded_proposition": "Barnet experienced a notably higher population growth compared to the London average between 1990 and 2010.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Barnet vs London: Population Growth (1990-2010)",
+          "chart_description": "Comparison of population growth trends in Barnet and London from 1990 to 2010.",
+          "reasoning": "A line chart effectively illustrates temporal trends, making it easy to compare Barnet's growth against the London average over time.",
+          "tapas_questions": [
+            "Which borough had the highest population growth?",
+            "How did Barnet's population growth compare to the London average?",
+            "What was the average population growth across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "1990-2010",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "population_temporal_trends_tt15",
+          "dataset": "population",
+          "category": "temporal_trends",
+          "original_proposition": "The borough of Enfield saw a 30% increase in population from 1985 to 2005.",
+          "reworded_proposition": "Enfield experienced a notable rise in population over two decades, from 1985 to 2005.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Growth in Enfield (1985-2005)",
+          "chart_description": "Visualizing the population increase in Enfield over 20 years.",
+          "reasoning": "A simple bar chart effectively illustrates the trend of population growth over the specified time period, highlighting changes year by year.",
+          "tapas_questions": [
+            "How did the population change from 1985 to 2005 in Enfield?",
+            "What is the average population in Enfield during this period?",
+            "Which year had the highest population in Enfield?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "1985-2005",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        }
+      ]
+    },
+    "geographic_patterns": {
+      "category": "geographic_patterns",
+      "dataset": "population",
+      "processed_at": "2025-08-20T04:06:36.192Z",
+      "total_propositions": 10,
+      "propositions": [
+        {
+          "proposition_id": "population_geographic_patterns_gp1",
+          "dataset": "population",
+          "category": "geographic_patterns",
+          "original_proposition": "The boroughs of Camden and Westminster have the highest population densities in London.",
+          "reworded_proposition": "Camden and Westminster stand out as having notably higher population densities compared to other London boroughs.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Density Across London Boroughs",
+          "chart_description": "Comparison of population densities in London boroughs, highlighting Camden and Westminster.",
+          "reasoning": "A simple bar chart effectively highlights the differences in population densities across boroughs, making it easy to identify the highest values.",
+          "tapas_questions": [
+            "Which borough has the highest population density?",
+            "How does Camden's population density compare to Westminster's?",
+            "What is the average population density across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp2",
+          "dataset": "population",
+          "category": "geographic_patterns",
+          "original_proposition": "Outer London boroughs generally have lower population densities compared to inner London boroughs.",
+          "reworded_proposition": "Outer London boroughs tend to exhibit lower population densities than their inner London counterparts.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Density: Outer vs. Inner London",
+          "chart_description": "Comparison of population densities between outer and inner London boroughs.",
+          "reasoning": "A simple bar chart effectively highlights the differences in population densities between the two groups of boroughs, allowing for easy comparison.",
+          "tapas_questions": [
+            "Which borough has the lowest population density?",
+            "How does the population density of outer boroughs compare to inner boroughs?",
+            "What is the average population density across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp3",
+          "dataset": "population",
+          "category": "geographic_patterns",
+          "original_proposition": "The borough of Tower Hamlets has one of the fastest-growing populations in London.",
+          "reworded_proposition": "Tower Hamlets is experiencing one of the most rapid population increases among London's boroughs.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Growth in London Boroughs",
+          "chart_description": "Comparison of population growth rates across London boroughs",
+          "reasoning": "A bar chart effectively highlights the comparative growth rates of different boroughs, making it easy to identify which areas are growing fastest.",
+          "tapas_questions": [
+            "Which borough has the fastest-growing population?",
+            "How does Tower Hamlets compare to other boroughs in population growth?",
+            "What percentage of London's population growth is in Tower Hamlets?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp4",
+          "dataset": "population",
+          "category": "geographic_patterns",
+          "original_proposition": "Population density is highest in the central boroughs of London, such as Westminster and Kensington and Chelsea.",
+          "reworded_proposition": "Central London boroughs like Westminster and Kensington and Chelsea exhibit notably higher population density compared to other areas.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Density Across London Boroughs",
+          "chart_description": "Comparison of population density in London boroughs, highlighting central areas.",
+          "reasoning": "A bar chart effectively highlights the differences in population density across boroughs, making it easy to compare central areas with others.",
+          "tapas_questions": [
+            "Which borough has the highest population density?",
+            "How does Westminster compare to Kensington and Chelsea in terms of population density?",
+            "What percentage of the total population resides in Westminster?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp5",
+          "dataset": "population",
+          "category": "geographic_patterns",
+          "original_proposition": "The borough of Croydon has a significantly larger population compared to its neighboring boroughs.",
+          "reworded_proposition": "Croydon stands out with a notably larger population than its neighboring boroughs.",
+          "chart_type": "barChart_with_mean_2D",
+          "chart_title": "Population Comparison of Croydon and Neighboring Boroughs",
+          "chart_description": "Visualize how Croydon's population size compares to nearby boroughs.",
+          "reasoning": "A bar chart with a mean line effectively highlights Croydon's population size relative to its neighbors and the average.",
+          "tapas_questions": [
+            "Which borough has the highest population?",
+            "How does Croydon's population compare to the average of its neighbors?",
+            "What is the average population across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp6",
+          "dataset": "population",
+          "category": "geographic_patterns",
+          "original_proposition": "Boroughs in East London, such as Newham and Barking and Dagenham, have seen rapid population growth.",
+          "reworded_proposition": "East London boroughs, including Newham and Barking and Dagenham, are experiencing notable population increases.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Growth in East London Boroughs",
+          "chart_description": "Comparison of population growth across East London boroughs.",
+          "reasoning": "A simple bar chart effectively highlights the differences in population growth across boroughs, making it easy to compare.",
+          "tapas_questions": [
+            "Which borough has the highest population growth?",
+            "How does Newham compare to Barking and Dagenham in terms of population growth?",
+            "What percentage of the total population growth is in Newham?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp7",
+          "dataset": "population",
+          "category": "geographic_patterns",
+          "original_proposition": "The borough of Richmond upon Thames has one of the lowest population densities in London.",
+          "reworded_proposition": "Richmond upon Thames stands out for its notably low population density compared to other London boroughs.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Density Across London Boroughs",
+          "chart_description": "Comparison of population density among London boroughs.",
+          "reasoning": "A simple bar chart effectively highlights the comparison of population density across different boroughs, making it easy to identify those with the lowest values.",
+          "tapas_questions": [
+            "Which borough has the lowest population density?",
+            "How does Richmond upon Thames compare to other boroughs in terms of population density?",
+            "What is the average population density across all London boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp8",
+          "dataset": "population",
+          "category": "geographic_patterns",
+          "original_proposition": "Population distribution in London shows a clear north-south divide, with higher densities in the north.",
+          "reworded_proposition": "London's population distribution reveals a distinct pattern, with the northern boroughs experiencing notably higher population densities compared to the south.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "North-South Population Density in London",
+          "chart_description": "Comparison of population densities across London's boroughs.",
+          "reasoning": "A simple bar chart effectively illustrates the comparative population densities across different boroughs, highlighting the north-south divide.",
+          "tapas_questions": [
+            "Which borough has the highest population density?",
+            "What percentage of the population is in northern boroughs?",
+            "How does the population density compare between northern and southern boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp9",
+          "dataset": "population",
+          "category": "geographic_patterns",
+          "original_proposition": "The borough of Hillingdon has a lower population density compared to central London boroughs.",
+          "reworded_proposition": "Hillingdon exhibits a notably lower population density than the more densely populated central London boroughs.",
+          "chart_type": "barChart_with_mean_2D",
+          "chart_title": "Population Density Across London Boroughs",
+          "chart_description": "Comparison of population density between Hillingdon and central London boroughs.",
+          "reasoning": "A bar chart with a mean line effectively highlights the contrast in population density between Hillingdon and central boroughs, while the mean line provides a benchmark for comparison.",
+          "tapas_questions": [
+            "Which borough has the highest population density?",
+            "What is the average population density across all boroughs?",
+            "How does Hillingdon compare to Westminster in terms of population density?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_geographic_patterns_gp10",
+          "dataset": "population",
+          "category": "geographic_patterns",
+          "original_proposition": "Population growth hotspots are identified in the boroughs of Hackney and Haringey.",
+          "reworded_proposition": "Hackney and Haringey emerge as key areas of population growth.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Growth in Hackney and Haringey",
+          "chart_description": "Comparison of population growth across boroughs.",
+          "reasoning": "A simple bar chart effectively highlights the comparison of population growth between boroughs, emphasizing the hotspots.",
+          "tapas_questions": [
+            "Which borough has the highest population growth?",
+            "How does Hackney compare to Haringey in terms of population growth?",
+            "What percentage of total population growth is in Hackney?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        }
+      ]
+    },
+    "statistical_patterns": {
+      "category": "statistical_patterns",
+      "dataset": "population",
+      "processed_at": "2025-08-20T04:06:43.175Z",
+      "total_propositions": 6,
+      "propositions": [
+        {
+          "proposition_id": "population_statistical_patterns_sp1",
+          "dataset": "population",
+          "category": "statistical_patterns",
+          "original_proposition": "Population distribution across London boroughs is skewed towards higher densities in central areas.",
+          "reworded_proposition": "Central London boroughs tend to have notably higher population densities compared to other areas.",
+          "chart_type": "histogram_simple_2D",
+          "chart_title": "Population Density Across London Boroughs",
+          "chart_description": "Visualizes the distribution of population density across different boroughs in London.",
+          "reasoning": "A histogram effectively shows the distribution of population density, highlighting areas with higher concentrations.",
+          "tapas_questions": [
+            "Which borough has the highest population density?",
+            "How does population density in central areas compare to outer boroughs?",
+            "What percentage of the population lives in the most densely populated boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_statistical_patterns_sp2",
+          "dataset": "population",
+          "category": "statistical_patterns",
+          "original_proposition": "There is a high variance in population density between inner and outer London boroughs.",
+          "reworded_proposition": "Population density varies significantly between inner and outer London boroughs.",
+          "chart_type": "histogram_simple_2D",
+          "chart_title": "Population Density Across London Boroughs",
+          "chart_description": "Explore the variation in population density between inner and outer boroughs.",
+          "reasoning": "A histogram effectively displays the distribution and variance in population density across different boroughs, highlighting differences between inner and outer areas.",
+          "tapas_questions": [
+            "Which borough has the highest population density?",
+            "What is the average population density across all boroughs?",
+            "How does the population density of inner boroughs compare to outer boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "population_statistical_patterns_sp3",
+          "dataset": "population",
+          "category": "statistical_patterns",
+          "original_proposition": "The top 10% of boroughs account for 50% of London's total population.",
+          "reworded_proposition": "A small number of boroughs hold a disproportionately large share of London's population.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Population Concentration in London's Boroughs",
+          "chart_description": "Visualizing the population distribution across London's boroughs.",
+          "reasoning": "A simple bar chart effectively illustrates the distribution of population across boroughs, highlighting the concentration in a few areas.",
+          "tapas_questions": [
+            "Which borough has the highest population?",
+            "What percentage of the total population is in each borough?",
+            "How does the population of the top borough compare to others?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "population_statistical_patterns_sp4",
+          "dataset": "population",
+          "category": "statistical_patterns",
+          "original_proposition": "A correlation exists between borough population size and density, with a correlation coefficient of 0.75.",
+          "reworded_proposition": "There is a notable relationship between the size of a borough's population and its density.",
+          "chart_type": "scatterPlot_simple_2D",
+          "chart_title": "Borough Population Size vs. Density",
+          "chart_description": "Exploring the relationship between population size and density across boroughs.",
+          "reasoning": "A scatter plot is ideal for visualizing the relationship between two continuous variables, such as population size and density.",
+          "tapas_questions": [
+            "Which borough has the highest population density?",
+            "Is there a correlation between population size and density?",
+            "How does the population size compare across boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_statistical_patterns_sp5",
+          "dataset": "population",
+          "category": "statistical_patterns",
+          "original_proposition": "Outliers in population growth are observed in the boroughs of Newham and Tower Hamlets.",
+          "reworded_proposition": "Newham and Tower Hamlets stand out with notably higher population growth compared to other boroughs.",
+          "chart_type": "histogram_simple_2D",
+          "chart_title": "Population Growth Outliers in Boroughs",
+          "chart_description": "Highlighting boroughs with exceptional population growth",
+          "reasoning": "A histogram effectively showcases the distribution of population growth across boroughs, highlighting outliers.",
+          "tapas_questions": [
+            "Which borough has the highest population growth?",
+            "How does Newham compare to Tower Hamlets in terms of population growth?",
+            "What percentage of total population growth is in Newham?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_statistical_patterns_sp6",
+          "dataset": "population",
+          "category": "statistical_patterns",
+          "original_proposition": "Population density follows a bimodal distribution, with peaks in both inner and outer boroughs.",
+          "reworded_proposition": "Population density exhibits two distinct peaks, one in inner boroughs and another in outer boroughs.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Bimodal Distribution of Population Density",
+          "chart_description": "Explore the peaks in population density across inner and outer boroughs.",
+          "reasoning": "A simple bar chart effectively highlights the bimodal distribution by comparing population densities across different boroughs.",
+          "tapas_questions": [
+            "Which borough has the highest population density?",
+            "How do inner boroughs compare to outer boroughs in terms of population density?",
+            "What is the average population density across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        }
+      ]
+    },
+    "cross_dimensional": {
+      "category": "cross_dimensional",
+      "dataset": "population",
+      "processed_at": "2025-08-20T04:06:46.193Z",
+      "total_propositions": 4,
+      "propositions": [
+        {
+          "proposition_id": "population_cross_dimensional_cd1",
+          "dataset": "population",
+          "category": "cross_dimensional",
+          "original_proposition": "Population growth in the borough of Greenwich is higher during the summer months.",
+          "reworded_proposition": "Greenwich experiences noticeable population increases during the summer months.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Seasonal Population Trends in Greenwich",
+          "chart_description": "Visualize population changes in Greenwich across different months.",
+          "reasoning": "A simple line chart effectively illustrates changes in population over time, highlighting seasonal trends.",
+          "tapas_questions": [
+            "How does population change from spring to summer in Greenwich?",
+            "What is the population trend in Greenwich during winter months?",
+            "Which month shows the highest population increase in Greenwich?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_cross_dimensional_cd2",
+          "dataset": "population",
+          "category": "cross_dimensional",
+          "original_proposition": "The category of 'young adults' is predominantly higher in central London boroughs.",
+          "reworded_proposition": "Central London boroughs tend to have a notably higher concentration of young adults compared to other areas.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Young Adult Population in Central London",
+          "chart_description": "Comparison of young adult population across London boroughs.",
+          "reasoning": "A simple bar chart effectively highlights the differences in young adult population across boroughs, making it easy to compare central London to other areas.",
+          "tapas_questions": [
+            "Which borough has the highest percentage of young adults?",
+            "How does the young adult population in central boroughs compare to others?",
+            "What is the average percentage of young adults across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "population_cross_dimensional_cd3",
+          "dataset": "population",
+          "category": "cross_dimensional",
+          "original_proposition": "Population density in the borough of Brent peaks during the winter months.",
+          "reworded_proposition": "The borough of Brent experiences a noticeable increase in population density during the winter months.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Brent's Population Density Trends in Winter",
+          "chart_description": "Explore how Brent's population density changes during winter months.",
+          "reasoning": "A line chart effectively illustrates changes in population density over time, highlighting seasonal trends.",
+          "tapas_questions": [
+            "How does Brent's population density in winter compare to other months?",
+            "What is the average population density in Brent across all months?",
+            "Which month has the highest population density in Brent?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "date"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "population_cross_dimensional_cd4",
+          "dataset": "population",
+          "category": "cross_dimensional",
+          "original_proposition": "The elderly population category shows a significant increase in outer London boroughs over the past two decades.",
+          "reworded_proposition": "Outer London boroughs have experienced a notable rise in their elderly population over the last twenty years.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Elderly Population Growth in Outer London",
+          "chart_description": "Trends in elderly population across outer London boroughs from 2001 to 2021.",
+          "reasoning": "A line chart effectively illustrates changes over time, highlighting trends in population growth across different boroughs.",
+          "tapas_questions": [
+            "Which borough has the highest increase in elderly population?",
+            "How does the elderly population in outer London compare to inner London?",
+            "What is the average growth rate of the elderly population across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2001-2021",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        }
+      ]
+    }
+  }
+}

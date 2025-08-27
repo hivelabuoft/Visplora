@@ -1,0 +1,228 @@
+{
+  "category": "temporal_trends",
+  "dataset": "house-prices",
+  "processed_at": "2025-08-20T18:04:40.792Z",
+  "total_queries": 10,
+  "sql_queries": [
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_001",
+      "dataset": "house-prices",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date, area_name ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_002",
+      "dataset": "house-prices",
+      "time_period": "1995-2005",
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '1995-01-01' AND '2005-12-31' ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_003",
+      "dataset": "house-prices",
+      "time_period": "2010-2015",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2010-01-01' AND '2015-12-31' GROUP BY date, area_name ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_004",
+      "dataset": "house-prices",
+      "time_period": "1995-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '1995-01-01' AND '2023-12-31' GROUP BY date, average_price ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_005",
+      "dataset": "house-prices",
+      "time_period": "2008-2010",
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2008-01-01' AND '2010-12-31' ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_006",
+      "dataset": "house-prices",
+      "time_period": "2021-2022",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_price) AS value, (SELECT AVG(average_price) FROM house_price_data WHERE date BETWEEN '2021-01-01' AND '2022-12-31') AS mean_value FROM house_price_data WHERE date BETWEEN '2021-01-01' AND '2022-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_007",
+      "dataset": "house-prices",
+      "time_period": "2015-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2015-01-01' AND '2023-12-31' GROUP BY date, average_price ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_008",
+      "dataset": "house-prices",
+      "time_period": "1995-2005",
+      "variables_needed": [
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '1995-01-01' AND '2005-12-31' ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_009",
+      "dataset": "house-prices",
+      "time_period": "2018-2023",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2018-01-01' AND '2023-12-31' GROUP BY date, area_name ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_temporal_trends_tt_010",
+      "dataset": "house-prices",
+      "time_period": "2000-2005",
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, AVG(average_price) AS value FROM house_price_data WHERE date BETWEEN '2000-01-01' AND '2005-12-31' GROUP BY date ORDER BY date;"
+    }
+  ]
+}

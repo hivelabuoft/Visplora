@@ -1,0 +1,57 @@
+country,city,iso3,nearest_airport_iata,airport_travel_time_min,intl_flight_freq_weekly,visa_policy,visa_on_arrival,evisa_available,transit_score,walk_score,rideshare_availability,source,as_of_date
+USA,New York,USA,JFK,40,1681,VisaRequired,False,False,45.9,63.8,False,synthetic,2025-01-01
+USA,San Francisco,USA,SFO,60,2571,VisaOnArrival,True,True,89.7,71.1,True,synthetic,2025-01-01
+Canada,Toronto,CAN,YYZ,19,1774,eVisa,False,True,66.8,75.1,True,synthetic,2025-01-01
+Canada,Vancouver,CAN,YVR,25,1061,VisaRequired,False,False,73.3,69.4,False,synthetic,2025-01-01
+Mexico,Mexico City,MEX,MEX,42,736,VisaFree,False,False,43.1,94.2,False,synthetic,2025-01-01
+Brazil,Rio de Janeiro,BRA,GIG,72,1557,VisaFree,False,False,43.5,51.1,True,synthetic,2025-01-01
+Argentina,Buenos Aires,ARG,EZE,42,2272,eVisa,False,True,45.7,62.8,True,synthetic,2025-01-01
+UK,London,GBR,LHR,37,1891,VisaFree,False,False,63.1,36.9,False,synthetic,2025-01-01
+Ireland,Dublin,IRL,DUB,44,2099,VisaOnArrival,True,True,68.3,72.3,True,synthetic,2025-01-01
+France,Paris,FRA,CDG,27,523,VisaRequired,False,False,90.5,72.0,True,synthetic,2025-01-01
+Spain,Barcelona,ESP,BCN,42,2401,VisaFree,False,False,48.9,55.1,True,synthetic,2025-01-01
+Portugal,Lisbon,PRT,LIS,37,748,eVisa,False,True,85.7,61.6,True,synthetic,2025-01-01
+Italy,Rome,ITA,FCO,20,1252,VisaRequired,False,False,73.4,81.8,False,synthetic,2025-01-01
+Netherlands,Amsterdam,NLD,AMS,40,1568,VisaOnArrival,True,True,76.4,61.6,True,synthetic,2025-01-01
+Germany,Berlin,DEU,BER,24,1431,eVisa,False,True,63.3,95.4,False,synthetic,2025-01-01
+Switzerland,Zurich,CHE,ZRH,55,1706,VisaOnArrival,True,True,77.6,63.4,False,synthetic,2025-01-01
+Austria,Vienna,AUT,VIE,16,1027,VisaOnArrival,True,True,72.0,69.1,True,synthetic,2025-01-01
+Czechia,Prague,CZE,PRG,42,1937,eVisa,False,True,56.2,52.7,True,synthetic,2025-01-01
+Greece,Athens,GRC,ATH,56,1816,eVisa,False,True,62.2,63.1,False,synthetic,2025-01-01
+Turkey,Istanbul,TUR,IST,33,1225,VisaFree,False,False,79.5,100.0,True,synthetic,2025-01-01
+UAE,Dubai,ARE,DXB,37,1730,VisaOnArrival,True,True,36.3,56.3,False,synthetic,2025-01-01
+Qatar,Doha,QAT,DOH,53,1521,VisaOnArrival,True,True,10.0,77.1,True,synthetic,2025-01-01
+India,Delhi,IND,DEL,63,40,VisaOnArrival,True,True,100.0,15.1,True,synthetic,2025-01-01
+India,Mumbai,IND,BOM,49,1193,eVisa,False,True,23.0,73.0,False,synthetic,2025-01-01
+Thailand,Bangkok,THA,BKK,52,1491,VisaFree,False,False,81.7,57.6,True,synthetic,2025-01-01
+Vietnam,Ho Chi Minh City,VNM,SGN,10,1753,VisaOnArrival,True,True,100.0,85.3,True,synthetic,2025-01-01
+Malaysia,Kuala Lumpur,MYS,KUL,10,40,eVisa,False,True,53.1,36.3,False,synthetic,2025-01-01
+Singapore,Singapore,SGP,SIN,35,1514,VisaOnArrival,True,True,41.4,79.0,False,synthetic,2025-01-01
+Indonesia,Bali,IDN,DPS,44,761,VisaFree,False,False,66.5,29.9,True,synthetic,2025-01-01
+Australia,Sydney,AUS,SYD,30,1205,VisaRequired,False,False,73.4,71.8,True,synthetic,2025-01-01
+New Zealand,Auckland,NZL,AKL,38,988,VisaOnArrival,True,True,75.7,83.0,False,synthetic,2025-01-01
+Japan,Tokyo,JPN,HND,33,1454,eVisa,False,True,66.3,53.4,True,synthetic,2025-01-01
+South Korea,Seoul,KOR,ICN,42,755,eVisa,False,True,77.7,65.5,True,synthetic,2025-01-01
+China,Shanghai,CHN,PVG,30,937,VisaRequired,False,False,59.8,35.4,True,synthetic,2025-01-01
+Hong Kong,Hong Kong,HKG,HKG,40,1385,VisaRequired,False,False,87.0,55.4,False,synthetic,2025-01-01
+Taiwan,Taipei,TWN,TPE,63,896,VisaRequired,False,False,52.5,47.1,True,synthetic,2025-01-01
+South Africa,Cape Town,ZAF,CPT,10,2426,VisaOnArrival,True,True,97.4,75.8,True,synthetic,2025-01-01
+Kenya,Nairobi,KEN,NBO,21,2649,eVisa,False,True,63.0,60.2,True,synthetic,2025-01-01
+Morocco,Marrakesh,MAR,RAK,56,1727,eVisa,False,True,100.0,69.5,True,synthetic,2025-01-01
+Egypt,Cairo,EGY,CAI,29,710,eVisa,False,True,33.1,60.0,False,synthetic,2025-01-01
+Israel,Tel Aviv,ISR,TLV,52,1679,VisaFree,False,False,70.4,47.1,True,synthetic,2025-01-01
+Jordan,Amman,JOR,AMM,38,2010,VisaOnArrival,True,True,78.6,68.0,True,synthetic,2025-01-01
+Saudi Arabia,Riyadh,SAU,RUH,23,1893,VisaRequired,False,False,10.0,71.9,True,synthetic,2025-01-01
+Russia,Moscow,RUS,SVO,73,40,VisaRequired,False,False,65.2,64.9,True,synthetic,2025-01-01
+Norway,Oslo,NOR,OSL,28,2029,VisaRequired,False,False,79.4,67.7,True,synthetic,2025-01-01
+Sweden,Stockholm,SWE,ARN,46,1213,VisaOnArrival,True,True,100.0,67.7,True,synthetic,2025-01-01
+Finland,Helsinki,FIN,HEL,37,40,eVisa,False,True,59.1,85.7,False,synthetic,2025-01-01
+Poland,Krakow,POL,KRK,14,40,VisaFree,False,False,70.6,89.7,True,synthetic,2025-01-01
+Hungary,Budapest,HUN,BUD,35,931,eVisa,False,True,32.8,73.1,True,synthetic,2025-01-01
+Croatia,Dubrovnik,HRV,DBV,44,40,eVisa,False,True,92.7,78.8,True,synthetic,2025-01-01
+Iceland,Reykjavik,ISL,KEF,51,1666,VisaFree,False,False,83.1,74.4,True,synthetic,2025-01-01
+Chile,Santiago,CHL,SCL,48,40,eVisa,False,True,40.0,51.8,True,synthetic,2025-01-01
+Peru,Lima,PER,LIM,33,1510,VisaOnArrival,True,True,76.5,85.1,True,synthetic,2025-01-01
+Colombia,Cartagena,COL,CTG,52,502,VisaOnArrival,True,True,74.8,49.7,True,synthetic,2025-01-01
+Dominican Republic,Punta Cana,DOM,PUJ,32,1457,eVisa,False,True,10.0,100.0,True,synthetic,2025-01-01
+Puerto Rico,San Juan,PRI,SJU,43,723,VisaFree,False,False,100.0,58.7,True,synthetic,2025-01-01

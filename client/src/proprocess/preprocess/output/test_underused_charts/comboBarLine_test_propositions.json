@@ -1,0 +1,255 @@
+{
+  "chart_type": "comboBarLine",
+  "total_generated": 10,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_trend_analysis_comboBarLine_001",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "proposition": "Boroughs with high crime counts do not necessarily have high crime rates per capita, suggesting population size significantly impacts perceived safety.",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Crime Counts vs Rates Per Capita by Borough",
+      "chart_description": "Bar chart shows total crimes per borough, line chart shows crime rate per 1000 residents with threshold for high crime rate.",
+      "reasoning": "This chart type highlights the discrepancy between total crime and population-adjusted crime rate, providing a nuanced view of safety.",
+      "tapas_questions": [
+        "Which boroughs have the highest crime counts?",
+        "How do crime rates per 1000 residents compare across boroughs?",
+        "What threshold defines high crime rate areas?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "total_crimes",
+        "population"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_distribution_comboBarLine_002",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "proposition": "The proportion of White British residents is declining, whereas ethnic diversity is increasing, as seen in the rising share of other ethnic groups.",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Ethnicity Distribution and Diversity Trends",
+      "chart_description": "Bar chart displays counts for each ethnic group, line chart illustrates percentage change over time with mean diversity index.",
+      "reasoning": "Combining absolute counts and percentage changes provides insights into demographic shifts and increasing diversity.",
+      "tapas_questions": [
+        "What is the current count of White British residents?",
+        "How has the diversity index changed over time?",
+        "Which ethnic groups show the most significant growth?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local authority name",
+        "year",
+        "All usual residents",
+        "White British",
+        "other ethnic groups"
+      ],
+      "time_period": "2010-2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "country-of-births_population_comboBarLine_003",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "proposition": "Foreign-born population estimates reveal a steady increase, while the proportion of native-born residents shows a gradual decline.",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Foreign-Born Population Dynamics",
+      "chart_description": "3D bar chart shows absolute number of foreign-born residents, line chart maps percentage of total population over time.",
+      "reasoning": "The 3D aspect provides a spatial depth to population diversity trends, emphasizing changes in demographic compositions.",
+      "tapas_questions": [
+        "How has the number of foreign-born residents changed over time?",
+        "What percentage of the population is foreign-born?",
+        "How does this trend impact overall population diversity?"
+      ],
+      "3d_dimension": "Year",
+      "variables_needed": [
+        "Area_Name",
+        "Year",
+        "foreign-born estimate",
+        "total population"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_density_comboBarLine_004",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "proposition": "Population density increases have been more pronounced in certain boroughs, influencing urban planning and resource allocation.",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Population Density Trends Across Boroughs",
+      "chart_description": "Bar chart shows population counts, line chart displays population density per square kilometer with average density line.",
+      "reasoning": "Averages provide a benchmark for evaluating borough growth and its implications on infrastructure and services.",
+      "tapas_questions": [
+        "Which boroughs have the highest population densities?",
+        "How has population density changed over time?",
+        "How do density changes affect borough infrastructure needs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Borough",
+        "year",
+        "population count",
+        "land area"
+      ],
+      "time_period": "1981-2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_growth_comboBarLine_005",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "proposition": "Income levels have risen consistently, but income inequality remains stark between different boroughs.",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Income Growth vs Inequality",
+      "chart_description": "Bar chart depicts average income by borough, line chart illustrates income growth rate with inequality threshold.",
+      "reasoning": "Highlighting growth alongside inequality thresholds provides insight into economic disparities.",
+      "tapas_questions": [
+        "Which boroughs have the highest average income?",
+        "How does income growth rate vary across boroughs?",
+        "What threshold defines significant income inequality?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "average income",
+        "income growth rate"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_trend_analysis_comboBarLine_006",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "proposition": "House prices have shown substantial increases, with the rate of increase varying significantly across different areas.",
+      "chart_type": "comboBarLine_simple_3D",
+      "chart_title": "Trends in House Prices Across London",
+      "chart_description": "3D bar chart shows average house prices by area, line chart maps the rate of price increase over time.",
+      "reasoning": "The 3D chart allows for a clearer comparison of price trends across multiple dimensions, enhancing spatial understanding.",
+      "tapas_questions": [
+        "Which areas have the highest average house prices?",
+        "How has the rate of house price increase varied?",
+        "What factors might influence these trends?"
+      ],
+      "3d_dimension": "Year",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "average house price",
+        "price increase rate"
+      ],
+      "time_period": "2005-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_seasonal_comboBarLine_007",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "proposition": "Seasonal variations in crime rates show peaks during certain months, with the summer months typically experiencing higher rates.",
+      "chart_type": "comboBarLine_with_mean_2D",
+      "chart_title": "Seasonal Variations in Crime Rates",
+      "chart_description": "Bar chart shows monthly crime counts, line chart displays crime rate per 1000 residents with seasonal average line.",
+      "reasoning": "This chart type effectively highlights the seasonal component of crime trends, providing insights into temporal patterns.",
+      "tapas_questions": [
+        "What months experience the highest crime rates?",
+        "How do crime counts vary seasonally?",
+        "What is the average crime rate across seasons?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "month",
+        "crime counts",
+        "crime rate per 1000 residents"
+      ],
+      "time_period": "2022",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_growth_comboBarLine_008",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "proposition": "The growth of ethnic minority populations has been significant over the last decade, reflecting increasing diversity.",
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "chart_title": "Growth of Ethnic Minority Populations",
+      "chart_description": "Bar chart presents counts of ethnic minority groups, line chart shows growth rate with diversity threshold.",
+      "reasoning": "This combination highlights both the growth and the threshold that marks significant diversity changes.",
+      "tapas_questions": [
+        "Which ethnic minority groups have grown the most?",
+        "How does the growth rate compare across groups?",
+        "What threshold indicates significant diversity?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local authority name",
+        "ethnic group",
+        "year",
+        "growth rate"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_trend_analysis_comboBarLine_009",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "proposition": "While overall population has steadily increased, certain boroughs have experienced much more rapid growth.",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Population Growth Trends by Borough",
+      "chart_description": "Bar chart shows total population per borough, line chart illustrates population growth rate over decades.",
+      "reasoning": "This chart effectively separates total growth from rate of increase, providing insights into relative growth across boroughs.",
+      "tapas_questions": [
+        "Which boroughs have the largest populations?",
+        "How does the growth rate vary across boroughs?",
+        "What factors contribute to rapid population growth?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Borough",
+        "year",
+        "total population",
+        "growth rate"
+      ],
+      "time_period": "1981-2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_trend_analysis_comboBarLine_010",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "proposition": "Despite overall income growth, the wage gap between high and low-income boroughs remains substantial.",
+      "chart_type": "comboBarLine_simple_2D",
+      "chart_title": "Income and Wage Gap Analysis",
+      "chart_description": "Bar chart shows average income per borough, line chart maps wage growth rate over time.",
+      "reasoning": "The use of a combo chart highlights both the absolute income levels and the growth trajectory, revealing economic disparities.",
+      "tapas_questions": [
+        "Which boroughs have the highest average income?",
+        "How does the wage growth rate differ across boroughs?",
+        "What are the implications of persistent wage gaps?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "average income",
+        "wage growth rate"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ],
+  "generation_timestamp": "2025-08-20T15:15:40.092Z"
+}

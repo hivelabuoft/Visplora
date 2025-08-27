@@ -1,0 +1,111 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "schools-colleges",
+  "processed_at": "2025-08-20T04:08:12.492Z",
+  "total_propositions": 4,
+  "propositions": [
+    {
+      "proposition_id": "schools-colleges_cross_dimensional_cd_01",
+      "dataset": "schools-colleges",
+      "category": "cross_dimensional",
+      "original_proposition": "In 2023, the borough of Lewisham shows a 10% increase in schools rated 'Good' compared to 2022, with a significant concentration in the northern part of the borough.",
+      "reworded_proposition": "In 2023, Lewisham has seen a notable rise in schools rated 'Good', especially concentrated in its northern areas compared to the previous year.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Increase in 'Good' Rated Schools in Lewisham",
+      "chart_description": "Comparison of 'Good' rated schools in Lewisham from 2022 to 2023.",
+      "reasoning": "A bar chart effectively shows the change in the number of 'Good' rated schools over time, highlighting the increase in Lewisham.",
+      "tapas_questions": [
+        "Which borough had the highest increase in 'Good' rated schools?",
+        "What percentage of schools in Lewisham are rated 'Good' in 2023?",
+        "How did the number of 'Good' rated schools change from 2022 to 2023 in Lewisham?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "schools-colleges_cross_dimensional_cd_02",
+      "dataset": "schools-colleges",
+      "category": "cross_dimensional",
+      "original_proposition": "Schools offering arts programs in Inner London have seen a 5% increase in performance ratings from 2021 to 2023.",
+      "reworded_proposition": "Inner London schools with arts programs have shown a noticeable improvement in performance ratings over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Performance Trends in Arts Programs in Inner London",
+      "chart_description": "Track performance rating changes in arts programs from 2021 to 2023.",
+      "reasoning": "A line chart effectively visualizes changes over time, highlighting trends in performance ratings.",
+      "tapas_questions": [
+        "How did performance ratings change from 2021 to 2023?",
+        "Which boroughs have the highest performance ratings in 2023?",
+        "What is the average performance rating across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "schools-colleges_cross_dimensional_cd_03",
+      "dataset": "schools-colleges",
+      "category": "cross_dimensional",
+      "original_proposition": "The proportion of schools with 'Outstanding' ratings in East London increased by 12% from 2021 to 2023, with the largest growth in the borough of Newham.",
+      "reworded_proposition": "East London has seen a notable rise in schools rated 'Outstanding', particularly in Newham, over recent years.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Growth of 'Outstanding' School Ratings in East London",
+      "chart_description": "Trends in 'Outstanding' ratings from 2021 to 2023 by borough.",
+      "reasoning": "A 3D line chart effectively illustrates changes over time across multiple boroughs, highlighting Newham's significant growth.",
+      "tapas_questions": [
+        "Which borough has the highest proportion of 'Outstanding' ratings?",
+        "How did the proportion of 'Outstanding' ratings change from 2021 to 2023?",
+        "What is the average increase in 'Outstanding' ratings across all boroughs?"
+      ],
+      "3d_dimension": "geographic_subdivision",
+      "variables_needed": [
+        "area",
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "schools-colleges_cross_dimensional_cd_04",
+      "dataset": "schools-colleges",
+      "category": "cross_dimensional",
+      "original_proposition": "In 2023, schools in the borough of Bromley that offer STEM programs have a 20% higher average performance rating compared to those that do not.",
+      "reworded_proposition": "Schools in Bromley with STEM programs tend to achieve notably higher performance ratings than those without.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "STEM Program Impact on School Performance in Bromley",
+      "chart_description": "Comparison of performance ratings for schools with and without STEM programs in Bromley, 2023.",
+      "reasoning": "A bar chart with a mean line effectively highlights the performance difference between schools with and without STEM programs, allowing for easy comparison against the average.",
+      "tapas_questions": [
+        "Which schools have the highest performance rating?",
+        "What is the average performance rating for schools with STEM programs?",
+        "How does the performance of STEM schools compare to non-STEM schools?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

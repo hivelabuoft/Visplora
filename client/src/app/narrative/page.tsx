@@ -3261,6 +3261,25 @@ export default function NarrativePage() {
               <InquiryBoard
                 ref={inquiryBoardRef}
                 onGoBack={handleBackToViews}
+                pageId={narrativeSystemRef.current?.getCurrentPageId() || 'default-page'}
+                treeStructure={(() => {
+                  const currentPageId = narrativeSystemRef.current?.getCurrentPageId() || '';
+                  const treeStructure = getTreeStructureForPage(currentPageId);
+                  return treeStructure || { nodes: [], activePath: [] };
+                })()}
+                onHighlightSentences={(sentenceIds: string[]) => {
+                  console.log('🎯 Main Page: Received request to highlight sentences:', sentenceIds);
+                  if (narrativeSystemRef.current) {
+                    const success = narrativeSystemRef.current.highlightSentencesByIds(sentenceIds);
+                    if (success) {
+                      console.log('✅ Main Page: Successfully highlighted sentences');
+                    } else {
+                      console.warn('⚠️ Main Page: Failed to highlight sentences');
+                    }
+                  } else {
+                    console.warn('❌ Main Page: narrativeSystemRef not available');
+                  }
+                }}
               />
             ) : showDashboard && shouldShowLondonDashboard ? (
               <ReactFlowCanvas 
@@ -3338,6 +3357,17 @@ export default function NarrativePage() {
                     pageId={currentPageId}
                     activePath={currentActivePath}
                     isLoading={isTimelineLoading}
+                    onNodeHighlight={(sentenceContent: string) => {
+                      // Call the narrative system to highlight the sentence
+                      if (narrativeSystemRef.current) {
+                        const success = narrativeSystemRef.current.highlightSentence(sentenceContent);
+                        if (success) {
+                          console.log('✅ Timeline → Narrative: Successfully highlighted sentence');
+                        } else {
+                          console.log('❌ Timeline → Narrative: Failed to highlight sentence');
+                        }
+                      }
+                    }}
                     onPathSwitch={handlePathSwitch}
                   />
                 ) : (

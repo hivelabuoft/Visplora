@@ -20,6 +20,149 @@ import { VegaLite } from 'react-vega';
 
 import '@xyflow/react/dist/style.css';
 
+// Add CSS animations for ViewGenerator node selection effects
+const viewGeneratorStyles = `
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 12px 35px rgba(8, 145, 178, 0.4), 0 0 0 4px rgba(8, 145, 178, 0.3);
+    }
+    50% {
+      box-shadow: 0 16px 45px rgba(8, 145, 178, 0.6), 0 0 0 6px rgba(8, 145, 178, 0.4);
+    }
+  }
+  
+  @keyframes pulse-border {
+    0%, 100% {
+      opacity: 0.15;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.25;
+      transform: scale(1.005);
+    }
+  }
+  
+  @keyframes pulse-outer-ring {
+    0%, 100% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.1;
+      transform: scale(1.01);
+    }
+  }
+  
+  @keyframes badge-pulse {
+    0%, 100% {
+      box-shadow: 0 2px 4px rgba(8, 145, 178, 0.3);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 4px 8px rgba(8, 145, 178, 0.5);
+      transform: scale(1.05);
+    }
+  }
+  
+  .view-generator-node-selected {
+    filter: brightness(1.05) saturate(1.1);
+  }
+`;
+
+// Inject the styles into the document head
+if (typeof document !== 'undefined' && !document.querySelector('#view-generator-animations')) {
+  const styleElement = document.createElement('style');
+  styleElement.id = 'view-generator-animations';
+  styleElement.innerHTML = viewGeneratorStyles;
+  document.head.appendChild(styleElement);
+}
+
+// Dynamically import ViewGenerator to avoid SSR issues
+const ViewGenerator = dynamic(() => import('../viewGenerator/page'), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center h-full text-gray-400">Loading ViewGenerator...</div>
+});
+import dynamic from 'next/dynamic';
+
+// Utility function to calculate non-overlapping positions
+interface NodeDimensions {
+  width: number;
+  height: number;
+}
+
+interface ExistingNode {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+const getNodeDimensions = (nodeType: string): NodeDimensions => {
+  switch (nodeType) {
+    case 'infoNode':
+      return { width: 520, height: 400 }; // Max size for visualization plans
+    case 'vegaChartNode':
+      return { width: 400, height: 300 };
+    case 'vegaDashboardNode':
+      return { width: 600, height: 500 };
+    case 'viewGeneratorNode':
+      return { width: 800, height: 600 };
+    case 'dashboardNode':
+      return { width: 1200, height: 1000 }; // London dashboard default
+    default:
+      return { width: 300, height: 200 };
+  }
+};
+
+const findNonOverlappingPosition = (
+  existingNodes: ExistingNode[],
+  newNodeDimensions: NodeDimensions,
+  canvasWidth: number = 2000,
+  canvasHeight: number = 1500,
+  margin: number = 80
+): { x: number; y: number } => {
+  const { width: nodeWidth, height: nodeHeight } = newNodeDimensions;
+  
+  // Try a grid-based approach first, but with larger spacing
+  const gridSpacingX = Math.max(nodeWidth + margin * 2, 400);
+  const gridSpacingY = Math.max(nodeHeight + margin * 2, 300);
+  
+  // Start from top-left and work systematically
+  for (let row = 0; row < Math.ceil(canvasHeight / gridSpacingY); row++) {
+    for (let col = 0; col < Math.ceil(canvasWidth / gridSpacingX); col++) {
+      const x = col * gridSpacingX + margin;
+      const y = row * gridSpacingY + margin;
+      
+      // Check if this position would fit within canvas bounds
+      if (x + nodeWidth + margin > canvasWidth || y + nodeHeight + margin > canvasHeight) {
+        continue;
+      }
+      
+      // Check for overlaps with existing nodes (with extra margin)
+      const hasOverlap = existingNodes.some(existing => {
+        const overlapX = x < existing.x + existing.width + margin * 2 && 
+                       x + nodeWidth + margin * 2 > existing.x;
+        const overlapY = y < existing.y + existing.height + margin * 2 && 
+                       y + nodeHeight + margin * 2 > existing.y;
+        return overlapX && overlapY;
+      });
+      
+      if (!hasOverlap) {
+        console.log(`📍 Found position for node: x=${x}, y=${y} (grid: ${col},${row})`);
+        return { x, y };
+      }
+    }
+  }
+  
+  // Fallback: position to the right of all existing nodes with large spacing
+  const maxX = existingNodes.reduce((max, node) => Math.max(max, node.x + node.width), 0);
+  const fallbackX = maxX + margin * 3;
+  const fallbackY = margin;
+  
+  console.log(`📍 Using fallback position: x=${fallbackX}, y=${fallbackY}`);
+  return { x: fallbackX, y: fallbackY };
+};
+
 // Data interfaces for AI-generated chart nodes
 export interface VegaChartData {
   title: string;
@@ -43,6 +186,20 @@ export interface VegaDashboardData {
   isGreyedOut?: boolean;
 }
 
+// Interface for ViewGenerator data (from example2_data.json format)
+export interface ViewGeneratorData {
+  sentence_id: number;
+  charts: Array<{
+    chart_type: string;
+    description: string;
+    variation?: string[];
+    size?: string;
+    data?: any;
+  }>;
+  onInteraction?: (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => void;
+  isGreyedOut?: boolean;
+}
+
 // Expose methods for parent components to interact with the canvas
 export interface ReactFlowCanvasRef {
   addInfoNode: (data: { title: string; content: string }) => void;
@@ -53,6 +210,12 @@ export interface ReactFlowCanvasRef {
   // NEW: AI-generated chart support
   addVegaChartNode: (data: VegaChartData) => void;
   addVegaDashboardNode: (data: VegaDashboardData) => void;
+  // NEW: ViewGenerator support
+  addViewGeneratorNode: (data: ViewGeneratorData, skipAutoZoom?: boolean) => void;
+  // NEW: Direct ReactFlow control
+  fitViewToAllNodes: () => void;
+  hasViewGeneratorNode: (sentenceId: number) => boolean; // NEW: Check if ViewGenerator node exists by sentence ID
+  selectAndZoomToViewGeneratorNode: (sentenceId: number) => boolean; // NEW: Select and zoom to ViewGenerator node by sentence ID
 }
 
 // Custom node component for info nodes
@@ -722,11 +885,190 @@ const VegaDashboardNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
   );
 };
 
+// Custom node component for ViewGenerator (example2_data.json format)
+const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected }) => {
+  const [error, setError] = useState<string | null>(null);
+
+  const handleError = (error: any) => {
+    console.error('ViewGenerator error:', error);
+    setError(error.message || 'Unknown error occurred');
+  };
+
+  const handleNodeClick = (e: React.MouseEvent) => {
+    console.log(`🎯 ViewGenerator node clicked for sentence ${data.sentence_id}`);
+    
+    // Call the onNodeClick callback if provided
+    if (data.onNodeClick) {
+      data.onNodeClick(data.sentence_id, data.nodeId);
+    }
+    
+    // Note: We don't stop event propagation here to allow ReactFlow's selection to work
+  };
+
+  return (
+    <div
+      className={`view-generator-node ${selected ? 'view-generator-node-selected' : ''}`}
+      onClick={handleNodeClick}
+      style={{
+        position: 'relative',
+        background: selected 
+          ? 'linear-gradient(145deg, #f0f9ff, #e0f2fe)' 
+          : 'white',
+        borderRadius: '12px',
+        boxShadow: selected 
+          ? '0 12px 35px rgba(8, 145, 178, 0.4), 0 0 0 4px rgba(8, 145, 178, 0.3)' 
+          : '0 4px 12px rgba(0, 0, 0, 0.1)',
+        border: selected 
+          ? '3px solid #0891b2' 
+          : '2px solid #e2e8f0',
+        minWidth: '800px',
+        minHeight: '600px',
+        opacity: data.isGreyedOut ? 0.3 : 1,
+        transition: 'all 0.3s ease',
+        transform: selected ? 'scale(1.03)' : 'scale(1)',
+        pointerEvents: data.isGreyedOut ? 'none' : 'auto',
+        zIndex: selected ? 15 : 2,
+        cursor: 'pointer',
+        animation: selected ? 'pulse-glow 2s ease-in-out infinite' : 'none',
+      }}
+    >
+      {selected && (
+        <NodeResizer
+          color="#0891b2"
+          isVisible={true}
+          minWidth={800}
+          minHeight={600}
+          maxWidth={1400}
+          maxHeight={1000}
+          handleStyle={{ width: '12px', height: '12px', pointerEvents: 'none' }}
+          lineStyle={{ borderWidth: 3, pointerEvents: 'none' }}
+        />
+      )}
+
+      {/* Enhanced Selection Glow Effect */}
+      {selected && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '-8px',
+            left: '-8px',
+            right: '-8px',
+            bottom: '-8px',
+            background: 'linear-gradient(45deg, #0891b2, #06b6d4, #0891b2)',
+            borderRadius: '20px',
+            opacity: 0.15,
+            pointerEvents: 'none',
+            zIndex: -1,
+            animation: 'pulse-border 3s ease-in-out infinite',
+          }}
+        />
+      )}
+
+      {/* Outer glow ring for selected state */}
+      {selected && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '-12px',
+            left: '-12px',
+            right: '-12px',
+            bottom: '-12px',
+            border: '2px solid rgba(8, 145, 178, 0.2)',
+            borderRadius: '24px',
+            pointerEvents: 'none',
+            zIndex: -2,
+            animation: 'pulse-outer-ring 4s ease-in-out infinite',
+          }}
+        />
+      )}
+
+      {/* ViewGenerator Header */}
+      <div className="view-generator-header" style={{
+        padding: '12px 16px',
+        borderBottom: selected ? '2px solid #0891b2' : '1px solid #e2e8f0',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        background: selected 
+          ? 'linear-gradient(90deg, #e6f7ff, #bae7ff)' 
+          : 'linear-gradient(90deg, #f8fafc, #f1f5f9)',
+        borderRadius: '12px 12px 0 0',
+        transition: 'all 0.3s ease',
+      }}>
+        <h3 style={{
+          margin: 0,
+          fontSize: selected ? '17px' : '16px',
+          fontWeight: selected ? '700' : '600',
+          color: selected ? '#0369a1' : '#334155',
+          transition: 'all 0.3s ease',
+          textShadow: selected ? '0 1px 2px rgba(3, 105, 161, 0.1)' : 'none',
+        }}>
+          📊 Sentence #{data.sentence_id}
+        </h3>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontSize: '12px',
+          color: selected ? '#0369a1' : '#64748b',
+          transition: 'all 0.3s ease',
+        }}>
+          {selected && (
+            <span style={{
+              backgroundColor: '#0891b2',
+              color: 'white',
+              padding: '3px 8px',
+              borderRadius: '6px',
+              fontSize: '11px',
+              fontWeight: '700',
+              letterSpacing: '0.5px',
+              boxShadow: '0 2px 4px rgba(8, 145, 178, 0.3)',
+              animation: 'badge-pulse 2s ease-in-out infinite',
+            }}>
+              ✓ ACTIVE
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* ViewGenerator Content */}
+      <div
+        className="view-generator-content"
+        style={{
+          padding: '0',
+          height: 'calc(100% - 60px)',
+          overflow: 'auto',
+          pointerEvents: 'auto',
+          zIndex: 3,
+        }}
+      >
+        {error ? (
+          <div style={{
+            color: '#dc2626',
+            textAlign: 'center',
+            padding: '40px 20px',
+            fontSize: '14px',
+          }}>
+            ⚠️ Error loading ViewGenerator: {error}
+          </div>
+        ) : (
+          <ViewGenerator
+            sentence_id={data.sentence_id}
+            charts={data.charts || []}
+            onInteraction={data.onInteraction}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
 const nodeTypes = {
   dashboardNode: DashboardNode,
   infoNode: InfoNode,
   vegaChartNode: VegaChartNode,
   vegaDashboardNode: VegaDashboardNode,
+  viewGeneratorNode: ViewGeneratorNode,
 };
 
 const initialNodes: Node[] = [
@@ -765,12 +1107,14 @@ interface ReactFlowCanvasProps {
   showDashboard?: boolean;
   children?: React.ReactNode;
   dashboardConfig?: DashboardConfig;
+  onViewGeneratorNodeClick?: (sentenceId: number, nodeId: string) => void;
 }
 
 const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({ 
   showDashboard, 
   children, 
-  dashboardConfig
+  dashboardConfig,
+  onViewGeneratorNodeClick
 }, ref) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -789,27 +1133,45 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
   // Function to add info node (exposed via ref)
   const addInfoNode = useCallback((data: { title: string; content: string }) => {
     const nodeId = `info-${Date.now()}`;
-    const newNode: Node = {
-      id: nodeId,
-      position: { 
-        x: Math.random() * 400 + 100, 
-        y: Math.random() * 300 + 100 
-      },
-      data: { 
-        title: data.title,
-        content: data.content,
-        nodeId: nodeId // Pass nodeId to the component
-      },
-      type: 'infoNode',
-      draggable: true,
-      selectable: true,
-      zIndex: 1000,
-    };
+    
+    // Get fresh node state for accurate positioning
+    setNodes((currentNodes) => {
+      // Calculate position to avoid overlaps using current nodes
+      const existingNodes: ExistingNode[] = currentNodes.map(node => {
+        const dimensions = getNodeDimensions(node.type || 'default');
+        return {
+          x: node.position.x,
+          y: node.position.y,
+          width: dimensions.width,
+          height: dimensions.height,
+        };
+      });
+      
+      const nodeType = data.title === 'Visualization Plan' ? 'infoNode' : 'infoNode';
+      const newPosition = findNonOverlappingPosition(
+        existingNodes,
+        getNodeDimensions(nodeType)
+      );
+      
+      console.log(`📍 Info node ${nodeId} positioned at:`, newPosition);
+      
+      const newNode: Node = {
+        id: nodeId,
+        position: newPosition,
+        data: { 
+          title: data.title,
+          content: data.content,
+          nodeId: nodeId // Pass nodeId to the component
+        },
+        type: 'infoNode',
+        draggable: true,
+        selectable: true,
+        zIndex: 1000,
+      };
 
-    setNodes((nds) => {
       // Separate nodes by type to ensure info nodes always come last (on top)
-      const infoNodes = nds.filter(node => node.type === 'infoNode');
-      const otherNodes = nds.filter(node => node.type !== 'infoNode');
+      const infoNodes = currentNodes.filter(node => node.type === 'infoNode');
+      const otherNodes = currentNodes.filter(node => node.type !== 'infoNode');
       
       // Add new info node and put all info nodes at the end
       return [...otherNodes, ...infoNodes, newNode];
@@ -828,7 +1190,7 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
         });
       }
     }, 100);
-  }, [setNodes]);
+  }, []);
 
   // Function to show loading state
   const showLoadingState = useCallback((message: string = 'Generating visualization recommendations...') => {
@@ -860,26 +1222,43 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
   // Function to add Vega chart node
   const addVegaChartNode = useCallback((data: VegaChartData) => {
     const nodeId = `vega-chart-${Date.now()}`;
-    const newNode: Node = {
-      id: nodeId,
-      position: { 
-        x: Math.random() * 400 + 100, 
-        y: Math.random() * 300 + 100 
-      },
-      data: {
-        ...data,
-        nodeId: nodeId
-      },
-      type: 'vegaChartNode',
-      draggable: true,
-      selectable: true,
-      zIndex: 1000,
-    };
+    
+    // Get fresh node state for accurate positioning
+    setNodes((currentNodes) => {
+      // Calculate position to avoid overlaps using current nodes
+      const existingNodes: ExistingNode[] = currentNodes.map(node => {
+        const dimensions = getNodeDimensions(node.type || 'default');
+        return {
+          x: node.position.x,
+          y: node.position.y,
+          width: dimensions.width,
+          height: dimensions.height,
+        };
+      });
+      
+      const newPosition = findNonOverlappingPosition(
+        existingNodes,
+        getNodeDimensions('vegaChartNode')
+      );
+      
+      console.log(`📍 Vega chart ${nodeId} positioned at:`, newPosition);
+      
+      const newNode: Node = {
+        id: nodeId,
+        position: newPosition,
+        data: {
+          ...data,
+          nodeId: nodeId
+        },
+        type: 'vegaChartNode',
+        draggable: true,
+        selectable: true,
+        zIndex: 1000,
+      };
 
-    setNodes((nds) => {
       // Separate nodes by type to ensure chart nodes always come last (on top)
-      const chartNodes = nds.filter(node => node.type === 'vegaChartNode' || node.type === 'vegaDashboardNode');
-      const otherNodes = nds.filter(node => node.type !== 'vegaChartNode' && node.type !== 'vegaDashboardNode');
+      const chartNodes = currentNodes.filter(node => node.type === 'vegaChartNode' || node.type === 'vegaDashboardNode');
+      const otherNodes = currentNodes.filter(node => node.type !== 'vegaChartNode' && node.type !== 'vegaDashboardNode');
       
       return [...otherNodes, ...chartNodes, newNode];
     });
@@ -894,31 +1273,48 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
         });
       }
     }, 100);
-  }, [setNodes]);
+  }, []);
 
   // Function to add Vega dashboard node
   const addVegaDashboardNode = useCallback((data: VegaDashboardData) => {
     const nodeId = `vega-dashboard-${Date.now()}`;
-    const newNode: Node = {
-      id: nodeId,
-      position: { 
-        x: Math.random() * 400 + 100, 
-        y: Math.random() * 300 + 100 
-      },
-      data: {
-        ...data,
-        nodeId: nodeId
-      },
-      type: 'vegaDashboardNode',
-      draggable: true,
-      selectable: true,
-      zIndex: 1000,
-    };
+    
+    // Get fresh node state for accurate positioning
+    setNodes((currentNodes) => {
+      // Calculate position to avoid overlaps using current nodes
+      const existingNodes: ExistingNode[] = currentNodes.map(node => {
+        const dimensions = getNodeDimensions(node.type || 'default');
+        return {
+          x: node.position.x,
+          y: node.position.y,
+          width: dimensions.width,
+          height: dimensions.height,
+        };
+      });
+      
+      const newPosition = findNonOverlappingPosition(
+        existingNodes,
+        getNodeDimensions('vegaDashboardNode')
+      );
+      
+      console.log(`📍 Vega dashboard ${nodeId} positioned at:`, newPosition);
+      
+      const newNode: Node = {
+        id: nodeId,
+        position: newPosition,
+        data: {
+          ...data,
+          nodeId: nodeId
+        },
+        type: 'vegaDashboardNode',
+        draggable: true,
+        selectable: true,
+        zIndex: 1000,
+      };
 
-    setNodes((nds) => {
       // Separate nodes by type to ensure dashboard nodes always come last (on top)
-      const chartNodes = nds.filter(node => node.type === 'vegaChartNode' || node.type === 'vegaDashboardNode');
-      const otherNodes = nds.filter(node => node.type !== 'vegaChartNode' && node.type !== 'vegaDashboardNode');
+      const chartNodes = currentNodes.filter(node => node.type === 'vegaChartNode' || node.type === 'vegaDashboardNode');
+      const otherNodes = currentNodes.filter(node => node.type !== 'vegaChartNode' && node.type !== 'vegaDashboardNode');
       
       return [...otherNodes, ...chartNodes, newNode];
     });
@@ -933,7 +1329,68 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
         });
       }
     }, 100);
-  }, [setNodes]);
+  }, []);
+
+  // Function to add ViewGenerator node
+  const addViewGeneratorNode = useCallback((data: ViewGeneratorData, skipAutoZoom: boolean = false) => {
+    const nodeId = `view-generator-${Date.now()}`;
+    
+    // Get fresh node state for accurate positioning
+    setNodes((currentNodes) => {
+      // Calculate position to avoid overlaps using current nodes
+      const existingNodes: ExistingNode[] = currentNodes.map(node => {
+        const dimensions = getNodeDimensions(node.type || 'default');
+        return {
+          x: node.position.x,
+          y: node.position.y,
+          width: dimensions.width,
+          height: dimensions.height,
+        };
+      });
+      
+      console.log(`📊 Adding ViewGenerator node ${nodeId}, existing nodes:`, existingNodes.length);
+      
+      const newPosition = findNonOverlappingPosition(
+        existingNodes,
+        getNodeDimensions('viewGeneratorNode')
+      );
+      
+      console.log(`📍 ViewGenerator ${nodeId} positioned at:`, newPosition);
+      
+      const newNode: Node = {
+        id: nodeId,
+        position: newPosition,
+        data: {
+          ...data,
+          nodeId: nodeId,
+          onNodeClick: onViewGeneratorNodeClick
+        },
+        type: 'viewGeneratorNode',
+        draggable: true,
+        selectable: true,
+        zIndex: 1000,
+      };
+
+      // Separate nodes by type to ensure ViewGenerator nodes always come last (on top)
+      const generatorNodes = currentNodes.filter(node => node.type === 'viewGeneratorNode');
+      const otherNodes = currentNodes.filter(node => node.type !== 'viewGeneratorNode');
+      
+      return [...otherNodes, ...generatorNodes, newNode];
+    });
+
+    // Auto-zoom to the new ViewGenerator node only if not skipping
+    if (!skipAutoZoom) {
+      setTimeout(() => {
+        if (reactFlowInstance.current) {
+          reactFlowInstance.current.fitView({
+            nodes: [{ id: nodeId }],
+            duration: 800,
+            padding: 0.3,
+          });
+        }
+      }, 100);
+    }
+  }, []);
 
   // Test functions to load simulated data
   const loadSimulatedDashboard = useCallback(async () => {
@@ -976,6 +1433,87 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
     }
   }, [addVegaChartNode]);
 
+  // Function to fit view to all nodes
+  const fitViewToAllNodes = useCallback(() => {
+    if (reactFlowInstance.current) {
+      reactFlowInstance.current.fitView({
+        duration: 1000,
+        padding: 0.1,
+      });
+    }
+  }, []);
+
+  // Function to check if a ViewGenerator node exists by sentence ID
+  const hasViewGeneratorNode = useCallback((sentenceId: number): boolean => {
+    const targetNode = nodes.find(node => 
+      node.type === 'viewGeneratorNode' && 
+      node.data?.sentence_id === sentenceId
+    );
+    
+    return !!targetNode;
+  }, [nodes]);
+
+  // Function to select and zoom to a ViewGenerator node by sentence ID
+  const selectAndZoomToViewGeneratorNode = useCallback((sentenceId: number): boolean => {
+    if (!reactFlowInstance.current) {
+      console.warn('❌ ReactFlow instance not available');
+      return false;
+    }
+
+    console.log(`🔍 Looking for ViewGenerator node with sentence_id: ${sentenceId}`);
+    console.log(`🔍 Available nodes:`, nodes.map(n => ({ 
+      id: n.id, 
+      type: n.type, 
+      sentence_id: n.data?.sentence_id,
+      data: n.data 
+    })));
+
+    // Find the ViewGenerator node with the matching sentence ID
+    const targetNode = nodes.find(node => {
+      const isViewGenerator = node.type === 'viewGeneratorNode';
+      const hasSentenceId = node.data?.sentence_id === sentenceId;
+      console.log(`🔍 Checking node ${node.id}: type=${node.type}, sentence_id=${node.data?.sentence_id}, match=${isViewGenerator && hasSentenceId}`);
+      return isViewGenerator && hasSentenceId;
+    });
+
+    if (!targetNode) {
+      console.warn(`❌ No ViewGenerator node found for sentence ${sentenceId}`);
+      console.warn(`❌ Available ViewGenerator nodes:`, nodes
+        .filter(n => n.type === 'viewGeneratorNode')
+        .map(n => ({ id: n.id, sentence_id: n.data?.sentence_id }))
+      );
+      return false;
+    }
+
+    console.log(`🎯 Found target node:`, { 
+      id: targetNode.id, 
+      type: targetNode.type, 
+      sentence_id: targetNode.data?.sentence_id 
+    });
+
+    // Select the node by updating the nodes array
+    setNodes((currentNodes) => 
+      currentNodes.map(node => ({
+        ...node,
+        selected: node.id === targetNode.id
+      }))
+    );
+
+    // Zoom to the node
+    setTimeout(() => {
+      if (reactFlowInstance.current) {
+        console.log(`📍 Zooming to node ${targetNode.id}`);
+        reactFlowInstance.current.fitView({
+          nodes: [{ id: targetNode.id }],
+          duration: 800,
+          padding: 0.3,
+        });
+      }
+    }, 100);
+
+    return true;
+  }, [nodes, setNodes]);
+
   // Expose methods to parent component
   useImperativeHandle(ref, () => ({
     addInfoNode,
@@ -984,8 +1522,12 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
     clearAllNodes,
     hideLoadingState,
     addVegaChartNode,
-    addVegaDashboardNode
-  }), [addInfoNode, hasActiveInfoNode, showLoadingState, clearAllNodes, hideLoadingState, addVegaChartNode, addVegaDashboardNode]);
+    addVegaDashboardNode,
+    addViewGeneratorNode,
+    fitViewToAllNodes,
+    hasViewGeneratorNode,
+    selectAndZoomToViewGeneratorNode
+  }), [addInfoNode, hasActiveInfoNode, showLoadingState, clearAllNodes, hideLoadingState, addVegaChartNode, addVegaDashboardNode, addViewGeneratorNode, fitViewToAllNodes, hasViewGeneratorNode, selectAndZoomToViewGeneratorNode]);
 
   // Handle close info node event
   useEffect(() => {
@@ -1034,10 +1576,34 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
         const existingDashboard = nds.find(node => node.id === 'london-dashboard');
         
         if (!existingDashboard) {
+          // Calculate position to avoid overlaps with existing nodes
+          const existingNodes: ExistingNode[] = nds.map(node => {
+            const dimensions = getNodeDimensions(node.type || 'default');
+            return {
+              x: node.position.x,
+              y: node.position.y,
+              width: dimensions.width,
+              height: dimensions.height,
+            };
+          });
+          
+          const dashboardDimensions = {
+            width: dashboardConfig?.width || 1200,
+            height: dashboardConfig?.height || 1000
+          };
+          
+          const newPosition = findNonOverlappingPosition(
+            existingNodes,
+            dashboardDimensions,
+            1500, // canvas width
+            1000, // canvas height
+            50    // margin
+          );
+          
           // Create new dashboard node only if it doesn't exist
           const dashboardNode: Node = {
             id: 'london-dashboard',
-            position: { x: 50, y: 50 },
+            position: newPosition,
             data: { 
               label: 'London Dashboard',
               dashboardComponent: children,
@@ -1084,7 +1650,7 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
         return filtered;
       });
     }
-  }, [showDashboard, setNodes, dashboardConfig]);
+  }, [showDashboard, setNodes, dashboardConfig, children]);
 
   // Separate effect to update dashboard content without recreating the node
   useEffect(() => {

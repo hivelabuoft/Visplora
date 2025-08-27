@@ -27,16 +27,20 @@ export interface InquiryIssue {
   title: string;
   status: 'open' | 'stalled' | 'resolved';
   
-  // Unified content fields
+  // Sentence references from the first layer API
+  sentenceRefs?: string[];
+  
+  // Unified content fields from enrichment
   position_suggested_by?: {
     text: string;
+    confidence: 'low' | 'medium' | 'high';
   };
   argument_suggested_by?: {
     text: string;
+    basis: 'data' | 'mechanism' | 'pattern' | 'comparison' | 'other';
   };
   
   links: IssueLink[];
-  answer?: string; // for resolved issues
 }
 
 // New relationship types for issue-to-issue connections
@@ -44,7 +48,6 @@ export interface IssueLink {
   qid: string; // target issue node
   type: 'suggested_by' | 'generalized_from' | 'specialized_from' | 'replaces';
   explanation: string;
-  color?: string; // Optional color for the relationship
 }
 
 // Expose methods for parent components to interact with the inquiry board
@@ -210,22 +213,6 @@ const InquiryNodeComponent: React.FC<{
             </div>
           ))}
 
-          {/* Answer (for resolved issues) */}
-          {inquiry.answer && (
-            <div style={{
-              fontSize: '11px',
-              color: colors.accent,
-              backgroundColor: 'rgba(34, 197, 94, 0.1)',
-              padding: '8px',
-              borderRadius: '6px',
-              fontStyle: 'italic',
-              lineHeight: '1.3',
-              border: '1px solid rgba(34, 197, 94, 0.3)',
-            }}>
-              <strong>Answer:</strong> {inquiry.answer}
-            </div>
-          )}
-
           {/* Links Count Badge */}
           <div style={{
             position: 'absolute',
@@ -371,15 +358,30 @@ const initialEdges: Edge[] = [];
 
 interface InquiryBoardProps {
   onGoBack?: () => void;
+  treeStructure?: {
+    nodes: any[];
+    activePath: string[];
+  };
+  pageId?: string;
+  scenario?: string;  // Optional: scenario number for example data
+  example?: string;   // Optional: example number for example data
+  onHighlightSentences?: (sentenceIds: string[]) => void; // New callback for highlighting sentences
 }
 
 const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({ 
-  onGoBack 
+  onGoBack,
+  treeStructure,
+  pageId,
+  scenario,
+  example,
+  onHighlightSentences 
 }, ref) => {
   const [nodes, setNodes, onNodesChangeOriginal] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [layoutMode, setLayoutMode] = useState<'status' | 'relationship'>('status');
   const [inquiries, setInquiries] = useState<InquiryIssue[]>([]);
+  const [isLoadingInquiries, setIsLoadingInquiries] = useState(false);
+  const [loadingError, setLoadingError] = useState<string | null>(null);
 
   // Custom node change handler that restricts movement in status mode
   const handleNodesChange = useCallback(
@@ -465,38 +467,118 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
     inquiryNode: (props: any) => (
       <InquiryNodeComponent
         {...props}
-        onClick={(nodeId: string) => console.log('Node clicked:', nodeId)}
+        onClick={(nodeId: string) => handleInquiryNodeClick(nodeId)}
         showHandles={true} // Enable handles when used in ReactFlow
         maxWidth="280px" // Limit width in network view
       />
     ),
   };
 
-  // Load inquiry data from test file (only in demo mode)
+  // Load inquiry data - from API in production mode, from test file in demo mode
   useEffect(() => {
     const loadInquiries = async () => {
       logDemoModeStatus('InquiryBoard');
+      setIsLoadingInquiries(true);
+      setLoadingError(null);
       
-      if (!isDemoMode()) {
-        console.log('🚫 Production mode: No test data loaded for inquiry board');
-        setInquiries([]);
-        return;
+      if (isDemoMode()) {
+        // Demo mode: Load from test.json
+        try {
+          const response = await fetch('/testcases/test_inquiry_board/test.json');
+          const data: InquiryIssue[] = await response.json();
+          setInquiries(data);
+        } catch (error) {
+          setLoadingError('Failed to load test data');
+          setInquiries([]);
+        }
+      } else {
+        // Production mode: Call inquiry APIs
+        try {
+          
+          // Use the tree structure passed from the narrative system
+          const currentTreeStructure = treeStructure || {
+            nodes: [],
+            activePath: []
+          };
+          
+          console.log('📝 Using tree structure with', currentTreeStructure.nodes.length, 'nodes and active path:', currentTreeStructure.activePath);
+          
+          // Check if we have any narrative content
+          if (currentTreeStructure.nodes.length === 0) {
+            setInquiries([]);
+            setIsLoadingInquiries(false);
+            return;
+          }
+          
+          
+          // Step 1: Call the first layer API to extract basic issues
+          const basicIssuesResponse = await fetch('/api/inquiry-issues', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              treeStructure: currentTreeStructure,
+              pageId: pageId || 'default-page',
+              scenario: scenario,  // Pass scenario for example data detection
+              example: example     // Pass example for example data detection
+            }),
+          });
+          
+          if (!basicIssuesResponse.ok) {
+            throw new Error(`Basic issues API failed: ${basicIssuesResponse.status}`);
+          }
+          
+          const basicIssuesData = await basicIssuesResponse.json();
+          
+          if (!basicIssuesData.issues || basicIssuesData.issues.length === 0) {
+            setInquiries([]);
+            setIsLoadingInquiries(false);
+            return;
+          }
+          
+          
+          // Step 2: Call the second layer API to enrich the issues
+          const enrichmentResponse = await fetch('/api/inquiry-enrichment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              issues: basicIssuesData.issues,
+              treeStructure: currentTreeStructure,
+              pageId: pageId || 'default-page'
+            }),
+          });
+          
+          if (!enrichmentResponse.ok) {
+            throw new Error(`Enrichment API failed: ${enrichmentResponse.status}`);
+          }
+          
+          const enrichmentData = await enrichmentResponse.json();
+          
+          // Use enriched issues as final data
+          const finalIssues = enrichmentData.enrichedIssues || [];
+          console.log('🔍 Final inquiries loaded:', finalIssues.map((i: InquiryIssue) => ({
+            qid: i.qid,
+            title: i.title,
+            sentenceRefs: i.sentenceRefs,
+            sentenceRefsCount: i.sentenceRefs?.length || 0
+          })));
+          setInquiries(finalIssues);
+          
+        } catch (error) {
+          console.error('❌ Failed to load inquiry data from APIs:', error);
+          setLoadingError(error instanceof Error ? error.message : 'Failed to load inquiries');
+          setInquiries([]);
+        }
       }
-
-      try {
-        console.log('📊 Demo mode: Loading inquiry data from test.json');
-        const response = await fetch('/testcases/test_inquiry_board/test.json');
-        const data: InquiryIssue[] = await response.json();
-        console.log('✅ Demo mode: Loaded', data.length, 'inquiries from test data');
-        setInquiries(data);
-      } catch (error) {
-        console.error('❌ Failed to load inquiry test data:', error);
-        setInquiries([]);
-      }
+      
+      setIsLoadingInquiries(false);
     };
 
     loadInquiries();
-  }, []);
+  }, [treeStructure, pageId]);
 
   // Create status-based layout (horizontal lanes)
   const createStatusLayout = () => {
@@ -582,15 +664,12 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
   const createEdgesFromLinks = () => {
     const edgeList: Edge[] = [];
     
-    console.log('🔗 Creating edges for inquiries:', inquiries.length);
 
     inquiries.forEach((inquiry) => {
       if (inquiry.links && inquiry.links.length > 0) {
-        console.log(`🔗 Processing ${inquiry.links.length} links for ${inquiry.qid}`);
         inquiry.links.forEach((link, linkIndex) => {
           // Check if the linked inquiry exists in our dataset
           const targetExists = inquiries.some(inq => inq.qid === link.qid);
-          console.log(`🔗 Link ${inquiry.qid} -> ${link.qid} (${link.type}): target exists = ${targetExists}`);
           if (targetExists) {
             // Get actual node positions from current nodes state
             const sourceNode = nodes.find(n => n.id === inquiry.qid);
@@ -667,7 +746,6 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
               data: {
                 explanation: link.explanation,
                 relationshipType: link.type,
-                color: link.color,
               },
               style: {
                 stroke: 'rgba(156, 163, 175, 0.4)', // Very subtle gray with transparency
@@ -686,7 +764,6 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
       }
     });
     
-    console.log('🔗 Created edges:', edgeList.length, edgeList.map(e => `${e.source}->${e.target}`));
     return edgeList;
   };
 
@@ -705,13 +782,39 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
       setEdges(newEdges); // Create edges for network view
     }
     
-    console.log('🔄 Setting nodes:', newNodes.length);
     setNodes(newNodes);
   }, [inquiries, layoutMode, setNodes, setEdges]);
 
+  // Handle inquiry node click - highlight corresponding sentences
+  const handleInquiryNodeClick = useCallback((nodeId: string) => {
+    const clickedInquiry = inquiries.find(inquiry => inquiry.qid === nodeId);
+    if (clickedInquiry) {
+      console.log('🎯 Inquiry Node Clicked:', clickedInquiry.qid, clickedInquiry.title);
+      console.log('🔍 Full inquiry object:', JSON.stringify(clickedInquiry, null, 2));
+      
+      if (clickedInquiry.sentenceRefs && clickedInquiry.sentenceRefs.length > 0) {
+        console.log('📝 Found sentence references:', clickedInquiry.sentenceRefs);
+        
+        // Call the highlight callback if provided
+        if (onHighlightSentences) {
+          console.log('🎨 Calling highlight callback for sentences:', clickedInquiry.sentenceRefs);
+          onHighlightSentences(clickedInquiry.sentenceRefs);
+        } else {
+          console.warn('⚠️ No highlight callback provided - cannot highlight sentences');
+        }
+      } else {
+        console.log('❌ No sentence references found for inquiry:', clickedInquiry.qid);
+        console.log('🔍 sentenceRefs value:', clickedInquiry.sentenceRefs);
+        console.log('🔍 sentenceRefs type:', typeof clickedInquiry.sentenceRefs);
+        console.log('🔍 sentenceRefs is array:', Array.isArray(clickedInquiry.sentenceRefs));
+      }
+    } else {
+      console.error('❌ Inquiry node not found:', nodeId);
+    }
+  }, [inquiries, onHighlightSentences]);
+
   // Handle go back button
   const handleGoBack = useCallback(() => {
-    console.log('🔙 Going back from inquiry board');
     if (onGoBack) {
       onGoBack();
     }
@@ -724,6 +827,13 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
 
   return (
     <div className="w-full h-full relative">
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+      
       {/* Header with controls */}
       <div style={{
         position: 'absolute',
@@ -773,16 +883,40 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
         }}>
           <Network size={20} />
           Inquiry Board
-          <span style={{
-            fontSize: '12px',
-            fontWeight: '400',
-            color: '#64748b',
-            background: '#f1f5f9',
-            padding: '2px 8px',
-            borderRadius: '12px',
-          }}>
-            {inquiries.length} issues
-          </span>
+          {isLoadingInquiries ? (
+            <span style={{
+              fontSize: '12px',
+              fontWeight: '400',
+              color: '#3b82f6',
+              background: 'rgba(59, 130, 246, 0.1)',
+              padding: '2px 8px',
+              borderRadius: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}>
+              <div style={{
+                width: '10px',
+                height: '10px',
+                border: '2px solid transparent',
+                borderTop: '2px solid currentColor',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite'
+              }}></div>
+              analyzing...
+            </span>
+          ) : (
+            <span style={{
+              fontSize: '12px',
+              fontWeight: '400',
+              color: '#64748b',
+              background: '#f1f5f9',
+              padding: '2px 8px',
+              borderRadius: '12px',
+            }}>
+              {inquiries.length} issues
+            </span>
+          )}
         </div>
 
         {/* Right: Layout Toggle */}
@@ -830,7 +964,168 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
       </div>
 
       {/* Main Content Area */}
-      {layoutMode === 'status' ? (
+      {isLoadingInquiries ? (
+        /* Loading State */
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+          paddingTop: '80px',
+          flexDirection: 'column',
+          gap: '20px'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '24px 32px',
+            background: 'rgba(255, 255, 255, 0.9)',
+            borderRadius: '12px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(0, 0, 0, 0.05)'
+          }}>
+            <div style={{
+              width: '24px',
+              height: '24px',
+              border: '3px solid #e2e8f0',
+              borderTop: '3px solid #3b82f6',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite'
+            }}></div>
+            <div style={{
+              fontSize: '16px',
+              fontWeight: '500',
+              color: '#374151'
+            }}>
+              {isDemoMode() ? 'Loading demo inquiries...' : 'Analyzing narrative for inquiries...'}
+            </div>
+          </div>
+          <div style={{
+            fontSize: '14px',
+            color: '#6b7280',
+            textAlign: 'center',
+            maxWidth: '400px',
+            lineHeight: '1.5'
+          }}>
+            {isDemoMode() 
+              ? 'Loading test inquiry data from demo files'
+              : 'AI is extracting and enriching inquiry issues from your narrative content. This may take a moment.'
+            }
+          </div>
+        </div>
+      ) : loadingError ? (
+        /* Error State */
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+          paddingTop: '80px',
+          flexDirection: 'column',
+          gap: '16px'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '20px 24px',
+            background: 'rgba(254, 242, 242, 0.9)',
+            borderRadius: '12px',
+            border: '1px solid rgba(239, 68, 68, 0.2)',
+            maxWidth: '500px'
+          }}>
+            <div style={{
+              fontSize: '24px'
+            }}>
+              ⚠️
+            </div>
+            <div>
+              <div style={{
+                fontSize: '16px',
+                fontWeight: '600',
+                color: '#dc2626',
+                marginBottom: '4px'
+              }}>
+                Failed to Load Inquiries
+              </div>
+              <div style={{
+                fontSize: '14px',
+                color: '#7f1d1d'
+              }}>
+                {loadingError}
+              </div>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              setLoadingError(null);
+              // Trigger a reload by updating the effect
+              const loadInquiries = async () => {
+                // This will re-trigger the useEffect
+                setInquiries([]);
+              };
+              loadInquiries();
+            }}
+            style={{
+              padding: '8px 16px',
+              backgroundColor: '#dc2626',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              fontSize: '14px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              transition: 'background-color 0.2s'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#b91c1c'}
+            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#dc2626'}
+          >
+            Try Again
+          </button>
+        </div>
+      ) : inquiries.length === 0 ? (
+        /* Empty State */
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+          paddingTop: '80px',
+          flexDirection: 'column',
+          gap: '16px'
+        }}>
+          <div style={{
+            fontSize: '48px',
+            marginBottom: '8px'
+          }}>
+            🤔
+          </div>
+          <div style={{
+            fontSize: '18px',
+            fontWeight: '600',
+            color: '#374151',
+            marginBottom: '4px'
+          }}>
+            No Inquiries Found
+          </div>
+          <div style={{
+            fontSize: '14px',
+            color: '#6b7280',
+            textAlign: 'center',
+            maxWidth: '400px',
+            lineHeight: '1.5'
+          }}>
+            {!treeStructure || treeStructure.nodes.length === 0
+              ? 'Write some narrative content first to generate inquiry questions.'
+              : 'No inquiry issues were found in your current narrative. Try adding more analytical content or questions.'
+            }
+          </div>
+        </div>
+      ) : layoutMode === 'status' ? (
         /* Status View - Vertical Columns with Vertical Scrolling (Kanban Style) */
         <div style={{ 
           display: 'flex', 
@@ -888,7 +1183,7 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
                   <InquiryNodeComponent
                     data={inquiry}
                     selected={false}
-                    onClick={(nodeId: string) => console.log('Clicked:', nodeId)}
+                    onClick={(nodeId: string) => handleInquiryNodeClick(nodeId)}
                   />
                 </div>
               ))}
@@ -957,7 +1252,7 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
                   <InquiryNodeComponent
                     data={inquiry}
                     selected={false}
-                    onClick={(nodeId: string) => console.log('Clicked:', nodeId)}
+                    onClick={(nodeId: string) => handleInquiryNodeClick(nodeId)}
                   />
                 </div>
               ))}
@@ -1026,7 +1321,7 @@ const InquiryBoard = forwardRef<InquiryBoardRef, InquiryBoardProps>(({
                   <InquiryNodeComponent
                     data={inquiry}
                     selected={false}
-                    onClick={(nodeId: string) => console.log('Clicked:', nodeId)}
+                    onClick={(nodeId: string) => handleInquiryNodeClick(nodeId)}
                   />
                 </div>
               ))}

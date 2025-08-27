@@ -1,0 +1,184 @@
+{
+  "validation_config": {
+    "paths": {
+      "layer2_output_dir": "../preprocess/output_layer2/sql_queries",
+      "csv_data_dir": "../../data/london_datasets_csv",
+      "validation_output_dir": "./validation_results"
+    },
+    "processing": {
+      "batch_size": 5,
+      "delay_between_batches": 2,
+      "max_retries": 3,
+      "timeout_per_query": 30
+    },
+    "vanna_settings": {
+      "model": "gpt-4o",
+      "temperature": 0.1,
+      "max_tokens": 1000,
+      "enable_date_format_validation": true,
+      "enable_schema_validation": true,
+      "enable_query_optimization": true
+    },
+    "output_settings": {
+      "save_individual_files": true,
+      "save_batch_summaries": true,
+      "save_consolidated_report": true,
+      "include_query_details": true,
+      "include_performance_metrics": true
+    },
+    "validation_focus": {
+      "datasets_to_prioritize": [
+        "crime-rates",
+        "population", 
+        "house-prices",
+        "ethnicity"
+      ],
+      "chart_types_to_prioritize": [
+        "comboBarLine",
+        "multiLineChart",
+        "scatterPlot",
+        "groupedBar"
+      ],
+      "categories_to_prioritize": [
+        "temporal_trends",
+        "geographic_patterns",
+        "chart_specific_analysis"
+      ]
+    },
+    "error_handling": {
+      "continue_on_error": true,
+      "log_all_errors": true,
+      "save_failed_queries": true,
+      "attempt_auto_fix": true
+    },
+    "reporting": {
+      "generate_summary_stats": true,
+      "generate_detailed_logs": true,
+      "generate_performance_report": true,
+      "generate_error_analysis": true,
+      "export_formats": ["json", "csv"]
+    }
+  },
+  "dataset_schemas": {
+    "crime-rates": {
+      "table_name": "crime_data",
+      "key_columns": ["borough_name", "crime_category", "date", "count"],
+      "date_columns": ["date"],
+      "numeric_columns": ["count"],
+      "categorical_columns": ["borough_name", "crime_category"]
+    },
+    "ethnicity": {
+      "table_name": "ethnicity_data", 
+      "key_columns": ["borough_name", "area_name", "ethnic_group", "population_count", "percentage"],
+      "date_columns": [],
+      "numeric_columns": ["population_count", "percentage"],
+      "categorical_columns": ["borough_name", "area_name", "ethnic_group"]
+    },
+    "population": {
+      "table_name": "population_data",
+      "key_columns": ["borough_name", "area_name", "date", "age_group", "population_count"],
+      "date_columns": ["date"],
+      "numeric_columns": ["population_count"],
+      "categorical_columns": ["borough_name", "area_name", "age_group"]
+    },
+    "income": {
+      "table_name": "income_data",
+      "key_columns": ["borough_name", "area_name", "date", "income_level", "median_income", "average_income"],
+      "date_columns": ["date"],
+      "numeric_columns": ["median_income", "average_income"],
+      "categorical_columns": ["borough_name", "area_name", "income_level"]
+    },
+    "house-prices": {
+      "table_name": "house_price_data",
+      "key_columns": ["borough_name", "area_name", "date", "property_type", "average_price", "median_price"],
+      "date_columns": ["date"],
+      "numeric_columns": ["average_price", "median_price"],
+      "categorical_columns": ["borough_name", "area_name", "property_type"]
+    },
+    "country-of-births": {
+      "table_name": "birth_country_data",
+      "key_columns": ["borough_name", "area_name", "country_of_birth", "population_count", "percentage"],
+      "date_columns": [],
+      "numeric_columns": ["population_count", "percentage"],
+      "categorical_columns": ["borough_name", "area_name", "country_of_birth"]
+    },
+    "schools-colleges": {
+      "table_name": "education_data",
+      "key_columns": ["borough_name", "institution_type", "institution_name", "student_count", "rating"],
+      "date_columns": [],
+      "numeric_columns": ["student_count", "rating"],
+      "categorical_columns": ["borough_name", "institution_type", "institution_name"]
+    },
+    "vehicles": {
+      "table_name": "vehicle_data",
+      "key_columns": ["borough_name", "area_name", "date", "vehicle_type", "registration_count"],
+      "date_columns": ["date"],
+      "numeric_columns": ["registration_count"],
+      "categorical_columns": ["borough_name", "area_name", "vehicle_type"]
+    },
+    "restaurants": {
+      "table_name": "restaurant_data",
+      "key_columns": ["borough_name", "area_name", "cuisine_type", "restaurant_count", "rating"],
+      "date_columns": [],
+      "numeric_columns": ["restaurant_count", "rating"],
+      "categorical_columns": ["borough_name", "area_name", "cuisine_type"]
+    },
+    "private-rent": {
+      "table_name": "rent_data",
+      "key_columns": ["borough_name", "area_name", "date", "property_type", "average_rent", "median_rent"],
+      "date_columns": ["date"],
+      "numeric_columns": ["average_rent", "median_rent"],
+      "categorical_columns": ["borough_name", "area_name", "property_type"]
+    },
+    "gyms": {
+      "table_name": "gym_data",
+      "key_columns": ["borough_name", "area_name", "gym_name", "membership_count", "facility_type"],
+      "date_columns": [],
+      "numeric_columns": ["membership_count"],
+      "categorical_columns": ["borough_name", "area_name", "gym_name", "facility_type"]
+    },
+    "libraries": {
+      "table_name": "library_data",
+      "key_columns": ["borough_name", "area_name", "library_name", "visitor_count", "book_count"],
+      "date_columns": [],
+      "numeric_columns": ["visitor_count", "book_count"],
+      "categorical_columns": ["borough_name", "area_name", "library_name"]
+    }
+  },
+  "chart_type_requirements": {
+    "comboBarLineChart": {
+      "required_columns": ["category", "bar_value", "line_value"],
+      "optional_columns": ["dimension"],
+      "validation_rules": [
+        "bar_value must be numeric",
+        "line_value must be numeric", 
+        "category should be text/categorical"
+      ]
+    },
+    "multiLineChart": {
+      "required_columns": ["time", "series", "value"],
+      "optional_columns": ["dimension"],
+      "validation_rules": [
+        "time should be date/time format",
+        "value must be numeric",
+        "series should identify different lines"
+      ]
+    },
+    "scatterPlot": {
+      "required_columns": ["category", "x_value", "y_value"],
+      "optional_columns": ["dimension"],
+      "validation_rules": [
+        "x_value must be numeric",
+        "y_value must be numeric"
+      ]
+    },
+    "groupedBarChart": {
+      "required_columns": ["category", "series", "value"],
+      "optional_columns": ["dimension"],
+      "validation_rules": [
+        "value must be numeric",
+        "series should identify different groups"
+      ]
+    }
+  }
+}

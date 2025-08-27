@@ -1,0 +1,352 @@
+{
+  "chart_type": "areaChart",
+  "category": "chart_specific_analysis",
+  "processed_at": "2025-08-20T18:07:19.811Z",
+  "total_queries": 15,
+  "sql_queries": [
+    {
+      "proposition_id": "crime-rates_chart_analysis_areaChart_simple_2D_001",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "month"
+      ],
+      "chart_type": "areaChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT DATE_TRUNC('month', date) AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY time ORDER BY time;"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_areaChart_simple_2D_002",
+      "dataset": "ethnicity",
+      "time_period": "2010-2020",
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "year"
+      ],
+      "chart_type": "areaChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT year AS time, SUM(CASE WHEN ethnic_group = 'White British' THEN population_count ELSE 0 END) AS value FROM ethnicity_data WHERE year BETWEEN 2010 AND 2020 GROUP BY year ORDER BY year;"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_areaChart_simple_2D_003",
+      "dataset": "country-of-births",
+      "time_period": "2015-2020",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate",
+        "Year"
+      ],
+      "chart_type": "areaChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT Year AS time, SUM(Estimate) AS value FROM birth_country_data WHERE Year BETWEEN 2015 AND 2020 GROUP BY Year ORDER BY Year"
+    },
+    {
+      "proposition_id": "population_chart_analysis_areaChart_stacked_2D_004",
+      "dataset": "population",
+      "time_period": "2000-2020",
+      "variables_needed": [
+        "area",
+        "year",
+        "age_group",
+        "population"
+      ],
+      "chart_type": "areaChart_stacked_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2000-01-01' AND '2020-12-31' GROUP BY date, area, age_group ORDER BY date;"
+    },
+    {
+      "proposition_id": "income_chart_analysis_areaChart_simple_2D_005",
+      "dataset": "income",
+      "time_period": "2010-2020",
+      "variables_needed": [
+        "Year",
+        "Area",
+        "Income"
+      ],
+      "chart_type": "areaChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, SUM(median_income) AS value FROM income_data WHERE date BETWEEN '2010-01-01' AND '2020-12-31' GROUP BY date ORDER BY date;"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_areaChart_simple_2D_006",
+      "dataset": "house-prices",
+      "time_period": "2010-2021",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "areaChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT DATE_FORMAT(date, '%Y') AS time, AVG(average_price) AS value FROM house_price_data WHERE date BETWEEN '2010-01-01' AND '2021-12-31' GROUP BY DATE_FORMAT(date, '%Y') ORDER BY DATE_FORMAT(date, '%Y');"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_areaChart_simple_2D_007",
+      "dataset": "schools-colleges",
+      "time_period": "2018-2023",
+      "variables_needed": [
+        "LANAME",
+        "Year",
+        "Enrollment"
+      ],
+      "chart_type": "areaChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT Year AS time, SUM(student_count) AS value FROM education_data WHERE Year BETWEEN 2018 AND 2023 GROUP BY Year ORDER BY Year;"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_areaChart_simple_2D_008",
+      "dataset": "vehicles",
+      "time_period": "2018-2023",
+      "variables_needed": [
+        "Year",
+        "Local Authority",
+        "Electric Vehicles"
+      ],
+      "chart_type": "areaChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT YEAR(date) AS time, SUM(registration_count) AS value FROM vehicle_data WHERE vehicle_type = 'Electric Vehicles' AND date BETWEEN '2018-01-01' AND '2023-12-31' GROUP BY YEAR(date) ORDER BY YEAR(date);"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_areaChart_simple_2D_009",
+      "dataset": "restaurants",
+      "time_period": "2015-2020",
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Employment"
+      ],
+      "chart_type": "areaChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT CAST(YEAR(date) AS CHAR) AS time, SUM(restaurant_count) AS value FROM restaurant_data WHERE date BETWEEN '2015-01-01' AND '2020-12-31' GROUP BY YEAR(date) ORDER BY YEAR(date);"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_areaChart_simple_2D_010",
+      "dataset": "private-rent",
+      "time_period": "2015-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Average (£)"
+      ],
+      "chart_type": "areaChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT DATE_FORMAT(date, '%Y') AS time, AVG(average_rent) AS value FROM rent_data WHERE date BETWEEN '2015-01-01' AND '2023-12-31' GROUP BY DATE_FORMAT(date, '%Y') ORDER BY DATE_FORMAT(date, '%Y');"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_areaChart_simple_3D_011",
+      "dataset": "crime-rates",
+      "time_period": "2022",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "year",
+        "month"
+      ],
+      "chart_type": "areaChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT DATE_FORMAT(date, '%Y-%m') AS time, SUM(count) AS value, crime_category AS dimension FROM crime_data WHERE YEAR(date) = 2022 GROUP BY time, dimension ORDER BY time, dimension;"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_areaChart_simple_3D_012",
+      "dataset": "ethnicity",
+      "time_period": "2010-2020",
+      "variables_needed": [
+        "local authority name",
+        "ethnic_group",
+        "year"
+      ],
+      "chart_type": "areaChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT year AS time, population_count AS value, ethnic_group AS dimension FROM ethnicity_data WHERE year BETWEEN 2010 AND 2020 GROUP BY year, ethnic_group ORDER BY year, ethnic_group;"
+    },
+    {
+      "proposition_id": "population_chart_analysis_areaChart_simple_3D_013",
+      "dataset": "population",
+      "time_period": "2000-2020",
+      "variables_needed": [
+        "area",
+        "year",
+        "density"
+      ],
+      "chart_type": "areaChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT date AS time, population_count AS value, area_name AS dimension FROM population_data WHERE date BETWEEN '2000-01-01' AND '2020-12-31' GROUP BY date, area_name ORDER BY date, area_name;"
+    },
+    {
+      "proposition_id": "income_chart_analysis_areaChart_simple_3D_014",
+      "dataset": "income",
+      "time_period": "2010-2020",
+      "variables_needed": [
+        "Year",
+        "Borough",
+        "Income"
+      ],
+      "chart_type": "areaChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT DATE_FORMAT(date, '%Y') AS time, average_income AS value, borough_name AS dimension FROM income_data WHERE DATE_FORMAT(date, '%Y') BETWEEN '2010' AND '2020' GROUP BY time, dimension ORDER BY time, dimension;"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_areaChart_simple_3D_015",
+      "dataset": "house-prices",
+      "time_period": "2010-2023",
+      "variables_needed": [
+        "Year",
+        "Borough",
+        "Price"
+      ],
+      "chart_type": "areaChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT DATE_FORMAT(date, '%Y') AS time, AVG(average_price) AS value, borough_name AS dimension FROM house_price_data WHERE date BETWEEN '2010-01-01' AND '2023-12-31' GROUP BY time, dimension ORDER BY time, dimension;"
+    }
+  ]
+}

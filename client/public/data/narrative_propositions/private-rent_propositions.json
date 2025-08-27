@@ -1,0 +1,345 @@
+{
+  "dataset_name": "private-rent",
+  "complexity_score": 5,
+  "total_propositions": 25,
+  "proposition_breakdown": {
+    "temporal_trends": 8,
+    "geographic_patterns": 8,
+    "categorical_analysis": 6,
+    "cross_dimensional": 3
+  },
+  "generated_at": "2025-08-18T17:26:08.670Z",
+  "categories": {
+    "temporal_trends": [
+      {
+        "id": "tt1",
+        "proposition": "Average rent values increased by 10% annually from 2020 to 2023 in London boroughs.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt2",
+        "proposition": "The highest quarterly rent increase occurred in Q2 2021 across all boroughs.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2021",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt3",
+        "proposition": "Rent values in outer London boroughs showed a cyclical pattern with peaks every Q3 from 2015 to 2023.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2015-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt4",
+        "proposition": "From 2011 to 2023, rent values in inner London boroughs have increased by 50%.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2011-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt5",
+        "proposition": "In 2022, rent values in London boroughs experienced a 5% drop in Q4 compared to Q3.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2022",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt6",
+        "proposition": "From 2011 to 2019, rent values in the borough of Kensington and Chelsea showed a steady annual increase of 3%.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2011-2019",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt7",
+        "proposition": "Rent values in the borough of Hackney peaked in Q3 2020, showing a 12% increase from the previous quarter.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2020",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt8",
+        "proposition": "The period from 2011 to 2023 saw a 25% increase in rent values during Q1 across all London boroughs.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2011-2023",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      }
+    ],
+    "geographic_patterns": [
+      {
+        "id": "gp1",
+        "proposition": "In 2023, the boroughs of Westminster and Camden had the highest average rent values, accounting for 20% of London's total rent value.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp2",
+        "proposition": "Outer London boroughs consistently show lower rent values compared to inner London from 2011 to 2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2011-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp3",
+        "proposition": "In 2022, the borough of Tower Hamlets had the fastest growth in rent values with a 15% increase compared to the previous year.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2022",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp4",
+        "proposition": "Rent values in South London boroughs were 10% lower than those in North London in 2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp5",
+        "proposition": "The boroughs of Richmond upon Thames and Kingston upon Thames had the lowest rent values in 2021.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2021",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp6",
+        "proposition": "From 2015 to 2023, rent values in East London boroughs increased by 30%, outpacing other regions.",
+        "variables_needed": [
+          "area",
+          "value",
+          "date"
+        ],
+        "time_period": "2015-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "gp7",
+        "proposition": "In 2023, the borough of Haringey showed a unique pattern with rent values 5% higher than its neighboring boroughs.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp8",
+        "proposition": "Boroughs in West London have consistently maintained higher rent values compared to East London from 2011 to 2023.",
+        "variables_needed": [
+          "area",
+          "value"
+        ],
+        "time_period": "2011-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "categorical_analysis": [
+      {
+        "id": "ca1",
+        "proposition": "In 2023, the category 'Luxury Apartments' accounted for 40% of the total rent value in Kensington and Chelsea.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca2",
+        "proposition": "The 'Studio' category saw a 20% increase in rent values from 2020 to 2023 in inner London boroughs.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2020-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca3",
+        "proposition": "In 2022, 'Family Homes' represented the least common category in central London boroughs, making up only 10% of the market.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "2022",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca4",
+        "proposition": "The 'Shared Accommodation' category has seen a 15% decline in rent values from 2015 to 2023 in outer London boroughs.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2015-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "ca5",
+        "proposition": "In 2023, 'Luxury Apartments' were most concentrated in Westminster, comprising 50% of the borough's rent value.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca6",
+        "proposition": "The 'Affordable Housing' category has consistently been the most common in East London boroughs from 2011 to 2023.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "2011-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      }
+    ],
+    "cross_dimensional": [
+      {
+        "id": "cd1",
+        "proposition": "Rent values for 'Luxury Apartments' in central London boroughs peaked during Q3 2022, showing a 25% increase from Q2.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2022",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd2",
+        "proposition": "From 2011 to 2023, 'Family Homes' in outer London boroughs experienced a 30% increase in rent values, with the highest growth in 2020.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2011-2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd3",
+        "proposition": "In 2023, 'Studio' apartments in North London boroughs showed a 10% higher rent value compared to South London.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "2023",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      }
+    ]
+  }
+}

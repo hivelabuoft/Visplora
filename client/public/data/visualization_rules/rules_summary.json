@@ -1,0 +1,796 @@
+{
+  "generation_summary": {
+    "generated_at": "2025-08-18T19:58:17.735Z",
+    "total_datasets": 24,
+    "total_fields": 502,
+    "categories": [
+      "crime-rates",
+      "ethnicity",
+      "country-of-births",
+      "population",
+      "income",
+      "house-prices",
+      "schools-colleges",
+      "vehicles",
+      "restaurants",
+      "private-rent",
+      "gyms",
+      "libraries"
+    ]
+  },
+  "field_role_statistics": {
+    "geo": 40,
+    "category": 211,
+    "facet": 76,
+    "time": 18,
+    "metric": 279
+  },
+  "chart_type_suggestions": {
+    "bar_chart": 43,
+    "line_chart": 8,
+    "choropleth_map": 19,
+    "stacked_bar_chart": 19,
+    "histogram": 19
+  },
+  "datasets_by_category": {
+    "crime-rates": [
+      {
+        "id": "london-crime-data-2022-2023",
+        "name": "London Crime Data 2022-2023"
+      }
+    ],
+    "ethnicity": [
+      {
+        "id": "ethnic-group",
+        "name": "Ethnic Group Distribution"
+      }
+    ],
+    "country-of-births": [
+      {
+        "id": "cob-borough",
+        "name": "Country of Birth by Borough"
+      }
+    ],
+    "population": [
+      {
+        "id": "population-1801-2021",
+        "name": "Population 1801 to 2021"
+      },
+      {
+        "id": "housing-density-borough",
+        "name": "Housing Density by Borough"
+      }
+    ],
+    "income": [
+      {
+        "id": "income-of-tax-payers",
+        "name": "Income of Tax Payers"
+      }
+    ],
+    "house-prices": [
+      {
+        "id": "land-registry-house-prices-borough",
+        "name": "Land Registry House Prices by Borough"
+      }
+    ],
+    "schools-colleges": [
+      {
+        "id": "school-information-2022-2023",
+        "name": "School Information 2022-2023"
+      },
+      {
+        "id": "school-information-2021-2022",
+        "name": "School Information 2021-2022"
+      },
+      {
+        "id": "england-spine-2010-2011",
+        "name": "England Spine 2010-2011"
+      }
+    ],
+    "vehicles": [
+      {
+        "id": "vehicles-licensed-2023",
+        "name": "Licensed Vehicles 2023"
+      },
+      {
+        "id": "vehicles-licensed-2022",
+        "name": "Licensed Vehicles 2022"
+      },
+      {
+        "id": "vehicles-licensed-2021",
+        "name": "Licensed Vehicles 2021"
+      },
+      {
+        "id": "vehicles-licensed-2020",
+        "name": "Licensed Vehicles 2020"
+      },
+      {
+        "id": "vehicles-licensed-2019",
+        "name": "Licensed Vehicles 2019"
+      }
+    ],
+    "restaurants": [
+      {
+        "id": "licensed-restaurants-units",
+        "name": "Licensed Restaurants Units"
+      },
+      {
+        "id": "licensed-restaurants-employment",
+        "name": "Licensed Restaurants Employment"
+      },
+      {
+        "id": "unlicensed-restaurants-units",
+        "name": "Unlicensed Restaurants Units"
+      },
+      {
+        "id": "unlicensed-restaurants-emp",
+        "name": "Unlicensed Restaurants Employment"
+      }
+    ],
+    "private-rent": [
+      {
+        "id": "voa-average-rent-summary",
+        "name": "VOA Average Rent Summary"
+      },
+      {
+        "id": "voa-average-rent-raw-data",
+        "name": "VOA Average Rent Raw Data"
+      },
+      {
+        "id": "voa-average-rent-pivot-table",
+        "name": "VOA Average Rent Pivot Table"
+      }
+    ],
+    "gyms": [
+      {
+        "id": "london-gym-facilities-2024",
+        "name": "London Gym Facilities 2024"
+      }
+    ],
+    "libraries": [
+      {
+        "id": "libraries-by-areas-chart",
+        "name": "Libraries by Areas Chart"
+      }
+    ]
+  },
+  "field_patterns": {
+    "common_time_fields": [
+      {
+        "name": "Year",
+        "count": 3,
+        "roles": [
+          "time"
+        ]
+      },
+      {
+        "name": "ESTAB",
+        "count": 3,
+        "roles": [
+          "time"
+        ]
+      },
+      {
+        "name": "OPENDATE",
+        "count": 2,
+        "roles": [
+          "time"
+        ]
+      },
+      {
+        "name": "CLOSEDATE",
+        "count": 2,
+        "roles": [
+          "time"
+        ]
+      }
+    ],
+    "common_geo_fields": [
+      {
+        "name": "area_name",
+        "count": 2,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "borough_name",
+        "count": 2,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "lsoa_code",
+        "count": 2,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "area",
+        "count": 2,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "Area",
+        "count": 4,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "TOWN",
+        "count": 3,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "POSTCODE",
+        "count": 3,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "Buses and coaches",
+        "count": 5,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "Area code",
+        "count": 4,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "Area name",
+        "count": 4,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      }
+    ],
+    "common_metric_fields": [
+      {
+        "name": "URN",
+        "count": 3,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "LA",
+        "count": 3,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "LAESTAB",
+        "count": 3,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "ISPRIMARY",
+        "count": 3,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "ISSECONDARY",
+        "count": 3,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "ISPOST16",
+        "count": 3,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "AGELOW",
+        "count": 2,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "AGEHIGH",
+        "count": 2,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "Cars",
+        "count": 5,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "Motor cycles",
+        "count": 5,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "Light goods",
+        "count": 5,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "Heavy goods",
+        "count": 5,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "Other vehicles",
+        "count": 5,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "Total",
+        "count": 5,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2001",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2002",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2003",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2004",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2005",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2006",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2007",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2008",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2009",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2010",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2011",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2012",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2013",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2014",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2015",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2016",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2017",
+        "count": 4,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "Count of rents",
+        "count": 21,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "Average (£)",
+        "count": 20,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "Lower quartile (£)",
+        "count": 20,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "Median (£)",
+        "count": 20,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "Upper quartile (£)",
+        "count": 20,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "1647",
+        "count": 2,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "1712",
+        "count": 2,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "1733",
+        "count": 2,
+        "roles": [
+          "metric"
+        ]
+      },
+      {
+        "name": "2102",
+        "count": 2,
+        "roles": [
+          "metric"
+        ]
+      }
+    ],
+    "common_category_fields": [
+      {
+        "name": "area_name",
+        "count": 2,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "borough_name",
+        "count": 2,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "lsoa_code",
+        "count": 2,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "area",
+        "count": 2,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "",
+        "count": 48,
+        "roles": [
+          "category"
+        ]
+      },
+      {
+        "name": "Code",
+        "count": 3,
+        "roles": [
+          "category"
+        ]
+      },
+      {
+        "name": "Area",
+        "count": 4,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "LANAME",
+        "count": 2,
+        "roles": [
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "SCHNAME",
+        "count": 3,
+        "roles": [
+          "category"
+        ]
+      },
+      {
+        "name": "STREET",
+        "count": 3,
+        "roles": [
+          "category"
+        ]
+      },
+      {
+        "name": "LOCALITY",
+        "count": 3,
+        "roles": [
+          "category"
+        ]
+      },
+      {
+        "name": "ADDRESS3",
+        "count": 3,
+        "roles": [
+          "category"
+        ]
+      },
+      {
+        "name": "TOWN",
+        "count": 3,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "POSTCODE",
+        "count": 3,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "SCHSTATUS",
+        "count": 2,
+        "roles": [
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "MINORGROUP",
+        "count": 3,
+        "roles": [
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "SCHOOLTYPE",
+        "count": 2,
+        "roles": [
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "GENDER",
+        "count": 3,
+        "roles": [
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "RELCHAR",
+        "count": 2,
+        "roles": [
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "ADMPOL",
+        "count": 3,
+        "roles": [
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "OFSTEDRATING",
+        "count": 2,
+        "roles": [
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "OFSTEDLASTINSP",
+        "count": 2,
+        "roles": [
+          "category"
+        ]
+      },
+      {
+        "name": "ONS CHD LA Code",
+        "count": 5,
+        "roles": [
+          "category"
+        ]
+      },
+      {
+        "name": "ONS SNAC LA Code",
+        "count": 5,
+        "roles": [
+          "category"
+        ]
+      },
+      {
+        "name": "Local Authority",
+        "count": 5,
+        "roles": [
+          "category"
+        ]
+      },
+      {
+        "name": "Buses and coaches",
+        "count": 5,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "Area code",
+        "count": 4,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "Area name",
+        "count": 4,
+        "roles": [
+          "geo",
+          "category",
+          "facet"
+        ]
+      },
+      {
+        "name": "Library visits per 1,000 population",
+        "count": 6,
+        "roles": [
+          "category"
+        ]
+      }
+    ]
+  }
+}

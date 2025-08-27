@@ -1,0 +1,288 @@
+{
+  "dataset_id": "vehicles-licensed-2021",
+  "dataset_name": "Licensed Vehicles 2021",
+  "category": "vehicles",
+  "description": "Licensed vehicles by type and borough for 2021",
+  "file_path": "/dataset/london/vehicles/vehicles-licensed-type-borough_2021.csv",
+  "field_roles": [
+    {
+      "name": "ONS CHD LA Code",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "E09000001",
+        "E09000002",
+        "E09000003"
+      ]
+    },
+    {
+      "name": "ONS SNAC LA Code",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "00AA",
+        "00AB",
+        "00AC"
+      ]
+    },
+    {
+      "name": "Local Authority",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "City of London",
+        "Barking and Dagenham",
+        "Barnet"
+      ]
+    },
+    {
+      "name": "Cars",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        1.077,
+        32889.462,
+        2465.05
+      ]
+    },
+    {
+      "name": "Motor cycles",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0.108,
+        1341.566,
+        102.14
+      ]
+    },
+    {
+      "name": "Light goods",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0.305,
+        4541.097,
+        334.54
+      ]
+    },
+    {
+      "name": "Heavy goods",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0.017,
+        529.202,
+        38.59
+      ]
+    },
+    {
+      "name": "Buses and coaches",
+      "type": "numeric",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        0.013,
+        145.73,
+        11.05
+      ]
+    },
+    {
+      "name": "Other vehicles",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        0.048,
+        827.731,
+        59.28
+      ]
+    },
+    {
+      "name": "Total",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        2.07,
+        40274.788,
+        3010.66
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "choropleth_map",
+      "description": "Geographic distribution of metrics",
+      "encoding": {
+        "geo": {
+          "name": "Buses and coaches",
+          "type": "numeric",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            0.013,
+            145.73,
+            11.05
+          ]
+        },
+        "color": {
+          "name": "Cars",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            1.077,
+            32889.462,
+            2465.05
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "Buses and coaches",
+          "type": "numeric",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            0.013,
+            145.73,
+            11.05
+          ]
+        },
+        "y": {
+          "name": "Cars",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            1.077,
+            32889.462,
+            2465.05
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Category comparison",
+      "encoding": {
+        "x": {
+          "name": "ONS CHD LA Code",
+          "type": "text",
+          "roles": [
+            "category"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "y": {
+          "name": "Cars",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            1.077,
+            32889.462,
+            2465.05
+          ]
+        }
+      }
+    },
+    {
+      "type": "stacked_bar_chart",
+      "description": "Multi-category analysis",
+      "encoding": {
+        "x": {
+          "name": "ONS CHD LA Code",
+          "type": "text",
+          "roles": [
+            "category"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "y": {
+          "name": "Cars",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            1.077,
+            32889.462,
+            2465.05
+          ]
+        },
+        "color": {
+          "name": "ONS SNAC LA Code",
+          "type": "text",
+          "roles": [
+            "category"
+          ],
+          "sample_values": [
+            "00AA",
+            "00AB",
+            "00AC"
+          ]
+        }
+      }
+    },
+    {
+      "type": "histogram",
+      "description": "Distribution analysis",
+      "encoding": {
+        "x": {
+          "name": "Cars",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            1.077,
+            32889.462,
+            2465.05
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.722Z"
+}

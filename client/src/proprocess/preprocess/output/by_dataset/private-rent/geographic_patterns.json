@@ -1,0 +1,202 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "private-rent",
+  "processed_at": "2025-08-20T04:09:25.004Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "private-rent_geographic_patterns_gp1",
+      "dataset": "private-rent",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2023, the boroughs of Westminster and Camden had the highest average rent values, accounting for 20% of London's total rent value.",
+      "reworded_proposition": "In 2023, Westminster and Camden emerged as the boroughs with the most expensive rental markets, contributing significantly to London's overall rent value.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Top Boroughs by Average Rent in 2023",
+      "chart_description": "Comparison of average rent values across London boroughs in 2023.",
+      "reasoning": "A bar chart effectively highlights the comparison of average rent values across different boroughs, making it easy to identify the boroughs with the highest rents.",
+      "tapas_questions": [
+        "Which borough has the highest average rent?",
+        "What percentage of total rent value is in Westminster?",
+        "How does Camden compare to other boroughs in terms of rent value?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_geographic_patterns_gp2",
+      "dataset": "private-rent",
+      "category": "geographic_patterns",
+      "original_proposition": "Outer London boroughs consistently show lower rent values compared to inner London from 2011 to 2023.",
+      "reworded_proposition": "Outer London boroughs have consistently exhibited lower rent values than inner London over the years.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Rent Value Comparison: Outer vs Inner London",
+      "chart_description": "Visual comparison of rent values between outer and inner London from 2011 to 2023.",
+      "reasoning": "A bar chart effectively highlights the comparison between outer and inner London boroughs over time.",
+      "tapas_questions": [
+        "Which borough has the lowest rent values?",
+        "How do rent values in outer London compare to inner London?",
+        "What is the trend of rent values from 2011 to 2023?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2011-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_geographic_patterns_gp3",
+      "dataset": "private-rent",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2022, the borough of Tower Hamlets had the fastest growth in rent values with a 15% increase compared to the previous year.",
+      "reworded_proposition": "In 2022, Tower Hamlets experienced the most rapid increase in rent values among boroughs, marking a notable upward trend.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Tower Hamlets Leads in Rent Growth in 2022",
+      "chart_description": "Comparison of rent value changes across boroughs in 2022",
+      "reasoning": "A bar chart with a mean line effectively highlights the comparative growth of rent values across boroughs, emphasizing Tower Hamlets' leading position.",
+      "tapas_questions": [
+        "Which borough had the highest rent value increase in 2022?",
+        "What is the average rent value increase across all boroughs?",
+        "How does Tower Hamlets compare to other boroughs in rent growth?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_geographic_patterns_gp4",
+      "dataset": "private-rent",
+      "category": "geographic_patterns",
+      "original_proposition": "Rent values in South London boroughs were 10% lower than those in North London in 2023.",
+      "reworded_proposition": "Rent values in South London boroughs tend to be noticeably lower than those in North London for the year 2023.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Rent Value Comparison: South vs North London",
+      "chart_description": "Visual comparison of rent values between South and North London boroughs in 2023.",
+      "reasoning": "A bar chart is ideal for comparing rent values across different geographic entities, highlighting the differences between South and North London boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest rent value?",
+        "What is the average rent value across all boroughs?",
+        "How do rent values in South London compare to North London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_geographic_patterns_gp5",
+      "dataset": "private-rent",
+      "category": "geographic_patterns",
+      "original_proposition": "The boroughs of Richmond upon Thames and Kingston upon Thames had the lowest rent values in 2021.",
+      "reworded_proposition": "Richmond upon Thames and Kingston upon Thames consistently exhibit the lowest rent values among boroughs in 2021.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Lowest Rent Values in 2021",
+      "chart_description": "Comparison of rent values across boroughs in 2021",
+      "reasoning": "A bar chart effectively compares rent values across different boroughs, highlighting those with the lowest values.",
+      "tapas_questions": [
+        "Which borough has the lowest rent value?",
+        "How does Richmond upon Thames compare to Kingston upon Thames in terms of rent values?",
+        "What is the average rent value across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2021",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_geographic_patterns_gp6",
+      "dataset": "private-rent",
+      "category": "geographic_patterns",
+      "original_proposition": "From 2015 to 2023, rent values in East London boroughs increased by 30%, outpacing other regions.",
+      "reworded_proposition": "Since 2015, rent values in East London boroughs have risen more rapidly compared to other regions.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Rent Value Trends in East London (2015-2023)",
+      "chart_description": "Comparison of rent value growth in East London vs other regions over time.",
+      "reasoning": "A line chart effectively illustrates trends over time, highlighting the differences in rent value growth between East London and other regions.",
+      "tapas_questions": [
+        "How did rent values change from 2015 to 2023 in East London?",
+        "Which borough had the highest rent increase?",
+        "How do rent values in East London compare to other regions?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "private-rent_geographic_patterns_gp7",
+      "dataset": "private-rent",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2023, the borough of Haringey showed a unique pattern with rent values 5% higher than its neighboring boroughs.",
+      "reworded_proposition": "In 2023, Haringey's rent values stood out as notably higher than those of its neighboring boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Haringey Rent Values Compared to Neighbors",
+      "chart_description": "Comparison of rent values in Haringey and neighboring boroughs for 2023.",
+      "reasoning": "A bar chart effectively highlights the comparative differences in rent values between Haringey and its neighboring boroughs, making it easy to see the unique pattern.",
+      "tapas_questions": [
+        "Which borough has the highest rent values?",
+        "How does Haringey compare to its neighboring boroughs in terms of rent values?",
+        "What is the average rent value across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_geographic_patterns_gp8",
+      "dataset": "private-rent",
+      "category": "geographic_patterns",
+      "original_proposition": "Boroughs in West London have consistently maintained higher rent values compared to East London from 2011 to 2023.",
+      "reworded_proposition": "West London boroughs have persistently shown higher rent values compared to those in East London over the years.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Rent Value Comparison: West vs East London",
+      "chart_description": "Comparison of rent values in West and East London boroughs from 2011 to 2023.",
+      "reasoning": "A bar chart effectively highlights the comparison of rent values between two geographic regions over time.",
+      "tapas_questions": [
+        "Which borough has the highest rent value?",
+        "How do rent values compare between West and East London?",
+        "What is the average rent value across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "time_period": "2011-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

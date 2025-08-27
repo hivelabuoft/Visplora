@@ -1,0 +1,136 @@
+{
+  "category": "categorical_analysis",
+  "dataset": "restaurants",
+  "processed_at": "2025-08-20T04:09:04.399Z",
+  "total_propositions": 5,
+  "propositions": [
+    {
+      "proposition_id": "restaurants_categorical_analysis_ca_001",
+      "dataset": "restaurants",
+      "category": "categorical_analysis",
+      "original_proposition": "Licensed restaurants make up 70% of the total restaurant count in London.",
+      "reworded_proposition": "Licensed restaurants dominate the restaurant scene in London, comprising the majority of the total count.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Proportion of Licensed Restaurants in London",
+      "chart_description": "Visual representation of licensed vs. total restaurants in London.",
+      "reasoning": "A donut chart effectively illustrates the proportion of licensed restaurants compared to the total, highlighting the dominance of licensed establishments.",
+      "tapas_questions": [
+        "What percentage of restaurants in London are licensed?",
+        "How many restaurants in London are not licensed?",
+        "What is the total count of restaurants in London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "restaurants_categorical_analysis_ca_002",
+      "dataset": "restaurants",
+      "category": "categorical_analysis",
+      "original_proposition": "The category of fast-food restaurants has grown by 20% more than fine dining establishments from 2001 to 2017.",
+      "reworded_proposition": "Fast-food restaurants have expanded at a notably faster rate than fine dining establishments over the years from 2001 to 2017.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Growth Trends in Restaurant Categories",
+      "chart_description": "Compare growth of fast-food vs fine dining in London from 2001 to 2017",
+      "reasoning": "A line chart is suitable for showing trends over time, and the 3D aspect allows for additional breakdown by another dimension, such as time subdivision.",
+      "tapas_questions": [
+        "How did the number of fast-food restaurants change from 2001 to 2017?",
+        "Which category of restaurants has the highest growth rate?",
+        "How does the growth of fast-food restaurants compare to fine dining establishments?"
+      ],
+      "3d_dimension": "time_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2001-2017",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "restaurants_categorical_analysis_ca_003",
+      "dataset": "restaurants",
+      "category": "categorical_analysis",
+      "original_proposition": "The proportion of vegan restaurants doubled from 2010 to 2017.",
+      "reworded_proposition": "Vegan restaurants have seen a notable increase in their share of the dining scene from 2010 to 2017.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Growth of Vegan Restaurants in London",
+      "chart_description": "Illustrates the rise in vegan restaurant proportions from 2010 to 2017.",
+      "reasoning": "A simple bar chart effectively shows the change in proportions over time, highlighting the growth trend.",
+      "tapas_questions": [
+        "How did the proportion of vegan restaurants change from 2010 to 2017?",
+        "What percentage of restaurants were vegan in 2017?",
+        "Which year saw the highest increase in vegan restaurant proportions?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2010-2017",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "restaurants_categorical_analysis_ca_004",
+      "dataset": "restaurants",
+      "category": "categorical_analysis",
+      "original_proposition": "The majority of new restaurant licenses issued in 2017 were for casual dining establishments.",
+      "reworded_proposition": "In 2017, casual dining establishments dominated the issuance of new restaurant licenses.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Dominance of Casual Dining in 2017 Licenses",
+      "chart_description": "Visual representation of restaurant license categories in 2017.",
+      "reasoning": "A donut chart effectively illustrates the proportion of each category within the whole, highlighting the dominance of casual dining licenses.",
+      "tapas_questions": [
+        "What percentage of restaurant licenses were for casual dining in 2017?",
+        "Which category had the highest number of new licenses in 2017?",
+        "How does the number of casual dining licenses compare to other categories in 2017?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "restaurants_categorical_analysis_ca_005",
+      "dataset": "restaurants",
+      "category": "categorical_analysis",
+      "original_proposition": "Family-owned restaurants represent 25% of the total restaurant market in London.",
+      "reworded_proposition": "Family-owned restaurants form a notable segment of London's restaurant market.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Market Share of Family-Owned Restaurants in London",
+      "chart_description": "Visual representation of family-owned restaurants' share in London's market.",
+      "reasoning": "A donut chart effectively illustrates the proportion of family-owned restaurants within the overall market, highlighting their share relative to other categories.",
+      "tapas_questions": [
+        "What percentage of the restaurant market is family-owned in London?",
+        "How does the market share of family-owned restaurants compare to other types?",
+        "Which category of restaurants has the largest market share in London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    }
+  ]
+}

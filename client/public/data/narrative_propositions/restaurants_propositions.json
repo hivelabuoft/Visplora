@@ -1,0 +1,364 @@
+{
+  "dataset_name": "restaurants",
+  "complexity_score": 5,
+  "total_propositions": 25,
+  "proposition_breakdown": {
+    "temporal_trends": 8,
+    "geographic_patterns": 8,
+    "categorical_analysis": 5,
+    "cross_dimensional": 4
+  },
+  "generated_at": "2025-08-18T17:25:34.914Z",
+  "categories": {
+    "temporal_trends": [
+      {
+        "id": "tt_001",
+        "proposition": "The number of licensed restaurants in London increased by 25% from 2005 to 2010.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2005-2010",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_002",
+        "proposition": "Unlicensed restaurant openings peaked in 2015, showing a 40% increase compared to 2014.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2014-2015",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt_003",
+        "proposition": "Employment in the restaurant sector grew steadily by 3% annually from 2001 to 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2001-2017",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt_004",
+        "proposition": "The number of new restaurant licenses issued in London declined by 10% during the 2008 financial crisis.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2008",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_005",
+        "proposition": "Seasonal employment in restaurants shows a consistent peak in December each year from 2001 to 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2001-2017",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt_006",
+        "proposition": "The number of restaurants in outer London boroughs increased by 15% from 2010 to 2015.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2010-2015",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_007",
+        "proposition": "From 2001 to 2017, the trend of restaurant closures in London shows a cyclical pattern with peaks every five years.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2001-2017",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "tt_008",
+        "proposition": "The number of new restaurant openings in London increased by 50% in the year following the 2012 Olympics.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2013",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      }
+    ],
+    "geographic_patterns": [
+      {
+        "id": "gp_001",
+        "proposition": "Westminster and Camden have the highest concentration of licensed restaurants, accounting for 30% of the total in London.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_002",
+        "proposition": "Outer London boroughs have 20% fewer restaurants per capita compared to inner London boroughs.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp_003",
+        "proposition": "The eastern boroughs of London show a 15% higher growth rate in restaurant numbers compared to western boroughs from 2010 to 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2010-2017",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "gp_004",
+        "proposition": "South London boroughs have a higher proportion of unlicensed restaurants compared to the north.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_005",
+        "proposition": "The clustering of high-end restaurants is most prominent in the central boroughs of London.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "heatmap",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp_006",
+        "proposition": "North London boroughs have seen a 10% increase in restaurant employment compared to a 5% increase in the south from 2001 to 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2001-2017",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "gp_007",
+        "proposition": "The ratio of licensed to unlicensed restaurants is highest in the City of London.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_008",
+        "proposition": "Boroughs in the west of London have a higher density of family-owned restaurants compared to the east.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Basic"
+      }
+    ],
+    "categorical_analysis": [
+      {
+        "id": "ca_001",
+        "proposition": "Licensed restaurants make up 70% of the total restaurant count in London.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_002",
+        "proposition": "The category of fast-food restaurants has grown by 20% more than fine dining establishments from 2001 to 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2001-2017",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_003",
+        "proposition": "The proportion of vegan restaurants doubled from 2010 to 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2010-2017",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_004",
+        "proposition": "The majority of new restaurant licenses issued in 2017 were for casual dining establishments.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_005",
+        "proposition": "Family-owned restaurants represent 25% of the total restaurant market in London.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category"
+        ],
+        "time_period": "Not applicable",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      }
+    ],
+    "cross_dimensional": [
+      {
+        "id": "cd_001",
+        "proposition": "The growth of licensed restaurants in central London boroughs was 30% higher than in outer boroughs from 2005 to 2015.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2005-2015",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd_002",
+        "proposition": "The increase in unlicensed restaurants in the east of London coincides with a 15% rise in employment from 2010 to 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2010-2017",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cd_003",
+        "proposition": "The number of family-owned restaurants in south London increased by 20% during the economic recovery period from 2012 to 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2012-2017",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd_004",
+        "proposition": "The proportion of vegan restaurants in inner London boroughs increased by 30% more than in outer boroughs from 2010 to 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2010-2017",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      }
+    ]
+  }
+}

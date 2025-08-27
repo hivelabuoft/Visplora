@@ -1,0 +1,57 @@
+country,city,iso3,year,english_coverage_pct,languages_serviceable,cuisine_variety_index,restaurants_per_10k,festivals_per_year,lgbtq_friendliness_index,cultural_diversity_index,source
+USA,New York,USA,2024,73.3,3,63.3,26.2,37,34.8,53.1,synthetic
+USA,San Francisco,USA,2024,36.7,4,65.8,58.3,23,67.5,57.5,synthetic
+Canada,Toronto,CAN,2024,85.7,1,80.1,29.5,37,53.8,67.4,synthetic
+Canada,Vancouver,CAN,2024,73.5,3,81.2,31.2,28,100.0,76.7,synthetic
+Mexico,Mexico City,MEX,2024,64.3,4,100.0,40.8,1,53.3,70.3,synthetic
+Brazil,Rio de Janeiro,BRA,2024,45.9,5,73.6,51.0,32,85.2,66.6,synthetic
+Argentina,Buenos Aires,ARG,2024,45.5,4,95.5,13.3,21,78.9,69.4,synthetic
+UK,London,GBR,2024,72.0,6,85.9,41.1,34,89.1,76.8,synthetic
+Ireland,Dublin,IRL,2024,70.8,3,89.9,23.9,24,41.1,64.0,synthetic
+France,Paris,FRA,2024,84.6,5,61.0,32.7,19,96.9,69.8,synthetic
+Spain,Barcelona,ESP,2024,98.3,3,28.6,52.3,25,71.2,55.4,synthetic
+Portugal,Lisbon,PRT,2024,89.3,3,65.5,29.7,30,92.0,71.5,synthetic
+Italy,Rome,ITA,2024,99.0,4,72.8,48.3,13,100.0,79.4,synthetic
+Netherlands,Amsterdam,NLD,2024,74.2,3,60.5,44.4,21,67.6,61.4,synthetic
+Germany,Berlin,DEU,2024,36.6,3,66.5,41.3,21,5.0,40.3,synthetic
+Switzerland,Zurich,CHE,2024,61.7,1,59.4,50.1,4,77.4,60.6,synthetic
+Austria,Vienna,AUT,2024,59.9,2,60.3,39.8,30,26.9,48.3,synthetic
+Czechia,Prague,CZE,2024,93.0,2,80.8,17.3,19,38.0,63.1,synthetic
+Greece,Athens,GRC,2024,59.4,3,57.8,39.7,30,100.0,65.5,synthetic
+Turkey,Istanbul,TUR,2024,88.6,5,48.5,5.6,21,100.0,63.7,synthetic
+UAE,Dubai,ARE,2024,99.0,2,66.2,43.2,22,65.7,68.1,synthetic
+Qatar,Doha,QAT,2024,82.7,8,94.6,63.0,2,96.9,85.0,synthetic
+India,Delhi,IND,2024,51.0,6,95.4,44.1,16,57.9,68.0,synthetic
+India,Mumbai,IND,2024,61.9,5,81.1,56.3,44,48.9,64.9,synthetic
+Thailand,Bangkok,THA,2024,79.5,4,73.6,49.1,30,55.6,65.7,synthetic
+Vietnam,Ho Chi Minh City,VNM,2024,67.2,3,64.1,33.7,9,81.8,63.4,synthetic
+Malaysia,Kuala Lumpur,MYS,2024,98.1,4,89.2,37.3,12,100.0,84.6,synthetic
+Singapore,Singapore,SGP,2024,21.6,4,63.5,58.7,27,100.0,61.9,synthetic
+Indonesia,Bali,IDN,2024,70.7,2,49.3,51.6,14,59.5,54.6,synthetic
+Australia,Sydney,AUS,2024,94.6,5,65.9,28.2,3,18.6,52.9,synthetic
+New Zealand,Auckland,NZL,2024,85.3,5,80.4,37.8,16,100.0,78.8,synthetic
+Japan,Tokyo,JPN,2024,34.3,3,77.4,35.0,24,57.0,56.8,synthetic
+South Korea,Seoul,KOR,2024,80.8,2,72.8,41.5,21,70.1,68.0,synthetic
+China,Shanghai,CHN,2024,74.3,1,50.0,37.0,17,56.3,53.5,synthetic
+Hong Kong,Hong Kong,HKG,2024,81.4,2,38.8,59.9,39,99.9,64.7,synthetic
+Taiwan,Taipei,TWN,2024,47.6,3,56.0,34.1,20,43.0,47.1,synthetic
+South Africa,Cape Town,ZAF,2024,80.1,3,100.0,36.3,1,24.7,65.9,synthetic
+Kenya,Nairobi,KEN,2024,99.0,3,78.6,35.1,41,22.3,62.4,synthetic
+Morocco,Marrakesh,MAR,2024,96.6,5,75.1,41.2,20,27.9,61.4,synthetic
+Egypt,Cairo,EGY,2024,81.6,4,79.0,42.2,17,100.0,78.0,synthetic
+Israel,Tel Aviv,ISR,2024,70.2,4,70.9,50.8,26,67.9,65.7,synthetic
+Jordan,Amman,JOR,2024,94.1,1,70.8,25.8,29,77.9,70.7,synthetic
+Saudi Arabia,Riyadh,SAU,2024,69.8,2,74.6,39.9,22,97.7,73.3,synthetic
+Russia,Moscow,RUS,2024,82.2,4,39.8,31.7,32,63.0,52.9,synthetic
+Norway,Oslo,NOR,2024,76.1,3,78.5,56.0,34,37.6,63.3,synthetic
+Sweden,Stockholm,SWE,2024,36.8,4,92.5,10.1,22,100.0,71.5,synthetic
+Finland,Helsinki,FIN,2024,64.6,7,62.6,25.3,16,38.0,50.8,synthetic
+Poland,Krakow,POL,2024,36.2,3,77.2,24.2,19,100.0,66.5,synthetic
+Hungary,Budapest,HUN,2024,89.4,3,81.4,10.5,28,68.4,70.0,synthetic
+Croatia,Dubrovnik,HRV,2024,62.5,4,73.1,15.3,45,93.8,69.0,synthetic
+Iceland,Reykjavik,ISL,2024,62.2,1,38.2,65.1,22,89.1,57.6,synthetic
+Chile,Santiago,CHL,2024,51.0,3,71.2,38.6,26,46.9,55.6,synthetic
+Peru,Lima,PER,2024,51.3,3,48.7,22.7,23,79.9,53.1,synthetic
+Colombia,Cartagena,COL,2024,99.0,3,75.5,7.0,29,47.3,64.0,synthetic
+Dominican Republic,Punta Cana,DOM,2024,63.8,4,82.8,13.2,34,69.0,66.1,synthetic
+Puerto Rico,San Juan,PRI,2024,95.3,6,99.1,13.6,29,30.6,69.2,synthetic

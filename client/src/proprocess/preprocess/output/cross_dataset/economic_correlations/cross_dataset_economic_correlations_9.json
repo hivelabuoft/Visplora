@@ -1,0 +1,41 @@
+{
+  "input": {
+    "type": "cross_dataset",
+    "category": "economic_correlations",
+    "proposition_id": "cross_dataset_economic_correlations_9",
+    "proposition": "Boroughs with increased restaurant openings from 2001 to 2017 have higher house prices in 2023.",
+    "datasets_required": [
+      "restaurants",
+      "house-prices"
+    ],
+    "variables_needed": {
+      "restaurants": [
+        "area",
+        "value"
+      ],
+      "house-prices": [
+        "area",
+        "value"
+      ]
+    },
+    "time_periods": {
+      "restaurants": "2001-2017",
+      "house-prices": "2023"
+    },
+    "relationship_type": "lag",
+    "suggested_visualization": "line_chart",
+    "temporal_assumption": "A vibrant restaurant scene may enhance neighborhood desirability, affecting house prices."
+  },
+  "analysis": "### Cross-Dataset Analysis Methodology\n\n1. **Data Collection and Preparation:**\n   - Extract restaurant opening data from 2001 to 2017 for each borough using the provided SQL query.\n   - Extract house price data for 2023 for each borough using the provided SQL query.\n   - Ensure both datasets are cleaned and standardized, particularly focusing on consistent naming conventions for boroughs.\n\n2. **Temporal Alignment:**\n   - Given the lag relationship type, align the restaurant data (2001-2017) with the house prices in 2023. This involves aggregating restaurant openings over the specified period to create a single metric representing growth or change in restaurant numbers for each borough.\n\n3. **Data Integration:**\n   - Join the datasets on the 'area' field to create a combined dataset that includes both the total change in restaurant numbers and the house prices for each borough.\n\n4. **Correlation Analysis:**\n   - Calculate the correlation coefficient (e.g., Pearson's r) between the change in restaurant numbers and house prices to assess the strength and direction of the relationship.\n   - Visualize the relationship using a scatter plot to identify any linear trends.\n\n5. **Pattern and Outlier Detection:**\n   - Identify boroughs that significantly deviate from the trend line in the scatter plot, indicating potential outliers or unique cases.\n\n6. **Statistical Validation:**\n   - Perform hypothesis testing (e.g., t-test) to determine if the observed correlation is statistically significant.\n   - Consider using regression analysis to further explore the relationship and control for potential confounding variables.\n\n### Key Findings and Correlations\n\n- **Correlation Coefficient:** The analysis might reveal a positive correlation, indicating that boroughs with more restaurant openings tend to have higher house prices in 2023.\n- **Significant Boroughs:** Identify specific boroughs where the correlation is particularly strong or weak, providing insights into local economic dynamics.\n- **Outliers:** Highlight any boroughs that do not fit the overall trend, suggesting unique local factors influencing house prices.\n\n### Statistical Significance Measures\n\n- **Pearson's r:** Calculate the correlation coefficient to quantify the relationship.\n- **p-value:** Use a p-value to assess the statistical significance of the correlation. A p-value less than 0.05 typically indicates a significant relationship.\n- **Confidence Intervals:** Provide confidence intervals for the correlation coefficient to understand the precision of the estimate.\n\n### Data Quality Considerations\n\n- **Consistency:** Ensure consistent data collection methods across years and datasets.\n- **Completeness:** Verify that all boroughs are represented in both datasets.\n- **Accuracy:** Cross-check data against other sources to confirm accuracy.\n\n### Visualization Recommendations\n\n- **Line Chart:** Create a line chart to visualize changes in restaurant numbers over time for each borough.\n- **Scatter Plot:** Use a scatter plot to illustrate the relationship between restaurant growth and house prices, with a trend line to highlight the correlation.\n\n### Limitations and Assumptions\n\n- **Causality:** The analysis identifies correlation, not causation. Other factors may influence house prices.\n- **Temporal Lag:** Assumes that changes in restaurant numbers from 2001 to 2017 influence house prices in 2023, which may not capture more immediate effects.\n- **Data Limitations:** Potential missing data or inaccuracies in historical records could affect results.\n\n### Expected Output Structure\n\n```json\n{\n  \"type\": \"line\",\n  \"data\": [\n    {\n      \"time\": \"2001-2017\",\n      \"value1\": \"total_restaurant_change\",\n      \"value2\": \"house_price_2023\",\n      \"area\": \"borough_name\"\n    }\n  ]\n}\n```\n\nThis analysis provides a comprehensive view of the relationship between restaurant growth and house prices in London boroughs, offering insights into urban development dynamics and potential investment opportunities.",
+  "datasets_involved": [
+    "restaurants",
+    "house-prices"
+  ],
+  "relationship_type": "lag",
+  "temporal_alignment": {
+    "restaurants": "2001-2017",
+    "house-prices": "2023"
+  },
+  "processing_timestamp": "2025-08-20T06:23:34.342Z",
+  "status": "completed"
+}

@@ -1,0 +1,855 @@
+{
+  "chart_type": "scatterPlot",
+  "category": "chart_specific_analysis",
+  "processed_at": "2025-08-20T18:10:50.923Z",
+  "total_queries": 35,
+  "sql_queries": [
+    {
+      "proposition_id": "crime-rates_borough_crime_trends_scatterPlot_simple_2D_001",
+      "dataset": "crime-rates",
+      "time_period": "2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "month"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, EXTRACT(MONTH FROM date) AS x_value, SUM(count) AS y_value FROM crime_data WHERE EXTRACT(YEAR FROM date) = 2023 GROUP BY crime_category, EXTRACT(MONTH FROM date) ORDER BY crime_category, x_value;"
+    },
+    {
+      "proposition_id": "ethnicity_population_distribution_scatterPlot_simple_2D_002",
+      "dataset": "ethnicity",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "local authority name",
+        "Broad_group"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT ethnic_group AS category, SUM(population_count) AS x_value, AVG(percentage) AS y_value FROM ethnicity_data GROUP BY ethnic_group ORDER BY ethnic_group;"
+    },
+    {
+      "proposition_id": "country-of-births_borough_origin_scatterPlot_with_mean_2D_003",
+      "dataset": "country-of-births",
+      "time_period": "2022",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "scatterPlot_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT Area_Name AS category, AVG(population_count) AS x_value, AVG(percentage) AS y_value FROM birth_country_data WHERE date LIKE '2022%' GROUP BY Area_Name ORDER BY Area_Name;"
+    },
+    {
+      "proposition_id": "population_density_growth_scatterPlot_simple_2D_004",
+      "dataset": "population",
+      "time_period": "2010-2020",
+      "variables_needed": [
+        "area",
+        "2010",
+        "2020"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(CASE WHEN date = 2010 THEN population_count ELSE 0 END) AS x_value, SUM(CASE WHEN date = 2020 THEN population_count ELSE 0 END) AS y_value FROM population_data WHERE date IN (2010, 2020) GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "income_borough_variation_scatterPlot_with_threshold_2D_005",
+      "dataset": "income",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, YEAR(date) AS x_value, average_income AS y_value FROM income_data WHERE YEAR(date) BETWEEN 2022 AND 2023 GROUP BY area_name, YEAR(date), average_income ORDER BY area_name, x_value;"
+    },
+    {
+      "proposition_id": "house-prices_variation_trend_scatterPlot_with_threshold_2D_006",
+      "dataset": "house-prices",
+      "time_period": "2022",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_price) AS x_value, AVG(median_price) AS y_value FROM house_price_data WHERE DATE_FORMAT(date, '%Y') = '2022' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "schools-colleges_borough_performance_scatterPlot_simple_2D_007",
+      "dataset": "schools-colleges",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "LANAME",
+        "Year",
+        "Performance Indicator"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT LANAME AS category, Year AS x_value, AVG(\"Performance Indicator\") AS y_value FROM education_data WHERE Year BETWEEN 2021 AND 2023 GROUP BY LANAME, Year ORDER BY LANAME, Year;"
+    },
+    {
+      "proposition_id": "vehicles_registration_trend_scatterPlot_simple_3D_008",
+      "dataset": "vehicles",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Local Authority",
+        "Vehicle Type",
+        "Year"
+      ],
+      "chart_type": "scatterPlot_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, YEAR(date) AS x_value, COUNT(vehicle_type) AS y_value, vehicle_type AS dimension FROM vehicle_data WHERE YEAR(date) BETWEEN 2020 AND 2023 GROUP BY area_name, YEAR(date), vehicle_type ORDER BY area_name, YEAR(date), vehicle_type;"
+    },
+    {
+      "proposition_id": "restaurants_employment_trend_scatterPlot_simple_2D_009",
+      "dataset": "restaurants",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Employment"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, EXTRACT(YEAR FROM date) AS x_value, SUM(restaurant_count) AS y_value FROM restaurant_data WHERE EXTRACT(YEAR FROM date) BETWEEN 2020 AND 2023 GROUP BY area_name, EXTRACT(YEAR FROM date) ORDER BY area_name, x_value;"
+    },
+    {
+      "proposition_id": "private-rent_cost_variation_scatterPlot_simple_2D_010",
+      "dataset": "private-rent",
+      "time_period": "2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Average (£)"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, EXTRACT(YEAR FROM date) AS x_value, AVG(average_rent) AS y_value FROM rent_data WHERE EXTRACT(YEAR FROM date) = 2023 GROUP BY area_name, EXTRACT(YEAR FROM date) ORDER BY area_name, x_value;"
+    },
+    {
+      "proposition_id": "gyms_availability_growth_scatterPlot_simple_2D_011",
+      "dataset": "gyms",
+      "time_period": "2020-2024",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "facility_count"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, EXTRACT(YEAR FROM date) AS x_value, COUNT(facility_type) AS y_value FROM gym_data WHERE EXTRACT(YEAR FROM date) BETWEEN 2020 AND 2024 GROUP BY borough_name, x_value ORDER BY category, x_value;"
+    },
+    {
+      "proposition_id": "libraries_visits_trend_scatterPlot_simple_2D_012",
+      "dataset": "libraries",
+      "time_period": "2015-2023",
+      "variables_needed": [
+        "area",
+        "Year",
+        "Library visits per 1,000 population"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, EXTRACT(YEAR FROM date) AS x_value, SUM(visitor_count) / (population_count / 1000) AS y_value FROM library_data JOIN population_data ON library_data.area_name = population_data.area_name WHERE date BETWEEN '2015-01-01' AND '2023-12-31' GROUP BY area_name, EXTRACT(YEAR FROM date) ORDER BY area_name, x_value;"
+    },
+    {
+      "proposition_id": "crime-rates_seasonal_variation_scatterPlot_simple_3D_013",
+      "dataset": "crime-rates",
+      "time_period": "2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "month"
+      ],
+      "chart_type": "scatterPlot_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, EXTRACT(MONTH FROM date) AS x_value, SUM(count) AS y_value, borough_name AS dimension FROM crime_data WHERE EXTRACT(YEAR FROM date) = 2023 GROUP BY crime_category, EXTRACT(MONTH FROM date), borough_name ORDER BY category, x_value, dimension;"
+    },
+    {
+      "proposition_id": "ethnicity_diversity_trend_scatterPlot_simple_2D_014",
+      "dataset": "ethnicity",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "local authority name",
+        "Broad_group"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS x_value, AVG(percentage) AS y_value FROM ethnicity_data GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "country-of-births_origin_trend_scatterPlot_with_mean_2D_015",
+      "dataset": "country-of-births",
+      "time_period": "2022",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "scatterPlot_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT Area_Name AS category, AVG(population_count) AS x_value, AVG(percentage) AS y_value FROM birth_country_data WHERE date LIKE '2022%' GROUP BY Area_Name ORDER BY Area_Name;"
+    },
+    {
+      "proposition_id": "population_density_borough_trend_scatterPlot_simple_2D_016",
+      "dataset": "population",
+      "time_period": "2010-2020",
+      "variables_needed": [
+        "area",
+        "2010",
+        "2020"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(CASE WHEN date = '2010' THEN population_count ELSE 0 END) AS x_value, SUM(CASE WHEN date = '2020' THEN population_count ELSE 0 END) AS y_value FROM population_data WHERE date IN ('2010', '2020') GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "income_economic_trend_scatterPlot_with_threshold_2D_017",
+      "dataset": "income",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, YEAR(date) AS x_value, average_income AS y_value FROM income_data WHERE YEAR(date) BETWEEN 2022 AND 2023 GROUP BY area_name, YEAR(date), average_income ORDER BY area_name, x_value;"
+    },
+    {
+      "proposition_id": "house-prices_trend_analysis_scatterPlot_with_threshold_2D_018",
+      "dataset": "house-prices",
+      "time_period": "2015-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, EXTRACT(YEAR FROM date) AS x_value, AVG(average_price) AS y_value FROM house_price_data WHERE date BETWEEN '2015-01-01' AND '2023-12-31' GROUP BY area_name, EXTRACT(YEAR FROM date) ORDER BY area_name, x_value;"
+    },
+    {
+      "proposition_id": "schools-colleges_performance_improvement_scatterPlot_simple_2D_019",
+      "dataset": "schools-colleges",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "LANAME",
+        "Year",
+        "Performance Indicator"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT LANAME AS category, Year AS x_value, AVG(\"Performance Indicator\") AS y_value FROM education_data WHERE Year BETWEEN 2021 AND 2023 GROUP BY LANAME, Year ORDER BY LANAME, Year;"
+    },
+    {
+      "proposition_id": "vehicles_registration_trend_scatterPlot_simple_3D_020",
+      "dataset": "vehicles",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Local Authority",
+        "Vehicle Type",
+        "Year"
+      ],
+      "chart_type": "scatterPlot_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, YEAR(date) AS x_value, COUNT(registration_count) AS y_value, vehicle_type AS dimension FROM vehicle_data WHERE YEAR(date) BETWEEN 2020 AND 2023 GROUP BY area_name, YEAR(date), vehicle_type ORDER BY area_name, x_value, dimension;"
+    },
+    {
+      "proposition_id": "restaurants_growth_trend_scatterPlot_simple_2D_021",
+      "dataset": "restaurants",
+      "time_period": "2018-2023",
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Units"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, EXTRACT(YEAR FROM date) AS x_value, SUM(restaurant_count) AS y_value FROM restaurant_data WHERE date BETWEEN '2018-01-01' AND '2023-12-31' GROUP BY area_name, EXTRACT(YEAR FROM date) ORDER BY area_name, x_value;"
+    },
+    {
+      "proposition_id": "private-rent_cost_trend_scatterPlot_simple_2D_022",
+      "dataset": "private-rent",
+      "time_period": "2017-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Average (£)"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, EXTRACT(YEAR FROM date) AS x_value, AVG(average_rent) AS y_value FROM rent_data WHERE date BETWEEN '2017-01-01' AND '2023-12-31' GROUP BY area_name, EXTRACT(YEAR FROM date) ORDER BY area_name, x_value;"
+    },
+    {
+      "proposition_id": "gyms_facility_growth_scatterPlot_simple_2D_023",
+      "dataset": "gyms",
+      "time_period": "2019-2024",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "facility_count"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, EXTRACT(YEAR FROM date) AS x_value, COUNT(DISTINCT gym_name) AS y_value FROM gym_data WHERE EXTRACT(YEAR FROM date) BETWEEN 2019 AND 2024 GROUP BY borough_name, x_value ORDER BY category, x_value;"
+    },
+    {
+      "proposition_id": "libraries_visits_trend_scatterPlot_simple_2D_024",
+      "dataset": "libraries",
+      "time_period": "2015-2023",
+      "variables_needed": [
+        "area",
+        "Year",
+        "Library visits per 1,000 population"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, EXTRACT(YEAR FROM date) AS x_value, SUM(visitor_count) / (population_count / 1000) AS y_value FROM library_data JOIN population_data ON library_data.area_name = population_data.area_name WHERE date BETWEEN '2015-01-01' AND '2023-12-31' GROUP BY area_name, EXTRACT(YEAR FROM date) ORDER BY area_name, x_value;"
+    },
+    {
+      "proposition_id": "crime-rates_borough_comparison_scatterPlot_simple_3D_025",
+      "dataset": "crime-rates",
+      "time_period": "2023",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "count"
+      ],
+      "chart_type": "scatterPlot_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS x_value, COUNT(DISTINCT date) AS y_value, borough_name AS dimension FROM crime_data WHERE YEAR(date) = 2023 GROUP BY crime_category, borough_name ORDER BY category, dimension;"
+    },
+    {
+      "proposition_id": "ethnicity_borough_diversity_scatterPlot_simple_2D_026",
+      "dataset": "ethnicity",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "local authority name",
+        "Broad_group"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS x_value, AVG(percentage) AS y_value FROM ethnicity_data GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "country-of-births_population_trend_scatterPlot_with_mean_2D_027",
+      "dataset": "country-of-births",
+      "time_period": "2022",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "scatterPlot_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT Area_Name AS category, AVG(population_count) AS x_value, AVG(percentage) AS y_value FROM birth_country_data WHERE date LIKE '2022%' GROUP BY Area_Name ORDER BY Area_Name;"
+    },
+    {
+      "proposition_id": "population_density_trend_scatterPlot_simple_2D_028",
+      "dataset": "population",
+      "time_period": "2010-2020",
+      "variables_needed": [
+        "area",
+        "2010",
+        "2020"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(CASE WHEN date = 2010 THEN population_count ELSE 0 END) AS x_value, SUM(CASE WHEN date = 2020 THEN population_count ELSE 0 END) AS y_value FROM population_data WHERE date IN (2010, 2020) GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "income_borough_trend_scatterPlot_with_threshold_2D_029",
+      "dataset": "income",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, YEAR(date) AS x_value, AVG(median_income) AS y_value FROM income_data WHERE YEAR(date) BETWEEN 2022 AND 2023 GROUP BY area_name, YEAR(date) ORDER BY area_name, YEAR(date);"
+    },
+    {
+      "proposition_id": "house-prices_borough_comparison_scatterPlot_with_threshold_2D_030",
+      "dataset": "house-prices",
+      "time_period": "2018-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, EXTRACT(YEAR FROM date) AS x_value, average_price AS y_value FROM house_price_data WHERE date BETWEEN '2018-01-01' AND '2023-12-31' GROUP BY area_name, EXTRACT(YEAR FROM date), average_price ORDER BY area_name, x_value;"
+    },
+    {
+      "proposition_id": "schools-colleges_borough_improvement_scatterPlot_simple_2D_031",
+      "dataset": "schools-colleges",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "LANAME",
+        "Year",
+        "Performance Indicator"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT LANAME AS category, Year AS x_value, AVG(\"Performance Indicator\") AS y_value FROM education_data WHERE Year BETWEEN 2021 AND 2023 GROUP BY LANAME, Year ORDER BY LANAME, Year;"
+    },
+    {
+      "proposition_id": "vehicles_registration_trend_scatterPlot_simple_3D_032",
+      "dataset": "vehicles",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "Local Authority",
+        "Vehicle Type",
+        "Year"
+      ],
+      "chart_type": "scatterPlot_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT Local_Authority AS category, Year AS x_value, COUNT(*) AS y_value, Vehicle_Type AS dimension FROM vehicle_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' GROUP BY Local_Authority, Year, Vehicle_Type ORDER BY Local_Authority, Year, Vehicle_Type;"
+    },
+    {
+      "proposition_id": "restaurants_employment_growth_scatterPlot_simple_2D_033",
+      "dataset": "restaurants",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Employment"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, EXTRACT(YEAR FROM date) AS x_value, SUM(restaurant_count) AS y_value FROM restaurant_data WHERE EXTRACT(YEAR FROM date) BETWEEN 2020 AND 2023 GROUP BY area_name, x_value ORDER BY category, x_value;"
+    },
+    {
+      "proposition_id": "private-rent_price_trend_scatterPlot_simple_2D_034",
+      "dataset": "private-rent",
+      "time_period": "2016-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Average (£)"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, EXTRACT(YEAR FROM date) AS x_value, AVG(average_rent) AS y_value FROM rent_data WHERE date BETWEEN '2016-01-01' AND '2023-12-31' GROUP BY area_name, EXTRACT(YEAR FROM date) ORDER BY area_name, x_value;"
+    },
+    {
+      "proposition_id": "gyms_facility_increase_scatterPlot_simple_2D_035",
+      "dataset": "gyms",
+      "time_period": "2018-2024",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "facility_count"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, EXTRACT(YEAR FROM date) AS x_value, COUNT(facility_type) AS y_value FROM gym_data WHERE EXTRACT(YEAR FROM date) BETWEEN 2018 AND 2024 GROUP BY borough_name, x_value ORDER BY category, x_value;"
+    }
+  ]
+}

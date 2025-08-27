@@ -1,0 +1,152 @@
+{
+  "dataset_id": "libraries-by-areas-chart",
+  "dataset_name": "Libraries by Areas Chart",
+  "category": "libraries",
+  "description": "Libraries by areas chart data",
+  "file_path": "/dataset/london/libraries/libraries-by-areas-chart.csv",
+  "field_roles": [
+    {
+      "name": "area label",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "area label",
+        "area label",
+        "area label"
+      ]
+    },
+    {
+      "name": "area long label",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "area long label",
+        "area long label",
+        "area long label"
+      ]
+    },
+    {
+      "name": "area",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "area",
+        "area",
+        "area"
+      ]
+    },
+    {
+      "name": "Library visits per 1,000 population",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "284",
+        "Visits per 1000 people",
+        "raw"
+      ]
+    },
+    {
+      "name": "Library visits per 1,000 population",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "284",
+        "Visits per 1000 people",
+        "raw"
+      ]
+    },
+    {
+      "name": "Library visits per 1,000 population",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "284",
+        "Visits per 1000 people",
+        "raw"
+      ]
+    },
+    {
+      "name": "Library visits per 1,000 population",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "284",
+        "Visits per 1000 people",
+        "raw"
+      ]
+    },
+    {
+      "name": "Library visits per 1,000 population",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "284",
+        "Visits per 1000 people",
+        "raw"
+      ]
+    },
+    {
+      "name": "Library visits per 1,000 population",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "284",
+        "Visits per 1000 people",
+        "raw"
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "area label",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "area label",
+            "area label",
+            "area label"
+          ]
+        },
+        "y": {
+          "name": "count",
+          "roles": [
+            "metric"
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.724Z"
+}

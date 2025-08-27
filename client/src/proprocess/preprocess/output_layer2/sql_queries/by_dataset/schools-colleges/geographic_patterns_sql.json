@@ -1,0 +1,238 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "schools-colleges",
+  "processed_at": "2025-08-20T18:06:52.708Z",
+  "total_queries": 10,
+  "sql_queries": [
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_01",
+      "dataset": "schools-colleges",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT institution_type AS category, SUM(student_count) AS value FROM education_data WHERE YEAR(CURDATE()) = 2023 GROUP BY institution_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_02",
+      "dataset": "schools-colleges",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT institution_type AS category, SUM(student_count) AS value FROM education_data GROUP BY institution_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_03",
+      "dataset": "schools-colleges",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT institution_type AS category, AVG(student_count) AS value, (SELECT AVG(student_count) FROM education_data WHERE EXTRACT(YEAR FROM date) = 2023) AS mean_value FROM education_data WHERE EXTRACT(YEAR FROM date) = 2023 GROUP BY institution_type ORDER BY category;"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_04",
+      "dataset": "schools-colleges",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT institution_type AS category, SUM(student_count) AS value FROM education_data GROUP BY institution_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_05",
+      "dataset": "schools-colleges",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT institution_type AS category, SUM(student_count) AS value, AVG(student_count) OVER () AS mean_value FROM education_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2023 GROUP BY institution_type ORDER BY category;"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_06",
+      "dataset": "schools-colleges",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT institution_type AS category, SUM(student_count) AS value, AVG(SUM(student_count)) OVER () AS mean_value FROM education_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2023 GROUP BY institution_type ORDER BY category;"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_07",
+      "dataset": "schools-colleges",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT institution_name AS category, student_count AS value FROM education_data WHERE institution_type IN ('school', 'college') AND EXTRACT(YEAR FROM CURRENT_DATE) = 2023 GROUP BY institution_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_08",
+      "dataset": "schools-colleges",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT institution_type AS category, SUM(student_count) AS value FROM education_data GROUP BY institution_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_09",
+      "dataset": "schools-colleges",
+      "time_period": "2023",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT institution_type AS category, SUM(student_count) AS value, AVG(SUM(student_count)) OVER () AS mean_value FROM education_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2023 GROUP BY institution_type ORDER BY category;"
+    },
+    {
+      "proposition_id": "schools-colleges_geographic_patterns_gp_10",
+      "dataset": "schools-colleges",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT institution_type AS category, SUM(student_count) AS value, (SUM(student_count) * 100.0 / (SELECT SUM(student_count) FROM education_data)) AS percentage FROM education_data GROUP BY institution_type ORDER BY value DESC;"
+    }
+  ]
+}

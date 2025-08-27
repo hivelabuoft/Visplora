@@ -1,0 +1,448 @@
+{
+  "dataset_name": "ethnicity",
+  "complexity_score": 7,
+  "total_propositions": 35,
+  "proposition_breakdown": {
+    "geographic_patterns": 12,
+    "categorical_analysis": 15,
+    "cross_dimensional": 6,
+    "statistical_patterns": 2
+  },
+  "generated_at": "2025-08-18T17:21:46.620Z",
+  "categories": {
+    "geographic_patterns": [
+      {
+        "id": "geo_001",
+        "proposition": "The borough of Brent has the highest count of Asian Indian residents, accounting for 15% of the total Asian Indian population in London.",
+        "variables_needed": [
+          "local_authority_name",
+          "Asian_Indian"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_002",
+        "proposition": "White British residents are predominantly located in Outer London boroughs, with a concentration of 70% compared to 30% in Inner London.",
+        "variables_needed": [
+          "local_authority_name",
+          "White_British"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_003",
+        "proposition": "The LSOA with the highest diversity index is located in Tower Hamlets, showing a balanced distribution across all major ethnic categories.",
+        "variables_needed": [
+          "LSOA_code",
+          "White_British",
+          "Asian_Indian",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "heatmap",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "geo_004",
+        "proposition": "South London boroughs have a higher proportion of Black African residents, with Lambeth and Southwark accounting for 25% of the population.",
+        "variables_needed": [
+          "local_authority_name",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_005",
+        "proposition": "Newham and Brent are hotspots for Asian Indian residents, together comprising 40% of the total population in London.",
+        "variables_needed": [
+          "local_authority_name",
+          "Asian_Indian"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_006",
+        "proposition": "The borough of Hackney shows a significant clustering of Black African residents, representing 20% of the borough's population.",
+        "variables_needed": [
+          "local_authority_name",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "geo_007",
+        "proposition": "West London boroughs such as Hillingdon and Ealing have a higher concentration of Asian Indian residents compared to East London.",
+        "variables_needed": [
+          "local_authority_name",
+          "Asian_Indian"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_008",
+        "proposition": "The LSOAs in Kensington and Chelsea show a higher proportion of White British residents compared to neighboring boroughs.",
+        "variables_needed": [
+          "LSOA_code",
+          "White_British"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "heatmap",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "geo_009",
+        "proposition": "Inner London boroughs have a more diverse ethnic composition with no single ethnic group exceeding 50% of the population.",
+        "variables_needed": [
+          "local_authority_name",
+          "White_British",
+          "Asian_Indian",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "geo_010",
+        "proposition": "The borough of Croydon has seen a significant increase in Black African residents, now comprising 30% of the borough's population.",
+        "variables_needed": [
+          "local_authority_name",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_011",
+        "proposition": "East London boroughs, particularly Newham, have a higher proportion of Asian Indian residents compared to the rest of London.",
+        "variables_needed": [
+          "local_authority_name",
+          "Asian_Indian"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "geo_012",
+        "proposition": "The LSOA with the lowest count of White British residents is located in Westminster, indicating a highly diverse population.",
+        "variables_needed": [
+          "LSOA_code",
+          "White_British"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "heatmap",
+        "complexity_level": "Advanced"
+      }
+    ],
+    "categorical_analysis": [
+      {
+        "id": "cat_001",
+        "proposition": "White British is the most common ethnic category in Outer London, representing 60% of the population.",
+        "variables_needed": [
+          "local_authority_name",
+          "White_British"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "cat_002",
+        "proposition": "Asian Indian residents are more concentrated in boroughs with higher economic activity, such as Tower Hamlets and Newham.",
+        "variables_needed": [
+          "local_authority_name",
+          "Asian_Indian"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_003",
+        "proposition": "Black African residents make up 10% of the population in Inner London, a higher proportion than in Outer London.",
+        "variables_needed": [
+          "local_authority_name",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_004",
+        "proposition": "The least common ethnic category in London is 'Other', representing less than 1% of the total population.",
+        "variables_needed": [
+          "local_authority_name"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "cat_005",
+        "proposition": "In Westminster, White British residents account for only 30% of the population, indicating a highly diverse borough.",
+        "variables_needed": [
+          "local_authority_name",
+          "White_British"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_006",
+        "proposition": "Asian Indian residents are the second most common ethnic group in London, comprising 20% of the population.",
+        "variables_needed": [
+          "local_authority_name",
+          "Asian_Indian"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "cat_007",
+        "proposition": "The proportion of Black African residents is highest in the borough of Lewisham, where they make up 25% of the population.",
+        "variables_needed": [
+          "local_authority_name",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_008",
+        "proposition": "White British residents are least common in Newham, representing only 15% of the borough's population.",
+        "variables_needed": [
+          "local_authority_name",
+          "White_British"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_009",
+        "proposition": "The ethnic category 'Mixed' is most prevalent in Hackney, accounting for 12% of the borough's population.",
+        "variables_needed": [
+          "local_authority_name"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_010",
+        "proposition": "The distribution of Asian Indian residents is more even across boroughs compared to Black African residents.",
+        "variables_needed": [
+          "local_authority_name",
+          "Asian_Indian",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cat_011",
+        "proposition": "White British residents have the highest concentration in the borough of Richmond upon Thames, making up 80% of the population.",
+        "variables_needed": [
+          "local_authority_name",
+          "White_British"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_012",
+        "proposition": "The borough of Haringey has a balanced ethnic composition with no single group exceeding 40% of the population.",
+        "variables_needed": [
+          "local_authority_name",
+          "White_British",
+          "Asian_Indian",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cat_013",
+        "proposition": "The 'Other' ethnic category is more prevalent in Inner London boroughs, representing 5% of the population compared to 2% in Outer London.",
+        "variables_needed": [
+          "local_authority_name"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_014",
+        "proposition": "In the borough of Barnet, Asian Indian residents make up 18% of the population, the highest proportion in North London.",
+        "variables_needed": [
+          "local_authority_name",
+          "Asian_Indian"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cat_015",
+        "proposition": "The borough of Greenwich has a diverse ethnic composition with Black African residents making up 20% of the population.",
+        "variables_needed": [
+          "local_authority_name",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "cross_dimensional": [
+      {
+        "id": "cross_001",
+        "proposition": "The proportion of White British residents in Outer London has decreased by 5% over the last decade, while the Asian Indian population has increased by 8%.",
+        "variables_needed": [
+          "local_authority_name",
+          "White_British",
+          "Asian_Indian"
+        ],
+        "time_period": "2011-2021",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_002",
+        "proposition": "In the borough of Ealing, the Asian Indian population peaks during the Diwali festival period, showing a 10% increase in community events.",
+        "variables_needed": [
+          "local_authority_name",
+          "Asian_Indian"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_003",
+        "proposition": "The LSOAs in Southwark show a seasonal increase in Black African community activities during the summer months.",
+        "variables_needed": [
+          "LSOA_code",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "LSOA",
+        "suggested_visualization": "heatmap",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_004",
+        "proposition": "The ethnic composition of Inner London boroughs has shifted over the past decade, with a 10% decrease in White British and a 15% increase in Asian Indian residents.",
+        "variables_needed": [
+          "local_authority_name",
+          "White_British",
+          "Asian_Indian"
+        ],
+        "time_period": "2011-2021",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_005",
+        "proposition": "During the Notting Hill Carnival, the borough of Kensington and Chelsea sees a 20% increase in Black African cultural representation.",
+        "variables_needed": [
+          "local_authority_name",
+          "Black_African"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cross_006",
+        "proposition": "The borough of Hounslow has experienced a 12% increase in Asian Indian residents over the last decade, correlating with economic growth in the area.",
+        "variables_needed": [
+          "local_authority_name",
+          "Asian_Indian"
+        ],
+        "time_period": "2011-2021",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      }
+    ],
+    "statistical_patterns": [
+      {
+        "id": "stat_001",
+        "proposition": "The distribution of White British residents across London follows a normal distribution with a mean of 50,000 residents per borough.",
+        "variables_needed": [
+          "local_authority_name",
+          "White_British"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "histogram",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "stat_002",
+        "proposition": "There is a strong positive correlation (r=0.8) between the number of Asian Indian residents and the presence of cultural centers in boroughs.",
+        "variables_needed": [
+          "local_authority_name",
+          "Asian_Indian"
+        ],
+        "time_period": "2021 Census",
+        "geographic_level": "Borough",
+        "suggested_visualization": "scatter_plot",
+        "complexity_level": "Advanced"
+      }
+    ]
+  }
+}

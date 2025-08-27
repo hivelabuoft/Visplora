@@ -1,0 +1,280 @@
+{
+  "proposition_generation_config": {
+    "datasets": {
+      "crime-rates": {
+        "total_propositions": 40,
+        "complexity_score": 8,
+        "complexity_factors": {
+          "row_count": 705509,
+          "temporal_granularity": "monthly",
+          "geographic_levels": "borough_and_lsoa",
+          "categorical_richness": "few_categories",
+          "time_span": "2022-2023"
+        },
+        "proposition_breakdown": {
+          "temporal_trends": 8,
+          "geographic_patterns": 10,
+          "categorical_analysis": 8,
+          "cross_dimensional": 8,
+          "statistical_patterns": 6
+        },
+        "justification": "High complexity: Large dataset with temporal, geographic, and categorical dimensions"
+      },
+      
+      "ethnicity": {
+        "total_propositions": 35,
+        "complexity_score": 7,
+        "complexity_factors": {
+          "row_count": 4995,
+          "temporal_granularity": "snapshot",
+          "geographic_levels": "borough_and_lsoa", 
+          "categorical_richness": "many_categories",
+          "time_span": "census_snapshot"
+        },
+        "proposition_breakdown": {
+          "geographic_patterns": 12,
+          "categorical_analysis": 15,
+          "cross_dimensional": 6,
+          "statistical_patterns": 2
+        },
+        "justification": "High complexity: 20+ ethnic categories across detailed geographic areas"
+      },
+      
+      "country-of-births": {
+        "total_propositions": 30,
+        "complexity_score": 6,
+        "complexity_factors": {
+          "row_count": 14701,
+          "temporal_granularity": "yearly",
+          "geographic_levels": "borough_only",
+          "categorical_richness": "many_categories", 
+          "time_span": "2017-2018"
+        },
+        "proposition_breakdown": {
+          "temporal_trends": 5,
+          "geographic_patterns": 8,
+          "categorical_analysis": 12,
+          "cross_dimensional": 5
+        },
+        "justification": "Medium-high complexity: Many birth countries, temporal data, borough level"
+      },
+      
+      "population": {
+        "total_propositions": 35,
+        "complexity_score": 7,
+        "complexity_factors": {
+          "row_count": 1912,
+          "temporal_granularity": "decadal",
+          "geographic_levels": "borough_only",
+          "categorical_richness": "few_categories",
+          "time_span": "1801-2021"
+        },
+        "proposition_breakdown": {
+          "temporal_trends": 15,
+          "geographic_patterns": 10,
+          "statistical_patterns": 6,
+          "cross_dimensional": 4
+        },
+        "justification": "High complexity: Exceptional 220-year historical span, population density analysis"
+      },
+      
+      "income": {
+        "total_propositions": 25,
+        "complexity_score": 5,
+        "complexity_factors": {
+          "row_count": 56,
+          "temporal_granularity": "yearly", 
+          "geographic_levels": "borough_only",
+          "categorical_richness": "few_categories",
+          "time_span": "1999-2023"
+        },
+        "proposition_breakdown": {
+          "temporal_trends": 8,
+          "geographic_patterns": 8,
+          "statistical_patterns": 5,
+          "cross_dimensional": 4
+        },
+        "justification": "Medium complexity: Long time series, borough comparisons, economic indicators"
+      },
+      
+      "house-prices": {
+        "total_propositions": 30,
+        "complexity_score": 6,
+        "complexity_factors": {
+          "row_count": 12016,
+          "temporal_granularity": "yearly",
+          "geographic_levels": "borough_only", 
+          "categorical_richness": "few_categories",
+          "time_span": "1995-present"
+        },
+        "proposition_breakdown": {
+          "temporal_trends": 10,
+          "geographic_patterns": 8,
+          "statistical_patterns": 6,
+          "cross_dimensional": 6
+        },
+        "justification": "Medium-high complexity: 28-year price history, borough analysis, market trends"
+      },
+      
+      "schools-colleges": {
+        "total_propositions": 30,
+        "complexity_score": 6,
+        "complexity_factors": {
+          "row_count": 25387,
+          "temporal_granularity": "snapshot_comparison",
+          "geographic_levels": "borough_only",
+          "categorical_richness": "medium_categories",
+          "time_span": "2010-2023"
+        },
+        "proposition_breakdown": {
+          "temporal_trends": 6,
+          "geographic_patterns": 10,
+          "categorical_analysis": 10,
+          "cross_dimensional": 4
+        },
+        "justification": "Medium-high complexity: Large school dataset, multiple types, performance ratings"
+      },
+      
+      "vehicles": {
+        "total_propositions": 20,
+        "complexity_score": 4,
+        "complexity_factors": {
+          "row_count": 275,
+          "temporal_granularity": "yearly",
+          "geographic_levels": "borough_only",
+          "categorical_richness": "medium_categories",
+          "time_span": "2019-2023"
+        },
+        "proposition_breakdown": {
+          "temporal_trends": 6,
+          "geographic_patterns": 6,
+          "categorical_analysis": 6,
+          "cross_dimensional": 2
+        },
+        "justification": "Medium complexity: Vehicle types, 5-year trends, borough comparisons"
+      },
+      
+      "restaurants": {
+        "total_propositions": 25,
+        "complexity_score": 5,
+        "complexity_factors": {
+          "row_count": 208,
+          "temporal_granularity": "yearly",
+          "geographic_levels": "borough_only",
+          "categorical_richness": "few_categories",
+          "time_span": "2001-2017"
+        },
+        "proposition_breakdown": {
+          "temporal_trends": 8,
+          "geographic_patterns": 8,
+          "categorical_analysis": 5,
+          "cross_dimensional": 4
+        },
+        "justification": "Medium complexity: 17-year business trends, employment data, licensed vs unlicensed"
+      },
+      
+      "private-rent": {
+        "total_propositions": 25,
+        "complexity_score": 5,
+        "complexity_factors": {
+          "row_count": 6160,
+          "temporal_granularity": "quarterly",
+          "geographic_levels": "borough_only",
+          "categorical_richness": "medium_categories",
+          "time_span": "2011-present"
+        },
+        "proposition_breakdown": {
+          "temporal_trends": 8,
+          "geographic_patterns": 8,
+          "categorical_analysis": 6,
+          "cross_dimensional": 3
+        },
+        "justification": "Medium complexity: Quarterly rent data, property types, borough variations"
+      },
+      
+      "gyms": {
+        "total_propositions": 20,
+        "complexity_score": 4,
+        "complexity_factors": {
+          "row_count": 446,
+          "temporal_granularity": "snapshot",
+          "geographic_levels": "borough_and_lsoa",
+          "categorical_richness": "medium_categories",
+          "time_span": "2024"
+        },
+        "proposition_breakdown": {
+          "geographic_patterns": 8,
+          "categorical_analysis": 8,
+          "cross_dimensional": 4
+        },
+        "justification": "Medium complexity: Gym types, income correlation, geographic distribution"
+      },
+      
+      "libraries": {
+        "total_propositions": 15,
+        "complexity_score": 3,
+        "complexity_factors": {
+          "row_count": 38,
+          "temporal_granularity": "snapshot",
+          "geographic_levels": "borough_only",
+          "categorical_richness": "few_categories",
+          "time_span": "2022-2023"
+        },
+        "proposition_breakdown": {
+          "geographic_patterns": 8,
+          "categorical_analysis": 4,
+          "statistical_patterns": 3
+        },
+        "justification": "Low complexity: Limited data, simple metrics, borough-level only"
+      }
+    },
+    
+    "cross_dataset_propositions": {
+      "total_propositions": 100,
+      "categories": {
+        "economic_correlations": 20,
+        "demographic_patterns": 18,
+        "infrastructure_relationships": 16,
+        "temporal_lag_analysis": 15,
+        "gentrification_indicators": 12,
+        "safety_livability_relationships": 10,
+        "market_development_patterns": 9
+      },
+      "temporal_overlap_opportunities": {
+        "2022_2023_overlap": ["crime-rates", "schools-colleges", "libraries", "gyms"],
+        "2019_2023_overlap": ["vehicles", "house-prices", "income", "private-rent"],
+        "historical_context": ["population", "house-prices", "income"],
+        "lag_relationships": [
+          "income_2020 → gyms_2024",
+          "schools_2021 → house-prices_2023",
+          "restaurants_2017 → crime_2022",
+          "population_growth_1990-2021 → current_infrastructure_2022-2024",
+          "restaurant_density_2015-2017 → neighborhood_safety_2022-2023",
+          "house_price_growth_2010-2020 → school_performance_2021-2023"
+        ]
+      }
+    },
+    
+    "generation_summary": {
+      "total_single_dataset_propositions": 330,
+      "total_cross_dataset_propositions": 100,
+      "grand_total": 430,
+      "average_per_dataset": 27.5,
+      "complexity_distribution": {
+        "high_complexity_8": ["crime-rates"],
+        "high_complexity_7": ["ethnicity", "population"], 
+        "medium_high_6": ["country-of-births", "house-prices", "schools-colleges"],
+        "medium_5": ["income", "restaurants", "private-rent"],
+        "medium_low_4": ["vehicles", "gyms"],
+        "low_3": ["libraries"]
+      }
+    },
+    
+    "usage_instructions": {
+      "single_dataset_generation": "Use total_propositions and proposition_breakdown for structured generation per dataset",
+      "cross_dataset_generation": "Use temporal_overlap_opportunities to identify meaningful dataset combinations",
+      "quality_control": "Higher complexity_score datasets should receive more detailed, nuanced propositions",
+      "temporal_awareness": "Include time_span information in prompts to ensure temporal accuracy"
+    }
+  }
+}

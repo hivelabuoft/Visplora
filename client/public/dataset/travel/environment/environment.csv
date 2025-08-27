@@ -1,0 +1,57 @@
+country,city,iso3,year,aqi_pm25_annual,no2_annual,noise_index,green_space_pct,water_quality_index,climate_risk_score,source
+USA,New York,USA,2023,31.0,28.1,61.7,19.9,78.2,25.1,synthetic
+USA,San Francisco,USA,2023,18.1,17.4,26.0,15.3,100.0,33.4,synthetic
+Canada,Toronto,CAN,2023,19.6,17.9,45.1,25.4,63.9,5.0,synthetic
+Canada,Vancouver,CAN,2023,25.9,29.3,36.0,20.0,92.5,21.1,synthetic
+Mexico,Mexico City,MEX,2023,21.9,48.3,57.6,25.8,83.2,49.0,synthetic
+Brazil,Rio de Janeiro,BRA,2023,11.4,5.8,57.1,33.9,65.5,64.6,synthetic
+Argentina,Buenos Aires,ARG,2023,32.4,23.4,46.7,3.0,67.4,5.0,synthetic
+UK,London,GBR,2023,3.0,22.5,64.1,3.0,66.2,34.7,synthetic
+Ireland,Dublin,IRL,2023,15.1,8.4,66.0,8.8,40.8,10.3,synthetic
+France,Paris,FRA,2023,22.8,16.1,40.8,31.3,75.0,5.0,synthetic
+Spain,Barcelona,ESP,2023,23.2,26.3,48.5,22.2,98.4,22.2,synthetic
+Portugal,Lisbon,PRT,2023,16.3,20.3,50.6,21.7,71.3,63.2,synthetic
+Italy,Rome,ITA,2023,26.1,17.5,39.6,16.2,84.3,6.3,synthetic
+Netherlands,Amsterdam,NLD,2023,42.0,17.8,33.5,27.2,58.0,27.5,synthetic
+Germany,Berlin,DEU,2023,3.0,16.3,24.5,17.8,57.6,26.0,synthetic
+Switzerland,Zurich,CHE,2023,10.4,18.2,60.7,29.3,89.5,26.0,synthetic
+Austria,Vienna,AUT,2023,21.2,20.5,63.8,16.2,81.8,19.6,synthetic
+Czechia,Prague,CZE,2023,12.3,15.5,55.4,12.0,55.8,23.4,synthetic
+Greece,Athens,GRC,2023,18.5,11.4,53.2,20.7,79.9,36.1,synthetic
+Turkey,Istanbul,TUR,2023,35.5,18.8,35.4,22.4,70.3,18.6,synthetic
+UAE,Dubai,ARE,2023,33.2,15.8,42.3,27.2,56.4,52.4,synthetic
+Qatar,Doha,QAT,2023,25.7,18.9,57.1,19.0,47.5,29.1,synthetic
+India,Delhi,IND,2023,13.0,3.7,37.3,10.2,54.2,59.0,synthetic
+India,Mumbai,IND,2023,23.1,24.8,56.1,38.0,70.4,62.3,synthetic
+Thailand,Bangkok,THA,2023,5.7,17.5,37.7,39.9,76.3,56.4,synthetic
+Vietnam,Ho Chi Minh City,VNM,2023,4.0,13.8,28.6,29.3,63.6,48.6,synthetic
+Malaysia,Kuala Lumpur,MYS,2023,18.3,3.1,30.1,26.0,77.0,5.0,synthetic
+Singapore,Singapore,SGP,2023,17.2,10.9,36.7,17.1,71.9,22.3,synthetic
+Indonesia,Bali,IDN,2023,3.0,18.8,45.8,13.7,65.4,28.7,synthetic
+Australia,Sydney,AUS,2023,18.4,16.3,52.0,24.4,82.3,63.5,synthetic
+New Zealand,Auckland,NZL,2023,17.8,13.6,32.8,32.8,56.5,77.3,synthetic
+Japan,Tokyo,JPN,2023,45.8,16.5,30.0,32.8,100.0,11.4,synthetic
+South Korea,Seoul,KOR,2023,37.0,5.1,32.5,28.7,85.3,33.8,synthetic
+China,Shanghai,CHN,2023,22.5,25.7,64.6,17.5,57.0,54.0,synthetic
+Hong Kong,Hong Kong,HKG,2023,22.5,22.1,42.1,32.7,53.6,39.5,synthetic
+Taiwan,Taipei,TWN,2023,19.1,18.8,59.4,12.8,80.2,35.4,synthetic
+South Africa,Cape Town,ZAF,2023,10.1,8.7,72.7,24.2,64.7,14.4,synthetic
+Kenya,Nairobi,KEN,2023,28.9,25.1,59.8,24.3,81.3,20.2,synthetic
+Morocco,Marrakesh,MAR,2023,20.2,17.6,53.2,3.2,98.0,64.1,synthetic
+Egypt,Cairo,EGY,2023,6.5,22.0,32.2,26.0,37.1,29.7,synthetic
+Israel,Tel Aviv,ISR,2023,13.1,26.1,70.0,45.3,87.4,36.5,synthetic
+Jordan,Amman,JOR,2023,21.9,20.7,35.8,38.8,80.4,48.3,synthetic
+Saudi Arabia,Riyadh,SAU,2023,3.0,21.2,62.1,24.8,62.5,10.5,synthetic
+Russia,Moscow,RUS,2023,3.7,19.1,47.2,22.0,92.9,12.4,synthetic
+Norway,Oslo,NOR,2023,14.5,29.9,46.3,25.8,67.4,47.7,synthetic
+Sweden,Stockholm,SWE,2023,3.0,16.6,50.7,13.0,75.2,49.2,synthetic
+Finland,Helsinki,FIN,2023,22.5,30.5,44.8,31.0,77.1,30.8,synthetic
+Poland,Krakow,POL,2023,29.3,20.0,35.6,34.0,62.5,29.2,synthetic
+Hungary,Budapest,HUN,2023,15.5,23.1,62.9,23.1,66.7,5.0,synthetic
+Croatia,Dubrovnik,HRV,2023,10.9,11.4,53.7,23.7,56.4,37.7,synthetic
+Iceland,Reykjavik,ISL,2023,17.3,3.0,63.3,37.1,66.4,41.3,synthetic
+Chile,Santiago,CHL,2023,14.7,6.8,76.0,34.0,84.1,29.9,synthetic
+Peru,Lima,PER,2023,29.3,8.4,47.1,33.9,60.6,51.4,synthetic
+Colombia,Cartagena,COL,2023,21.0,19.5,41.4,29.9,99.0,38.2,synthetic
+Dominican Republic,Punta Cana,DOM,2023,23.6,22.9,36.3,23.4,67.6,5.0,synthetic
+Puerto Rico,San Juan,PRI,2023,25.9,11.5,58.2,15.9,100.0,30.0,synthetic

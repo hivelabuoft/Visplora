@@ -1,0 +1,208 @@
+{
+  "category": "temporal_trends",
+  "dataset": "private-rent",
+  "processed_at": "2025-08-20T04:09:17.896Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "private-rent_temporal_trends_tt1",
+      "dataset": "private-rent",
+      "category": "temporal_trends",
+      "original_proposition": "Average rent values increased by 10% annually from 2020 to 2023 in London boroughs.",
+      "reworded_proposition": "London boroughs have experienced a steady upward trend in average rent values over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trends in Average Rent Values in London Boroughs",
+      "chart_description": "Visualizing the increase in rent values from 2020 to 2023.",
+      "reasoning": "A line chart effectively shows the temporal trend of rent increases over the specified period.",
+      "tapas_questions": [
+        "How did rent values change from 2020 to 2023?",
+        "Which borough had the highest increase in rent values?",
+        "What is the average rent value across all boroughs in 2023?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_temporal_trends_tt2",
+      "dataset": "private-rent",
+      "category": "temporal_trends",
+      "original_proposition": "The highest quarterly rent increase occurred in Q2 2021 across all boroughs.",
+      "reworded_proposition": "During the second quarter of 2021, rent prices saw the most significant increase across all London boroughs.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Peak Rent Increase in Q2 2021 Across Boroughs",
+      "chart_description": "Visualizes the significant rent increase in Q2 2021 across London boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the magnitude of rent increases across different boroughs during a specific time period, making it easy to compare changes.",
+      "tapas_questions": [
+        "Which borough had the highest rent increase in Q2 2021?",
+        "How did rent change from Q1 to Q2 in 2021?",
+        "What is the average rent increase across all boroughs in Q2 2021?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2021",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_temporal_trends_tt3",
+      "dataset": "private-rent",
+      "category": "temporal_trends",
+      "original_proposition": "Rent values in outer London boroughs showed a cyclical pattern with peaks every Q3 from 2015 to 2023.",
+      "reworded_proposition": "Outer London boroughs experience a recurring rise in rent values during the third quarter each year from 2015 to 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Cyclical Rent Patterns in Outer London",
+      "chart_description": "Visualize quarterly rent trends in outer London from 2015 to 2023.",
+      "reasoning": "A simple 2D line chart effectively displays temporal trends, highlighting cyclical patterns over time.",
+      "tapas_questions": [
+        "What is the average rent value in outer London boroughs?",
+        "How did rent values change from Q3 2015 to Q3 2023?",
+        "Which borough has the highest rent value in Q3 2023?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "private-rent_temporal_trends_tt4",
+      "dataset": "private-rent",
+      "category": "temporal_trends",
+      "original_proposition": "From 2011 to 2023, rent values in inner London boroughs have increased by 50%.",
+      "reworded_proposition": "Rent values in inner London boroughs have shown a steady upward trend from 2011 to 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trend of Rent Values in Inner London (2011-2023)",
+      "chart_description": "Illustrates the upward trend of rent values in inner London boroughs over time.",
+      "reasoning": "A line chart effectively displays the trend of rent values over time, highlighting the increase across the specified period.",
+      "tapas_questions": [
+        "How did rent values change from 2011 to 2023?",
+        "Which borough had the highest increase in rent values?",
+        "What is the average rent value increase across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2011-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_temporal_trends_tt5",
+      "dataset": "private-rent",
+      "category": "temporal_trends",
+      "original_proposition": "In 2022, rent values in London boroughs experienced a 5% drop in Q4 compared to Q3.",
+      "reworded_proposition": "In late 2022, rent values across London boroughs saw a noticeable decline from the previous quarter.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Quarterly Rent Value Changes in London Boroughs",
+      "chart_description": "Visualizing rent value trends in London boroughs from Q3 to Q4 2022.",
+      "reasoning": "A bar chart with a mean line effectively highlights the decline in rent values across boroughs and allows for easy comparison against the average trend.",
+      "tapas_questions": [
+        "Which borough experienced the largest drop in rent values?",
+        "What is the average rent value change across all boroughs?",
+        "How does the rent value change in Q4 compare to Q3 for a specific borough?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_temporal_trends_tt6",
+      "dataset": "private-rent",
+      "category": "temporal_trends",
+      "original_proposition": "From 2011 to 2019, rent values in the borough of Kensington and Chelsea showed a steady annual increase of 3%.",
+      "reworded_proposition": "Rent values in Kensington and Chelsea experienced a consistent upward trend from 2011 to 2019.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Kensington and Chelsea Rent Trends (2011-2019)",
+      "chart_description": "Illustrates the steady increase in rent values over time.",
+      "reasoning": "A line chart effectively displays the temporal trend of rent values over the specified period, highlighting the consistent increase.",
+      "tapas_questions": [
+        "How did rent values change from 2011 to 2019?",
+        "What is the average rent value across all years?",
+        "Which year had the highest rent value?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2011-2019",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_temporal_trends_tt7",
+      "dataset": "private-rent",
+      "category": "temporal_trends",
+      "original_proposition": "Rent values in the borough of Hackney peaked in Q3 2020, showing a 12% increase from the previous quarter.",
+      "reworded_proposition": "Rent values in Hackney reached their highest point in the third quarter of 2020, marking a noticeable rise from the previous quarter.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Hackney Rent Trends in 2020",
+      "chart_description": "Quarterly rent changes in Hackney during 2020",
+      "reasoning": "A simple bar chart effectively shows the temporal trend of rent changes across quarters, highlighting peaks and comparisons.",
+      "tapas_questions": [
+        "How did rent values change from Q2 to Q3 in 2020?",
+        "Which quarter had the highest rent values in Hackney in 2020?",
+        "What is the average rent value in Hackney for 2020?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_temporal_trends_tt8",
+      "dataset": "private-rent",
+      "category": "temporal_trends",
+      "original_proposition": "The period from 2011 to 2023 saw a 25% increase in rent values during Q1 across all London boroughs.",
+      "reworded_proposition": "From 2011 to 2023, rent values during the first quarter have shown a noticeable upward trend across all London boroughs.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Q1 Rent Trends in London Boroughs (2011-2023)",
+      "chart_description": "Visualize the upward trend in Q1 rent values across London boroughs from 2011 to 2023.",
+      "reasoning": "A line chart effectively illustrates temporal trends, making it suitable for showing the increase in rent values over time.",
+      "tapas_questions": [
+        "How did rent values change from 2011 to 2023?",
+        "Which borough had the highest rent increase in Q1?",
+        "What is the average rent value in Q1 across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2011-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

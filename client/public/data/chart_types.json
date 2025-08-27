@@ -1,0 +1,35 @@
+{
+  "change_over_time": {
+    "line":        { "required": ["time","metric"],                "optional": ["series"],           "notes": "Aggregate to year/quarter/month as needed" },
+    "area":        { "required": ["time","metric"],                "optional": ["series"],           "notes": "Good for cumulative/stacked totals" },
+    "small_multiples_line": { "required": ["time","metric","facet_category"], "optional": [],       "notes": "One sparkline per borough/category" },
+    "combo_bar_line": {
+  "required": ["x_axis","metric_bar","metric_line"],
+  "optional": ["series"],
+  "notes": "Bar and line layered with shared X but separate Y axes"
+}
+
+  },
+  "ranking_comparison": {
+    "bar":         { "required": ["category","metric"],            "optional": ["series"],           "notes": "Ranked bars for boroughs/types" },
+    "grouped_bar": { "required": ["category","metric","series"],   "optional": [],                   "notes": "Compare categories within a small series set" },
+    "stacked_bar": { "required": ["category","metric","series"],   "optional": [],                   "notes": "Use normalized stacking for shares" },
+    "divergent_bar": { "required": ["category","positive_metric","negative_metric"], "optional": ["comparison_years"], "notes": "Shows divergent comparison between two values from center point" },
+    "horizontal_diverging_bar": { "required": ["category","metric"], "optional": [], "notes": "Shows positive/negative values from center point" }
+  },
+  "correlation_relationship": {
+    "scatter":     { "required": ["x_metric","y_metric"],          "optional": ["group","size"],     "notes": "Cross‑section or same-year comparisons" },
+    "bubble":      { "required": ["x_metric","y_metric","size"],   "optional": ["group"],            "notes": "Size encodes population/volume" },
+    "heatmap":     { "required": ["cat_x","cat_y","metric"],       "optional": [],                   "notes": "Category×Category or Time×Category matrix" }
+  },
+  "distribution": {
+    "histogram":   { "required": ["metric"],                       "optional": ["group"],            "notes": "Univariate distributions (e.g., prices)" },
+    "boxplot":     { "required": ["metric"],                       "optional": ["category"],         "notes": "Spread by borough/type" }
+  },
+  "part_to_whole": {
+    "donut":       { "required": ["category","metric"],            "optional": [],                   "notes": "Prefer stacked bars if many categories" }
+  },
+  "spatial": {
+    "boroughMap": {}
+  }
+}

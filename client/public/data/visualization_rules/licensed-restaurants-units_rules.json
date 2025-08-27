@@ -1,0 +1,404 @@
+{
+  "dataset_id": "licensed-restaurants-units",
+  "dataset_name": "Licensed Restaurants Units",
+  "category": "restaurants",
+  "description": "Licensed restaurants and cafes units by borough",
+  "file_path": "/dataset/london/restaurants/licensed-restaurants-cafes-borough_Restaurants-units.csv",
+  "field_roles": [
+    {
+      "name": "Area code",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "E12000007",
+        "E09000001",
+        "E09000002"
+      ]
+    },
+    {
+      "name": "Area name",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "London",
+        "City of London",
+        "Barking and Dagenham"
+      ]
+    },
+    {
+      "name": "2001",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        30,
+        5455,
+        321.18
+      ]
+    },
+    {
+      "name": "2002",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        30,
+        5525,
+        325.15
+      ]
+    },
+    {
+      "name": "2003",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        30,
+        5540,
+        325.44
+      ]
+    },
+    {
+      "name": "2004",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        35,
+        5575,
+        327.94
+      ]
+    },
+    {
+      "name": "2005",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        35,
+        5915,
+        348.24
+      ]
+    },
+    {
+      "name": "2006",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        35,
+        5940,
+        349.41
+      ]
+    },
+    {
+      "name": "2007",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        35,
+        6175,
+        363.24
+      ]
+    },
+    {
+      "name": "2008",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        35,
+        5985,
+        351.91
+      ]
+    },
+    {
+      "name": "2009",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        30,
+        5910,
+        347.35
+      ]
+    },
+    {
+      "name": "2010",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        30,
+        6175,
+        363.38
+      ]
+    },
+    {
+      "name": "2011",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        30,
+        6210,
+        365
+      ]
+    },
+    {
+      "name": "2012",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        40,
+        6655,
+        391.47
+      ]
+    },
+    {
+      "name": "2013",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        40,
+        6715,
+        394.85
+      ]
+    },
+    {
+      "name": "2014",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        35,
+        7035,
+        413.82
+      ]
+    },
+    {
+      "name": "2015",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        45,
+        7515,
+        441.91
+      ]
+    },
+    {
+      "name": "2016",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        40,
+        7745,
+        455.29
+      ]
+    },
+    {
+      "name": "2017",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        35,
+        7990,
+        470
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "choropleth_map",
+      "description": "Geographic distribution of metrics",
+      "encoding": {
+        "geo": {
+          "name": "Area code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E12000007",
+            "E09000001",
+            "E09000002"
+          ]
+        },
+        "color": {
+          "name": "2001",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            30,
+            5455,
+            321.18
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "Area code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E12000007",
+            "E09000001",
+            "E09000002"
+          ]
+        },
+        "y": {
+          "name": "2001",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            30,
+            5455,
+            321.18
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Category comparison",
+      "encoding": {
+        "x": {
+          "name": "Area code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E12000007",
+            "E09000001",
+            "E09000002"
+          ]
+        },
+        "y": {
+          "name": "2001",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            30,
+            5455,
+            321.18
+          ]
+        }
+      }
+    },
+    {
+      "type": "stacked_bar_chart",
+      "description": "Multi-category analysis",
+      "encoding": {
+        "x": {
+          "name": "Area code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E12000007",
+            "E09000001",
+            "E09000002"
+          ]
+        },
+        "y": {
+          "name": "2001",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            30,
+            5455,
+            321.18
+          ]
+        },
+        "color": {
+          "name": "Area name",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "London",
+            "City of London",
+            "Barking and Dagenham"
+          ]
+        }
+      }
+    },
+    {
+      "type": "histogram",
+      "description": "Distribution analysis",
+      "encoding": {
+        "x": {
+          "name": "2001",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            30,
+            5455,
+            321.18
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.722Z"
+}

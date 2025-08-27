@@ -1,0 +1,192 @@
+{
+  "category": "categorical_analysis",
+  "dataset": "gyms",
+  "processed_at": "2025-08-20T18:04:05.764Z",
+  "total_queries": 8,
+  "sql_queries": [
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_01",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT facility_type AS category, SUM(membership_count) AS value, (SUM(membership_count) * 100.0 / (SELECT SUM(membership_count) FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024)) AS percentage FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024 GROUP BY facility_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_02",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT facility_type AS category, SUM(membership_count) AS value FROM gym_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2024 GROUP BY facility_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_03",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT facility_type AS category, SUM(membership_count) AS value, (SUM(membership_count) * 100.0 / (SELECT SUM(membership_count) FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024)) AS percentage FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024 GROUP BY facility_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_04",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT facility_type AS category, SUM(membership_count) AS value, AVG(SUM(membership_count)) OVER () AS mean_value FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024 GROUP BY facility_type ORDER BY category;"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_05",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT DATE_FORMAT(date, '%Y-%m') AS time, SUM(membership_count) AS value FROM gym_data WHERE YEAR(date) = 2024 GROUP BY DATE_FORMAT(date, '%Y-%m') ORDER BY DATE_FORMAT(date, '%Y-%m')"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_06",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT facility_type AS category, SUM(membership_count) AS value FROM gym_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) = 2024 GROUP BY facility_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_07",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "category",
+        "area",
+        "value"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT facility_type AS category, SUM(membership_count) AS value, (SUM(membership_count) * 100.0 / (SELECT SUM(membership_count) FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024)) AS percentage FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024 GROUP BY facility_type ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "gyms_categorical_analysis_cat_08",
+      "dataset": "gyms",
+      "time_period": "2024",
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "chart_type": "donutChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        },
+        {
+          "category": "",
+          "value": 0,
+          "percentage": 0
+        }
+      ],
+      "sql_query": "SELECT facility_type AS category, SUM(membership_count) AS value, (SUM(membership_count) * 100.0 / (SELECT SUM(membership_count) FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024)) AS percentage FROM gym_data WHERE EXTRACT(YEAR FROM date) = 2024 GROUP BY facility_type ORDER BY value DESC;"
+    }
+  ]
+}

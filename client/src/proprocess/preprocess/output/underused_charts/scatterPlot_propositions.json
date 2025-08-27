@@ -1,0 +1,844 @@
+{
+  "chart_type": "scatterPlot",
+  "total_generated": 35,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_borough_crime_trends_scatterPlot_simple_2D_001",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Hackney sees a sharp rise in theft incidents compared to other crimes in 2023",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Theft Incidents Surge in Hackney",
+      "chart_description": "Scatter plot showing the rise in theft incidents compared to other crime categories in Hackney during 2023",
+      "reasoning": "A scatter plot effectively shows the concentration of theft incidents relative to other crimes",
+      "tapas_questions": [
+        "How does theft compare to other crimes in Hackney?",
+        "What is the trend of theft incidents over months?",
+        "Are there any other boroughs with a similar pattern?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "month"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_population_distribution_scatterPlot_simple_2D_002",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Newham shows the highest concentration of Asian ethnic groups",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Ethnic Group Distribution in Newham",
+      "chart_description": "Scatter plot of the distribution of ethnic groups in Newham highlighting the Asian population",
+      "reasoning": "Scatter plots are useful for visualizing the distribution of categories across a geographic area",
+      "tapas_questions": [
+        "Which ethnic group is most prevalent in Newham?",
+        "How does Newham compare to other boroughs?",
+        "What insights can we draw about diversity in Newham?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local authority name",
+        "Broad_group"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_borough_origin_scatterPlot_with_mean_2D_003",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Westminster has a diverse population with significant representation from European countries",
+      "chart_type": "scatterPlot_with_mean_2D",
+      "chart_title": "Diverse Origins in Westminster",
+      "chart_description": "Scatter plot showing the country of birth distribution in Westminster with a mean overlay",
+      "reasoning": "The mean overlay provides a baseline to understand the diversity level compared to other boroughs",
+      "tapas_questions": [
+        "What countries contribute most to Westminster's diversity?",
+        "How does the mean diversity compare across boroughs?",
+        "What insights can be drawn about European representation?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_density_growth_scatterPlot_simple_2D_004",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Population density in Tower Hamlets increased sharply between 2010 and 2020",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Tower Hamlets Population Density Growth",
+      "chart_description": "Scatter plot showing the increase in population density in Tower Hamlets over a decade",
+      "reasoning": "Scatter plots can show changes in density over time, highlighting growth trends",
+      "tapas_questions": [
+        "What is the rate of population density growth in Tower Hamlets?",
+        "How does this compare to other boroughs?",
+        "What factors might contribute to this growth?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "2010",
+        "2020"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_borough_variation_scatterPlot_with_threshold_2D_005",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income levels in Kensington and Chelsea consistently exceed London averages",
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "chart_title": "Kensington and Chelsea Income Levels",
+      "chart_description": "Scatter plot showing income levels in Kensington and Chelsea with a threshold line indicating London averages",
+      "reasoning": "Threshold lines help to visualize how income levels compare to a standard benchmark",
+      "tapas_questions": [
+        "How do income levels in Kensington and Chelsea compare to the London average?",
+        "Which boroughs have similar income patterns?",
+        "What socioeconomic factors could explain these income levels?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_variation_trend_scatterPlot_with_threshold_2D_006",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House prices in Richmond upon Thames consistently rank among the highest in London",
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "chart_title": "Richmond upon Thames House Prices",
+      "chart_description": "Scatter plot showing house prices in Richmond upon Thames with a threshold line for comparison",
+      "reasoning": "Threshold lines can highlight how Richmond's house prices compare with other boroughs",
+      "tapas_questions": [
+        "What is the average house price in Richmond upon Thames?",
+        "How do these prices compare to other boroughs?",
+        "What factors might contribute to high house prices in this area?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_borough_performance_scatterPlot_simple_2D_007",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Barnet schools show a significant improvement in performance from 2021 to 2023",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Barnet School Performance Improvement",
+      "chart_description": "Scatter plot illustrating the improvement in school performance in Barnet over two years",
+      "reasoning": "Scatter plots can effectively show performance changes over time",
+      "tapas_questions": [
+        "What is the rate of improvement in Barnet schools?",
+        "How does Barnet's performance compare to other boroughs?",
+        "What initiatives might have contributed to this improvement?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LANAME",
+        "Year",
+        "Performance Indicator"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_registration_trend_scatterPlot_simple_3D_008",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Electric vehicle registrations have surged in London since 2020, with the highest growth in Westminster",
+      "chart_type": "scatterPlot_simple_3D",
+      "chart_title": "Electric Vehicle Registration Surge",
+      "chart_description": "3D scatter plot showing electric vehicle registration trends across London boroughs, focusing on Westminster",
+      "reasoning": "A 3D scatter plot can effectively show trends over time and across categories",
+      "tapas_questions": [
+        "How have electric vehicle registrations changed since 2020?",
+        "Which boroughs show the highest growth in registrations?",
+        "What factors might have influenced this surge in Westminster?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Local Authority",
+        "Vehicle Type",
+        "Year"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_employment_trend_scatterPlot_simple_2D_009",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Restaurant employment in Camden increased significantly post-2020",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Camden Restaurant Employment Trends",
+      "chart_description": "Scatter plot showing the increase in restaurant employment in Camden after 2020",
+      "reasoning": "Scatter plots can effectively illustrate changes in employment trends over time",
+      "tapas_questions": [
+        "What is the trend of restaurant employment in Camden?",
+        "How does Camden compare to other boroughs?",
+        "What might have contributed to this employment increase?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Employment"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_cost_variation_scatterPlot_simple_2D_010",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Rent prices in Kensington have surged past other boroughs in 2023",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Kensington Rent Price Surge",
+      "chart_description": "Scatter plot illustrating rent prices in Kensington compared to other boroughs",
+      "reasoning": "Scatter plots can highlight differences in rent prices among boroughs",
+      "tapas_questions": [
+        "What is the average rent price in Kensington?",
+        "How do these prices compare across London boroughs?",
+        "What factors might be driving rent increases in Kensington?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Average (£)"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_availability_growth_scatterPlot_simple_2D_011",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "The number of gyms in Wandsworth doubled from 2020 to 2024",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Wandsworth Gym Growth",
+      "chart_description": "Scatter plot showing the increase in gym facilities in Wandsworth over four years",
+      "reasoning": "Scatter plots can show changes in facility counts over time, indicating growth trends",
+      "tapas_questions": [
+        "What is the growth rate of gyms in Wandsworth?",
+        "How does this growth compare to other boroughs?",
+        "What factors might have contributed to this increase in gym numbers?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "facility_count"
+      ],
+      "time_period": "2020-2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "libraries_visits_trend_scatterPlot_simple_2D_012",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Library visits in Lambeth have declined steadily since 2015",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Lambeth Library Visit Decline",
+      "chart_description": "Scatter plot illustrating the decline in library visits in Lambeth over several years",
+      "reasoning": "Scatter plots can effectively show trends over time, highlighting declines",
+      "tapas_questions": [
+        "What is the trend of library visits in Lambeth?",
+        "How does this trend compare to other boroughs?",
+        "What might be causing the decline in library visits?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "Year",
+        "Library visits per 1,000 population"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_seasonal_variation_scatterPlot_simple_3D_013",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Violent crime peaks in summer months across London",
+      "chart_type": "scatterPlot_simple_3D",
+      "chart_title": "Seasonal Crime Patterns in London",
+      "chart_description": "3D scatter plot showing violent crime trends across months in London",
+      "reasoning": "A 3D scatter plot can show seasonal trends and variations in crime data",
+      "tapas_questions": [
+        "When do violent crimes peak in London?",
+        "How do crime patterns vary across boroughs?",
+        "What might contribute to seasonal crime variations?"
+      ],
+      "3d_dimension": "month",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "month"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_diversity_trend_scatterPlot_simple_2D_014",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Diversity in Brent has increased with a notable rise in African ethnic groups",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Increasing Diversity in Brent",
+      "chart_description": "Scatter plot showing the rise in African ethnic groups in Brent",
+      "reasoning": "Scatter plots can highlight shifts in population diversity over time",
+      "tapas_questions": [
+        "What is the trend of diversity in Brent?",
+        "How does Brent's diversity compare to other boroughs?",
+        "What factors might explain the rise in African ethnic groups?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local authority name",
+        "Broad_group"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_origin_trend_scatterPlot_with_mean_2D_015",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Lambeth shows a steady increase in residents born in Africa",
+      "chart_type": "scatterPlot_with_mean_2D",
+      "chart_title": "Lambeth's African Born Population Increase",
+      "chart_description": "Scatter plot showing the increase in African-born residents in Lambeth with a mean line",
+      "reasoning": "A mean line helps highlight overall trends in origin data",
+      "tapas_questions": [
+        "How has the African-born population changed in Lambeth?",
+        "How does this trend compare to other origins?",
+        "What insights can be drawn from this demographic shift?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_density_borough_trend_scatterPlot_simple_2D_016",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Population density in Southwark has remained stable from 2010 to 2020",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Stable Population Density in Southwark",
+      "chart_description": "Scatter plot showing the stable population density trend in Southwark over a decade",
+      "reasoning": "Scatter plots can reveal stability or change in population data over time",
+      "tapas_questions": [
+        "What is the population density trend in Southwark?",
+        "How does Southwark compare to other boroughs?",
+        "What factors might contribute to the stability in population density?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "2010",
+        "2020"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_economic_trend_scatterPlot_with_threshold_2D_017",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Bromley income levels consistently fall below the London average",
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "chart_title": "Income Levels in Bromley",
+      "chart_description": "Scatter plot showing income levels in Bromley with a threshold line for London averages",
+      "reasoning": "Threshold lines help compare Bromley's income levels against a standard benchmark",
+      "tapas_questions": [
+        "How do income levels in Bromley compare to the London average?",
+        "Which boroughs have similar income patterns?",
+        "What socioeconomic factors might explain Bromley's income levels?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_trend_analysis_scatterPlot_with_threshold_2D_018",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House prices in Hackney have increased significantly since 2015, surpassing the London average",
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "chart_title": "Hackney House Prices vs London Average",
+      "chart_description": "Scatter plot showing the increase in Hackney house prices with a threshold line for London averages",
+      "reasoning": "Threshold lines can highlight how Hackney's house prices compare with London averages",
+      "tapas_questions": [
+        "What is the trend of house prices in Hackney?",
+        "How do these prices compare to the London average?",
+        "What factors might contribute to the rise in house prices in Hackney?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_performance_improvement_scatterPlot_simple_2D_019",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Haringey schools show marked improvement in academic performance from 2021 to 2023",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Haringey School Performance Improvement",
+      "chart_description": "Scatter plot illustrating the academic performance improvement in Haringey schools over two years",
+      "reasoning": "Scatter plots can effectively show performance changes over time",
+      "tapas_questions": [
+        "What is the rate of improvement in Haringey schools?",
+        "How does Haringey's performance compare to other boroughs?",
+        "What initiatives might have contributed to this improvement?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LANAME",
+        "Year",
+        "Performance Indicator"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_registration_trend_scatterPlot_simple_3D_020",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Hybrid vehicle registrations have increased sharply in London since 2020, with the highest growth in Croydon",
+      "chart_type": "scatterPlot_simple_3D",
+      "chart_title": "Hybrid Vehicle Registration Trend",
+      "chart_description": "3D scatter plot showing hybrid vehicle registration trends across London boroughs, focusing on Croydon",
+      "reasoning": "A 3D scatter plot can effectively show trends over time and across categories",
+      "tapas_questions": [
+        "How have hybrid vehicle registrations changed since 2020?",
+        "Which boroughs show the highest growth in registrations?",
+        "What factors might have influenced this surge in Croydon?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Local Authority",
+        "Vehicle Type",
+        "Year"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_growth_trend_scatterPlot_simple_2D_021",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "The number of restaurants in Islington has doubled since 2018",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Growth in Islington Restaurants",
+      "chart_description": "Scatter plot showing the increase in the number of restaurants in Islington over five years",
+      "reasoning": "Scatter plots can show changes in the number of establishments over time, indicating growth trends",
+      "tapas_questions": [
+        "What is the rate of growth in restaurant numbers in Islington?",
+        "How does this growth compare to other boroughs?",
+        "What factors might have contributed to this increase?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Units"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_cost_trend_scatterPlot_simple_2D_022",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Rent prices in Waltham Forest have seen a steady increase since 2017",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Waltham Forest Rent Price Trend",
+      "chart_description": "Scatter plot showing the steady increase in rent prices in Waltham Forest over six years",
+      "reasoning": "Scatter plots can effectively illustrate trends and changes in rent prices over time",
+      "tapas_questions": [
+        "What is the trend of rent prices in Waltham Forest?",
+        "How do these prices compare to other boroughs?",
+        "What factors might be driving rent increases in Waltham Forest?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Average (£)"
+      ],
+      "time_period": "2017-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_facility_growth_scatterPlot_simple_2D_023",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "The number of gym facilities in Hillingdon increased significantly from 2019 to 2024",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Gym Facility Growth in Hillingdon",
+      "chart_description": "Scatter plot showing the increase in gym facilities in Hillingdon over five years",
+      "reasoning": "Scatter plots can show changes in facility counts over time, indicating growth trends",
+      "tapas_questions": [
+        "What is the growth rate of gyms in Hillingdon?",
+        "How does this growth compare to other boroughs?",
+        "What factors might have contributed to this increase in gym numbers?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "facility_count"
+      ],
+      "time_period": "2019-2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "libraries_visits_trend_scatterPlot_simple_2D_024",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Library visits in Greenwich have increased since 2015",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Increase in Library Visits in Greenwich",
+      "chart_description": "Scatter plot illustrating the increase in library visits in Greenwich over several years",
+      "reasoning": "Scatter plots can effectively show trends over time, highlighting increases",
+      "tapas_questions": [
+        "What is the trend of library visits in Greenwich?",
+        "How does this trend compare to other boroughs?",
+        "What might be causing the increase in library visits?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "Year",
+        "Library visits per 1,000 population"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_borough_comparison_scatterPlot_simple_3D_025",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Theft and burglary rates remain high in Camden compared to other boroughs",
+      "chart_type": "scatterPlot_simple_3D",
+      "chart_title": "Crime Rate Comparison in Camden",
+      "chart_description": "3D scatter plot comparing theft and burglary rates in Camden with other boroughs",
+      "reasoning": "A 3D scatter plot can effectively show comparisons across multiple crime categories and boroughs",
+      "tapas_questions": [
+        "How do theft and burglary rates in Camden compare to other boroughs?",
+        "What factors might contribute to high crime rates in Camden?",
+        "Are there any patterns in crime category distribution?"
+      ],
+      "3d_dimension": "crime_category",
+      "variables_needed": [
+        "borough_name",
+        "crime_category",
+        "count"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_borough_diversity_scatterPlot_simple_2D_026",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Hammersmith and Fulham show a balanced ethnic diversity profile",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Ethnic Diversity in Hammersmith and Fulham",
+      "chart_description": "Scatter plot of the distribution of ethnic groups in Hammersmith and Fulham",
+      "reasoning": "Scatter plots are useful for visualizing the distribution of categories across a geographic area",
+      "tapas_questions": [
+        "Which ethnic groups are most prevalent in Hammersmith and Fulham?",
+        "How does the diversity profile compare to other boroughs?",
+        "What insights can we draw about the ethnic balance?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local authority name",
+        "Broad_group"
+      ],
+      "time_period": "Not applicable",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_population_trend_scatterPlot_with_mean_2D_027",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Residents born in Asia have increased steadily in Lewisham",
+      "chart_type": "scatterPlot_with_mean_2D",
+      "chart_title": "Asian-born Population Increase in Lewisham",
+      "chart_description": "Scatter plot showing the increase in Asian-born residents in Lewisham with a mean line",
+      "reasoning": "A mean line helps highlight overall trends in origin data",
+      "tapas_questions": [
+        "How has the Asian-born population changed in Lewisham?",
+        "How does this trend compare to other origins?",
+        "What insights can be drawn from this demographic shift?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2022",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_density_trend_scatterPlot_simple_2D_028",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Population density in Barking and Dagenham has increased steadily since 2010",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Population Density Increase in Barking and Dagenham",
+      "chart_description": "Scatter plot showing the steady increase in population density in Barking and Dagenham over a decade",
+      "reasoning": "Scatter plots can reveal stability or change in population data over time",
+      "tapas_questions": [
+        "What is the population density trend in Barking and Dagenham?",
+        "How does Barking and Dagenham compare to other boroughs?",
+        "What factors might contribute to the increase in population density?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "2010",
+        "2020"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_borough_trend_scatterPlot_with_threshold_2D_029",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Harrow income levels consistently fall below the London average",
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "chart_title": "Income Levels in Harrow",
+      "chart_description": "Scatter plot showing income levels in Harrow with a threshold line for London averages",
+      "reasoning": "Threshold lines help compare Harrow's income levels against a standard benchmark",
+      "tapas_questions": [
+        "How do income levels in Harrow compare to the London average?",
+        "Which boroughs have similar income patterns?",
+        "What socioeconomic factors might explain Harrow's income levels?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_borough_comparison_scatterPlot_with_threshold_2D_030",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House prices in Hounslow have risen above the London average since 2018",
+      "chart_type": "scatterPlot_with_threshold_2D",
+      "chart_title": "Hounslow House Prices vs London Average",
+      "chart_description": "Scatter plot showing the rise in Hounslow house prices with a threshold line for London averages",
+      "reasoning": "Threshold lines can highlight how Hounslow's house prices compare with London averages",
+      "tapas_questions": [
+        "What is the trend of house prices in Hounslow?",
+        "How do these prices compare to the London average?",
+        "What factors might contribute to the rise in house prices in Hounslow?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_borough_improvement_scatterPlot_simple_2D_031",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Schools in Enfield show marked improvement in performance from 2021 to 2023",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Enfield School Performance Improvement",
+      "chart_description": "Scatter plot illustrating the academic performance improvement in Enfield schools over two years",
+      "reasoning": "Scatter plots can effectively show performance changes over time",
+      "tapas_questions": [
+        "What is the rate of improvement in Enfield schools?",
+        "How does Enfield's performance compare to other boroughs?",
+        "What initiatives might have contributed to this improvement?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LANAME",
+        "Year",
+        "Performance Indicator"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_registration_trend_scatterPlot_simple_3D_032",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Diesel vehicle registrations have declined in London since 2019, with the most significant drop in Lambeth",
+      "chart_type": "scatterPlot_simple_3D",
+      "chart_title": "Decline in Diesel Vehicle Registrations",
+      "chart_description": "3D scatter plot showing diesel vehicle registration trends across London boroughs, focusing on Lambeth",
+      "reasoning": "A 3D scatter plot can effectively show trends over time and across categories",
+      "tapas_questions": [
+        "How have diesel vehicle registrations changed since 2019?",
+        "Which boroughs show the most significant decline?",
+        "What factors might have influenced this decline in Lambeth?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "Local Authority",
+        "Vehicle Type",
+        "Year"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_employment_growth_scatterPlot_simple_2D_033",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Restaurant employment in Westminster increased significantly post-2020",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Westminster Restaurant Employment Trends",
+      "chart_description": "Scatter plot showing the increase in restaurant employment in Westminster after 2020",
+      "reasoning": "Scatter plots can effectively illustrate changes in employment trends over time",
+      "tapas_questions": [
+        "What is the trend of restaurant employment in Westminster?",
+        "How does Westminster compare to other boroughs?",
+        "What might have contributed to this employment increase?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Employment"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_price_trend_scatterPlot_simple_2D_034",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Rent prices in Ealing have steadily increased since 2016",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Rent Price Trend in Ealing",
+      "chart_description": "Scatter plot showing the steady increase in rent prices in Ealing over seven years",
+      "reasoning": "Scatter plots can effectively illustrate trends and changes in rent prices over time",
+      "tapas_questions": [
+        "What is the trend of rent prices in Ealing?",
+        "How do these prices compare to other boroughs?",
+        "What factors might be driving rent increases in Ealing?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Average (£)"
+      ],
+      "time_period": "2016-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_facility_increase_scatterPlot_simple_2D_035",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "The number of gym facilities in Croydon has increased significantly from 2018 to 2024",
+      "chart_type": "scatterPlot_simple_2D",
+      "chart_title": "Gym Facility Increase in Croydon",
+      "chart_description": "Scatter plot showing the increase in gym facilities in Croydon over six years",
+      "reasoning": "Scatter plots can show changes in facility counts over time, indicating growth trends",
+      "tapas_questions": [
+        "What is the growth rate of gyms in Croydon?",
+        "How does this growth compare to other boroughs?",
+        "What factors might have contributed to this increase in gym numbers?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "facility_count"
+      ],
+      "time_period": "2018-2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    }
+  ],
+  "generation_timestamp": "2025-08-20T16:56:39.962Z"
+}

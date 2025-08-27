@@ -1,0 +1,42 @@
+{
+  "input": {
+    "type": "cross_dataset",
+    "category": "economic_correlations",
+    "proposition_id": "cross_dataset_economic_correlations_10",
+    "proposition": "Boroughs with higher mean income in 2023 have lower crime rates in 2022-2023.",
+    "datasets_required": [
+      "income",
+      "crime-rates"
+    ],
+    "variables_needed": {
+      "income": [
+        "Area",
+        "Mean_income"
+      ],
+      "crime-rates": [
+        "borough_name",
+        "crime_category",
+        "count"
+      ]
+    },
+    "time_periods": {
+      "income": "2023",
+      "crime-rates": "2022-2023"
+    },
+    "relationship_type": "correlation",
+    "suggested_visualization": "scatter_plot",
+    "temporal_assumption": "Higher income levels may correlate with lower crime rates."
+  },
+  "analysis": "### Cross-Dataset Analysis Methodology\n\n1. **Data Acquisition and Preparation:**\n   - Extract income data for 2023 using the query:\n     ```sql\n     SELECT area AS Area, mean_income AS Mean_income FROM income_data WHERE year = 2023\n     ```\n   - Extract crime data for 2022-2023 using the query:\n     ```sql\n     SELECT borough AS borough_name, crime_type AS crime_category, count AS count FROM crime_data WHERE date BETWEEN 2022 AND 2023\n     ```\n   - Aggregate crime data by borough to get total crime counts:\n     ```sql\n     SELECT borough_name, SUM(count) AS total_crime FROM crime_data WHERE date BETWEEN 2022 AND 2023 GROUP BY borough_name\n     ```\n\n2. **Data Integration:**\n   - Join the income dataset with the aggregated crime data on the common field (Area/Borough):\n     ```sql\n     SELECT i.Area, i.Mean_income, c.total_crime\n     FROM income_data i\n     JOIN (SELECT borough_name, SUM(count) AS total_crime FROM crime_data WHERE date BETWEEN 2022 AND 2023 GROUP BY borough_name) c\n     ON i.Area = c.borough_name\n     ```\n\n3. **Correlation Analysis:**\n   - Calculate the Pearson correlation coefficient between mean income and total crime rates to assess the strength and direction of the relationship.\n   - Use statistical software or libraries (e.g., Python's `pandas` and `scipy`) to compute the correlation and p-value for statistical significance.\n\n4. **Visualization:**\n   - Create a scatter plot with mean income on the x-axis and total crime rates on the y-axis. Each point represents a borough.\n   - Highlight any outliers or significant patterns.\n\n### Key Findings and Correlations\n\n- **Correlation Coefficient:** The Pearson correlation coefficient will indicate the strength and direction of the relationship. A negative value would support the proposition that higher income correlates with lower crime rates.\n- **Statistical Significance:** A p-value less than 0.05 would indicate that the correlation is statistically significant.\n\n### Statistical Significance Measures\n\n- **Pearson Correlation Coefficient (r):** Measures the linear correlation between income and crime rates.\n- **P-value:** Assesses the significance of the correlation. A p-value < 0.05 indicates a statistically significant correlation.\n\n### Data Quality Considerations\n\n- Ensure data completeness and accuracy, particularly in crime reporting and income data collection.\n- Verify temporal alignment and consistency across datasets.\n- Consider potential biases in crime reporting or income estimation.\n\n### Visualization Recommendations\n\n- **Scatter Plot:** Use a scatter plot to visualize the relationship, with trend lines to highlight correlation.\n- **Annotations:** Include annotations for outliers or notable boroughs.\n- **Interactive Elements:** Consider interactive elements for deeper exploration of specific boroughs.\n\n### Limitations and Assumptions\n\n- **Temporal Mismatch:** Crime data spans two years, while income data is for a single year. This assumes income levels are stable or reflective of the previous year.\n- **Data Granularity:** Aggregated crime data may mask variations in crime types or specific areas within boroughs.\n- **Causation vs. Correlation:** The analysis only identifies correlation, not causation. Other factors may influence crime rates.\n\n### Expected Output Structure\n\n```json\n{\n  \"type\": \"scatter\",\n  \"data\": [\n    {\n      \"x\": \"income_value\",\n      \"y\": \"crime-rates_value\",\n      \"borough\": \"area_name\",\n      \"dataset1\": \"income\",\n      \"dataset2\": \"crime-rates\"\n    }\n  ]\n}\n```\n\nThis structured output will facilitate visualization and further analysis, providing insights into the relationship between income and crime rates across London boroughs.",
+  "datasets_involved": [
+    "income",
+    "crime-rates"
+  ],
+  "relationship_type": "correlation",
+  "temporal_alignment": {
+    "income": "2023",
+    "crime-rates": "2022-2023"
+  },
+  "processing_timestamp": "2025-08-20T06:23:45.483Z",
+  "status": "completed"
+}

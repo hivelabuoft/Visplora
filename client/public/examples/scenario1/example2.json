@@ -1,0 +1,563 @@
+{
+    "exploration_path": [
+  {
+    "sentence_id": 1,
+    "sentence_content": "I began with a broad affordability scan to see which boroughs sit in the lower rent band across London.",
+    "children": [2],
+    "parent": null,
+    "system_shows": "Dashboard: rent distribution by borough (bar), rent band selector, highlight below-/near-median group",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 2,
+    "sentence_content": "Since the client cares about schools and public services, I pivoted to a schools-access lens while keeping that affordability band in view.",
+    "children": [3, 12, 16],
+    "parent": 1,
+    "system_shows": "Dashboard: schools per 10k residents (heatmap), rent-band filter pill, shortlist toggle",
+    "drift_type": "context_shift"
+  },
+
+
+  {
+    "sentence_id": 3,
+    "sentence_content": "Within the affordable band, I shortlisted boroughs in the top quartile for school access.",
+    "children": [4, 21],
+    "parent": 2,
+    "system_shows": "Dashboard: quartile overlay on schools heatmap, shortlist panel (Candidate Set A)",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 4,
+    "sentence_content": "I added public libraries as a services proxy and intersected that with the schools shortlist.",
+    "children": [5, 25],
+    "parent": 3,
+    "system_shows": "Dashboard: libraries per 10k (bar), intersection badge on candidates",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 5,
+    "sentence_content": "To avoid mistaking cheap for good, I normalized by rent-to-income and pruned the list to those with manageable burden.",
+    "children": [6],
+    "parent": 4,
+    "system_shows": "Dashboard: rent-to-income ratio bars, threshold slider, prune action on shortlist",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 6,
+    "sentence_content": "Because cultural fit matters, I checked diversity patterns for the remaining boroughs.",
+    "children": [7],
+    "parent": 5,
+    "system_shows": "Dashboard: diversity index (ethnicity entropy / country-of-birth spread), candidate highlights",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 7,
+    "sentence_content": "As a sanity check on everyday access, I looked at restaurants per 10k without drifting into nightlife.",
+    "children": [8],
+    "parent": 6,
+    "system_shows": "Dashboard: restaurants per 10k (bar), affordability band shading on bars",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 8,
+    "sentence_content": "I verified consistency across the key signals—schools, libraries, rent burden, and diversity—using small multiples per candidate.",
+    "children": [9],
+    "parent": 7,
+    "system_shows": "Dashboard: small-multiple tiles per candidate (schools, libraries, ratio, diversity) with pass/fail ticks",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 9,
+    "sentence_content": "With a stable set, I drafted a preliminary recommendation framing these boroughs as strong balances of schools and services within budget.",
+    "children": [10],
+    "parent": 8,
+    "system_shows": "Dashboard: narrative composer prefilled with evidence-linked snippets from the last three views",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 10,
+    "sentence_content": "Before finalizing, I ran a reflection pass and softened any borderline claims that didn’t hold across multiple views.",
+    "children": [11],
+    "parent": 9,
+    "system_shows": "Dashboard: timeline of prior sentences with evidence badges and quick-jump to their charts",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 11,
+    "sentence_content": "Conclusion A (schools-first): recommend the top two to three boroughs that consistently pair strong school access and public libraries with acceptable rent-to-income and solid diversity.",
+    "children": [],
+    "parent": 10,
+    "system_shows": "Dashboard: final summary card with pinned candidates and linked charts",
+    "drift_type": "elaboration"
+  },
+
+
+  {
+    "sentence_id": 12,
+    "sentence_content": "In parallel, I explored an alternative hypothesis starting from cultural fit—surfacing high-diversity boroughs first.",
+    "children": [13],
+    "parent": 2,
+    "system_shows": "Dashboard: diversity index leaderboard, rent-band filter applied",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 13,
+    "sentence_content": "I intersected that high-diversity set with the same affordability band to maintain budget alignment.",
+    "children": [14],
+    "parent": 12,
+    "system_shows": "Dashboard: set intersection view (diversity ∧ affordability), candidate chip list",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 14,
+    "sentence_content": "Next, I overlaid schools and libraries to test whether diverse areas also provide good access to public services.",
+    "children": [15],
+    "parent": 13,
+    "system_shows": "Dashboard: dual-metric overlay (schools and libraries) on the intersected set",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 15,
+    "sentence_content": "Where diversity and services aligned within budget, I formed a candidate set; where they didn’t, I noted a diversity–services trade-off for the summary.",
+    "children": [111],
+    "parent": 14,
+    "system_shows": "Dashboard: candidate set panel with alignment flags; trade-off notes",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 111,
+    "sentence_content": "Conclusion B (cultural-fit-first): recommend boroughs where community diversity coexists with acceptable rent and accessible schools/libraries, noting any trade-offs explicitly.",
+    "children": [],
+    "parent": 15,
+    "system_shows": "Dashboard: summary composer scoped to cultural-fit-first branch",
+    "drift_type": "elaboration"
+  },
+
+
+  {
+    "sentence_id": 16,
+    "sentence_content": "I also tested a different method: a weighted score combining schools, libraries, diversity, and a penalty for rent burden, with presets for school-heavy or services-balanced renters.",
+    "children": [17],
+    "parent": 2,
+    "system_shows": "Dashboard: weight sliders (w_school, w_library, w_diversity, w_ratio), preset buttons",
+    "drift_type": "topic_change"
+  },
+  {
+    "sentence_id": 17,
+    "sentence_content": "I ranked boroughs by the composite score and used a waterfall chart to show how each component contributed.",
+    "children": [18],
+    "parent": 16,
+    "system_shows": "Dashboard: ranked list by score, waterfall per candidate",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 18,
+    "sentence_content": "To assess stability, I ran a sensitivity analysis by varying weights ±15% to see if the same boroughs remained on top.",
+    "children": [19],
+    "parent": 17,
+    "system_shows": "Dashboard: tornado/sensitivity plot, rank-change ribbons across weight ranges",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 19,
+    "sentence_content": "I then compared the scoring picks against the earlier rule-based shortlist to identify consistent versus brittle recommendations.",
+    "children": [20],
+    "parent": 18,
+    "system_shows": "Dashboard: Venn/comparison view (score-top vs rule-shortlist), stability badges",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 20,
+    "sentence_content": "I marked ‘robust’ candidates that appear across multiple weightings and also in the rule-based set.",
+    "children": [112],
+    "parent": 19,
+    "system_shows": "Dashboard: robust-candidate tags, filter to robust only",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 112,
+    "sentence_content": "Conclusion C (method synthesis): recommend robust candidates that persist under weighting changes and match the earlier rule-based rationale.",
+    "children": [],
+    "parent": 20,
+    "system_shows": "Dashboard: synthesis card combining robust tags with evidence links",
+    "drift_type": "elaboration"
+  },
+
+
+  {
+    "sentence_id": 21,
+    "sentence_content": "From the schools-first shortlist, I overlaid diversity and found at least one borough strong on schools and libraries but relatively low on diversity.",
+    "children": [22, 23],
+    "parent": 3,
+    "system_shows": "Dashboard: overlay—schools/libraries strength vs diversity index, conflict flag on the outlier",
+    "drift_type": "topic_change"
+  },
+  {
+    "sentence_id": 22,
+    "sentence_content": "For the schools-strong but diversity-low case, I lowered confidence for renters who prioritize cultural fit.",
+    "children": [24],
+    "parent": 21,
+    "system_shows": "Dashboard: confidence dial tied to renter persona (cultural-fit priority)",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 23,
+    "sentence_content": "Conversely, for the diversity-strong but services-modest case, I checked proximity to adjacent higher-service boroughs within the same rent band as a mitigation.",
+    "children": [24],
+    "parent": 21,
+    "system_shows": "Dashboard: adjacency map, travel-time cards to nearby higher-service boroughs",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 24,
+    "sentence_content": "I documented the split as conditional guidance: keep the schools-strong option for academics-first renters; nudge diversity-first renters toward the mitigated alternative.",
+    "children": [113],
+    "parent": 22,
+    "system_shows": "Dashboard: branch notes panel with ‘if/then’ recommendations and evidence links",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 113,
+    "sentence_content": "Conclusion D (conflict-aware): present two paths—schools-first versus diversity-first—with explicit trade-offs and who benefits from each.",
+    "children": [],
+    "parent": 24,
+    "system_shows": "Dashboard: dual-path summary cards with target personas",
+    "drift_type": "elaboration"
+  },
+
+
+  {
+    "sentence_id": 25,
+    "sentence_content": "I ran a quick quality check on the library and schools data to ensure coverage and freshness were sufficient for weighting.",
+    "children": [26],
+    "parent": 4,
+    "system_shows": "Dashboard: data-quality panel—coverage %, last update, variance by borough",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 26,
+    "sentence_content": "Where coverage was thin, I flagged the claim and routed back to the rent-burden normalization to avoid over-weighting a weak signal.",
+    "children": [5],
+    "parent": 25,
+    "system_shows": "Dashboard: inline warning on sentences using thin metrics; one-click jump back to ratio pruning view",
+    "drift_type": "reframing"
+  }
+],
+"data_story": [
+  {
+    "data_story_sentence": "Focusing on rental affordability, an initial borough-level scan identified a below- and near-median rent band to frame the search space.",
+    "ref_id": 1
+  },
+  {
+    "data_story_sentence": "Within this affordability band, we pivoted to a schooling lens to align with the client’s priorities on education and public services.",
+    "ref_id": 2
+  },
+  {
+    "data_story_sentence": "Filtering for boroughs in the top quartile of schools within the affordability band produced a focused candidate set for families.",
+    "ref_id": 3
+  },
+  {
+    "data_story_sentence": "Intersecting that set with public library density refined candidates to places where learning and civic services co-locate.",
+    "ref_id": 4
+  },
+  {
+    "data_story_sentence": "Normalizing by rent-to-income confirmed these candidates maintain a manageable housing burden rather than appearing merely ‘cheap for a reason.’",
+    "ref_id": 5
+  },
+  {
+    "data_story_sentence": "Adding a cultural-fit lens via diversity indices highlighted boroughs where community variety aligns with affordability and service access.",
+    "ref_id": 6
+  },
+  {
+    "data_story_sentence": "A light amenity check using restaurants per capita indicated everyday access without over-indexing on nightlife.",
+    "ref_id": 7
+  },
+  {
+    "data_story_sentence": "Consistency checks across schools, libraries, rent burden, and diversity—via small-multiple tiles—supported a stable shortlist.",
+    "ref_id": 8
+  },
+  {
+    "data_story_sentence": "Under the schools-first synthesis, recommended boroughs are those that jointly meet education and service access while staying within an acceptable rent burden and diverse community context.",
+    "ref_id": 11
+  },
+  {
+    "data_story_sentence": "As an alternative hypothesis, beginning from cultural diversity and then intersecting with affordability, schools, and libraries yielded a complementary shortlist for renters prioritizing community fit.",
+    "ref_id": 111
+  },
+  {
+    "data_story_sentence": "A methodological cross-check using a weighted multi-criteria score—stress-tested via sensitivity analysis—identified robust candidates that persist across parameter changes and align with the rule-based shortlist.",
+    "ref_id": 112
+  },
+  {
+    "data_story_sentence": "Where evidence conflicted—strong schools and services but lower diversity, or the reverse—the narrative branches into conditional guidance: schools-first options for academics-focused renters, diversity-first options where community fit leads.",
+    "ref_id": 113
+  },
+  {
+    "data_story_sentence": "Quality controls on data coverage and freshness were applied; thin or uneven signals were flagged and routed back to rent-burden normalization to avoid overweighting weak evidence.",
+    "ref_id": 26
+  }
+],
+"inquiries": [
+  {
+    "qid": "Q0",
+    "title": "Define affordability search space (rent band baseline)",
+    "status": "resolved",
+    "sentenceRefs": ["1"],
+    "position_suggested_by": {
+      "text": "Below- and near-median rent bands constrain the candidate set for renters with budgeti sensitivity.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Distributional scan of borough rents to establish a budget-aligned scope.",
+      "basis": "comparison"
+    },
+    "links": []
+  },
+  {
+    "qid": "Q1",
+    "title": "Schools-first hypothesis within affordability band",
+    "status": "resolved",
+    "sentenceRefs": ["2", "3"],
+    "position_suggested_by": {
+      "text": "Top-quartile school access inside the affordable band forms Candidate Set A.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Quartile filtering on schools per capita while keeping the rent-band constraint.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "Q0",
+        "type": "suggested_by",
+        "explanation": "Affordability baseline motivated a school-access filter constrained by rent."
+      }
+    ]
+  },
+  {
+    "qid": "Q2",
+    "title": "Public services intersection (libraries × schools)",
+    "status": "resolved",
+    "sentenceRefs": ["4"],
+    "position_suggested_by": {
+      "text": "Co-location of schools and libraries refines the set toward service-rich boroughs.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Set intersection on libraries-per-capita and schools top quartile.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q1",
+        "type": "specialized_from",
+        "explanation": "Narrows the schools shortlist to places with strong library access."
+      }
+    ]
+  },
+  {
+    "qid": "Q3",
+    "title": "Affordability normalization (rent-to-income burden)",
+    "status": "resolved",
+    "sentenceRefs": ["5"],
+    "position_suggested_by": {
+      "text": "Candidates retain a manageable rent-to-income burden, avoiding ‘cheap for a reason’.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Ratio thresholding on rent vs. local income.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q2",
+        "type": "suggested_by",
+        "explanation": "After services are confirmed, affordability must be validated in context."
+      }
+    ]
+  },
+  {
+    "qid": "Q4",
+    "title": "Cultural fit screen (diversity indices)",
+    "status": "resolved",
+    "sentenceRefs": ["6"],
+    "position_suggested_by": {
+      "text": "Candidate boroughs with higher diversity better align with cultural-fit priorities.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Entropy/variety measures for ethnicity and country of birth.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "Q3",
+        "type": "specialized_from",
+        "explanation": "Extends affordability-validated set to reflect community fit."
+      }
+    ]
+  },
+  {
+    "qid": "Q5",
+    "title": "Amenity sanity check (restaurants per capita)",
+    "status": "resolved",
+    "sentenceRefs": ["7"],
+    "position_suggested_by": {
+      "text": "Everyday access is adequate without relying on nightlife-heavy areas.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Restaurants per 10k residents in the affordability band.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q4",
+        "type": "generalized_from",
+        "explanation": "Complements the cultural-fit lens with practical daily access."
+      }
+    ]
+  },
+  {
+    "qid": "Q6",
+    "title": "Consistency audit across schools, libraries, rent burden, diversity",
+    "status": "resolved",
+    "sentenceRefs": ["8", "10"],
+    "position_suggested_by": {
+      "text": "Shortlisted boroughs show stable performance across core metrics after reflection and minor edits.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Small-multiples verification and timeline-based revision.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "Q5",
+        "type": "suggested_by",
+        "explanation": "Triggered by the need to confirm stability before drafting."
+      }
+    ]
+  },
+  {
+    "qid": "Q7",
+    "title": "Schools-first synthesis recommendation",
+    "status": "resolved",
+    "sentenceRefs": ["9", "11"],
+    "position_suggested_by": {
+      "text": "Recommend 2–3 boroughs that jointly meet schooling, services, affordability, and diversity criteria.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Synthesis of prior verified metrics into an audience-facing recommendation.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q6",
+        "type": "specialized_from",
+        "explanation": "Converts the stability-checked shortlist into a narrative decision."
+      }
+    ]
+  },
+  {
+    "qid": "Q8",
+    "title": "Alternative hypothesis: cultural-fit-first route",
+    "status": "resolved",
+    "sentenceRefs": ["12", "13", "14", "15", "111"],
+    "position_suggested_by": {
+      "text": "High-diversity areas that also meet affordability and service thresholds provide a complementary shortlist.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Reversed sequence: diversity → affordability → schools & libraries.",
+      "basis": "mechanism"
+    },
+    "links": [
+      {
+        "qid": "Q1",
+        "type": "replaces",
+        "explanation": "Tests a different causal order against the schools-first hypothesis."
+      }
+    ]
+  },
+  {
+    "qid": "Q9",
+    "title": "Methodological alternative: weighted composite + sensitivity",
+    "status": "resolved",
+    "sentenceRefs": ["16", "17", "18", "19", "20", "112"],
+    "position_suggested_by": {
+      "text": "Robust candidates persist across weighting schemes and align with rule-based results.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Multi-criteria scoring, waterfall attribution, and tornado sensitivity analysis.",
+      "basis": "mechanism"
+    },
+    "links": [
+      {
+        "qid": "Q7",
+        "type": "generalized_from",
+        "explanation": "Cross-validates the schools-first synthesis via a different method."
+      },
+      {
+        "qid": "Q8",
+        "type": "generalized_from",
+        "explanation": "Also tests the cultural-fit-first shortlist for stability under weights."
+      }
+    ]
+  },
+  {
+    "qid": "Q10",
+    "title": "Contradictory evidence: schools/services vs cultural fit",
+    "status": "resolved",
+    "sentenceRefs": ["21", "22", "23", "24", "113"],
+    "position_suggested_by": {
+      "text": "Conflict-aware guidance: keep schools-strong but diversity-low for academics-first; favor diversity-strong with service mitigation for community-first renters.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Overlay of diversity on schools/services with conditional recommendations.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q7",
+        "type": "suggested_by",
+        "explanation": "Arises when schools-first picks do not align with cultural-fit priorities."
+      },
+      {
+        "qid": "Q8",
+        "type": "suggested_by",
+        "explanation": "Also arises when cultural-fit picks show weaker service access."
+      }
+    ]
+  },
+  {
+    "qid": "Q11",
+    "title": "Data-quality guardrail and revision loop",
+    "status": "resolved",
+    "sentenceRefs": ["25", "26"],
+    "position_suggested_by": {
+      "text": "Thin or uneven signals are flagged and routed back to affordability normalization to avoid overweighting weak evidence.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Coverage/freshness audit and targeted revision to stronger metrics.",
+      "basis": "other"
+    },
+    "links": [
+      {
+        "qid": "Q2",
+        "type": "suggested_by",
+        "explanation": "Introduced after intersecting services to ensure inputs were reliable."
+      },
+      {
+        "qid": "Q3",
+        "type": "specialized_from",
+        "explanation": "Uses rent-burden normalization as a stable fallback during revisions."
+      }
+    ]
+  }
+]
+}

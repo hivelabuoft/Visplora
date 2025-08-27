@@ -1,0 +1,1225 @@
+{
+  "chart_type": "comboBarLine",
+  "category": "chart_specific_analysis",
+  "processed_at": "2025-08-20T18:08:10.646Z",
+  "total_queries": 50,
+  "sql_queries": [
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_001",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "count",
+        "borough_name",
+        "month"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS bar_value, EXTRACT(MONTH FROM date) AS line_value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category, EXTRACT(MONTH FROM date) ORDER BY crime_category, line_value;"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_002",
+      "dataset": "ethnicity",
+      "time_period": "2021",
+      "variables_needed": [
+        "local authority name",
+        "All usual residents",
+        "Broad_group"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS bar_value, SUM(population_count) * 1.0 / COUNT(DISTINCT ethnic_group) AS line_value FROM ethnicity_data WHERE area_name IS NOT NULL AND ethnic_group = 'Broad_group' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_comboBarLine_003",
+      "dataset": "country-of-births",
+      "time_period": "2022",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS bar_value, AVG(percentage) AS line_value FROM birth_country_data WHERE date LIKE '2022%' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "population_chart_analysis_comboBarLine_004",
+      "dataset": "population",
+      "time_period": "2021",
+      "variables_needed": [
+        "area",
+        "population",
+        "density"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS bar_value, AVG(population_count / NULLIF(density, 0)) AS line_value FROM population_data WHERE date = '2021' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "income_chart_analysis_comboBarLine_005",
+      "dataset": "income",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "borough_name",
+        "average_income",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, AVG(average_income) AS bar_value, AVG(growth_rate) AS line_value FROM income_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY borough_name ORDER BY borough_name;"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_comboBarLine_006",
+      "dataset": "house-prices",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_price) AS bar_value, AVG(median_price) AS line_value FROM house_price_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_comboBarLine_007",
+      "dataset": "schools-colleges",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "LANAME",
+        "SCHNAME",
+        "performance_score"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT LANAME AS category, AVG(performance_score) AS bar_value, SUM(performance_score) AS line_value FROM education_data WHERE institution_type IN ('school', 'college') AND date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY LANAME ORDER BY category;"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_comboBarLine_008",
+      "dataset": "vehicles",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "Local Authority",
+        "Cars",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, SUM(CASE WHEN vehicle_type = 'Cars' THEN registration_count ELSE 0 END) AS bar_value, AVG(growth_rate) AS line_value FROM vehicle_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' GROUP BY borough_name ORDER BY category;"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_comboBarLine_009",
+      "dataset": "restaurants",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "Area name",
+        "licensed_units",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(restaurant_count) AS bar_value, AVG(rating) AS line_value FROM restaurant_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_comboBarLine_010",
+      "dataset": "private-rent",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Area",
+        "Average (£)",
+        "Median (£)"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_rent) AS bar_value, AVG(median_rent) AS line_value FROM rent_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_comboBarLine_011",
+      "dataset": "gyms",
+      "time_period": "2020-2024",
+      "variables_needed": [
+        "borough_name",
+        "gym_type",
+        "facility_count"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, COUNT(DISTINCT gym_name) AS bar_value, COUNT(DISTINCT facility_type) AS line_value FROM gym_data WHERE EXTRACT(YEAR FROM CURRENT_DATE) BETWEEN 2020 AND 2024 GROUP BY borough_name ORDER BY borough_name;"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_comboBarLine_012",
+      "dataset": "libraries",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "area",
+        "Library visits per 1,000 population"
+      ],
+      "chart_type": "comboBarLine_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(visitor_count) / COUNT(DISTINCT library_name) AS bar_value, SUM(visitor_count) / (SELECT SUM(population_count) FROM population_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' AND area_name = library_data.area_name) * 1000 AS line_value FROM library_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_013",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category",
+        "count",
+        "borough_name",
+        "month"
+      ],
+      "chart_type": "comboBarLine_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS bar_value, AVG(count) AS line_value, borough_name AS dimension FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category, borough_name ORDER BY category, dimension;"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_014",
+      "dataset": "ethnicity",
+      "time_period": "2021",
+      "variables_needed": [
+        "local authority name",
+        "Broad_group"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS bar_value, AVG(population_count) AS line_value FROM ethnicity_data WHERE date LIKE '2021%' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_comboBarLine_015",
+      "dataset": "country-of-births",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT Area_Name AS category, SUM(CASE WHEN Broad_group = 'Bar' THEN Estimate ELSE 0 END) AS bar_value, SUM(CASE WHEN Broad_group = 'Line' THEN Estimate ELSE 0 END) AS line_value FROM birth_country_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY Area_Name ORDER BY Area_Name;"
+    },
+    {
+      "proposition_id": "population_chart_analysis_comboBarLine_016",
+      "dataset": "population",
+      "time_period": "2015-2021",
+      "variables_needed": [
+        "area",
+        "population",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS bar_value, AVG(growth_rate) AS line_value FROM population_data WHERE date BETWEEN '2015-01-01' AND '2021-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "income_chart_analysis_comboBarLine_017",
+      "dataset": "income",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "borough_name",
+        "average_income",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, AVG(average_income) AS bar_value, AVG(growth_rate) AS line_value FROM income_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' GROUP BY borough_name ORDER BY borough_name;"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_comboBarLine_018",
+      "dataset": "house-prices",
+      "time_period": "2018-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_price) AS bar_value, AVG(median_price) AS line_value FROM house_price_data WHERE date BETWEEN '2018-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_comboBarLine_019",
+      "dataset": "schools-colleges",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "LANAME",
+        "SCHNAME",
+        "performance_score"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT SCHNAME AS category, AVG(performance_score) AS bar_value, MAX(performance_score) AS line_value FROM education_data WHERE institution_type = 'school' AND date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY SCHNAME ORDER BY SCHNAME;"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_comboBarLine_020",
+      "dataset": "vehicles",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "Local Authority",
+        "Electric Vehicles",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, AVG(registration_count) AS bar_value, (MAX(registration_count) - MIN(registration_count)) / NULLIF(MIN(registration_count), 0) AS line_value FROM vehicle_data WHERE vehicle_type = 'Electric Vehicles' AND date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY borough_name ORDER BY category;"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_comboBarLine_021",
+      "dataset": "restaurants",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Area name",
+        "unlicensed_units",
+        "year"
+      ],
+      "chart_type": "comboBarLine_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(restaurant_count) AS bar_value, COUNT(DISTINCT cuisine_type) AS line_value, YEAR(date) AS dimension FROM restaurant_data WHERE YEAR(date) BETWEEN 2020 AND 2023 GROUP BY area_name, YEAR(date) ORDER BY area_name, YEAR(date);"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_comboBarLine_022",
+      "dataset": "private-rent",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Area",
+        "Average (£)",
+        "Increase Rate"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_rent) AS bar_value, (MAX(average_rent) - MIN(average_rent)) / MIN(average_rent) * 100 AS line_value FROM rent_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_comboBarLine_023",
+      "dataset": "gyms",
+      "time_period": "2022-2024",
+      "variables_needed": [
+        "borough_name",
+        "gym_type",
+        "facility_count"
+      ],
+      "chart_type": "comboBarLine_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, COUNT(DISTINCT gym_name) AS bar_value, COUNT(DISTINCT facility_type) AS line_value, area_name AS dimension FROM gym_data WHERE date BETWEEN '2022-01-01' AND '2024-12-31' GROUP BY borough_name, area_name ORDER BY borough_name, area_name;"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_comboBarLine_024",
+      "dataset": "libraries",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "area",
+        "digital_visits",
+        "physical_visits"
+      ],
+      "chart_type": "comboBarLine_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(digital_visits) AS bar_value, SUM(physical_visits) AS line_value, '3D' AS dimension FROM library_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_025",
+      "dataset": "crime-rates",
+      "time_period": "2022-2023",
+      "variables_needed": [
+        "crime_category_name",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS bar_value, AVG(count) AS line_value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY crime_category ORDER BY crime_category;"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_026",
+      "dataset": "ethnicity",
+      "time_period": "2011-2021",
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "decline_rate"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(CASE WHEN ethnic_group = 'White British' THEN population_count ELSE 0 END) AS bar_value, AVG(decline_rate) AS line_value FROM ethnicity_data WHERE date BETWEEN '2011-01-01' AND '2021-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_comboBarLine_027",
+      "dataset": "country-of-births",
+      "time_period": "2015-2023",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "comboBarLine_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT Area_Name AS category, SUM(population_count) AS bar_value, AVG(percentage) AS line_value, Broad_group AS dimension FROM birth_country_data WHERE date BETWEEN '2015-01-01' AND '2023-12-31' GROUP BY Area_Name, Broad_group ORDER BY Area_Name, Broad_group;"
+    },
+    {
+      "proposition_id": "population_chart_analysis_comboBarLine_028",
+      "dataset": "population",
+      "time_period": "2016-2023",
+      "variables_needed": [
+        "area",
+        "population",
+        "decline_rate"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS bar_value, AVG(decline_rate) AS line_value FROM population_data WHERE date BETWEEN '2016-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "income_chart_analysis_comboBarLine_029",
+      "dataset": "income",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "borough_name",
+        "average_income",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, AVG(average_income) AS bar_value, AVG(growth_rate) AS line_value FROM ( SELECT borough_name, date, average_income, (average_income - LAG(average_income) OVER (PARTITION BY borough_name ORDER BY date)) / LAG(average_income) OVER (PARTITION BY borough_name ORDER BY date) AS growth_rate FROM income_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' ) AS subquery GROUP BY borough_name ORDER BY borough_name;"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_comboBarLine_030",
+      "dataset": "house-prices",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_price) AS bar_value, AVG(median_price) AS line_value FROM house_price_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_comboBarLine_031",
+      "dataset": "schools-colleges",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "LANAME",
+        "SCHNAME",
+        "performance_score"
+      ],
+      "chart_type": "comboBarLine_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT SCHNAME AS category, AVG(performance_score) AS bar_value, MAX(performance_score) AS line_value, LANAME AS dimension FROM education_data WHERE institution_type IN ('school', 'college') AND date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY SCHNAME, LANAME ORDER BY SCHNAME, LANAME;"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_comboBarLine_032",
+      "dataset": "vehicles",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "Local Authority",
+        "Cars",
+        "public_transport_reliance"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(CASE WHEN vehicle_type = 'Cars' THEN registration_count ELSE 0 END) AS bar_value, AVG(CASE WHEN vehicle_type = 'public_transport_reliance' THEN registration_count ELSE 0 END) AS line_value FROM vehicle_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_comboBarLine_033",
+      "dataset": "restaurants",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "Area name",
+        "vegan_units",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(restaurant_count) AS bar_value, AVG(rating) AS line_value FROM restaurant_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_comboBarLine_034",
+      "dataset": "private-rent",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Area",
+        "Average (£)",
+        "luxury_growth_rate"
+      ],
+      "chart_type": "comboBarLine_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_rent) AS bar_value, (AVG(average_rent) - LAG(AVG(average_rent)) OVER (PARTITION BY area_name ORDER BY EXTRACT(YEAR FROM date))) / LAG(AVG(average_rent)) OVER (PARTITION BY area_name ORDER BY EXTRACT(YEAR FROM date)) * 100 AS line_value, EXTRACT(YEAR FROM date) AS dimension FROM rent_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY area_name, EXTRACT(YEAR FROM date) ORDER BY area_name, dimension;"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_comboBarLine_035",
+      "dataset": "gyms",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "borough_name",
+        "community_gym_members",
+        "participation_rate"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, SUM(membership_count) AS bar_value, AVG(participation_rate) AS line_value FROM gym_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY borough_name ORDER BY borough_name;"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_comboBarLine_036",
+      "dataset": "libraries",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "area",
+        "digital_service_usage",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(visitor_count) AS bar_value, AVG(visitor_count) * (1 + AVG(growth_rate)) AS line_value FROM library_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_037",
+      "dataset": "crime-rates",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "crime_category_name",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS bar_value, AVG(count) AS line_value FROM crime_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY crime_category ORDER BY crime_category;"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_038",
+      "dataset": "ethnicity",
+      "time_period": "2015-2023",
+      "variables_needed": [
+        "local authority name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS bar_value, AVG(population_count) AS line_value FROM ethnicity_data WHERE date BETWEEN '2015-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "country-of-births_chart_analysis_comboBarLine_039",
+      "dataset": "country-of-births",
+      "time_period": "2016-2023",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT Area_Name AS category, SUM(CASE WHEN Broad_group = 'Bar' THEN Estimate ELSE 0 END) AS bar_value, SUM(CASE WHEN Broad_group = 'Line' THEN Estimate ELSE 0 END) AS line_value FROM birth_country_data WHERE date BETWEEN '2016-01-01' AND '2023-12-31' GROUP BY Area_Name ORDER BY Area_Name;"
+    },
+    {
+      "proposition_id": "population_chart_analysis_comboBarLine_040",
+      "dataset": "population",
+      "time_period": "2018-2023",
+      "variables_needed": [
+        "area",
+        "population",
+        "density"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS bar_value, AVG(population_count / NULLIF(density, 0)) AS line_value FROM population_data WHERE date BETWEEN '2018-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "income_chart_analysis_comboBarLine_041",
+      "dataset": "income",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "borough_name",
+        "average_income",
+        "stabilization_rate"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, AVG(average_income) AS bar_value, AVG(stabilization_rate) AS line_value FROM income_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY borough_name ORDER BY borough_name;"
+    },
+    {
+      "proposition_id": "house-prices_chart_analysis_comboBarLine_042",
+      "dataset": "house-prices",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_price) AS bar_value, AVG(median_price) AS line_value FROM house_price_data WHERE date BETWEEN '2019-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "schools-colleges_chart_analysis_comboBarLine_043",
+      "dataset": "schools-colleges",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "LANAME",
+        "SCHNAME",
+        "enrollment"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT institution_name AS category, AVG(student_count) AS bar_value, AVG(student_count) OVER () AS line_value FROM education_data WHERE institution_type = 'school' AND date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY institution_name ORDER BY institution_name;"
+    },
+    {
+      "proposition_id": "vehicles_chart_analysis_comboBarLine_044",
+      "dataset": "vehicles",
+      "time_period": "2019-2023",
+      "variables_needed": [
+        "Local Authority",
+        "Hybrid Vehicles",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, AVG(CASE WHEN vehicle_type = 'Hybrid' THEN registration_count ELSE 0 END) AS bar_value, AVG(CASE WHEN vehicle_type = 'Hybrid' THEN registration_count ELSE 0 END) / NULLIF(LAG(AVG(CASE WHEN vehicle_type = 'Hybrid' THEN registration_count ELSE 0 END)) OVER (PARTITION BY borough_name ORDER BY EXTRACT(YEAR FROM date)), 0) - 1 AS line_value FROM vehicle_data WHERE EXTRACT(YEAR FROM date) BETWEEN 2019 AND 2023 GROUP BY borough_name ORDER BY category;"
+    },
+    {
+      "proposition_id": "restaurants_chart_analysis_comboBarLine_045",
+      "dataset": "restaurants",
+      "time_period": "2018-2023",
+      "variables_needed": [
+        "Area name",
+        "fine_dining_units",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(restaurant_count) AS bar_value, AVG(rating) AS line_value FROM restaurant_data WHERE date BETWEEN '2018-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY category;"
+    },
+    {
+      "proposition_id": "private-rent_chart_analysis_comboBarLine_046",
+      "dataset": "private-rent",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "Area",
+        "Average (£)",
+        "stabilization_rate"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_rent) AS bar_value, (AVG(average_rent) - LAG(AVG(average_rent), 1) OVER (ORDER BY date)) / LAG(AVG(average_rent), 1) OVER (ORDER BY date) * 100 AS line_value FROM rent_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY area_name, date ORDER BY area_name, date;"
+    },
+    {
+      "proposition_id": "gyms_chart_analysis_comboBarLine_047",
+      "dataset": "gyms",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "borough_name",
+        "boutique_studios",
+        "growth_rate"
+      ],
+      "chart_type": "comboBarLine_with_threshold_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT borough_name AS category, SUM(CASE WHEN facility_type = 'Boutique Studio' THEN membership_count ELSE 0 END) AS bar_value, (SUM(CASE WHEN facility_type = 'Boutique Studio' THEN membership_count ELSE 0 END) - LAG(SUM(CASE WHEN facility_type = 'Boutique Studio' THEN membership_count ELSE 0 END), 1) OVER (ORDER BY EXTRACT(YEAR FROM date))) / NULLIF(LAG(SUM(CASE WHEN facility_type = 'Boutique Studio' THEN membership_count ELSE 0 END), 1) OVER (ORDER BY EXTRACT(YEAR FROM date)), 0) * 100 AS line_value FROM gym_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY borough_name, EXTRACT(YEAR FROM date) ORDER BY borough_name, EXTRACT(YEAR FROM date);"
+    },
+    {
+      "proposition_id": "libraries_chart_analysis_comboBarLine_048",
+      "dataset": "libraries",
+      "time_period": "2021-2023",
+      "variables_needed": [
+        "area",
+        "Library visits per 1,000 population"
+      ],
+      "chart_type": "comboBarLine_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(visitor_count) AS bar_value, AVG(visitor_count) AS line_value FROM library_data WHERE date BETWEEN '2021-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "crime-rates_chart_analysis_comboBarLine_049",
+      "dataset": "crime-rates",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "crime_category_name",
+        "count",
+        "borough_name"
+      ],
+      "chart_type": "comboBarLine_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT crime_category AS category, SUM(count) AS bar_value, AVG(count) AS line_value, borough_name AS dimension FROM crime_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY crime_category, borough_name ORDER BY category, dimension;"
+    },
+    {
+      "proposition_id": "ethnicity_chart_analysis_comboBarLine_050",
+      "dataset": "ethnicity",
+      "time_period": "2017-2023",
+      "variables_needed": [
+        "local authority name",
+        "Broad_group",
+        "Estimate"
+      ],
+      "chart_type": "comboBarLine_simple_3D",
+      "example": [
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        },
+        {
+          "category": "",
+          "bar_value": 0,
+          "line_value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS bar_value, AVG(percentage) AS line_value, ethnic_group AS dimension FROM ethnicity_data WHERE date BETWEEN '2017-01-01' AND '2023-12-31' GROUP BY area_name, ethnic_group ORDER BY area_name, ethnic_group;"
+    }
+  ]
+}

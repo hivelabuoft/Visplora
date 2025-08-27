@@ -1,0 +1,618 @@
+{
+    "exploration_path": [
+  {
+    "sentence_id": 1,
+    "sentence_content": "I started broad: a quick look at borough housing prices just to see what ‘attainable’ even means for a long-term purchase in London.",
+    "children": [2],
+    "parent": null,
+    "system_shows": "Dashboard: (1) Choropleth—median house price by borough; (2) Ranked bars—price with London median band; (3) Filter chips—below- and near-median price bands",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 2,
+    "sentence_content": "Price alone felt too blunt, so I reframed it as value: services per pound—how much schools and libraries you effectively get for the price you’d pay.",
+    "children": [3],
+    "parent": 1,
+    "system_shows": "Dashboard: (1) Index card—Value-per-Service = f(schools/10k + libraries/10k) ÷ price; (2) Scatter—value index vs price; (3) Toggle—limit to below/near-median price band",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 3,
+    "sentence_content": "With that lens, I shortlisted boroughs that rank high on value-per-service while staying in the attainable price bands.",
+    "children": [4],
+    "parent": 2,
+    "system_shows": "Dashboard: (1) Ranked list—value-per-service within price band; (2) Shortlist panel—pin candidates; (3) Confidence ribbons—index stability",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 4,
+    "sentence_content": "To make sure the schooling signal wasn’t just one hot spot, I checked whether top-quartile school access holds across multiple wards in each candidate.",
+    "children": [5],
+    "parent": 3,
+    "system_shows": "Dashboard: (1) Small multiples—schools per 10k by ward within each candidate; (2) Quartile overlay; (3) Consistency ticks",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 5,
+    "sentence_content": "I added library coverage to confirm civic access is broad—not a single marquee branch that looks good on paper but doesn’t help day to day.",
+    "children": [6],
+    "parent": 4,
+    "system_shows": "Dashboard: (1) Libraries per 10k by ward; (2) Distribution chart—branches per ward; (3) Evenness badge—Gini-style spread indicator",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 6,
+    "sentence_content": "Since neighborhood ‘fit’ matters over decades, I layered in cultural context—ethnicity diversity and country-of-birth variety—on the same shortlist.",
+    "children": [7, 8, 24],
+    "parent": 5,
+    "system_shows": "Dashboard: (1) Diversity index leaderboard—ethnicity entropy; (2) Country-of-birth variety gauge; (3) Overlay—diversity scores on candidates",
+    "drift_type": "context_shift"
+  },
+
+
+  {
+    "sentence_id": 7,
+    "sentence_content": "First branch: I nudged up the candidates where diversity is already strong and still within the attainable price band—thinking long-term resilience and community breadth.",
+    "children": [9, 10],
+    "parent": 6,
+    "system_shows": "Dashboard: (1) Filter—top diversity quartile ∧ price band; (2) Candidate chips—promoted set; (3) Note—assumption: diversity correlates with sustained desirability",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 9,
+    "sentence_content": "I stress-tested those by checking co-location: do strong diversity scores sit alongside top-quartile schools and solid library coverage inside the same boroughs?",
+    "children": [13, 14],
+    "parent": 7,
+    "system_shows": "Dashboard: (1) Matrix—candidates × {diversity, schools, libraries}; (2) Heat cells—pass/fail; (3) Drill-through—ward maps for outliers",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 13,
+    "sentence_content": "On schools, I looked for ward-level consistency so we’re not hanging a 20-year decision on a single catchment that could shift.",
+    "children": [20],
+    "parent": 9,
+    "system_shows": "Dashboard: (1) Ward-level schools small multiples; (2) Stability flag—proportion of wards in top quartile; (3) Catchment notes",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 14,
+    "sentence_content": "On libraries, I checked that access is reasonably even across wards—multiple neighborhood branches rather than one central hub.",
+    "children": [20],
+    "parent": 9,
+    "system_shows": "Dashboard: (1) Branches-by-ward bar; (2) Evenness index card; (3) Map pins—branch spread",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 10,
+    "sentence_content": "If diversity is strong but the sticker price is creeping up, I paused to see whether a slight premium still pencils out when service access is this good.",
+    "children": [15, 16],
+    "parent": 7,
+    "system_shows": "Dashboard: (1) Price vs value-per-service scatter—highlight premium points; (2) Delta card—% above near-median; (3) ‘Premium test’ slider",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 15,
+    "sentence_content": "Where the premium was small and services plus diversity were clearly superior, I kept the borough with a note that the extra up-front cost likely buys long-term stability.",
+    "children": [20],
+    "parent": 10,
+    "system_shows": "Dashboard: (1) Premium threshold acceptance; (2) Evidence summary—co-located strengths; (3) Flag—‘justified premium’",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 16,
+    "sentence_content": "If the premium couldn’t be justified on services and community context, I dropped it back to the general pool and stuck to value-first candidates.",
+    "children": [20],
+    "parent": 10,
+    "system_shows": "Dashboard: (1) Premium threshold fail; (2) Demotion tag; (3) Return-to-shortlist action",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 20,
+    "sentence_content": "Pulling the pieces together in this branch, I marked the diversity-plus-services boroughs as resilient buys, with caveats about ward consistency and any mild premium.",
+    "children": [21],
+    "parent": 16,
+    "system_shows": "Dashboard: (1) Branch synthesis card—{diversity, schools consistency, library evenness, premium note}; (2) Pin recommended set",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 21,
+    "sentence_content": "Conclusion A (resilience): recommend the boroughs where strong cultural breadth co-exists with durable school access and even library coverage, at or near attainable prices.",
+    "children": [28],
+    "parent": 20,
+    "system_shows": "Dashboard: (1) Summary composer—resilience path; (2) Evidence links to all checks; (3) Persona tag—‘community breadth + services’",
+    "drift_type": "elaboration"
+  },
+
+  {
+    "sentence_id": 8,
+    "sentence_content": "Second branch: I grouped the shortlisted boroughs by community profile—how ethnicity and country-of-birth patterns cluster—so buyers can compare like with like.",
+    "children": [11, 12],
+    "parent": 6,
+    "system_shows": "Dashboard: (1) Cluster map—ethnicity/country-of-birth profile clusters; (2) Centroid cards—cluster signatures; (3) Candidate overlay",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 11,
+    "sentence_content": "Inside each cluster, I kept the boroughs that stay in the attainable price band and clear baseline thresholds on schools and libraries.",
+    "children": [17, 18],
+    "parent": 8,
+    "system_shows": "Dashboard: (1) Cluster filter ∧ price band; (2) Threshold badges—schools top half, libraries top half; (3) Keep/drop toggles",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 17,
+    "sentence_content": "If a cluster match was great but schools were just outside the cutoff, I checked whether adjacent wards within the same borough compensate.",
+    "children": [22],
+    "parent": 11,
+    "system_shows": "Dashboard: (1) Ward adjacency map; (2) Spillover chart—nearby ward school density; (3) ‘Mitigated by adjacency’ flag",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 18,
+    "sentence_content": "For libraries, I verified coverage isn’t lopsided; strong center-only access wasn’t enough for a decades-long plan.",
+    "children": [22],
+    "parent": 11,
+    "system_shows": "Dashboard: (1) Library coverage by ward; (2) Evenness badge; (3) Coverage heat strip",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 12,
+    "sentence_content": "Where the community profile fit nicely but services were modest, I tested whether practical mitigations make it workable without exiting the price band.",
+    "children": [19, 20],
+    "parent": 8,
+    "system_shows": "Dashboard: (1) Service baseline check; (2) Mitigation panel—nearby wards with higher services; (3) Price-band guardrail",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 19,
+    "sentence_content": "If mitigations were real—nearby wards with stronger services while staying within the band—I kept the borough with a clear note about how to use the area.",
+    "children": [22],
+    "parent": 12,
+    "system_shows": "Dashboard: (1) Keep with caveat tag; (2) Mitigation route card; (3) Evidence link",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 20,
+    "sentence_content": "If mitigations didn’t hold up, I downgraded it to an honorable mention for buyers prioritizing cultural match over convenience.",
+    "children": [22],
+    "parent": 12,
+    "system_shows": "Dashboard: (1) Downgrade badge; (2) Persona note—‘community-first, services second’; (3) Store as alternative",
+    "drift_type": "reframing"
+  },
+  {
+    "sentence_id": 22,
+    "sentence_content": "Conclusion B (profile-fit): present cluster-based recommendations that stay affordable, meet minimum school and library thresholds, and carry explicit caveats where applicable.",
+    "children": [28],
+    "parent": 17,
+    "system_shows": "Dashboard: (1) Summary composer—cluster path; (2) Persona cards per cluster; (3) Links to threshold and mitigation checks",
+    "drift_type": "elaboration"
+  },
+
+
+  {
+    "sentence_id": 24,
+    "sentence_content": "To cross-check the rule-based picks, I also built a weighted score—schools, libraries, diversity—minus a penalty for higher prices.",
+    "children": [25],
+    "parent": 6,
+    "system_shows": "Dashboard: (1) Weight sliders {w_schools, w_libraries, w_diversity, w_price}; (2) Score formula card; (3) Ranked table by score",
+    "drift_type": "topic_change"
+  },
+  {
+    "sentence_id": 25,
+    "sentence_content": "I ran a quick sensitivity analysis—swinging the weights ±15–20%—to see which boroughs stayed near the top no matter how you dial the priorities.",
+    "children": [26],
+    "parent": 24,
+    "system_shows": "Dashboard: (1) Tornado plot—rank stability; (2) Rank ribbons across weight ranges; (3) Stability badge",
+    "drift_type": "context_shift"
+  },
+  {
+    "sentence_id": 26,
+    "sentence_content": "I tagged any borough that was top-ranked both under weighting and under the earlier rule logic as ‘robust’—these are the safest bets to defend.",
+    "children": [27],
+    "parent": 25,
+    "system_shows": "Dashboard: (1) Venn—score-top ∩ rule-top; (2) Robust tag on overlaps; (3) Filter—robust only",
+    "drift_type": "elaboration"
+  },
+  {
+    "sentence_id": 27,
+    "sentence_content": "Method synthesis: the robust set aligns with at least one of the branches and doesn’t wobble when preferences shift—good news for a 10–20 year horizon.",
+    "children": [28],
+    "parent": 26,
+    "system_shows": "Dashboard: (1) Robust set card; (2) Links back to A/B evidence; (3) Persona presets mapping to weight ranges",
+    "drift_type": "elaboration"
+  },
+
+
+  {
+    "sentence_id": 28,
+    "sentence_content": "Bringing it all together, I’d recommend the robust boroughs first, then offer the resilience path for buyers prioritizing community breadth with strong services, and the cluster-fit path for buyers seeking a specific cultural profile—with clear notes on price bands, ward consistency, and any justified premiums.",
+    "children": [],
+    "parent": 21,
+    "system_shows": "Dashboard: (1) Final summary—three-lane recommendation (Robust, Resilience, Profile-Fit); (2) Evidence index—every claim linked to a chart; (3) Export pack—narrative + pinned views",
+    "drift_type": "elaboration"
+  }
+],
+"data_story": [
+  {
+    "data_story_sentence": "Focusing on long-term attainability, an initial borough-level price scan established a below- and near-median housing price band as the search space.",
+    "ref_id": 1
+  },
+  {
+    "data_story_sentence": "We reframed affordability as value by normalizing access to schools and libraries per pound of purchase price.",
+    "ref_id": 2
+  },
+  {
+    "data_story_sentence": "This value-per-service lens surfaced a shortlist of boroughs that deliver strong public services while remaining within the attainable price bands.",
+    "ref_id": 3
+  },
+  {
+    "data_story_sentence": "Ward-level small multiples showed that school access is durable across catchments rather than concentrated in a single hotspot.",
+    "ref_id": 4
+  },
+  {
+    "data_story_sentence": "Library coverage exhibited an even spread of branches across wards, reducing hub-dependence risk for everyday access.",
+    "ref_id": 5
+  },
+  {
+    "data_story_sentence": "To incorporate community fit over a multi-decade horizon, we layered ethnicity diversity and country-of-birth variety onto the same candidate set.",
+    "ref_id": 6
+  },
+  {
+    "data_story_sentence": "Prioritizing high-diversity candidates that still met the price band highlighted areas with potential resilience in desirability.",
+    "ref_id": 7
+  },
+  {
+    "data_story_sentence": "Co-location checks verified that these high-diversity areas also sustained top-quartile schools alongside strong library networks.",
+    "ref_id": 9
+  },
+  {
+    "data_story_sentence": "School stability indicators confirmed that multiple wards—rather than a single catchment—meet or exceed the target access thresholds.",
+    "ref_id": 13
+  },
+  {
+    "data_story_sentence": "Library evenness metrics confirmed multiple neighborhood branches instead of a single central hub.",
+    "ref_id": 14
+  },
+  {
+    "data_story_sentence": "Where cultural breadth coincided with a mild price premium, we tested whether superior service access justified a small step-up above the near-median band.",
+    "ref_id": 10
+  },
+  {
+    "data_story_sentence": "Boroughs that cleared this premium test were retained as resilient buys given their combined service and community advantages.",
+    "ref_id": 15
+  },
+  {
+    "data_story_sentence": "Where the premium could not be justified on services and context, candidates were returned to the general pool and the value-first shortlist.",
+    "ref_id": 16
+  },
+  {
+    "data_story_sentence": "Synthesizing these checks, we marked diversity-plus-services boroughs as resilience picks, annotated with ward-consistency and premium notes where applicable.",
+    "ref_id": 20
+  },
+  {
+    "data_story_sentence": "Conclusion A (resilience): recommend boroughs where strong cultural breadth co-exists with durable school access and even library coverage at or near attainable prices.",
+    "ref_id": 21
+  },
+  {
+    "data_story_sentence": "In parallel, cluster analysis grouped candidates by community profile to support like-for-like comparisons for buyers seeking specific cultural contexts.",
+    "ref_id": 8
+  },
+  {
+    "data_story_sentence": "Within each profile cluster, we retained boroughs that stayed inside the price band and cleared baseline thresholds for schools and libraries.",
+    "ref_id": 11
+  },
+  {
+    "data_story_sentence": "Adjacency checks showed that near-cutoff school access can be supported by neighboring wards within the same borough.",
+    "ref_id": 17
+  },
+  {
+    "data_story_sentence": "Library coverage reviews filtered out cases with overly centralized access, preserving only boroughs with broadly distributed branches.",
+    "ref_id": 18
+  },
+  {
+    "data_story_sentence": "Where profile fit was strong but services were modest, practical mitigations preserved viability without breaching the price band.",
+    "ref_id": 12
+  },
+  {
+    "data_story_sentence": "When mitigations held—via nearby higher-service wards while staying within band—we kept the option with explicit usage notes.",
+    "ref_id": 19
+  },
+  {
+    "data_story_sentence": "Conclusion B (profile-fit): present cluster-based recommendations that remain affordable, meet minimum school and library thresholds, and carry clear caveats where needed.",
+    "ref_id": 22
+  },
+  {
+    "data_story_sentence": "To cross-validate selections, we built a weighted composite score over schools, libraries, and diversity with a price penalty.",
+    "ref_id": 24
+  },
+  {
+    "data_story_sentence": "Sensitivity analysis—swinging weights by ±15–20%—assessed rank stability under different buyer priorities.",
+    "ref_id": 25
+  },
+  {
+    "data_story_sentence": "Boroughs that stayed near the top across weight swings and also appeared in the rule-based branches were tagged as robust.",
+    "ref_id": 26
+  },
+  {
+    "data_story_sentence": "These robust candidates provide defensible anchors for a 10–20-year horizon, independent of small shifts in emphasis.",
+    "ref_id": 27
+  },
+  {
+    "data_story_sentence": "Final guidance prioritizes robust candidates first, followed by resilience-path picks for community breadth with strong services, and cluster-fit matches for specific cultural profiles, each tied to price-band and network-evenness evidence.",
+    "ref_id": 28
+  }
+],
+"inquiries": [
+  {
+    "qid": "Q0",
+    "title": "Establish attainable purchase band (price baseline)",
+    "status": "resolved",
+    "sentenceRefs": ["1"],
+    "position_suggested_by": {
+      "text": "Below- and near-median housing price bands define the search space for long-term purchase candidates.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Citywide scan of borough-level prices to anchor analysis in attainable ranges.",
+      "basis": "comparison"
+    },
+    "links": []
+  },
+  {
+    "qid": "Q1",
+    "title": "Value-per-service lens and shortlist",
+    "status": "resolved",
+    "sentenceRefs": ["2", "3"],
+    "position_suggested_by": {
+      "text": "Value-per-service (schools + libraries per capita normalized by price) surfaces high-service boroughs that remain attainable.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Derived index combining service density with price normalization.",
+      "basis": "mechanism"
+    },
+    "links": [
+      {
+        "qid": "Q0",
+        "type": "suggested_by",
+        "explanation": "Price bands motivated reframing from raw price to service-adjusted value."
+      }
+    ]
+  },
+  {
+    "qid": "Q2",
+    "title": "School access durability (ward-level consistency)",
+    "status": "resolved",
+    "sentenceRefs": ["4"],
+    "position_suggested_by": {
+      "text": "Top-quartile school access persists across multiple wards, not a single hotspot.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Small-multiple ward analysis with quartile overlays.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "Q1",
+        "type": "suggested_by",
+        "explanation": "Shortlisted boroughs from the value lens required verification of distributed school access."
+      }
+    ]
+  },
+  {
+    "qid": "Q3",
+    "title": "Library network evenness (civic breadth)",
+    "status": "resolved",
+    "sentenceRefs": ["5"],
+    "position_suggested_by": {
+      "text": "Library access is broadly distributed across wards rather than hub-concentrated.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Branch-per-ward distribution and evenness index.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q1",
+        "type": "suggested_by",
+        "explanation": "Value shortlist prompted checks that civic infrastructure extends beyond a central branch."
+      }
+    ]
+  },
+  {
+    "qid": "Q4",
+    "title": "Community fit overlay (ethnicity and country of birth)",
+    "status": "resolved",
+    "sentenceRefs": ["6"],
+    "position_suggested_by": {
+      "text": "Cultural breadth is layered onto candidates to reflect multi-decade neighborhood fit.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Diversity indices (ethnicity entropy and country-of-birth variety) applied to the shortlist.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "Q2",
+        "type": "generalized_from",
+        "explanation": "Extends school durability checks to include social context."
+      },
+      {
+        "qid": "Q3",
+        "type": "generalized_from",
+        "explanation": "Pairs civic access breadth with cultural fit signals."
+      }
+    ]
+  },
+  {
+    "qid": "Q5",
+    "title": "Resilience path: diversity co-located with schools and libraries (within price band)",
+    "status": "resolved",
+    "sentenceRefs": ["7", "9", "13", "14", "21"],
+    "position_suggested_by": {
+      "text": "Boroughs where high diversity co-exists with durable school access and even library coverage—without leaving the attainable band—are marked as resilient buys.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Matrix co-location checks plus ward-level stability for schools and network evenness for libraries.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q4",
+        "type": "suggested_by",
+        "explanation": "Diversity overlay prompted verification of co-location with core services."
+      },
+      {
+        "qid": "Q2",
+        "type": "specialized_from",
+        "explanation": "Specializes school durability into a resilience criterion."
+      },
+      {
+        "qid": "Q3",
+        "type": "specialized_from",
+        "explanation": "Specializes library evenness into a resilience criterion."
+      }
+    ]
+  },
+  {
+    "qid": "Q6",
+    "title": "Premium justification test (diversity strong but price creeping up)",
+    "status": "resolved",
+    "sentenceRefs": ["10", "15", "16"],
+    "position_suggested_by": {
+      "text": "Small, justified premiums are acceptable when service access and diversity gains are clear; otherwise, candidates revert to the value-first pool.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Price–value scatter with premium thresholds and keep/drop rules.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q5",
+        "type": "suggested_by",
+        "explanation": "Resilience candidates with slight price premiums required explicit justification."
+      },
+      {
+        "qid": "Q0",
+        "type": "generalized_from",
+        "explanation": "Premium is judged relative to the near-median price band baseline."
+      }
+    ]
+  },
+  {
+    "qid": "Q7",
+    "title": "Profile-fit path: community clusters with price and service thresholds",
+    "status": "resolved",
+    "sentenceRefs": ["8", "11", "17", "18", "12", "19", "22"],
+    "position_suggested_by": {
+      "text": "Cluster-based recommendations retain boroughs that match community profiles while meeting price bands and baseline school/library thresholds, with mitigations or caveats as needed.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Clustering on ethnicity/country-of-birth, threshold filters, adjacency mitigations, and coverage checks.",
+      "basis": "mechanism"
+    },
+    "links": [
+      {
+        "qid": "Q4",
+        "type": "suggested_by",
+        "explanation": "Community fit prompted cluster-level comparisons."
+      },
+      {
+        "qid": "Q5",
+        "type": "replaces",
+        "explanation": "Provides a parallel route centered on profile matching rather than resilience co-location."
+      }
+    ]
+  },
+  {
+    "qid": "Q8",
+    "title": "Method cross-check: weighted composite + sensitivity; robust picks",
+    "status": "resolved",
+    "sentenceRefs": ["24", "25", "26", "27"],
+    "position_suggested_by": {
+      "text": "Robust candidates persist across weighting changes and align with rule-based selections from the resilience and profile-fit paths.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Weighted scoring with price penalty, tornado sensitivity, and overlap with rule-based sets.",
+      "basis": "mechanism"
+    },
+    "links": [
+      {
+        "qid": "Q5",
+        "type": "generalized_from",
+        "explanation": "Cross-validates resilience selections via a different method."
+      },
+      {
+        "qid": "Q7",
+        "type": "generalized_from",
+        "explanation": "Cross-validates profile-fit selections via a different method."
+      }
+    ]
+  },
+  {
+    "qid": "Q9",
+    "title": "Contradictory evidence handling (services-strong vs diversity-strong)",
+    "status": "resolved",
+    "sentenceRefs": ["10", "11", "12", "21", "22", "28"],
+    "position_suggested_by": {
+      "text": "Recommendations split by buyer priority: education/civics-first where diversity is lower but services are strong, or community-fit-first where diversity is higher and services meet thresholds with mitigations.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Explicit branch logic producing conditional guidance for divergent strengths.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q5",
+        "type": "suggested_by",
+        "explanation": "Service strength uncovered cases with lower diversity needing persona-specific framing."
+      },
+      {
+        "qid": "Q7",
+        "type": "suggested_by",
+        "explanation": "High-diversity cases with modest services required mitigation or caveats."
+      }
+    ]
+  },
+  {
+    "qid": "Q10",
+    "title": "Final synthesis (robust → resilience → profile-fit lanes)",
+    "status": "resolved",
+    "sentenceRefs": ["28"],
+    "position_suggested_by": {
+      "text": "Prioritize robust boroughs first, then offer resilience picks and cluster-based profile fits, each tied to price band, ward consistency, and any justified premiums.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Aggregation of methodological and branch outcomes into an audience-facing decision structure.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "Q8",
+        "type": "specialized_from",
+        "explanation": "Elevates robust cross-validated options to the top of the final guidance."
+      },
+      {
+        "qid": "Q5",
+        "type": "specialized_from",
+        "explanation": "Carries resilience recommendations forward with evidence notes."
+      },
+      {
+        "qid": "Q7",
+        "type": "specialized_from",
+        "explanation": "Carries profile-fit recommendations forward with caveats/mitigations."
+      }
+    ]
+  }
+]
+
+}

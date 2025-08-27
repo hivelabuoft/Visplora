@@ -1,0 +1,224 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "population",
+  "processed_at": "2025-08-20T18:05:28.886Z",
+  "total_queries": 10,
+  "sql_queries": [
+    {
+      "proposition_id": "population_geographic_patterns_gp1",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp2",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp3",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp4",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp5",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value, AVG(SUM(population_count)) OVER () AS mean_value FROM population_data GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp6",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp7",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp8",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp9",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_with_mean_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "mean_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value, AVG(SUM(population_count)) OVER () AS mean_value FROM population_data GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "population_geographic_patterns_gp10",
+      "dataset": "population",
+      "time_period": "Not applicable",
+      "variables_needed": [
+        "area",
+        "value"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM population_data GROUP BY area_name ORDER BY value DESC;"
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+{
+  "dataset_id": "voa-average-rent-raw-data",
+  "dataset_name": "VOA Average Rent Raw Data",
+  "category": "private-rent",
+  "description": "VOA average rent raw data by borough",
+  "file_path": "/dataset/london/private-rent/voa-average-rent-borough_Raw-data.csv",
+  "field_roles": [
+    {
+      "name": "2011",
+      "type": "numeric",
+      "roles": [
+        "time"
+      ],
+      "sample_values": [
+        2011,
+        2012,
+        2011.08
+      ]
+    },
+    {
+      "name": "Quarter",
+      "type": "categorical",
+      "roles": [
+        "time",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Q3",
+        "Q4",
+        "Q2"
+      ]
+    },
+    {
+      "name": "Code",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        "E09000002",
+        "E09000003",
+        "E09000004"
+      ]
+    },
+    {
+      "name": "Area",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Barking and Dagenham",
+        "Barnet",
+        "Bexley"
+      ]
+    },
+    {
+      "name": "Category",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Room",
+        "Studio",
+        "One Bedroom"
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        10,
+        80789,
+        4027.27
+      ]
+    },
+    {
+      "name": "Average",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        267,
+        10578,
+        1107.88
+      ]
+    },
+    {
+      "name": "Lower quartile",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        238,
+        5958,
+        855.78
+      ]
+    },
+    {
+      "name": "Median",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        260,
+        8667,
+        1021.19
+      ]
+    },
+    {
+      "name": "Upper quartile",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        303,
+        12881,
+        1249.7
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "line_chart",
+      "description": "Time series analysis",
+      "encoding": {
+        "x": {
+          "name": "2011",
+          "type": "numeric",
+          "roles": [
+            "time"
+          ],
+          "sample_values": [
+            2011,
+            2012,
+            2011.08
+          ]
+        },
+        "y": {
+          "name": "Count of rents",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            10,
+            80789,
+            4027.27
+          ]
+        },
+        "color": {
+          "name": "Quarter",
+          "type": "categorical",
+          "roles": [
+            "time",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Q3",
+            "Q4",
+            "Q2"
+          ]
+        }
+      }
+    },
+    {
+      "type": "choropleth_map",
+      "description": "Geographic distribution of metrics",
+      "encoding": {
+        "geo": {
+          "name": "Area",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barking and Dagenham",
+            "Barnet",
+            "Bexley"
+          ]
+        },
+        "color": {
+          "name": "Count of rents",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            10,
+            80789,
+            4027.27
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "Area",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Barking and Dagenham",
+            "Barnet",
+            "Bexley"
+          ]
+        },
+        "y": {
+          "name": "Count of rents",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            10,
+            80789,
+            4027.27
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Category comparison",
+      "encoding": {
+        "x": {
+          "name": "Quarter",
+          "type": "categorical",
+          "roles": [
+            "time",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Q3",
+            "Q4",
+            "Q2"
+          ]
+        },
+        "y": {
+          "name": "Count of rents",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            10,
+            80789,
+            4027.27
+          ]
+        }
+      }
+    },
+    {
+      "type": "stacked_bar_chart",
+      "description": "Multi-category analysis",
+      "encoding": {
+        "x": {
+          "name": "Quarter",
+          "type": "categorical",
+          "roles": [
+            "time",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "Q3",
+            "Q4",
+            "Q2"
+          ]
+        },
+        "y": {
+          "name": "Count of rents",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            10,
+            80789,
+            4027.27
+          ]
+        },
+        "color": {
+          "name": "Code",
+          "type": "text",
+          "roles": [
+            "category"
+          ],
+          "sample_values": [
+            "E09000002",
+            "E09000003",
+            "E09000004"
+          ]
+        }
+      }
+    },
+    {
+      "type": "histogram",
+      "description": "Distribution analysis",
+      "encoding": {
+        "x": {
+          "name": "Count of rents",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            10,
+            80789,
+            4027.27
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.723Z"
+}

@@ -1,0 +1,307 @@
+{
+  "dataset_id": "cob-borough",
+  "dataset_name": "Country of Birth by Borough",
+  "category": "country-of-births",
+  "description": "Population by country of birth across London boroughs",
+  "file_path": "/dataset/london/country-of-births/cob-borough.csv",
+  "field_roles": [
+    {
+      "name": "Year",
+      "type": "numeric",
+      "roles": [
+        "time"
+      ],
+      "sample_values": [
+        2017,
+        2018,
+        2017.98
+      ]
+    },
+    {
+      "name": "Area_Code",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "E09000001",
+        "E09000002",
+        "E09000003"
+      ]
+    },
+    {
+      "name": "Area_Name",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "City of London",
+        "Barking and Dagenham",
+        "Barnet"
+      ]
+    },
+    {
+      "name": "Broad_group",
+      "type": "categorical",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "Rest of the World",
+        "European Union",
+        "Asia"
+      ]
+    },
+    {
+      "name": "Detailed_group",
+      "type": "categorical",
+      "roles": [
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "All",
+        "Total",
+        "United Kingdom"
+      ]
+    },
+    {
+      "name": "Estimate",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        1,
+        65611,
+        533.08
+      ]
+    },
+    {
+      "name": "CI",
+      "type": "text",
+      "roles": [
+        "category"
+      ],
+      "sample_values": [
+        ":",
+        "z",
+        "z"
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "line_chart",
+      "description": "Time series analysis",
+      "encoding": {
+        "x": {
+          "name": "Year",
+          "type": "numeric",
+          "roles": [
+            "time"
+          ],
+          "sample_values": [
+            2017,
+            2018,
+            2017.98
+          ]
+        },
+        "y": {
+          "name": "Estimate",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            1,
+            65611,
+            533.08
+          ]
+        },
+        "color": {
+          "name": "Area_Code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        }
+      }
+    },
+    {
+      "type": "choropleth_map",
+      "description": "Geographic distribution of metrics",
+      "encoding": {
+        "geo": {
+          "name": "Area_Code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "color": {
+          "name": "Estimate",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            1,
+            65611,
+            533.08
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "Area_Code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "y": {
+          "name": "Estimate",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            1,
+            65611,
+            533.08
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Category comparison",
+      "encoding": {
+        "x": {
+          "name": "Area_Code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "y": {
+          "name": "Estimate",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            1,
+            65611,
+            533.08
+          ]
+        }
+      }
+    },
+    {
+      "type": "stacked_bar_chart",
+      "description": "Multi-category analysis",
+      "encoding": {
+        "x": {
+          "name": "Area_Code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "y": {
+          "name": "Estimate",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            1,
+            65611,
+            533.08
+          ]
+        },
+        "color": {
+          "name": "Area_Name",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "City of London",
+            "Barking and Dagenham",
+            "Barnet"
+          ]
+        }
+      }
+    },
+    {
+      "type": "histogram",
+      "description": "Distribution analysis",
+      "encoding": {
+        "x": {
+          "name": "Estimate",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            1,
+            65611,
+            533.08
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.714Z"
+}

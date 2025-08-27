@@ -1,0 +1,1400 @@
+{
+  "dataset_id": "voa-average-rent-summary",
+  "dataset_name": "VOA Average Rent Summary",
+  "category": "private-rent",
+  "description": "VOA average rent summary by borough",
+  "file_path": "/dataset/london/private-rent/voa-average-rent-borough_Summary.csv",
+  "field_roles": [
+    {
+      "name": "Area Code",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "E09000001",
+        "E09000002",
+        "E09000003"
+      ]
+    },
+    {
+      "name": "Area",
+      "type": "text",
+      "roles": [
+        "geo",
+        "category",
+        "facet"
+      ],
+      "sample_values": [
+        "City of London",
+        "Barking and Dagenham",
+        "Barnet"
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    },
+    {
+      "name": "Count of rents",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        100,
+        504970,
+        25189.56
+      ]
+    },
+    {
+      "name": "Average (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        541,
+        3208,
+        1453.31
+      ]
+    },
+    {
+      "name": "Lower quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        420,
+        1777,
+        1083.07
+      ]
+    },
+    {
+      "name": "Median (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        495,
+        2427,
+        1316.98
+      ]
+    },
+    {
+      "name": "Upper quartile (£)",
+      "type": "numeric",
+      "roles": [
+        "metric"
+      ],
+      "sample_values": [
+        595,
+        3489,
+        1634.64
+      ]
+    }
+  ],
+  "suggested_charts": [
+    {
+      "type": "choropleth_map",
+      "description": "Geographic distribution of metrics",
+      "encoding": {
+        "geo": {
+          "name": "Area Code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "color": {
+          "name": "Count of rents",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100,
+            504970,
+            25189.56
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Comparison across geographic areas",
+      "encoding": {
+        "x": {
+          "name": "Area Code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "y": {
+          "name": "Count of rents",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100,
+            504970,
+            25189.56
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar_chart",
+      "description": "Category comparison",
+      "encoding": {
+        "x": {
+          "name": "Area Code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "y": {
+          "name": "Count of rents",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100,
+            504970,
+            25189.56
+          ]
+        }
+      }
+    },
+    {
+      "type": "stacked_bar_chart",
+      "description": "Multi-category analysis",
+      "encoding": {
+        "x": {
+          "name": "Area Code",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "E09000001",
+            "E09000002",
+            "E09000003"
+          ]
+        },
+        "y": {
+          "name": "Count of rents",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100,
+            504970,
+            25189.56
+          ]
+        },
+        "color": {
+          "name": "Area",
+          "type": "text",
+          "roles": [
+            "geo",
+            "category",
+            "facet"
+          ],
+          "sample_values": [
+            "City of London",
+            "Barking and Dagenham",
+            "Barnet"
+          ]
+        }
+      }
+    },
+    {
+      "type": "histogram",
+      "description": "Distribution analysis",
+      "encoding": {
+        "x": {
+          "name": "Count of rents",
+          "type": "numeric",
+          "roles": [
+            "metric"
+          ],
+          "sample_values": [
+            100,
+            504970,
+            25189.56
+          ]
+        }
+      }
+    }
+  ],
+  "generated_at": "2025-08-18T19:58:17.723Z"
+}

@@ -1,0 +1,41 @@
+{
+  "input": {
+    "type": "cross_dataset",
+    "category": "economic_correlations",
+    "proposition_id": "cross_dataset_economic_correlations_19",
+    "proposition": "Boroughs with higher mean income in 2023 have more restaurants per capita in 2017.",
+    "datasets_required": [
+      "income",
+      "restaurants"
+    ],
+    "variables_needed": {
+      "income": [
+        "Area",
+        "Mean_income"
+      ],
+      "restaurants": [
+        "area",
+        "value"
+      ]
+    },
+    "time_periods": {
+      "income": "2023",
+      "restaurants": "2017"
+    },
+    "relationship_type": "proxy",
+    "suggested_visualization": "scatter_plot",
+    "temporal_assumption": "Higher income levels may correlate with a vibrant restaurant scene."
+  },
+  "analysis": "### Cross-Dataset Analysis Methodology\n\n1. **Data Collection and Preparation:**\n   - Extract income data for 2023 using the query:\n     ```sql\n     SELECT area AS Area, mean_income AS Mean_income FROM income_data WHERE year = 2023\n     ```\n   - Extract restaurant data for 2017 using the query:\n     ```sql\n     SELECT area AS area, restaurant_count AS value FROM restaurant_data WHERE date = 2017\n     ```\n   - Ensure both datasets are cleaned and standardized, with consistent naming conventions for the 'area' or 'borough' fields.\n\n2. **Data Integration:**\n   - Join the two datasets on the 'area' field to align income data with restaurant data for each borough.\n   - Calculate the number of restaurants per capita by normalizing the restaurant count with the population data for 2017, if available.\n\n3. **Temporal Alignment:**\n   - Recognize that the relationship is a proxy, meaning that the 2017 restaurant data is being used as an indicator of potential future trends or conditions in 2023.\n   - Consider any socio-economic changes between 2017 and 2023 that might affect the analysis.\n\n4. **Correlation Analysis:**\n   - Use statistical methods such as Pearson or Spearman correlation coefficients to quantify the relationship between mean income and restaurants per capita.\n   - Identify patterns or trends through scatter plot visualization.\n\n5. **Statistical Validation:**\n   - Perform hypothesis testing to determine the significance of the observed correlation.\n   - Use p-values to assess whether the correlation is statistically significant.\n\n### Key Findings and Correlations\n\n- **Correlation Coefficient:** Calculate the Pearson correlation coefficient to determine the strength and direction of the relationship between mean income and restaurants per capita.\n- **Trend Analysis:** Identify whether higher income boroughs tend to have more restaurants per capita, suggesting a positive correlation.\n- **Outliers:** Detect any boroughs that significantly deviate from the trend, which may indicate unique socio-economic factors or data anomalies.\n\n### Statistical Significance Measures\n\n- **P-Value:** Report the p-value to indicate the probability that the observed correlation occurred by chance. A p-value less than 0.05 typically indicates statistical significance.\n- **Confidence Intervals:** Provide confidence intervals for the correlation coefficient to understand the range within which the true correlation likely falls.\n\n### Data Quality Considerations\n\n- **Data Completeness:** Ensure that both datasets are complete and cover all boroughs of interest.\n- **Data Accuracy:** Verify the accuracy of the income and restaurant data, considering potential reporting errors or outdated information.\n- **Temporal Discrepancies:** Acknowledge the temporal gap between datasets and its potential impact on the analysis.\n\n### Visualization Recommendations\n\n- **Scatter Plot:** Create a scatter plot with mean income on the x-axis and restaurants per capita on the y-axis. Each point represents a borough, labeled accordingly.\n- **Trend Line:** Add a trend line to visualize the overall direction of the relationship.\n- **Highlight Outliers:** Use different colors or markers to highlight outliers or significant deviations from the trend.\n\n### Limitations and Assumptions\n\n- **Temporal Mismatch:** The analysis assumes that the 2017 restaurant data is a valid proxy for 2023 conditions, which may not account for changes over time.\n- **Causality vs. Correlation:** The analysis identifies correlation but does not imply causation. Other factors may influence both income and restaurant density.\n- **Data Limitations:** The absence of population data for per capita calculations could affect the accuracy of the restaurant density metric.\n\n### Conclusion\n\nThis analysis explores the relationship between mean income and restaurant density across London boroughs, providing insights into socio-economic patterns. While the findings suggest a potential correlation, further investigation with updated data and additional variables is recommended to strengthen the conclusions.",
+  "datasets_involved": [
+    "income",
+    "restaurants"
+  ],
+  "relationship_type": "proxy",
+  "temporal_alignment": {
+    "income": "2023",
+    "restaurants": "2017"
+  },
+  "processing_timestamp": "2025-08-20T06:26:44.872Z",
+  "status": "completed"
+}

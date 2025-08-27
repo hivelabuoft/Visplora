@@ -1,0 +1,23 @@
+{
+  "source_dataset": "private-rent",
+  "proposition_id": "private-rent_temporal_trends_tt1",
+  "dataset": "private-rent",
+  "time_period": "2020-2023",
+  "variables_needed": [
+    "area",
+    "value",
+    "date"
+  ],
+  "chart_type": "lineChart_simple_2D",
+  "example": [
+    {
+      "time": "",
+      "value": 0
+    },
+    {
+      "time": "",
+      "value": 0
+    }
+  ],
+  "sql_query": "SELECT date AS time, AVG(average_rent) AS value FROM rent_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;"
+}

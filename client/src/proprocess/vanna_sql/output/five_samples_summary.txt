@@ -1,0 +1,146 @@
+VANNA AI VALIDATION RESULTS
+========================================
+Test Date: 2025-08-20 15:25:27
+Input File: five_sample_propositions.json
+Total Propositions: 5
+
+SUMMARY:
+✅ Valid: 0
+🔧 Fixed: 5
+❌ Errors: 0
+⚠️  Needs Attention: 0
+
+DETAILED RESULTS:
+--------------------
+ID: crime-rates_temporal_trends_temp_001
+Dataset: crime-rates
+Status: fixed
+Issues: 1. The `date` column in the dataset uses the "YYYY-MM" format, not full dates like "YYYY-MM-DD". The original query incorrectly uses the full date format in the `BETWEEN` clause.
+2. The `count` column is not listed in the available columns, which suggests it might not exist. The query attempts to sum a non-existent column.
+Original SQL: SELECT date AS time, SUM(count) AS value FROM crime_data WHERE date BETWEEN '2022-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;
+Fixed SQL: ```sql
+SELECT date AS time, COUNT(*) AS value 
+FROM crime_data 
+WHERE date BETWEEN '2022-01' AND '2023-12' 
+GROUP BY date 
+ORDER BY date;
+```
+----------------------------------------
+ID: house-prices_temporal_trends_tt_001
+Dataset: house-prices
+Status: fixed
+Issues: 1. The table name `house_price_data` does not match the dataset structure provided.
+2. The column names `date`, `average_price`, and `area_name` do not exist in the dataset. The correct columns are `Year`, `Value`, and `Area`.
+3. The `Year` column format is "Year ending Dec 1995", which is not compatible with the `BETWEEN '2020-01-01' AND '2023-12-31'` date filtering.
+4. The `GROUP BY` clause is incorrect because it uses non-existent columns and does not match the dataset structure.
+Original SQL: SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date, area_name ORDER BY date;
+Fixed SQL: ```sql
+SELECT 
+    Year AS time, 
+    Value AS value 
+FROM 
+    house_prices 
+WHERE 
+    Year BETWEEN 'Year ending Dec 2020' AND 'Year ending Dec 2023' 
+GROUP BY 
+    Year, Area 
+ORDER BY 
+    Year;
+```
+----------------------------------------
+ID: population_temporal_trends_tt1
+Dataset: population
+Status: fixed
+Issues: 1. The dataset does not have a 'date' column; instead, it has columns for each year as individual columns (e.g., '2001', '2011').
+2. The original query assumes a date range filtering, which is not applicable since the dataset uses year columns.
+3. The table name 'population_data' does not match the dataset structure provided.
+4. The query needs to be adjusted to sum across the relevant year columns.
+Original SQL: SELECT date AS time, SUM(population_count) AS value FROM population_data WHERE date BETWEEN '2000-01-01' AND '2020-12-31' GROUP BY date ORDER BY date;
+Fixed SQL: ```sql
+SELECT 
+    '2001' AS time, SUM(CAST(REPLACE("2001", ',', '') AS INTEGER)) AS value 
+FROM 
+    population_data
+UNION ALL
+SELECT 
+    '2011' AS time, SUM(CAST(REPLACE("2011", ',', '') AS INTEGER)) AS value 
+FROM 
+    population_data
+UNION ALL
+SELECT 
+    '2021' AS time, SUM(CAST(REPLACE("2021", ',', '') AS INTEGER)) AS value 
+FROM 
+    population_data
+ORDER BY 
+    time;
+```
+----------------------------------------
+ID: vehicles_categorical_analysis_ca1
+Dataset: vehicles
+Status: fixed
+Issues: 1. The original query uses a column `date` which does not exist in the dataset. The dataset does not have a date column, so filtering by year is not applicable.
+2. The original query uses `vehicle_type` and `registration_count` columns, which do not exist in the dataset. The dataset has specific vehicle type columns like `Cars`, `Motor cycles`, etc.
+3. The aggregation logic needs to be adjusted to sum across the specific vehicle type columns.
+Original SQL: SELECT vehicle_type AS category, SUM(registration_count) AS value, (SUM(registration_count) * 100.0 / (SELECT SUM(registration_count) FROM vehicle_data WHERE YEAR(date) = 2023)) AS percentage FROM vehicle_data WHERE YEAR(date) = 2023 GROUP BY vehicle_type ORDER BY value DESC;
+Fixed SQL: ```sql
+SELECT 
+    'Cars' AS category, 
+    SUM(Cars) AS value, 
+    (SUM(Cars) * 100.0 / SUM(Total)) AS percentage 
+FROM vehicle_data
+UNION ALL
+SELECT 
+    'Motor cycles' AS category, 
+    SUM(Motor cycles) AS value, 
+    (SUM(Motor cycles) * 100.0 / SUM(Total)) AS percentage 
+FROM vehicle_data
+UNION ALL
+SELECT 
+    'Light goods' AS category, 
+    SUM(Light goods) AS value, 
+    (SUM(Light goods) * 100.0 / SUM(Total)) AS percentage 
+FROM vehicle_data
+UNION ALL
+SELECT 
+    'Heavy goods' AS category, 
+    SUM(Heavy goods) AS value, 
+    (SUM(Heavy goods) * 100.0 / SUM(Total)) AS percentage 
+FROM vehicle_data
+UNION ALL
+SELECT 
+    'Buses and coaches' AS category, 
+    SUM(Buses and coaches) AS value, 
+    (SUM(Buses and coaches) * 100.0 / SUM(Total)) AS percentage 
+FROM vehicle_data
+UNION ALL
+SELECT 
+    'Other vehicles' AS category, 
+    SUM(Other vehicles) AS value, 
+    (SUM(Other vehicles) * 100.0 / SUM(Total)) AS percentage 
+FROM vehicle_data
+ORDER BY value DESC;
+```
+----------------------------------------
+ID: private-rent_temporal_trends_tt1
+Dataset: private-rent
+Status: fixed
+Issues: 1. The original query uses a column named `date`, which does not exist in the dataset. The dataset has a `Quarter` column that likely represents time.
+2. The column `average_rent` does not exist; the correct column name is `Average`.
+3. The table name `rent_data` is incorrect; the dataset does not specify a table name, but we will assume it should be `private_rent` based on the context.
+4. The expected output structure requires a `time` field, which should be derived from the `Quarter` column.
+5. The date filtering logic needs to be adjusted to use the `Quarter` column, which is in the format 'QY' (e.g., 'Q2').
+Original SQL: SELECT date AS time, AVG(average_rent) AS value FROM rent_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date ORDER BY date;
+Fixed SQL: ```sql
+SELECT 
+    Quarter AS time, 
+    AVG(CAST(Average AS FLOAT)) AS value 
+FROM 
+    private_rent 
+WHERE 
+    Quarter BETWEEN 'Q1' AND 'Q4' 
+GROUP BY 
+    Quarter 
+ORDER BY 
+    Quarter;
+```
+----------------------------------------

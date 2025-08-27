@@ -1,0 +1,613 @@
+{
+  "chart_type": "lineChart",
+  "total_generated": 25,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_trend_lineChart_simple_2D_001",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Knife crime incidents in Lambeth surged by 30% between 2022 and 2023",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Knife Crime Trend in Lambeth",
+      "chart_description": "This chart illustrates the increase in knife crime incidents in Lambeth over the last two years.",
+      "reasoning": "A line chart effectively captures the trend of increasing knife crime incidents over time.",
+      "tapas_questions": [
+        "How has knife crime in Lambeth changed over the past two years?",
+        "Is there a seasonal pattern to these incidents?",
+        "How does Lambeth compare to other boroughs in terms of knife crime increase?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "crime_category_name",
+        "year",
+        "month"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_trend_lineChart_simple_2D_002",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "White British population in Newham decreased by 15% from 2010 to 2020",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "White British Population Change in Newham",
+      "chart_description": "This chart shows the decline of the White British population in Newham over a decade.",
+      "reasoning": "The line chart clearly shows the trend of population change over a decade.",
+      "tapas_questions": [
+        "What factors contributed to the decrease in the White British population?",
+        "How does this trend compare to other ethnic groups in Newham?",
+        "What are the implications of this demographic shift?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "local authority name",
+        "White British",
+        "year"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_trend_lineChart_simple_2D_003",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Increase in residents born in India in Harrow from 2015 to 2023",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Indian-born Population Trend in Harrow",
+      "chart_description": "This chart depicts the upward trend of Indian-born residents in Harrow over recent years.",
+      "reasoning": "The line chart effectively highlights the growth trend in the Indian-born population.",
+      "tapas_questions": [
+        "What might be driving the increase in Indian-born residents?",
+        "How does this trend compare to other boroughs?",
+        "What impact does this have on local services?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area_Name",
+        "Broad_group",
+        "Year"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_trend_lineChart_simple_2D_004",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Population growth in Tower Hamlets accelerated significantly after 2015",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Population Growth in Tower Hamlets",
+      "chart_description": "This chart shows the rapid population growth in Tower Hamlets starting from 2015.",
+      "reasoning": "A line chart is ideal for illustrating population growth over a defined time period.",
+      "tapas_questions": [
+        "What factors contributed to the accelerated growth?",
+        "How does Tower Hamlets' growth compare to other boroughs?",
+        "What challenges does this growth present?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "area",
+        "year"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "income_trend_lineChart_simple_2D_005",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Average income in Kensington and Chelsea increased by 20% from 2010 to 2020",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Income Growth in Kensington and Chelsea",
+      "chart_description": "This chart displays the steady increase in average income levels in Kensington and Chelsea over a decade.",
+      "reasoning": "A line chart effectively captures the steady increase in income over time.",
+      "tapas_questions": [
+        "What factors have driven income growth in this borough?",
+        "How does this trend compare to other affluent areas?",
+        "What impact does this income growth have on housing and living costs?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Income"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_trend_lineChart_simple_2D_006",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House prices in Hackney doubled between 2010 and 2023",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "House Price Inflation in Hackney",
+      "chart_description": "This chart illustrates the sharp increase in house prices in Hackney over the last decade.",
+      "reasoning": "A line chart is suitable for showing significant changes in house prices over time.",
+      "tapas_questions": [
+        "What are the key drivers of house price inflation in Hackney?",
+        "How does Hackney's price increase compare to other boroughs?",
+        "What are the long-term implications for residents?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "schools-colleges_trend_lineChart_simple_2D_007",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Student enrollment in secondary schools in Croydon has steadily increased since 2015",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Secondary School Enrollment in Croydon",
+      "chart_description": "This chart shows the increasing trend of student enrollment in Croydon's secondary schools.",
+      "reasoning": "A line chart effectively depicts the trend of increasing student enrollment over time.",
+      "tapas_questions": [
+        "What factors contribute to the rise in secondary school enrollment?",
+        "How does Croydon's trend compare to other boroughs?",
+        "What challenges does this increase pose to local education infrastructure?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "LANAME",
+        "Year",
+        "Enrollment"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_trend_lineChart_simple_2D_008",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Electric vehicle registrations in Greenwich increased fivefold from 2018 to 2023",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Rise of Electric Vehicles in Greenwich",
+      "chart_description": "This chart highlights the rapid increase in electric vehicle registrations in Greenwich.",
+      "reasoning": "A line chart is ideal for showing the exponential growth in electric vehicle numbers.",
+      "tapas_questions": [
+        "What policies have encouraged the adoption of electric vehicles?",
+        "How does Greenwich's growth compare to other areas?",
+        "What are the environmental impacts of this trend?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Local Authority",
+        "Year",
+        "Electric Vehicles"
+      ],
+      "time_period": "2018-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_trend_lineChart_simple_2D_009",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Growth in licensed restaurant units in Camden from 2010 to 2020",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Expansion of Restaurant Industry in Camden",
+      "chart_description": "This chart illustrates the growth of licensed restaurant units in Camden over a decade.",
+      "reasoning": "A line chart effectively shows the growth trend in restaurant units.",
+      "tapas_questions": [
+        "What factors have driven the growth of the restaurant industry?",
+        "How does Camden's growth compare to other boroughs?",
+        "What impact does this have on local employment?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Licensed Restaurants"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "private-rent_trend_lineChart_simple_2D_010",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Average private rent in Wandsworth increased by 25% between 2015 and 2023",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Rising Private Rents in Wandsworth",
+      "chart_description": "This chart shows the significant increase in average private rents in Wandsworth over recent years.",
+      "reasoning": "A line chart is suitable for illustrating the upward trend in rental prices.",
+      "tapas_questions": [
+        "What factors have contributed to rising rents in Wandsworth?",
+        "How does this trend compare to other boroughs?",
+        "What are the implications for housing affordability?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Average (£)"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_trend_lineChart_simple_3D_011",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Boutique gym facilities in Westminster tripled from 2015 to 2024",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Growth of Boutique Gyms in Westminster",
+      "chart_description": "This chart shows the rapid expansion of boutique gym facilities in Westminster over the past decade.",
+      "reasoning": "A 3D line chart with gym type as the third dimension highlights the specific growth of boutique gyms.",
+      "tapas_questions": [
+        "What trends are driving the growth of boutique gyms?",
+        "How does Westminster's gym growth compare to other boroughs?",
+        "What impact does this have on the fitness industry?"
+      ],
+      "3d_dimension": "gym_type",
+      "variables_needed": [
+        "borough_name",
+        "gym_type",
+        "facility_count",
+        "year"
+      ],
+      "time_period": "2015-2024",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "libraries_trend_lineChart_simple_3D_012",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Library visits per 1,000 population in Haringey declined steadily from 2010 to 2020",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Decline in Library Visits in Haringey",
+      "chart_description": "This chart illustrates the decrease in library visits per 1,000 population in Haringey over a decade.",
+      "reasoning": "A 3D line chart with year as the third dimension effectively shows the decline over time.",
+      "tapas_questions": [
+        "What factors have contributed to the decline in library visits?",
+        "How does this trend compare to other boroughs?",
+        "What are the implications for public library services?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "area",
+        "year",
+        "Library visits per 1,000 population"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "crime-rates_trend_lineChart_simple_3D_013",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Theft incidents in Southwark varied significantly across different months in 2023",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Monthly Theft Incidents in Southwark",
+      "chart_description": "This chart shows the monthly variation in theft incidents in Southwark during 2023.",
+      "reasoning": "A 3D line chart with month as the third dimension highlights monthly changes.",
+      "tapas_questions": [
+        "What months see the highest theft incidents in Southwark?",
+        "How do these variations compare to other crime categories?",
+        "What measures can be taken to address peak theft periods?"
+      ],
+      "3d_dimension": "month",
+      "variables_needed": [
+        "borough_name",
+        "crime_category_name",
+        "month",
+        "year"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_trend_lineChart_simple_3D_014",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Income disparities widened notably in Richmond upon Thames from 2010 to 2020",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Income Disparities in Richmond upon Thames",
+      "chart_description": "This chart highlights the widening income disparities in Richmond upon Thames over a decade.",
+      "reasoning": "A 3D line chart with income brackets as the third dimension shows disparities effectively.",
+      "tapas_questions": [
+        "What factors are contributing to widening income disparities?",
+        "How does this trend compare across different income brackets?",
+        "What policy measures could address these disparities?"
+      ],
+      "3d_dimension": "income_bracket",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Income",
+        "Income Bracket"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "population_trend_lineChart_simple_3D_015",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Elderly population in Barnet grew significantly from 2010 to 2023",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Growth of Elderly Population in Barnet",
+      "chart_description": "This chart shows the significant growth of the elderly population in Barnet over the years.",
+      "reasoning": "A 3D line chart with age group as the third dimension highlights demographic changes.",
+      "tapas_questions": [
+        "What services are needed to support the growing elderly population?",
+        "How does Barnet's elderly population growth compare to other areas?",
+        "What are the long-term implications for healthcare and housing?"
+      ],
+      "3d_dimension": "age_group",
+      "variables_needed": [
+        "area",
+        "year",
+        "age_group",
+        "population"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "crime-rates_trend_lineChart_with_mean_2D_016",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Violent crime rates in Westminster consistently above London average from 2020 to 2023",
+      "chart_type": "lineChart_with_mean_2D",
+      "chart_title": "Violent Crime Rates in Westminster vs London Average",
+      "chart_description": "This chart compares violent crime rates in Westminster to the London average over recent years.",
+      "reasoning": "Adding a mean line provides context by showing how Westminster compares to the overall average.",
+      "tapas_questions": [
+        "Why are violent crime rates higher in Westminster?",
+        "How does the trend compare to other forms of crime?",
+        "What initiatives could reduce violent crime in the area?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "crime_category_name",
+        "year",
+        "crime_rate"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_trend_lineChart_with_mean_2D_017",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "House prices in Brent consistently below London average from 2010 to 2023",
+      "chart_type": "lineChart_with_mean_2D",
+      "chart_title": "House Prices in Brent vs London Average",
+      "chart_description": "This chart shows how house prices in Brent compare to the London average over time.",
+      "reasoning": "The mean line provides a benchmark against which to compare Brent's housing market.",
+      "tapas_questions": [
+        "What factors keep Brent's house prices below the average?",
+        "How does this affect the local housing market?",
+        "What are the potential benefits or drawbacks for residents?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Value"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_trend_lineChart_with_mean_2D_018",
+      "dataset": "vehicles",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Car ownership in outer London exceeds city average consistently from 2015 to 2023",
+      "chart_type": "lineChart_with_mean_2D",
+      "chart_title": "Car Ownership in Outer London vs City Average",
+      "chart_description": "This chart highlights how car ownership in outer London compares to the city-wide average.",
+      "reasoning": "A mean line shows the relative difference in car ownership levels.",
+      "tapas_questions": [
+        "What drives higher car ownership in outer London?",
+        "How does this trend impact transportation policies?",
+        "What are environmental implications of increased car ownership?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Local Authority",
+        "Year",
+        "Cars"
+      ],
+      "time_period": "2015-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_trend_lineChart_with_mean_2D_019",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Diversity index in Lewisham remains above London average from 2010 to 2020",
+      "chart_type": "lineChart_with_mean_2D",
+      "chart_title": "Diversity Index in Lewisham vs London Average",
+      "chart_description": "This chart shows how Lewisham's diversity index compares to the London average.",
+      "reasoning": "A mean line provides a clear comparison of Lewisham's diversity against the city average.",
+      "tapas_questions": [
+        "What contributes to Lewisham's high diversity index?",
+        "How does diversity impact community cohesion?",
+        "What trends are seen in other boroughs?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "local authority name",
+        "year",
+        "diversity_index"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "restaurants_trend_lineChart_with_threshold_2D_020",
+      "dataset": "restaurants",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Licensed restaurant employment in Westminster surpassed 10,000 jobs in 2022",
+      "chart_type": "lineChart_with_threshold_2D",
+      "chart_title": "Restaurant Employment Growth in Westminster",
+      "chart_description": "This chart shows the growth of employment in licensed restaurants in Westminster, highlighting when it surpassed 10,000 jobs.",
+      "reasoning": "A threshold line emphasizes the significant milestone in employment figures.",
+      "tapas_questions": [
+        "What factors contributed to reaching this employment milestone?",
+        "How does this growth compare to other sectors?",
+        "What are the economic implications for Westminster?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area name",
+        "Year",
+        "Licensed Restaurants Employment"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "gyms_trend_lineChart_with_threshold_2D_021",
+      "dataset": "gyms",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Total gym facilities in Camden exceeded 100 in 2023",
+      "chart_type": "lineChart_with_threshold_2D",
+      "chart_title": "Growth of Gym Facilities in Camden",
+      "chart_description": "This chart highlights the growth of gym facilities in Camden, marking when the total surpassed 100.",
+      "reasoning": "A threshold line effectively marks the significant growth milestone.",
+      "tapas_questions": [
+        "What has driven the increase in gym facilities?",
+        "How does this growth compare to other boroughs?",
+        "What are the implications for local health and fitness?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "facility_count"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "libraries_trend_lineChart_with_threshold_2D_022",
+      "dataset": "libraries",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Library visits in Hackney fell below 500 visits per 1,000 population in 2020",
+      "chart_type": "lineChart_with_threshold_2D",
+      "chart_title": "Decline in Library Visits in Hackney",
+      "chart_description": "This chart illustrates the decline in library visits in Hackney, marking when visits fell below 500 per 1,000 population.",
+      "reasoning": "A threshold line highlights the significant decline in library usage.",
+      "tapas_questions": [
+        "What factors have led to the decline in library visits?",
+        "How does Hackney compare to other boroughs?",
+        "What strategies could reverse this trend?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "area",
+        "year",
+        "Library visits per 1,000 population"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "private-rent_trend_lineChart_with_threshold_2D_023",
+      "dataset": "private-rent",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Median rent in Islington surpassed £1,500 in 2022",
+      "chart_type": "lineChart_with_threshold_2D",
+      "chart_title": "Rising Median Rent in Islington",
+      "chart_description": "This chart shows the increase in median rent in Islington, highlighting when it exceeded £1,500.",
+      "reasoning": "A threshold line marks the point of significant rent increase.",
+      "tapas_questions": [
+        "How does the rent increase affect affordability in Islington?",
+        "What are the main drivers of rent increases?",
+        "How does this trend compare to other boroughs?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area",
+        "Year",
+        "Median (£)"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "country-of-births_trend_lineChart_with_threshold_2D_024",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Residents born in Poland in Ealing exceeded 10,000 in 2020",
+      "chart_type": "lineChart_with_threshold_2D",
+      "chart_title": "Growth of Polish-born Residents in Ealing",
+      "chart_description": "This chart shows the increase in Polish-born residents in Ealing, marking when the population exceeded 10,000.",
+      "reasoning": "A threshold line highlights the significant demographic milestone.",
+      "tapas_questions": [
+        "What factors have led to the growth of Polish-born residents?",
+        "How does this trend compare to other boroughs?",
+        "What cultural impacts does this demographic change have?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "Area_Name",
+        "Year",
+        "Broad_group",
+        "Estimate"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "schools-colleges_trend_lineChart_with_threshold_2D_025",
+      "dataset": "schools-colleges",
+      "category": "chart_specific_analysis",
+      "reworded_proposition": "Primary school enrollment in Hammersmith and Fulham fell below 5,000 in 2022",
+      "chart_type": "lineChart_with_threshold_2D",
+      "chart_title": "Decline in Primary School Enrollment in Hammersmith and Fulham",
+      "chart_description": "This chart highlights the decline in primary school enrollment in Hammersmith and Fulham, marking when it fell below 5,000.",
+      "reasoning": "A threshold line effectively marks the significant decline in enrollment numbers.",
+      "tapas_questions": [
+        "What factors have contributed to declining primary school enrollment?",
+        "How does this trend impact local education policies?",
+        "What measures could reverse the decline?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "LANAME",
+        "Year",
+        "Enrollment"
+      ],
+      "time_period": "2010-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ],
+  "generation_timestamp": "2025-08-20T17:07:37.315Z"
+}

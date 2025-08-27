@@ -1,0 +1,60 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "vehicles",
+  "processed_at": "2025-08-20T04:08:42.049Z",
+  "total_propositions": 2,
+  "propositions": [
+    {
+      "proposition_id": "vehicles_cross_dimensional_cd1",
+      "dataset": "vehicles",
+      "category": "cross_dimensional",
+      "original_proposition": "Electric vehicle registrations peak 30% higher in inner London boroughs during summer months from 2020 to 2023.",
+      "reworded_proposition": "Inner London boroughs see a noticeable surge in electric vehicle registrations during the summer months over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Summer Surge in EV Registrations in Inner London",
+      "chart_description": "Trends in electric vehicle registrations in inner London from 2020 to 2023.",
+      "reasoning": "A line chart effectively illustrates trends over time, highlighting seasonal peaks in registrations.",
+      "tapas_questions": [
+        "Which borough has the highest electric vehicle registrations during summer?",
+        "How do electric vehicle registrations in inner London compare to outer London?",
+        "What is the trend of electric vehicle registrations from 2020 to 2023?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2020-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "vehicles_cross_dimensional_cd2",
+      "dataset": "vehicles",
+      "category": "cross_dimensional",
+      "original_proposition": "Hybrid vehicles show a 20% increase in registrations in outer London boroughs during winter months from 2019 to 2023.",
+      "reworded_proposition": "Hybrid vehicle registrations have steadily increased in outer London boroughs during the winter months over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Hybrid Vehicle Registrations in Outer London",
+      "chart_description": "Trend of hybrid vehicle registrations in outer boroughs from 2019 to 2023.",
+      "reasoning": "A line chart effectively shows the trend of increasing hybrid vehicle registrations over time, highlighting seasonal patterns.",
+      "tapas_questions": [
+        "Which borough has the highest increase in hybrid vehicle registrations?",
+        "How do hybrid vehicle registrations in outer boroughs compare to inner boroughs?",
+        "What is the trend of hybrid vehicle registrations from 2019 to 2023?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

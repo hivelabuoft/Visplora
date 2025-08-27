@@ -1,0 +1,216 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "country-of-births",
+  "processed_at": "2025-08-20T04:05:48.167Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_001",
+      "dataset": "country-of-births",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2018, Westminster had the highest number of births from European countries, accounting for 20% of the total in London.",
+      "reworded_proposition": "In 2018, Westminster emerged as the borough with the most births from European countries, making up a significant portion of London's total.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Births from European Countries in London Boroughs, 2018",
+      "chart_description": "Comparison of births from European countries across London boroughs in 2018.",
+      "reasoning": "A simple bar chart effectively highlights the comparison of births from European countries across different boroughs, emphasizing Westminster's leading position.",
+      "tapas_questions": [
+        "Which borough had the highest number of births from European countries?",
+        "What percentage of births in London were from European countries in Westminster?",
+        "How does Westminster compare to other boroughs in terms of births from European countries?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_002",
+      "dataset": "country-of-births",
+      "category": "geographic_patterns",
+      "original_proposition": "Births from African countries were predominantly in Southwark and Lambeth, making up 30% of the total in 2017.",
+      "reworded_proposition": "Southwark and Lambeth are key areas for births from African countries, contributing significantly to the total in 2017.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Births from African Countries by Borough in 2017",
+      "chart_description": "Visual representation of boroughs with highest births from African countries in 2017.",
+      "reasoning": "A simple bar chart effectively highlights the distribution of births from African countries across different boroughs, emphasizing the concentration in Southwark and Lambeth.",
+      "tapas_questions": [
+        "Which borough has the highest number of births from African countries?",
+        "What percentage of births from African countries occurred in Southwark?",
+        "How does Lambeth compare to Southwark in terms of births from African countries?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_003",
+      "dataset": "country-of-births",
+      "category": "geographic_patterns",
+      "original_proposition": "Outer London boroughs collectively accounted for 60% of births from Asian countries in 2018.",
+      "reworded_proposition": "In 2018, outer London boroughs were the predominant regions for births from Asian countries.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Births from Asian Countries in Outer London",
+      "chart_description": "Distribution of births from Asian countries across London boroughs in 2018.",
+      "reasoning": "A bar chart effectively shows the distribution of births across different boroughs, highlighting the dominance of outer London.",
+      "tapas_questions": [
+        "Which borough had the highest number of births from Asian countries?",
+        "What percentage of births from Asian countries occurred in outer London?",
+        "How do inner and outer London compare in terms of births from Asian countries?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_004",
+      "dataset": "country-of-births",
+      "category": "geographic_patterns",
+      "original_proposition": "North London boroughs had a 25% higher birth rate from Middle Eastern countries compared to South London in 2017.",
+      "reworded_proposition": "In 2017, birth rates from Middle Eastern countries were notably higher in North London boroughs compared to those in South London.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Birth Rates from Middle Eastern Countries in London",
+      "chart_description": "Comparison of birth rates between North and South London boroughs in 2017.",
+      "reasoning": "A bar chart with a mean line effectively highlights the comparison between North and South London boroughs, showing how each stands relative to the average.",
+      "tapas_questions": [
+        "Which borough has the highest birth rate from Middle Eastern countries?",
+        "What is the average birth rate from Middle Eastern countries across all London boroughs?",
+        "How do North London boroughs compare to South London in terms of birth rates from Middle Eastern countries?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_005",
+      "dataset": "country-of-births",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2018, births from Oceania were concentrated in Kensington and Chelsea, representing 40% of such births in London.",
+      "reworded_proposition": "In 2018, Kensington and Chelsea emerged as a key area for births from Oceania, accounting for a significant portion of such births in London.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Oceania Birth Concentration in Kensington and Chelsea",
+      "chart_description": "Distribution of births from Oceania across London boroughs in 2018.",
+      "reasoning": "A bar chart effectively highlights the concentration of births from Oceania in Kensington and Chelsea compared to other boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest number of births from Oceania?",
+        "What percentage of Oceania births occurred in Kensington and Chelsea?",
+        "How does Kensington and Chelsea compare to other boroughs in Oceania births?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_006",
+      "dataset": "country-of-births",
+      "category": "geographic_patterns",
+      "original_proposition": "East London boroughs showed a 15% increase in births from South American countries from 2017 to 2018.",
+      "reworded_proposition": "East London boroughs experienced a noticeable rise in births from South American origins between 2017 and 2018.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Rise in South American Births in East London",
+      "chart_description": "Trend of births from South America in East London boroughs from 2017 to 2018.",
+      "reasoning": "A line chart effectively shows the trend over time, highlighting the increase in births from South America.",
+      "tapas_questions": [
+        "Which borough had the highest increase in South American births?",
+        "What percentage of births were from South America in 2018?",
+        "How did the number of South American births change from 2017 to 2018?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017-2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_007",
+      "dataset": "country-of-births",
+      "category": "geographic_patterns",
+      "original_proposition": "Births from North American countries were evenly distributed across London boroughs in 2018, with no borough accounting for more than 10%.",
+      "reworded_proposition": "Births from North American countries were evenly spread across London boroughs in 2018, with no single borough dominating the distribution.",
+      "chart_type": "barChart_simple_3D",
+      "chart_title": "Distribution of North American Births Across London Boroughs",
+      "chart_description": "Visualizing the even spread of North American births across boroughs in 2018.",
+      "reasoning": "A 3D bar chart effectively displays the distribution across boroughs, allowing for an additional dimension if needed.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of North American births?",
+        "What percentage of North American births is in each borough?",
+        "How does the distribution of North American births compare across boroughs?"
+      ],
+      "3d_dimension": "geographic_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_geographic_patterns_gp_008",
+      "dataset": "country-of-births",
+      "category": "geographic_patterns",
+      "original_proposition": "In 2017, births from Caribbean countries were predominantly in the boroughs of Hackney and Haringey, making up 35% of the total.",
+      "reworded_proposition": "In 2017, Hackney and Haringey emerged as key areas for births from Caribbean countries, accounting for a significant portion of the total.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Caribbean Births Concentration in 2017",
+      "chart_description": "Distribution of Caribbean births across boroughs in 2017.",
+      "reasoning": "A bar chart effectively highlights the distribution of births across different boroughs, making it easy to compare Hackney and Haringey with other areas.",
+      "tapas_questions": [
+        "Which borough has the highest number of Caribbean births?",
+        "What percentage of Caribbean births occurred in Hackney?",
+        "How do Hackney and Haringey compare in terms of Caribbean births?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

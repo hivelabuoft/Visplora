@@ -1,0 +1,112 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "restaurants",
+  "processed_at": "2025-08-20T04:09:09.294Z",
+  "total_propositions": 4,
+  "propositions": [
+    {
+      "proposition_id": "restaurants_cross_dimensional_cd_001",
+      "dataset": "restaurants",
+      "category": "cross_dimensional",
+      "original_proposition": "The growth of licensed restaurants in central London boroughs was 30% higher than in outer boroughs from 2005 to 2015.",
+      "reworded_proposition": "Central London boroughs have seen a notably faster increase in licensed restaurants compared to outer boroughs over the past decade.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Growth of Licensed Restaurants in London Boroughs",
+      "chart_description": "Comparison of restaurant growth in central vs. outer boroughs from 2005 to 2015.",
+      "reasoning": "A line chart effectively illustrates trends over time, making it suitable for comparing growth rates between central and outer boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest growth in licensed restaurants?",
+        "How does the growth in central boroughs compare to outer boroughs?",
+        "What is the average growth rate of licensed restaurants across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2005-2015",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_cross_dimensional_cd_002",
+      "dataset": "restaurants",
+      "category": "cross_dimensional",
+      "original_proposition": "The increase in unlicensed restaurants in the east of London coincides with a 15% rise in employment from 2010 to 2017.",
+      "reworded_proposition": "The rise in unlicensed restaurants in East London aligns with a notable increase in employment from 2010 to 2017.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Unlicensed Restaurants and Employment Growth",
+      "chart_description": "Explore the trend of unlicensed restaurants and employment in East London from 2010 to 2017.",
+      "reasoning": "A simple 2D bar chart effectively illustrates the correlation between two variables over time, highlighting trends in both unlicensed restaurants and employment.",
+      "tapas_questions": [
+        "How did the number of unlicensed restaurants change from 2010 to 2017?",
+        "What percentage of employment increase occurred in East London?",
+        "Which borough in East London saw the highest rise in unlicensed restaurants?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2010-2017",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "restaurants_cross_dimensional_cd_003",
+      "dataset": "restaurants",
+      "category": "cross_dimensional",
+      "original_proposition": "The number of family-owned restaurants in south London increased by 20% during the economic recovery period from 2012 to 2017.",
+      "reworded_proposition": "Family-owned restaurants in south London saw a notable rise during the economic recovery period from 2012 to 2017.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Growth of Family-Owned Restaurants in South London",
+      "chart_description": "Trends in family-owned restaurant numbers from 2012 to 2017.",
+      "reasoning": "A 3D line chart effectively shows trends over time and can incorporate additional geographic or categorical dimensions, such as boroughs or restaurant types.",
+      "tapas_questions": [
+        "How did the number of family-owned restaurants change from 2012 to 2017?",
+        "Which borough in south London had the highest increase in family-owned restaurants?",
+        "What is the average growth rate of family-owned restaurants across all boroughs?"
+      ],
+      "3d_dimension": "geographic_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2012-2017",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_cross_dimensional_cd_004",
+      "dataset": "restaurants",
+      "category": "cross_dimensional",
+      "original_proposition": "The proportion of vegan restaurants in inner London boroughs increased by 30% more than in outer boroughs from 2010 to 2017.",
+      "reworded_proposition": "Inner London boroughs have seen a notably faster rise in vegan restaurants compared to their outer counterparts over recent years.",
+      "chart_type": "barChart_simple_3D",
+      "chart_title": "Growth of Vegan Restaurants in London Boroughs",
+      "chart_description": "Comparison of vegan restaurant growth in inner vs outer London from 2010 to 2017",
+      "reasoning": "A 3D bar chart effectively displays the comparative growth of vegan restaurants across different boroughs, with the third dimension allowing for a temporal breakdown.",
+      "tapas_questions": [
+        "Which borough has the highest increase in vegan restaurants?",
+        "How does the growth rate of vegan restaurants in inner boroughs compare to outer boroughs?",
+        "What is the average growth rate of vegan restaurants across all boroughs?"
+      ],
+      "3d_dimension": "time_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2010-2017",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    }
+  ]
+}

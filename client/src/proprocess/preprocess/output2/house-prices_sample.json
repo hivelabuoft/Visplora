@@ -1,0 +1,23 @@
+{
+  "source_dataset": "house-prices",
+  "proposition_id": "house-prices_temporal_trends_tt_001",
+  "dataset": "house-prices",
+  "time_period": "2020-2023",
+  "variables_needed": [
+    "area",
+    "value",
+    "date"
+  ],
+  "chart_type": "lineChart_simple_2D",
+  "example": [
+    {
+      "time": "",
+      "value": 0
+    },
+    {
+      "time": "",
+      "value": 0
+    }
+  ],
+  "sql_query": "SELECT date AS time, average_price AS value FROM house_price_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date, area_name ORDER BY date;"
+}

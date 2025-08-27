@@ -1,0 +1,320 @@
+{
+  "category": "categorical_analysis",
+  "dataset": "country-of-births",
+  "processed_at": "2025-08-20T04:06:05.939Z",
+  "total_propositions": 12,
+  "propositions": [
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_001",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "European countries were the most common birth origin, accounting for 45% of all births in 2018.",
+      "reworded_proposition": "In 2018, European countries emerged as the predominant birth origin, representing a significant portion of all births.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Birth Origins in 2018: European Dominance",
+      "chart_description": "Visualizing the distribution of birth origins in 2018, highlighting Europe's prominence.",
+      "reasoning": "A donut chart effectively illustrates the proportion of births by origin, emphasizing Europe's share within the total distribution.",
+      "tapas_questions": [
+        "Which region had the highest percentage of births in 2018?",
+        "What percentage of births were from European countries?",
+        "How does the birth origin from Europe compare to other continents?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_002",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2017, births from African countries represented 25% of the total, making it the second most common category.",
+      "reworded_proposition": "In 2017, births from African countries were a significant portion of the total, ranking as the second most common origin.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Birth Origins in London, 2017",
+      "chart_description": "Distribution of births by country of origin in London for 2017.",
+      "reasoning": "A donut chart effectively shows the proportion of each category within a whole, highlighting the significance of African countries as a birth origin.",
+      "tapas_questions": [
+        "Which country category has the highest birth percentage?",
+        "What percentage of births are from African countries?",
+        "How do births from African countries compare to those from other regions?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_003",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "Asian countries showed a 10% higher birth rate in inner London compared to outer London in 2018.",
+      "reworded_proposition": "Asian countries have a noticeably higher birth rate in inner London compared to outer London during 2018.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Birth Rate Comparison: Inner vs Outer London",
+      "chart_description": "Explore how birth rates differ between inner and outer London for Asian countries in 2018.",
+      "reasoning": "A bar chart with a mean line effectively highlights the difference in birth rates between two geographic areas, allowing for easy comparison against the average.",
+      "tapas_questions": [
+        "Which area has the highest birth rate for Asian countries?",
+        "What is the average birth rate across all areas?",
+        "How does inner London compare to outer London in terms of birth rate for Asian countries?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_004",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "Births from Middle Eastern countries were least common, making up only 5% of the total in 2017.",
+      "reworded_proposition": "Births from Middle Eastern countries were notably uncommon, representing a small fraction of the total in 2017.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Birth Distribution by Region in 2017",
+      "chart_description": "Visualizes the proportion of births from different regions in 2017.",
+      "reasoning": "A donut chart effectively shows the proportion of births from different regions, highlighting the small share from Middle Eastern countries.",
+      "tapas_questions": [
+        "What percentage of births were from Middle Eastern countries?",
+        "Which region had the highest percentage of births?",
+        "How do births from Middle Eastern countries compare to other regions?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_005",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2018, South American countries accounted for 15% of births in the boroughs of Lambeth and Southwark.",
+      "reworded_proposition": "In 2018, births in Lambeth and Southwark showed a notable contribution from South American countries.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Births by Region in Lambeth and Southwark, 2018",
+      "chart_description": "Visualizing the contribution of South American births in 2018.",
+      "reasoning": "A bar chart effectively compares categorical data, highlighting the contribution of different regions to births.",
+      "tapas_questions": [
+        "Which region has the highest percentage of births?",
+        "What percentage of births are from South America in Lambeth?",
+        "How do births from South America compare between Lambeth and Southwark?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_006",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "Births from Oceania were rare, constituting only 2% of the total in 2018.",
+      "reworded_proposition": "Births from Oceania were notably uncommon, making up a small fraction of the total in 2018.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Distribution of Births by Region in 2018",
+      "chart_description": "Visualizes the proportion of births from different regions in 2018.",
+      "reasoning": "A donut chart effectively highlights the small proportion of births from Oceania compared to other regions, emphasizing categorical differences.",
+      "tapas_questions": [
+        "What percentage of births were from Oceania?",
+        "Which region had the highest percentage of births?",
+        "How does the percentage of births from Oceania compare to other regions?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_007",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "Caribbean countries had a higher concentration of births in North London, accounting for 18% of the total in 2017.",
+      "reworded_proposition": "North London shows a notable concentration of births from Caribbean countries compared to other regions.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Birth Concentration by Country in North London",
+      "chart_description": "Distribution of births by country of origin in North London for 2017.",
+      "reasoning": "A simple 2D bar chart effectively compares the concentration of births from different countries within a specific region, highlighting the Caribbean countries' prominence.",
+      "tapas_questions": [
+        "Which borough has the highest concentration of Caribbean births?",
+        "What percentage of births in North London are from Caribbean countries?",
+        "How does the concentration of Caribbean births in North London compare to South London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_008",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2018, births from North American countries were evenly distributed, with no borough exceeding 8% of the total.",
+      "reworded_proposition": "In 2018, births from North American countries were fairly consistent across boroughs, with none surpassing a notable share.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Distribution of North American Births by Borough",
+      "chart_description": "Visualizing the even spread of births from North America across boroughs in 2018.",
+      "reasoning": "A bar chart effectively displays categorical data, highlighting the uniform distribution across different boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of North American births?",
+        "What percentage of births are from North America in each borough?",
+        "How does the distribution of North American births compare across boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_009",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "The proportion of births from Middle Eastern countries increased by 3% from 2017 to 2018.",
+      "reworded_proposition": "There was a noticeable rise in the proportion of births from Middle Eastern countries between 2017 and 2018.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Trends in Births from Middle Eastern Countries",
+      "chart_description": "Explore the increase in births from Middle Eastern origins from 2017 to 2018.",
+      "reasoning": "A line chart effectively illustrates trends over time, and the 3D aspect allows for additional breakdowns, such as by specific countries or demographic details, enhancing the analysis.",
+      "tapas_questions": [
+        "How did the proportion of births from Middle Eastern countries change from 2017 to 2018?",
+        "What is the average proportion of births from Middle Eastern countries across the years?",
+        "Which year had the highest proportion of births from Middle Eastern countries?"
+      ],
+      "3d_dimension": "category",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017-2018",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_010",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2017, births from European countries were concentrated in central London, making up 50% of the total.",
+      "reworded_proposition": "In 2017, central London saw a notable concentration of births from European countries, comprising a significant portion of the total.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "European Birth Concentration in Central London",
+      "chart_description": "Distribution of births from European countries in central London in 2017.",
+      "reasoning": "A bar chart effectively displays the distribution and concentration of categorical data, such as country of birth, across different areas.",
+      "tapas_questions": [
+        "Which borough had the highest percentage of births from European countries?",
+        "What percentage of total births in central London were from European countries?",
+        "How does the birth rate from European countries in central London compare to other areas?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2017",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_011",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "Births from African countries in 2018 were predominantly in the boroughs of Hackney and Tower Hamlets, accounting for 40% of the total.",
+      "reworded_proposition": "In 2018, Hackney and Tower Hamlets were key areas for births from African countries, contributing significantly to the total.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Births from African Countries by Borough in 2018",
+      "chart_description": "Distribution of births from African countries across boroughs in 2018.",
+      "reasoning": "A bar chart effectively illustrates the distribution of categorical data across different boroughs, highlighting key areas.",
+      "tapas_questions": [
+        "Which borough has the highest number of births from African countries?",
+        "What percentage of births from African countries occurred in Hackney?",
+        "How does Tower Hamlets compare to other boroughs in terms of births from African countries?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "country-of-births_categorical_analysis_ca_012",
+      "dataset": "country-of-births",
+      "category": "categorical_analysis",
+      "original_proposition": "In 2018, births from Asian countries were the most evenly distributed across London, with no single borough exceeding 12% of the total.",
+      "reworded_proposition": "In 2018, births from Asian countries were distributed quite evenly across London, with no borough dominating the total share.",
+      "chart_type": "barChart_simple_3D",
+      "chart_title": "Distribution of Asian Births Across London Boroughs",
+      "chart_description": "Visualizing the even spread of Asian births in London boroughs for 2018.",
+      "reasoning": "A 3D bar chart effectively illustrates the distribution across boroughs and can include an additional dimension for deeper analysis.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of Asian births?",
+        "What is the average percentage of Asian births across all boroughs?",
+        "How does the distribution of Asian births compare between two specific boroughs?"
+      ],
+      "3d_dimension": "geographic_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2018",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    }
+  ]
+}

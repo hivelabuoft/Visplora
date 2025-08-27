@@ -1,0 +1,24 @@
+{
+  "source_dataset": "vehicles",
+  "proposition_id": "vehicles_categorical_analysis_ca1",
+  "dataset": "vehicles",
+  "time_period": "2023",
+  "variables_needed": [
+    "category",
+    "value"
+  ],
+  "chart_type": "donutChart_simple_2D",
+  "example": [
+    {
+      "category": "",
+      "value": 0,
+      "percentage": 0
+    },
+    {
+      "category": "",
+      "value": 0,
+      "percentage": 0
+    }
+  ],
+  "sql_query": "SELECT vehicle_type AS category, SUM(registration_count) AS value, (SUM(registration_count) * 100.0 / (SELECT SUM(registration_count) FROM vehicle_data WHERE YEAR(date) = 2023)) AS percentage FROM vehicle_data WHERE YEAR(date) = 2023 GROUP BY vehicle_type ORDER BY value DESC;"
+}

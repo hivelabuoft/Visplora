@@ -1,0 +1,300 @@
+{
+  "category": "geographic_patterns",
+  "dataset": "ethnicity",
+  "processed_at": "2025-08-20T04:05:00.233Z",
+  "total_propositions": 12,
+  "propositions": [
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_001",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Brent has the highest count of Asian Indian residents, accounting for 15% of the total Asian Indian population in London.",
+      "reworded_proposition": "Brent stands out as the borough with the largest concentration of Asian Indian residents, representing a significant portion of this community in London.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Asian Indian Population by Borough",
+      "chart_description": "Comparison of Asian Indian residents across London boroughs.",
+      "reasoning": "A bar chart effectively highlights the comparison of Asian Indian populations across different boroughs, making it easy to identify the borough with the highest concentration.",
+      "tapas_questions": [
+        "Which borough has the highest Asian Indian population?",
+        "What percentage of the Asian Indian population is in Brent?",
+        "How does Brent compare to other boroughs in terms of Asian Indian residents?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "Asian_Indian"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_002",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "White British residents are predominantly located in Outer London boroughs, with a concentration of 70% compared to 30% in Inner London.",
+      "reworded_proposition": "White British residents are more commonly found in Outer London boroughs, showing a marked preference compared to Inner London.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Distribution of White British Residents in London",
+      "chart_description": "Comparison of White British population in Outer vs. Inner London boroughs.",
+      "reasoning": "A bar chart with a mean line is ideal for comparing the distribution of a demographic group across different geographic areas, highlighting deviations from the average.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of White British residents?",
+        "What is the average percentage of White British residents across all London boroughs?",
+        "How does the percentage of White British residents in Outer London compare to Inner London?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "White_British"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_003",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "The LSOA with the highest diversity index is located in Tower Hamlets, showing a balanced distribution across all major ethnic categories.",
+      "reworded_proposition": "Tower Hamlets stands out for having an LSOA with a remarkably balanced ethnic diversity, showcasing a harmonious distribution among major ethnic groups.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Ethnic Diversity Across LSOAs in Tower Hamlets",
+      "chart_description": "Visualizing the ethnic distribution balance in Tower Hamlets LSOAs.",
+      "reasoning": "A histogram heatmap effectively illustrates the distribution and balance of ethnic categories across different LSOAs, highlighting areas with notable diversity.",
+      "tapas_questions": [
+        "Which LSOA has the highest diversity index?",
+        "What percentage of the population in the highest diversity LSOA is White British?",
+        "How does the ethnic distribution in the top LSOA compare to others?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LSOA_code",
+        "White_British",
+        "Asian_Indian",
+        "Black_African"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_004",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "South London boroughs have a higher proportion of Black African residents, with Lambeth and Southwark accounting for 25% of the population.",
+      "reworded_proposition": "South London boroughs, particularly Lambeth and Southwark, have a notably higher presence of Black African residents compared to other areas.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Black African Population in South London Boroughs",
+      "chart_description": "Comparison of Black African population across South London boroughs.",
+      "reasoning": "A bar chart effectively highlights the differences in Black African population proportions across boroughs, making it easy to compare Lambeth and Southwark with others.",
+      "tapas_questions": [
+        "Which borough has the highest proportion of Black African residents?",
+        "What percentage of the Black African population is in Lambeth?",
+        "How does Lambeth compare to Southwark in terms of Black African population?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "Black_African"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_005",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "Newham and Brent are hotspots for Asian Indian residents, together comprising 40% of the total population in London.",
+      "reworded_proposition": "Newham and Brent stand out as key areas with a high concentration of Asian Indian residents, significantly contributing to the overall demographic makeup in London.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Asian Indian Population in London Boroughs",
+      "chart_description": "Comparison of Asian Indian population across London boroughs.",
+      "reasoning": "A simple bar chart effectively highlights the concentration of Asian Indian residents across different boroughs, making it easy to compare the demographic distribution.",
+      "tapas_questions": [
+        "Which borough has the highest Asian Indian population?",
+        "What percentage of the Asian Indian population resides in Newham?",
+        "How does Brent compare to Newham in terms of Asian Indian population?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "Asian_Indian"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_006",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Hackney shows a significant clustering of Black African residents, representing 20% of the borough's population.",
+      "reworded_proposition": "Hackney exhibits a notable concentration of Black African residents, forming a substantial part of its demographic makeup.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Concentration of Black African Residents in Hackney",
+      "chart_description": "Visualizing the demographic distribution in Hackney from the 2021 Census.",
+      "reasoning": "A simple bar chart effectively highlights the demographic concentration within Hackney, allowing for easy comparison with other boroughs.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of Black African residents?",
+        "What percentage of Hackney's population is Black African?",
+        "How does Hackney compare to other boroughs in terms of Black African population percentage?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "Black_African"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_007",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "West London boroughs such as Hillingdon and Ealing have a higher concentration of Asian Indian residents compared to East London.",
+      "reworded_proposition": "West London boroughs, including Hillingdon and Ealing, show a notably higher presence of Asian Indian residents compared to their East London counterparts.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Asian Indian Population in London Boroughs",
+      "chart_description": "Comparison of Asian Indian residents across London boroughs",
+      "reasoning": "A bar chart with a mean line effectively highlights differences in Asian Indian population concentration across boroughs, allowing for easy comparison against the average.",
+      "tapas_questions": [
+        "Which borough has the highest concentration of Asian Indian residents?",
+        "What is the average concentration of Asian Indian residents across all boroughs?",
+        "How does Hillingdon compare to Ealing in terms of Asian Indian population?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "Asian_Indian"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_008",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "The LSOAs in Kensington and Chelsea show a higher proportion of White British residents compared to neighboring boroughs.",
+      "reworded_proposition": "Kensington and Chelsea's LSOAs have a notably higher presence of White British residents compared to their neighboring boroughs.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "White British Population in Kensington and Chelsea",
+      "chart_description": "Distribution of White British residents across LSOAs in 2021.",
+      "reasoning": "The histogram heatmap effectively visualizes geographic patterns, highlighting differences in the proportion of White British residents across LSOAs.",
+      "tapas_questions": [
+        "Which LSOA has the highest proportion of White British residents?",
+        "What percentage of White British residents is in Kensington and Chelsea?",
+        "How does Kensington and Chelsea compare to neighboring boroughs in terms of White British population?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LSOA_code",
+        "White_British"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_009",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "Inner London boroughs have a more diverse ethnic composition with no single ethnic group exceeding 50% of the population.",
+      "reworded_proposition": "Inner London boroughs exhibit a rich tapestry of ethnic diversity, with no single group forming a majority.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Ethnic Diversity in Inner London Boroughs",
+      "chart_description": "Visual representation of ethnic composition in Inner London boroughs as per the 2021 Census.",
+      "reasoning": "A donut chart effectively illustrates the proportional distribution of multiple ethnic groups within each borough, highlighting diversity.",
+      "tapas_questions": [
+        "Which borough has the highest percentage of White British?",
+        "What percentage of the population is Black African in each borough?",
+        "How does the ethnic composition of one borough compare to another?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "White_British",
+        "Asian_Indian",
+        "Black_African"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_010",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "The borough of Croydon has seen a significant increase in Black African residents, now comprising 30% of the borough's population.",
+      "reworded_proposition": "Croydon has experienced a notable rise in its Black African population, now making up a substantial portion of its residents.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Rise in Black African Population in Croydon",
+      "chart_description": "Visualizing the growth of Black African residents in Croydon from the 2021 Census.",
+      "reasoning": "A bar chart effectively highlights the proportion of Black African residents in Croydon compared to other boroughs, emphasizing the increase.",
+      "tapas_questions": [
+        "What percentage of Croydon's population is Black African?",
+        "Which borough has the highest percentage of Black African residents?",
+        "How does Croydon's Black African population compare to other boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "Black_African"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_011",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "East London boroughs, particularly Newham, have a higher proportion of Asian Indian residents compared to the rest of London.",
+      "reworded_proposition": "East London, especially Newham, stands out for its notably higher concentration of Asian Indian residents compared to other London areas.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Asian Indian Population in East London Boroughs",
+      "chart_description": "Comparison of Asian Indian population across London boroughs in 2021.",
+      "reasoning": "A simple bar chart effectively highlights the differences in Asian Indian population proportions across boroughs, making it easy to compare Newham with others.",
+      "tapas_questions": [
+        "Which borough has the highest proportion of Asian Indian residents?",
+        "What percentage of the Asian Indian population resides in Newham?",
+        "How does Newham compare to other boroughs in terms of Asian Indian population?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "local_authority_name",
+        "Asian_Indian"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_geographic_patterns_geo_012",
+      "dataset": "ethnicity",
+      "category": "geographic_patterns",
+      "original_proposition": "The LSOA with the lowest count of White British residents is located in Westminster, indicating a highly diverse population.",
+      "reworded_proposition": "Westminster stands out for its diverse population, with one LSOA having notably fewer White British residents.",
+      "chart_type": "histogramHeatmap_simple_2D",
+      "chart_title": "Diversity in Westminster's LSOAs",
+      "chart_description": "Explore the distribution of White British residents across LSOAs in Westminster.",
+      "reasoning": "A histogram heatmap effectively visualizes the distribution of ethnic diversity across geographic areas, highlighting areas with lower counts of a specific demographic.",
+      "tapas_questions": [
+        "Which LSOA has the lowest count of White British residents?",
+        "What percentage of residents are White British in the most diverse LSOA?",
+        "How does the diversity in Westminster compare to other boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "LSOA_code",
+        "White_British"
+      ],
+      "time_period": "2021 Census",
+      "geographic_level": "LSOA",
+      "complexity_level": "Advanced"
+    }
+  ]
+}

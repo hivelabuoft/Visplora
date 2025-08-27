@@ -1,0 +1,44 @@
+{
+  "input": {
+    "type": "cross_dataset",
+    "category": "gentrification_indicators",
+    "proposition_id": "cross_dataset_gentrification_indicators_7",
+    "proposition": "Boroughs with higher median income from 1999 to 2023 have more licensed restaurants from 2001 to 2017.",
+    "datasets_required": [
+      "income",
+      "restaurants"
+    ],
+    "variables_needed": {
+      "income": [
+        "Area",
+        "Median_income",
+        "Year"
+      ],
+      "restaurants": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ]
+    },
+    "time_periods": {
+      "income": "1999-2023",
+      "restaurants": "2001-2017"
+    },
+    "relationship_type": "temporal_lag",
+    "suggested_visualization": "bubble_chart",
+    "temporal_assumption": "Higher incomes increase demand for dining options."
+  },
+  "analysis": "### Cross-Dataset Analysis Methodology\n\n1. **Data Preparation**:\n   - Extract the relevant data from the income and restaurant datasets using the provided SQL queries.\n   - Ensure that both datasets are cleaned and standardized, particularly focusing on consistent naming conventions for boroughs.\n\n2. **Temporal Alignment**:\n   - The proposition involves a temporal lag relationship, where income data spans from 1999 to 2023 and restaurant data from 2001 to 2017.\n   - Align the datasets by focusing on overlapping years (2001-2017) for immediate correlation analysis, while considering income trends from 1999 as a leading indicator.\n\n3. **Data Integration**:\n   - Merge the datasets on the 'Area' field, ensuring each borough's income data is paired with its corresponding restaurant data.\n   - Aggregate the restaurant data by borough and year to calculate the total number of licensed restaurants.\n\n4. **Correlation Analysis**:\n   - Calculate the Pearson correlation coefficient to assess the strength and direction of the relationship between median income and the number of licensed restaurants.\n   - Use regression analysis to explore the predictive power of income on restaurant count, considering potential lag effects.\n\n5. **Pattern Identification**:\n   - Identify any outliers or boroughs with significant deviations from the general trend.\n   - Analyze the distribution of restaurant types (cuisine categories) to see if certain types correlate more strongly with income levels.\n\n6. **Statistical Validation**:\n   - Perform hypothesis testing (e.g., t-tests) to determine the statistical significance of observed correlations.\n   - Use p-values to assess the likelihood that observed patterns are due to chance.\n\n### Key Findings and Correlations\n\n- **Correlation Strength**: A moderate to strong positive correlation is expected between median income and the number of licensed restaurants, indicating that higher-income boroughs tend to have more restaurants.\n- **Temporal Lag Effects**: Income data from earlier years (1999-2000) may show a predictive relationship with restaurant growth in subsequent years (2001-2017).\n- **Outliers**: Certain boroughs may deviate from the trend, potentially due to unique socioeconomic factors or urban development policies.\n\n### Statistical Significance Measures\n\n- **Pearson Correlation Coefficient**: Quantifies the linear relationship between income and restaurant count.\n- **P-Value**: Assesses the statistical significance of the correlation, with a threshold (e.g., p < 0.05) indicating significance.\n- **Regression Analysis**: Provides R-squared values to indicate the proportion of variance in restaurant count explained by income.\n\n### Data Quality Considerations\n\n- **Data Completeness**: Ensure no missing data points for key years in either dataset.\n- **Consistency**: Verify consistent borough naming and categorization across datasets.\n- **Temporal Coverage**: Acknowledge the gap in restaurant data post-2017 and income data post-2023.\n\n### Visualization Recommendations\n\n- **Bubble Chart**: Use a bubble chart to visualize the relationship, with:\n  - X-axis representing median income.\n  - Y-axis representing the number of licensed restaurants.\n  - Bubble size indicating the relative population or area size of the borough.\n  - Color coding for different cuisine types or income brackets.\n\n### Limitations and Assumptions\n\n- **Temporal Lag Assumption**: Assumes that income changes precede changes in restaurant licensing, which may not account for immediate economic shifts.\n- **Data Gaps**: The absence of restaurant data post-2017 limits the analysis of recent trends.\n- **External Factors**: Other factors such as tourism, urban policy, and cultural trends are not accounted for but may influence restaurant numbers.\n\n### Expected Output Structure\n\n```json\n{\n  \"type\": \"scatter\",\n  \"data\": [\n    {\n      \"x\": \"income_value\",\n      \"y\": \"restaurants_value\",\n      \"borough\": \"area_name\",\n      \"dataset1\": \"income\",\n      \"dataset2\": \"restaurants\"\n    }\n  ]\n}\n```\n\nThis structured output will facilitate the creation of a bubble chart to visually represent the correlation between median income and the number of licensed restaurants across London boroughs.",
+  "datasets_involved": [
+    "income",
+    "restaurants"
+  ],
+  "relationship_type": "temporal_lag",
+  "temporal_alignment": {
+    "income": "1999-2023",
+    "restaurants": "2001-2017"
+  },
+  "processing_timestamp": "2025-08-20T06:38:50.518Z",
+  "status": "completed"
+}

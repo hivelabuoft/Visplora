@@ -1,0 +1,442 @@
+{
+  "dataset_name": "country-of-births",
+  "complexity_score": 6,
+  "total_propositions": 30,
+  "proposition_breakdown": {
+    "temporal_trends": 5,
+    "geographic_patterns": 8,
+    "categorical_analysis": 12,
+    "cross_dimensional": 5
+  },
+  "generated_at": "2025-08-18T17:22:22.664Z",
+  "categories": {
+    "temporal_trends": [
+      {
+        "id": "tt_001",
+        "proposition": "The number of births from European countries increased by 8% from 2017 to 2018 across London boroughs.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017-2018",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_002",
+        "proposition": "Births from Asian countries peaked in the summer months of 2018, showing a 15% increase compared to other seasons.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_003",
+        "proposition": "From 2017 to 2018, there was a 10% decline in births from African countries in outer London boroughs.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017-2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "tt_004",
+        "proposition": "Births from North American countries remained stable from 2017 to 2018, showing no significant seasonal variation.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017-2018",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "tt_005",
+        "proposition": "The number of births from South American countries increased by 5% in the first quarter of 2018 compared to the same period in 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017-2018",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "geographic_patterns": [
+      {
+        "id": "gp_001",
+        "proposition": "In 2018, Westminster had the highest number of births from European countries, accounting for 20% of the total in London.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_002",
+        "proposition": "Births from African countries were predominantly in Southwark and Lambeth, making up 30% of the total in 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_003",
+        "proposition": "Outer London boroughs collectively accounted for 60% of births from Asian countries in 2018.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_004",
+        "proposition": "North London boroughs had a 25% higher birth rate from Middle Eastern countries compared to South London in 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "gp_005",
+        "proposition": "In 2018, births from Oceania were concentrated in Kensington and Chelsea, representing 40% of such births in London.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_006",
+        "proposition": "East London boroughs showed a 15% increase in births from South American countries from 2017 to 2018.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017-2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "gp_007",
+        "proposition": "Births from North American countries were evenly distributed across London boroughs in 2018, with no borough accounting for more than 10%.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "gp_008",
+        "proposition": "In 2017, births from Caribbean countries were predominantly in the boroughs of Hackney and Haringey, making up 35% of the total.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      }
+    ],
+    "categorical_analysis": [
+      {
+        "id": "ca_001",
+        "proposition": "European countries were the most common birth origin, accounting for 45% of all births in 2018.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_002",
+        "proposition": "In 2017, births from African countries represented 25% of the total, making it the second most common category.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_003",
+        "proposition": "Asian countries showed a 10% higher birth rate in inner London compared to outer London in 2018.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_004",
+        "proposition": "Births from Middle Eastern countries were least common, making up only 5% of the total in 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_005",
+        "proposition": "In 2018, South American countries accounted for 15% of births in the boroughs of Lambeth and Southwark.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_006",
+        "proposition": "Births from Oceania were rare, constituting only 2% of the total in 2018.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "pie_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_007",
+        "proposition": "Caribbean countries had a higher concentration of births in North London, accounting for 18% of the total in 2017.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_008",
+        "proposition": "In 2018, births from North American countries were evenly distributed, with no borough exceeding 8% of the total.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      },
+      {
+        "id": "ca_009",
+        "proposition": "The proportion of births from Middle Eastern countries increased by 3% from 2017 to 2018.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017-2018",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_010",
+        "proposition": "In 2017, births from European countries were concentrated in central London, making up 50% of the total.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_011",
+        "proposition": "Births from African countries in 2018 were predominantly in the boroughs of Hackney and Tower Hamlets, accounting for 40% of the total.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "choropleth_map",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "ca_012",
+        "proposition": "In 2018, births from Asian countries were the most evenly distributed across London, with no single borough exceeding 12% of the total.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "bar_chart",
+        "complexity_level": "Basic"
+      }
+    ],
+    "cross_dimensional": [
+      {
+        "id": "cd_001",
+        "proposition": "In 2018, births from European countries were 20% higher in inner London boroughs during the spring months.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd_002",
+        "proposition": "From 2017 to 2018, births from African countries showed a 12% increase in outer London boroughs during the winter months.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017-2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd_003",
+        "proposition": "Births from Asian countries in 2018 were concentrated in the eastern boroughs, peaking in the summer with a 15% increase.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      },
+      {
+        "id": "cd_004",
+        "proposition": "In 2017, births from North American countries were evenly distributed across seasons, with a slight increase of 5% in autumn.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2017",
+        "geographic_level": "London-wide",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Intermediate"
+      },
+      {
+        "id": "cd_005",
+        "proposition": "The number of births from South American countries in 2018 was highest in the boroughs of Lambeth and Southwark during the spring, showing a 10% increase compared to other seasons.",
+        "variables_needed": [
+          "area",
+          "value",
+          "category",
+          "date"
+        ],
+        "time_period": "2018",
+        "geographic_level": "Borough",
+        "suggested_visualization": "line_chart",
+        "complexity_level": "Advanced"
+      }
+    ]
+  }
+}

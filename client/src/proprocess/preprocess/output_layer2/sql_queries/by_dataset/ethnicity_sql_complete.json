@@ -1,0 +1,814 @@
+{
+  "dataset": "ethnicity",
+  "processed_at": "2025-08-20T18:03:56.504Z",
+  "total_queries": 35,
+  "categories": {
+    "categorical_analysis": {
+      "category": "categorical_analysis",
+      "dataset": "ethnicity",
+      "processed_at": "2025-08-20T18:03:38.502Z",
+      "total_queries": 15,
+      "sql_queries": [
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_001",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "White_British"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(population_count) AS value, AVG(percentage) AS percentage FROM ethnicity_data WHERE ethnic_group = 'White_British' AND date = '2021-01-01' GROUP BY local_authority_name ORDER BY local_authority_name;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_002",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Asian_Indian"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Asian Indian' AND date = '2021-01-01' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_003",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Black_African"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Black African' AND date = '2021-01-01' GROUP BY local_authority_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_004",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT ethnic_group AS category, SUM(population_count) AS value, SUM(percentage) AS percentage FROM ethnicity_data WHERE area_name = '2021 Census' GROUP BY ethnic_group ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_005",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "White_British"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'White_British' AND date = '2021-01-01' GROUP BY local_authority_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_006",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Asian_Indian"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value, AVG(percentage) AS percentage FROM ethnicity_data WHERE ethnic_group = 'Asian_Indian' AND date = '2021-01-01' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_007",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Black_African"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Black African' AND date = '2021-01-01' GROUP BY local_authority_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_008",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "White_British"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'White_British' AND date = '2021-01-01' GROUP BY local_authority_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_009",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE date = '2021-01-01' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_010",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Asian_Indian",
+            "Black_African"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(CASE WHEN ethnic_group = 'Asian Indian' THEN population_count ELSE 0 END) AS value, AVG(SUM(CASE WHEN ethnic_group = 'Asian Indian' THEN population_count ELSE 0 END)) OVER () AS mean_value FROM ethnicity_data WHERE date = '2021-01-01' GROUP BY local_authority_name UNION ALL SELECT local_authority_name AS category, SUM(CASE WHEN ethnic_group = 'Black African' THEN population_count ELSE 0 END) AS value, AVG(SUM(CASE WHEN ethnic_group = 'Black African' THEN population_count ELSE 0 END)) OVER () AS mean_value FROM ethnicity_data WHERE date = '2021-01-01' GROUP BY local_authority_name ORDER BY category;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_011",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "White_British"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'White_British' AND date = '2021-01-01' GROUP BY local_authority_name ORDER BY category;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_012",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "White_British",
+            "Asian_Indian",
+            "Black_African"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT ethnic_group AS category, SUM(population_count) AS value, AVG(percentage) AS percentage FROM ethnicity_data WHERE ethnic_group IN ('White_British', 'Asian_Indian', 'Black_African') AND area_name = '2021 Census' GROUP BY ethnic_group ORDER BY ethnic_group;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_013",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(population_count) AS value, AVG(SUM(population_count)) OVER () AS mean_value FROM ethnicity_data WHERE date = '2021-01-01' GROUP BY local_authority_name ORDER BY local_authority_name;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_014",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Asian_Indian"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Asian Indian' AND date = '2021-01-01' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_categorical_analysis_cat_015",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Black_African"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value, AVG(percentage) AS percentage FROM ethnicity_data WHERE ethnic_group = 'Black African' AND date = '2021-01-01' GROUP BY area_name ORDER BY value DESC;"
+        }
+      ]
+    },
+    "cross_dimensional": {
+      "category": "cross_dimensional",
+      "dataset": "ethnicity",
+      "processed_at": "2025-08-20T18:03:44.600Z",
+      "total_queries": 6,
+      "sql_queries": [
+        {
+          "proposition_id": "ethnicity_cross_dimensional_cross_001",
+          "dataset": "ethnicity",
+          "time_period": "2011-2021",
+          "variables_needed": [
+            "local_authority_name",
+            "White_British",
+            "Asian_Indian"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS time, SUM(CASE WHEN ethnic_group = 'White_British' THEN population_count ELSE 0 END) AS value FROM ethnicity_data WHERE area_name BETWEEN '2011' AND '2021' GROUP BY area_name ORDER BY area_name;"
+        },
+        {
+          "proposition_id": "ethnicity_cross_dimensional_cross_002",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Asian_Indian"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT '2021 Census' AS time, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Asian_Indian' GROUP BY time ORDER BY time;"
+        },
+        {
+          "proposition_id": "ethnicity_cross_dimensional_cross_003",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "LSOA_code",
+            "Black_African"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT LSOA_code AS x_bin, 'Black_African' AS y_bin, SUM(population_count) AS count FROM ethnicity_data WHERE ethnic_group = 'Black African' AND date = '2021-01-01' GROUP BY LSOA_code ORDER BY LSOA_code;"
+        },
+        {
+          "proposition_id": "ethnicity_cross_dimensional_cross_004",
+          "dataset": "ethnicity",
+          "time_period": "2011-2021",
+          "variables_needed": [
+            "local_authority_name",
+            "White_British",
+            "Asian_Indian"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT date AS time, SUM(CASE WHEN ethnic_group = 'White_British' THEN population_count ELSE 0 END) AS value FROM ethnicity_data WHERE date BETWEEN '2011-01-01' AND '2021-12-31' GROUP BY date ORDER BY date; UNION ALL SELECT date AS time, SUM(CASE WHEN ethnic_group = 'Asian_Indian' THEN population_count ELSE 0 END) AS value FROM ethnicity_data WHERE date BETWEEN '2011-01-01' AND '2021-12-31' GROUP BY date ORDER BY date;"
+        },
+        {
+          "proposition_id": "ethnicity_cross_dimensional_cross_005",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Black_African"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT '2021' AS time, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Black African' GROUP BY time ORDER BY time;"
+        },
+        {
+          "proposition_id": "ethnicity_cross_dimensional_cross_006",
+          "dataset": "ethnicity",
+          "time_period": "2011-2021",
+          "variables_needed": [
+            "local_authority_name",
+            "Asian_Indian"
+          ],
+          "chart_type": "lineChart_simple_2D",
+          "example": [
+            {
+              "time": "",
+              "value": 0
+            },
+            {
+              "time": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT 'Year ' || EXTRACT(YEAR FROM date) AS time, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Asian_Indian' AND EXTRACT(YEAR FROM date) BETWEEN 2011 AND 2021 GROUP BY EXTRACT(YEAR FROM date) ORDER BY EXTRACT(YEAR FROM date);"
+        }
+      ]
+    },
+    "geographic_patterns": {
+      "category": "geographic_patterns",
+      "dataset": "ethnicity",
+      "processed_at": "2025-08-20T18:03:55.052Z",
+      "total_queries": 12,
+      "sql_queries": [
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_001",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Asian_Indian"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Asian Indian' AND date = '2021-01-01' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_002",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "White_British"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(CASE WHEN ethnic_group = 'White British' THEN population_count ELSE 0 END) AS value, AVG(SUM(CASE WHEN ethnic_group = 'White British' THEN population_count ELSE 0 END)) OVER () AS mean_value FROM ethnicity_data WHERE date = '2021-01-01' GROUP BY local_authority_name ORDER BY local_authority_name;"
+        },
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_003",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "LSOA_code",
+            "White_British",
+            "Asian_Indian",
+            "Black_African"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT CASE WHEN ethnic_group = 'White British' THEN 'White_British' WHEN ethnic_group = 'Asian Indian' THEN 'Asian_Indian' WHEN ethnic_group = 'Black African' THEN 'Black_African' ELSE 'Other' END AS x_bin, LSOA_code AS y_bin, SUM(population_count) AS count FROM ethnicity_data WHERE date = '2021-01-01' AND ethnic_group IN ('White British', 'Asian Indian', 'Black African') GROUP BY x_bin, y_bin ORDER BY x_bin, y_bin;"
+        },
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_004",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Black_African"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Black African' AND date = '2021-01-01' GROUP BY local_authority_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_005",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Asian_Indian"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Asian_Indian' AND date = '2021-01-01' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_006",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Black_African"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Black African' AND date = '2021-01-01' GROUP BY local_authority_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_007",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Asian_Indian"
+          ],
+          "chart_type": "barChart_with_mean_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "mean_value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(CASE WHEN ethnic_group = 'Asian_Indian' THEN population_count ELSE 0 END) AS value, AVG(SUM(CASE WHEN ethnic_group = 'Asian_Indian' THEN population_count ELSE 0 END)) OVER () AS mean_value FROM ethnicity_data WHERE date = '2021-01-01' GROUP BY local_authority_name ORDER BY local_authority_name;"
+        },
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_008",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "LSOA_code",
+            "White_British"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT LSOA_code AS x_bin, 'White_British' AS y_bin, SUM(population_count) AS count FROM ethnicity_data WHERE ethnic_group = 'White British' AND date = '2021-01-01' GROUP BY LSOA_code ORDER BY LSOA_code;"
+        },
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_009",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "White_British",
+            "Asian_Indian",
+            "Black_African"
+          ],
+          "chart_type": "donutChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            },
+            {
+              "category": "",
+              "value": 0,
+              "percentage": 0
+            }
+          ],
+          "sql_query": "SELECT ethnic_group AS category, SUM(population_count) AS value, SUM(percentage) AS percentage FROM ethnicity_data WHERE area_name = '2021 Census' AND ethnic_group IN ('White_British', 'Asian_Indian', 'Black_African') GROUP BY ethnic_group ORDER BY ethnic_group;"
+        },
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_010",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Black_African"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Black African' AND date = '2021-01-01' GROUP BY local_authority_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_011",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Asian_Indian"
+          ],
+          "chart_type": "barChart_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "value": 0
+            },
+            {
+              "category": "",
+              "value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(population_count) AS value FROM ethnicity_data WHERE ethnic_group = 'Asian_Indian' AND date = '2021-01-01' GROUP BY area_name ORDER BY value DESC;"
+        },
+        {
+          "proposition_id": "ethnicity_geographic_patterns_geo_012",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "LSOA_code",
+            "White_British"
+          ],
+          "chart_type": "histogramHeatmap_simple_2D",
+          "example": [
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            },
+            {
+              "x_bin": "",
+              "y_bin": "",
+              "count": 0
+            }
+          ],
+          "sql_query": "SELECT LSOA_code AS x_bin, 'White_British' AS y_bin, SUM(population_count) AS count FROM ethnicity_data WHERE ethnic_group = 'White British' AND date = '2021-01-01' GROUP BY LSOA_code ORDER BY LSOA_code;"
+        }
+      ]
+    },
+    "statistical_patterns": {
+      "category": "statistical_patterns",
+      "dataset": "ethnicity",
+      "processed_at": "2025-08-20T18:03:56.504Z",
+      "total_queries": 2,
+      "sql_queries": [
+        {
+          "proposition_id": "ethnicity_statistical_patterns_stat_001",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "White_British"
+          ],
+          "chart_type": "histogram_simple_2D",
+          "example": [
+            {
+              "bin": "",
+              "frequency": 0
+            },
+            {
+              "bin": "",
+              "frequency": 0
+            }
+          ],
+          "sql_query": "SELECT local_authority_name AS bin, SUM(population_count) AS frequency FROM ethnicity_data WHERE ethnic_group = 'White_British' AND date = '2021-01-01' GROUP BY local_authority_name ORDER BY local_authority_name;"
+        },
+        {
+          "proposition_id": "ethnicity_statistical_patterns_stat_002",
+          "dataset": "ethnicity",
+          "time_period": "2021 Census",
+          "variables_needed": [
+            "local_authority_name",
+            "Asian_Indian"
+          ],
+          "chart_type": "scatterPlot_simple_2D",
+          "example": [
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            },
+            {
+              "category": "",
+              "x_value": 0,
+              "y_value": 0
+            }
+          ],
+          "sql_query": "SELECT area_name AS category, SUM(CASE WHEN ethnic_group = 'Asian_Indian' THEN population_count ELSE 0 END) AS x_value, SUM(CASE WHEN ethnic_group = 'Asian_Indian' THEN percentage ELSE 0 END) AS y_value FROM ethnicity_data WHERE date = '2021-01-01' GROUP BY area_name ORDER BY area_name;"
+        }
+      ]
+    }
+  }
+}

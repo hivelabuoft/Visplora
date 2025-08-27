@@ -1,0 +1,216 @@
+{
+  "category": "temporal_trends",
+  "dataset": "restaurants",
+  "processed_at": "2025-08-20T04:08:53.008Z",
+  "total_propositions": 8,
+  "propositions": [
+    {
+      "proposition_id": "restaurants_temporal_trends_tt_001",
+      "dataset": "restaurants",
+      "category": "temporal_trends",
+      "original_proposition": "The number of licensed restaurants in London increased by 25% from 2005 to 2010.",
+      "reworded_proposition": "London has seen a notable rise in the number of licensed restaurants from 2005 to 2010.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Growth of Licensed Restaurants in London (2005-2010)",
+      "chart_description": "Tracks the increase in licensed restaurants over five years.",
+      "reasoning": "A line chart effectively shows trends over time, and the 3D aspect allows for further breakdown, such as by restaurant category or geographic subdivision.",
+      "tapas_questions": [
+        "How did the number of licensed restaurants change from 2005 to 2010?",
+        "What is the average number of licensed restaurants per year?",
+        "Which year had the highest increase in licensed restaurants?"
+      ],
+      "3d_dimension": "time_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2005-2010",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "restaurants_temporal_trends_tt_002",
+      "dataset": "restaurants",
+      "category": "temporal_trends",
+      "original_proposition": "Unlicensed restaurant openings peaked in 2015, showing a 40% increase compared to 2014.",
+      "reworded_proposition": "The number of unlicensed restaurant openings reached its highest point in 2015, marking a notable rise from the previous year.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Trends in Unlicensed Restaurant Openings (2014-2015)",
+      "chart_description": "Visualizing the surge in unlicensed restaurant openings in 2015 across London.",
+      "reasoning": "A bar chart with a mean line effectively highlights the temporal trend and allows comparison against the average number of openings.",
+      "tapas_questions": [
+        "How did the number of unlicensed restaurant openings change from 2014 to 2015?",
+        "What is the average number of unlicensed restaurant openings across the years?",
+        "Which year had the highest number of unlicensed restaurant openings?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2014-2015",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "restaurants_temporal_trends_tt_003",
+      "dataset": "restaurants",
+      "category": "temporal_trends",
+      "original_proposition": "Employment in the restaurant sector grew steadily by 3% annually from 2001 to 2017.",
+      "reworded_proposition": "The restaurant sector in London experienced a consistent upward trend in employment over the years from 2001 to 2017.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Steady Growth in Restaurant Employment (2001-2017)",
+      "chart_description": "Visualizing the consistent increase in employment within London's restaurant sector over time.",
+      "reasoning": "A line chart effectively illustrates temporal trends, showing the steady growth over time. The 3D aspect allows for additional breakdowns, such as geographic or demographic subdivisions, if available.",
+      "tapas_questions": [
+        "How did employment in the restaurant sector change from 2001 to 2017?",
+        "What is the average annual growth rate of employment in the restaurant sector?",
+        "Which years saw the highest increase in employment in the restaurant sector?"
+      ],
+      "3d_dimension": "time_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2001-2017",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_temporal_trends_tt_004",
+      "dataset": "restaurants",
+      "category": "temporal_trends",
+      "original_proposition": "The number of new restaurant licenses issued in London declined by 10% during the 2008 financial crisis.",
+      "reworded_proposition": "During the 2008 financial crisis, there was a noticeable decline in the issuance of new restaurant licenses in London.",
+      "chart_type": "lineChart_simple_3D",
+      "chart_title": "Trend of New Restaurant Licenses in London (2008)",
+      "chart_description": "Visualize the decline in restaurant licenses during the 2008 crisis.",
+      "reasoning": "A 3D line chart effectively shows temporal trends and allows for detailed monthly analysis during the crisis.",
+      "tapas_questions": [
+        "How did the number of new restaurant licenses change from 2007 to 2009?",
+        "What is the average number of new restaurant licenses issued in 2008?",
+        "Which month in 2008 had the lowest number of new restaurant licenses issued?"
+      ],
+      "3d_dimension": "time_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2008",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "restaurants_temporal_trends_tt_005",
+      "dataset": "restaurants",
+      "category": "temporal_trends",
+      "original_proposition": "Seasonal employment in restaurants shows a consistent peak in December each year from 2001 to 2017.",
+      "reworded_proposition": "Employment in restaurants consistently reaches its highest levels each December over the years from 2001 to 2017.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Peaks in Restaurant Employment",
+      "chart_description": "Employment trends in restaurants, peaking each December from 2001 to 2017.",
+      "reasoning": "A line chart is ideal for illustrating temporal trends and highlighting seasonal peaks over multiple years.",
+      "tapas_questions": [
+        "How does December employment compare to other months?",
+        "What is the average employment in December across all years?",
+        "How did employment change from December 2001 to December 2017?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2001-2017",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "restaurants_temporal_trends_tt_006",
+      "dataset": "restaurants",
+      "category": "temporal_trends",
+      "original_proposition": "The number of restaurants in outer London boroughs increased by 15% from 2010 to 2015.",
+      "reworded_proposition": "Outer London boroughs have seen a noticeable rise in the number of restaurants over the first half of the 2010s.",
+      "chart_type": "barChart_simple_3D",
+      "chart_title": "Growth of Restaurants in Outer London Boroughs (2010-2015)",
+      "chart_description": "Visualizing the increase in restaurant numbers across outer London boroughs from 2010 to 2015.",
+      "reasoning": "A 3D bar chart effectively illustrates the temporal growth of restaurant numbers across multiple boroughs, allowing for clear comparison and trend visualization.",
+      "tapas_questions": [
+        "Which borough had the highest increase in restaurants?",
+        "How did the number of restaurants change from 2010 to 2015 in each borough?",
+        "What is the average increase in restaurant numbers across all boroughs?"
+      ],
+      "3d_dimension": "time_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2010-2015",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "restaurants_temporal_trends_tt_007",
+      "dataset": "restaurants",
+      "category": "temporal_trends",
+      "original_proposition": "From 2001 to 2017, the trend of restaurant closures in London shows a cyclical pattern with peaks every five years.",
+      "reworded_proposition": "The pattern of restaurant closures in London from 2001 to 2017 reveals a recurring cycle with notable peaks approximately every five years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Cyclical Trends in London Restaurant Closures",
+      "chart_description": "Visualizing the cyclical pattern of restaurant closures from 2001 to 2017 in London.",
+      "reasoning": "A simple 2D line chart effectively illustrates temporal trends, making it easy to identify cyclical patterns and peak intervals over the specified period.",
+      "tapas_questions": [
+        "How did restaurant closures change from 2001 to 2017?",
+        "What are the peak years for restaurant closures?",
+        "Is there a consistent interval between peaks in restaurant closures?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2001-2017",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "restaurants_temporal_trends_tt_008",
+      "dataset": "restaurants",
+      "category": "temporal_trends",
+      "original_proposition": "The number of new restaurant openings in London increased by 50% in the year following the 2012 Olympics.",
+      "reworded_proposition": "Following the 2012 Olympics, London experienced a notable surge in new restaurant openings.",
+      "chart_type": "barChart_simple_3D",
+      "chart_title": "Surge in London Restaurant Openings Post-2012 Olympics",
+      "chart_description": "Visualizing the increase in restaurant openings in London after 2012.",
+      "reasoning": "A 3D bar chart effectively illustrates the temporal trend of restaurant openings, with the third dimension allowing for further breakdowns.",
+      "tapas_questions": [
+        "How did the number of restaurant openings change from 2012 to 2013?",
+        "What percentage of restaurant openings occurred in 2013?",
+        "Which year had the highest number of restaurant openings?"
+      ],
+      "3d_dimension": "time_subdivision",
+      "variables_needed": [
+        "area",
+        "value",
+        "category",
+        "date"
+      ],
+      "time_period": "2013",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    }
+  ]
+}

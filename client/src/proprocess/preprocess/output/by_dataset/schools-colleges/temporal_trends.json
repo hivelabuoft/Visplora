@@ -1,0 +1,157 @@
+{
+  "category": "temporal_trends",
+  "dataset": "schools-colleges",
+  "processed_at": "2025-08-20T04:07:48.474Z",
+  "total_propositions": 6,
+  "propositions": [
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_01",
+      "dataset": "schools-colleges",
+      "category": "temporal_trends",
+      "original_proposition": "School performance ratings improved by 8% from 2021 to 2023 in the borough of Hackney.",
+      "reworded_proposition": "Hackney has seen a notable improvement in school performance ratings over the past two years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Improvement in Hackney School Ratings (2021-2023)",
+      "chart_description": "Track the upward trend in school performance ratings in Hackney from 2021 to 2023.",
+      "reasoning": "A simple 2D line chart effectively illustrates the temporal trend of improving school ratings over a specified period.",
+      "tapas_questions": [
+        "How did school performance ratings change from 2021 to 2023 in Hackney?",
+        "What is the average school performance rating in Hackney over the years?",
+        "Which year had the highest school performance rating in Hackney?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_02",
+      "dataset": "schools-colleges",
+      "category": "temporal_trends",
+      "original_proposition": "The number of schools rated 'Outstanding' increased by 15% in 2022 compared to 2021 across all London boroughs.",
+      "reworded_proposition": "In 2022, there was a noticeable rise in the number of schools rated 'Outstanding' across London compared to the previous year.",
+      "chart_type": "barChart_with_mean_2D",
+      "chart_title": "Increase in Outstanding Schools in London (2021-2022)",
+      "chart_description": "Comparison of schools rated 'Outstanding' in 2021 and 2022 across London boroughs.",
+      "reasoning": "A bar chart with a mean line effectively highlights the increase in 'Outstanding' schools over time and allows for comparison across boroughs.",
+      "tapas_questions": [
+        "How did the number of 'Outstanding' schools change from 2021 to 2022?",
+        "Which boroughs have the highest number of 'Outstanding' schools?",
+        "What is the average number of 'Outstanding' schools across all boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2021-2022",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_03",
+      "dataset": "schools-colleges",
+      "category": "temporal_trends",
+      "original_proposition": "There is a seasonal peak in school enrollments in September each year from 2021 to 2023.",
+      "reworded_proposition": "School enrollments consistently peak in September each year, highlighting a clear seasonal trend from 2021 to 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Seasonal Trends in School Enrollments",
+      "chart_description": "Enrollment peaks each September from 2021 to 2023 in London.",
+      "reasoning": "A simple line chart effectively illustrates temporal trends and seasonal patterns over multiple years.",
+      "tapas_questions": [
+        "How did school enrollments change from August to September each year?",
+        "What is the trend in school enrollments from 2021 to 2023?",
+        "Which month has the highest school enrollments each year?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "date",
+        "value"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_04",
+      "dataset": "schools-colleges",
+      "category": "temporal_trends",
+      "original_proposition": "The average student-teacher ratio decreased by 5% from 2022 to 2023 in the borough of Lambeth.",
+      "reworded_proposition": "In the borough of Lambeth, there was a noticeable decline in the student-teacher ratio from 2022 to 2023.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Student-Teacher Ratio Trend in Lambeth",
+      "chart_description": "Visualize the decline in student-teacher ratio from 2022 to 2023 in Lambeth.",
+      "reasoning": "A line chart effectively illustrates temporal trends, showing changes over time, which is ideal for highlighting the decrease in the student-teacher ratio.",
+      "tapas_questions": [
+        "How did the student-teacher ratio change from 2022 to 2023 in Lambeth?",
+        "What is the average student-teacher ratio across all boroughs?",
+        "Which borough had the lowest student-teacher ratio in 2023?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "value",
+        "date"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_05",
+      "dataset": "schools-colleges",
+      "category": "temporal_trends",
+      "original_proposition": "From 2021 to 2023, there has been a 10% increase in the number of schools offering STEM programs in the borough of Camden.",
+      "reworded_proposition": "Between 2021 and 2023, Camden has seen a noticeable rise in the number of schools introducing STEM programs.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Growth of STEM Programs in Camden Schools",
+      "chart_description": "Tracks the increase in schools offering STEM from 2021 to 2023 in Camden.",
+      "reasoning": "A line chart effectively illustrates the trend over time, showing the increase in schools offering STEM programs.",
+      "tapas_questions": [
+        "How many schools offered STEM programs in 2021?",
+        "How did the number of schools offering STEM change from 2021 to 2023?",
+        "What is the percentage increase in schools offering STEM programs in Camden?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "date"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "schools-colleges_temporal_trends_tt_06",
+      "dataset": "schools-colleges",
+      "category": "temporal_trends",
+      "original_proposition": "The number of schools with 'Good' ratings has remained stable from 2021 to 2023 across London.",
+      "reworded_proposition": "The prevalence of schools with 'Good' ratings has shown little variation from 2021 to 2023 throughout London.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Stability of 'Good' School Ratings in London",
+      "chart_description": "Track the consistency of 'Good' ratings for schools in London from 2021 to 2023.",
+      "reasoning": "A line chart effectively illustrates the stability or change over time, highlighting trends in school ratings across multiple years.",
+      "tapas_questions": [
+        "How many schools had 'Good' ratings in 2021?",
+        "Did the number of 'Good' rated schools increase or decrease in 2022?",
+        "What is the trend of 'Good' rated schools over the years?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2021-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    }
+  ]
+}

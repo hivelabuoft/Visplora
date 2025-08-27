@@ -1,0 +1,681 @@
+{
+  "dataset": "restaurants",
+  "processed_at": "2025-08-20T04:09:09.296Z",
+  "total_propositions": 25,
+  "categories": {
+    "temporal_trends": {
+      "category": "temporal_trends",
+      "dataset": "restaurants",
+      "processed_at": "2025-08-20T04:08:53.008Z",
+      "total_propositions": 8,
+      "propositions": [
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_001",
+          "dataset": "restaurants",
+          "category": "temporal_trends",
+          "original_proposition": "The number of licensed restaurants in London increased by 25% from 2005 to 2010.",
+          "reworded_proposition": "London has seen a notable rise in the number of licensed restaurants from 2005 to 2010.",
+          "chart_type": "lineChart_simple_3D",
+          "chart_title": "Growth of Licensed Restaurants in London (2005-2010)",
+          "chart_description": "Tracks the increase in licensed restaurants over five years.",
+          "reasoning": "A line chart effectively shows trends over time, and the 3D aspect allows for further breakdown, such as by restaurant category or geographic subdivision.",
+          "tapas_questions": [
+            "How did the number of licensed restaurants change from 2005 to 2010?",
+            "What is the average number of licensed restaurants per year?",
+            "Which year had the highest increase in licensed restaurants?"
+          ],
+          "3d_dimension": "time_subdivision",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2005-2010",
+          "geographic_level": "London-wide",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_002",
+          "dataset": "restaurants",
+          "category": "temporal_trends",
+          "original_proposition": "Unlicensed restaurant openings peaked in 2015, showing a 40% increase compared to 2014.",
+          "reworded_proposition": "The number of unlicensed restaurant openings reached its highest point in 2015, marking a notable rise from the previous year.",
+          "chart_type": "barChart_with_mean_2D",
+          "chart_title": "Trends in Unlicensed Restaurant Openings (2014-2015)",
+          "chart_description": "Visualizing the surge in unlicensed restaurant openings in 2015 across London.",
+          "reasoning": "A bar chart with a mean line effectively highlights the temporal trend and allows comparison against the average number of openings.",
+          "tapas_questions": [
+            "How did the number of unlicensed restaurant openings change from 2014 to 2015?",
+            "What is the average number of unlicensed restaurant openings across the years?",
+            "Which year had the highest number of unlicensed restaurant openings?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2014-2015",
+          "geographic_level": "London-wide",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_003",
+          "dataset": "restaurants",
+          "category": "temporal_trends",
+          "original_proposition": "Employment in the restaurant sector grew steadily by 3% annually from 2001 to 2017.",
+          "reworded_proposition": "The restaurant sector in London experienced a consistent upward trend in employment over the years from 2001 to 2017.",
+          "chart_type": "lineChart_simple_3D",
+          "chart_title": "Steady Growth in Restaurant Employment (2001-2017)",
+          "chart_description": "Visualizing the consistent increase in employment within London's restaurant sector over time.",
+          "reasoning": "A line chart effectively illustrates temporal trends, showing the steady growth over time. The 3D aspect allows for additional breakdowns, such as geographic or demographic subdivisions, if available.",
+          "tapas_questions": [
+            "How did employment in the restaurant sector change from 2001 to 2017?",
+            "What is the average annual growth rate of employment in the restaurant sector?",
+            "Which years saw the highest increase in employment in the restaurant sector?"
+          ],
+          "3d_dimension": "time_subdivision",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2001-2017",
+          "geographic_level": "London-wide",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_004",
+          "dataset": "restaurants",
+          "category": "temporal_trends",
+          "original_proposition": "The number of new restaurant licenses issued in London declined by 10% during the 2008 financial crisis.",
+          "reworded_proposition": "During the 2008 financial crisis, there was a noticeable decline in the issuance of new restaurant licenses in London.",
+          "chart_type": "lineChart_simple_3D",
+          "chart_title": "Trend of New Restaurant Licenses in London (2008)",
+          "chart_description": "Visualize the decline in restaurant licenses during the 2008 crisis.",
+          "reasoning": "A 3D line chart effectively shows temporal trends and allows for detailed monthly analysis during the crisis.",
+          "tapas_questions": [
+            "How did the number of new restaurant licenses change from 2007 to 2009?",
+            "What is the average number of new restaurant licenses issued in 2008?",
+            "Which month in 2008 had the lowest number of new restaurant licenses issued?"
+          ],
+          "3d_dimension": "time_subdivision",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2008",
+          "geographic_level": "London-wide",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_005",
+          "dataset": "restaurants",
+          "category": "temporal_trends",
+          "original_proposition": "Seasonal employment in restaurants shows a consistent peak in December each year from 2001 to 2017.",
+          "reworded_proposition": "Employment in restaurants consistently reaches its highest levels each December over the years from 2001 to 2017.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Seasonal Peaks in Restaurant Employment",
+          "chart_description": "Employment trends in restaurants, peaking each December from 2001 to 2017.",
+          "reasoning": "A line chart is ideal for illustrating temporal trends and highlighting seasonal peaks over multiple years.",
+          "tapas_questions": [
+            "How does December employment compare to other months?",
+            "What is the average employment in December across all years?",
+            "How did employment change from December 2001 to December 2017?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2001-2017",
+          "geographic_level": "London-wide",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_006",
+          "dataset": "restaurants",
+          "category": "temporal_trends",
+          "original_proposition": "The number of restaurants in outer London boroughs increased by 15% from 2010 to 2015.",
+          "reworded_proposition": "Outer London boroughs have seen a noticeable rise in the number of restaurants over the first half of the 2010s.",
+          "chart_type": "barChart_simple_3D",
+          "chart_title": "Growth of Restaurants in Outer London Boroughs (2010-2015)",
+          "chart_description": "Visualizing the increase in restaurant numbers across outer London boroughs from 2010 to 2015.",
+          "reasoning": "A 3D bar chart effectively illustrates the temporal growth of restaurant numbers across multiple boroughs, allowing for clear comparison and trend visualization.",
+          "tapas_questions": [
+            "Which borough had the highest increase in restaurants?",
+            "How did the number of restaurants change from 2010 to 2015 in each borough?",
+            "What is the average increase in restaurant numbers across all boroughs?"
+          ],
+          "3d_dimension": "time_subdivision",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2010-2015",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_007",
+          "dataset": "restaurants",
+          "category": "temporal_trends",
+          "original_proposition": "From 2001 to 2017, the trend of restaurant closures in London shows a cyclical pattern with peaks every five years.",
+          "reworded_proposition": "The pattern of restaurant closures in London from 2001 to 2017 reveals a recurring cycle with notable peaks approximately every five years.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Cyclical Trends in London Restaurant Closures",
+          "chart_description": "Visualizing the cyclical pattern of restaurant closures from 2001 to 2017 in London.",
+          "reasoning": "A simple 2D line chart effectively illustrates temporal trends, making it easy to identify cyclical patterns and peak intervals over the specified period.",
+          "tapas_questions": [
+            "How did restaurant closures change from 2001 to 2017?",
+            "What are the peak years for restaurant closures?",
+            "Is there a consistent interval between peaks in restaurant closures?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2001-2017",
+          "geographic_level": "London-wide",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "restaurants_temporal_trends_tt_008",
+          "dataset": "restaurants",
+          "category": "temporal_trends",
+          "original_proposition": "The number of new restaurant openings in London increased by 50% in the year following the 2012 Olympics.",
+          "reworded_proposition": "Following the 2012 Olympics, London experienced a notable surge in new restaurant openings.",
+          "chart_type": "barChart_simple_3D",
+          "chart_title": "Surge in London Restaurant Openings Post-2012 Olympics",
+          "chart_description": "Visualizing the increase in restaurant openings in London after 2012.",
+          "reasoning": "A 3D bar chart effectively illustrates the temporal trend of restaurant openings, with the third dimension allowing for further breakdowns.",
+          "tapas_questions": [
+            "How did the number of restaurant openings change from 2012 to 2013?",
+            "What percentage of restaurant openings occurred in 2013?",
+            "Which year had the highest number of restaurant openings?"
+          ],
+          "3d_dimension": "time_subdivision",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2013",
+          "geographic_level": "London-wide",
+          "complexity_level": "Basic"
+        }
+      ]
+    },
+    "geographic_patterns": {
+      "category": "geographic_patterns",
+      "dataset": "restaurants",
+      "processed_at": "2025-08-20T04:09:00.773Z",
+      "total_propositions": 8,
+      "propositions": [
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_001",
+          "dataset": "restaurants",
+          "category": "geographic_patterns",
+          "original_proposition": "Westminster and Camden have the highest concentration of licensed restaurants, accounting for 30% of the total in London.",
+          "reworded_proposition": "Westminster and Camden stand out with a notably high concentration of licensed restaurants, making up a significant portion of London's total.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Concentration of Licensed Restaurants by Borough",
+          "chart_description": "Visual comparison of restaurant concentrations across London boroughs.",
+          "reasoning": "A bar chart is ideal for comparing the concentration of licensed restaurants across different boroughs, highlighting Westminster and Camden's prominence.",
+          "tapas_questions": [
+            "Which borough has the highest concentration of licensed restaurants?",
+            "What percentage of licensed restaurants are located in Westminster?",
+            "How does Camden compare to other boroughs in terms of restaurant concentration?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_002",
+          "dataset": "restaurants",
+          "category": "geographic_patterns",
+          "original_proposition": "Outer London boroughs have 20% fewer restaurants per capita compared to inner London boroughs.",
+          "reworded_proposition": "Outer London boroughs tend to have noticeably fewer restaurants per capita compared to their inner London counterparts.",
+          "chart_type": "barChart_with_mean_2D",
+          "chart_title": "Restaurant Density in Outer vs. Inner London",
+          "chart_description": "Comparison of restaurants per capita across London boroughs",
+          "reasoning": "A bar chart with a mean line effectively highlights the disparity in restaurant density between outer and inner London boroughs, allowing for easy comparison against the average.",
+          "tapas_questions": [
+            "Which borough has the highest number of restaurants per capita?",
+            "What is the average number of restaurants per capita across all boroughs?",
+            "How do outer London boroughs compare to inner London boroughs in terms of restaurants per capita?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_003",
+          "dataset": "restaurants",
+          "category": "geographic_patterns",
+          "original_proposition": "The eastern boroughs of London show a 15% higher growth rate in restaurant numbers compared to western boroughs from 2010 to 2017.",
+          "reworded_proposition": "Eastern boroughs of London have experienced a notably faster increase in restaurant numbers compared to their western counterparts over recent years.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Growth in Restaurant Numbers by Borough",
+          "chart_description": "Trends in restaurant growth in eastern vs. western boroughs from 2010 to 2017.",
+          "reasoning": "A line chart effectively illustrates the trend of restaurant growth over time, highlighting differences between eastern and western boroughs.",
+          "tapas_questions": [
+            "Which borough has the highest growth in restaurant numbers?",
+            "How does the growth rate in eastern boroughs compare to western boroughs?",
+            "What is the average growth rate of restaurant numbers across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2010-2017",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_004",
+          "dataset": "restaurants",
+          "category": "geographic_patterns",
+          "original_proposition": "South London boroughs have a higher proportion of unlicensed restaurants compared to the north.",
+          "reworded_proposition": "South London boroughs tend to have a noticeably higher presence of unlicensed restaurants compared to those in the north.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Unlicensed Restaurants by Borough in London",
+          "chart_description": "Comparison of unlicensed restaurant proportions between South and North London boroughs.",
+          "reasoning": "A bar chart effectively highlights the differences in proportions of unlicensed restaurants between the boroughs, making it easy to compare South and North London.",
+          "tapas_questions": [
+            "Which borough has the highest proportion of unlicensed restaurants?",
+            "How does the proportion of unlicensed restaurants in South London compare to North London?",
+            "What percentage of restaurants are unlicensed in each borough?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_005",
+          "dataset": "restaurants",
+          "category": "geographic_patterns",
+          "original_proposition": "The clustering of high-end restaurants is most prominent in the central boroughs of London.",
+          "reworded_proposition": "Central London boroughs exhibit a notable concentration of high-end restaurants compared to other areas.",
+          "chart_type": "histogramHeatmap_simple_2D",
+          "chart_title": "Concentration of High-End Restaurants in London",
+          "chart_description": "Visualizing the density of high-end restaurants across London boroughs.",
+          "reasoning": "A histogram heatmap effectively highlights geographic patterns and concentrations, making it ideal for showing the distribution of high-end restaurants across boroughs.",
+          "tapas_questions": [
+            "Which borough has the highest concentration of high-end restaurants?",
+            "How does the number of high-end restaurants in central boroughs compare to outer boroughs?",
+            "What percentage of high-end restaurants are located in central London boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_006",
+          "dataset": "restaurants",
+          "category": "geographic_patterns",
+          "original_proposition": "North London boroughs have seen a 10% increase in restaurant employment compared to a 5% increase in the south from 2001 to 2017.",
+          "reworded_proposition": "North London boroughs have experienced a more pronounced growth in restaurant employment compared to their southern counterparts over the years from 2001 to 2017.",
+          "chart_type": "barChart_with_mean_2D",
+          "chart_title": "Growth in Restaurant Employment by Borough",
+          "chart_description": "Comparison of employment growth in restaurants between North and South London from 2001 to 2017.",
+          "reasoning": "A bar chart with a mean line effectively highlights the differences in employment growth between the regions and allows for easy comparison against the average growth rate.",
+          "tapas_questions": [
+            "Which borough has the highest increase in restaurant employment?",
+            "What is the average increase in restaurant employment across all boroughs?",
+            "How does the increase in restaurant employment in North London compare to South London?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2001-2017",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_007",
+          "dataset": "restaurants",
+          "category": "geographic_patterns",
+          "original_proposition": "The ratio of licensed to unlicensed restaurants is highest in the City of London.",
+          "reworded_proposition": "The City of London stands out for having a notably higher proportion of licensed restaurants compared to unlicensed ones.",
+          "chart_type": "donutChart_simple_2D",
+          "chart_title": "Licensed vs Unlicensed Restaurants in City of London",
+          "chart_description": "Visual comparison of licensed and unlicensed restaurants in the City of London.",
+          "reasoning": "A donut chart effectively illustrates the proportion of licensed to unlicensed restaurants, highlighting the City of London's unique pattern.",
+          "tapas_questions": [
+            "Which borough has the highest ratio of licensed to unlicensed restaurants?",
+            "What percentage of restaurants are licensed in the City of London?",
+            "How does the City of London compare to other boroughs in terms of licensed restaurants?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "restaurants_geographic_patterns_gp_008",
+          "dataset": "restaurants",
+          "category": "geographic_patterns",
+          "original_proposition": "Boroughs in the west of London have a higher density of family-owned restaurants compared to the east.",
+          "reworded_proposition": "Western boroughs of London tend to have a higher concentration of family-owned restaurants compared to those in the east.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Distribution of Family-Owned Restaurants in London",
+          "chart_description": "Comparison of family-owned restaurant density between western and eastern boroughs of London.",
+          "reasoning": "A bar chart effectively compares the density of family-owned restaurants across different boroughs, highlighting geographic patterns.",
+          "tapas_questions": [
+            "Which borough has the highest density of family-owned restaurants?",
+            "How does the density of family-owned restaurants in western boroughs compare to eastern boroughs?",
+            "What percentage of family-owned restaurants are located in western boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "Borough",
+          "complexity_level": "Basic"
+        }
+      ]
+    },
+    "categorical_analysis": {
+      "category": "categorical_analysis",
+      "dataset": "restaurants",
+      "processed_at": "2025-08-20T04:09:04.399Z",
+      "total_propositions": 5,
+      "propositions": [
+        {
+          "proposition_id": "restaurants_categorical_analysis_ca_001",
+          "dataset": "restaurants",
+          "category": "categorical_analysis",
+          "original_proposition": "Licensed restaurants make up 70% of the total restaurant count in London.",
+          "reworded_proposition": "Licensed restaurants dominate the restaurant scene in London, comprising the majority of the total count.",
+          "chart_type": "donutChart_simple_2D",
+          "chart_title": "Proportion of Licensed Restaurants in London",
+          "chart_description": "Visual representation of licensed vs. total restaurants in London.",
+          "reasoning": "A donut chart effectively illustrates the proportion of licensed restaurants compared to the total, highlighting the dominance of licensed establishments.",
+          "tapas_questions": [
+            "What percentage of restaurants in London are licensed?",
+            "How many restaurants in London are not licensed?",
+            "What is the total count of restaurants in London?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "London-wide",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "restaurants_categorical_analysis_ca_002",
+          "dataset": "restaurants",
+          "category": "categorical_analysis",
+          "original_proposition": "The category of fast-food restaurants has grown by 20% more than fine dining establishments from 2001 to 2017.",
+          "reworded_proposition": "Fast-food restaurants have expanded at a notably faster rate than fine dining establishments over the years from 2001 to 2017.",
+          "chart_type": "lineChart_simple_3D",
+          "chart_title": "Growth Trends in Restaurant Categories",
+          "chart_description": "Compare growth of fast-food vs fine dining in London from 2001 to 2017",
+          "reasoning": "A line chart is suitable for showing trends over time, and the 3D aspect allows for additional breakdown by another dimension, such as time subdivision.",
+          "tapas_questions": [
+            "How did the number of fast-food restaurants change from 2001 to 2017?",
+            "Which category of restaurants has the highest growth rate?",
+            "How does the growth of fast-food restaurants compare to fine dining establishments?"
+          ],
+          "3d_dimension": "time_subdivision",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2001-2017",
+          "geographic_level": "London-wide",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "restaurants_categorical_analysis_ca_003",
+          "dataset": "restaurants",
+          "category": "categorical_analysis",
+          "original_proposition": "The proportion of vegan restaurants doubled from 2010 to 2017.",
+          "reworded_proposition": "Vegan restaurants have seen a notable increase in their share of the dining scene from 2010 to 2017.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Growth of Vegan Restaurants in London",
+          "chart_description": "Illustrates the rise in vegan restaurant proportions from 2010 to 2017.",
+          "reasoning": "A simple bar chart effectively shows the change in proportions over time, highlighting the growth trend.",
+          "tapas_questions": [
+            "How did the proportion of vegan restaurants change from 2010 to 2017?",
+            "What percentage of restaurants were vegan in 2017?",
+            "Which year saw the highest increase in vegan restaurant proportions?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2010-2017",
+          "geographic_level": "London-wide",
+          "complexity_level": "Basic"
+        },
+        {
+          "proposition_id": "restaurants_categorical_analysis_ca_004",
+          "dataset": "restaurants",
+          "category": "categorical_analysis",
+          "original_proposition": "The majority of new restaurant licenses issued in 2017 were for casual dining establishments.",
+          "reworded_proposition": "In 2017, casual dining establishments dominated the issuance of new restaurant licenses.",
+          "chart_type": "donutChart_simple_2D",
+          "chart_title": "Dominance of Casual Dining in 2017 Licenses",
+          "chart_description": "Visual representation of restaurant license categories in 2017.",
+          "reasoning": "A donut chart effectively illustrates the proportion of each category within the whole, highlighting the dominance of casual dining licenses.",
+          "tapas_questions": [
+            "What percentage of restaurant licenses were for casual dining in 2017?",
+            "Which category had the highest number of new licenses in 2017?",
+            "How does the number of casual dining licenses compare to other categories in 2017?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2017",
+          "geographic_level": "London-wide",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "restaurants_categorical_analysis_ca_005",
+          "dataset": "restaurants",
+          "category": "categorical_analysis",
+          "original_proposition": "Family-owned restaurants represent 25% of the total restaurant market in London.",
+          "reworded_proposition": "Family-owned restaurants form a notable segment of London's restaurant market.",
+          "chart_type": "donutChart_simple_2D",
+          "chart_title": "Market Share of Family-Owned Restaurants in London",
+          "chart_description": "Visual representation of family-owned restaurants' share in London's market.",
+          "reasoning": "A donut chart effectively illustrates the proportion of family-owned restaurants within the overall market, highlighting their share relative to other categories.",
+          "tapas_questions": [
+            "What percentage of the restaurant market is family-owned in London?",
+            "How does the market share of family-owned restaurants compare to other types?",
+            "Which category of restaurants has the largest market share in London?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category"
+          ],
+          "time_period": "Not applicable",
+          "geographic_level": "London-wide",
+          "complexity_level": "Basic"
+        }
+      ]
+    },
+    "cross_dimensional": {
+      "category": "cross_dimensional",
+      "dataset": "restaurants",
+      "processed_at": "2025-08-20T04:09:09.294Z",
+      "total_propositions": 4,
+      "propositions": [
+        {
+          "proposition_id": "restaurants_cross_dimensional_cd_001",
+          "dataset": "restaurants",
+          "category": "cross_dimensional",
+          "original_proposition": "The growth of licensed restaurants in central London boroughs was 30% higher than in outer boroughs from 2005 to 2015.",
+          "reworded_proposition": "Central London boroughs have seen a notably faster increase in licensed restaurants compared to outer boroughs over the past decade.",
+          "chart_type": "lineChart_simple_2D",
+          "chart_title": "Growth of Licensed Restaurants in London Boroughs",
+          "chart_description": "Comparison of restaurant growth in central vs. outer boroughs from 2005 to 2015.",
+          "reasoning": "A line chart effectively illustrates trends over time, making it suitable for comparing growth rates between central and outer boroughs.",
+          "tapas_questions": [
+            "Which borough has the highest growth in licensed restaurants?",
+            "How does the growth in central boroughs compare to outer boroughs?",
+            "What is the average growth rate of licensed restaurants across all boroughs?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2005-2015",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "restaurants_cross_dimensional_cd_002",
+          "dataset": "restaurants",
+          "category": "cross_dimensional",
+          "original_proposition": "The increase in unlicensed restaurants in the east of London coincides with a 15% rise in employment from 2010 to 2017.",
+          "reworded_proposition": "The rise in unlicensed restaurants in East London aligns with a notable increase in employment from 2010 to 2017.",
+          "chart_type": "barChart_simple_2D",
+          "chart_title": "Unlicensed Restaurants and Employment Growth",
+          "chart_description": "Explore the trend of unlicensed restaurants and employment in East London from 2010 to 2017.",
+          "reasoning": "A simple 2D bar chart effectively illustrates the correlation between two variables over time, highlighting trends in both unlicensed restaurants and employment.",
+          "tapas_questions": [
+            "How did the number of unlicensed restaurants change from 2010 to 2017?",
+            "What percentage of employment increase occurred in East London?",
+            "Which borough in East London saw the highest rise in unlicensed restaurants?"
+          ],
+          "3d_dimension": null,
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2010-2017",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        },
+        {
+          "proposition_id": "restaurants_cross_dimensional_cd_003",
+          "dataset": "restaurants",
+          "category": "cross_dimensional",
+          "original_proposition": "The number of family-owned restaurants in south London increased by 20% during the economic recovery period from 2012 to 2017.",
+          "reworded_proposition": "Family-owned restaurants in south London saw a notable rise during the economic recovery period from 2012 to 2017.",
+          "chart_type": "lineChart_simple_3D",
+          "chart_title": "Growth of Family-Owned Restaurants in South London",
+          "chart_description": "Trends in family-owned restaurant numbers from 2012 to 2017.",
+          "reasoning": "A 3D line chart effectively shows trends over time and can incorporate additional geographic or categorical dimensions, such as boroughs or restaurant types.",
+          "tapas_questions": [
+            "How did the number of family-owned restaurants change from 2012 to 2017?",
+            "Which borough in south London had the highest increase in family-owned restaurants?",
+            "What is the average growth rate of family-owned restaurants across all boroughs?"
+          ],
+          "3d_dimension": "geographic_subdivision",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2012-2017",
+          "geographic_level": "Borough",
+          "complexity_level": "Advanced"
+        },
+        {
+          "proposition_id": "restaurants_cross_dimensional_cd_004",
+          "dataset": "restaurants",
+          "category": "cross_dimensional",
+          "original_proposition": "The proportion of vegan restaurants in inner London boroughs increased by 30% more than in outer boroughs from 2010 to 2017.",
+          "reworded_proposition": "Inner London boroughs have seen a notably faster rise in vegan restaurants compared to their outer counterparts over recent years.",
+          "chart_type": "barChart_simple_3D",
+          "chart_title": "Growth of Vegan Restaurants in London Boroughs",
+          "chart_description": "Comparison of vegan restaurant growth in inner vs outer London from 2010 to 2017",
+          "reasoning": "A 3D bar chart effectively displays the comparative growth of vegan restaurants across different boroughs, with the third dimension allowing for a temporal breakdown.",
+          "tapas_questions": [
+            "Which borough has the highest increase in vegan restaurants?",
+            "How does the growth rate of vegan restaurants in inner boroughs compare to outer boroughs?",
+            "What is the average growth rate of vegan restaurants across all boroughs?"
+          ],
+          "3d_dimension": "time_subdivision",
+          "variables_needed": [
+            "area",
+            "value",
+            "category",
+            "date"
+          ],
+          "time_period": "2010-2017",
+          "geographic_level": "Borough",
+          "complexity_level": "Intermediate"
+        }
+      ]
+    }
+  }
+}

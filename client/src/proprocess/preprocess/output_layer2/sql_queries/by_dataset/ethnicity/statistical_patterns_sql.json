@@ -1,0 +1,52 @@
+{
+  "category": "statistical_patterns",
+  "dataset": "ethnicity",
+  "processed_at": "2025-08-20T18:03:56.504Z",
+  "total_queries": 2,
+  "sql_queries": [
+    {
+      "proposition_id": "ethnicity_statistical_patterns_stat_001",
+      "dataset": "ethnicity",
+      "time_period": "2021 Census",
+      "variables_needed": [
+        "local_authority_name",
+        "White_British"
+      ],
+      "chart_type": "histogram_simple_2D",
+      "example": [
+        {
+          "bin": "",
+          "frequency": 0
+        },
+        {
+          "bin": "",
+          "frequency": 0
+        }
+      ],
+      "sql_query": "SELECT local_authority_name AS bin, SUM(population_count) AS frequency FROM ethnicity_data WHERE ethnic_group = 'White_British' AND date = '2021-01-01' GROUP BY local_authority_name ORDER BY local_authority_name;"
+    },
+    {
+      "proposition_id": "ethnicity_statistical_patterns_stat_002",
+      "dataset": "ethnicity",
+      "time_period": "2021 Census",
+      "variables_needed": [
+        "local_authority_name",
+        "Asian_Indian"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, SUM(CASE WHEN ethnic_group = 'Asian_Indian' THEN population_count ELSE 0 END) AS x_value, SUM(CASE WHEN ethnic_group = 'Asian_Indian' THEN percentage ELSE 0 END) AS y_value FROM ethnicity_data WHERE date = '2021-01-01' GROUP BY area_name ORDER BY area_name;"
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "chart_type": "multiLineChart",
+  "total_generated": 10,
+  "propositions": [
+    {
+      "proposition_id": "crime-rates_trend_analysis_multiLineChart_with_mean_2D_001",
+      "dataset": "crime-rates",
+      "category": "chart_specific_analysis",
+      "proposition": "Analyze the average annual crime rates across multiple London boroughs to identify trends and deviations.",
+      "chart_type": "multiLineChart_with_mean_2D",
+      "chart_title": "Annual Crime Rate Trends with Average Comparison",
+      "chart_description": "Line chart showing annual crime rates across different boroughs with a mean line for average comparison.",
+      "reasoning": "The mean line provides a benchmark for analyzing deviations and trends across boroughs over the years.",
+      "tapas_questions": [
+        "Which boroughs show significant deviations from the average crime rate?",
+        "How have crime rates changed over the years across boroughs?",
+        "What trends can be identified when comparing borough crime rates to the average?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "crime_rate"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "ethnicity_population_dynamics_multiLineChart_simple_2D_002",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "proposition": "Track the changes in population proportions of major ethnic groups in London over a decade.",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Ethnic Group Population Dynamics in London",
+      "chart_description": "Line chart illustrating the proportionate changes of major ethnic groups across London over time.",
+      "reasoning": "Multiple lines allow for a straightforward comparison of how different ethnic groups' proportions have evolved.",
+      "tapas_questions": [
+        "Which ethnic groups have seen the most significant changes over the decade?",
+        "How do these changes compare across different periods?",
+        "Are there any consistent trends in the demographic shifts?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "year",
+        "ethnic_group",
+        "population_proportion"
+      ],
+      "time_period": "2010-2020",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "country-of-births_demographic_trends_multiLineChart_with_threshold_2D_003",
+      "dataset": "country-of-births",
+      "category": "chart_specific_analysis",
+      "proposition": "Identify significant demographic shifts in the population by country of birth with a threshold for notable changes.",
+      "chart_type": "multiLineChart_with_threshold_2D",
+      "chart_title": "Demographic Shifts by Country of Birth with Significant Change Threshold",
+      "chart_description": "Multi-line chart showing population changes with highlighted thresholds for significant demographic shifts.",
+      "reasoning": "Thresholds help highlight significant demographic changes, making it easier to spot important trends.",
+      "tapas_questions": [
+        "Which countries of birth have seen the most significant changes?",
+        "How do these changes align with global events?",
+        "What constitutes a significant demographic shift?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "year",
+        "country_of_birth",
+        "population"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "London-wide",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_historical_trends_multiLineChart_simple_3D_004",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "proposition": "Visualize population growth trends across different London boroughs over two centuries in a 3D space.",
+      "chart_type": "multiLineChart_simple_3D",
+      "chart_title": "Two-Century Population Growth in London Boroughs",
+      "chart_description": "3D multi-line chart illustrating population growth trends across boroughs from 1801 to 2000.",
+      "reasoning": "3D visualization helps in observing population growth over a long timeline and across multiple dimensions.",
+      "tapas_questions": [
+        "Which boroughs have experienced the most rapid growth?",
+        "How do growth trends compare in the 19th vs. 20th century?",
+        "Are there any boroughs with consistent growth patterns throughout?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "population"
+      ],
+      "time_period": "1801-2000",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "income_variation_analysis_multiLineChart_with_mean_2D_005",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "proposition": "Examine income variations across different London boroughs, with an overlay of the mean income trend.",
+      "chart_type": "multiLineChart_with_mean_2D",
+      "chart_title": "Income Variation Across Boroughs with Mean Trend",
+      "chart_description": "Multi-line chart comparing income trends across boroughs with an overlay of the average income trend.",
+      "reasoning": "Overlaying the mean trend allows for easy identification of boroughs above or below average income trends.",
+      "tapas_questions": [
+        "Which boroughs consistently perform above the mean income trend?",
+        "How have incomes varied across boroughs over time?",
+        "What factors might contribute to these variations in income?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "income"
+      ],
+      "time_period": "1999-2019",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "house-prices_market_trends_multiLineChart_simple_2D_006",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "proposition": "Identify housing market trends across different London areas over the last two decades.",
+      "chart_type": "multiLineChart_simple_2D",
+      "chart_title": "Housing Market Trends in London Areas",
+      "chart_description": "Line chart showing the trends in house prices across different areas over the past 20 years.",
+      "reasoning": "Simple line charts effectively display price trends over time, allowing for area-to-area comparisons.",
+      "tapas_questions": [
+        "Which areas have seen the most significant price increases?",
+        "How do trends in different areas compare?",
+        "What are the potential drivers behind these trends?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "area",
+        "year",
+        "price"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "Area",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "ethnicity_diversity_change_multiLineChart_with_threshold_2D_007",
+      "dataset": "ethnicity",
+      "category": "chart_specific_analysis",
+      "proposition": "Explore changes in ethnic diversity across London boroughs with a focus on significant shifts.",
+      "chart_type": "multiLineChart_with_threshold_2D",
+      "chart_title": "Ethnic Diversity Changes Across Boroughs with Significant Shifts",
+      "chart_description": "Line chart showing ethnic diversity changes with thresholds highlighting significant shifts.",
+      "reasoning": "Thresholds help identify where significant diversity changes have occurred over time.",
+      "tapas_questions": [
+        "Which boroughs have experienced significant shifts in diversity?",
+        "How have these changes impacted the overall demographics?",
+        "What are the implications of these diversity shifts?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "ethnic_group_proportion"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "population_density_growth_multiLineChart_simple_3D_008",
+      "dataset": "population",
+      "category": "chart_specific_analysis",
+      "proposition": "Analyze population density growth across various London boroughs in a 3D space to capture intricate patterns.",
+      "chart_type": "multiLineChart_simple_3D",
+      "chart_title": "3D Population Density Growth Across London Boroughs",
+      "chart_description": "3D line chart showing the changes in population density across boroughs over several decades.",
+      "reasoning": "A 3D chart allows for a detailed visualization of density changes, adding depth to the analysis of spatial trends.",
+      "tapas_questions": [
+        "Which boroughs have the highest population density growth?",
+        "How does density growth correlate with urban development?",
+        "What are the potential impacts of these density changes?"
+      ],
+      "3d_dimension": "year",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "population_density"
+      ],
+      "time_period": "1970-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    },
+    {
+      "proposition_id": "house-prices_value_fluctuations_multiLineChart_with_mean_2D_009",
+      "dataset": "house-prices",
+      "category": "chart_specific_analysis",
+      "proposition": "Examine fluctuations in house prices across various London areas with an average price trend line.",
+      "chart_type": "multiLineChart_with_mean_2D",
+      "chart_title": "House Price Fluctuations with Average Trend Across London",
+      "chart_description": "Line chart showing price fluctuations with a mean line indicating average price trends.",
+      "reasoning": "Including a mean line helps contextualize area-specific price trends against overall market trends.",
+      "tapas_questions": [
+        "Which areas show the most volatility in house prices?",
+        "How do these price trends compare to the average trend?",
+        "What factors might influence these fluctuations?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "area",
+        "year",
+        "price"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "Area",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "income_growth_analysis_multiLineChart_with_threshold_2D_010",
+      "dataset": "income",
+      "category": "chart_specific_analysis",
+      "proposition": "Investigate income growth patterns with thresholds highlighting significant economic changes across boroughs.",
+      "chart_type": "multiLineChart_with_threshold_2D",
+      "chart_title": "Income Growth Patterns with Significant Change Thresholds",
+      "chart_description": "Line chart illustrating income growth with thresholds marking significant economic changes.",
+      "reasoning": "Thresholds help draw attention to periods of significant economic change, aiding in policy analysis.",
+      "tapas_questions": [
+        "Which boroughs have experienced significant economic changes?",
+        "How do these changes align with broader economic trends?",
+        "What might be driving significant income growth in certain boroughs?"
+      ],
+      "3d_dimension": "null",
+      "variables_needed": [
+        "borough_name",
+        "year",
+        "income"
+      ],
+      "time_period": "2000-2020",
+      "geographic_level": "Borough",
+      "complexity_level": "Advanced"
+    }
+  ],
+  "generation_timestamp": "2025-08-20T15:16:22.568Z"
+}

@@ -1,0 +1,155 @@
+{
+  "category": "categorical_analysis",
+  "dataset": "vehicles",
+  "processed_at": "2025-08-20T04:08:38.351Z",
+  "total_propositions": 6,
+  "propositions": [
+    {
+      "proposition_id": "vehicles_categorical_analysis_ca1",
+      "dataset": "vehicles",
+      "category": "categorical_analysis",
+      "original_proposition": "Electric vehicles represent 40% of all new vehicle registrations in 2023.",
+      "reworded_proposition": "Electric vehicles have become a significant portion of new vehicle registrations in 2023.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Proportion of Electric Vehicle Registrations in 2023",
+      "chart_description": "Visual representation of the share of electric vehicles among new registrations in 2023.",
+      "reasoning": "A donut chart effectively highlights the proportion of electric vehicles compared to other types, emphasizing their share in the total registrations.",
+      "tapas_questions": [
+        "What percentage of new vehicle registrations are electric vehicles?",
+        "How does the proportion of electric vehicles compare to other types?",
+        "Which vehicle type has the highest share of new registrations?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_categorical_analysis_ca2",
+      "dataset": "vehicles",
+      "category": "categorical_analysis",
+      "original_proposition": "Diesel vehicles account for the least number of registrations, making up only 10% of the total in 2023.",
+      "reworded_proposition": "Diesel vehicles represent the smallest share of registrations in 2023, highlighting a preference for other vehicle types.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Vehicle Registration by Type in 2023",
+      "chart_description": "Comparison of vehicle registration types in London for 2023",
+      "reasoning": "A bar chart effectively shows the distribution of vehicle registrations across different types, highlighting the relative share of diesel vehicles.",
+      "tapas_questions": [
+        "Which vehicle type has the highest number of registrations?",
+        "What percentage of total registrations are diesel vehicles?",
+        "How do diesel vehicle registrations compare to electric vehicles?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_categorical_analysis_ca3",
+      "dataset": "vehicles",
+      "category": "categorical_analysis",
+      "original_proposition": "Hybrid vehicles have seen a 50% increase in their share of total registrations from 2019 to 2023.",
+      "reworded_proposition": "Hybrid vehicles have increasingly become a larger part of total registrations over recent years.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Growth of Hybrid Vehicle Registrations",
+      "chart_description": "Trends in hybrid vehicle registration share from 2019 to 2023.",
+      "reasoning": "A line chart effectively illustrates the trend of increasing hybrid vehicle registrations over time, highlighting changes and growth patterns.",
+      "tapas_questions": [
+        "How did the share of hybrid vehicle registrations change from 2019 to 2023?",
+        "What is the average share of hybrid vehicle registrations across the years?",
+        "Which year saw the highest increase in hybrid vehicle registration share?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2019-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_categorical_analysis_ca4",
+      "dataset": "vehicles",
+      "category": "categorical_analysis",
+      "original_proposition": "Petrol vehicles remain the most common type, comprising 45% of all vehicles in 2023.",
+      "reworded_proposition": "Petrol vehicles continue to dominate as the most prevalent type in 2023.",
+      "chart_type": "donutChart_simple_2D",
+      "chart_title": "Dominance of Petrol Vehicles in 2023",
+      "chart_description": "Distribution of vehicle types in London for the year 2023.",
+      "reasoning": "A donut chart effectively shows the proportion of different vehicle types, highlighting the dominance of petrol vehicles.",
+      "tapas_questions": [
+        "Which vehicle type is the most common in 2023?",
+        "What percentage of vehicles are petrol in 2023?",
+        "How does the proportion of petrol vehicles compare to other types?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    },
+    {
+      "proposition_id": "vehicles_categorical_analysis_ca5",
+      "dataset": "vehicles",
+      "category": "categorical_analysis",
+      "original_proposition": "The proportion of electric vehicles is highest in high-income boroughs, making up 60% of registrations.",
+      "reworded_proposition": "Electric vehicle registrations are predominantly found in high-income boroughs, where they constitute a significant share of the total.",
+      "chart_type": "barChart_simple_2D",
+      "chart_title": "Electric Vehicle Registrations by Borough Income",
+      "chart_description": "Distribution of electric vehicle registrations across boroughs in 2023.",
+      "reasoning": "A simple bar chart effectively highlights the comparison of electric vehicle registration proportions across different boroughs, emphasizing the income-related pattern.",
+      "tapas_questions": [
+        "Which borough has the highest proportion of electric vehicle registrations?",
+        "What percentage of vehicle registrations are electric in high-income boroughs?",
+        "How does electric vehicle registration compare between high-income and low-income boroughs?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "area",
+        "category",
+        "value"
+      ],
+      "time_period": "2023",
+      "geographic_level": "Borough",
+      "complexity_level": "Intermediate"
+    },
+    {
+      "proposition_id": "vehicles_categorical_analysis_ca6",
+      "dataset": "vehicles",
+      "category": "categorical_analysis",
+      "original_proposition": "The least common vehicle type in 2023 is diesel, with registrations decreasing by 5% from the previous year.",
+      "reworded_proposition": "Diesel vehicles have become the least popular type, with a noticeable decline in registrations over the past year.",
+      "chart_type": "lineChart_simple_2D",
+      "chart_title": "Trends in Vehicle Registrations by Type",
+      "chart_description": "Explore changes in vehicle type registrations from 2022 to 2023.",
+      "reasoning": "A line chart effectively displays trends over time, highlighting changes in vehicle registrations across different types.",
+      "tapas_questions": [
+        "Which vehicle type had the lowest registrations in 2023?",
+        "How did diesel vehicle registrations change from 2022 to 2023?",
+        "What is the trend in vehicle registrations over the past year?"
+      ],
+      "3d_dimension": null,
+      "variables_needed": [
+        "category",
+        "value",
+        "date"
+      ],
+      "time_period": "2022-2023",
+      "geographic_level": "London-wide",
+      "complexity_level": "Basic"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "category": "cross_dimensional",
+  "dataset": "income",
+  "processed_at": "2025-08-20T18:04:45.054Z",
+  "total_queries": 4,
+  "sql_queries": [
+    {
+      "proposition_id": "income_cross_dimensional_cd1",
+      "dataset": "income",
+      "time_period": "2020-2023",
+      "variables_needed": [
+        "Area",
+        "Mean_income",
+        "Year"
+      ],
+      "chart_type": "lineChart_simple_2D",
+      "example": [
+        {
+          "time": "",
+          "value": 0
+        },
+        {
+          "time": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_income AS value FROM income_data WHERE date BETWEEN '2020-01-01' AND '2023-12-31' GROUP BY date, area_name ORDER BY date;"
+    },
+    {
+      "proposition_id": "income_cross_dimensional_cd2",
+      "dataset": "income",
+      "time_period": "2015-2023",
+      "variables_needed": [
+        "Area",
+        "Median_income",
+        "Year"
+      ],
+      "chart_type": "barChart_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "value": 0
+        },
+        {
+          "category": "",
+          "value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(median_income) AS value FROM income_data WHERE date BETWEEN '2015-01-01' AND '2023-12-31' GROUP BY area_name ORDER BY area_name;"
+    },
+    {
+      "proposition_id": "income_cross_dimensional_cd3",
+      "dataset": "income",
+      "time_period": "2010-2020",
+      "variables_needed": [
+        "Area",
+        "Mean_income",
+        "Year"
+      ],
+      "chart_type": "scatterPlot_simple_2D",
+      "example": [
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        },
+        {
+          "category": "",
+          "x_value": 0,
+          "y_value": 0
+        }
+      ],
+      "sql_query": "SELECT area_name AS category, AVG(average_income) AS x_value, EXTRACT(YEAR FROM date) AS y_value FROM income_data WHERE EXTRACT(YEAR FROM date) BETWEEN 2010 AND 2020 GROUP BY area_name, EXTRACT(YEAR FROM date) ORDER BY area_name, y_value;"
+    },
+    {
+      "proposition_id": "income_cross_dimensional_cd4",
+      "dataset": "income",
+      "time_period": "2008-2023",
+      "variables_needed": [
+        "Area",
+        "Mean_income",
+        "Median_income",
+        "Year"
+      ],
+      "chart_type": "lineChart_simple_3D",
+      "example": [
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        },
+        {
+          "time": "",
+          "value": 0,
+          "dimension": ""
+        }
+      ],
+      "sql_query": "SELECT date AS time, average_income AS value, area_name AS dimension FROM income_data WHERE date BETWEEN '2008-01-01' AND '2023-12-31' GROUP BY date, area_name, average_income ORDER BY date, area_name;"
+    }
+  ]
+}
