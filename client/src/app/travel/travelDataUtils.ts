@@ -533,3 +533,81 @@ export const getDestinationMetrics = (
     };
   });
 };
+
+// Major cities data for country detail map
+export const getMajorCities = (country: string): Array<{city: string, longitude: number, latitude: number}> => {
+  const cityData: Record<string, Array<{city: string, longitude: number, latitude: number}>> = {
+    'France': [
+      {city: 'Paris', longitude: 2.3522, latitude: 48.8566},
+      {city: 'Lyon', longitude: 4.8357, latitude: 45.7640},
+      {city: 'Marseille', longitude: 5.3698, latitude: 43.2965},
+      {city: 'Nice', longitude: 7.2619, latitude: 43.7102},
+      {city: 'Toulouse', longitude: 1.4442, latitude: 43.6047}
+    ],
+    'Germany': [
+      {city: 'Berlin', longitude: 13.4050, latitude: 52.5200},
+      {city: 'Munich', longitude: 11.5820, latitude: 48.1351},
+      {city: 'Hamburg', longitude: 9.9937, latitude: 53.5511},
+      {city: 'Frankfurt', longitude: 8.6821, latitude: 50.1109},
+      {city: 'Cologne', longitude: 6.9603, latitude: 50.9375}
+    ],
+    'Italy': [
+      {city: 'Rome', longitude: 12.4964, latitude: 41.9028},
+      {city: 'Milan', longitude: 9.1900, latitude: 45.4642},
+      {city: 'Florence', longitude: 11.2558, latitude: 43.7696},
+      {city: 'Venice', longitude: 12.3155, latitude: 45.4408},
+      {city: 'Naples', longitude: 14.2681, latitude: 40.8518}
+    ],
+    'Spain': [
+      {city: 'Madrid', longitude: -3.7038, latitude: 40.4168},
+      {city: 'Barcelona', longitude: 2.1734, latitude: 41.3851},
+      {city: 'Seville', longitude: -5.9845, latitude: 37.3891},
+      {city: 'Valencia', longitude: -0.3763, latitude: 39.4699},
+      {city: 'Bilbao', longitude: -2.9253, latitude: 43.2627}
+    ],
+    'United Kingdom': [
+      {city: 'London', longitude: -0.1276, latitude: 51.5074},
+      {city: 'Edinburgh', longitude: -3.1883, latitude: 55.9533},
+      {city: 'Manchester', longitude: -2.2426, latitude: 53.4808},
+      {city: 'Liverpool', longitude: -2.9916, latitude: 53.4084},
+      {city: 'Bath', longitude: -2.3601, latitude: 51.3811}
+    ],
+    'Japan': [
+      {city: 'Tokyo', longitude: 139.6917, latitude: 35.6895},
+      {city: 'Osaka', longitude: 135.5023, latitude: 34.6937},
+      {city: 'Kyoto', longitude: 135.7681, latitude: 35.0116},
+      {city: 'Hiroshima', longitude: 132.4596, latitude: 34.3853},
+      {city: 'Nara', longitude: 135.8048, latitude: 34.6851}
+    ],
+    'Thailand': [
+      {city: 'Bangkok', longitude: 100.5018, latitude: 13.7563},
+      {city: 'Chiang Mai', longitude: 98.9817, latitude: 18.7883},
+      {city: 'Phuket', longitude: 98.3923, latitude: 7.8804},
+      {city: 'Pattaya', longitude: 100.8698, latitude: 12.9236},
+      {city: 'Krabi', longitude: 99.0632, latitude: 8.0863}
+    ],
+    'United States': [
+      {city: 'New York', longitude: -74.0060, latitude: 40.7128},
+      {city: 'Los Angeles', longitude: -118.2437, latitude: 34.0522},
+      {city: 'San Francisco', longitude: -122.4194, latitude: 37.7749},
+      {city: 'Chicago', longitude: -87.6298, latitude: 41.8781},
+      {city: 'Miami', longitude: -80.1918, latitude: 25.7617}
+    ],
+    'Canada': [
+      {city: 'Toronto', longitude: -79.3832, latitude: 43.6532},
+      {city: 'Vancouver', longitude: -123.1207, latitude: 49.2827},
+      {city: 'Montreal', longitude: -73.5673, latitude: 45.5017},
+      {city: 'Calgary', longitude: -114.0719, latitude: 51.0447},
+      {city: 'Ottawa', longitude: -75.6972, latitude: 45.4215}
+    ],
+    'Australia': [
+      {city: 'Sydney', longitude: 151.2093, latitude: -33.8688},
+      {city: 'Melbourne', longitude: 144.9631, latitude: -37.8136},
+      {city: 'Brisbane', longitude: 153.0251, latitude: -27.4698},
+      {city: 'Perth', longitude: 115.8605, latitude: -31.9505},
+      {city: 'Adelaide', longitude: 138.6007, latitude: -34.9285}
+    ]
+  };
+  
+  return cityData[country] || [{city: 'Capital', longitude: 0, latitude: 0}];
+};
