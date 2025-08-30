@@ -23,7 +23,14 @@ import {
   getVisitorFlowForDestination,
   getDestinationMetrics,
   TRAVEL_DESTINATIONS,
-  REGIONS
+  REGIONS,
+  getMockReviewsDistribution,
+  generateConsistentTravelGrowthData,
+  getMockTravelGrowthDataByCountryYear,
+  getMockTravelGrowthData,
+  getMockCulturalDiversity,
+  getEnvironmentalQualityForCity,
+  generateSafetyBreakdown
 } from './travelDataUtils';
 import {
   worldMapSpec,
@@ -233,132 +240,18 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
     return destinationMetrics.find(d => d.city === dashboardFilters.selectedCity) || null;
   }, [destinationMetrics, dashboardFilters.selectedCity]);
 
-  // Mock data for various charts
-  const mockReviewsDistribution = [
-    { rating: '5 Stars', count: 12500, percentage: 45.2 },
-    { rating: '4 Stars', count: 8700, percentage: 31.4 },
-    { rating: '3 Stars', count: 4200, percentage: 15.2 },
-    { rating: '2 Stars', count: 1800, percentage: 6.5 },
-    { rating: '1 Star', count: 450, percentage: 1.7 }
-  ];
-
-  // Mock travel growth data for different countries and years
-  const mockTravelGrowthDataByCountryYear: Record<string, Record<number, Array<{city: string, year: number, visitors: number, change: number}>>> = {
-    'United States': {
-      2025: [
-        { city: 'New York', year: 2025, visitors: 65800000, change: 8.5 },
-        { city: 'Los Angeles', year: 2025, visitors: 50000000, change: 6.2 },
-        { city: 'Chicago', year: 2025, visitors: 57800000, change: 4.8 },
-        { city: 'San Francisco', year: 2025, visitors: 25800000, change: 12.1 },
-        { city: 'Las Vegas', year: 2025, visitors: 42300000, change: 15.3 },
-        { city: 'Miami', year: 2025, visitors: 23400000, change: 9.7 },
-        { city: 'Washington DC', year: 2025, visitors: 25200000, change: 5.4 },
-        { city: 'Boston', year: 2025, visitors: 21800000, change: 7.2 }
-      ],
-      2024: [
-        { city: 'New York', year: 2024, visitors: 60650000, change: 5.2 },
-        { city: 'Los Angeles', year: 2024, visitors: 47100000, change: 3.8 },
-        { city: 'Chicago', year: 2024, visitors: 55100000, change: 2.1 },
-        { city: 'San Francisco', year: 2024, visitors: 23000000, change: 8.9 },
-        { city: 'Las Vegas', year: 2024, visitors: 36700000, change: 11.2 },
-        { city: 'Miami', year: 2024, visitors: 21300000, change: 6.4 },
-        { city: 'Washington DC', year: 2024, visitors: 23900000, change: 2.8 },
-        { city: 'Boston', year: 2024, visitors: 20300000, change: 4.6 }
-      ],
-      2023: [
-        { city: 'New York', year: 2023, visitors: 57600000, change: -2.1 },
-        { city: 'Los Angeles', year: 2023, visitors: 45400000, change: -1.8 },
-        { city: 'Chicago', year: 2023, visitors: 53900000, change: -3.2 },
-        { city: 'San Francisco', year: 2023, visitors: 21100000, change: 1.2 },
-        { city: 'Las Vegas', year: 2023, visitors: 33000000, change: 7.8 },
-        { city: 'Miami', year: 2023, visitors: 20000000, change: 3.1 },
-        { city: 'Washington DC', year: 2023, visitors: 23250000, change: -4.5 },
-        { city: 'Boston', year: 2023, visitors: 19400000, change: 1.8 }
-      ]
-    },
-    'Japan': {
-      2025: [
-        { city: 'Tokyo', year: 2025, visitors: 15200000, change: 12.5 },
-        { city: 'Osaka', year: 2025, visitors: 11800000, change: 9.8 },
-        { city: 'Kyoto', year: 2025, visitors: 55000000, change: 18.2 },
-        { city: 'Sapporo', year: 2025, visitors: 15800000, change: 6.3 },
-        { city: 'Hiroshima', year: 2025, visitors: 3200000, change: 4.1 },
-        { city: 'Nara', year: 2025, visitors: 17200000, change: 11.7 }
-      ],
-      2024: [
-        { city: 'Tokyo', year: 2024, visitors: 13500000, change: 8.2 },
-        { city: 'Osaka', year: 2024, visitors: 10750000, change: 6.4 },
-        { city: 'Kyoto', year: 2024, visitors: 46500000, change: 14.8 },
-        { city: 'Sapporo', year: 2024, visitors: 14850000, change: 3.9 },
-        { city: 'Hiroshima', year: 2024, visitors: 3070000, change: 2.1 },
-        { city: 'Nara', year: 2024, visitors: 15400000, change: 8.3 }
-      ],
-      2023: [
-        { city: 'Tokyo', year: 2023, visitors: 12480000, change: -5.3 },
-        { city: 'Osaka', year: 2023, visitors: 10100000, change: -7.2 },
-        { city: 'Kyoto', year: 2023, visitors: 40500000, change: -12.8 },
-        { city: 'Sapporo', year: 2023, visitors: 14290000, change: -8.1 },
-        { city: 'Hiroshima', year: 2023, visitors: 3006000, change: -4.5 },
-        { city: 'Nara', year: 2023, visitors: 14220000, change: -9.6 }
-      ]
-    },
-    'United Kingdom': {
-      2025: [
-        { city: 'London', year: 2025, visitors: 21200000, change: 7.8 },
-        { city: 'Edinburgh', year: 2025, visitors: 4500000, change: 9.2 },
-        { city: 'Manchester', year: 2025, visitors: 1400000, change: 5.1 },
-        { city: 'Liverpool', year: 2025, visitors: 61800000, change: 12.3 },
-        { city: 'Bath', year: 2025, visitors: 6200000, change: 8.7 },
-        { city: 'York', year: 2025, visitors: 7100000, change: 6.4 }
-      ],
-      2024: [
-        { city: 'London', year: 2024, visitors: 19650000, change: 4.2 },
-        { city: 'Edinburgh', year: 2024, visitors: 4120000, change: 6.8 },
-        { city: 'Manchester', year: 2024, visitors: 1330000, change: 2.9 },
-        { city: 'Liverpool', year: 2024, visitors: 55000000, change: 8.1 },
-        { city: 'Bath', year: 2024, visitors: 5700000, change: 5.3 },
-        { city: 'York', year: 2024, visitors: 6680000, change: 3.7 }
-      ],
-      2023: [
-        { city: 'London', year: 2023, visitors: 18860000, change: -8.2 },
-        { city: 'Edinburgh', year: 2023, visitors: 3860000, change: -12.3 },
-        { city: 'Manchester', year: 2023, visitors: 1292000, change: -15.1 },
-        { city: 'Liverpool', year: 2023, visitors: 50870000, change: -18.7 },
-        { city: 'Bath', year: 2023, visitors: 5410000, change: -11.8 },
-        { city: 'York', year: 2023, visitors: 6440000, change: -9.4 }
-      ]
-    }
-  };
-
-  const mockTravelGrowthData = [
-    { city: 'Tokyo', year: 2025, visitors: 15200000, change: 12.5 },
-    { city: 'Paris', year: 2025, visitors: 14800000, change: 8.3 },
-    { city: 'London', year: 2025, visitors: 13600000, change: 6.7 },
-    { city: 'Dubai', year: 2025, visitors: 12300000, change: 15.2 },
-    { city: 'Singapore', year: 2025, visitors: 11900000, change: 9.8 },
-    { city: 'New York', year: 2025, visitors: 11500000, change: 4.1 },
-    { city: 'Barcelona', year: 2025, visitors: 10800000, change: 7.9 },
-    { city: 'Amsterdam', year: 2025, visitors: 9200000, change: 11.3 }
-  ];
-
-  const mockCulturalDiversity = [
-    { metric: 'Cuisine Variety', score: 85, maxScore: 100 },
-    { metric: 'Language Support', score: 72, maxScore: 100 },
-    { metric: 'Cultural Events', score: 78, maxScore: 100 },
-    { metric: 'LGBTQ+ Friendly', score: 92, maxScore: 100 },
-    { metric: 'Religious Diversity', score: 68, maxScore: 100 }
-  ];
-
-  const mockEnvironmentalQuality = [
-    { city: 'Singapore', aqi: 15, greenSpacePct: 47, waterQuality: 95, overallScore: 85 },
-    { city: 'Sydney', aqi: 18, greenSpacePct: 46, waterQuality: 92, overallScore: 82 },
-    { city: 'Tokyo', aqi: 22, greenSpacePct: 24, waterQuality: 89, overallScore: 78 },
-    { city: 'Amsterdam', aqi: 16, greenSpacePct: 43, waterQuality: 88, overallScore: 77 },
-    { city: 'Seoul', aqi: 28, greenSpacePct: 34, waterQuality: 85, overallScore: 75 },
-    { city: 'Barcelona', aqi: 26, greenSpacePct: 35, waterQuality: 84, overallScore: 74 },
-    { city: 'Dubai', aqi: 35, greenSpacePct: 18, waterQuality: 79, overallScore: 68 },
-    { city: 'Bangkok', aqi: 42, greenSpacePct: 22, waterQuality: 76, overallScore: 65 }
-  ];
+  // Get all mock data from utility functions
+  const mockReviewsDistribution = getMockReviewsDistribution();
+  const mockTravelGrowthDataByCountryYear = getMockTravelGrowthDataByCountryYear();
+  const mockTravelGrowthData = getMockTravelGrowthData();
+  const mockCulturalDiversity = getMockCulturalDiversity();
+  const currentSafetyScore = Math.round(currentDestinationMetrics?.safetyScore || 78);
+  const safetyBreakdownData = generateSafetyBreakdown(currentSafetyScore);
+  const mockEnvironmentalQuality = getEnvironmentalQualityForCity(
+    dashboardFilters.selectedCity, 
+    dashboardFilters.selectedCountry,
+    currentDestinationMetrics?.environmentScore
+  );
 
   if (isLoading) {
     return (
@@ -757,13 +650,7 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
           </div>
           <div className="absolute left-6 bottom-0">
             <MemoizedVegaLite 
-              spec={safetyBreakdownPieSpec([
-                { category: 'Very Safe', score: 8500, percentage: 42.5 },
-                { category: 'Safe', score: 6200, percentage: 31.0 },
-                { category: 'Moderate', score: 3400, percentage: 17.0 },
-                { category: 'Caution', score: 1500, percentage: 7.5 },
-                { category: 'High Risk', score: 400, percentage: 2.0 }
-              ])}
+              spec={safetyBreakdownPieSpec(safetyBreakdownData)}
               actions={false}
               style={{width: '100%', height: '100%'}}
             />
@@ -805,13 +692,13 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
         <div className="relative col-span-3 row-span-3 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div className="text-sm font-semibold text-gray-700">
-              Environmental Quality - {dashboardFilters.selectedCity}
+              Environmental Quality
             </div>
           </div>
           <div className="text-xs text-gray-500">
-            Scores for Air Quality, Green Space, and Water Quality
+            Shows how cities compare based on air quality, water quality, and green space to reflect overall living conditions
           </div>
-          <div className="absolute left-4 bottom-2">
+          <div className="absolute left-4 bottom-1">
             <MemoizedVegaLite 
               spec={environmentalQualityScatterSpec(mockEnvironmentalQuality)}
               actions={false}
@@ -821,11 +708,11 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
         </div>
                        
 
-        {/* Cultural Attractions - Bar Chart */}
+        {/* Cultural Diversity - Bar Chart */}
         <div className="col-span-2 row-span-2 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
           <div className="flex items-center justify-between mb-3">
             <div className="text-sm font-semibold text-gray-700">
-              Cultural Attractions - {dashboardFilters.selectedCity}
+              Cultural Diversity - {dashboardFilters.selectedCity}
             </div>
             <button className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">
               + Add

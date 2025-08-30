@@ -1982,7 +1982,7 @@ export const environmentalQualityScatterSpec = (data: Array<{city: string, aqi: 
         "labelColor": "#888",
         "titleFontSize": 9,
         "labelFontSize": 8,
-        "offset": 10,
+        "offset": 5,
         "orient": "top" as const
       }
     },
