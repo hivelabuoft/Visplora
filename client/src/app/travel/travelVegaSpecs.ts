@@ -1127,7 +1127,7 @@ export const safetyComparisonBarChartSpec = (data: SafetyComparisonData[]) => {
   return {
     "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
     "width": 450,
-    "height": 230,
+    "height": 170,
     "background": "transparent",
     "data": {
       "values": sortedData
@@ -1203,7 +1203,7 @@ export const safetyComparisonBarChartSpec = (data: SafetyComparisonData[]) => {
               "titleFontSize": 10,
               "labelFontSize": 9,
               "symbolSize": 80,
-              "offset": 10
+              "offset": 5
             }
           },
           "stroke": {
@@ -1770,7 +1770,7 @@ export const debugAllCountriesMapSpec = () => ({
 export const culturalDiversityBarSpec = (data: Array<{metric: string, score: number, maxScore: number}>) => ({
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
   "width": 200,
-  "height": 160,
+  "height": 100,
   "background": "transparent",
   "data": {
     "values": data.map(d => ({
@@ -1880,7 +1880,7 @@ export const culturalDiversityBarSpec = (data: Array<{metric: string, score: num
 export const environmentalQualityScatterSpec = (data: Array<{city: string, aqi: number, greenSpacePct: number, waterQuality: number, overallScore: number}>) => ({
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json" as const,
   "width": 360,
-  "height": 180,
+  "height": 120,
   "background": "transparent",
   "data": {
     "values": data
@@ -1965,7 +1965,7 @@ export const environmentalQualityScatterSpec = (data: Array<{city: string, aqi: 
         "orient": "right" as const,
         "offset": 15,
         "padding": 0,
-        "values": [50, 60, 70, 80, 90, 100]
+        "values": [40, 60, 80, 100]
       }
     },
     "color": {
@@ -1973,7 +1973,7 @@ export const environmentalQualityScatterSpec = (data: Array<{city: string, aqi: 
       "type": "quantitative" as const,
       "scale": {
         "scheme": "redyellowgreen",
-        "domain": [50, 10],
+        "domain": [60, 10],
         "reverse": true
       },
       "legend": {
@@ -1982,7 +1982,7 @@ export const environmentalQualityScatterSpec = (data: Array<{city: string, aqi: 
         "labelColor": "#888",
         "titleFontSize": 9,
         "labelFontSize": 8,
-        "offset": 5,
+        "offset": 0,
         "orient": "top" as const
       }
     },
