@@ -283,10 +283,10 @@ If no related sentence is found in the active path, set \`related_sentence\` to 
 
 ############################
 Allowed drift types:
-1. **Elaboration** - Adds detail to the prior insight without changing topic, time, location, or measure.
-2. **Context Shift** - Keeps the same topic but changes **where** (geo) or **when** (time) the insight applies.
-3. **Reframing** - Keeps the same topic and location but changes how the data is viewed.
-4. **Topic Change** - Switches the subject or domain entirely, or introduces logical contradiction.
+1. **Provide Overview** - Establishes the broader context, scope, or big picture within which the story unfolds. Often sets the stage by situating data points relative to larger trends, baselines, or background information.
+2. **Adjust** - Changes the framing or focus of the narrative by shifting scale, perspective, or grouping — e.g., moving from national to local, yearly to monthly, or averages to distributions.
+3. **Detect Pattern** - Highlights a relationship, anomaly, or notable trend discovered in the data. These are often the “aha” moments of the story — where the writer points out evidence that stands out.
+4. **Match Mental Model** - Connects the story to prior expectations, domain knowledge, or intuitive explanations. It makes the narrative resonate with what the audience already believes or knows, or challenges those expectations.
 
 Allowed severity: \`none\`, \`minor\`, \`moderate\`, \`critical\`
 

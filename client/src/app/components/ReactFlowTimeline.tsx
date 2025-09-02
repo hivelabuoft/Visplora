@@ -23,7 +23,8 @@ import '../../styles/timeline.css';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Target } from 'lucide-react';
-import { TbTextPlus, TbRoute, TbCrop, TbGitBranch, TbGitFork } from 'react-icons/tb';
+import { TbMap, TbAdjustments, TbTrendingUp, TbBrain, TbGitFork } from 'react-icons/tb';
+import { GrShift } from "react-icons/gr";
 import { TimelineTooltip } from './TimelineTooltip';
 import { ReflectionModal } from './ReflectionModal';
 
@@ -58,36 +59,36 @@ export const getActivePathBeforeNode = (
 // Drift types configuration
 const DRIFT_TYPES = [
   {
-    id: "elaboration",
-    label: "Elaboration",
-    icon: TbTextPlus,
+    id: "provide_overview",
+    label: "Provide Overview",
+    icon: TbMap,
     shape: "circle",
     color: "#CBD5E0",
-    description: "Adds detail without changing topic, scope, time, or measure."
+    description: "Establishes the broader context, scope, or big picture within which the story unfolds."
   },
   {
-    id: "context_shift",
-    label: "Context Shift", 
-    icon: TbRoute,
+    id: "adjust",
+    label: "Adjust", 
+    icon: TbAdjustments,
     shape: "hexagon",
     color: "#BEE3F8",
-    description: "Keeps topic but shifts time or geo (the analysis frame)."
+    description: "Changes the framing or focus of the narrative by shifting scale, perspective, or grouping."
   },
   {
-    id: "reframing",
-    label: "Reframing",
-    icon: TbCrop,
+    id: "detect_pattern",
+    label: "Detect Pattern",
+    icon: TbTrendingUp,
     shape: "square", 
     color: "#FEFCBF",
-    description: "Keeps topic/scope but changes measure, unit, or subgroup."
+    description: "Highlights a relationship, anomaly, or notable trend discovered in the data."
   },
   {
-    id: "topic_change",
-    label: "Topic Change",
-    icon: TbGitBranch,
+    id: "match_mental_model",
+    label: "Match Mental Model",
+    icon: TbBrain,
     shape: "diamond",
     color: "#FED7D7", 
-    description: "Switches subject/domain; begins a new branch."
+    description: "Connects the story to prior expectations, domain knowledge, or intuitive explanations."
   }
 ];
 
@@ -156,11 +157,20 @@ const TimelineNodeComponent = ({ data }: { data: any }) => {
       
       // Map drift types from JSON data to component IDs
       const driftTypeMapping: { [key: string]: string } = {
-        'elaboration': 'elaboration',
-        'context shift': 'context_shift',
-        'reframing': 'reframing',
-        'topic_change': 'topic_change',
-        'topic change': 'topic_change' // Handle both variants
+        'provide_overview': 'provide_overview',
+        'provide overview': 'provide_overview',
+        'adjust': 'adjust',
+        'detect_pattern': 'detect_pattern',
+        'detect pattern': 'detect_pattern',
+        'match_mental_model': 'match_mental_model',
+        'match mental model': 'match_mental_model',
+        // Legacy mappings for backward compatibility
+        'elaboration': 'provide_overview',
+        'context_shift': 'adjust',
+        'context shift': 'adjust',
+        'reframing': 'detect_pattern',
+        'topic_change': 'match_mental_model',
+        'topic change': 'match_mental_model'
       };
       
       const mappedDriftType = driftTypeMapping[driftTypeId] || driftTypeId;
@@ -878,36 +888,36 @@ const ReactFlowTimelineInner: React.FC<ReactFlowTimelineProps> = ({ nodes, pageI
         <Panel position="top-left">
           <div className="drift-legend">
             <div className="drift-legend-items">
-              {/* Elaboration */}
+              {/* Provide Overview */}
               <div className="drift-legend-item">
-                <div className="drift-shape drift-elaboration">
-                  <TbTextPlus size={12} />
+                <div className="drift-shape drift-provide-overview">
+                  <TbMap size={12} />
                 </div>
-                <span className="drift-label">Elaboration</span>
+                <span className="drift-label">Provide Overview</span>
               </div>
               
-              {/* Context Shift */}
+              {/* Adjust */}
               <div className="drift-legend-item">
-                <div className="drift-shape drift-context-shift">
-                  <TbRoute size={12} />
+                <div className="drift-shape drift-adjust">
+                  <TbAdjustments size={12} />
                 </div>
-                <span className="drift-label">Context Shift</span>
+                <span className="drift-label">Adjust</span>
               </div>
               
-              {/* Reframing */}
+              {/* Detect Pattern */}
               <div className="drift-legend-item">
-                <div className="drift-shape drift-reframing">
-                  <TbCrop size={12} />
+                <div className="drift-shape drift-detect-pattern">
+                  <TbTrendingUp size={12}/>
                 </div>
-                <span className="drift-label">Reframing</span>
+                <span className="drift-label">Detect Pattern</span>
               </div>
               
-              {/* Topic Change */}
+              {/* Match Mental Model */}
               <div className="drift-legend-item">
-                <div className="drift-shape drift-topic-change">
-                  <TbGitBranch size={12} />
+                <div className="drift-shape drift-match-mental-model">
+                  <TbBrain size={12} />
                 </div>
-                <span className="drift-label">Topic Change</span>
+                <span className="drift-label">Match Mental Model</span>
               </div>
             </div>
           </div>

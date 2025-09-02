@@ -1,38 +1,38 @@
 [
   {
-    "id": "elaboration",
-    "label": "Elaboration",
-    "icon": "TbTextPlus",
+    "id": "provide_overview",
+    "label": "Provide Overview",
+    "icon": "TbMap",
     "icon_package": "react-icons/tb",
     "shape": "circle",
     "color": "#CBD5E0",
-    "description": "Adds detail without changing topic, scope, time, or measure."
+    "description": "Establishes the broader context, scope, or big picture within which the story unfolds."
   },
   {
-    "id": "context_shift",
-    "label": "Context Shift",
-    "icon": "TbRoute",
+    "id": "adjust",
+    "label": "Adjust",
+    "icon": "TbAdjustments",
     "icon_package": "react-icons/tb",
     "shape": "hexagon",
     "color": "#BEE3F8",
-    "description": "Keeps topic but shifts time or geo (the analysis frame)."
+    "description": "Changes the framing or focus of the narrative by shifting scale, perspective, or grouping."
   },
   {
-    "id": "reframing",
-    "label": "Reframing",
-    "icon": "TbCrop",
+    "id": "detect_pattern",
+    "label": "Detect Pattern",
+    "icon": "TbTrendingUp",
     "icon_package": "react-icons/tb",
     "shape": "square",
     "color": "#FEFCBF",
-    "description": "Keeps topic/scope but changes measure, unit, or subgroup."
+    "description": "Highlights a relationship, anomaly, or notable trend discovered in the data."
   },
   {
-    "id": "topic_change",
-    "label": "Topic Change",
-    "icon": "TbGitBranch",
+    "id": "match_mental_model",
+    "label": "Match Mental Model",
+    "icon": "TbBrain",
     "icon_package": "react-icons/tb",
     "shape": "diamond",
     "color": "#FED7D7",
-    "description": "Switches subject/domain; begins a new branch."
+    "description": "Connects the story to prior expectations, domain knowledge, or intuitive explanations."
   }
 ]
