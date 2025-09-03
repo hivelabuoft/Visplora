@@ -235,8 +235,7 @@ This document defines the chart templates that will be created in the `vegaTempl
 
 **File**: `multiType/`
 
-- `barChartWithLineSpec` - A histogram and line chart on the same axis
-- `combinedChartSpec` - Multiple chart types layered together
+- `barChartWithLineSpec` - A histogram and line chart on the same axis. Example Implementaion: visitorFlowSeasonalChartSpec
 
 **Parameters**:
 

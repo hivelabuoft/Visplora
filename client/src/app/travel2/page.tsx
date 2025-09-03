@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import ReusableNode from '../../components/ReusableNode';
 import ReusableGrid from '../../components/ReusableGrid';
-import dynamic from 'next/dynamic';
 
 // Import travel data utilities and types
 import {
@@ -36,27 +35,9 @@ import {
   VisitorFlowSeasonalData
 } from '../travel/travelDataTypes';
 
-// Import Vega specs
-import {
-  worldTravelMapSpec,
-  countryDetailMapSpec,
-  reviewsDistributionPieSpec,
-  visitorFlowSeasonalChartSpec,
-  safetyBreakdownPieSpec,
-  safetyComparisonBarChartSpec,
-  environmentalQualityScatterSpec,
-  culturalDiversityBarSpec,
-  travelGrowthTrendsSpec
-} from '../travel/travelVegaSpecs';
+import { worldTravelMapSpec } from '../travel/travelVegaSpecs';
 
-// Import new SpecCreator for chart templates
 import { SpecCreator } from '../../vegaTemplates/SpecCreator';
-
-// Dynamically import CountryDetailMap component
-// const CountryDetailMap = dynamic(() => import('../travel/CountryDetailMap'), {
-//   ssr: false,
-//   loading: () => <div className="flex items-center justify-center h-full text-gray-400">Loading country map...</div>
-// });
 
 interface Travel2Props {
   onInteraction?: (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => void;
@@ -301,6 +282,454 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
     });
   };
 
+  // Helper function to create reviews distribution pie chart using template system
+  const createReviewsDistributionSpec = (data: any[]) => {
+    if (!data.length) return null;
+    
+    return SpecCreator.create({
+      type: 'pie',
+      subtype: 'interactivePieSpec',
+      data,
+      config: {
+        dimensions: { width: 120, height: 120 },
+        fields: {
+          category: 'rating',
+          value: 'count'
+        },
+        styling: {
+          colors: ['#8B5CF6', '#3B82F6', '#06B6D4', '#10B981', '#F59E0B'],
+          background: 'transparent'
+        },
+        legend: {
+          title: 'Review Ratings',
+          orient: 'right',
+          titleColor: '#888',
+          labelColor: '#888',
+          titleFontSize: 11,
+          labelFontSize: 10,
+          symbolSize: 200,
+          offset: 30,
+          padding: 0,
+          symbolType: 'circle'
+        },
+        interactions: {
+          hover: true
+        }
+      }
+    });
+  };
+
+  // Helper function to create safety breakdown pie chart using template system
+  const createSafetyBreakdownSpec = (data: any[]) => {
+    if (!data.length) return null;
+    
+    return SpecCreator.create({
+      type: 'pie',
+      subtype: 'interactivePieSpec',
+      data,
+      config: {
+        dimensions: { width: 120, height: 120 },
+        fields: {
+          category: 'category',
+          value: 'score'
+        },
+        styling: {
+          colors: ['#8B5CF6', '#3B82F6', '#06B6D4', '#10B981', '#F59E0B'],
+          background: 'transparent'
+        },
+        legend: {
+          title: 'Safety Levels',
+          orient: 'right',
+          titleColor: '#888',
+          labelColor: '#888',
+          titleFontSize: 11,
+          labelFontSize: 10,
+          symbolSize: 200,
+          offset: 30,
+          padding: 0,
+          symbolType: 'circle'
+        },
+        interactions: {
+          hover: true
+        }
+      }
+    });
+  };
+
+  // Helper function to create environmental quality scatter chart using template system
+  const createEnvironmentalQualitySpec = (data: any[]) => {
+    if (!data.length) return null;
+    
+    return SpecCreator.create({
+      type: 'scatter',
+      subtype: 'bubblePlotScatterSpec',
+      data,
+      config: {
+        dimensions: { width: 360, height: 120 },
+        fields: {
+          x: 'greenSpacePct',
+          y: 'waterQuality',
+          size: 'overallScore',
+          color: 'aqi'
+        },
+        styling: {
+          colors: ['redyellowgreen', 'reverse'],
+          background: 'transparent',
+          sizeDomain: [40, 100],
+          axes: {
+            xAxis: {
+              labelColor: '#888',
+              titleColor: '#888',
+              labelFontSize: 8,
+              titleFontSize: 10,
+              grid: true,
+              gridColor: '#888',
+              gridDash: [4, 10],
+              ticks: true,
+              domain: true,
+              title: 'Green Space %',
+              scale: { domain: [0, 60], nice: true }
+            },
+            yAxis: {
+              labelColor: '#888',
+              titleColor: '#888', 
+              labelFontSize: 8,
+              titleFontSize: 10,
+              grid: false,
+              gridColor: '#888',
+              gridDash: [4, 50],
+              ticks: true,
+              domain: true,
+              title: 'Water Quality Score',
+              scale: { domain: [70, 100], nice: true }
+            }
+          }
+        },
+        legend: {
+          showSize: true,
+          sizeTitle: 'Overall Score',
+          showColor: true,
+          colorTitle: 'Air Quality (Lower AQI = Better)',
+          titleColor: '#888',
+          labelColor: '#888',
+          titleFontSize: 9,
+          labelFontSize: 8,
+          orient: 'right',
+          colorOrient: 'top',
+          offset: 15,
+          colorOffset: 0
+        },
+        sizeLegend: {
+          sizeTitle: 'Overall Score',
+          titleColor: '#888',
+          labelColor: '#888',
+          titleFontSize: 9,
+          labelFontSize: 8,
+          orient: 'right',
+          values: [40, 60, 80, 100],
+          offset: 15
+        },
+        colorLegend: {
+          colorTitle: 'Air Quality (Lower AQI = Better)',
+          titleColor: '#888',
+          labelColor: '#888',
+          titleFontSize: 9,
+          labelFontSize: 8,
+          colorOrient: 'top',
+          colorOffset: 0
+        },
+        tooltip: {
+          fields: [
+            { field: 'city', type: 'nominal', title: 'City' },
+            { field: 'aqi', type: 'quantitative', title: 'Air Quality Index', format: '.0f' },
+            { field: 'greenSpacePct', type: 'quantitative', title: 'Green Space %', format: '.1f' },
+            { field: 'waterQuality', type: 'quantitative', title: 'Water Quality Score', format: '.0f' },
+            { field: 'overallScore', type: 'quantitative', title: 'Overall Environmental Score', format: '.0f' }
+          ]
+        },
+        interactions: {
+          hover: true,
+          select: true
+        }
+      }
+    });
+  };
+
+  // Helper function to create travel growth trends chart using SpecCreator
+  const createTravelGrowthTrendsSpec = (data: any[]) => {
+    if (!data.length) return null;
+    
+    return SpecCreator.create({
+      type: 'bar',
+      subtype: 'horizontalBarSpec',
+      data,
+      config: {
+        dimensions: { width: 170, height: 200 },
+        fields: {
+          category: 'city',
+          value: 'visitors'
+        },
+        styling: {
+          colors: ['#94a3b8', '#3b82f6', '#16a34a'],
+          background: 'transparent',
+          axes: {
+            xAxis: {
+              labelColor: '#888',
+              titleColor: '#888',
+              labelFontSize: 8,
+              grid: true,
+              gridColor: '#888',
+              gridDash: [2, 2],
+              title: 'Annual Visitors (millions)',
+              format: '.1s'
+            },
+            yAxis: {
+              labelColor: '#888',
+              titleColor: '#888',
+              labelFontSize: 10,
+              title: null
+            }
+          }
+        },
+        legend: {
+          title: 'Growth %',
+          titleColor: '#888',
+          labelColor: '#888',
+          titleFontSize: 9,
+          labelFontSize: 8,
+          offset: 10,
+          orient: 'right'
+        },
+        tooltip: {
+          fields: [
+            { field: 'city', type: 'nominal', title: 'City' },
+            { field: 'visitors', type: 'quantitative', title: 'Visitors', format: '.2s' },
+            { field: 'change', type: 'quantitative', title: 'Growth Rate (%)', format: '.1f' },
+            { field: 'year', type: 'quantitative', title: 'Year', format: '.0f' }
+          ]
+        },
+        interactions: {
+          hover: true,
+          select: true
+        }
+      }
+    });
+  };
+
+  // Helper function to create world travel map (using original function without customizations)
+  const createWorldTravelMapSpec = () => {
+    return worldTravelMapSpec();
+  };
+
+  // Helper function to create visitor flow seasonal chart using template system  
+  const createVisitorFlowSeasonalChartSpec = (data: any[]) => {
+    if (!data.length) return null;
+    
+    return SpecCreator.create({
+      type: 'multiType',
+      subtype: 'barChartWithLineSpec',
+      data,
+      config: {
+        dimensions: { width: 390, height: 160 },
+        fields: {
+          x: 'monthName',
+          y: 'arrivals',
+          series: 'occupancyRate',
+          color: 'season'
+        },
+        styling: {
+          colors: ['#94a3b8', '#3b82f6', '#dc2626'],
+          background: 'transparent'
+        },
+        interactions: {
+          hover: true
+        }
+      }
+    });
+  };
+
+  // Helper function to create safety comparison bar chart using SpecCreator
+  const createSafetyComparisonBarChartSpec = (data: any[]) => {
+    if (!data.length) return null;
+    
+    // Transform data to include the required positive and negative fields for diverging bar
+    const transformedData = data.map(d => ({
+      ...d,
+      crimeIndex_positive: d.crimeIndex,
+      crimeIndex_negative: d.politicalRisk
+    }));
+    
+    return SpecCreator.create({
+      type: 'bar',
+      subtype: 'divergingBarSpec',
+      data: transformedData,
+      config: {
+        dimensions: { width: 450, height: 155 },
+        fields: {
+          category: 'region',
+          value: 'crimeIndex',
+          positiveLabel: 'Crime Risk',
+          negativeLabel: 'Political Risk'
+        },
+        styling: {
+          colors: ['#ef4444', '#f59e0b'],
+          background: 'transparent',
+          axes: {
+            xAxis: {
+              labelColor: '#888',
+              titleColor: '#888',
+              labelFontSize: 8,
+              grid: true,
+              gridColor: '#888',
+              gridDash: [2, 2],
+              title: 'Risk Index (Crime ← | → Political)',
+              format: '.0f'
+            }
+          }
+        },
+        legend: {
+          title: null,
+          orient: 'top',
+          titleColor: '#888',
+          labelColor: '#888',
+          titleFontSize: 11,
+          labelFontSize: 10,
+          symbolSize: 150,
+          symbolType: 'square'
+        },
+        tooltip: {
+          fields: [
+            { field: 'region', type: 'nominal', title: 'Region' },
+            { field: 'riskLabel', type: 'nominal', title: 'Risk Type' },
+            { field: 'absolute_risk', type: 'quantitative', title: 'Risk Value', format: '.1f' },
+            { field: 'overallSafety', type: 'quantitative', title: 'Overall Safety', format: '.0f' }
+          ]
+        },
+        interactions: {
+          hover: true,
+          select: true
+        }
+      }
+    });
+  };
+
+  // Helper function to create cultural diversity bar chart using SpecCreator
+  const createCulturalDiversityBarSpec = (data: any[]) => {
+    if (!data.length) return null;
+    
+    // Transform data to add percentage calculation, similar to the original culturalDiversityBarSpec
+    const transformedData = data.map(d => ({
+      metric: d.metric,
+      score: d.score,
+      maxScore: d.maxScore,
+      percentage: (d.score / d.maxScore) * 100
+    }));
+    
+    console.log('Cultural Diversity Data:', transformedData); // Debug log
+    
+    // Create a simple horizontal bar chart spec directly to avoid SpecCreator issues
+    const spec = {
+      $schema: 'https://vega.github.io/schema/vega-lite/v6.json' as const,
+      width: 200,
+      height: 100,
+      background: 'transparent',
+      data: {
+        values: transformedData
+      },
+      params: [{
+        name: 'hover_culture_bar',
+        select: {
+          type: 'point' as const,
+          on: 'pointerover' as const,
+          clear: 'pointerout' as const
+        }
+      }],
+      mark: {
+        type: 'bar' as const,
+        cursor: 'pointer' as const,
+        cornerRadiusEnd: 4,
+        height: 12
+      },
+      encoding: {
+        y: {
+          field: 'metric',
+          type: 'nominal' as const,
+          sort: {
+            field: 'score',
+            order: 'descending' as const
+          },
+          axis: {
+            labelColor: '#888',
+            titleColor: '#888',
+            labelFontSize: 10,
+            labelLimit: 120,
+            title: null,
+            grid: false,
+            ticks: true,
+            domain: true
+          }
+        },
+        x: {
+          field: 'percentage',
+          type: 'quantitative' as const,
+          scale: {
+            domain: [0, 100]
+          },
+          axis: {
+            labelColor: '#888',
+            titleColor: '#888',
+            labelFontSize: 8,
+            grid: true,
+            gridColor: '#888',
+            gridDash: [2, 2],
+            ticks: true,
+            domain: true,
+            title: null,
+            format: '.0f'
+          }
+        },
+        color: {
+          value: '#16a34a' // Simple solid color instead of complex scale
+        },
+        stroke: {
+          condition: {
+            param: 'hover_culture_bar',
+            value: 'transparent'
+          },
+          value: 'transparent'
+        },
+        strokeWidth: {
+          condition: {
+            param: 'hover_culture_bar',
+            value: 0
+          },
+          value: 0
+        },
+        opacity: {
+          condition: {
+            param: 'hover_culture_bar',
+            value: 1
+          },
+          value: 0.7
+        },
+        tooltip: [
+          { field: 'metric', type: 'nominal' as const, title: 'Cultural Metric' },
+          { field: 'score', type: 'quantitative' as const, title: 'Score', format: '.0f' },
+          { field: 'maxScore', type: 'quantitative' as const, title: 'Max Score', format: '.0f' },
+        ]
+      },
+      config: {
+        background: 'transparent',
+        view: {
+          stroke: null
+        }
+      }
+    };
+    
+    console.log('Generated Cultural Diversity Spec:', spec); // Debug log
+    return spec;
+  };
+
   return (
     <ReusableGrid 
       config="travel-dashboard"
@@ -396,7 +825,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         chartType="vega"
         title="WORLD TRAVEL MAP"
         subtitle="(Pan, zoom & click countries)"
-        vegaSpec={worldTravelMapSpec()}
+        vegaSpec={createWorldTravelMapSpec()}
         vegaRenderer="svg"
         chartPosition="full"
         signalListeners={{
@@ -437,7 +866,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         chartType="vega-lite"
         title="Travel Growth Trends"
         description={`Annual visitor count for top cities in ${dashboardFilters.selectedCountry}`}
-        vegaSpec={travelGrowthTrendsSpec(
+        vegaSpec={createTravelGrowthTrendsSpec(
           mockTravelGrowthDataByCountryYear[dashboardFilters.selectedCountry]?.[dashboardFilters.selectedYear] || 
           mockTravelGrowthData.filter((d: any) => d.year === dashboardFilters.selectedYear)
         )}
@@ -466,7 +895,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         size="medium"
         chartType="vega-lite"
         title={`Travel Categories - ${dashboardFilters.selectedCity}`}
-        vegaSpec={reviewsDistributionPieSpec(mockReviewsDistribution)}
+        vegaSpec={createReviewsDistributionSpec(mockReviewsDistribution)}
         chartPosition="left-6-bottom-0"
         hasFieldFilter={false}
         fieldFilterKey="selectedYear"
@@ -481,7 +910,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         chartType="vega-lite"
         title={`Visitor Flow Timeline - ${dashboardFilters.selectedCity}`}
         description={`Seasonal trends for visitor arrivals in ${dashboardFilters.selectedCity}`}
-        vegaSpec={visitorFlowData.length > 0 ? visitorFlowSeasonalChartSpec(visitorFlowData).spec : null}
+        vegaSpec={visitorFlowData.length > 0 ? createVisitorFlowSeasonalChartSpec(visitorFlowData) : null}
         chartData={visitorFlowData}
         dataCondition={visitorFlowData.length > 0}
         chartPosition="left-4-bottom-0"
@@ -493,7 +922,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         size="medium"
         chartType="vega-lite"
         title={`Safety Breakdown - ${dashboardFilters.selectedCity}`}
-        vegaSpec={safetyBreakdownPieSpec(safetyBreakdownData)}
+        vegaSpec={createSafetyBreakdownSpec(safetyBreakdownData)}
         chartPosition="left-6-bottom-0"
         hasFieldFilter={false}
         fieldFilterKey="selectedYear"
@@ -508,7 +937,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         chartType="vega-lite"
         title={`Safety Breakdown - ${dashboardFilters.selectedCity}`}
         description="Comprehensive safety assessment across multiple categories (0-100 scale)"
-        vegaSpec={safetyComparisonBarChartSpec(safetyComparisonData)}
+        vegaSpec={createSafetyComparisonBarChartSpec(safetyComparisonData)}
         chartPosition="left-6-bottom-0"
         hasFieldFilter={false}
         fieldFilterKey="selectedYear"
@@ -523,7 +952,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         chartType="vega-lite"
         title="Environmental Quality"
         description="Shows how cities compare based on air quality, water quality, and green space to reflect overall living conditions"
-        vegaSpec={environmentalQualityScatterSpec(mockEnvironmentalQuality)}
+        vegaSpec={createEnvironmentalQualitySpec(mockEnvironmentalQuality)}
         chartPosition="left-4-bottom-0"
       />
 
@@ -532,7 +961,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         size="medium"
         chartType="vega-lite"
         title={`Cultural Diversity - ${dashboardFilters.selectedCity}`}
-        vegaSpec={culturalDiversityBarSpec(mockCulturalDiversity)}
+        vegaSpec={createCulturalDiversityBarSpec(mockCulturalDiversity)}
         // buttons={[{
         //   label: "+ Add",
         //   onClick: () => console.log("Add button clicked"),
