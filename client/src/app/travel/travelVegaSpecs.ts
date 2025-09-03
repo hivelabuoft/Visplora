@@ -1,9 +1,5 @@
 // Vega-Lite specifications for Travel Numbers dashboard
-import { field, pad } from 'vega';
 import { CostTimelineData, SafetyComparisonData, VisitorFlowSeasonalData, DestinationMetrics } from './travelDataTypes';
-import { getMajorCities } from './travelDataUtils';
-import { off, title } from 'process';
-import { tooltip } from 'leaflet';
 
 // Clickable countries for world travel map (150+ popular destinations)
 export const CLICKABLE_COUNTRIES = [

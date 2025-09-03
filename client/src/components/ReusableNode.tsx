@@ -33,7 +33,7 @@ export const CHART_POSITIONS = {
   'left-6-bottom-0': 'absolute left-6 bottom-0', 
   'bottom-0-right-4': 'absolute bottom-0 right-4',
   'center': 'absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2',
-  'full': 'absolute inset-2',
+  'full': 'absolute top-9 left-2 right-2 bottom-2 rounded-lg overflow-hidden', // Match travel page positioning
   'custom': ''
 } as const;
 
@@ -200,6 +200,13 @@ const ReusableNode: React.FC<ReusableNodeProps> = ({
         </div>
       );
     }
+
+    // For map charts, ensure proper containment similar to travel page
+    const isMapChart = chartType === 'vega' && vegaSpec && (
+      vegaSpec.data?.url?.includes('countries') || 
+      vegaSpec.marks?.some((mark: any) => mark.type === 'geoshape') ||
+      vegaSpec.mark?.type === 'geoshape'
+    );
 
     const chartStyle = customChartStyle || { width: '100%', height: '100%' };
     

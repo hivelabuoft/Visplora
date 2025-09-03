@@ -261,17 +261,21 @@ export class SpecCreator {
    * Create interactive world map
    */
   private static createWorldInteractiveMap(data: any[], config: ChartConfig): any {
-    const params: MapChartParams = {
+    const params: MapChartParams & { options?: any } = {
       data,
       geoData: config.fields.geoData,
       width: config.dimensions.width,
       height: config.dimensions.height,
       background: config.styling.background || 'transparent',
-      projection: 'naturalEarth1',
+      projection: (config.styling as any).projection || 'naturalEarth1',
       colors: config.styling.colors || ["#d1d5db", "#a78bfa", "#8b5a87"],
       tooltip: config.tooltip,
       legend: config.legend,
-      interactions: config.interactions
+      interactions: config.interactions,
+      options: {
+        selectableCountries: (config.fields as any).selectableCountries,
+        countryField: (config.fields as any).countryField || 'properties.NAME'
+      }
     };
 
     return createWorldInteractiveMapSpec(params);

@@ -35,7 +35,8 @@ import {
   VisitorFlowSeasonalData
 } from '../travel/travelDataTypes';
 
-import { worldTravelMapSpec } from '../travel/travelVegaSpecs';
+import { CLICKABLE_COUNTRIES } from '../travel/travelVegaSpecs';
+import { createWorldTravelMapVegaSpec } from '../../vegaTemplates/map/worldInteractiveMapSpec';
 
 import { SpecCreator } from '../../vegaTemplates/SpecCreator';
 
@@ -516,9 +517,16 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
     });
   };
 
-  // Helper function to create world travel map (using original function without customizations)
+  // Helper function to create world travel map using SpecCreator
   const createWorldTravelMapSpec = () => {
-    return worldTravelMapSpec();
+    return createWorldTravelMapVegaSpec({
+      width: 800,
+      height: 350,
+      background: "#7ec2ddff",
+      options: { 
+        selectableCountries: CLICKABLE_COUNTRIES 
+      }
+    });
   };
 
   // Helper function to create visitor flow seasonal chart using template system  
