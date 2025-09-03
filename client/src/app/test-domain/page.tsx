@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { validateDomain } from '../LLMs/domainValidation';
 import { testCompleteDomainValidation, TestResult } from '../utils/testCompleteDomainValidation';

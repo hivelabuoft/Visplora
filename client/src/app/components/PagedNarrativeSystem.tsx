@@ -766,7 +766,7 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
     const newBranchNode = createSentenceNode(newBranchContent, parentNodeId, currentPageId);
     newBranchNode.isCompleted = true;
 
-    let newBranchId = newBranchNode.id;
+    const newBranchId = newBranchNode.id;
 
     // Update the tree structure
     updatePageSentenceTree(currentPageId, (sentenceNodes) => {
@@ -1336,7 +1336,7 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
         const node = newMap.get(nodeId);
         if (!node) return [];
         
-        let descendants: string[] = [nodeId];
+        const descendants: string[] = [nodeId];
         for (const childId of node.children) {
           descendants.push(...collectDescendants(childId));
         }

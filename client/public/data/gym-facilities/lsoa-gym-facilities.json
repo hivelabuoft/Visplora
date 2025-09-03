@@ -321,6 +321,15 @@
       "count": 1
     }
   ],
+<<<<<<< HEAD
+  "Brent 025D": [
+    {
+      "facility_type": "Squash Court",
+      "count": 3
+    },
+    {
+      "facility_type": "Premium Gym",
+=======
   "Brent 014C": [
     {
       "facility_type": "Chain Gym",
@@ -332,6 +341,7 @@
     },
     {
       "facility_type": "Wrestling Gym",
+>>>>>>> 21bda97dccd069d3cff2a3e5576433597b772a8b
       "count": 3
     },
     {
@@ -339,6 +349,14 @@
       "count": 2
     },
     {
+<<<<<<< HEAD
+      "facility_type": "Fencing Salle",
+      "count": 4
+    },
+    {
+      "facility_type": "Bowling Alley",
+      "count": 1
+=======
       "facility_type": "Archery Range",
       "count": 3
     },
@@ -349,6 +367,7 @@
     {
       "facility_type": "Swimming Pool",
       "count": 2
+>>>>>>> 21bda97dccd069d3cff2a3e5576433597b772a8b
     }
   ]
 }

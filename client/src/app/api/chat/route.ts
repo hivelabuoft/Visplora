@@ -330,7 +330,7 @@ export async function POST(req: NextRequest) {
       const hasLondonData = context.londonDataSummary && Object.keys(context.londonDataSummary).length > 0;
       const hasHRData = context.hrData && context.hrData.length > 0;
       
-      let detectedFilters = {} as any;
+      const detectedFilters = {} as any;
       
       // London data filters
       if (hasLondonData) {

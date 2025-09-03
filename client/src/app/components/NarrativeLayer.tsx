@@ -196,7 +196,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
 
       // Use smart sentence splitting that considers decimal numbers
       const sentences = [];
-      let currentPos = 0;
+      const currentPos = 0;
       let sentenceStart = 0;
       
       for (let i = 0; i < fullText.length; i++) {
@@ -455,7 +455,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       
       // Fallback to original logic if cursor-based extraction fails
       if (!sentenceForAnalysis || sentenceForAnalysis.length <= 2) {
-        let currentSentence = getCurrentSentence(text);
+        const currentSentence = getCurrentSentence(text);
         sentenceForAnalysis = currentSentence.trim();
         
         // If getCurrentSentence returns empty, try to extract the last complete sentence manually
@@ -1792,7 +1792,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
               id: draftBranchId,
               content: '',
               originalContent: '',
-              type: 'alternative' as 'alternative',
+              type: 'alternative' as const,
               editor: null,
               isNew: true // This is a new draft branch
             }

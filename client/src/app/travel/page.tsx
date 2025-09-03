@@ -23,10 +23,18 @@ import {
   getVisitorFlowForDestination,
   getDestinationMetrics,
   TRAVEL_DESTINATIONS,
-  REGIONS
+  REGIONS,
+  getMockReviewsDistribution,
+  generateConsistentTravelGrowthData,
+  getMockTravelGrowthDataByCountryYear,
+  getMockTravelGrowthData,
+  getMockCulturalDiversity,
+  getEnvironmentalQualityForCity,
+  generateSafetyBreakdown
 } from './travelDataUtils';
 import {
   worldMapSpec,
+  worldTravelMapSpec,
   workingWorldMapSpec,
   fallbackWorldMapSpec,
   simpleWorldMapSpec,
@@ -36,20 +44,39 @@ import {
   safetyComparisonBarChartSpec,
   visitorFlowSeasonalChartSpec,
   reviewsDistributionPieSpec,
-  smallDestinationMapSpec,
+  safetyBreakdownPieSpec,
+  travelGrowthTrendsSpec,
+  countryDetailMapSpec,
   culturalDiversityBarSpec,
-  environmentalQualityBarSpec
+  environmentalQualityBarSpec,
+  environmentalQualityScatterSpec
 } from './travelVegaSpecs';
 
-// Dynamically import VegaLite to avoid SSR issues
+// Dynamically import VegaLite and Vega to avoid SSR issues
 const VegaLite = dynamic(() => import('react-vega').then(mod => ({ default: mod.VegaLite })), {
   ssr: false,
   loading: () => <div className="flex items-center justify-center h-full text-gray-400 text-sm">Loading map...</div>
 });
 
+const Vega = dynamic(() => import('react-vega').then(mod => ({ default: mod.Vega })), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center h-full text-gray-400 text-sm">Loading map...</div>
+});
+
+// Dynamically import CountryDetailMap with SSR disabled
+const CountryDetailMap = dynamic(() => import('./CountryDetailMap'), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center h-full text-gray-400">Loading country map...</div>
+});
+
 // Memoized VegaLite wrapper
 const MemoizedVegaLite = React.memo(({ spec, actions = false, signalListeners, style, renderer }: any) => {
   return <VegaLite spec={spec} actions={actions} signalListeners={signalListeners} style={style} renderer={renderer} />;
+});
+
+// Memoized Vega wrapper
+const MemoizedVega = React.memo(({ spec, actions = false, signalListeners, style, renderer }: any) => {
+  return <Vega spec={spec} actions={actions} signalListeners={signalListeners} style={style} renderer={renderer} />;
 });
 
 interface Dashboard4Props {
@@ -59,11 +86,11 @@ interface Dashboard4Props {
 const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
   // Dashboard filter state
   const [dashboardFilters, setDashboardFilters] = useState<TravelDashboardFilters>({
-    selectedCountry: 'Japan',
-    selectedCity: 'Tokyo',
+    selectedCountry: 'United States',
+    selectedCity: 'New York',
     selectedYear: 2025,
     selectedMonth: 6,
-    selectedRegion: 'Asia'
+    selectedRegion: 'North America'
   });
 
   // Data states
@@ -140,25 +167,36 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
     }
   };
 
+  // Handle city selection from the country detail map
+  const handleCitySelect = (cityName: string, cityData: any) => {
+    console.log('City selected:', cityName, cityData);
+    updateDashboardFilter('selectedCity', cityName);
+    
+    if (onInteraction) {
+      onInteraction('country-detail-map', 'Country Detail Map', 'map', 'city_select', {
+        selectedCity: cityName,
+        cityData,
+        description: `Selected city: ${cityName}`
+      });
+    }
+  };
+
   // Handle country/destination clicks
   const handleDestinationClick = (name: string, value: any) => {
     console.log('Click event received:', { name, value });
     
-    // Try different possible paths to get the country name
+    // For Vega signals, the value is the datum directly
     let countryName = null;
+    let countryId = null;
     
-    if (value && value.datum) {
-      // Try the new countryName field we created, then fallback to other options
-      countryName = value.datum.countryName || 
-                    value.datum.properties?.NAME || 
-                    value.datum.properties?.NAME_EN || 
-                    value.datum.properties?.name || 
-                    value.datum.properties?.country ||
-                    value.datum.NAME ||
-                    value.datum.name;
+    if (value) {
+      // Extract country name from lookup transform or fallback to ID
+      countryName = value.country_name || value.name || `Country ${value.id}`;
+      countryId = value.id;
                     
       console.log('Extracted country name:', countryName);
-      console.log('Full datum:', value.datum);
+      console.log('Country ID:', countryId);
+      console.log('Full datum:', value);
     }
     
     if (countryName && countryName !== 'Unknown Country') {
@@ -202,33 +240,18 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
     return destinationMetrics.find(d => d.city === dashboardFilters.selectedCity) || null;
   }, [destinationMetrics, dashboardFilters.selectedCity]);
 
-  // Mock data for various charts
-  const mockReviewsDistribution = [
-    { rating: '5 Stars', count: 12500, percentage: 45.2 },
-    { rating: '4 Stars', count: 8700, percentage: 31.4 },
-    { rating: '3 Stars', count: 4200, percentage: 15.2 },
-    { rating: '2 Stars', count: 1800, percentage: 6.5 },
-    { rating: '1 Star', count: 450, percentage: 1.7 }
-  ];
-
-  const mockCulturalDiversity = [
-    { metric: 'Cuisine Variety', score: 85, maxScore: 100 },
-    { metric: 'Language Support', score: 72, maxScore: 100 },
-    { metric: 'Cultural Events', score: 78, maxScore: 100 },
-    { metric: 'LGBTQ+ Friendly', score: 92, maxScore: 100 },
-    { metric: 'Religious Diversity', score: 68, maxScore: 100 }
-  ];
-
-  const mockEnvironmentalQuality = [
-    { city: 'Singapore', aqi: 15, greenSpacePct: 47, waterQuality: 95, overallScore: 85 },
-    { city: 'Sydney', aqi: 18, greenSpacePct: 46, waterQuality: 92, overallScore: 82 },
-    { city: 'Tokyo', aqi: 22, greenSpacePct: 24, waterQuality: 89, overallScore: 78 },
-    { city: 'Amsterdam', aqi: 16, greenSpacePct: 43, waterQuality: 88, overallScore: 77 },
-    { city: 'Seoul', aqi: 28, greenSpacePct: 34, waterQuality: 85, overallScore: 75 },
-    { city: 'Barcelona', aqi: 26, greenSpacePct: 35, waterQuality: 84, overallScore: 74 },
-    { city: 'Dubai', aqi: 35, greenSpacePct: 18, waterQuality: 79, overallScore: 68 },
-    { city: 'Bangkok', aqi: 42, greenSpacePct: 22, waterQuality: 76, overallScore: 65 }
-  ];
+  // Get all mock data from utility functions
+  const mockReviewsDistribution = getMockReviewsDistribution();
+  const mockTravelGrowthDataByCountryYear = getMockTravelGrowthDataByCountryYear();
+  const mockTravelGrowthData = getMockTravelGrowthData();
+  const mockCulturalDiversity = getMockCulturalDiversity();
+  const currentSafetyScore = Math.round(currentDestinationMetrics?.safetyScore || 78);
+  const safetyBreakdownData = generateSafetyBreakdown(currentSafetyScore);
+  const mockEnvironmentalQuality = getEnvironmentalQualityForCity(
+    dashboardFilters.selectedCity, 
+    dashboardFilters.selectedCountry,
+    currentDestinationMetrics?.environmentScore
+  );
 
   if (isLoading) {
     return (
@@ -248,7 +271,7 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
       fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
     }}>
       {/* Grid Container */}
-      <div className="grid grid-cols-8 grid-rows-8 gap-4" style={{ gridTemplateRows: '100px 330px 330px repeat(3, 110px)'}}>
+      <div className="grid grid-cols-8 grid-rows-8 gap-4" style={{ gridTemplateRows: '100px 330px repeat(4, 80px)'}}>
         {/* Top Row - KPI Cards */}
         {/* Average Cost Index */}
         <div className="col-span-1 bg-white rounded-lg p-4 shadow-sm border border-gray-200 flex flex-col justify-between">
@@ -269,7 +292,7 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
             <div className="w-8 h-8">
               {currentDestinationMetrics && (
                 <MemoizedVegaLite 
-                  spec={smallDestinationMapSpec(dashboardFilters.selectedCountry)} 
+                  spec={countryDetailMapSpec(dashboardFilters.selectedCountry)} 
                   actions={false}
                   style={{width: '100%', height: '100%'}}
                 />
@@ -405,97 +428,133 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
             WORLD TRAVEL MAP
           </div>
           <div className="absolute top-4 right-5 text-xs text-gray-400">
-            (Click to filter dashboard)
+            (Pan, zoom & click countries)
           </div>
           
           {/* Map Content */}
           <div 
-            className="absolute top-2 left-12 right-5 bottom-5" 
-            title='Click outside to reset selection'
+            className="absolute top-9 left-2 right-2 bottom-2 rounded-lg overflow-hidden" 
+            title='Pan and zoom the map, click countries to select'
           >
-            <MemoizedVegaLite 
-              spec={fallbackWorldMapSpec()}
+            <MemoizedVega 
+              spec={worldTravelMapSpec()}
               actions={false}
               renderer='svg'
               style={{width: '100%', height: '100%'}}
               signalListeners={{
-                clicked: handleDestinationClick
+                clicked_country: handleDestinationClick
               }}
             />
           </div>
         </div>
 
-        {/* City Detail Map - Similar to LSOA Map */}
+        {/* Country Detail Map - Shows major cities within selected country */}
         <div className="col-span-3 row-span-1 bg-white rounded-lg p-4 shadow-sm border border-gray-200 relative">
-          <div className="absolute top-4 left-5 right-5 flex flex-col justify-between">
+          <div className="absolute top-4 left-4 right-4 flex justify-between">
             <div className="text-sm font-semibold" style={{color: '#2B7A9B'}}>
-              CITY DETAIL MAP | {dashboardFilters.selectedCity || 'Select Country'}
+              COUNTRY DETAIL MAP | {dashboardFilters.selectedCountry || 'Select Country'}
             </div>
             <div className="flex justify-between text-xs text-gray-400">
-              (Click districts to filter)
+              (Click cities for details)
             </div>
           </div>
           
           {/* Map Content */}
           <div 
-            className="absolute top-2 left-12 right-5 bottom-5" 
-            title='Select a country from world map first'
+            className="absolute top-9 left-2 right-2 bottom-2" 
+            title='Interactive country map with major cities'
           >
-            <div className="h-full flex items-center justify-center">
-              <div className="text-center text-gray-500">
-                <div className="text-4xl mb-2">🏙️</div>
-                <div className="text-sm">
-                  {dashboardFilters.selectedCity ? 
-                    `${dashboardFilters.selectedCity} Districts` : 
-                    'Select a country first'
-                  }
+            <div className="h-full">
+              {dashboardFilters.selectedCountry && (
+                <CountryDetailMap
+                  selectedCountry={dashboardFilters.selectedCountry}
+                  selectedCity={dashboardFilters.selectedCity}
+                  onCitySelect={handleCitySelect}
+                />
+              )}
+              {!dashboardFilters.selectedCountry && (
+                <div className="h-full flex items-center justify-center">
+                  <div className="text-center text-gray-500">
+                    <div className="text-4xl mb-2">🗺️</div>
+                    <div className="text-sm">
+                      Select a country to view cities
+                    </div>
+                    <div className="text-xs text-gray-400 mt-1">
+                      Click areas for details
+                    </div>
+                  </div>
                 </div>
-                <div className="text-xs text-gray-400 mt-1">
-                  Click areas for details
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
 
         {/* Population Growth & Projections equivalent - Travel Trends */}
-        <div className="col-span-2 row-span-1 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-3">
-            <div className="text-sm font-semibold text-gray-700">
-              Travel Growth Trends
-            </div>
+        <div className="relative col-span-2 row-span-1 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+          <div className="text-sm font-semibold text-gray-700">
+            Travel Growth Trends
           </div>
-          <div className="h-[280px]">
-            {/* Mock visitor growth data */}
-            <div className="text-center text-gray-500 flex items-center justify-center h-full">
-              <div>
-                <div className="text-2xl mb-2">📈</div>
-                <div className="text-sm">Visitor Growth</div>
-                <div className="text-xs">{dashboardFilters.selectedCity}</div>
+          <div className="text-xs text-gray-500">
+            Annual visitor count for top cities in {dashboardFilters.selectedCountry}
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex gap-2">
+              {[2023, 2024, 2025].map(year => (
+                <button
+                  key={year}
+                  className={`text-[10px] px-1.5 py-1 rounded ${
+                    dashboardFilters.selectedYear === year 
+                      ? 'bg-purple-600 text-white' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                  onClick={() => updateDashboardFilter('selectedYear', year)}
+                >
+                  {year}
+                </button>
+              ))}
+            </div>
+            
+            {/* Manual Growth Legend */}
+            <div className="flex flex-col items-center">
+              <div className="text-[9px] text-gray-600 font-medium">Growth Rate (%)</div>
+              <div className="flex items-center">
+                <div 
+                  className="w-18 h-2.5 border-1 border-gray-700"
+                  style={{
+                    background: 'linear-gradient(to right, #94a3b8 10%, #3b82f6 50%, #16a34a 90%)'
+                  }}
+                ></div>
+              </div>
+              <div className="flex justify-between w-18 mt-0.5">
+                <span className="text-[8px] text-gray-500">0</span>
+                <span className="text-[8px] text-gray-500">15</span>
               </div>
             </div>
+          </div>
+          <div className="absolute bottom-0 right-4">
+            <MemoizedVegaLite 
+              spec={travelGrowthTrendsSpec(
+                mockTravelGrowthDataByCountryYear[dashboardFilters.selectedCountry]?.[dashboardFilters.selectedYear] || 
+                mockTravelGrowthData.filter(d => d.year === dashboardFilters.selectedYear)
+              )}
+              actions={false}
+              style={{width: '100%', height: '100%'}}
+            />
           </div>
         </div>
 
         {/* Third Row */}
         {/* Cost Timeline - Line Chart */}
-        <div className="col-span-3 row-span-2 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-3">
-            <div className="text-sm font-semibold text-gray-700">
-              Cost Timeline - {dashboardFilters.selectedCity}
-            </div>
-            <div className="flex gap-2 text-xs">
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-purple-500 rounded-full mr-1"></div>
-                <span>Mean</span>
-              </div>
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-blue-500 rounded-full mr-1"></div>
-                <span>Median</span>
-              </div>
+        <div className="relative col-span-3 row-span-3 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+          <div className="text-sm font-semibold text-gray-700">
+            Cost Timeline - {dashboardFilters.selectedCity}
+          </div>
+          <div>
+            <div className="text-xs text-gray-500 mb-1">
+              Monthly average costs for hotel, meals, and transport (in USD)
             </div>
           </div>
-          <div className="h-[180px]">
+          <div className='absolute left-4 bottom-0'>
             {costTimelineData.length > 0 && (
               <MemoizedVegaLite 
                 spec={costTimelineChartSpec(costTimelineData)}
@@ -506,29 +565,8 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
           </div>
         </div>
 
-        {/* Visitor Flow Timeline - Line Chart */}
-        <div className="col-span-3 row-span-2 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-3">
-            <div className="text-sm font-semibold text-gray-700">
-              Visitor Flow Timeline - {dashboardFilters.selectedCity}
-            </div>
-            <button className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">
-              + Add
-            </button>
-          </div>
-          <div className="h-[180px]">
-            {visitorFlowData.length > 0 && (
-              <MemoizedVegaLite 
-                spec={visitorFlowSeasonalChartSpec(visitorFlowData)}
-                actions={false}
-                style={{width: '100%', height: '100%'}}
-              />
-            )}
-          </div>
-        </div>
-
         {/* Travel Categories - Donut Chart */}
-        <div className="col-span-2 row-span-2 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        <div className="relative col-span-2 row-span-2 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
           <div className="flex items-center justify-between mb-3">
             <div className="text-sm font-semibold text-gray-700">
               Travel Categories - {dashboardFilters.selectedCity}
@@ -545,7 +583,7 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
               </select>
             </div>
           </div>
-          <div className="h-[180px]">
+          <div className="absolute left-6 bottom-0">
             <MemoizedVegaLite 
               spec={reviewsDistributionPieSpec(mockReviewsDistribution)}
               actions={false}
@@ -554,9 +592,46 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
           </div>
         </div>
 
-        {/* Fourth Row */}        
-        {/* Safety Distribution - Donut Chart */}
-        <div className="col-span-2 row-span-2 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        {/* Visitor Flow Timeline - Line Chart */}
+        <div className="relative col-span-3 row-span-3 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <div className="text-sm font-semibold text-gray-700">
+                Visitor Flow Timeline - {dashboardFilters.selectedCity}
+              </div>
+              <div className="text-xs text-gray-500">
+                Seasonal trends for visitor arrivals in {dashboardFilters.selectedCountry}
+              </div>
+            </div>
+            {/* Mean Display */}
+            {visitorFlowData.length > 0 && (() => {
+              const meanValue = visitorFlowData.reduce((sum, d) => sum + d.arrivals, 0) / visitorFlowData.length;
+              return (
+                <div className="text-right">
+                  <div className="text-xs text-gray-500">Mean Arrival Count</div>
+                  <div className="text-lg font-semibold text-red-600">
+                    {meanValue.toLocaleString(undefined, { maximumFractionDigits: 0 })} 
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+          <div className="absolute left-4 bottom-0">
+            {visitorFlowData.length > 0 && (() => {
+              const { spec } = visitorFlowSeasonalChartSpec(visitorFlowData);
+              return (
+                <MemoizedVegaLite 
+                  spec={spec}
+                  actions={false}
+                  style={{width: '100%', height: '100%'}}
+                />
+              );
+            })()}
+          </div>
+        </div>
+
+        {/* Safety Breakdown - Donut Chart */}
+        <div className="relative col-span-2 row-span-2 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
           <div className="flex items-center justify-between mb-3">
             <div className="text-sm font-semibold text-gray-700">
               Safety Breakdown - {dashboardFilters.selectedCity}
@@ -573,26 +648,71 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
               </select>
             </div>
           </div>
-          <div className="h-[180px]">
+          <div className="absolute left-6 bottom-0">
             <MemoizedVegaLite 
-              spec={reviewsDistributionPieSpec([
-                { rating: 'Very Safe', count: 8500, percentage: 42.5 },
-                { rating: 'Safe', count: 6200, percentage: 31.0 },
-                { rating: 'Moderate', count: 3400, percentage: 17.0 },
-                { rating: 'Caution', count: 1500, percentage: 7.5 },
-                { rating: 'High Risk', count: 400, percentage: 2.0 }
-              ])}
+              spec={safetyBreakdownPieSpec(safetyBreakdownData)}
               actions={false}
               style={{width: '100%', height: '100%'}}
             />
           </div>
         </div>
 
-        {/* Cultural Attractions - Bar Chart */}
-        <div className="col-span-3 row-span-2 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        {/* Fourth Row */}        
+        {/* Safety Distribution - Donut Chart */}
+        <div className="relative col-span-3 row-span-3 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-semibold text-gray-700">
+              Safety Breakdown - {dashboardFilters.selectedCity}
+            </div>
+            <div className="flex gap-1 text-[10px]">
+              <select 
+                className="text-[10px] bg-gray-100 rounded px-1"
+                value={dashboardFilters.selectedYear}
+                onChange={(e) => updateDashboardFilter('selectedYear', parseInt(e.target.value))}
+              >
+                <option value={2023}>2023</option>
+                <option value={2024}>2024</option>
+                <option value={2025}>2025</option>
+              </select>
+            </div>
+          </div>
+          <div className="text-xs text-gray-500 mb-2">
+            Comprehensive safety assessment across multiple categories (0-100 scale)
+          </div>
+          <div className='absolute left-6 bottom-2'>
+            <MemoizedVegaLite
+              spec={safetyComparisonBarChartSpec(safetyComparisonData)}
+              actions={false}
+              style={{width: '100%', height: '100%'}}
+            />
+          </div>
+        </div>
+
+        {/* Environmental Metrics - Stacked Bar */}
+        <div className="relative col-span-3 row-span-3 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-semibold text-gray-700">
+              Environmental Quality
+            </div>
+          </div>
+          <div className="text-xs text-gray-500">
+            Shows how cities compare based on air quality, water quality, and green space to reflect overall living conditions
+          </div>
+          <div className="absolute left-4 bottom-1">
+            <MemoizedVegaLite 
+              spec={environmentalQualityScatterSpec(mockEnvironmentalQuality)}
+              actions={false}
+              style={{width: '100%', height: '100%'}}
+            />
+          </div>
+        </div>
+                       
+
+        {/* Cultural Diversity - Bar Chart */}
+        <div className="col-span-2 row-span-2 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
           <div className="flex items-center justify-between mb-3">
             <div className="text-sm font-semibold text-gray-700">
-              Cultural Attractions - {dashboardFilters.selectedCity}
+              Cultural Diversity - {dashboardFilters.selectedCity}
             </div>
             <button className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">
               + Add
@@ -601,38 +721,6 @@ const Dashboard4: React.FC<Dashboard4Props> = ({ onInteraction }) => {
           <div className="h-[180px]">
             <MemoizedVegaLite 
               spec={culturalDiversityBarSpec(mockCulturalDiversity)}
-              actions={false}
-              style={{width: '100%', height: '100%'}}
-            />
-          </div>
-        </div>
-
-        {/* Environmental Metrics - Stacked Bar */}
-        <div className="col-span-3 row-span-2 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-3">
-            <div className="text-sm font-semibold text-gray-700">
-              Environmental Quality - {dashboardFilters.selectedCity}
-            </div>
-            <div className="flex gap-2 text-xs">
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-red-500 rounded-full mr-1"></div>
-                <span>AQI</span>
-              </div>
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-green-500 rounded-full mr-1"></div>
-                <span>Green</span>
-              </div>
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-blue-500 rounded-full mr-1"></div>
-                <span>Water</span>
-              </div>
-            </div>
-          </div>
-          <div className="h-[180px]">
-            <MemoizedVegaLite 
-              spec={environmentalQualityBarSpec([
-                mockEnvironmentalQuality.find(d => d.city === dashboardFilters.selectedCity) || mockEnvironmentalQuality[0]
-              ])}
               actions={false}
               style={{width: '100%', height: '100%'}}
             />

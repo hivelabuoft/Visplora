@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
     const sessionId = url.searchParams.get('sessionId');
     const userId = url.searchParams.get('userId');
     
-    let query: any = {};
+    const query: any = {};
     if (sessionId) query.sessionId = sessionId;
     if (userId) query.userId = userId;
 

@@ -79,7 +79,7 @@ export const useNoteLinking = (
       // Get viewport dimensions
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-      let targetScale = 0.5;
+      const targetScale = 0.5;
       
       // Calculate position to center the dashboard in the viewport at 40% zoom
       const targetX = (viewportWidth / 2) - (dashboardCenterX * targetScale);

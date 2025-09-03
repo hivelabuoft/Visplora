@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const participantFilter: any = {};
     if (participantId) participantFilter.participantId = participantId;
 
-    let data: any = {};
+    const data: any = {};
 
     switch (exportType) {
       case 'interactions':

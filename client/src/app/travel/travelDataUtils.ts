@@ -533,3 +533,315 @@ export const getDestinationMetrics = (
     };
   });
 };
+
+// Major cities data for country detail map
+export const getMajorCities = (country: string): Array<{city: string, longitude: number, latitude: number}> => {
+  const cityData: Record<string, Array<{city: string, longitude: number, latitude: number}>> = {
+    'France': [
+      {city: 'Paris', longitude: 2.3522, latitude: 48.8566},
+      {city: 'Lyon', longitude: 4.8357, latitude: 45.7640},
+      {city: 'Marseille', longitude: 5.3698, latitude: 43.2965},
+      {city: 'Nice', longitude: 7.2619, latitude: 43.7102},
+      {city: 'Toulouse', longitude: 1.4442, latitude: 43.6047}
+    ],
+    'Germany': [
+      {city: 'Berlin', longitude: 13.4050, latitude: 52.5200},
+      {city: 'Munich', longitude: 11.5820, latitude: 48.1351},
+      {city: 'Hamburg', longitude: 9.9937, latitude: 53.5511},
+      {city: 'Frankfurt', longitude: 8.6821, latitude: 50.1109},
+      {city: 'Cologne', longitude: 6.9603, latitude: 50.9375}
+    ],
+    'Italy': [
+      {city: 'Rome', longitude: 12.4964, latitude: 41.9028},
+      {city: 'Milan', longitude: 9.1900, latitude: 45.4642},
+      {city: 'Florence', longitude: 11.2558, latitude: 43.7696},
+      {city: 'Venice', longitude: 12.3155, latitude: 45.4408},
+      {city: 'Naples', longitude: 14.2681, latitude: 40.8518}
+    ],
+    'Spain': [
+      {city: 'Madrid', longitude: -3.7038, latitude: 40.4168},
+      {city: 'Barcelona', longitude: 2.1734, latitude: 41.3851},
+      {city: 'Seville', longitude: -5.9845, latitude: 37.3891},
+      {city: 'Valencia', longitude: -0.3763, latitude: 39.4699},
+      {city: 'Bilbao', longitude: -2.9253, latitude: 43.2627}
+    ],
+    'United Kingdom': [
+      {city: 'London', longitude: -0.1276, latitude: 51.5074},
+      {city: 'Edinburgh', longitude: -3.1883, latitude: 55.9533},
+      {city: 'Manchester', longitude: -2.2426, latitude: 53.4808},
+      {city: 'Liverpool', longitude: -2.9916, latitude: 53.4084},
+      {city: 'Bath', longitude: -2.3601, latitude: 51.3811}
+    ],
+    'Japan': [
+      {city: 'Tokyo', longitude: 139.6917, latitude: 35.6895},
+      {city: 'Osaka', longitude: 135.5023, latitude: 34.6937},
+      {city: 'Kyoto', longitude: 135.7681, latitude: 35.0116},
+      {city: 'Hiroshima', longitude: 132.4596, latitude: 34.3853},
+      {city: 'Nara', longitude: 135.8048, latitude: 34.6851}
+    ],
+    'Thailand': [
+      {city: 'Bangkok', longitude: 100.5018, latitude: 13.7563},
+      {city: 'Chiang Mai', longitude: 98.9817, latitude: 18.7883},
+      {city: 'Phuket', longitude: 98.3923, latitude: 7.8804},
+      {city: 'Pattaya', longitude: 100.8698, latitude: 12.9236},
+      {city: 'Krabi', longitude: 99.0632, latitude: 8.0863}
+    ],
+    'United States': [
+      {city: 'New York', longitude: -74.0060, latitude: 40.7128},
+      {city: 'Los Angeles', longitude: -118.2437, latitude: 34.0522},
+      {city: 'San Francisco', longitude: -122.4194, latitude: 37.7749},
+      {city: 'Chicago', longitude: -87.6298, latitude: 41.8781},
+      {city: 'Miami', longitude: -80.1918, latitude: 25.7617}
+    ],
+    'Canada': [
+      {city: 'Toronto', longitude: -79.3832, latitude: 43.6532},
+      {city: 'Vancouver', longitude: -123.1207, latitude: 49.2827},
+      {city: 'Montreal', longitude: -73.5673, latitude: 45.5017},
+      {city: 'Calgary', longitude: -114.0719, latitude: 51.0447},
+      {city: 'Ottawa', longitude: -75.6972, latitude: 45.4215}
+    ],
+    'Australia': [
+      {city: 'Sydney', longitude: 151.2093, latitude: -33.8688},
+      {city: 'Melbourne', longitude: 144.9631, latitude: -37.8136},
+      {city: 'Brisbane', longitude: 153.0251, latitude: -27.4698},
+      {city: 'Perth', longitude: 115.8605, latitude: -31.9505},
+      {city: 'Adelaide', longitude: 138.6007, latitude: -34.9285}
+    ]
+  };
+  
+  return cityData[country] || [{city: 'Capital', longitude: 0, latitude: 0}];
+};
+
+// Mock reviews distribution data
+export const getMockReviewsDistribution = () => [
+  { rating: '5 Stars', count: 12500, percentage: 45.2 },
+  { rating: '4 Stars', count: 8700, percentage: 31.4 },
+  { rating: '3 Stars', count: 4200, percentage: 15.2 },
+  { rating: '2 Stars', count: 1800, percentage: 6.5 },
+  { rating: '1 Star', count: 450, percentage: 1.7 }
+];
+
+// Generate consistent travel growth data based on the same source as KPIs
+export const generateConsistentTravelGrowthData = () => {
+  const baseVisitorData = {
+    'New York': 13000000,
+    'Los Angeles': 12000000, 
+    'Chicago': 9500000,
+    'San Francisco': 7800000,
+    'Las Vegas': 8200000,
+    'Miami': 6500000,
+    'Washington DC': 5200000,
+    'Boston': 4800000
+  };
+  
+  return {
+    2025: Object.entries(baseVisitorData).map(([city, visitors]) => ({
+      city,
+      year: 2025,
+      visitors,
+      change: 5 + Math.random() * 10 // 5-15% growth range
+    })),
+    2024: Object.entries(baseVisitorData).map(([city, visitors]) => ({
+      city,
+      year: 2024, 
+      visitors: Math.round(visitors * 0.95), // 5% less than 2025
+      change: 2 + Math.random() * 6 // 2-8% growth range
+    })),
+    2023: Object.entries(baseVisitorData).map(([city, visitors]) => ({
+      city,
+      year: 2023,
+      visitors: Math.round(visitors * 0.88), // 12% less than 2025
+      change: -5 + Math.random() * 8 // -5% to 3% range (pandemic recovery)
+    }))
+  };
+};
+
+// Mock travel growth data by country and year
+export const getMockTravelGrowthDataByCountryYear = (): Record<string, Record<number, Array<{city: string, year: number, visitors: number, change: number}>>> => ({
+  'United States': generateConsistentTravelGrowthData(),
+  'Japan': {
+    2025: [
+      { city: 'Tokyo', year: 2025, visitors: 15000000, change: 12.5 },
+      { city: 'Osaka', year: 2025, visitors: 11800000, change: 9.8 },
+      { city: 'Kyoto', year: 2025, visitors: 8500000, change: 18.2 },
+      { city: 'Sapporo', year: 2025, visitors: 2800000, change: 6.3 }
+    ],
+    2024: [
+      { city: 'Tokyo', year: 2024, visitors: 13500000, change: 8.2 },
+      { city: 'Osaka', year: 2024, visitors: 10750000, change: 6.4 },
+      { city: 'Kyoto', year: 2024, visitors: 7200000, change: 14.8 },
+      { city: 'Sapporo', year: 2024, visitors: 2600000, change: 3.9 }
+    ],
+    2023: [
+      { city: 'Tokyo', year: 2023, visitors: 12480000, change: -5.3 },
+      { city: 'Osaka', year: 2023, visitors: 10100000, change: -7.2 },
+      { city: 'Kyoto', year: 2023, visitors: 6100000, change: -12.8 },
+      { city: 'Sapporo', year: 2023, visitors: 2400000, change: -8.1 }
+    ]
+  },
+  'United Kingdom': {
+    2025: [
+      { city: 'London', year: 2025, visitors: 18000000, change: 7.8 },
+      { city: 'Edinburgh', year: 2025, visitors: 4500000, change: 9.2 },
+      { city: 'Manchester', year: 2025, visitors: 1400000, change: 5.1 },
+      { city: 'Liverpool', year: 2025, visitors: 1200000, change: 12.3 }
+    ],
+    2024: [
+      { city: 'London', year: 2024, visitors: 16700000, change: 4.2 },
+      { city: 'Edinburgh', year: 2024, visitors: 4120000, change: 6.8 },
+      { city: 'Manchester', year: 2024, visitors: 1330000, change: 2.9 },
+      { city: 'Liverpool', year: 2024, visitors: 1100000, change: 8.1 }
+    ],
+    2023: [
+      { city: 'London', year: 2023, visitors: 15500000, change: -8.2 },
+      { city: 'Edinburgh', year: 2023, visitors: 3860000, change: -12.3 },
+      { city: 'Manchester', year: 2023, visitors: 1292000, change: -15.1 },
+      { city: 'Liverpool', year: 2023, visitors: 980000, change: -18.7 }
+    ]
+  }
+});
+
+// Fallback travel growth data for countries not in the main dataset
+export const getMockTravelGrowthData = () => [
+  { city: 'Tokyo', year: 2025, visitors: 15200000, change: 12.5 },
+  { city: 'Paris', year: 2025, visitors: 14800000, change: 8.3 },
+  { city: 'London', year: 2025, visitors: 13600000, change: 6.7 },
+  { city: 'Dubai', year: 2025, visitors: 12300000, change: 15.2 },
+  { city: 'Singapore', year: 2025, visitors: 11900000, change: 9.8 },
+  { city: 'New York', year: 2025, visitors: 11500000, change: 4.1 },
+  { city: 'Barcelona', year: 2025, visitors: 10800000, change: 7.9 },
+  { city: 'Amsterdam', year: 2025, visitors: 9200000, change: 11.3 }
+];
+
+// Mock cultural diversity data
+export const getMockCulturalDiversity = () => [
+  { metric: 'Cuisine Variety', score: 85, maxScore: 100 },
+  { metric: 'Language Support', score: 72, maxScore: 100 },
+  { metric: 'Cultural Events', score: 78, maxScore: 100 },
+  { metric: 'LGBTQ+ Friendly', score: 92, maxScore: 100 },
+  { metric: 'Religious Diversity', score: 68, maxScore: 100 }
+];
+
+// Environmental quality data for major cities by country
+const COUNTRY_ENVIRONMENTAL_DATA: Record<string, Array<{city: string, aqi: number, greenSpacePct: number, waterQuality: number, overallScore: number}>> = {
+  'United States': [
+    { city: 'New York', aqi: 35, greenSpacePct: 27, waterQuality: 85, overallScore: 73 },
+    { city: 'Los Angeles', aqi: 45, greenSpacePct: 15, waterQuality: 78, overallScore: 65 },
+    { city: 'Chicago', aqi: 32, greenSpacePct: 25, waterQuality: 82, overallScore: 71 },
+    { city: 'San Francisco', aqi: 28, greenSpacePct: 20, waterQuality: 88, overallScore: 75 },
+    { city: 'Seattle', aqi: 22, greenSpacePct: 35, waterQuality: 92, overallScore: 80 },
+    { city: 'Miami', aqi: 38, greenSpacePct: 18, waterQuality: 79, overallScore: 68 },
+    { city: 'Denver', aqi: 25, greenSpacePct: 30, waterQuality: 90, overallScore: 78 },
+    { city: 'Boston', aqi: 29, greenSpacePct: 22, waterQuality: 86, overallScore: 74 }
+  ],
+  'Japan': [
+    { city: 'Tokyo', aqi: 22, greenSpacePct: 24, waterQuality: 89, overallScore: 78 },
+    { city: 'Osaka', aqi: 26, greenSpacePct: 20, waterQuality: 87, overallScore: 75 },
+    { city: 'Kyoto', aqi: 18, greenSpacePct: 42, waterQuality: 91, overallScore: 82 },
+    { city: 'Sapporo', aqi: 15, greenSpacePct: 38, waterQuality: 94, overallScore: 85 },
+    { city: 'Yokohama', aqi: 24, greenSpacePct: 22, waterQuality: 88, overallScore: 77 },
+    { city: 'Hiroshima', aqi: 19, greenSpacePct: 35, waterQuality: 90, overallScore: 81 },
+    { city: 'Fukuoka', aqi: 21, greenSpacePct: 28, waterQuality: 89, overallScore: 79 },
+    { city: 'Sendai', aqi: 16, greenSpacePct: 40, waterQuality: 93, overallScore: 84 }
+  ],
+  'United Kingdom': [
+    { city: 'London', aqi: 31, greenSpacePct: 33, waterQuality: 83, overallScore: 72 },
+    { city: 'Edinburgh', aqi: 20, greenSpacePct: 45, waterQuality: 91, overallScore: 82 },
+    { city: 'Manchester', aqi: 28, greenSpacePct: 28, waterQuality: 85, overallScore: 74 },
+    { city: 'Liverpool', aqi: 27, greenSpacePct: 30, waterQuality: 84, overallScore: 75 },
+    { city: 'Birmingham', aqi: 33, greenSpacePct: 25, waterQuality: 81, overallScore: 70 },
+    { city: 'Bristol', aqi: 24, greenSpacePct: 37, waterQuality: 87, overallScore: 78 },
+    { city: 'Glasgow', aqi: 22, greenSpacePct: 42, waterQuality: 89, overallScore: 81 },
+    { city: 'Brighton', aqi: 26, greenSpacePct: 32, waterQuality: 86, overallScore: 76 }
+  ],
+  'Canada': [
+    { city: 'Toronto', aqi: 20, greenSpacePct: 35, waterQuality: 92, overallScore: 82 },
+    { city: 'Vancouver', aqi: 18, greenSpacePct: 42, waterQuality: 95, overallScore: 85 },
+    { city: 'Montreal', aqi: 22, greenSpacePct: 38, waterQuality: 89, overallScore: 80 },
+    { city: 'Calgary', aqi: 16, greenSpacePct: 40, waterQuality: 93, overallScore: 84 },
+    { city: 'Ottawa', aqi: 19, greenSpacePct: 45, waterQuality: 91, overallScore: 83 },
+    { city: 'Edmonton', aqi: 17, greenSpacePct: 37, waterQuality: 90, overallScore: 81 },
+    { city: 'Winnipeg', aqi: 21, greenSpacePct: 33, waterQuality: 88, overallScore: 78 },
+    { city: 'Quebec City', aqi: 15, greenSpacePct: 48, waterQuality: 94, overallScore: 86 }
+  ],
+  'Australia': [
+    { city: 'Sydney', aqi: 18, greenSpacePct: 46, waterQuality: 92, overallScore: 82 },
+    { city: 'Melbourne', aqi: 21, greenSpacePct: 41, waterQuality: 90, overallScore: 80 },
+    { city: 'Brisbane', aqi: 23, greenSpacePct: 38, waterQuality: 88, overallScore: 78 },
+    { city: 'Perth', aqi: 19, greenSpacePct: 43, waterQuality: 91, overallScore: 81 },
+    { city: 'Adelaide', aqi: 20, greenSpacePct: 40, waterQuality: 89, overallScore: 79 },
+    { city: 'Canberra', aqi: 15, greenSpacePct: 50, waterQuality: 95, overallScore: 87 },
+    { city: 'Gold Coast', aqi: 22, greenSpacePct: 35, waterQuality: 87, overallScore: 77 },
+    { city: 'Darwin', aqi: 12, greenSpacePct: 52, waterQuality: 93, overallScore: 89 }
+  ]
+};
+
+// Environmental quality data for major cities in the selected country
+export const getEnvironmentalQualityForCity = (selectedCity: string, selectedCountry: string, envScore?: number) => {
+  const environmentScore = envScore || 72;
+  
+  // Get cities for the selected country, fallback to global cities if country not found
+  let countryData = COUNTRY_ENVIRONMENTAL_DATA[selectedCountry];
+  
+  if (!countryData) {
+    // Fallback to global cities if country not found
+    countryData = [
+      { city: 'Singapore', aqi: 15, greenSpacePct: 47, waterQuality: 95, overallScore: 85 },
+      { city: 'Sydney', aqi: 18, greenSpacePct: 46, waterQuality: 92, overallScore: 82 },
+      { city: 'Tokyo', aqi: 22, greenSpacePct: 24, waterQuality: 89, overallScore: 78 },
+      { city: 'Amsterdam', aqi: 16, greenSpacePct: 43, waterQuality: 88, overallScore: 77 },
+      { city: 'Seoul', aqi: 28, greenSpacePct: 34, waterQuality: 85, overallScore: 75 },
+      { city: 'Barcelona', aqi: 26, greenSpacePct: 35, waterQuality: 84, overallScore: 74 },
+      { city: 'Bangkok', aqi: 42, greenSpacePct: 22, waterQuality: 76, overallScore: 65 },
+      { city: 'Global Average', aqi: 25, greenSpacePct: 28, waterQuality: 89, overallScore: environmentScore }
+    ];
+  }
+  
+  // If the selected city is in the data, adjust its score to match the KPI
+  const adjustedData = countryData.map(cityData => {
+    if (cityData.city === selectedCity) {
+      return { ...cityData, overallScore: environmentScore };
+    }
+    return cityData;
+  });
+  
+  return adjustedData;
+};
+
+// Generate consistent safety breakdown data based on current safety score
+export const generateSafetyBreakdown = (safetyScore: number) => {
+  // Higher safety score = more "Very Safe" and "Safe" categories
+  if (safetyScore >= 80) {
+    return [
+      { category: 'Very Safe', score: 4500, percentage: 45.0 },
+      { category: 'Safe', score: 3200, percentage: 32.0 },
+      { category: 'Moderate', score: 1500, percentage: 15.0 },
+      { category: 'Caution', score: 600, percentage: 6.0 },
+      { category: 'High Risk', score: 200, percentage: 2.0 }
+    ];
+  } else if (safetyScore >= 70) {
+    return [
+      { category: 'Very Safe', score: 3500, percentage: 35.0 },
+      { category: 'Safe', score: 3200, percentage: 32.0 },
+      { category: 'Moderate', score: 2000, percentage: 20.0 },
+      { category: 'Caution', score: 900, percentage: 9.0 },
+      { category: 'High Risk', score: 400, percentage: 4.0 }
+    ];
+  } else if (safetyScore >= 60) {
+    return [
+      { category: 'Very Safe', score: 2500, percentage: 25.0 },
+      { category: 'Safe', score: 3000, percentage: 30.0 },
+      { category: 'Moderate', score: 2500, percentage: 25.0 },
+      { category: 'Caution', score: 1500, percentage: 15.0 },
+      { category: 'High Risk', score: 500, percentage: 5.0 }
+    ];
+  } else {
+    return [
+      { category: 'Very Safe', score: 1500, percentage: 15.0 },
+      { category: 'Safe', score: 2000, percentage: 20.0 },
+      { category: 'Moderate', score: 3000, percentage: 30.0 },
+      { category: 'Caution', score: 2500, percentage: 25.0 },
+      { category: 'High Risk', score: 1000, percentage: 10.0 }
+    ];
+  }
+};

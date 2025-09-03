@@ -167,8 +167,8 @@ const LSOAMap: React.FC<LSOAMapProps> = ({ selectedBorough, onLSOASelect, select
         let minPop = Infinity, maxPop = -Infinity;
         for (const row of popRows) {
           const code = row['LSOA11 Code'];
-          let pop2014 = row['Mid-2014 population'].replace(/,/g, '');
-          let pop2023 = Math.round(parseInt(pop2014, 10) * 1.05);
+          const pop2014 = row['Mid-2014 population'].replace(/,/g, '');
+          const pop2023 = Math.round(parseInt(pop2014, 10) * 1.05);
           popMap[code] = pop2023;
           if (!isNaN(pop2023)) {
             minPop = Math.min(minPop, pop2023);
