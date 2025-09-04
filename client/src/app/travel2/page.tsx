@@ -517,18 +517,6 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
     });
   };
 
-  // Helper function to create world travel map using SpecCreator
-  const createWorldTravelMapSpec = () => {
-    return createWorldTravelMapVegaSpec({
-      width: 800,
-      height: 350,
-      background: "#7ec2ddff",
-      options: { 
-        selectableCountries: CLICKABLE_COUNTRIES 
-      }
-    });
-  };
-
   // Helper function to create visitor flow seasonal chart using template system  
   const createVisitorFlowSeasonalChartSpec = (data: any[]) => {
     if (!data.length) return null;
@@ -833,7 +821,12 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         chartType="vega"
         title="WORLD TRAVEL MAP"
         subtitle="(Pan, zoom & click countries)"
-        vegaSpec={createWorldTravelMapSpec()}
+        vegaSpec={createWorldTravelMapVegaSpec({
+          width: 800,
+          height: 350,
+          background: "#7ec2ddff",
+          options: { selectableCountries: CLICKABLE_COUNTRIES }
+        })}
         vegaRenderer="svg"
         chartPosition="full"
         signalListeners={{
