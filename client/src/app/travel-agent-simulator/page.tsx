@@ -288,6 +288,7 @@ const TravelAgentDemo: React.FC = () => {
                   subtitle="Generation Failed"
                   description={`Error: ${chart.error}`}
                   chartPosition="full"
+                  vegaRenderer="svg"
                 >
                   <div className="h-40 flex items-center justify-center">
                     <div className="text-center">

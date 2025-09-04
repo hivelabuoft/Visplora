@@ -561,7 +561,8 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
 
     return SpecCreator.create({
       type: 'multiType',
-      subtype: 'barChartWithLineSpec',
+      // subtype: 'multiType_same_y_diff_type',
+      subtype: 'multiTypeWithThreshold',
       data: transformedData,
       config: {
         dimensions: { width: 350, height: 180 },
@@ -572,6 +573,10 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
           color: 'season'
         },
         styling: {
+          thresholdValue: 950000,      // Efficiency target
+      thresholdColor: '#22c55e',
+      thresholdLabel: 'Efficiency Target',
+      showThresholdLabel: true,
           colors: ['#94a3b8', '#3b82f6', '#dc2626'], // Season colors
           lineColor: '#ef4444', // Red line for global average
           lineWidth: 3,
@@ -901,6 +906,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         title={`COUNTRY DETAIL MAP | ${dashboardFilters.selectedCountry || 'Select Country'}`}
         subtitle="(Click cities for details)"
         chartPosition="full"
+        vegaRenderer="svg"
         dataCondition={!!dashboardFilters.selectedCountry}
         fallbackContent={
           <div className="h-full flex flex-col items-center justify-center text-gray-400">
@@ -930,6 +936,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
           mockTravelGrowthDataByCountryYear[dashboardFilters.selectedCountry]?.[dashboardFilters.selectedYear] || 
           mockTravelGrowthData.filter((d: any) => d.year === dashboardFilters.selectedYear)
         )}
+        vegaRenderer="svg"
         chartPosition="bottom-0-right-4"
         hasFieldFilter={true}
         fieldFilterKey="selectedYear"
@@ -942,6 +949,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
       <ReusableNode
         size="xlarge"
         chartType="vega-lite"
+        vegaRenderer="svg"
         title={`Cost Timeline - ${dashboardFilters.selectedCity}`}
         description="Monthly average costs for hotel, meals, and transport (in USD)"
         vegaSpec={createCostTimelineSpec(costTimelineData)}
@@ -958,6 +966,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         vegaSpec={createReviewsDistributionSpec(mockReviewsDistribution)}
         chartPosition="left-6-bottom-0"
         hasFieldFilter={false}
+        vegaRenderer="svg"
         fieldFilterKey="selectedYear"
         filterOptions={yearFilterOptions}
         selectedFilter={dashboardFilters.selectedYear}
@@ -975,6 +984,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         dataCondition={visitorFlowData.length > 0}
         chartPosition="left-4-bottom-0"
         showMeanValue={true}
+        vegaRenderer="svg"
       />
 
       {/* Safety Breakdown */}
@@ -987,6 +997,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         hasFieldFilter={false}
         fieldFilterKey="selectedYear"
         filterOptions={yearFilterOptions}
+        vegaRenderer="svg"
         selectedFilter={dashboardFilters.selectedYear}
         onFilterChange={updateDashboardFilter}
       />
@@ -1001,6 +1012,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         chartPosition="left-6-bottom-0"
         hasFieldFilter={false}
         fieldFilterKey="selectedYear"
+        vegaRenderer="svg"
         filterOptions={yearFilterOptions}
         selectedFilter={dashboardFilters.selectedYear}
         onFilterChange={updateDashboardFilter}
@@ -1011,6 +1023,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         size="xlarge"
         chartType="vega-lite"
         title="Environmental Quality"
+        vegaRenderer="svg"
         description="Shows how cities compare based on air quality, water quality, and green space to reflect overall living conditions"
         vegaSpec={createEnvironmentalQualitySpec(mockEnvironmentalQuality)}
         chartPosition="left-4-bottom-0"
@@ -1020,6 +1033,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
       <ReusableNode
         size="medium"
         chartType="vega-lite"
+        vegaRenderer="svg"
         title={`Cultural Diversity - ${dashboardFilters.selectedCity}`}
         vegaSpec={createCulturalDiversityBarSpec(mockCulturalDiversity)}
         // buttons={[{

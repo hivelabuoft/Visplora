@@ -166,7 +166,8 @@ export const createBarChartWithLineAndThresholdSpec = (params: MultiTypeChartWit
         "mark": {
           "type": "line" as const,
           "color": styling.lineColor || "#8b5cf6",
-          "strokeWidth": styling.lineWidth || 2
+          "strokeWidth": styling.lineWidth || 2,
+          "point": true
         },
         "encoding": {
           "x": {
@@ -176,18 +177,8 @@ export const createBarChartWithLineAndThresholdSpec = (params: MultiTypeChartWit
           },
           "y": {
             "field": fields.yLine,
-            "type": "quantitative" as const,
-            "axis": {
-              "labelColor": axes?.yAxisRight?.labelColor || "#888",
-              "titleColor": axes?.yAxisRight?.titleColor || "#888",
-              "labelFontSize": axes?.yAxisRight?.labelFontSize || 8,
-              "gridColor": axes?.yAxisRight?.gridColor || "#888",
-              "gridDash": axes?.yAxisRight?.gridDash || [2, 2],
-              "grid": axes?.yAxisRight?.grid || false,
-              "title": axes?.yAxisRight?.title,
-              "format": axes?.yAxisRight?.format || ".2s"
-            },
-            ...(axes?.yAxisRight?.scale && { "scale": axes.yAxisRight.scale })
+            "type": "quantitative" as const
+            // No axis config here - it will use the same scale as the bar
           },
           "tooltip": [
             {"field": fields.x, "type": fields.xType || "nominal" as const, "title": axes?.xAxis?.tooltipTitle || "Category"},
@@ -225,7 +216,7 @@ export const createBarChartWithLineAndThresholdSpec = (params: MultiTypeChartWit
     ],
     "resolve": {
       "scale": {
-        "y": "independent"
+        "y": "shared" // This is key - both layers share the same Y scale
       }
     },
     "config": {
