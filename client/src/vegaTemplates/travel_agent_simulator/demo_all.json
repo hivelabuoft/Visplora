@@ -1,0 +1,200 @@
+{
+  "demoRequests": [
+    {
+      "name": "Cost Trends Over Time",
+      "request": {
+        "userQuery": "Show monthly hotel and meal costs for Tokyo over the past 8 months",
+        "constraints": {
+          "chartType": "line",
+          "dataCategory": "cost",
+          "destinations": ["Tokyo"],
+          "maxDataPoints": 8
+        }
+      }
+    },
+    {
+      "name": "Safety Comparison",
+      "request": {
+        "userQuery": "Compare safety scores across major Asian cities",
+        "constraints": {
+          "chartType": "bar",
+          "dataCategory": "safety",
+          "destinations": ["Tokyo", "Bangkok", "Singapore", "Seoul"],
+          "visualization": "comparison"
+        }
+      }
+    },
+    {
+      "name": "Review Distribution",
+      "request": {
+        "userQuery": "Show review rating distribution breakdown for Paris hotels",
+        "constraints": {
+          "chartType": "pie",
+          "dataCategory": "reviews",
+          "destinations": ["Paris"],
+          "maxDataPoints": 5
+        }
+      }
+    },
+    {
+      "name": "Cost vs Safety Relationship",
+      "request": {
+        "userQuery": "Plot relationship between travel costs and safety scores across European destinations",
+        "constraints": {
+          "chartType": "scatter",
+          "dataCategory": "cost",
+          "destinations": ["Paris", "London", "Rome", "Barcelona", "Amsterdam"],
+          "visualization": "relationship"
+        }
+      }
+    },
+    {
+      "name": "Visitor Flow with Occupancy",
+      "request": {
+        "userQuery": "Show monthly visitor arrivals with hotel occupancy rates for Bangkok",
+        "constraints": {
+          "chartType": "multiType",
+          "dataCategory": "visitor-flow",
+          "destinations": ["Bangkok"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "Safety Scores with Threshold",
+      "request": {
+        "userQuery": "Show safety score trends with target threshold line for European destinations",
+        "constraints": {
+          "chartType": "line",
+          "dataCategory": "safety",
+          "destinations": ["Paris", "London", "Berlin"],
+          "maxDataPoints": 10
+        }
+      }
+    },
+    {
+      "name": "Environmental Quality with Mean",
+      "request": {
+        "userQuery": "Compare environmental scores across cities with global average line",
+        "constraints": {
+          "chartType": "bar",
+          "dataCategory": "environmental",
+          "destinations": ["Singapore", "Tokyo", "Sydney", "Amsterdam"],
+          "visualization": "comparison"
+        }
+      }
+    },
+    {
+      "name": "Cultural Diversity Breakdown",
+      "request": {
+        "userQuery": "Show cultural diversity metrics distribution for Singapore",
+        "constraints": {
+          "chartType": "pie",
+          "dataCategory": "cultural",
+          "destinations": ["Singapore"],
+          "maxDataPoints": 5
+        }
+      }
+    },
+    {
+      "name": "Environmental Quality Analysis",
+      "request": {
+        "userQuery": "Plot environmental quality: air quality vs green space coverage with city sizes",
+        "constraints": {
+          "chartType": "scatter",
+          "dataCategory": "environmental",
+          "destinations": ["Singapore", "Tokyo", "Bangkok", "Sydney"],
+          "visualization": "relationship"
+        }
+      }
+    },
+    {
+      "name": "Revenue with Growth Rate",
+      "request": {
+        "userQuery": "Show quarterly tourism revenue with growth percentage on same scale",
+        "constraints": {
+          "chartType": "multiType",
+          "dataCategory": "visitor-flow",
+          "destinations": ["Bangkok"],
+          "maxDataPoints": 8
+        }
+      }
+    },
+    {
+      "name": "Visitor Arrivals with Mean",
+      "request": {
+        "userQuery": "Display visitor arrival trends with global average line overlay",
+        "constraints": {
+          "chartType": "line",
+          "dataCategory": "visitor-flow",
+          "destinations": ["Tokyo", "Bangkok"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "Crime vs Political Risk Diverging",
+      "request": {
+        "userQuery": "Show crime risk versus political risk across regions using diverging bars",
+        "constraints": {
+          "chartType": "bar",
+          "dataCategory": "safety",
+          "destinations": ["Tokyo", "Bangkok", "Paris", "New York"],
+          "visualization": "comparison"
+        }
+      }
+    }
+  ],
+  "autoDetectionTests": [
+    "Show cost trends over the past year for European cities",
+    "Compare visitor numbers across top 5 destinations",
+    "Break down expense categories for typical traveler",
+    "What's the relationship between cost and satisfaction?",
+    "Monthly arrivals with seasonal occupancy rates",
+    "Plot environmental quality vs tourism ratings",
+    "Show safety improvements over time with targets",
+    "Compare cultural diversity across Asian capitals"
+  ],
+  "exampleRequests": {
+    "trending": {
+      "userQuery": "Show visitor trends for Tokyo over the past 12 months with seasonal patterns",
+      "constraints": {
+        "dataCategory": "visitor-flow",
+        "destinations": ["Tokyo"],
+        "maxDataPoints": 12
+      }
+    },
+    "comparison": {
+      "userQuery": "Compare environmental quality across major cities in Asia",
+      "constraints": {
+        "dataCategory": "environmental",
+        "destinations": ["Tokyo", "Singapore", "Bangkok", "Seoul"],
+        "chartType": "scatter"
+      }
+    },
+    "distribution": {
+      "userQuery": "Break down cultural diversity metrics for Singapore",
+      "constraints": {
+        "dataCategory": "cultural",
+        "destinations": ["Singapore"],
+        "chartType": "pie"
+      }
+    },
+    "relationship": {
+      "userQuery": "Show relationship between travel costs and safety across European capitals",
+      "constraints": {
+        "dataCategory": "safety",
+        "destinations": ["Paris", "London", "Berlin", "Rome"],
+        "chartType": "scatter"
+      }
+    },
+    "seasonal": {
+      "userQuery": "Monthly visitor arrivals with hotel occupancy for peak season analysis",
+      "constraints": {
+        "dataCategory": "visitor-flow",
+        "chartType": "multiType",
+        "maxDataPoints": 12
+      }
+    }
+  }
+}

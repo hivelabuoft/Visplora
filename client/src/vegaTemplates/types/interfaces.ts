@@ -39,6 +39,31 @@ export interface StyleConfig {
   axes?: AxisConfig;
   marks?: MarkConfig;
   sizeDomain?: [number, number]; // Custom domain for size scale
+  
+  // Line styling properties
+  lineColor?: string;
+  lineWidth?: number;
+  cornerRadius?: number;
+  colorDomain?: string[];
+  
+  // Mean line properties
+  meanValue?: number;
+  meanField?: string;
+  meanColor?: string;
+  meanStrokeWidth?: number;
+  meanStrokeDash?: number[];
+  meanLabel?: string;
+  showMeanLabel?: boolean;
+  
+  // Threshold line properties
+  thresholdValue?: number;
+  thresholdField?: string;
+  thresholdColor?: string;
+  thresholdStrokeWidth?: number;
+  thresholdStrokeDash?: number[];
+  thresholdLabel?: string;
+  showThresholdLabel?: boolean;
+  thresholdType?: 'line' | 'area';
 }
 
 export interface AxisConfig {

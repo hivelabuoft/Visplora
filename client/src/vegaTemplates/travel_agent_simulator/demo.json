@@ -1,0 +1,130 @@
+{
+  "demoRequests": [
+    {
+      "name": "Visitor Flow with Occupancy - Bangkok",
+      "request": {
+        "userQuery": "Show monthly visitor arrivals with hotel occupancy rates for Bangkok",
+        "constraints": {
+          "chartType": "multiType",
+          "dataCategory": "visitor-flow",
+          "destinations": ["Bangkok"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "Cost vs Satisfaction Trends - Tokyo",
+      "request": {
+        "userQuery": "Display monthly travel costs with satisfaction ratings for Tokyo",
+        "constraints": {
+          "chartType": "multiType",
+          "dataCategory": "cost",
+          "destinations": ["Tokyo"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "City vs Region Visitor Comparison - Paris",
+      "request": {
+        "userQuery": "Compare Paris arrivals with European regional averages monthly",
+        "constraints": {
+          "chartType": "multiType",
+          "dataCategory": "visitor-flow",
+          "destinations": ["Paris"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "Local vs Global Tourism Trends - Singapore",
+      "request": {
+        "userQuery": "Show Singapore visitor data compared to global tourism averages",
+        "constraints": {
+          "chartType": "multiType", 
+          "dataCategory": "visitor-flow",
+          "destinations": ["Singapore"],
+          "maxDataPoints": 10
+        }
+      }
+    },
+    {
+      "name": "Revenue with Growth Targets - London",
+      "request": {
+        "userQuery": "Display quarterly tourism revenue with growth target threshold for London",
+        "constraints": {
+          "chartType": "multiType",
+          "dataCategory": "revenue",
+          "destinations": ["London"],
+          "maxDataPoints": 8
+        }
+      }
+    },
+    {
+      "name": "Safety Improvements with Targets - Rome", 
+      "request": {
+        "userQuery": "Show monthly safety scores with target threshold line for Rome",
+        "constraints": {
+          "chartType": "multiType",
+          "dataCategory": "safety",
+          "destinations": ["Rome"],
+          "maxDataPoints": 10
+        }
+      }
+    },
+    {
+      "name": "Visitor Flows with Average Line - Amsterdam",
+      "request": {
+        "userQuery": "Display Amsterdam visitor arrivals with mean average overlay",
+        "constraints": {
+          "chartType": "multiType",
+          "dataCategory": "visitor-flow", 
+          "destinations": ["Amsterdam"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "Hotel Costs with Mean Benchmark - Barcelona",
+      "request": {
+        "userQuery": "Show Barcelona hotel costs with calculated mean benchmark line",
+        "constraints": {
+          "chartType": "multiType",
+          "dataCategory": "cost",
+          "destinations": ["Barcelona"],
+          "maxDataPoints": 10
+        }
+      }
+    }
+  ],
+  "autoDetectionTests": [
+    "Show visitor flows with occupancy rates",
+    "Compare local arrivals with regional averages", 
+    "Display costs with satisfaction scores",
+    "Revenue trends with growth targets",
+    "Safety improvements with thresholds",
+    "Monthly data with mean benchmarks"
+  ],
+  "exampleRequests": {
+    "barChartWithLineSpec": {
+      "userQuery": "Show visitor arrivals with occupancy rates for Bangkok",
+      "expectedSubtype": "barChartWithLineSpec",
+      "reason": "Different units: visitor counts vs percentages"
+    },
+    "multiType_same_y_diff_type": {
+      "userQuery": "Compare city arrivals with regional averages",
+      "expectedSubtype": "multiType_same_y_diff_type", 
+      "reason": "Same units: both are visitor counts"
+    },
+    "multiTypeWithThreshold": {
+      "userQuery": "Revenue trends with growth target line",
+      "expectedSubtype": "multiTypeWithThreshold",
+      "reason": "Bars with target threshold overlay"
+    },
+    "multiTypeWithMean": {
+      "userQuery": "Visitor flows with average benchmark", 
+      "expectedSubtype": "multiTypeWithMean",
+      "reason": "Bars with computed mean line overlay"
+    }
+  }
+}

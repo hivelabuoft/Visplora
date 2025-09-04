@@ -1,12 +1,19 @@
 // SpecCreator factory for creating chart specifications
 import { ChartSpec, ChartConfig, LineChartParams, BarChartParams, PieChartParams, ScatterChartParams, MapChartParams, MultiTypeChartParams } from './types/interfaces';
 import { createMultiLineLabelSpec } from './line/multiLineLabelSpec';
+import { createMultiLineLabelWithMeanSpec, LineChartWithMeanParams } from './line/multiLineLabelWithMeanSpec';
+import { createMultiLineLabelWithThresholdSpec, LineChartWithThresholdParams } from './line/multiLineLabelWithThresholdSpec';
 import { createDivergingBarSpec } from './bar/divergingBarSpec';
 import { createHorizontalBarSpec } from './bar/horizontalBarSpec';
+import { createHorizontalBarWithMeanSpec, BarChartWithMeanParams } from './bar/horizontalBarWithMeanSpec';
+import { createHorizontalBarWithThresholdSpec, BarChartWithThresholdParams } from './bar/horizontalBarWithThresholdSpec';
 import { createInteractivePieSpec } from './pie/interactivePieSpec';
 import { createBubblePlotScatterSpec } from './scatter/bubblePlotScatterSpec';
 import { createWorldInteractiveMapSpec, createCountryDetailMapSpec } from './map/worldInteractiveMapSpec';
 import { createBarChartWithLineSpec } from './multiType/barChartWithLineSpec';
+import { createBarChartWithLineAndMeanSpec, MultiTypeChartWithMeanParams } from './multiType/barChartWithLineAndMeanSpec';
+import { createBarChartWithLineAndThresholdSpec, MultiTypeChartWithThresholdParams } from './multiType/barChartWithLineAndThresholdSpec';
+import { createMultiTypeSameYAxisSpec, MultiTypeSameYAxisParams } from './multiType/multiTypeSameYAxisSpec';
 
 export class SpecCreator {
   /**
@@ -38,6 +45,10 @@ export class SpecCreator {
     switch (subtype) {
       case 'multiLineLabelSpec':
         return SpecCreator.createMultiLineLabelChart(data, config);
+      case 'lineChartWithMean':
+        return SpecCreator.createLineChartWithMean(data, config);
+      case 'lineChartWithThreshold':
+        return SpecCreator.createLineChartWithThreshold(data, config);
       case 'multiLineSpec':
         // TODO: Implement basic multi-line chart (without labels)
         throw new Error(`Line chart subtype "${subtype}" not yet implemented`);
@@ -71,6 +82,73 @@ export class SpecCreator {
     };
 
     return createMultiLineLabelSpec(params);
+  }
+
+  /**
+   * Create line chart with mean line
+   */
+  private static createLineChartWithMean(data: any[], config: ChartConfig): any {
+    const params: LineChartWithMeanParams = {
+      data,
+      xField: config.fields.x || config.fields.date || 'date',
+      yField: config.fields.y || config.fields.value || 'value',
+      seriesField: config.fields.series || 'series',
+      colors: config.styling.colors,
+      width: config.dimensions.width,
+      height: config.dimensions.height,
+      background: config.styling.background || 'transparent',
+      xAxisConfig: config.styling.axes?.xAxis,
+      yAxisConfig: config.styling.axes?.yAxis,
+      legend: config.legend,
+      dateFormat: config.styling.axes?.xAxis?.format || '%Y-%m',
+      yFormat: config.styling.axes?.yAxis?.format || '$,.0f',
+      interactions: config.interactions ? {
+        hover: config.interactions.hover !== false,
+        labels: config.interactions.labels !== false
+      } : { hover: true, labels: true },
+      meanValue: (config.styling as any).meanValue,
+      meanColor: (config.styling as any).meanColor,
+      meanStrokeWidth: (config.styling as any).meanStrokeWidth,
+      meanStrokeDash: (config.styling as any).meanStrokeDash,
+      meanLabel: (config.styling as any).meanLabel,
+      showMeanLabel: (config.styling as any).showMeanLabel
+    };
+
+    return createMultiLineLabelWithMeanSpec(params);
+  }
+
+  /**
+   * Create line chart with threshold line
+   */
+  private static createLineChartWithThreshold(data: any[], config: ChartConfig): any {
+    const params: LineChartWithThresholdParams = {
+      data,
+      xField: config.fields.x || config.fields.date || 'date',
+      yField: config.fields.y || config.fields.value || 'value',
+      seriesField: config.fields.series || 'series',
+      colors: config.styling.colors,
+      width: config.dimensions.width,
+      height: config.dimensions.height,
+      background: config.styling.background || 'transparent',
+      xAxisConfig: config.styling.axes?.xAxis,
+      yAxisConfig: config.styling.axes?.yAxis,
+      legend: config.legend,
+      dateFormat: config.styling.axes?.xAxis?.format || '%Y-%m',
+      yFormat: config.styling.axes?.yAxis?.format || '$,.0f',
+      interactions: config.interactions ? {
+        hover: config.interactions.hover !== false,
+        labels: config.interactions.labels !== false
+      } : { hover: true, labels: true },
+      thresholdValue: (config.styling as any).thresholdValue,
+      thresholdColor: (config.styling as any).thresholdColor,
+      thresholdStrokeWidth: (config.styling as any).thresholdStrokeWidth,
+      thresholdStrokeDash: (config.styling as any).thresholdStrokeDash,
+      thresholdLabel: (config.styling as any).thresholdLabel,
+      showThresholdLabel: (config.styling as any).showThresholdLabel,
+      thresholdType: (config.styling as any).thresholdType
+    };
+
+    return createMultiLineLabelWithThresholdSpec(params);
   }
 
   /**
@@ -114,6 +192,10 @@ export class SpecCreator {
         return SpecCreator.createDivergingBarChart(data, config);
       case 'horizontalBarSpec':
         return SpecCreator.createHorizontalBarChart(data, config);
+      case 'barChartWithMean':
+        return SpecCreator.createBarChartWithMean(data, config);
+      case 'barChartWithThreshold':
+        return SpecCreator.createBarChartWithThreshold(data, config);
       default:
         throw new Error(`Unsupported bar chart subtype: ${subtype}`);
     }
@@ -166,6 +248,64 @@ export class SpecCreator {
     };
 
     return createHorizontalBarSpec(params);
+  }
+
+  /**
+   * Create horizontal bar chart with mean line
+   */
+  private static createBarChartWithMean(data: any[], config: ChartConfig): any {
+    const params: BarChartWithMeanParams = {
+      data,
+      categoryField: config.fields.category || 'category',
+      valueField: config.fields.value || 'value',
+      colors: config.styling.colors,
+      width: config.dimensions.width,
+      height: config.dimensions.height,
+      background: config.styling.background || 'transparent',
+      orientation: 'horizontal',
+      xAxisConfig: config.styling.axes?.xAxis,
+      yAxisConfig: config.styling.axes?.yAxis,
+      legend: config.legend,
+      tooltip: config.tooltip,
+      interactions: config.interactions,
+      meanValue: (config.styling as any).meanValue,
+      meanColor: (config.styling as any).meanColor,
+      meanStrokeWidth: (config.styling as any).meanStrokeWidth,
+      meanStrokeDash: (config.styling as any).meanStrokeDash,
+      meanLabel: (config.styling as any).meanLabel,
+      showMeanLabel: (config.styling as any).showMeanLabel
+    };
+
+    return createHorizontalBarWithMeanSpec(params);
+  }
+
+  /**
+   * Create horizontal bar chart with threshold line
+   */
+  private static createBarChartWithThreshold(data: any[], config: ChartConfig): any {
+    const params: BarChartWithThresholdParams = {
+      data,
+      categoryField: config.fields.category || 'category',
+      valueField: config.fields.value || 'value',
+      colors: config.styling.colors,
+      width: config.dimensions.width,
+      height: config.dimensions.height,
+      background: config.styling.background || 'transparent',
+      orientation: 'horizontal',
+      xAxisConfig: config.styling.axes?.xAxis,
+      yAxisConfig: config.styling.axes?.yAxis,
+      legend: config.legend,
+      tooltip: config.tooltip,
+      interactions: config.interactions,
+      thresholdValue: (config.styling as any).thresholdValue,
+      thresholdColor: (config.styling as any).thresholdColor,
+      thresholdStrokeWidth: (config.styling as any).thresholdStrokeWidth,
+      thresholdStrokeDash: (config.styling as any).thresholdStrokeDash,
+      thresholdLabel: (config.styling as any).thresholdLabel,
+      showThresholdLabel: (config.styling as any).showThresholdLabel
+    };
+
+    return createHorizontalBarWithThresholdSpec(params);
   }
 
   /**
@@ -311,6 +451,12 @@ export class SpecCreator {
     switch (subtype) {
       case 'barChartWithLineSpec':
         return SpecCreator.createBarChartWithLine(data, config);
+      case 'multiTypeWithMean':
+        return SpecCreator.createMultiTypeChartWithMean(data, config);
+      case 'multiTypeWithThreshold':
+        return SpecCreator.createMultiTypeChartWithThreshold(data, config);
+      case 'multiType_same_y_diff_type':
+        return SpecCreator.createMultiTypeSameYAxis(data, config);
       default:
         throw new Error(`Unsupported multi-type chart subtype: ${subtype}`);
     }
@@ -380,5 +526,211 @@ export class SpecCreator {
     };
 
     return createBarChartWithLineSpec(params);
+  }
+
+  /**
+   * Create multi-type chart with mean line
+   */
+  private static createMultiTypeChartWithMean(data: any[], config: ChartConfig): any {
+    const params: MultiTypeChartWithMeanParams = {
+      data,
+      dimensions: { 
+        width: config.dimensions.width, 
+        height: config.dimensions.height 
+      },
+      fields: {
+        x: config.fields.x || 'x',
+        xType: 'ordinal',
+        yBar: config.fields.y || 'yBar',
+        yLine: config.fields.series || 'yLine',
+        colorField: config.fields.color
+      },
+      styling: {
+        background: config.styling.background || 'transparent',
+        colors: config.styling.colors,
+        colorDomain: config.styling.marks?.opacity ? ['Low', 'Shoulder', 'High'] : undefined,
+        lineColor: '#8b5cf6',
+        lineWidth: 2,
+        cornerRadius: 2
+      },
+      interactions: {
+        hoverParam: 'hover_flow',
+        hoverOn: 'pointerover',
+        hoverClear: 'pointerout',
+        hoverOpacity: 0.8,
+        defaultOpacity: 0.6
+      },
+      axes: {
+        xAxis: {
+          labelColor: config.styling.axes?.xAxis?.labelColor,
+          titleColor: config.styling.axes?.xAxis?.titleColor,
+          labelFontSize: config.styling.axes?.xAxis?.labelFontSize,
+          title: config.styling.axes?.xAxis?.title || undefined,
+          grid: config.styling.axes?.xAxis?.grid,
+          ticks: config.styling.axes?.xAxis?.ticks,
+          domain: config.styling.axes?.xAxis?.domain
+        },
+        yAxisLeft: {
+          labelColor: config.styling.axes?.yAxis?.labelColor,
+          titleColor: config.styling.axes?.yAxis?.titleColor,
+          labelFontSize: config.styling.axes?.yAxis?.labelFontSize,
+          gridColor: config.styling.axes?.yAxis?.gridColor,
+          gridDash: config.styling.axes?.yAxis?.gridDash,
+          grid: config.styling.axes?.yAxis?.grid,
+          format: config.styling.axes?.yAxis?.format,
+          title: config.styling.axes?.yAxis?.title || undefined
+        },
+        yAxisRight: {
+          title: 'Occupancy Rate (%)',
+          scale: { domain: [0, 100] },
+          format: '.2s',
+          tooltipTitle: 'Occupancy Rate'
+        }
+      },
+      legend: config.legend,
+      tooltip: config.tooltip,
+      meanValue: (config.styling as any).meanValue,
+      meanField: (config.styling as any).meanField,
+      meanColor: (config.styling as any).meanColor,
+      meanStrokeWidth: (config.styling as any).meanStrokeWidth,
+      meanStrokeDash: (config.styling as any).meanStrokeDash,
+      meanLabel: (config.styling as any).meanLabel,
+      showMeanLabel: (config.styling as any).showMeanLabel
+    };
+
+    return createBarChartWithLineAndMeanSpec(params);
+  }
+
+  /**
+   * Create multi-type chart with threshold line
+   */
+  private static createMultiTypeChartWithThreshold(data: any[], config: ChartConfig): any {
+    const params: MultiTypeChartWithThresholdParams = {
+      data,
+      dimensions: { 
+        width: config.dimensions.width, 
+        height: config.dimensions.height 
+      },
+      fields: {
+        x: config.fields.x || 'x',
+        xType: 'ordinal',
+        yBar: config.fields.y || 'yBar',
+        yLine: config.fields.series || 'yLine',
+        colorField: config.fields.color
+      },
+      styling: {
+        background: config.styling.background || 'transparent',
+        colors: config.styling.colors,
+        colorDomain: config.styling.marks?.opacity ? ['Low', 'Shoulder', 'High'] : undefined,
+        lineColor: '#8b5cf6',
+        lineWidth: 2,
+        cornerRadius: 2
+      },
+      interactions: {
+        hoverParam: 'hover_flow',
+        hoverOn: 'pointerover',
+        hoverClear: 'pointerout',
+        hoverOpacity: 0.8,
+        defaultOpacity: 0.6
+      },
+      axes: {
+        xAxis: {
+          labelColor: config.styling.axes?.xAxis?.labelColor,
+          titleColor: config.styling.axes?.xAxis?.titleColor,
+          labelFontSize: config.styling.axes?.xAxis?.labelFontSize,
+          title: config.styling.axes?.xAxis?.title || undefined,
+          grid: config.styling.axes?.xAxis?.grid,
+          ticks: config.styling.axes?.xAxis?.ticks,
+          domain: config.styling.axes?.xAxis?.domain
+        },
+        yAxisLeft: {
+          labelColor: config.styling.axes?.yAxis?.labelColor,
+          titleColor: config.styling.axes?.yAxis?.titleColor,
+          labelFontSize: config.styling.axes?.yAxis?.labelFontSize,
+          gridColor: config.styling.axes?.yAxis?.gridColor,
+          gridDash: config.styling.axes?.yAxis?.gridDash,
+          grid: config.styling.axes?.yAxis?.grid,
+          format: config.styling.axes?.yAxis?.format,
+          title: config.styling.axes?.yAxis?.title || undefined
+        },
+        yAxisRight: {
+          title: 'Occupancy Rate (%)',
+          scale: { domain: [0, 100] },
+          format: '.2s',
+          tooltipTitle: 'Occupancy Rate'
+        }
+      },
+      legend: config.legend,
+      tooltip: config.tooltip,
+      thresholdValue: (config.styling as any).thresholdValue,
+      thresholdField: (config.styling as any).thresholdField,
+      thresholdColor: (config.styling as any).thresholdColor,
+      thresholdStrokeWidth: (config.styling as any).thresholdStrokeWidth,
+      thresholdStrokeDash: (config.styling as any).thresholdStrokeDash,
+      thresholdLabel: (config.styling as any).thresholdLabel,
+      showThresholdLabel: (config.styling as any).showThresholdLabel
+    };
+
+    return createBarChartWithLineAndThresholdSpec(params);
+  }
+
+  /**
+   * Create multi-type chart with same Y axis
+   */
+  private static createMultiTypeSameYAxis(data: any[], config: ChartConfig): any {
+    const params: MultiTypeSameYAxisParams = {
+      data,
+      dimensions: { 
+        width: config.dimensions.width, 
+        height: config.dimensions.height 
+      },
+      fields: {
+        x: config.fields.x || 'x',
+        xType: 'ordinal',
+        yBar: config.fields.y || 'yBar',
+        yLine: config.fields.series || 'yLine',
+        colorField: config.fields.color
+      },
+      styling: {
+        background: config.styling.background || 'transparent',
+        colors: config.styling.colors,
+        colorDomain: config.styling.marks?.opacity ? ['Low', 'Shoulder', 'High'] : undefined,
+        lineColor: '#8b5cf6',
+        lineWidth: 2,
+        cornerRadius: 2
+      },
+      interactions: {
+        hoverParam: 'hover_flow',
+        hoverOn: 'pointerover',
+        hoverClear: 'pointerout',
+        hoverOpacity: 0.8,
+        defaultOpacity: 0.6
+      },
+      axes: {
+        xAxis: {
+          labelColor: config.styling.axes?.xAxis?.labelColor,
+          titleColor: config.styling.axes?.xAxis?.titleColor,
+          labelFontSize: config.styling.axes?.xAxis?.labelFontSize,
+          title: config.styling.axes?.xAxis?.title || undefined,
+          grid: config.styling.axes?.xAxis?.grid,
+          ticks: config.styling.axes?.xAxis?.ticks,
+          domain: config.styling.axes?.xAxis?.domain
+        },
+        yAxisLeft: {
+          labelColor: config.styling.axes?.yAxis?.labelColor,
+          titleColor: config.styling.axes?.yAxis?.titleColor,
+          labelFontSize: config.styling.axes?.yAxis?.labelFontSize,
+          gridColor: config.styling.axes?.yAxis?.gridColor,
+          gridDash: config.styling.axes?.yAxis?.gridDash,
+          grid: config.styling.axes?.yAxis?.grid,
+          format: config.styling.axes?.yAxis?.format,
+          title: config.styling.axes?.yAxis?.title || undefined
+        }
+      },
+      legend: config.legend,
+      tooltip: config.tooltip
+    };
+
+    return createMultiTypeSameYAxisSpec(params);
   }
 }

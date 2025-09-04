@@ -6,6 +6,7 @@ export interface MapChartData {
 
 export interface WorldMapOptions {
   selectableCountries?: string[]; // List of countries that should be interactive
+  selectedCountries?: string[]; // List of countries that should be pre-selected
   countryField?: string; // Field name containing country names in geo data
 }
 
@@ -32,6 +33,7 @@ export function createWorldInteractiveMapSpec(
 
   // Extract options for selectable countries
   const selectableCountries = options?.selectableCountries || [];
+  const selectedCountries = options?.selectedCountries || [];
   const countryField = options?.countryField || 'properties.NAME';
 
   // Build parameters for interactions
@@ -276,6 +278,7 @@ export function createWorldTravelMapVegaSpec(
 
   // Extract options for selectable countries
   const selectableCountries = options?.selectableCountries || [];
+  const selectedCountries = options?.selectedCountries || [];
 
   // Create the base Vega spec based on worldTravelMapSpec
   const spec = {
@@ -352,6 +355,19 @@ export function createWorldTravelMapVegaSpec(
           "events": {"signal": "delta"},
           "update": "clamp(angles[1] + delta[1], -60, 60)"
         }]
+      },
+      // Add signal to track selected countries
+      {
+        "name": "selected_countries",
+        "value": selectedCountries, // This will be set from the TypeScript variable
+        "on": [
+          {
+            "events": "@countries:click",
+            "update": selectableCountries.length > 0 
+              ? "datum.isClickable ? (indexof(selected_countries, datum.country_name) >= 0 ? selected_countries : [datum.country_name]) : selected_countries"
+              : "[datum.country_name]"
+          }
+        ]
       },
       // Add the clicked_country signal that travel2 expects
       {
@@ -500,6 +516,11 @@ export function createWorldTravelMapVegaSpec(
                 "test": "!datum.isClickable",
                 "value": "#f5f5f5"
               }] : []),
+              // Check if country is in the selected countries list
+              {
+                "test": "indexof(selected_countries, datum.country_name) >= 0",
+                "value": "#69a656ff"
+              },
               {
                 "test": "clicked_country && clicked_country.id == datum.id",
                 "value": "#69a656ff"

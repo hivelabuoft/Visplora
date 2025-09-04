@@ -9,6 +9,7 @@ import { EmptyCanvas, EmptyTimeline, AnalyzingState, TimelineVisualization } fro
 import ReactFlowCanvas, { ReactFlowCanvasRef } from '../../../components/ReactFlowCanvas';
 import InquiryBoard, { InquiryBoardRef } from '../../../components/InquiryBoard';
 import LondonDashboard from '../../../london/page';
+import TravelDashboard from '../../../travel/page';
 import { generateMultipleFileSummaries, FileSummary } from '../../../../utils/londonDataLoader';
 import { interactionLogger } from '../../../../lib/interactionLogger';
 import { captureAndLogInteractions, getCapturedInteractionCount } from '../../../utils/dashboardConfig';
@@ -123,6 +124,7 @@ export default function DynamicNarrativePage() {
   const [showNarrativeLayer, setShowNarrativeLayer] = useState(false);
   const [currentPrompt, setCurrentPrompt] = useState('');
   const [shouldShowLondonDashboard, setShouldShowLondonDashboard] = useState(false);
+  const [shouldShowTravelDashboard, setShouldShowTravelDashboard] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<DatasetFile[]>([]);
   const [fileSummaries, setFileSummaries] = useState<FileSummary[]>([]);
   const [summaryLoading, setSummaryLoading] = useState(false);
@@ -621,6 +623,7 @@ export default function DynamicNarrativePage() {
 
         const defaultDashboard = process.env.NEXT_PUBLIC_DEFAULT_DASHBOARD;
         setShouldShowLondonDashboard(defaultDashboard === '1');
+        setShouldShowTravelDashboard(defaultDashboard === '2');
 
         if (studyMode) {
           const userStr = localStorage.getItem('narrativeUser');
@@ -707,7 +710,7 @@ export default function DynamicNarrativePage() {
       setIsAnalyzing(false);
       setShowNarrativeLayer(true);
       
-      if (shouldShowLondonDashboard) {
+      if (shouldShowLondonDashboard || shouldShowTravelDashboard) {
         setShowDashboard(true);
       }
     }, analysisTime);
@@ -1280,6 +1283,24 @@ export default function DynamicNarrativePage() {
                 }}
               >
                 <LondonDashboard onInteraction={logDashboardInteraction} />
+              </ReactFlowCanvas>
+            ) : showDashboard && shouldShowTravelDashboard ? (
+              <ReactFlowCanvas 
+                ref={reactFlowCanvasRef}
+                key="travel-flow-canvas"
+                showDashboard={true}
+                onViewGeneratorNodeClick={handleViewGeneratorNodeClick}
+                dashboardConfig={{
+                  name: 'Travel Dashboard',
+                  width: 1500,
+                  height: 1000,
+                  minWidth: 800,
+                  minHeight: 600,
+                  maxWidth: 1500,
+                  maxHeight: 1200,
+                }}
+              >
+                <TravelDashboard onInteraction={logDashboardInteraction} />
               </ReactFlowCanvas>
             ) : isAnalyzing ? (
               <div className="relative w-full h-full">

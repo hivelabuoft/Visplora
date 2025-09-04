@@ -54,6 +54,9 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
     selectedRegion: 'North America'
   });
 
+  // Selected countries for the map
+  const [selectedCountries, setSelectedCountries] = useState<string[]>(['United States']);
+
   // Data states
   const [costData, setCostData] = useState<TravelCostData[]>([]);
   const [safetyData, setSafetyData] = useState<TravelSafetyData[]>([]);
@@ -161,6 +164,18 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
     }
     
     if (countryName && countryName !== 'Unknown Country') {
+      // Update selected countries list (toggle selection)
+      setSelectedCountries(prev => {
+        const isSelected = prev.includes(countryName);
+        if (isSelected) {
+          // Remove from selection
+          return prev.filter(c => c !== countryName);
+        } else {
+          // Add to selection (replace current selection for now)
+          return [countryName];
+        }
+      });
+
       // First check if it's in our predefined destinations
       const destination = TRAVEL_DESTINATIONS.find((d: any) => d.country === countryName);
       
@@ -524,7 +539,8 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
       height: 350,
       background: "#7ec2ddff",
       options: { 
-        selectableCountries: CLICKABLE_COUNTRIES 
+        selectableCountries: CLICKABLE_COUNTRIES,
+        selectedCountries: selectedCountries
       }
     });
   };
@@ -533,21 +549,57 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
   const createVisitorFlowSeasonalChartSpec = (data: any[]) => {
     if (!data.length) return null;
     
+    // Transform data to include both city-specific arrivals (bars) and global average (line)
+    const transformedData = data.map(d => ({
+      monthName: d.monthName,
+      month: d.month,
+      season: d.season,
+      cityArrivals: d.arrivals, // Bar chart values - city specific
+      globalAverage: Math.round(d.arrivals * 0.85 + Math.random() * 0.3 * d.arrivals), // Line chart values - simulated global average
+      occupancyRate: d.occupancyRate
+    }));
+
     return SpecCreator.create({
       type: 'multiType',
       subtype: 'barChartWithLineSpec',
-      data,
+      data: transformedData,
       config: {
-        dimensions: { width: 390, height: 160 },
+        dimensions: { width: 350, height: 180 },
         fields: {
           x: 'monthName',
-          y: 'arrivals',
-          series: 'occupancyRate',
+          y: 'cityArrivals',      // Bar field
+          series: 'globalAverage', // Line field (using same scale)
           color: 'season'
         },
         styling: {
-          colors: ['#94a3b8', '#3b82f6', '#dc2626'],
-          background: 'transparent'
+          colors: ['#94a3b8', '#3b82f6', '#dc2626'], // Season colors
+          lineColor: '#ef4444', // Red line for global average
+          lineWidth: 3,
+          background: 'transparent',
+          axes: {
+            xAxis: {
+              labelColor: '#888',
+              titleColor: '#888',
+              labelFontSize: 10,
+              title: 'Month'
+            },
+            yAxis: {
+              labelColor: '#888',
+              titleColor: '#888',
+              labelFontSize: 8,
+              gridColor: '#888',
+              gridDash: [2, 2],
+              grid: true,
+              format: '.1s',
+              title: 'Visitor Arrivals (thousands)'
+            }
+          }
+        },
+        legend: {
+          title: 'Season',
+          orient: 'right',
+          titleColor: '#888',
+          labelColor: '#888'
         },
         interactions: {
           hover: true
@@ -832,7 +884,7 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
         size="xlarge"
         chartType="vega"
         title="WORLD TRAVEL MAP"
-        subtitle="(Pan, zoom & click countries)"
+        subtitle={`Selected countries: {${selectedCountries.join(', ')}}`}
         vegaSpec={createWorldTravelMapSpec()}
         vegaRenderer="svg"
         chartPosition="full"
