@@ -68,10 +68,8 @@ const TravelAgentDemo: React.FC = () => {
       // Only set initial filters if chartFilters is empty (prevent overwriting user changes)
       setChartFilters(prev => {
         if (Object.keys(prev).length === 0) {
-          console.log('🔧 Initializing filter state:', initialFilters);
           return initialFilters;
         }
-        console.log('🔧 Skipping filter initialization - filters already set');
         return prev;
       });
     }
@@ -101,24 +99,6 @@ const TravelAgentDemo: React.FC = () => {
       const backupData = chartToUpdate.chartSpec?.backupData;
       const newData = backupData?.[newValue] || chartToUpdate.chartSpec?.originalData || chartToUpdate.chartSpec?.data;
 
-      // Debug logging
-      console.log('🔍 Filter Debug Info:', {
-        chartId,
-        filterKey,
-        newValue,
-        hasBackupData: !!backupData,
-        backupDataKeys: backupData ? Object.keys(backupData) : 'None',
-        hasNewData: !!newData,
-        currentDataLength: chartToUpdate.chartSpec?.data?.length,
-        newDataLength: newData?.length,
-        filterConfig: chartToUpdate.request?.constraints?.filterConfig,
-        chartSpec: {
-          hasBackupData: !!chartToUpdate.chartSpec?.backupData,
-          hasOriginalData: !!chartToUpdate.chartSpec?.originalData,
-          dataLength: chartToUpdate.chartSpec?.data?.length
-        }
-      });
-
       // Update the chart data locally by swapping from backup data
       setDemoData(prev => {
         if (!prev) return prev;
@@ -138,9 +118,9 @@ const TravelAgentDemo: React.FC = () => {
                     ...chart.vegaSpec,
                     // Handle different vega spec structures
                     ...(chart.vegaSpec.layer ? {
-                      // Multi-layer charts (like pie charts) - need to recalculate center text
+                      // Multi-layer charts (pie charts, bar charts with mean/threshold lines)
                       layer: chart.vegaSpec.layer.map((layer: any, index: number) => {
-                        // Update data layer (usually index 0)
+                        // Update main data layer (usually index 0)
                         if (layer.data?.values && index === 0) {
                           return {
                             ...layer,
@@ -151,7 +131,7 @@ const TravelAgentDemo: React.FC = () => {
                           };
                         }
                         
-                        // Update center text layers for pie charts (indices 1 and 2)
+                        // Handle pie chart center text layers
                         if (layer.mark?.type === "text" && newData && newData.length > 0) {
                           // For center value text (main number)
                           if (layer.mark.dy === -10) {
@@ -184,6 +164,68 @@ const TravelAgentDemo: React.FC = () => {
                           }
                         }
                         
+                        // Handle bar chart mean line layers
+                        if (layer.mark?.type === "rule" && layer.mark?.color && newData && newData.length > 0) {
+                          // Check if this is a mean line (usually has specific color and stroke properties)
+                          if (layer.mark.strokeDash || layer.mark.stroke === "#ff7f0e" || layer.mark.stroke === "orange") {
+                            // Find the mean field from the chart config or data
+                            const meanField = chart.chartSpec?.config?.fields?.meanValue || 
+                                           chart.chartSpec?.config?.styling?.meanField ||
+                                           Object.keys(newData[0] || {}).find(key => 
+                                             key.toLowerCase().includes('mean') || 
+                                             key.toLowerCase().includes('average')
+                                           );
+                            
+                            if (meanField && newData[0][meanField] !== undefined) {
+                              // Use the mean value from the data (already calculated by variation agent)
+                              const meanValue = newData[0][meanField];
+                              
+                              return {
+                                ...layer,
+                                encoding: {
+                                  ...layer.encoding,
+                                  y: {
+                                    ...layer.encoding?.y,
+                                    datum: meanValue
+                                  }
+                                }
+                              };
+                            }
+                          }
+                        }
+                        
+                        // Handle bar chart threshold line layers
+                        if (layer.mark?.type === "rule" && layer.mark?.strokeDash && newData && newData.length > 0) {
+                          // Check if this is a threshold line (usually dashed)
+                          if (layer.mark.stroke === "#e41a1c" || layer.mark.stroke === "red" || 
+                              JSON.stringify(layer.mark.strokeDash).includes('5')) {
+                            // Find the threshold field from the chart config or data
+                            const thresholdField = chart.chartSpec?.config?.fields?.thresholdValue || 
+                                                 chart.chartSpec?.config?.styling?.thresholdField ||
+                                                 Object.keys(newData[0] || {}).find(key => 
+                                                   key.toLowerCase().includes('threshold') || 
+                                                   key.toLowerCase().includes('target') ||
+                                                   key.toLowerCase().includes('goal')
+                                                 );
+                            
+                            if (thresholdField && newData[0][thresholdField] !== undefined) {
+                              // Use the threshold value from the data (already calculated by variation agent)
+                              const thresholdValue = newData[0][thresholdField];
+                              
+                              return {
+                                ...layer,
+                                encoding: {
+                                  ...layer.encoding,
+                                  y: {
+                                    ...layer.encoding?.y,
+                                    datum: thresholdValue
+                                  }
+                                }
+                              };
+                            }
+                          }
+                        }
+                        
                         return layer;
                       })
                     } : chart.vegaSpec.data ? {
@@ -200,19 +242,8 @@ const TravelAgentDemo: React.FC = () => {
         };
       });
 
-      console.log('📊 Updated chart data:', {
-        chartId,
-        originalDataSample: chartToUpdate.chartSpec?.data?.slice(0, 2),
-        newDataSample: newData?.slice(0, 2),
-        vegaStructure: {
-          hasLayer: !!chartToUpdate.vegaSpec?.layer,
-          hasDirectData: !!chartToUpdate.vegaSpec?.data,
-          layerCount: chartToUpdate.vegaSpec?.layer?.length || 0
-        }
-      });
 
     } catch (error) {
-      console.error('Failed to update chart filter:', error);
       // Revert filter state on error
       const originalChart = demoData?.charts.find(c => c.id === chartId);
       setChartFilters(prev => ({
@@ -237,7 +268,6 @@ const TravelAgentDemo: React.FC = () => {
         const result = await response.json();
         if (result.success) {
           setDemoData(result.data);
-          console.log(`✅ Loaded existing demo data from ${result.source}`);
           return;
         }
       }
@@ -247,7 +277,6 @@ const TravelAgentDemo: React.FC = () => {
       if (publicResponse.ok) {
         const data = await publicResponse.json();
         setDemoData(data);
-        console.log('✅ Loaded demo data from public directory');
         return;
       }
       
@@ -256,14 +285,12 @@ const TravelAgentDemo: React.FC = () => {
       if (vegaResponse.ok) {
         const data = await vegaResponse.json();
         setDemoData(data);
-        console.log('✅ Loaded demo data from vegaTemplates directory');
         return;
       }
       
       throw new Error('No demo data found in any location');
       
     } catch (error) {
-      console.log('No existing demo data found:', error);
       setError('No demo data found. Please generate new demo data or check if demo_output.json exists.');
     }
   };
@@ -513,20 +540,6 @@ const TravelAgentDemo: React.FC = () => {
             const filterOptions = filterConfig?.options || [];
             const selectedFilter = currentFilterValue?.[filterConfig?.filterKey] || filterConfig?.defaultValue;
             const fieldFilterKey = filterConfig?.filterKey || 'filter';
-
-            // Debug filter state only for chart-1 to reduce noise
-            if (hasFieldFilter && chart.id === 'chart-1') {
-              console.log('🎛️ Filter State Debug (chart-1 only):', {
-                chartId: chart.id,
-                filterKey: filterConfig?.filterKey,
-                currentFilterValue,
-                selectedFilter,
-                defaultValue: filterConfig?.defaultValue,
-                filterOptions: filterOptions.map((opt: any) => opt.value),
-                chartFiltersState: chartFilters,
-                currentValueForChart: chartFilters[chart.id]
-              });
-            }
 
             return (
               <ReusableNode

@@ -6,6 +6,9 @@ import { HorizontalBarWithThresholdAgent } from './HorizontalBarWithThresholdAge
 import { HorizontalBarWithMeanAgent } from './HorizontalBarWithMeanAgent';
 import { PieChartAgent } from './PieChartAgent';
 import { PieChartVariationAgent } from './PieChartVariationAgent';
+import { HorizontalBarVariationAgent } from './HorizontalBarVariationAgent';
+import { BarWithMeanVariationAgent } from './BarWithMeanVariationAgent';
+import { BarWithThresholdVariationAgent } from './BarWithThresholdVariationAgent';
 import { ScatterChartAgent } from './ScatterChartAgent';
 import { MultiTypeChartAgent } from './MultiTypeChartAgent';
 import { TravelAgentRequest, AgentResponse, TravelConstraints, TravelDataSample } from './types';
@@ -15,6 +18,9 @@ import { SpecCreator } from '../SpecCreator';
 export class TravelAgentManager {
   private agents: Map<string, BaseTravelAgent>;
   private pieVariationAgent: PieChartVariationAgent;
+  private horizontalBarVariationAgent: HorizontalBarVariationAgent;
+  private barWithMeanVariationAgent: BarWithMeanVariationAgent;
+  private barWithThresholdVariationAgent: BarWithThresholdVariationAgent;
 
   constructor() {
     this.agents = new Map<string, BaseTravelAgent>([
@@ -30,6 +36,9 @@ export class TravelAgentManager {
 
     // Initialize variation agents
     this.pieVariationAgent = new PieChartVariationAgent();
+    this.horizontalBarVariationAgent = new HorizontalBarVariationAgent();
+    this.barWithMeanVariationAgent = new BarWithMeanVariationAgent();
+    this.barWithThresholdVariationAgent = new BarWithThresholdVariationAgent();
   }
 
   /**
@@ -111,12 +120,28 @@ export class TravelAgentManager {
     const query = request.userQuery.toLowerCase();
     const constraints = request.constraints;
 
-    // Explicit chart type constraint takes priority
-    if (constraints?.chartType) {
+    // For bar charts, check subtype to route to specialized agent
+    if (constraints?.chartType === 'bar' && constraints?.subtype) {
+      // If subtype is specified for bar charts, return it directly
+      if (['horizontalBarSpec'].includes(constraints.subtype)) {
+        return 'horizontalBar';
+      }
+      if (['barChartWithMean'].includes(constraints.subtype)) {
+        return 'barChartWithMean';
+      }
+      if (['barChartWithThreshold'].includes(constraints.subtype)) {
+        return 'barChartWithThreshold';
+      }
+      // If bar chart but no matching subtype, default to horizontal bar
+      return 'horizontalBar';
+    }
+
+    // Explicit chart type constraint takes priority (for non-bar charts)
+    if (constraints?.chartType && constraints.chartType !== 'bar') {
       return constraints.chartType;
     }
 
-    // For bar charts, check subtype to route to specialized agent
+    // For direct subtype specification
     if (constraints?.subtype) {
       // If subtype is specified, return it directly for bar chart variants
       if (['horizontalBar', 'divergingBar', 'barChartWithThreshold', 'barChartWithMean'].includes(constraints.subtype)) {
@@ -374,7 +399,7 @@ export class TravelAgentManager {
       };
     }
 
-    // Currently only supports pie charts
+    // Support for pie charts
     if (chartSpec.type === 'pie') {
       return await this.pieVariationAgent.generateDataVariations({
         baseChartSpec: chartSpec,
@@ -382,11 +407,35 @@ export class TravelAgentManager {
       });
     }
 
+    // Support for bar charts
+    if (chartSpec.type === 'bar') {
+      if (chartSpec.subtype === 'horizontalBarSpec') {
+        return await this.horizontalBarVariationAgent.generateDataVariations({
+          baseChartSpec: chartSpec,
+          filterConfig: constraints.filterConfig
+        });
+      }
+      
+      if (chartSpec.subtype === 'barChartWithMean') {
+        return await this.barWithMeanVariationAgent.generateDataVariations({
+          baseChartSpec: chartSpec,
+          filterConfig: constraints.filterConfig
+        });
+      }
+      
+      if (chartSpec.subtype === 'barChartWithThreshold') {
+        return await this.barWithThresholdVariationAgent.generateDataVariations({
+          baseChartSpec: chartSpec,
+          filterConfig: constraints.filterConfig
+        });
+      }
+    }
+
     // Add support for other chart types here in the future
     return {
       success: false,
       dataVariations: {},
-      error: `Data variations not yet supported for chart type: ${chartSpec.type}`
+      error: `Data variations not yet supported for chart type: ${chartSpec.type} with subtype: ${chartSpec.subtype}`
     };
   }
 
