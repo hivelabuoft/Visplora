@@ -1,0 +1,60 @@
+{
+  "demoRequests": [
+    {
+      "name": "World Travel Map - Single Country Selection",
+      "request": {
+        "userQuery": "Show world travel map with Japan selected",
+        "constraints": {
+          "chartType": "map",
+          "subtype": "worldInteractiveMap",
+          "nodeSize": "xlarge",
+          "dataCategory": "geographic",
+          "selectedCountries": ["Japan"],
+          "maxDataPoints": 1
+        }
+      }
+    },
+    {
+      "name": "World Travel Map - European Tour",
+      "request": {
+        "userQuery": "Display world map highlighting European travel destinations",
+        "constraints": {
+          "chartType": "map",
+          "subtype": "worldInteractiveMap", 
+          "nodeSize": "xlarge",
+          "dataCategory": "geographic",
+          "selectedCountries": ["France", "Germany", "Italy", "Spain"],
+          "maxDataPoints": 4
+        }
+      }
+    },
+    {
+      "name": "World Travel Map - Asia Pacific Region",
+      "request": {
+        "userQuery": "Show world map with Asia Pacific destinations selected",
+        "constraints": {
+          "chartType": "map",
+          "subtype": "worldInteractiveMap",
+          "nodeSize": "xlarge", 
+          "dataCategory": "geographic",
+          "selectedCountries": ["Australia", "Thailand", "Singapore", "South Korea"],
+          "maxDataPoints": 4
+        }
+      }
+    },
+    {
+      "name": "World Travel Map - Americas Comparison",
+      "request": {
+        "userQuery": "Display world map comparing North and South American destinations",
+        "constraints": {
+          "chartType": "map",
+          "subtype": "worldInteractiveMap",
+          "nodeSize": "xlarge",
+          "dataCategory": "geographic", 
+          "selectedCountries": ["United States", "Canada", "Brazil", "Argentina", "Mexico"],
+          "maxDataPoints": 5
+        }
+      }
+    }
+  ]
+}

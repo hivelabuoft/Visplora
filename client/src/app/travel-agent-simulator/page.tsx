@@ -282,7 +282,7 @@ const TravelAgentDemo: React.FC = () => {
               return (
                 <ReusableNode
                   key={chart.id}
-                  size="large"
+                  size="xlarge"
                   chartType="custom"
                   title={chart.name}
                   subtitle="Generation Failed"
@@ -329,8 +329,9 @@ const TravelAgentDemo: React.FC = () => {
               <ReusableNode
                 key={chart.id}
                 size={getNodeSize(chart)}
-                chartType="vega-lite"
+                chartType={chartType === 'map' ? 'vega' : 'vega-lite'}
                 title={chart.name}
+                subtitle={chart.chartSpec?.subtitle || null}
                 description={chart.chartSpec?.description || chart.request.userQuery}
                 vegaSpec={chart.vegaSpec}
                 chartPosition="full"

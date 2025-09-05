@@ -1,0 +1,124 @@
+{
+  "demoRequests": [
+    {
+      "name": "Bangkok Visitor Flow with Hotel Occupancy",
+      "request": {
+        "userQuery": "Show monthly visitor arrivals with hotel occupancy rates for Bangkok",
+        "constraints": {
+          "chartType": "multiType",
+          "subtype": "barChartWithLineSpec",
+          "nodeSize": "xlarge",
+          "dataCategory": "visitor-flow",
+          "destinations": ["Bangkok"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "Tokyo Travel Costs vs Satisfaction Trends",
+      "request": {
+        "userQuery": "Display monthly travel costs with satisfaction ratings for Tokyo",
+        "constraints": {
+          "chartType": "multiType",
+          "subtype": "barChartWithLineSpec",
+          "nodeSize": "xlarge",
+          "dataCategory": "cost",
+          "destinations": ["Tokyo"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "Paris City vs European Regional Visitor Comparison",
+      "request": {
+        "userQuery": "Compare Paris arrivals with European regional averages monthly",
+        "constraints": {
+          "chartType": "multiType",
+          "subtype": "multiType_same_y_diff_type",
+          "nodeSize": "xlarge",
+          "dataCategory": "visitor-flow",
+          "destinations": ["Paris"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "Singapore Local vs Global Tourism Trends",
+      "request": {
+        "userQuery": "Show Singapore visitor data compared to global tourism averages",
+        "constraints": {
+          "chartType": "multiType",
+          "subtype": "multiType_same_y_diff_type",
+          "nodeSize": "xlarge",
+          "dataCategory": "visitor-flow",
+          "destinations": ["Singapore"],
+          "maxDataPoints": 10
+        }
+      }
+    },
+    {
+      "name": "London Tourism Revenue with Growth Targets",
+      "request": {
+        "userQuery": "Display quarterly tourism revenue with growth target threshold for London",
+        "constraints": {
+          "chartType": "multiType",
+          "subtype": "multiTypeWithThreshold",
+          "nodeSize": "xlarge",
+          "dataCategory": "revenue",
+          "destinations": ["London"],
+          "maxDataPoints": 8
+        }
+      }
+    },
+    {
+      "name": "Rome Safety Improvements with Target Thresholds",
+      "request": {
+        "userQuery": "Show monthly safety scores with target threshold line for Rome",
+        "constraints": {
+          "chartType": "multiType",
+          "subtype": "multiTypeWithThreshold",
+          "nodeSize": "xlarge",
+          "dataCategory": "safety",
+          "destinations": ["Rome"],
+          "maxDataPoints": 10
+        }
+      }
+    },
+    {
+      "name": "Amsterdam Visitor Flows with Average Benchmark",
+      "request": {
+        "userQuery": "Display Amsterdam visitor arrivals with mean average overlay",
+        "constraints": {
+          "chartType": "multiType",
+          "subtype": "multiTypeWithMean",
+          "nodeSize": "xlarge",
+          "dataCategory": "visitor-flow",
+          "destinations": ["Amsterdam"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "Barcelona Hotel Costs with Mean Benchmark",
+      "request": {
+        "userQuery": "Show Barcelona hotel costs with calculated mean benchmark line",
+        "constraints": {
+          "chartType": "multiType",
+          "subtype": "multiTypeWithMean",
+          "nodeSize": "xlarge",
+          "dataCategory": "cost",
+          "destinations": ["Barcelona"],
+          "maxDataPoints": 10
+        }
+      }
+    }
+  ],
+  "autoDetectionTests": [
+    "Show visitor flows with occupancy rates",
+    "Compare local arrivals with regional averages",
+    "Display costs with satisfaction scores", 
+    "Revenue trends with growth targets",
+    "Safety improvements with thresholds",
+    "Monthly data with mean benchmarks"
+  ]
+}

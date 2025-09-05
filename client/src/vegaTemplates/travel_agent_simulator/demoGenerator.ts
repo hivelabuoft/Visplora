@@ -2,6 +2,8 @@
 import { TravelAgentManager } from './TravelAgentManager';
 import { loadDemoConfig } from './index';
 import { SpecCreator } from '../SpecCreator';
+import { createWorldTravelMapVegaSpec } from '../map/worldInteractiveMapSpec';
+import { CLICKABLE_COUNTRIES } from '../../app/travel/travelVegaSpecs';
 import fs from 'fs';
 import path from 'path';
 
@@ -93,26 +95,40 @@ export async function generateDemoData(): Promise<DemoOutput> {
     console.log(`[${i + 1}/${demoConfig.demoRequests.length}] Generating: ${demoReq.name}`);
     
     try {
-      // Generate chart using AI
       const startTime = Date.now();
-      const response = await agentManager.generateTravelChart(demoReq.request);
-      const generationTime = Date.now() - startTime;
       
-      if (response.success && response.chartSpec) {
-        // Try to create Vega spec
-        let vegaSpec = null;
-        try {
-          const convertedSpec = convertToChartSpec(response.chartSpec);
-          vegaSpec = SpecCreator.create(convertedSpec);
-        } catch (specError) {
-          console.log(`  ⚠️  Chart generated but SpecCreator failed: ${specError}`);
-        }
+      // Check if this is a map chart - handle specially
+      if (demoReq.request.constraints?.chartType === 'map') {
+        console.log(`  🗺️  Generating map chart directly...`);
+        
+        // Create map spec directly using createWorldTravelMapVegaSpec
+        const selectedCountries = demoReq.request.constraints?.selectedCountries || [];
+        const nodeSize = demoReq.request.constraints?.nodeSize || 'xlarge';
+        
+        // Determine dimensions based on nodeSize
+        const dimensions = nodeSize === 'xlarge' ? { width: 800, height: 350 } : { width: 800, height: 350 };
+        
+        const vegaSpec = createWorldTravelMapVegaSpec({
+          width: dimensions.width,
+          height: dimensions.height,
+          background: "#7ec2ddff",
+          options: {
+            selectableCountries: CLICKABLE_COUNTRIES,
+            selectedCountries: selectedCountries
+          }
+        });
+
+        const chartSpec = {
+          subtitle: `Selected countries: {${selectedCountries.join(', ')}}`
+        };
+        
+        const generationTime = Date.now() - startTime;
         
         results.charts.push({
           id: chartId,
           name: demoReq.name,
           request: demoReq.request,
-          chartSpec: response.chartSpec,
+          chartSpec: chartSpec,
           vegaSpec: vegaSpec,
           generationTime: generationTime,
           success: true,
@@ -120,9 +136,39 @@ export async function generateDemoData(): Promise<DemoOutput> {
         });
         
         results.metadata.successful++;
-        console.log(`  ✅ Generated successfully (${generationTime}ms)`);
+        console.log(`  ✅ Map generated successfully (${generationTime}ms)`);
+        
       } else {
-        throw new Error(response.error || 'Generation failed');
+        // Generate chart using AI for non-map charts
+        const response = await agentManager.generateTravelChart(demoReq.request);
+        const generationTime = Date.now() - startTime;
+        
+        if (response.success && response.chartSpec) {
+          // Try to create Vega spec
+          let vegaSpec = null;
+          try {
+            const convertedSpec = convertToChartSpec(response.chartSpec);
+            vegaSpec = SpecCreator.create(convertedSpec);
+          } catch (specError) {
+            console.log(`  ⚠️  Chart generated but SpecCreator failed: ${specError}`);
+          }
+          
+          results.charts.push({
+            id: chartId,
+            name: demoReq.name,
+            request: demoReq.request,
+            chartSpec: response.chartSpec,
+            vegaSpec: vegaSpec,
+            generationTime: generationTime,
+            success: true,
+            error: null
+          });
+          
+          results.metadata.successful++;
+          console.log(`  ✅ Generated successfully (${generationTime}ms)`);
+        } else {
+          throw new Error(response.error || 'Generation failed');
+        }
       }
       
     } catch (error) {
@@ -144,15 +190,6 @@ export async function generateDemoData(): Promise<DemoOutput> {
     
     // Add delay between requests
     await new Promise(resolve => setTimeout(resolve, 1000));
-  }
-  
-  // Run auto-detection tests
-  for (const query of demoConfig.autoDetectionTests) {
-    const suggestions = agentManager.suggestChartTypes(query);
-    results.autoDetectionTests.push({
-      query,
-      suggestions
-    });
   }
   
   return results;

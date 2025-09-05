@@ -6,18 +6,19 @@ export interface TravelAgentRequest {
 }
 
 export interface TravelConstraints {
-  chartType?: 'line' | 'bar' | 'pie' | 'scatter' | 'multiType';
+  chartType?: 'line' | 'bar' | 'pie' | 'scatter' | 'multiType' | 'map';
   subtype?: string;
   nodeSize?: 'small' | 'medium' | 'large' | 'xlarge';
-  dataCategory?: 'cost' | 'safety' | 'visitor-flow' | 'reviews' | 'environmental' | 'cultural' | 'demographics' | 'recovery-analysis' | 'seasonal-tourism' | 'wildlife' | 'economics' | 'sustainability';
+  dataCategory?: 'cost' | 'safety' | 'visitor-flow' | 'reviews' | 'environmental' | 'cultural' | 'demographics' | 'recovery-analysis' | 'seasonal-tourism' | 'wildlife' | 'economics' | 'sustainability' | 'geographic';
   timeRange?: { start: string; end: string };
   destinations?: string[];
+  selectedCountries?: string[];
   maxDataPoints?: number;
   visualization?: 'comparison' | 'trends' | 'distribution' | 'relationship';
 }
 
 export interface TravelChartSpec {
-  type: 'line' | 'bar' | 'pie' | 'scatter' | 'multiType';
+  type: 'line' | 'bar' | 'pie' | 'scatter' | 'multiType' | 'map';
   subtype: string;
   data: any[];
   config: {
@@ -61,7 +62,8 @@ export const CHART_SUBTYPES = {
   bar: ['divergingBarSpec', 'horizontalBarSpec', 'barChartWithMean', 'barChartWithThreshold'],
   pie: ['interactivePieSpec'],
   scatter: ['bubblePlotScatterSpec'],
-  multiType: ['barChartWithLineSpec', 'multiTypeWithMean', 'multiTypeWithThreshold', 'multiType_same_y_diff_type']
+  multiType: ['barChartWithLineSpec', 'multiTypeWithMean', 'multiTypeWithThreshold', 'multiType_same_y_diff_type'],
+  map: ['worldInteractiveMap']
 } as const;
 
 export const TRAVEL_DATA_CATEGORIES = {
@@ -70,5 +72,6 @@ export const TRAVEL_DATA_CATEGORIES = {
   'visitor-flow': 'Tourist arrivals, seasonal patterns, occupancy rates',
   reviews: 'Ratings, review distributions, sentiment scores',
   environmental: 'Air quality, green spaces, water quality',
-  cultural: 'Diversity metrics, cultural events, language support'
+  cultural: 'Diversity metrics, cultural events, language support',
+  geographic: 'World map visualizations, country selections, regional data'
 } as const;

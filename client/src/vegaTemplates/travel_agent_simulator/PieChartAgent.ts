@@ -101,44 +101,87 @@ SPECIALIZED INSTRUCTIONS FOR PIE CHARTS:
 1. SUBTYPE SELECTION:
    - interactivePieSpec: Interactive donut/pie chart with hover effects (ONLY AVAILABLE OPTION)
 
-2. FIELD REQUIREMENTS:
-   - category: Must be nominal (rating, type, level, region, category)
-   - value: Must be quantitative (count, amount, score, visitors)
+2. REQUIRED OUTPUT FORMAT - RETURN EXACTLY THIS STRUCTURE:
+{
+  "type": "pie",
+  "subtype": "interactivePieSpec",
+  "title": "Your Chart Title",
+  "description": "Brief description of the chart",
+  "data": [
+    // Your generated data array here
+  ],
+  "config": {
+    "dimensions": { "width": 150, "height": 150 },
+    "fields": {
+      "category": "your_category_field_name",
+      "value": "your_value_field_name"
+    },
+    "styling": {
+      "colors": ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#F59E0B"],
+      "background": "transparent"
+    },
+    "legend": {
+      "title": "Your Legend Title",
+      "orient": "right",
+      "titleColor": "#888",
+      "labelColor": "#888",
+      "titleFontSize": 11,
+      "labelFontSize": 10,
+      "symbolSize": 200,
+      "offset": 30,
+      "padding": 0,
+      "symbolType": "circle"
+    },
+    "interactions": {
+      "hover": true
+    }
+  }
+}
 
-3. STYLING MUST INCLUDE:
-   - colors: Array of 4-6 distinct colors for different segments
-   - Example: ['#8B5CF6', '#3B82F6', '#06B6D4', '#10B981', '#F59E0B', '#EF4444']
-   - background: 'transparent'
+3. WHAT YOU CAN MODIFY:
+   - title: Change to match your chart content
+   - description: Brief explanation of what the chart shows
+   - data: Generate realistic travel data with proper field names
+   - config.fields.category: Update to match your generated data category field name
+   - config.fields.value: Update to match your generated data value field name
+   - config.styling.colors: Choose appropriate colors for your data categories (4-6 colors)
+   - config.legend.title: Update to describe what the legend represents
 
-4. LEGEND CONFIGURATION:
-   - title: Descriptive title for the legend
-   - orient: 'right' (standard placement)
-   - titleColor: '#888'
-   - labelColor: '#888'
-   - titleFontSize: 11
-   - labelFontSize: 10
-   - symbolSize: 200
-   - offset: 30
-   - symbolType: 'circle'
+4. WHAT YOU CANNOT MODIFY:
+   - type: Must always be "pie"
+   - subtype: Must always be "interactivePieSpec"
+   - config.dimensions: Fixed at 120x120
+   - config.styling.background: Must be "transparent"
+   - config.legend structure: Keep all legend properties exactly as shown (orient, titleColor, labelColor, etc.)
+   - config.interactions: Keep exactly as shown
 
-5. INTERACTIONS:
-   - hover: true (always enable for interactivity)
+5. FIELD REQUIREMENTS:
+   - category: Must be nominal (rating, type, level, region, category, metric)
+   - value: Must be quantitative (count, amount, score, visitors, areas)
 
 6. DATA REQUIREMENTS:
    - 4-6 categories for optimal visual balance
-   - Include percentage field for tooltips (calculated from values)
+   - Include percentage field for reference (calculated from values)
    - Ensure values sum to meaningful total
+   - Each data item should have both category and value fields
 
-7. EXAMPLE TRAVEL SCENARIOS:
-   - "review rating breakdown" → rating categories with counts
-   - "expense distribution" → expense types with amounts
-   - "safety level distribution" → safety categories with area counts
-   - "visitor origin analysis" → regions with visitor numbers
-   - "cultural diversity metrics" → metrics with scores
+7. COLOR SELECTION GUIDE:
+   - Use 4-6 distinct, accessible colors
+   - Default palette: ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#F59E0B"]
+   - For ratings: Use green-to-red gradient
+   - For categories: Use diverse, contrasting colors
 
-8. PERCENTAGE CALCULATION:
+8. EXAMPLE TRAVEL SCENARIOS:
+   - "review rating breakdown" → fields: {category: "rating", value: "count"}
+   - "expense distribution" → fields: {category: "expenseType", value: "amount"}
+   - "safety level distribution" → fields: {category: "safetyLevel", value: "areas"}
+   - "visitor origin analysis" → fields: {category: "region", value: "visitors"}
+   - "cultural diversity metrics" → fields: {category: "metric", value: "score"}
+
+9. PERCENTAGE CALCULATION:
    Calculate percentage = (value / total) * 100 for each category
 
+REMEMBER: Update the field names in config.fields to match the actual field names from your generated data.
 GENERATE realistic travel data with 4-6 meaningful categories and proper percentages.`;
 
       const llmResponse = await this.callLLM(prompt);

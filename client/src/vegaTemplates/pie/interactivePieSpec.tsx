@@ -16,8 +16,8 @@ export function createInteractivePieSpec(
   const {
     categoryField,
     valueField,
-    width = 120,
-    height = 120,
+    width = 150,
+    height = 150,
     innerRadius = 42,
     outerRadius = 60,
     colors,

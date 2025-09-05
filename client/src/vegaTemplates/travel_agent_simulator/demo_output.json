@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "generatedAt": "2025-09-05T02:25:07.334Z",
-    "totalRequests": 8,
-    "successful": 8,
+    "generatedAt": "2025-09-05T16:33:50.282Z",
+    "totalRequests": 4,
+    "successful": 4,
     "failed": 0,
     "agentTypes": [
       "line",
@@ -18,1697 +18,255 @@
   "charts": [
     {
       "id": "chart-0",
-      "name": "Bangkok Visitor Flow with Hotel Occupancy",
+      "name": "Cost vs Safety Analysis",
       "request": {
-        "userQuery": "Show monthly visitor arrivals with hotel occupancy rates for Bangkok",
+        "userQuery": "Analyze relationship between travel costs and safety scores across destinations",
         "constraints": {
-          "chartType": "multiType",
-          "subtype": "barChartWithLineSpec",
-          "nodeSize": "xlarge",
-          "dataCategory": "visitor-flow",
-          "destinations": [
-            "Bangkok"
-          ],
-          "maxDataPoints": 12
-        }
-      },
-      "chartSpec": {
-        "type": "multiType",
-        "subtype": "barChartWithLineSpec",
-        "data": [
-          {
-            "monthName": "Jan",
-            "cityArrivals": 105000,
-            "hotelOccupancyRate": 69,
-            "season": "Low"
-          },
-          {
-            "monthName": "Feb",
-            "cityArrivals": 117000,
-            "hotelOccupancyRate": 73,
-            "season": "Low"
-          },
-          {
-            "monthName": "Mar",
-            "cityArrivals": 133000,
-            "hotelOccupancyRate": 78,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Apr",
-            "cityArrivals": 125000,
-            "hotelOccupancyRate": 76,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "May",
-            "cityArrivals": 97000,
-            "hotelOccupancyRate": 65,
-            "season": "Low"
-          },
-          {
-            "monthName": "Jun",
-            "cityArrivals": 91000,
-            "hotelOccupancyRate": 62,
-            "season": "Low"
-          },
-          {
-            "monthName": "Jul",
-            "cityArrivals": 123000,
-            "hotelOccupancyRate": 74,
-            "season": "High"
-          },
-          {
-            "monthName": "Aug",
-            "cityArrivals": 128000,
-            "hotelOccupancyRate": 79,
-            "season": "High"
-          },
-          {
-            "monthName": "Sep",
-            "cityArrivals": 98000,
-            "hotelOccupancyRate": 66,
-            "season": "Low"
-          },
-          {
-            "monthName": "Oct",
-            "cityArrivals": 111000,
-            "hotelOccupancyRate": 71,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Nov",
-            "cityArrivals": 144000,
-            "hotelOccupancyRate": 82,
-            "season": "High"
-          },
-          {
-            "monthName": "Dec",
-            "cityArrivals": 153000,
-            "hotelOccupancyRate": 85,
-            "season": "High"
-          }
-        ],
-        "config": {
-          "dimensions": {
-            "width": 350,
-            "height": 180
-          },
-          "fields": {
-            "x": "monthName",
-            "y": "cityArrivals",
-            "series": "hotelOccupancyRate",
-            "color": "season"
-          },
-          "styling": {
-            "colors": [
-              "#94a3b8",
-              "#3b82f6",
-              "#dc2626"
-            ],
-            "lineColor": "#ef4444",
-            "lineWidth": 3,
-            "cornerRadius": 2,
-            "background": "transparent",
-            "axes": {
-              "yAxis": {
-                "title": "Monthly Visitor Arrivals",
-                "format": ".2s"
-              },
-              "yAxisRight": {
-                "title": "Hotel Occupancy Rate",
-                "format": ".1%"
-              },
-              "xAxis": {
-                "title": "Month"
-              }
-            }
-          },
-          "legend": {
-            "orient": "right",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "symbolSize": 200
-          },
-          "interactions": {
-            "hover": true
-          }
-        },
-        "title": "Bangkok Visitor Arrivals and Hotel Occupancy",
-        "description": "Monthly visitors and hotel occupancy rates",
-        "insights": [
-          "Occupancy peaks in December and November",
-          "Lowest arrivals in June during low season"
-        ],
-        "metadata": {
-          "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-05T02:25:38.191Z",
-          "userQuery": "Show monthly visitor arrivals with hotel occupancy rates for Bangkok",
-          "constraints": {
-            "chartType": "multiType",
-            "subtype": "barChartWithLineSpec",
-            "nodeSize": "xlarge",
-            "dataCategory": "visitor-flow",
-            "destinations": [
-              "Bangkok"
-            ],
-            "maxDataPoints": 12
-          }
-        }
-      },
-      "vegaSpec": {
-        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 350,
-        "height": 180,
-        "background": "transparent",
-        "data": {
-          "values": [
-            {
-              "monthName": "Jan",
-              "cityArrivals": 105000,
-              "hotelOccupancyRate": 69,
-              "season": "Low"
-            },
-            {
-              "monthName": "Feb",
-              "cityArrivals": 117000,
-              "hotelOccupancyRate": 73,
-              "season": "Low"
-            },
-            {
-              "monthName": "Mar",
-              "cityArrivals": 133000,
-              "hotelOccupancyRate": 78,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Apr",
-              "cityArrivals": 125000,
-              "hotelOccupancyRate": 76,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "May",
-              "cityArrivals": 97000,
-              "hotelOccupancyRate": 65,
-              "season": "Low"
-            },
-            {
-              "monthName": "Jun",
-              "cityArrivals": 91000,
-              "hotelOccupancyRate": 62,
-              "season": "Low"
-            },
-            {
-              "monthName": "Jul",
-              "cityArrivals": 123000,
-              "hotelOccupancyRate": 74,
-              "season": "High"
-            },
-            {
-              "monthName": "Aug",
-              "cityArrivals": 128000,
-              "hotelOccupancyRate": 79,
-              "season": "High"
-            },
-            {
-              "monthName": "Sep",
-              "cityArrivals": 98000,
-              "hotelOccupancyRate": 66,
-              "season": "Low"
-            },
-            {
-              "monthName": "Oct",
-              "cityArrivals": 111000,
-              "hotelOccupancyRate": 71,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Nov",
-              "cityArrivals": 144000,
-              "hotelOccupancyRate": 82,
-              "season": "High"
-            },
-            {
-              "monthName": "Dec",
-              "cityArrivals": 153000,
-              "hotelOccupancyRate": 85,
-              "season": "High"
-            }
-          ]
-        },
-        "layer": [
-          {
-            "params": [
-              {
-                "name": "hover_flow",
-                "select": {
-                  "type": "point",
-                  "on": "pointerover",
-                  "clear": "pointerout"
-                }
-              }
-            ],
-            "mark": {
-              "type": "bar",
-              "cursor": "pointer",
-              "cornerRadiusEnd": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 10,
-                  "labelAngle": 0,
-                  "labelPadding": 5,
-                  "title": "Month",
-                  "grid": false,
-                  "ticks": true,
-                  "domain": true
-                }
-              },
-              "y": {
-                "field": "cityArrivals",
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Monthly Visitor Arrivals",
-                  "format": ".2s"
-                }
-              },
-              "color": {
-                "field": "season",
-                "type": "nominal",
-                "scale": {
-                  "range": [
-                    "#94a3b8",
-                    "#3b82f6",
-                    "#dc2626"
-                  ]
-                },
-                "legend": {
-                  "orient": "right",
-                  "titleColor": "#888",
-                  "labelColor": "#888",
-                  "titleFontSize": 11,
-                  "labelFontSize": 10,
-                  "symbolSize": 200
-                }
-              },
-              "opacity": {
-                "condition": {
-                  "param": "hover_flow",
-                  "value": 0.8
-                },
-                "value": 0.6
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "cityArrivals",
-                  "type": "quantitative",
-                  "title": "Value",
-                  "format": ",.0f"
-                },
-                {
-                  "field": "season",
-                  "type": "nominal",
-                  "title": "Category"
-                }
-              ]
-            }
-          },
-          {
-            "mark": {
-              "type": "line",
-              "color": "#8b5cf6",
-              "strokeWidth": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal"
-              },
-              "y": {
-                "field": "hotelOccupancyRate",
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": false,
-                  "title": "Occupancy Rate (%)",
-                  "format": ".2s"
-                },
-                "scale": {
-                  "domain": [
-                    0,
-                    100
-                  ]
-                }
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "hotelOccupancyRate",
-                  "type": "quantitative",
-                  "title": "Occupancy Rate",
-                  "format": ".0f"
-                }
-              ]
-            }
-          }
-        ],
-        "resolve": {
-          "scale": {
-            "y": "independent"
-          }
-        },
-        "config": {
-          "background": "transparent",
-          "view": {
-            "stroke": null
-          }
-        }
-      },
-      "generationTime": 30857,
-      "success": true,
-      "error": null
-    },
-    {
-      "id": "chart-1",
-      "name": "Tokyo Travel Costs vs Satisfaction Trends",
-      "request": {
-        "userQuery": "Display monthly travel costs with satisfaction ratings for Tokyo",
-        "constraints": {
-          "chartType": "multiType",
-          "subtype": "barChartWithLineSpec",
+          "chartType": "scatter",
+          "subtype": "bubblePlotScatterSpec",
           "nodeSize": "xlarge",
           "dataCategory": "cost",
           "destinations": [
-            "Tokyo"
-          ],
-          "maxDataPoints": 12
-        }
-      },
-      "chartSpec": {
-        "type": "multiType",
-        "subtype": "barChartWithLineSpec",
-        "data": [
-          {
-            "monthName": "Jan",
-            "monthlyTravelCost": 165,
-            "travelerSatisfactionScore": 4.2,
-            "costTier": "Low"
-          },
-          {
-            "monthName": "Feb",
-            "monthlyTravelCost": 172,
-            "travelerSatisfactionScore": 4.3,
-            "costTier": "Low"
-          },
-          {
-            "monthName": "Mar",
-            "monthlyTravelCost": 180,
-            "travelerSatisfactionScore": 4.4,
-            "costTier": "Medium"
-          },
-          {
-            "monthName": "Apr",
-            "monthlyTravelCost": 190,
-            "travelerSatisfactionScore": 4.6,
-            "costTier": "Medium"
-          },
-          {
-            "monthName": "May",
-            "monthlyTravelCost": 210,
-            "travelerSatisfactionScore": 4.7,
-            "costTier": "High"
-          },
-          {
-            "monthName": "Jun",
-            "monthlyTravelCost": 225,
-            "travelerSatisfactionScore": 4.5,
-            "costTier": "High"
-          },
-          {
-            "monthName": "Jul",
-            "monthlyTravelCost": 240,
-            "travelerSatisfactionScore": 4.3,
-            "costTier": "High"
-          },
-          {
-            "monthName": "Aug",
-            "monthlyTravelCost": 235,
-            "travelerSatisfactionScore": 4.2,
-            "costTier": "High"
-          },
-          {
-            "monthName": "Sep",
-            "monthlyTravelCost": 200,
-            "travelerSatisfactionScore": 4.5,
-            "costTier": "Medium"
-          },
-          {
-            "monthName": "Oct",
-            "monthlyTravelCost": 185,
-            "travelerSatisfactionScore": 4.6,
-            "costTier": "Medium"
-          },
-          {
-            "monthName": "Nov",
-            "monthlyTravelCost": 175,
-            "travelerSatisfactionScore": 4.4,
-            "costTier": "Low"
-          },
-          {
-            "monthName": "Dec",
-            "monthlyTravelCost": 190,
-            "travelerSatisfactionScore": 4.5,
-            "costTier": "Medium"
-          }
-        ],
-        "config": {
-          "dimensions": {
-            "width": 350,
-            "height": 180
-          },
-          "fields": {
-            "x": "monthName",
-            "y": "monthlyTravelCost",
-            "series": "travelerSatisfactionScore",
-            "color": "costTier"
-          },
-          "styling": {
-            "colors": [
-              "#94a3b8",
-              "#3b82f6",
-              "#dc2626"
-            ],
-            "lineColor": "#ef4444",
-            "lineWidth": 3,
-            "cornerRadius": 2,
-            "background": "transparent",
-            "axes": {
-              "yAxis": {
-                "title": "Average Monthly Cost (USD)",
-                "format": "$,.0f"
-              },
-              "xAxis": {
-                "title": "Month"
-              }
-            }
-          },
-          "legend": {
-            "orient": "right",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "symbolSize": 200
-          },
-          "interactions": {
-            "hover": true
-          }
-        },
-        "title": "Tokyo monthly travel costs and satisfaction ratings",
-        "description": "Cost trends with traveler satisfaction",
-        "insights": [
-          "Peak costs in July and August",
-          "Satisfaction remains high year-round"
-        ],
-        "metadata": {
-          "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-05T02:25:59.554Z",
-          "userQuery": "Display monthly travel costs with satisfaction ratings for Tokyo",
-          "constraints": {
-            "chartType": "multiType",
-            "subtype": "barChartWithLineSpec",
-            "nodeSize": "xlarge",
-            "dataCategory": "cost",
-            "destinations": [
-              "Tokyo"
-            ],
-            "maxDataPoints": 12
-          }
-        }
-      },
-      "vegaSpec": {
-        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 350,
-        "height": 180,
-        "background": "transparent",
-        "data": {
-          "values": [
-            {
-              "monthName": "Jan",
-              "monthlyTravelCost": 165,
-              "travelerSatisfactionScore": 4.2,
-              "costTier": "Low"
-            },
-            {
-              "monthName": "Feb",
-              "monthlyTravelCost": 172,
-              "travelerSatisfactionScore": 4.3,
-              "costTier": "Low"
-            },
-            {
-              "monthName": "Mar",
-              "monthlyTravelCost": 180,
-              "travelerSatisfactionScore": 4.4,
-              "costTier": "Medium"
-            },
-            {
-              "monthName": "Apr",
-              "monthlyTravelCost": 190,
-              "travelerSatisfactionScore": 4.6,
-              "costTier": "Medium"
-            },
-            {
-              "monthName": "May",
-              "monthlyTravelCost": 210,
-              "travelerSatisfactionScore": 4.7,
-              "costTier": "High"
-            },
-            {
-              "monthName": "Jun",
-              "monthlyTravelCost": 225,
-              "travelerSatisfactionScore": 4.5,
-              "costTier": "High"
-            },
-            {
-              "monthName": "Jul",
-              "monthlyTravelCost": 240,
-              "travelerSatisfactionScore": 4.3,
-              "costTier": "High"
-            },
-            {
-              "monthName": "Aug",
-              "monthlyTravelCost": 235,
-              "travelerSatisfactionScore": 4.2,
-              "costTier": "High"
-            },
-            {
-              "monthName": "Sep",
-              "monthlyTravelCost": 200,
-              "travelerSatisfactionScore": 4.5,
-              "costTier": "Medium"
-            },
-            {
-              "monthName": "Oct",
-              "monthlyTravelCost": 185,
-              "travelerSatisfactionScore": 4.6,
-              "costTier": "Medium"
-            },
-            {
-              "monthName": "Nov",
-              "monthlyTravelCost": 175,
-              "travelerSatisfactionScore": 4.4,
-              "costTier": "Low"
-            },
-            {
-              "monthName": "Dec",
-              "monthlyTravelCost": 190,
-              "travelerSatisfactionScore": 4.5,
-              "costTier": "Medium"
-            }
-          ]
-        },
-        "layer": [
-          {
-            "params": [
-              {
-                "name": "hover_flow",
-                "select": {
-                  "type": "point",
-                  "on": "pointerover",
-                  "clear": "pointerout"
-                }
-              }
-            ],
-            "mark": {
-              "type": "bar",
-              "cursor": "pointer",
-              "cornerRadiusEnd": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 10,
-                  "labelAngle": 0,
-                  "labelPadding": 5,
-                  "title": "Month",
-                  "grid": false,
-                  "ticks": true,
-                  "domain": true
-                }
-              },
-              "y": {
-                "field": "monthlyTravelCost",
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Average Monthly Cost (USD)",
-                  "format": "$,.0f"
-                }
-              },
-              "color": {
-                "field": "costTier",
-                "type": "nominal",
-                "scale": {
-                  "range": [
-                    "#94a3b8",
-                    "#3b82f6",
-                    "#dc2626"
-                  ]
-                },
-                "legend": {
-                  "orient": "right",
-                  "titleColor": "#888",
-                  "labelColor": "#888",
-                  "titleFontSize": 11,
-                  "labelFontSize": 10,
-                  "symbolSize": 200
-                }
-              },
-              "opacity": {
-                "condition": {
-                  "param": "hover_flow",
-                  "value": 0.8
-                },
-                "value": 0.6
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "monthlyTravelCost",
-                  "type": "quantitative",
-                  "title": "Value",
-                  "format": ",.0f"
-                },
-                {
-                  "field": "costTier",
-                  "type": "nominal",
-                  "title": "Category"
-                }
-              ]
-            }
-          },
-          {
-            "mark": {
-              "type": "line",
-              "color": "#8b5cf6",
-              "strokeWidth": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal"
-              },
-              "y": {
-                "field": "travelerSatisfactionScore",
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": false,
-                  "title": "Occupancy Rate (%)",
-                  "format": ".2s"
-                },
-                "scale": {
-                  "domain": [
-                    0,
-                    100
-                  ]
-                }
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "travelerSatisfactionScore",
-                  "type": "quantitative",
-                  "title": "Occupancy Rate",
-                  "format": ".0f"
-                }
-              ]
-            }
-          }
-        ],
-        "resolve": {
-          "scale": {
-            "y": "independent"
-          }
-        },
-        "config": {
-          "background": "transparent",
-          "view": {
-            "stroke": null
-          }
-        }
-      },
-      "generationTime": 20358,
-      "success": true,
-      "error": null
-    },
-    {
-      "id": "chart-2",
-      "name": "Paris City vs European Regional Visitor Comparison",
-      "request": {
-        "userQuery": "Compare Paris arrivals with European regional averages monthly",
-        "constraints": {
-          "chartType": "multiType",
-          "subtype": "multiType_same_y_diff_type",
-          "nodeSize": "xlarge",
-          "dataCategory": "visitor-flow",
-          "destinations": [
-            "Paris"
-          ],
-          "maxDataPoints": 12
-        }
-      },
-      "chartSpec": {
-        "type": "multiType",
-        "subtype": "multiType_same_y_diff_type",
-        "data": [
-          {
-            "monthName": "Jan",
-            "cityArrivals": 105000,
-            "regionalAverage": 98000,
-            "season": "Low"
-          },
-          {
-            "monthName": "Feb",
-            "cityArrivals": 112000,
-            "regionalAverage": 99000,
-            "season": "Low"
-          },
-          {
-            "monthName": "Mar",
-            "cityArrivals": 128000,
-            "regionalAverage": 110000,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Apr",
-            "cityArrivals": 146000,
-            "regionalAverage": 123000,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "May",
-            "cityArrivals": 169000,
-            "regionalAverage": 135000,
-            "season": "High"
-          },
-          {
-            "monthName": "Jun",
-            "cityArrivals": 182000,
-            "regionalAverage": 145000,
-            "season": "High"
-          },
-          {
-            "monthName": "Jul",
-            "cityArrivals": 205000,
-            "regionalAverage": 162000,
-            "season": "Peak"
-          },
-          {
-            "monthName": "Aug",
-            "cityArrivals": 211000,
-            "regionalAverage": 168000,
-            "season": "Peak"
-          },
-          {
-            "monthName": "Sep",
-            "cityArrivals": 171000,
-            "regionalAverage": 136000,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Oct",
-            "cityArrivals": 144000,
-            "regionalAverage": 118000,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Nov",
-            "cityArrivals": 121000,
-            "regionalAverage": 102000,
-            "season": "Low"
-          },
-          {
-            "monthName": "Dec",
-            "cityArrivals": 127000,
-            "regionalAverage": 110000,
-            "season": "Low"
-          }
-        ],
-        "config": {
-          "dimensions": {
-            "width": 390,
-            "height": 180
-          },
-          "fields": {
-            "x": "monthName",
-            "y": "cityArrivals",
-            "series": "regionalAverage",
-            "color": "season"
-          },
-          "styling": {
-            "colors": [
-              "#94a3b8",
-              "#3b82f6",
-              "#dc2626"
-            ],
-            "lineColor": "#ef4444",
-            "lineWidth": 3,
-            "cornerRadius": 2,
-            "background": "transparent",
-            "axes": {
-              "yAxis": {
-                "title": "Monthly Visitor Arrivals",
-                "format": ".2s"
-              },
-              "xAxis": {
-                "title": "Month of Year"
-              }
-            }
-          },
-          "legend": {
-            "orient": "right",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "symbolSize": 200
-          },
-          "interactions": {
-            "hover": true
-          }
-        },
-        "title": "Paris Arrivals vs European Regional Average",
-        "description": "Monthly arrivals compared to Europe region",
-        "insights": [
-          "Paris peaks in July and August",
-          "Paris consistently outpaces regional average"
-        ],
-        "metadata": {
-          "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-05T02:26:21.725Z",
-          "userQuery": "Compare Paris arrivals with European regional averages monthly",
-          "constraints": {
-            "chartType": "multiType",
-            "subtype": "multiType_same_y_diff_type",
-            "nodeSize": "xlarge",
-            "dataCategory": "visitor-flow",
-            "destinations": [
-              "Paris"
-            ],
-            "maxDataPoints": 12
-          }
-        }
-      },
-      "vegaSpec": {
-        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 390,
-        "height": 180,
-        "background": "transparent",
-        "data": {
-          "values": [
-            {
-              "monthName": "Jan",
-              "cityArrivals": 105000,
-              "regionalAverage": 98000,
-              "season": "Low"
-            },
-            {
-              "monthName": "Feb",
-              "cityArrivals": 112000,
-              "regionalAverage": 99000,
-              "season": "Low"
-            },
-            {
-              "monthName": "Mar",
-              "cityArrivals": 128000,
-              "regionalAverage": 110000,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Apr",
-              "cityArrivals": 146000,
-              "regionalAverage": 123000,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "May",
-              "cityArrivals": 169000,
-              "regionalAverage": 135000,
-              "season": "High"
-            },
-            {
-              "monthName": "Jun",
-              "cityArrivals": 182000,
-              "regionalAverage": 145000,
-              "season": "High"
-            },
-            {
-              "monthName": "Jul",
-              "cityArrivals": 205000,
-              "regionalAverage": 162000,
-              "season": "Peak"
-            },
-            {
-              "monthName": "Aug",
-              "cityArrivals": 211000,
-              "regionalAverage": 168000,
-              "season": "Peak"
-            },
-            {
-              "monthName": "Sep",
-              "cityArrivals": 171000,
-              "regionalAverage": 136000,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Oct",
-              "cityArrivals": 144000,
-              "regionalAverage": 118000,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Nov",
-              "cityArrivals": 121000,
-              "regionalAverage": 102000,
-              "season": "Low"
-            },
-            {
-              "monthName": "Dec",
-              "cityArrivals": 127000,
-              "regionalAverage": 110000,
-              "season": "Low"
-            }
-          ]
-        },
-        "layer": [
-          {
-            "params": [
-              {
-                "name": "hover_flow",
-                "select": {
-                  "type": "point",
-                  "on": "pointerover",
-                  "clear": "pointerout"
-                }
-              }
-            ],
-            "mark": {
-              "type": "bar",
-              "cursor": "pointer",
-              "cornerRadiusEnd": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 10,
-                  "labelAngle": 0,
-                  "labelPadding": 5,
-                  "title": "Month of Year",
-                  "grid": false,
-                  "ticks": true,
-                  "domain": true
-                }
-              },
-              "y": {
-                "field": "cityArrivals",
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Monthly Visitor Arrivals",
-                  "format": ".2s"
-                }
-              },
-              "color": {
-                "field": "season",
-                "type": "nominal",
-                "scale": {
-                  "range": [
-                    "#94a3b8",
-                    "#3b82f6",
-                    "#dc2626"
-                  ]
-                },
-                "legend": {
-                  "orient": "right",
-                  "titleColor": "#888",
-                  "labelColor": "#888",
-                  "titleFontSize": 11,
-                  "labelFontSize": 10,
-                  "symbolSize": 200
-                }
-              },
-              "opacity": {
-                "condition": {
-                  "param": "hover_flow",
-                  "value": 0.8
-                },
-                "value": 0.6
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "cityArrivals",
-                  "type": "quantitative",
-                  "title": "Bar Value",
-                  "format": ",.0f"
-                },
-                {
-                  "field": "regionalAverage",
-                  "type": "quantitative",
-                  "title": "Line Value",
-                  "format": ",.0f"
-                },
-                {
-                  "field": "season",
-                  "type": "nominal",
-                  "title": "Category"
-                }
-              ]
-            }
-          },
-          {
-            "mark": {
-              "type": "line",
-              "color": "#8b5cf6",
-              "strokeWidth": 2,
-              "point": true
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal"
-              },
-              "y": {
-                "field": "regionalAverage",
-                "type": "quantitative"
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "regionalAverage",
-                  "type": "quantitative",
-                  "title": "Line Value",
-                  "format": ",.0f"
-                }
-              ]
-            }
-          }
-        ],
-        "resolve": {
-          "scale": {
-            "y": "shared"
-          }
-        },
-        "config": {
-          "background": "transparent",
-          "view": {
-            "stroke": null
-          }
-        }
-      },
-      "generationTime": 21169,
-      "success": true,
-      "error": null
-    },
-    {
-      "id": "chart-3",
-      "name": "Singapore Local vs Global Tourism Trends",
-      "request": {
-        "userQuery": "Show Singapore visitor data compared to global tourism averages",
-        "constraints": {
-          "chartType": "multiType",
-          "subtype": "multiType_same_y_diff_type",
-          "nodeSize": "xlarge",
-          "dataCategory": "visitor-flow",
-          "destinations": [
-            "Singapore"
-          ],
-          "maxDataPoints": 10
-        }
-      },
-      "chartSpec": {
-        "type": "multiType",
-        "subtype": "multiType_same_y_diff_type",
-        "data": [
-          {
-            "monthName": "Jan",
-            "cityArrivals": 1265000,
-            "globalAverage": 950000,
-            "season": "Low"
-          },
-          {
-            "monthName": "Feb",
-            "cityArrivals": 1320000,
-            "globalAverage": 970000,
-            "season": "Low"
-          },
-          {
-            "monthName": "Mar",
-            "cityArrivals": 1428000,
-            "globalAverage": 1015000,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Apr",
-            "cityArrivals": 1489000,
-            "globalAverage": 1040000,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "May",
-            "cityArrivals": 1362000,
-            "globalAverage": 1025000,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Jun",
-            "cityArrivals": 1298000,
-            "globalAverage": 990000,
-            "season": "Low"
-          },
-          {
-            "monthName": "Jul",
-            "cityArrivals": 1534000,
-            "globalAverage": 1120000,
-            "season": "Peak"
-          },
-          {
-            "monthName": "Aug",
-            "cityArrivals": 1576000,
-            "globalAverage": 1155000,
-            "season": "Peak"
-          },
-          {
-            "monthName": "Sep",
-            "cityArrivals": 1400000,
-            "globalAverage": 1050000,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Oct",
-            "cityArrivals": 1353000,
-            "globalAverage": 990000,
-            "season": "Shoulder"
-          }
-        ],
-        "config": {
-          "dimensions": {
-            "width": 390,
-            "height": 180
-          },
-          "fields": {
-            "x": "monthName",
-            "y": "cityArrivals",
-            "series": "globalAverage",
-            "color": "season"
-          },
-          "styling": {
-            "colors": [
-              "#94a3b8",
-              "#3b82f6",
-              "#dc2626"
-            ],
-            "lineColor": "#ef4444",
-            "lineWidth": 3,
-            "cornerRadius": 2,
-            "background": "transparent",
-            "axes": {
-              "yAxis": {
-                "title": "Monthly Visitor Arrivals",
-                "format": ".2s"
-              },
-              "xAxis": {
-                "title": "Month"
-              }
-            }
-          },
-          "legend": {
-            "orient": "right",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "symbolSize": 200
-          },
-          "interactions": {
-            "hover": true
-          }
-        },
-        "title": "Singapore Monthly Arrivals vs Global Tourism Average",
-        "description": "Singapore outpaces global visitor trends monthly",
-        "insights": [
-          "Singapore consistently exceeds global average arrivals",
-          "Peak season shows largest gap over global trend"
-        ],
-        "metadata": {
-          "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-05T02:26:37.668Z",
-          "userQuery": "Show Singapore visitor data compared to global tourism averages",
-          "constraints": {
-            "chartType": "multiType",
-            "subtype": "multiType_same_y_diff_type",
-            "nodeSize": "xlarge",
-            "dataCategory": "visitor-flow",
-            "destinations": [
-              "Singapore"
-            ],
-            "maxDataPoints": 10
-          }
-        }
-      },
-      "vegaSpec": {
-        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 390,
-        "height": 180,
-        "background": "transparent",
-        "data": {
-          "values": [
-            {
-              "monthName": "Jan",
-              "cityArrivals": 1265000,
-              "globalAverage": 950000,
-              "season": "Low"
-            },
-            {
-              "monthName": "Feb",
-              "cityArrivals": 1320000,
-              "globalAverage": 970000,
-              "season": "Low"
-            },
-            {
-              "monthName": "Mar",
-              "cityArrivals": 1428000,
-              "globalAverage": 1015000,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Apr",
-              "cityArrivals": 1489000,
-              "globalAverage": 1040000,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "May",
-              "cityArrivals": 1362000,
-              "globalAverage": 1025000,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Jun",
-              "cityArrivals": 1298000,
-              "globalAverage": 990000,
-              "season": "Low"
-            },
-            {
-              "monthName": "Jul",
-              "cityArrivals": 1534000,
-              "globalAverage": 1120000,
-              "season": "Peak"
-            },
-            {
-              "monthName": "Aug",
-              "cityArrivals": 1576000,
-              "globalAverage": 1155000,
-              "season": "Peak"
-            },
-            {
-              "monthName": "Sep",
-              "cityArrivals": 1400000,
-              "globalAverage": 1050000,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Oct",
-              "cityArrivals": 1353000,
-              "globalAverage": 990000,
-              "season": "Shoulder"
-            }
-          ]
-        },
-        "layer": [
-          {
-            "params": [
-              {
-                "name": "hover_flow",
-                "select": {
-                  "type": "point",
-                  "on": "pointerover",
-                  "clear": "pointerout"
-                }
-              }
-            ],
-            "mark": {
-              "type": "bar",
-              "cursor": "pointer",
-              "cornerRadiusEnd": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 10,
-                  "labelAngle": 0,
-                  "labelPadding": 5,
-                  "title": "Month",
-                  "grid": false,
-                  "ticks": true,
-                  "domain": true
-                }
-              },
-              "y": {
-                "field": "cityArrivals",
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Monthly Visitor Arrivals",
-                  "format": ".2s"
-                }
-              },
-              "color": {
-                "field": "season",
-                "type": "nominal",
-                "scale": {
-                  "range": [
-                    "#94a3b8",
-                    "#3b82f6",
-                    "#dc2626"
-                  ]
-                },
-                "legend": {
-                  "orient": "right",
-                  "titleColor": "#888",
-                  "labelColor": "#888",
-                  "titleFontSize": 11,
-                  "labelFontSize": 10,
-                  "symbolSize": 200
-                }
-              },
-              "opacity": {
-                "condition": {
-                  "param": "hover_flow",
-                  "value": 0.8
-                },
-                "value": 0.6
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "cityArrivals",
-                  "type": "quantitative",
-                  "title": "Bar Value",
-                  "format": ",.0f"
-                },
-                {
-                  "field": "globalAverage",
-                  "type": "quantitative",
-                  "title": "Line Value",
-                  "format": ",.0f"
-                },
-                {
-                  "field": "season",
-                  "type": "nominal",
-                  "title": "Category"
-                }
-              ]
-            }
-          },
-          {
-            "mark": {
-              "type": "line",
-              "color": "#8b5cf6",
-              "strokeWidth": 2,
-              "point": true
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal"
-              },
-              "y": {
-                "field": "globalAverage",
-                "type": "quantitative"
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "globalAverage",
-                  "type": "quantitative",
-                  "title": "Line Value",
-                  "format": ",.0f"
-                }
-              ]
-            }
-          }
-        ],
-        "resolve": {
-          "scale": {
-            "y": "shared"
-          }
-        },
-        "config": {
-          "background": "transparent",
-          "view": {
-            "stroke": null
-          }
-        }
-      },
-      "generationTime": 14938,
-      "success": true,
-      "error": null
-    },
-    {
-      "id": "chart-4",
-      "name": "London Tourism Revenue with Growth Targets",
-      "request": {
-        "userQuery": "Display quarterly tourism revenue with growth target threshold for London",
-        "constraints": {
-          "chartType": "multiType",
-          "subtype": "multiTypeWithThreshold",
-          "nodeSize": "xlarge",
-          "dataCategory": "revenue",
-          "destinations": [
-            "London"
+            "Tokyo",
+            "Paris",
+            "Bangkok",
+            "New York",
+            "Sydney",
+            "Dubai"
           ],
           "maxDataPoints": 8
         }
       },
       "chartSpec": {
-        "type": "multiType",
-        "subtype": "multiTypeWithThreshold",
+        "type": "scatter",
+        "subtype": "bubblePlotScatterSpec",
+        "title": "Travel Costs vs Safety Across Major Cities",
+        "description": "Comparing average travel cost and safety ratings",
         "data": [
           {
-            "monthName": "2023-Q1",
-            "quarterlyRevenue": 24500000,
-            "growthRate": 0.045,
-            "performance": "Moderate"
+            "avgCost": 185,
+            "safetyScore": 85,
+            "visitors": 15000000,
+            "region": "East Asia",
+            "city": "Tokyo"
           },
           {
-            "monthName": "2023-Q2",
-            "quarterlyRevenue": 31800000,
-            "growthRate": 0.089,
-            "performance": "Strong"
+            "avgCost": 210,
+            "safetyScore": 70,
+            "visitors": 17000000,
+            "region": "Western Europe",
+            "city": "Paris"
           },
           {
-            "monthName": "2023-Q3",
-            "quarterlyRevenue": 35500000,
-            "growthRate": 0.073,
-            "performance": "Strong"
+            "avgCost": 75,
+            "safetyScore": 68,
+            "visitors": 12000000,
+            "region": "Southeast Asia",
+            "city": "Bangkok"
           },
           {
-            "monthName": "2023-Q4",
-            "quarterlyRevenue": 28900000,
-            "growthRate": 0.038,
-            "performance": "Moderate"
+            "avgCost": 230,
+            "safetyScore": 72,
+            "visitors": 13500000,
+            "region": "North America",
+            "city": "New York"
           },
           {
-            "monthName": "2024-Q1",
-            "quarterlyRevenue": 26500000,
-            "growthRate": 0.056,
-            "performance": "Moderate"
+            "avgCost": 195,
+            "safetyScore": 88,
+            "visitors": 10000000,
+            "region": "Oceania",
+            "city": "Sydney"
           },
           {
-            "monthName": "2024-Q2",
-            "quarterlyRevenue": 34000000,
-            "growthRate": 0.092,
-            "performance": "Strong"
+            "avgCost": 190,
+            "safetyScore": 76,
+            "visitors": 16000000,
+            "region": "Middle East",
+            "city": "Dubai"
           },
           {
-            "monthName": "2024-Q3",
-            "quarterlyRevenue": 37300000,
-            "growthRate": 0.081,
-            "performance": "Strong"
+            "avgCost": 95,
+            "safetyScore": 60,
+            "visitors": 9500000,
+            "region": "Southeast Asia",
+            "city": "Kuala Lumpur"
           },
           {
-            "monthName": "2024-Q4",
-            "quarterlyRevenue": 30500000,
-            "growthRate": 0.049,
-            "performance": "Moderate"
+            "avgCost": 160,
+            "safetyScore": 80,
+            "visitors": 8000000,
+            "region": "East Asia",
+            "city": "Seoul"
           }
         ],
         "config": {
           "dimensions": {
-            "width": 350,
-            "height": 180
+            "width": 360,
+            "height": 200
           },
           "fields": {
-            "x": "monthName",
-            "y": "quarterlyRevenue",
-            "series": "growthRate",
-            "color": "performance"
+            "x": "avgCost",
+            "y": "safetyScore",
+            "size": "visitors",
+            "color": "region"
           },
           "styling": {
             "colors": [
-              "#94a3b8",
-              "#3b82f6",
-              "#dc2626"
+              "#8B5CF6",
+              "#3B82F6",
+              "#06B6D4",
+              "#F59E42",
+              "#F43F5E",
+              "#10B981"
             ],
-            "lineColor": "#ef4444",
-            "lineWidth": 3,
-            "cornerRadius": 2,
             "background": "transparent",
-            "thresholdValue": 32000000,
-            "thresholdColor": "#ef4444",
-            "thresholdLabel": "Growth Target",
-            "showThresholdLabel": true,
+            "sizeDomain": [
+              8000000,
+              17000000
+            ],
             "axes": {
-              "yAxis": {
-                "title": "Quarterly Tourism Revenue",
-                "format": "$,.0f"
-              },
               "xAxis": {
-                "title": "Quarter"
+                "labelColor": "#888",
+                "titleColor": "#888",
+                "labelFontSize": 8,
+                "titleFontSize": 10,
+                "grid": true,
+                "gridColor": "#888",
+                "gridDash": [
+                  4,
+                  10
+                ],
+                "ticks": true,
+                "domain": true,
+                "title": "Average Travel Cost (USD)",
+                "scale": {
+                  "domain": [
+                    50,
+                    250
+                  ],
+                  "nice": true
+                }
+              },
+              "yAxis": {
+                "labelColor": "#888",
+                "titleColor": "#888",
+                "labelFontSize": 8,
+                "titleFontSize": 10,
+                "grid": false,
+                "gridColor": "#888",
+                "gridDash": [
+                  4,
+                  50
+                ],
+                "ticks": true,
+                "domain": true,
+                "title": "Safety Score",
+                "scale": {
+                  "domain": [
+                    55,
+                    90
+                  ],
+                  "nice": true
+                }
               }
             }
           },
           "legend": {
-            "orient": "right",
+            "showSize": true,
+            "sizeTitle": "Annual Visitors",
+            "showColor": true,
+            "colorTitle": "Region",
             "titleColor": "#888",
             "labelColor": "#888",
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "symbolSize": 200
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "orient": "right",
+            "colorOrient": "top",
+            "offset": 15,
+            "colorOffset": 0
+          },
+          "sizeLegend": {
+            "sizeTitle": "Annual Visitors",
+            "titleColor": "#888",
+            "labelColor": "#888",
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "orient": "right",
+            "values": [
+              8000000,
+              11000000,
+              14000000,
+              17000000
+            ],
+            "offset": 15
+          },
+          "colorLegend": {
+            "colorTitle": "Region",
+            "titleColor": "#888",
+            "labelColor": "#888",
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "colorOrient": "top",
+            "colorOffset": 0
+          },
+          "tooltip": {
+            "fields": [
+              {
+                "field": "city",
+                "type": "nominal",
+                "title": "City"
+              },
+              {
+                "field": "avgCost",
+                "type": "quantitative",
+                "title": "Avg Cost (USD)",
+                "format": ".0f"
+              },
+              {
+                "field": "safetyScore",
+                "type": "quantitative",
+                "title": "Safety Score",
+                "format": ".0f"
+              },
+              {
+                "field": "visitors",
+                "type": "quantitative",
+                "title": "Annual Visitors",
+                "format": ".0f"
+              },
+              {
+                "field": "region",
+                "type": "nominal",
+                "title": "Region"
+              }
+            ]
           },
           "interactions": {
-            "hover": true
+            "hover": true,
+            "select": true
           }
         },
-        "title": "London Quarterly Tourism Revenue vs Growth Target",
-        "description": "Revenue and growth trends by quarter",
         "insights": [
-          "Q2 and Q3 consistently exceed growth target",
-          "Growth rate peaks in spring and summer quarters"
+          "Higher costs do not guarantee higher safety",
+          "Bangkok offers low cost but moderate safety"
         ],
         "metadata": {
-          "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-05T02:27:00.576Z",
-          "userQuery": "Display quarterly tourism revenue with growth target threshold for London",
+          "generatedBy": "scatterAgent",
+          "timestamp": "2025-09-05T16:34:34.351Z",
+          "userQuery": "Analyze relationship between travel costs and safety scores across destinations",
           "constraints": {
-            "chartType": "multiType",
-            "subtype": "multiTypeWithThreshold",
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
             "nodeSize": "xlarge",
-            "dataCategory": "revenue",
+            "dataCategory": "cost",
             "destinations": [
-              "London"
+              "Tokyo",
+              "Paris",
+              "Bangkok",
+              "New York",
+              "Sydney",
+              "Dubai"
             ],
             "maxDataPoints": 8
           }
@@ -1716,424 +274,1039 @@
       },
       "vegaSpec": {
         "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 350,
-        "height": 180,
+        "width": 360,
+        "height": 200,
         "background": "transparent",
         "data": {
           "values": [
             {
-              "monthName": "2023-Q1",
-              "quarterlyRevenue": 24500000,
-              "growthRate": 0.045,
-              "performance": "Moderate"
+              "avgCost": 185,
+              "safetyScore": 85,
+              "visitors": 15000000,
+              "region": "East Asia",
+              "city": "Tokyo"
             },
             {
-              "monthName": "2023-Q2",
-              "quarterlyRevenue": 31800000,
-              "growthRate": 0.089,
-              "performance": "Strong"
+              "avgCost": 210,
+              "safetyScore": 70,
+              "visitors": 17000000,
+              "region": "Western Europe",
+              "city": "Paris"
             },
             {
-              "monthName": "2023-Q3",
-              "quarterlyRevenue": 35500000,
-              "growthRate": 0.073,
-              "performance": "Strong"
+              "avgCost": 75,
+              "safetyScore": 68,
+              "visitors": 12000000,
+              "region": "Southeast Asia",
+              "city": "Bangkok"
             },
             {
-              "monthName": "2023-Q4",
-              "quarterlyRevenue": 28900000,
-              "growthRate": 0.038,
-              "performance": "Moderate"
+              "avgCost": 230,
+              "safetyScore": 72,
+              "visitors": 13500000,
+              "region": "North America",
+              "city": "New York"
             },
             {
-              "monthName": "2024-Q1",
-              "quarterlyRevenue": 26500000,
-              "growthRate": 0.056,
-              "performance": "Moderate"
+              "avgCost": 195,
+              "safetyScore": 88,
+              "visitors": 10000000,
+              "region": "Oceania",
+              "city": "Sydney"
             },
             {
-              "monthName": "2024-Q2",
-              "quarterlyRevenue": 34000000,
-              "growthRate": 0.092,
-              "performance": "Strong"
+              "avgCost": 190,
+              "safetyScore": 76,
+              "visitors": 16000000,
+              "region": "Middle East",
+              "city": "Dubai"
             },
             {
-              "monthName": "2024-Q3",
-              "quarterlyRevenue": 37300000,
-              "growthRate": 0.081,
-              "performance": "Strong"
+              "avgCost": 95,
+              "safetyScore": 60,
+              "visitors": 9500000,
+              "region": "Southeast Asia",
+              "city": "Kuala Lumpur"
             },
             {
-              "monthName": "2024-Q4",
-              "quarterlyRevenue": 30500000,
-              "growthRate": 0.049,
-              "performance": "Moderate"
+              "avgCost": 160,
+              "safetyScore": 80,
+              "visitors": 8000000,
+              "region": "East Asia",
+              "city": "Seoul"
             }
           ]
         },
-        "layer": [
+        "params": [
           {
-            "data": {
-              "values": [
-                {}
-              ]
-            },
-            "mark": {
-              "type": "rule",
-              "color": "#ef4444",
-              "strokeWidth": 2,
-              "strokeDash": [
-                6,
-                3
-              ]
-            },
-            "encoding": {
-              "y": {
-                "datum": 32000000,
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Quarterly Tourism Revenue",
-                  "format": "$,.0f"
-                }
-              },
-              "tooltip": [
-                {
-                  "field": "datum",
-                  "type": "quantitative",
-                  "title": "Growth Target",
-                  "format": "$,.0f"
-                }
-              ]
+            "name": "hover_scatter",
+            "select": {
+              "type": "point",
+              "on": "pointerover",
+              "clear": "pointerout"
             }
           },
           {
-            "params": [
-              {
-                "name": "hover_flow",
-                "select": {
-                  "type": "point",
-                  "on": "pointerover",
-                  "clear": "pointerout"
-                }
-              }
-            ],
-            "mark": {
-              "type": "bar",
-              "cursor": "pointer",
-              "cornerRadiusEnd": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 10,
-                  "labelAngle": 0,
-                  "labelPadding": 5,
-                  "title": "Quarter",
-                  "grid": false,
-                  "ticks": true,
-                  "domain": true
-                }
-              },
-              "y": {
-                "field": "quarterlyRevenue",
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Quarterly Tourism Revenue",
-                  "format": "$,.0f"
-                }
-              },
-              "color": {
-                "field": "performance",
-                "type": "nominal",
-                "scale": {
-                  "range": [
-                    "#94a3b8",
-                    "#3b82f6",
-                    "#dc2626"
-                  ]
-                },
-                "legend": {
-                  "orient": "right",
-                  "titleColor": "#888",
-                  "labelColor": "#888",
-                  "titleFontSize": 11,
-                  "labelFontSize": 10,
-                  "symbolSize": 200
-                }
-              },
-              "opacity": {
-                "condition": {
-                  "param": "hover_flow",
-                  "value": 0.8
-                },
-                "value": 0.6
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "quarterlyRevenue",
-                  "type": "quantitative",
-                  "title": "Value",
-                  "format": ",.0f"
-                },
-                {
-                  "field": "performance",
-                  "type": "nominal",
-                  "title": "Category"
-                }
-              ]
-            }
-          },
-          {
-            "mark": {
-              "type": "line",
-              "color": "#8b5cf6",
-              "strokeWidth": 2,
-              "point": true
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal"
-              },
-              "y": {
-                "field": "growthRate",
-                "type": "quantitative"
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "growthRate",
-                  "type": "quantitative",
-                  "title": "Occupancy Rate",
-                  "format": ".0f"
-                }
-              ]
-            }
-          },
-          {
-            "data": {
-              "values": [
-                {
-                  "thresholdValue": 32000000,
-                  "thresholdLabel": "Growth Target"
-                }
-              ]
-            },
-            "mark": {
-              "type": "text",
-              "align": "right",
-              "dx": -5,
-              "dy": -5,
-              "color": "#ef4444",
-              "fontSize": 10,
-              "fontWeight": "bold"
-            },
-            "encoding": {
-              "x": {
-                "value": 350
-              },
-              "y": {
-                "field": "thresholdValue",
-                "type": "quantitative"
-              },
-              "text": {
-                "field": "thresholdLabel",
-                "type": "nominal"
-              }
+            "name": "select_point",
+            "select": {
+              "type": "point"
             }
           }
         ],
-        "resolve": {
-          "scale": {
-            "y": "shared"
-          }
+        "mark": {
+          "type": "circle",
+          "cursor": "pointer",
+          "strokeWidth": 2
+        },
+        "encoding": {
+          "x": {
+            "field": "avgCost",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                50,
+                250
+              ],
+              "nice": true
+            },
+            "axis": {
+              "labelColor": "#888",
+              "titleColor": "#888",
+              "labelFontSize": 8,
+              "titleFontSize": 10,
+              "grid": true,
+              "gridColor": "#888",
+              "gridDash": [
+                4,
+                10
+              ],
+              "ticks": true,
+              "domain": true,
+              "title": "Average Travel Cost (USD)"
+            }
+          },
+          "y": {
+            "field": "safetyScore",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                55,
+                90
+              ],
+              "nice": true
+            },
+            "axis": {
+              "labelColor": "#888",
+              "titleColor": "#888",
+              "labelFontSize": 8,
+              "titleFontSize": 10,
+              "grid": false,
+              "gridColor": "#888",
+              "gridDash": [
+                4,
+                50
+              ],
+              "ticks": true,
+              "domain": true,
+              "title": "Safety Score"
+            }
+          },
+          "size": {
+            "field": "visitors",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "range": [
+                200,
+                800
+              ],
+              "domain": [
+                8000000,
+                17000000
+              ],
+              "clamp": true
+            },
+            "legend": {
+              "title": "Annual Visitors",
+              "titleColor": "#888",
+              "labelColor": "#888",
+              "titleFontSize": 9,
+              "labelFontSize": 8,
+              "orient": "right",
+              "offset": 15,
+              "padding": 0,
+              "values": [
+                8000000,
+                11000000,
+                14000000,
+                17000000
+              ]
+            }
+          },
+          "color": {
+            "field": "region",
+            "type": "nominal",
+            "scale": {
+              "range": [
+                "#8B5CF6",
+                "#3B82F6",
+                "#06B6D4",
+                "#F59E42",
+                "#F43F5E",
+                "#10B981"
+              ]
+            },
+            "legend": {
+              "title": "Region",
+              "titleColor": "#888",
+              "labelColor": "#888",
+              "titleFontSize": 9,
+              "labelFontSize": 8,
+              "orient": "top",
+              "offset": 0
+            }
+          },
+          "stroke": {
+            "condition": [
+              {
+                "param": "select_point",
+                "empty": false,
+                "value": "#272729"
+              },
+              {
+                "param": "hover_scatter",
+                "empty": false,
+                "value": "#272729"
+              }
+            ],
+            "value": "white"
+          },
+          "opacity": {
+            "condition": [
+              {
+                "param": "select_point",
+                "empty": false,
+                "value": 1
+              },
+              {
+                "param": "hover_scatter",
+                "empty": false,
+                "value": 0.9
+              }
+            ],
+            "value": 0.7
+          },
+          "tooltip": [
+            {
+              "field": "city",
+              "type": "nominal",
+              "title": "City"
+            },
+            {
+              "field": "avgCost",
+              "type": "quantitative",
+              "title": "Avg Cost (USD)",
+              "format": ".0f"
+            },
+            {
+              "field": "safetyScore",
+              "type": "quantitative",
+              "title": "Safety Score",
+              "format": ".0f"
+            },
+            {
+              "field": "visitors",
+              "type": "quantitative",
+              "title": "Annual Visitors",
+              "format": ".0f"
+            },
+            {
+              "field": "region",
+              "type": "nominal",
+              "title": "Region"
+            }
+          ]
         },
         "config": {
-          "background": "transparent",
           "view": {
             "stroke": null
           }
         }
       },
-      "generationTime": 21904,
+      "generationTime": 44070,
       "success": true,
       "error": null
     },
     {
-      "id": "chart-5",
-      "name": "Rome Safety Improvements with Target Thresholds",
+      "id": "chart-1",
+      "name": "Environmental Quality Assessment",
       "request": {
-        "userQuery": "Show monthly safety scores with target threshold line for Rome",
+        "userQuery": "Show environmental quality metrics including air quality vs green space coverage",
         "constraints": {
-          "chartType": "multiType",
-          "subtype": "multiTypeWithThreshold",
+          "chartType": "scatter",
+          "subtype": "bubblePlotScatterSpec",
           "nodeSize": "xlarge",
-          "dataCategory": "safety",
+          "dataCategory": "environmental",
           "destinations": [
+            "Singapore",
+            "Tokyo",
+            "Barcelona",
+            "Vancouver",
+            "Copenhagen"
+          ],
+          "maxDataPoints": 8
+        }
+      },
+      "chartSpec": {
+        "type": "scatter",
+        "subtype": "bubblePlotScatterSpec",
+        "title": "Air Quality vs Green Space in Top Cities",
+        "description": "Environmental quality among major destinations",
+        "data": [
+          {
+            "city": "Singapore",
+            "greenSpacePct": 47,
+            "waterQuality": 94,
+            "overallScore": 88,
+            "aqi": 14
+          },
+          {
+            "city": "Tokyo",
+            "greenSpacePct": 24,
+            "waterQuality": 88,
+            "overallScore": 78,
+            "aqi": 20
+          },
+          {
+            "city": "Barcelona",
+            "greenSpacePct": 35,
+            "waterQuality": 81,
+            "overallScore": 72,
+            "aqi": 33
+          },
+          {
+            "city": "Vancouver",
+            "greenSpacePct": 55,
+            "waterQuality": 92,
+            "overallScore": 90,
+            "aqi": 10
+          },
+          {
+            "city": "Copenhagen",
+            "greenSpacePct": 41,
+            "waterQuality": 96,
+            "overallScore": 86,
+            "aqi": 13
+          },
+          {
+            "city": "Singapore",
+            "greenSpacePct": 53,
+            "waterQuality": 91,
+            "overallScore": 91,
+            "aqi": 12
+          },
+          {
+            "city": "Tokyo",
+            "greenSpacePct": 28,
+            "waterQuality": 85,
+            "overallScore": 80,
+            "aqi": 18
+          },
+          {
+            "city": "Barcelona",
+            "greenSpacePct": 38,
+            "waterQuality": 78,
+            "overallScore": 68,
+            "aqi": 38
+          }
+        ],
+        "config": {
+          "dimensions": {
+            "width": 360,
+            "height": 200
+          },
+          "fields": {
+            "x": "greenSpacePct",
+            "y": "waterQuality",
+            "size": "overallScore",
+            "color": "aqi"
+          },
+          "styling": {
+            "colors": [
+              "redyellowgreen",
+              "reverse"
+            ],
+            "background": "transparent",
+            "sizeDomain": [
+              68,
+              91
+            ],
+            "axes": {
+              "xAxis": {
+                "labelColor": "#888",
+                "titleColor": "#888",
+                "labelFontSize": 8,
+                "titleFontSize": 10,
+                "grid": true,
+                "gridColor": "#888",
+                "gridDash": [
+                  4,
+                  10
+                ],
+                "ticks": true,
+                "domain": true,
+                "title": "Green Space Coverage (%)",
+                "scale": {
+                  "domain": [
+                    0,
+                    60
+                  ],
+                  "nice": true
+                }
+              },
+              "yAxis": {
+                "labelColor": "#888",
+                "titleColor": "#888",
+                "labelFontSize": 8,
+                "titleFontSize": 10,
+                "grid": false,
+                "gridColor": "#888",
+                "gridDash": [
+                  4,
+                  50
+                ],
+                "ticks": true,
+                "domain": true,
+                "title": "Water Quality Index",
+                "scale": {
+                  "domain": [
+                    70,
+                    100
+                  ],
+                  "nice": true
+                }
+              }
+            }
+          },
+          "legend": {
+            "showSize": true,
+            "sizeTitle": "Overall Environmental Score",
+            "showColor": true,
+            "colorTitle": "Air Quality Index (Lower is Better)",
+            "titleColor": "#888",
+            "labelColor": "#888",
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "orient": "right",
+            "colorOrient": "top",
+            "offset": 15,
+            "colorOffset": 0
+          },
+          "sizeLegend": {
+            "sizeTitle": "Overall Environmental Score",
+            "titleColor": "#888",
+            "labelColor": "#888",
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "orient": "right",
+            "values": [
+              70,
+              80,
+              90
+            ],
+            "offset": 15
+          },
+          "colorLegend": {
+            "colorTitle": "Air Quality Index (Lower is Better)",
+            "titleColor": "#888",
+            "labelColor": "#888",
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "colorOrient": "top",
+            "colorOffset": 0
+          },
+          "tooltip": {
+            "fields": [
+              {
+                "field": "city",
+                "type": "nominal",
+                "title": "City"
+              },
+              {
+                "field": "greenSpacePct",
+                "type": "quantitative",
+                "title": "Green Space (%)",
+                "format": ".0f"
+              },
+              {
+                "field": "waterQuality",
+                "type": "quantitative",
+                "title": "Water Quality",
+                "format": ".0f"
+              },
+              {
+                "field": "overallScore",
+                "type": "quantitative",
+                "title": "Environmental Score",
+                "format": ".0f"
+              },
+              {
+                "field": "aqi",
+                "type": "quantitative",
+                "title": "Air Quality Index",
+                "format": ".0f"
+              }
+            ]
+          },
+          "interactions": {
+            "hover": true,
+            "select": true
+          }
+        },
+        "insights": [
+          "Vancouver leads in green space and water quality",
+          "Barcelona has higher air pollution despite moderate green space"
+        ],
+        "metadata": {
+          "generatedBy": "scatterAgent",
+          "timestamp": "2025-09-05T16:35:07.079Z",
+          "userQuery": "Show environmental quality metrics including air quality vs green space coverage",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Singapore",
+              "Tokyo",
+              "Barcelona",
+              "Vancouver",
+              "Copenhagen"
+            ],
+            "maxDataPoints": 8
+          }
+        }
+      },
+      "vegaSpec": {
+        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+        "width": 360,
+        "height": 200,
+        "background": "transparent",
+        "data": {
+          "values": [
+            {
+              "city": "Singapore",
+              "greenSpacePct": 47,
+              "waterQuality": 94,
+              "overallScore": 88,
+              "aqi": 14
+            },
+            {
+              "city": "Tokyo",
+              "greenSpacePct": 24,
+              "waterQuality": 88,
+              "overallScore": 78,
+              "aqi": 20
+            },
+            {
+              "city": "Barcelona",
+              "greenSpacePct": 35,
+              "waterQuality": 81,
+              "overallScore": 72,
+              "aqi": 33
+            },
+            {
+              "city": "Vancouver",
+              "greenSpacePct": 55,
+              "waterQuality": 92,
+              "overallScore": 90,
+              "aqi": 10
+            },
+            {
+              "city": "Copenhagen",
+              "greenSpacePct": 41,
+              "waterQuality": 96,
+              "overallScore": 86,
+              "aqi": 13
+            },
+            {
+              "city": "Singapore",
+              "greenSpacePct": 53,
+              "waterQuality": 91,
+              "overallScore": 91,
+              "aqi": 12
+            },
+            {
+              "city": "Tokyo",
+              "greenSpacePct": 28,
+              "waterQuality": 85,
+              "overallScore": 80,
+              "aqi": 18
+            },
+            {
+              "city": "Barcelona",
+              "greenSpacePct": 38,
+              "waterQuality": 78,
+              "overallScore": 68,
+              "aqi": 38
+            }
+          ]
+        },
+        "params": [
+          {
+            "name": "hover_scatter",
+            "select": {
+              "type": "point",
+              "on": "pointerover",
+              "clear": "pointerout"
+            }
+          },
+          {
+            "name": "select_point",
+            "select": {
+              "type": "point"
+            }
+          }
+        ],
+        "mark": {
+          "type": "circle",
+          "cursor": "pointer",
+          "strokeWidth": 2
+        },
+        "encoding": {
+          "x": {
+            "field": "greenSpacePct",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                0,
+                60
+              ],
+              "nice": true
+            },
+            "axis": {
+              "labelColor": "#888",
+              "titleColor": "#888",
+              "labelFontSize": 8,
+              "titleFontSize": 10,
+              "grid": true,
+              "gridColor": "#888",
+              "gridDash": [
+                4,
+                10
+              ],
+              "ticks": true,
+              "domain": true,
+              "title": "Green Space Coverage (%)"
+            }
+          },
+          "y": {
+            "field": "waterQuality",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                70,
+                100
+              ],
+              "nice": true
+            },
+            "axis": {
+              "labelColor": "#888",
+              "titleColor": "#888",
+              "labelFontSize": 8,
+              "titleFontSize": 10,
+              "grid": false,
+              "gridColor": "#888",
+              "gridDash": [
+                4,
+                50
+              ],
+              "ticks": true,
+              "domain": true,
+              "title": "Water Quality Index"
+            }
+          },
+          "size": {
+            "field": "overallScore",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "range": [
+                200,
+                800
+              ],
+              "domain": [
+                68,
+                91
+              ],
+              "clamp": true
+            },
+            "legend": {
+              "title": "Overall Environmental Score",
+              "titleColor": "#888",
+              "labelColor": "#888",
+              "titleFontSize": 9,
+              "labelFontSize": 8,
+              "orient": "right",
+              "offset": 15,
+              "padding": 0,
+              "values": [
+                70,
+                80,
+                90
+              ]
+            }
+          },
+          "color": {
+            "field": "aqi",
+            "type": "quantitative",
+            "scale": {
+              "scheme": "redyellowgreen",
+              "reverse": true
+            },
+            "legend": {
+              "title": "Air Quality Index (Lower is Better)",
+              "titleColor": "#888",
+              "labelColor": "#888",
+              "titleFontSize": 9,
+              "labelFontSize": 8,
+              "orient": "top",
+              "offset": 0
+            }
+          },
+          "stroke": {
+            "condition": [
+              {
+                "param": "select_point",
+                "empty": false,
+                "value": "#272729"
+              },
+              {
+                "param": "hover_scatter",
+                "empty": false,
+                "value": "#272729"
+              }
+            ],
+            "value": "white"
+          },
+          "opacity": {
+            "condition": [
+              {
+                "param": "select_point",
+                "empty": false,
+                "value": 1
+              },
+              {
+                "param": "hover_scatter",
+                "empty": false,
+                "value": 0.9
+              }
+            ],
+            "value": 0.7
+          },
+          "tooltip": [
+            {
+              "field": "city",
+              "type": "nominal",
+              "title": "City"
+            },
+            {
+              "field": "greenSpacePct",
+              "type": "quantitative",
+              "title": "Green Space (%)",
+              "format": ".0f"
+            },
+            {
+              "field": "waterQuality",
+              "type": "quantitative",
+              "title": "Water Quality",
+              "format": ".0f"
+            },
+            {
+              "field": "overallScore",
+              "type": "quantitative",
+              "title": "Environmental Score",
+              "format": ".0f"
+            },
+            {
+              "field": "aqi",
+              "type": "quantitative",
+              "title": "Air Quality Index",
+              "format": ".0f"
+            }
+          ]
+        },
+        "config": {
+          "view": {
+            "stroke": null
+          }
+        }
+      },
+      "generationTime": 31724,
+      "success": true,
+      "error": null
+    },
+    {
+      "id": "chart-2",
+      "name": "Reviews vs Popularity Correlation",
+      "request": {
+        "userQuery": "Explore relationship between review ratings and visitor popularity with cost factors",
+        "constraints": {
+          "chartType": "scatter",
+          "subtype": "bubblePlotScatterSpec",
+          "nodeSize": "xlarge",
+          "dataCategory": "reviews",
+          "destinations": [
+            "Paris",
+            "Tokyo",
+            "Bangkok",
+            "New York",
+            "London",
             "Rome"
           ],
           "maxDataPoints": 10
         }
       },
       "chartSpec": {
-        "type": "multiType",
-        "subtype": "multiTypeWithThreshold",
+        "type": "scatter",
+        "subtype": "bubblePlotScatterSpec",
+        "title": "Review Ratings vs Visitor Popularity and Cost",
+        "description": "How cost links reviews and travel volume",
         "data": [
           {
-            "monthName": "Jan",
-            "safetyScore": 85,
-            "improvementIndex": 3.2,
-            "season": "Low"
+            "city": "Paris",
+            "avgRating": 4.3,
+            "visitors": 18000000,
+            "reviewCount": 52000,
+            "costIndex": 92
           },
           {
-            "monthName": "Feb",
-            "safetyScore": 86,
-            "improvementIndex": 3.5,
-            "season": "Low"
+            "city": "Tokyo",
+            "avgRating": 4.6,
+            "visitors": 15000000,
+            "reviewCount": 45000,
+            "costIndex": 85
           },
           {
-            "monthName": "Mar",
-            "safetyScore": 87,
-            "improvementIndex": 3.9,
-            "season": "Shoulder"
+            "city": "Bangkok",
+            "avgRating": 4.2,
+            "visitors": 12000000,
+            "reviewCount": 37000,
+            "costIndex": 68
           },
           {
-            "monthName": "Apr",
-            "safetyScore": 88,
-            "improvementIndex": 4.1,
-            "season": "Shoulder"
+            "city": "New York",
+            "avgRating": 4.5,
+            "visitors": 13500000,
+            "reviewCount": 49000,
+            "costIndex": 98
           },
           {
-            "monthName": "May",
-            "safetyScore": 90,
-            "improvementIndex": 4.5,
-            "season": "High"
+            "city": "London",
+            "avgRating": 4.4,
+            "visitors": 16400000,
+            "reviewCount": 51000,
+            "costIndex": 95
           },
           {
-            "monthName": "Jun",
-            "safetyScore": 89,
-            "improvementIndex": 4.3,
-            "season": "High"
+            "city": "Rome",
+            "avgRating": 4.1,
+            "visitors": 9400000,
+            "reviewCount": 25000,
+            "costIndex": 77
           },
           {
-            "monthName": "Jul",
-            "safetyScore": 87,
-            "improvementIndex": 4,
-            "season": "High"
+            "city": "Paris",
+            "avgRating": 4,
+            "visitors": 12500000,
+            "reviewCount": 36000,
+            "costIndex": 89
           },
           {
-            "monthName": "Aug",
-            "safetyScore": 86,
-            "improvementIndex": 3.7,
-            "season": "High"
+            "city": "Bangkok",
+            "avgRating": 4.4,
+            "visitors": 16500000,
+            "reviewCount": 40000,
+            "costIndex": 71
           },
           {
-            "monthName": "Sep",
-            "safetyScore": 88,
-            "improvementIndex": 4.2,
-            "season": "Shoulder"
+            "city": "London",
+            "avgRating": 4.6,
+            "visitors": 14500000,
+            "reviewCount": 47000,
+            "costIndex": 97
           },
           {
-            "monthName": "Oct",
-            "safetyScore": 89,
-            "improvementIndex": 4.4,
-            "season": "Shoulder"
+            "city": "Rome",
+            "avgRating": 4.3,
+            "visitors": 8900000,
+            "reviewCount": 21000,
+            "costIndex": 80
           }
         ],
         "config": {
           "dimensions": {
-            "width": 350,
-            "height": 180
+            "width": 360,
+            "height": 200
           },
           "fields": {
-            "x": "monthName",
-            "y": "safetyScore",
-            "series": "improvementIndex",
-            "color": "season"
+            "x": "avgRating",
+            "y": "visitors",
+            "size": "reviewCount",
+            "color": "costIndex"
           },
           "styling": {
             "colors": [
-              "#94a3b8",
-              "#3b82f6",
-              "#dc2626"
+              "redyellowgreen",
+              "reverse"
             ],
-            "lineColor": "#ef4444",
-            "lineWidth": 3,
-            "cornerRadius": 2,
             "background": "transparent",
-            "thresholdValue": 88,
-            "thresholdColor": "#ef4444",
-            "thresholdLabel": "Safety Target",
-            "showThresholdLabel": true,
+            "sizeDomain": [
+              20000,
+              52000
+            ],
             "axes": {
-              "yAxis": {
-                "title": "Monthly Safety Assessment Score",
-                "format": ".0f"
-              },
               "xAxis": {
-                "title": "Month"
+                "labelColor": "#888",
+                "titleColor": "#888",
+                "labelFontSize": 8,
+                "titleFontSize": 10,
+                "grid": true,
+                "gridColor": "#888",
+                "gridDash": [
+                  4,
+                  10
+                ],
+                "ticks": true,
+                "domain": true,
+                "title": "Average Review Rating",
+                "scale": {
+                  "domain": [
+                    4,
+                    4.7
+                  ],
+                  "nice": true
+                }
+              },
+              "yAxis": {
+                "labelColor": "#888",
+                "titleColor": "#888",
+                "labelFontSize": 8,
+                "titleFontSize": 10,
+                "grid": false,
+                "gridColor": "#888",
+                "gridDash": [
+                  4,
+                  50
+                ],
+                "ticks": true,
+                "domain": true,
+                "title": "Annual Visitors",
+                "scale": {
+                  "domain": [
+                    8000000,
+                    19000000
+                  ],
+                  "nice": true
+                }
               }
             }
           },
           "legend": {
-            "orient": "right",
+            "showSize": true,
+            "sizeTitle": "Number of Reviews",
+            "showColor": true,
+            "colorTitle": "Cost Index",
             "titleColor": "#888",
             "labelColor": "#888",
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "symbolSize": 200
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "orient": "right",
+            "colorOrient": "top",
+            "offset": 15,
+            "colorOffset": 0
+          },
+          "sizeLegend": {
+            "sizeTitle": "Number of Reviews",
+            "titleColor": "#888",
+            "labelColor": "#888",
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "orient": "right",
+            "values": [
+              20000,
+              30000,
+              40000,
+              52000
+            ],
+            "offset": 15
+          },
+          "colorLegend": {
+            "colorTitle": "Cost Index",
+            "titleColor": "#888",
+            "labelColor": "#888",
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "colorOrient": "top",
+            "colorOffset": 0
+          },
+          "tooltip": {
+            "fields": [
+              {
+                "field": "city",
+                "type": "nominal",
+                "title": "City"
+              },
+              {
+                "field": "avgRating",
+                "type": "quantitative",
+                "title": "Average Review Rating",
+                "format": ".1f"
+              },
+              {
+                "field": "visitors",
+                "type": "quantitative",
+                "title": "Annual Visitors",
+                "format": ".0f"
+              },
+              {
+                "field": "reviewCount",
+                "type": "quantitative",
+                "title": "Number of Reviews",
+                "format": ".0f"
+              },
+              {
+                "field": "costIndex",
+                "type": "quantitative",
+                "title": "Cost Index",
+                "format": ".0f"
+              }
+            ]
           },
           "interactions": {
-            "hover": true
+            "hover": true,
+            "select": true
           }
         },
-        "title": "Monthly Safety Scores for Rome",
-        "description": "Scores tracked with safety target line",
         "insights": [
-          "May and October exceed safety target",
-          "Scores dip slightly in July and August"
+          "Higher cost cities often have more reviews",
+          "Popular cities maintain high review ratings"
         ],
         "metadata": {
-          "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-05T02:27:22.954Z",
-          "userQuery": "Show monthly safety scores with target threshold line for Rome",
+          "generatedBy": "scatterAgent",
+          "timestamp": "2025-09-05T16:35:38.344Z",
+          "userQuery": "Explore relationship between review ratings and visitor popularity with cost factors",
           "constraints": {
-            "chartType": "multiType",
-            "subtype": "multiTypeWithThreshold",
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
             "nodeSize": "xlarge",
-            "dataCategory": "safety",
+            "dataCategory": "reviews",
             "destinations": [
+              "Paris",
+              "Tokyo",
+              "Bangkok",
+              "New York",
+              "London",
               "Rome"
             ],
             "maxDataPoints": 10
@@ -2142,1253 +1315,793 @@
       },
       "vegaSpec": {
         "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 350,
-        "height": 180,
+        "width": 360,
+        "height": 200,
         "background": "transparent",
         "data": {
           "values": [
             {
-              "monthName": "Jan",
-              "safetyScore": 85,
-              "improvementIndex": 3.2,
-              "season": "Low"
+              "city": "Paris",
+              "avgRating": 4.3,
+              "visitors": 18000000,
+              "reviewCount": 52000,
+              "costIndex": 92
             },
             {
-              "monthName": "Feb",
-              "safetyScore": 86,
-              "improvementIndex": 3.5,
-              "season": "Low"
+              "city": "Tokyo",
+              "avgRating": 4.6,
+              "visitors": 15000000,
+              "reviewCount": 45000,
+              "costIndex": 85
             },
             {
-              "monthName": "Mar",
-              "safetyScore": 87,
-              "improvementIndex": 3.9,
-              "season": "Shoulder"
+              "city": "Bangkok",
+              "avgRating": 4.2,
+              "visitors": 12000000,
+              "reviewCount": 37000,
+              "costIndex": 68
             },
             {
-              "monthName": "Apr",
-              "safetyScore": 88,
-              "improvementIndex": 4.1,
-              "season": "Shoulder"
+              "city": "New York",
+              "avgRating": 4.5,
+              "visitors": 13500000,
+              "reviewCount": 49000,
+              "costIndex": 98
             },
             {
-              "monthName": "May",
-              "safetyScore": 90,
-              "improvementIndex": 4.5,
-              "season": "High"
+              "city": "London",
+              "avgRating": 4.4,
+              "visitors": 16400000,
+              "reviewCount": 51000,
+              "costIndex": 95
             },
             {
-              "monthName": "Jun",
-              "safetyScore": 89,
-              "improvementIndex": 4.3,
-              "season": "High"
+              "city": "Rome",
+              "avgRating": 4.1,
+              "visitors": 9400000,
+              "reviewCount": 25000,
+              "costIndex": 77
             },
             {
-              "monthName": "Jul",
-              "safetyScore": 87,
-              "improvementIndex": 4,
-              "season": "High"
+              "city": "Paris",
+              "avgRating": 4,
+              "visitors": 12500000,
+              "reviewCount": 36000,
+              "costIndex": 89
             },
             {
-              "monthName": "Aug",
-              "safetyScore": 86,
-              "improvementIndex": 3.7,
-              "season": "High"
+              "city": "Bangkok",
+              "avgRating": 4.4,
+              "visitors": 16500000,
+              "reviewCount": 40000,
+              "costIndex": 71
             },
             {
-              "monthName": "Sep",
-              "safetyScore": 88,
-              "improvementIndex": 4.2,
-              "season": "Shoulder"
+              "city": "London",
+              "avgRating": 4.6,
+              "visitors": 14500000,
+              "reviewCount": 47000,
+              "costIndex": 97
             },
             {
-              "monthName": "Oct",
-              "safetyScore": 89,
-              "improvementIndex": 4.4,
-              "season": "Shoulder"
+              "city": "Rome",
+              "avgRating": 4.3,
+              "visitors": 8900000,
+              "reviewCount": 21000,
+              "costIndex": 80
             }
           ]
         },
-        "layer": [
+        "params": [
           {
-            "data": {
-              "values": [
-                {}
-              ]
-            },
-            "mark": {
-              "type": "rule",
-              "color": "#ef4444",
-              "strokeWidth": 2,
-              "strokeDash": [
-                6,
-                3
-              ]
-            },
-            "encoding": {
-              "y": {
-                "datum": 88,
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Monthly Safety Assessment Score",
-                  "format": ".0f"
-                }
-              },
-              "tooltip": [
-                {
-                  "field": "datum",
-                  "type": "quantitative",
-                  "title": "Safety Target",
-                  "format": ".0f"
-                }
-              ]
+            "name": "hover_scatter",
+            "select": {
+              "type": "point",
+              "on": "pointerover",
+              "clear": "pointerout"
             }
           },
           {
-            "params": [
-              {
-                "name": "hover_flow",
-                "select": {
-                  "type": "point",
-                  "on": "pointerover",
-                  "clear": "pointerout"
-                }
-              }
-            ],
-            "mark": {
-              "type": "bar",
-              "cursor": "pointer",
-              "cornerRadiusEnd": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 10,
-                  "labelAngle": 0,
-                  "labelPadding": 5,
-                  "title": "Month",
-                  "grid": false,
-                  "ticks": true,
-                  "domain": true
-                }
-              },
-              "y": {
-                "field": "safetyScore",
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Monthly Safety Assessment Score",
-                  "format": ".0f"
-                }
-              },
-              "color": {
-                "field": "season",
-                "type": "nominal",
-                "scale": {
-                  "range": [
-                    "#94a3b8",
-                    "#3b82f6",
-                    "#dc2626"
-                  ]
-                },
-                "legend": {
-                  "orient": "right",
-                  "titleColor": "#888",
-                  "labelColor": "#888",
-                  "titleFontSize": 11,
-                  "labelFontSize": 10,
-                  "symbolSize": 200
-                }
-              },
-              "opacity": {
-                "condition": {
-                  "param": "hover_flow",
-                  "value": 0.8
-                },
-                "value": 0.6
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "safetyScore",
-                  "type": "quantitative",
-                  "title": "Value",
-                  "format": ",.0f"
-                },
-                {
-                  "field": "season",
-                  "type": "nominal",
-                  "title": "Category"
-                }
-              ]
-            }
-          },
-          {
-            "mark": {
-              "type": "line",
-              "color": "#8b5cf6",
-              "strokeWidth": 2,
-              "point": true
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal"
-              },
-              "y": {
-                "field": "improvementIndex",
-                "type": "quantitative"
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "improvementIndex",
-                  "type": "quantitative",
-                  "title": "Occupancy Rate",
-                  "format": ".0f"
-                }
-              ]
-            }
-          },
-          {
-            "data": {
-              "values": [
-                {
-                  "thresholdValue": 88,
-                  "thresholdLabel": "Safety Target"
-                }
-              ]
-            },
-            "mark": {
-              "type": "text",
-              "align": "right",
-              "dx": -5,
-              "dy": -5,
-              "color": "#ef4444",
-              "fontSize": 10,
-              "fontWeight": "bold"
-            },
-            "encoding": {
-              "x": {
-                "value": 350
-              },
-              "y": {
-                "field": "thresholdValue",
-                "type": "quantitative"
-              },
-              "text": {
-                "field": "thresholdLabel",
-                "type": "nominal"
-              }
+            "name": "select_point",
+            "select": {
+              "type": "point"
             }
           }
         ],
-        "resolve": {
-          "scale": {
-            "y": "shared"
-          }
+        "mark": {
+          "type": "circle",
+          "cursor": "pointer",
+          "strokeWidth": 2
+        },
+        "encoding": {
+          "x": {
+            "field": "avgRating",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                4,
+                4.7
+              ],
+              "nice": true
+            },
+            "axis": {
+              "labelColor": "#888",
+              "titleColor": "#888",
+              "labelFontSize": 8,
+              "titleFontSize": 10,
+              "grid": true,
+              "gridColor": "#888",
+              "gridDash": [
+                4,
+                10
+              ],
+              "ticks": true,
+              "domain": true,
+              "title": "Average Review Rating"
+            }
+          },
+          "y": {
+            "field": "visitors",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                8000000,
+                19000000
+              ],
+              "nice": true
+            },
+            "axis": {
+              "labelColor": "#888",
+              "titleColor": "#888",
+              "labelFontSize": 8,
+              "titleFontSize": 10,
+              "grid": false,
+              "gridColor": "#888",
+              "gridDash": [
+                4,
+                50
+              ],
+              "ticks": true,
+              "domain": true,
+              "title": "Annual Visitors"
+            }
+          },
+          "size": {
+            "field": "reviewCount",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "range": [
+                200,
+                800
+              ],
+              "domain": [
+                20000,
+                52000
+              ],
+              "clamp": true
+            },
+            "legend": {
+              "title": "Number of Reviews",
+              "titleColor": "#888",
+              "labelColor": "#888",
+              "titleFontSize": 9,
+              "labelFontSize": 8,
+              "orient": "right",
+              "offset": 15,
+              "padding": 0,
+              "values": [
+                20000,
+                30000,
+                40000,
+                52000
+              ]
+            }
+          },
+          "color": {
+            "field": "costIndex",
+            "type": "quantitative",
+            "scale": {
+              "scheme": "redyellowgreen",
+              "reverse": true
+            },
+            "legend": {
+              "title": "Cost Index",
+              "titleColor": "#888",
+              "labelColor": "#888",
+              "titleFontSize": 9,
+              "labelFontSize": 8,
+              "orient": "top",
+              "offset": 0
+            }
+          },
+          "stroke": {
+            "condition": [
+              {
+                "param": "select_point",
+                "empty": false,
+                "value": "#272729"
+              },
+              {
+                "param": "hover_scatter",
+                "empty": false,
+                "value": "#272729"
+              }
+            ],
+            "value": "white"
+          },
+          "opacity": {
+            "condition": [
+              {
+                "param": "select_point",
+                "empty": false,
+                "value": 1
+              },
+              {
+                "param": "hover_scatter",
+                "empty": false,
+                "value": 0.9
+              }
+            ],
+            "value": 0.7
+          },
+          "tooltip": [
+            {
+              "field": "city",
+              "type": "nominal",
+              "title": "City"
+            },
+            {
+              "field": "avgRating",
+              "type": "quantitative",
+              "title": "Average Review Rating",
+              "format": ".1f"
+            },
+            {
+              "field": "visitors",
+              "type": "quantitative",
+              "title": "Annual Visitors",
+              "format": ".0f"
+            },
+            {
+              "field": "reviewCount",
+              "type": "quantitative",
+              "title": "Number of Reviews",
+              "format": ".0f"
+            },
+            {
+              "field": "costIndex",
+              "type": "quantitative",
+              "title": "Cost Index",
+              "format": ".0f"
+            }
+          ]
         },
         "config": {
-          "background": "transparent",
           "view": {
             "stroke": null
           }
         }
       },
-      "generationTime": 21376,
+      "generationTime": 30262,
       "success": true,
       "error": null
     },
     {
-      "id": "chart-6",
-      "name": "Amsterdam Visitor Flows with Average Benchmark",
+      "id": "chart-3",
+      "name": "Accessibility vs Satisfaction Analysis",
       "request": {
-        "userQuery": "Display Amsterdam visitor arrivals with mean average overlay",
+        "userQuery": "Compare visa accessibility with tourist satisfaction scores and spending patterns",
         "constraints": {
-          "chartType": "multiType",
-          "subtype": "multiTypeWithMean",
+          "chartType": "scatter",
+          "subtype": "bubblePlotScatterSpec",
           "nodeSize": "xlarge",
-          "dataCategory": "visitor-flow",
+          "dataCategory": "accessibility",
           "destinations": [
-            "Amsterdam"
+            "Singapore",
+            "Tokyo",
+            "Bangkok",
+            "Sydney",
+            "Dubai",
+            "Mumbai"
           ],
-          "maxDataPoints": 12
+          "maxDataPoints": 8
         }
       },
       "chartSpec": {
-        "type": "multiType",
-        "subtype": "multiTypeWithMean",
+        "type": "scatter",
+        "subtype": "bubblePlotScatterSpec",
+        "title": "Visa Accessibility vs Tourist Satisfaction and Spending",
+        "description": "Comparing visa access, satisfaction, and spend",
         "data": [
           {
-            "monthName": "Jan",
-            "cityArrivals": 120000,
-            "regionalAverage": 105000,
-            "season": "Low"
+            "city": "Singapore",
+            "visaFreeAccess": 85,
+            "satisfactionScore": 4.7,
+            "touristSpend": 2500,
+            "developmentIndex": 0.93
           },
           {
-            "monthName": "Feb",
-            "cityArrivals": 128000,
-            "regionalAverage": 110000,
-            "season": "Low"
+            "city": "Tokyo",
+            "visaFreeAccess": 67,
+            "satisfactionScore": 4.4,
+            "touristSpend": 3200,
+            "developmentIndex": 0.89
           },
           {
-            "monthName": "Mar",
-            "cityArrivals": 142000,
-            "regionalAverage": 118000,
-            "season": "Shoulder"
+            "city": "Bangkok",
+            "visaFreeAccess": 68,
+            "satisfactionScore": 4.2,
+            "touristSpend": 1800,
+            "developmentIndex": 0.81
           },
           {
-            "monthName": "Apr",
-            "cityArrivals": 178000,
-            "regionalAverage": 130000,
-            "season": "Shoulder"
+            "city": "Sydney",
+            "visaFreeAccess": 79,
+            "satisfactionScore": 4.6,
+            "touristSpend": 2950,
+            "developmentIndex": 0.95
           },
           {
-            "monthName": "May",
-            "cityArrivals": 210000,
-            "regionalAverage": 150000,
-            "season": "High"
+            "city": "Dubai",
+            "visaFreeAccess": 65,
+            "satisfactionScore": 4.1,
+            "touristSpend": 3400,
+            "developmentIndex": 0.91
           },
           {
-            "monthName": "Jun",
-            "cityArrivals": 238000,
-            "regionalAverage": 165000,
-            "season": "High"
+            "city": "Mumbai",
+            "visaFreeAccess": 60,
+            "satisfactionScore": 3.9,
+            "touristSpend": 1200,
+            "developmentIndex": 0.77
           },
           {
-            "monthName": "Jul",
-            "cityArrivals": 255000,
-            "regionalAverage": 172000,
-            "season": "High"
+            "city": "Singapore",
+            "visaFreeAccess": 85,
+            "satisfactionScore": 4.8,
+            "touristSpend": 2700,
+            "developmentIndex": 0.93
           },
           {
-            "monthName": "Aug",
-            "cityArrivals": 241000,
-            "regionalAverage": 169000,
-            "season": "High"
-          },
-          {
-            "monthName": "Sep",
-            "cityArrivals": 195000,
-            "regionalAverage": 145000,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Oct",
-            "cityArrivals": 162000,
-            "regionalAverage": 124000,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Nov",
-            "cityArrivals": 132000,
-            "regionalAverage": 108000,
-            "season": "Low"
-          },
-          {
-            "monthName": "Dec",
-            "cityArrivals": 140000,
-            "regionalAverage": 113000,
-            "season": "Low"
+            "city": "Bangkok",
+            "visaFreeAccess": 68,
+            "satisfactionScore": 4.3,
+            "touristSpend": 1900,
+            "developmentIndex": 0.81
           }
         ],
         "config": {
           "dimensions": {
-            "width": 350,
-            "height": 180
+            "width": 360,
+            "height": 200
           },
           "fields": {
-            "x": "monthName",
-            "y": "cityArrivals",
-            "series": "regionalAverage",
-            "color": "season"
+            "x": "visaFreeAccess",
+            "y": "satisfactionScore",
+            "size": "touristSpend",
+            "color": "developmentIndex"
           },
           "styling": {
             "colors": [
-              "#94a3b8",
-              "#3b82f6",
-              "#dc2626"
+              "redyellowgreen",
+              "reverse"
             ],
-            "lineColor": "#ef4444",
-            "lineWidth": 3,
-            "cornerRadius": 2,
             "background": "transparent",
-            "meanValue": 175083,
-            "meanColor": "#ff6b6b",
-            "meanLabel": "Monthly Average",
-            "showMeanLabel": true,
+            "sizeDomain": [
+              1200,
+              3400
+            ],
             "axes": {
-              "yAxis": {
-                "title": "Monthly Visitor Arrivals",
-                "format": ".2s"
-              },
               "xAxis": {
-                "title": "Month"
+                "labelColor": "#888",
+                "titleColor": "#888",
+                "labelFontSize": 8,
+                "titleFontSize": 10,
+                "grid": true,
+                "gridColor": "#888",
+                "gridDash": [
+                  4,
+                  10
+                ],
+                "ticks": true,
+                "domain": true,
+                "title": "Visa-Free Access (Countries)",
+                "scale": {
+                  "domain": [
+                    55,
+                    90
+                  ],
+                  "nice": true
+                }
+              },
+              "yAxis": {
+                "labelColor": "#888",
+                "titleColor": "#888",
+                "labelFontSize": 8,
+                "titleFontSize": 10,
+                "grid": false,
+                "gridColor": "#888",
+                "gridDash": [
+                  4,
+                  50
+                ],
+                "ticks": true,
+                "domain": true,
+                "title": "Tourist Satisfaction (1–5)",
+                "scale": {
+                  "domain": [
+                    3.8,
+                    5
+                  ],
+                  "nice": true
+                }
               }
             }
           },
           "legend": {
-            "orient": "right",
+            "showSize": true,
+            "sizeTitle": "Avg Tourist Spend (USD)",
+            "showColor": true,
+            "colorTitle": "Development Index",
             "titleColor": "#888",
             "labelColor": "#888",
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "symbolSize": 200
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "orient": "right",
+            "colorOrient": "top",
+            "offset": 15,
+            "colorOffset": 0
+          },
+          "sizeLegend": {
+            "sizeTitle": "Avg Tourist Spend (USD)",
+            "titleColor": "#888",
+            "labelColor": "#888",
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "orient": "right",
+            "values": [
+              1200,
+              1800,
+              2500,
+              3400
+            ],
+            "offset": 15
+          },
+          "colorLegend": {
+            "colorTitle": "Development Index",
+            "titleColor": "#888",
+            "labelColor": "#888",
+            "titleFontSize": 9,
+            "labelFontSize": 8,
+            "colorOrient": "top",
+            "colorOffset": 0
+          },
+          "tooltip": {
+            "fields": [
+              {
+                "field": "city",
+                "type": "nominal",
+                "title": "City"
+              },
+              {
+                "field": "visaFreeAccess",
+                "type": "quantitative",
+                "title": "Visa-Free Access",
+                "format": ".0f"
+              },
+              {
+                "field": "satisfactionScore",
+                "type": "quantitative",
+                "title": "Satisfaction Score",
+                "format": ".1f"
+              },
+              {
+                "field": "touristSpend",
+                "type": "quantitative",
+                "title": "Avg Tourist Spend (USD)",
+                "format": ".0f"
+              },
+              {
+                "field": "developmentIndex",
+                "type": "quantitative",
+                "title": "Development Index",
+                "format": ".2f"
+              }
+            ]
           },
           "interactions": {
-            "hover": true
+            "hover": true,
+            "select": true
           }
         },
-        "title": "Amsterdam monthly visitor arrivals vs regional average",
-        "description": "Arrivals with regional and mean overlays",
         "insights": [
-          "Peak arrivals in July and August",
-          "Amsterdam often surpasses regional average"
+          "Higher visa access often coincides with higher satisfaction",
+          "Tourist spend is highest in Dubai and Tokyo"
         ],
         "metadata": {
-          "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-05T02:27:38.383Z",
-          "userQuery": "Display Amsterdam visitor arrivals with mean average overlay",
+          "generatedBy": "scatterAgent",
+          "timestamp": "2025-09-05T16:36:10.484Z",
+          "userQuery": "Compare visa accessibility with tourist satisfaction scores and spending patterns",
           "constraints": {
-            "chartType": "multiType",
-            "subtype": "multiTypeWithMean",
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
             "nodeSize": "xlarge",
-            "dataCategory": "visitor-flow",
+            "dataCategory": "accessibility",
             "destinations": [
-              "Amsterdam"
+              "Singapore",
+              "Tokyo",
+              "Bangkok",
+              "Sydney",
+              "Dubai",
+              "Mumbai"
             ],
-            "maxDataPoints": 12
+            "maxDataPoints": 8
           }
         }
       },
       "vegaSpec": {
         "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 350,
-        "height": 180,
+        "width": 360,
+        "height": 200,
         "background": "transparent",
         "data": {
           "values": [
             {
-              "monthName": "Jan",
-              "cityArrivals": 120000,
-              "regionalAverage": 105000,
-              "season": "Low"
+              "city": "Singapore",
+              "visaFreeAccess": 85,
+              "satisfactionScore": 4.7,
+              "touristSpend": 2500,
+              "developmentIndex": 0.93
             },
             {
-              "monthName": "Feb",
-              "cityArrivals": 128000,
-              "regionalAverage": 110000,
-              "season": "Low"
+              "city": "Tokyo",
+              "visaFreeAccess": 67,
+              "satisfactionScore": 4.4,
+              "touristSpend": 3200,
+              "developmentIndex": 0.89
             },
             {
-              "monthName": "Mar",
-              "cityArrivals": 142000,
-              "regionalAverage": 118000,
-              "season": "Shoulder"
+              "city": "Bangkok",
+              "visaFreeAccess": 68,
+              "satisfactionScore": 4.2,
+              "touristSpend": 1800,
+              "developmentIndex": 0.81
             },
             {
-              "monthName": "Apr",
-              "cityArrivals": 178000,
-              "regionalAverage": 130000,
-              "season": "Shoulder"
+              "city": "Sydney",
+              "visaFreeAccess": 79,
+              "satisfactionScore": 4.6,
+              "touristSpend": 2950,
+              "developmentIndex": 0.95
             },
             {
-              "monthName": "May",
-              "cityArrivals": 210000,
-              "regionalAverage": 150000,
-              "season": "High"
+              "city": "Dubai",
+              "visaFreeAccess": 65,
+              "satisfactionScore": 4.1,
+              "touristSpend": 3400,
+              "developmentIndex": 0.91
             },
             {
-              "monthName": "Jun",
-              "cityArrivals": 238000,
-              "regionalAverage": 165000,
-              "season": "High"
+              "city": "Mumbai",
+              "visaFreeAccess": 60,
+              "satisfactionScore": 3.9,
+              "touristSpend": 1200,
+              "developmentIndex": 0.77
             },
             {
-              "monthName": "Jul",
-              "cityArrivals": 255000,
-              "regionalAverage": 172000,
-              "season": "High"
+              "city": "Singapore",
+              "visaFreeAccess": 85,
+              "satisfactionScore": 4.8,
+              "touristSpend": 2700,
+              "developmentIndex": 0.93
             },
             {
-              "monthName": "Aug",
-              "cityArrivals": 241000,
-              "regionalAverage": 169000,
-              "season": "High"
-            },
-            {
-              "monthName": "Sep",
-              "cityArrivals": 195000,
-              "regionalAverage": 145000,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Oct",
-              "cityArrivals": 162000,
-              "regionalAverage": 124000,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Nov",
-              "cityArrivals": 132000,
-              "regionalAverage": 108000,
-              "season": "Low"
-            },
-            {
-              "monthName": "Dec",
-              "cityArrivals": 140000,
-              "regionalAverage": 113000,
-              "season": "Low"
+              "city": "Bangkok",
+              "visaFreeAccess": 68,
+              "satisfactionScore": 4.3,
+              "touristSpend": 1900,
+              "developmentIndex": 0.81
             }
           ]
         },
-        "layer": [
+        "params": [
           {
-            "data": {
-              "values": [
-                {}
-              ]
-            },
-            "mark": {
-              "type": "rule",
-              "color": "#ff6b6b",
-              "strokeWidth": 2,
-              "strokeDash": [
-                4,
-                4
-              ]
-            },
-            "encoding": {
-              "y": {
-                "datum": 175083,
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Monthly Visitor Arrivals",
-                  "format": ".2s"
-                }
-              },
-              "tooltip": [
-                {
-                  "field": "datum",
-                  "type": "quantitative",
-                  "title": "Monthly Average",
-                  "format": ".2s"
-                }
-              ]
+            "name": "hover_scatter",
+            "select": {
+              "type": "point",
+              "on": "pointerover",
+              "clear": "pointerout"
             }
           },
           {
-            "params": [
-              {
-                "name": "hover_flow",
-                "select": {
-                  "type": "point",
-                  "on": "pointerover",
-                  "clear": "pointerout"
-                }
-              }
-            ],
-            "mark": {
-              "type": "bar",
-              "cursor": "pointer",
-              "cornerRadiusEnd": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 10,
-                  "labelAngle": 0,
-                  "labelPadding": 5,
-                  "title": "Month",
-                  "grid": false,
-                  "ticks": true,
-                  "domain": true
-                }
-              },
-              "y": {
-                "field": "cityArrivals",
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Monthly Visitor Arrivals",
-                  "format": ".2s"
-                }
-              },
-              "color": {
-                "field": "season",
-                "type": "nominal",
-                "scale": {
-                  "range": [
-                    "#94a3b8",
-                    "#3b82f6",
-                    "#dc2626"
-                  ]
-                },
-                "legend": {
-                  "orient": "right",
-                  "titleColor": "#888",
-                  "labelColor": "#888",
-                  "titleFontSize": 11,
-                  "labelFontSize": 10,
-                  "symbolSize": 200
-                }
-              },
-              "opacity": {
-                "condition": {
-                  "param": "hover_flow",
-                  "value": 0.8
-                },
-                "value": 0.6
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "cityArrivals",
-                  "type": "quantitative",
-                  "title": "Value",
-                  "format": ",.0f"
-                },
-                {
-                  "field": "season",
-                  "type": "nominal",
-                  "title": "Category"
-                }
-              ]
-            }
-          },
-          {
-            "mark": {
-              "type": "line",
-              "color": "#8b5cf6",
-              "strokeWidth": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal"
-              },
-              "y": {
-                "field": "regionalAverage",
-                "type": "quantitative"
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "regionalAverage",
-                  "type": "quantitative",
-                  "title": "Occupancy Rate",
-                  "format": ".0f"
-                }
-              ]
-            }
-          },
-          {
-            "data": {
-              "values": [
-                {
-                  "meanValue": 175083,
-                  "meanLabel": "Monthly Average"
-                }
-              ]
-            },
-            "mark": {
-              "type": "text",
-              "align": "right",
-              "dx": -5,
-              "dy": -5,
-              "color": "#ff6b6b",
-              "fontSize": 10,
-              "fontWeight": "bold"
-            },
-            "encoding": {
-              "x": {
-                "value": 350
-              },
-              "y": {
-                "field": "meanValue",
-                "type": "quantitative"
-              },
-              "text": {
-                "field": "meanLabel",
-                "type": "nominal"
-              }
+            "name": "select_point",
+            "select": {
+              "type": "point"
             }
           }
         ],
-        "resolve": {
-          "scale": {
-            "y": "shared"
-          }
+        "mark": {
+          "type": "circle",
+          "cursor": "pointer",
+          "strokeWidth": 2
+        },
+        "encoding": {
+          "x": {
+            "field": "visaFreeAccess",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                55,
+                90
+              ],
+              "nice": true
+            },
+            "axis": {
+              "labelColor": "#888",
+              "titleColor": "#888",
+              "labelFontSize": 8,
+              "titleFontSize": 10,
+              "grid": true,
+              "gridColor": "#888",
+              "gridDash": [
+                4,
+                10
+              ],
+              "ticks": true,
+              "domain": true,
+              "title": "Visa-Free Access (Countries)"
+            }
+          },
+          "y": {
+            "field": "satisfactionScore",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                3.8,
+                5
+              ],
+              "nice": true
+            },
+            "axis": {
+              "labelColor": "#888",
+              "titleColor": "#888",
+              "labelFontSize": 8,
+              "titleFontSize": 10,
+              "grid": false,
+              "gridColor": "#888",
+              "gridDash": [
+                4,
+                50
+              ],
+              "ticks": true,
+              "domain": true,
+              "title": "Tourist Satisfaction (1–5)"
+            }
+          },
+          "size": {
+            "field": "touristSpend",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "range": [
+                200,
+                800
+              ],
+              "domain": [
+                1200,
+                3400
+              ],
+              "clamp": true
+            },
+            "legend": {
+              "title": "Avg Tourist Spend (USD)",
+              "titleColor": "#888",
+              "labelColor": "#888",
+              "titleFontSize": 9,
+              "labelFontSize": 8,
+              "orient": "right",
+              "offset": 15,
+              "padding": 0,
+              "values": [
+                1200,
+                1800,
+                2500,
+                3400
+              ]
+            }
+          },
+          "color": {
+            "field": "developmentIndex",
+            "type": "quantitative",
+            "scale": {
+              "scheme": "redyellowgreen",
+              "reverse": true
+            },
+            "legend": {
+              "title": "Development Index",
+              "titleColor": "#888",
+              "labelColor": "#888",
+              "titleFontSize": 9,
+              "labelFontSize": 8,
+              "orient": "top",
+              "offset": 0
+            }
+          },
+          "stroke": {
+            "condition": [
+              {
+                "param": "select_point",
+                "empty": false,
+                "value": "#272729"
+              },
+              {
+                "param": "hover_scatter",
+                "empty": false,
+                "value": "#272729"
+              }
+            ],
+            "value": "white"
+          },
+          "opacity": {
+            "condition": [
+              {
+                "param": "select_point",
+                "empty": false,
+                "value": 1
+              },
+              {
+                "param": "hover_scatter",
+                "empty": false,
+                "value": 0.9
+              }
+            ],
+            "value": 0.7
+          },
+          "tooltip": [
+            {
+              "field": "city",
+              "type": "nominal",
+              "title": "City"
+            },
+            {
+              "field": "visaFreeAccess",
+              "type": "quantitative",
+              "title": "Visa-Free Access",
+              "format": ".0f"
+            },
+            {
+              "field": "satisfactionScore",
+              "type": "quantitative",
+              "title": "Satisfaction Score",
+              "format": ".1f"
+            },
+            {
+              "field": "touristSpend",
+              "type": "quantitative",
+              "title": "Avg Tourist Spend (USD)",
+              "format": ".0f"
+            },
+            {
+              "field": "developmentIndex",
+              "type": "quantitative",
+              "title": "Development Index",
+              "format": ".2f"
+            }
+          ]
         },
         "config": {
-          "background": "transparent",
           "view": {
             "stroke": null
           }
         }
       },
-      "generationTime": 14425,
-      "success": true,
-      "error": null
-    },
-    {
-      "id": "chart-7",
-      "name": "Barcelona Hotel Costs with Mean Benchmark",
-      "request": {
-        "userQuery": "Show Barcelona hotel costs with calculated mean benchmark line",
-        "constraints": {
-          "chartType": "multiType",
-          "subtype": "multiTypeWithMean",
-          "nodeSize": "xlarge",
-          "dataCategory": "cost",
-          "destinations": [
-            "Barcelona"
-          ],
-          "maxDataPoints": 10
-        }
-      },
-      "chartSpec": {
-        "type": "multiType",
-        "subtype": "multiTypeWithMean",
-        "data": [
-          {
-            "monthName": "Jan",
-            "monthlyHotelCost": 145,
-            "peerCityCost": 138,
-            "season": "Low"
-          },
-          {
-            "monthName": "Feb",
-            "monthlyHotelCost": 152,
-            "peerCityCost": 140,
-            "season": "Low"
-          },
-          {
-            "monthName": "Mar",
-            "monthlyHotelCost": 159,
-            "peerCityCost": 146,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Apr",
-            "monthlyHotelCost": 174,
-            "peerCityCost": 153,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "May",
-            "monthlyHotelCost": 189,
-            "peerCityCost": 158,
-            "season": "High"
-          },
-          {
-            "monthName": "Jun",
-            "monthlyHotelCost": 196,
-            "peerCityCost": 162,
-            "season": "High"
-          },
-          {
-            "monthName": "Jul",
-            "monthlyHotelCost": 205,
-            "peerCityCost": 168,
-            "season": "Peak"
-          },
-          {
-            "monthName": "Aug",
-            "monthlyHotelCost": 210,
-            "peerCityCost": 171,
-            "season": "Peak"
-          },
-          {
-            "monthName": "Sep",
-            "monthlyHotelCost": 187,
-            "peerCityCost": 159,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Oct",
-            "monthlyHotelCost": 168,
-            "peerCityCost": 150,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Nov",
-            "monthlyHotelCost": 156,
-            "peerCityCost": 143,
-            "season": "Low"
-          },
-          {
-            "monthName": "Dec",
-            "monthlyHotelCost": 149,
-            "peerCityCost": 139,
-            "season": "Low"
-          }
-        ],
-        "config": {
-          "dimensions": {
-            "width": 350,
-            "height": 180
-          },
-          "fields": {
-            "x": "monthName",
-            "y": "monthlyHotelCost",
-            "series": "peerCityCost",
-            "color": "season"
-          },
-          "styling": {
-            "colors": [
-              "#94a3b8",
-              "#3b82f6",
-              "#dc2626"
-            ],
-            "lineColor": "#ef4444",
-            "lineWidth": 3,
-            "cornerRadius": 2,
-            "background": "transparent",
-            "meanValue": 172,
-            "meanColor": "#ff6b6b",
-            "meanLabel": "Monthly Average",
-            "showMeanLabel": true,
-            "axes": {
-              "yAxis": {
-                "title": "Average Hotel Cost per Night (USD)",
-                "format": "$,.0f"
-              },
-              "xAxis": {
-                "title": "Month"
-              }
-            }
-          },
-          "legend": {
-            "orient": "right",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "symbolSize": 200
-          },
-          "interactions": {
-            "hover": true
-          }
-        },
-        "title": "Barcelona hotel costs vs peer cities",
-        "description": "Monthly hotel prices and peer city average",
-        "insights": [
-          "Hotel costs peak in August",
-          "Barcelona exceeds peer average in summer"
-        ],
-        "metadata": {
-          "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-05T02:27:58.418Z",
-          "userQuery": "Show Barcelona hotel costs with calculated mean benchmark line",
-          "constraints": {
-            "chartType": "multiType",
-            "subtype": "multiTypeWithMean",
-            "nodeSize": "xlarge",
-            "dataCategory": "cost",
-            "destinations": [
-              "Barcelona"
-            ],
-            "maxDataPoints": 10
-          }
-        }
-      },
-      "vegaSpec": {
-        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 350,
-        "height": 180,
-        "background": "transparent",
-        "data": {
-          "values": [
-            {
-              "monthName": "Jan",
-              "monthlyHotelCost": 145,
-              "peerCityCost": 138,
-              "season": "Low"
-            },
-            {
-              "monthName": "Feb",
-              "monthlyHotelCost": 152,
-              "peerCityCost": 140,
-              "season": "Low"
-            },
-            {
-              "monthName": "Mar",
-              "monthlyHotelCost": 159,
-              "peerCityCost": 146,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Apr",
-              "monthlyHotelCost": 174,
-              "peerCityCost": 153,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "May",
-              "monthlyHotelCost": 189,
-              "peerCityCost": 158,
-              "season": "High"
-            },
-            {
-              "monthName": "Jun",
-              "monthlyHotelCost": 196,
-              "peerCityCost": 162,
-              "season": "High"
-            },
-            {
-              "monthName": "Jul",
-              "monthlyHotelCost": 205,
-              "peerCityCost": 168,
-              "season": "Peak"
-            },
-            {
-              "monthName": "Aug",
-              "monthlyHotelCost": 210,
-              "peerCityCost": 171,
-              "season": "Peak"
-            },
-            {
-              "monthName": "Sep",
-              "monthlyHotelCost": 187,
-              "peerCityCost": 159,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Oct",
-              "monthlyHotelCost": 168,
-              "peerCityCost": 150,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Nov",
-              "monthlyHotelCost": 156,
-              "peerCityCost": 143,
-              "season": "Low"
-            },
-            {
-              "monthName": "Dec",
-              "monthlyHotelCost": 149,
-              "peerCityCost": 139,
-              "season": "Low"
-            }
-          ]
-        },
-        "layer": [
-          {
-            "data": {
-              "values": [
-                {}
-              ]
-            },
-            "mark": {
-              "type": "rule",
-              "color": "#ff6b6b",
-              "strokeWidth": 2,
-              "strokeDash": [
-                4,
-                4
-              ]
-            },
-            "encoding": {
-              "y": {
-                "datum": 172,
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Average Hotel Cost per Night (USD)",
-                  "format": "$,.0f"
-                }
-              },
-              "tooltip": [
-                {
-                  "field": "datum",
-                  "type": "quantitative",
-                  "title": "Monthly Average",
-                  "format": "$,.0f"
-                }
-              ]
-            }
-          },
-          {
-            "params": [
-              {
-                "name": "hover_flow",
-                "select": {
-                  "type": "point",
-                  "on": "pointerover",
-                  "clear": "pointerout"
-                }
-              }
-            ],
-            "mark": {
-              "type": "bar",
-              "cursor": "pointer",
-              "cornerRadiusEnd": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 10,
-                  "labelAngle": 0,
-                  "labelPadding": 5,
-                  "title": "Month",
-                  "grid": false,
-                  "ticks": true,
-                  "domain": true
-                }
-              },
-              "y": {
-                "field": "monthlyHotelCost",
-                "type": "quantitative",
-                "axis": {
-                  "labelColor": "#888",
-                  "titleColor": "#888",
-                  "labelFontSize": 8,
-                  "gridColor": "#888",
-                  "gridDash": [
-                    2,
-                    2
-                  ],
-                  "grid": true,
-                  "title": "Average Hotel Cost per Night (USD)",
-                  "format": "$,.0f"
-                }
-              },
-              "color": {
-                "field": "season",
-                "type": "nominal",
-                "scale": {
-                  "range": [
-                    "#94a3b8",
-                    "#3b82f6",
-                    "#dc2626"
-                  ]
-                },
-                "legend": {
-                  "orient": "right",
-                  "titleColor": "#888",
-                  "labelColor": "#888",
-                  "titleFontSize": 11,
-                  "labelFontSize": 10,
-                  "symbolSize": 200
-                }
-              },
-              "opacity": {
-                "condition": {
-                  "param": "hover_flow",
-                  "value": 0.8
-                },
-                "value": 0.6
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "monthlyHotelCost",
-                  "type": "quantitative",
-                  "title": "Value",
-                  "format": ",.0f"
-                },
-                {
-                  "field": "season",
-                  "type": "nominal",
-                  "title": "Category"
-                }
-              ]
-            }
-          },
-          {
-            "mark": {
-              "type": "line",
-              "color": "#8b5cf6",
-              "strokeWidth": 2
-            },
-            "encoding": {
-              "x": {
-                "field": "monthName",
-                "type": "ordinal"
-              },
-              "y": {
-                "field": "peerCityCost",
-                "type": "quantitative"
-              },
-              "tooltip": [
-                {
-                  "field": "monthName",
-                  "type": "ordinal",
-                  "title": "Category"
-                },
-                {
-                  "field": "peerCityCost",
-                  "type": "quantitative",
-                  "title": "Occupancy Rate",
-                  "format": ".0f"
-                }
-              ]
-            }
-          },
-          {
-            "data": {
-              "values": [
-                {
-                  "meanValue": 172,
-                  "meanLabel": "Monthly Average"
-                }
-              ]
-            },
-            "mark": {
-              "type": "text",
-              "align": "right",
-              "dx": -5,
-              "dy": -5,
-              "color": "#ff6b6b",
-              "fontSize": 10,
-              "fontWeight": "bold"
-            },
-            "encoding": {
-              "x": {
-                "value": 350
-              },
-              "y": {
-                "field": "meanValue",
-                "type": "quantitative"
-              },
-              "text": {
-                "field": "meanLabel",
-                "type": "nominal"
-              }
-            }
-          }
-        ],
-        "resolve": {
-          "scale": {
-            "y": "shared"
-          }
-        },
-        "config": {
-          "background": "transparent",
-          "view": {
-            "stroke": null
-          }
-        }
-      },
-      "generationTime": 19030,
+      "generationTime": 31137,
       "success": true,
       "error": null
     }
   ],
-  "autoDetectionTests": [
-    {
-      "query": "Show visitor flows with occupancy rates",
-      "suggestions": [
-        "multiType"
-      ]
-    },
-    {
-      "query": "Compare local arrivals with regional averages",
-      "suggestions": [
-        "bar"
-      ]
-    },
-    {
-      "query": "Display costs with satisfaction scores",
-      "suggestions": [
-        "bar"
-      ]
-    },
-    {
-      "query": "Revenue trends with growth targets",
-      "suggestions": [
-        "line"
-      ]
-    },
-    {
-      "query": "Safety improvements with thresholds",
-      "suggestions": [
-        "bar"
-      ]
-    },
-    {
-      "query": "Monthly data with mean benchmarks",
-      "suggestions": [
-        "bar"
-      ]
-    }
-  ],
+  "autoDetectionTests": [],
   "systemInfo": {
     "availableAgents": [
       {

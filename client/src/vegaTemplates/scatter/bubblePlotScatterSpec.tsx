@@ -128,25 +128,52 @@ export function createBubblePlotScatterSpec(
   // Add color encoding if colorField is provided
   if (colorField) {
     const effectiveColorLegend = colorLegend || legend;
-    encoding.color = {
-      field: colorField,
-      type: "quantitative",
-      scale: {
-        scheme: colors?.[0] || "redyellowgreen",
-        reverse: colors?.[1] === "reverse"
-      },
-      legend: effectiveColorLegend && effectiveColorLegend.showColor !== false ? {
-        title: effectiveColorLegend.colorTitle || colorField,
-        titleColor: effectiveColorLegend.titleColor || "#888",
-        labelColor: effectiveColorLegend.labelColor || "#888",
-        titleFontSize: effectiveColorLegend.titleFontSize || 9,
-        labelFontSize: effectiveColorLegend.labelFontSize || 8,
-        orient: effectiveColorLegend.colorOrient || "top",
-        offset: effectiveColorLegend.colorOffset || 0
-      } : null
-    };
+    
+    // Determine if the color field is nominal or quantitative
+    const sampleValue = data.length > 0 ? data[0][colorField] : null;
+    const isNominal = typeof sampleValue === 'string' || 
+                     data.some(d => typeof d[colorField] === 'string');
+    
+    if (isNominal) {
+      // For nominal fields, use color array and ordinal scale
+      encoding.color = {
+        field: colorField,
+        type: "nominal",
+        scale: {
+          range: Array.isArray(colors) ? colors : ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#F59E0B", "#F43F5E"]
+        },
+        legend: effectiveColorLegend && effectiveColorLegend.showColor !== false ? {
+          title: effectiveColorLegend.colorTitle || colorField,
+          titleColor: effectiveColorLegend.titleColor || "#888",
+          labelColor: effectiveColorLegend.labelColor || "#888",
+          titleFontSize: effectiveColorLegend.titleFontSize || 9,
+          labelFontSize: effectiveColorLegend.labelFontSize || 8,
+          orient: effectiveColorLegend.colorOrient || "top",
+          offset: effectiveColorLegend.colorOffset || 0
+        } : null
+      };
+    } else {
+      // For quantitative fields, use color scheme
+      encoding.color = {
+        field: colorField,
+        type: "quantitative",
+        scale: {
+          scheme: (Array.isArray(colors) && colors[0]) || "redyellowgreen",
+          reverse: Array.isArray(colors) && colors[1] === "reverse"
+        },
+        legend: effectiveColorLegend && effectiveColorLegend.showColor !== false ? {
+          title: effectiveColorLegend.colorTitle || colorField,
+          titleColor: effectiveColorLegend.titleColor || "#888",
+          labelColor: effectiveColorLegend.labelColor || "#888",
+          titleFontSize: effectiveColorLegend.titleFontSize || 9,
+          labelFontSize: effectiveColorLegend.labelFontSize || 8,
+          orient: effectiveColorLegend.colorOrient || "top",
+          offset: effectiveColorLegend.colorOffset || 0
+        } : null
+      };
+    }
   } else if (colors) {
-    encoding.color = { value: colors[0] };
+    encoding.color = { value: Array.isArray(colors) ? colors[0] : colors };
   }
 
   // Add interaction-based stroke and opacity

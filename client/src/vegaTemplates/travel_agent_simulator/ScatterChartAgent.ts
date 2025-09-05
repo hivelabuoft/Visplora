@@ -87,50 +87,132 @@ export class ScatterChartAgent extends BaseTravelAgent {
 
 SPECIALIZED INSTRUCTIONS FOR SCATTER CHARTS:
 
-1. SUBTYPE SELECTION:
-   - bubblePlotScatterSpec: Bubble plot scatter with size and color encoding (ONLY AVAILABLE OPTION)
+1. CHART TYPE: scatter, SUBTYPE: bubblePlotScatterSpec (ONLY AVAILABLE OPTION)
 
-2. FIELD REQUIREMENTS:
-   - x: Must be quantitative (cost, rating, score, percentage)
-   - y: Must be quantitative (score, visitors, quality, satisfaction)
-   - size: Must be quantitative (visitors, reviewCount, spend, population)
-   - color: Can be quantitative (index, aqi, score) or nominal (region, category)
+2. REQUIRED OUTPUT FORMAT - RETURN EXACTLY THIS STRUCTURE:
+{
+  "type": "scatter",
+  "subtype": "bubblePlotScatterSpec",
+  "title": "Your Chart Title",
+  "description": "Brief description of the chart",
+  "data": [
+    // Your generated data array here
+  ],
+  "config": {
+    "dimensions": { "width": 360, "height": 200 },
+    "fields": {
+      "x": "your_x_field_name",
+      "y": "your_y_field_name", 
+      "size": "your_size_field_name",
+      "color": "your_color_field_name"
+    },
+    "styling": {
+      "colors": ["redyellowgreen", "reverse"], // <you may change this>
+      "background": "transparent",
+      "sizeDomain": [40, 100], // <you may change this range>
+      "axes": {
+        "xAxis": {
+          "labelColor": "#888",
+          "titleColor": "#888",
+          "labelFontSize": 8,
+          "titleFontSize": 10,
+          "grid": true,
+          "gridColor": "#888",
+          "gridDash": [4, 10],
+          "ticks": true,
+          "domain": true,
+          "title": "Your X Axis Title", // <you may change this>
+          "scale": { "domain": [0, 100], "nice": true } // <you may change domain>
+        },
+        "yAxis": {
+          "labelColor": "#888",
+          "titleColor": "#888",
+          "labelFontSize": 8,
+          "titleFontSize": 10,
+          "grid": false,
+          "gridColor": "#888",
+          "gridDash": [4, 50],
+          "ticks": true,
+          "domain": true,
+          "title": "Your Y Axis Title", // <you may change this>
+          "scale": { "domain": [0, 100], "nice": true } // <you may change domain>
+        }
+      }
+    },
+    "legend": {
+      "showSize": true,
+      "sizeTitle": "Your Size Legend Title", // <you may change this>
+      "showColor": true,
+      "colorTitle": "Your Color Legend Title", // <you may change this>
+      "titleColor": "#888",
+      "labelColor": "#888",
+      "titleFontSize": 9,
+      "labelFontSize": 8,
+      "orient": "right",
+      "colorOrient": "top",
+      "offset": 15,
+      "colorOffset": 0
+    },
+    "sizeLegend": {
+      "sizeTitle": "Your Size Legend Title", // <you may change this>
+      "titleColor": "#888",
+      "labelColor": "#888",
+      "titleFontSize": 9,
+      "labelFontSize": 8,
+      "orient": "right",
+      "values": [40, 60, 80, 100], // <you may change these values>
+      "offset": 15
+    },
+    "colorLegend": {
+      "colorTitle": "Your Color Legend Title", // <you may change this>
+      "titleColor": "#888",
+      "labelColor": "#888",
+      "titleFontSize": 9,
+      "labelFontSize": 8,
+      "colorOrient": "top",
+      "colorOffset": 0
+    },
+    "tooltip": {
+      "fields": [
+        { "field": "city", "type": "nominal", "title": "City" },
+        { "field": "your_x_field", "type": "quantitative", "title": "Your X Title", "format": ".0f" },
+        { "field": "your_y_field", "type": "quantitative", "title": "Your Y Title", "format": ".0f" },
+        { "field": "your_size_field", "type": "quantitative", "title": "Your Size Title", "format": ".0f" },
+        { "field": "your_color_field", "type": "quantitative", "title": "Your Color Title", "format": ".0f" }
+      ]
+    },
+    "interactions": {
+      "hover": true,
+      "select": true
+    }
+  }
+}
 
-3. STYLING MUST INCLUDE:
-   - colors: For quantitative color → ['redyellowgreen', 'reverse'] or color scheme name
-   - colors: For nominal color → Array of distinct colors
-   - sizeDomain: [min, max] range for size encoding (e.g., [40, 100])
-   - axes.xAxis: Proper scale configuration with domain and nice: true
-   - axes.yAxis: Proper scale configuration with domain and nice: true
+3. CRITICAL: DIMENSIONS ARE FIXED - DO NOT CHANGE:
+- dimensions MUST be exactly { "width": 360, "height": 200 }
+- Do NOT modify width or height values under any circumstances
 
-4. LEGEND CONFIGURATION:
-   - showSize: true
-   - sizeTitle: "Descriptive title for size"
-   - showColor: true  
-   - colorTitle: "Descriptive title for color"
-   - orient: 'right'
-   - colorOrient: 'top' (for color legend)
+4. FIELD REQUIREMENTS:
+- x: Must be quantitative (cost, rating, score, percentage)
+- y: Must be quantitative (score, visitors, quality, satisfaction) 
+- size: Must be quantitative (visitors, reviewCount, spend, population)
+- color: Can be quantitative (index, aqi, score) or nominal (region, category)
 
-5. TOOLTIP CONFIGURATION:
-   - fields: Array of field definitions with proper titles and formats
-   - Include all 4 encoded fields (x, y, size, color) plus city/identifier
+4. DATA CATEGORIES FOR REALISTIC SCENARIOS:
+- "cost": avgCost(x), safetyScore(y), visitors(size), region(color)
+- "environmental": greenSpacePct(x), waterQuality(y), overallScore(size), aqi(color)
+- "reviews": avgRating(x), visitors(y), reviewCount(size), costIndex(color)
+- "accessibility": visaFreeAccess(x), satisfactionScore(y), touristSpend(size), developmentIndex(color)
 
-6. AXIS SCALING:
-   - Always include scale domains with nice: true
-   - Use meaningful ranges based on data
-   - Format appropriately (percentages, currency, decimals)
+5. STYLING GUIDELINES:
+- For quantitative color: use color schemes like ["redyellowgreen", "reverse"]
+- For nominal color: use distinct color arrays like ["#8B5CF6", "#3B82F6", "#06B6D4"]
+- sizeDomain should match your actual data range
+- Axis domains should reflect realistic data ranges with nice: true
 
-7. EXAMPLE TRAVEL SCENARIOS:
-   - "cost vs safety relationship" → cost(x), safety(y), visitors(size), region(color)
-   - "environmental quality analysis" → greenSpace(x), waterQuality(y), overall(size), aqi(color)
-   - "popularity vs satisfaction" → rating(x), visitors(y), reviews(size), cost(color)
-   - "accessibility impact" → visaAccess(x), satisfaction(y), spend(size), development(color)
+CRITICAL REMINDER: dimensions MUST be exactly { "width": 360, "height": 200 } - DO NOT CHANGE!
 
-8. SIZE RANGE:
-   - Use sizeRange: [200, 800] for bubble sizes
-   - Ensure sizeDomain reflects actual data range
-
-GENERATE realistic travel data showing meaningful relationships between variables.`;
+RETURN ONLY THE JSON OBJECT. NO OTHER TEXT OR EXPLANATION.`;
 
       const llmResponse = await this.callLLM(prompt);
       const chartSpec = this.validateResponse(llmResponse);

@@ -1,0 +1,88 @@
+{
+  "demoRequests": [
+    {
+      "name": "Travel Cost Timeline - Single Destination",
+      "request": {
+        "userQuery": "Show travel cost trends over time for Tokyo",
+        "constraints": {
+          "chartType": "line",
+          "subtype": "multiLineLabelSpec",
+          "nodeSize": "xlarge",
+          "dataCategory": "cost",
+          "destinations": ["Tokyo"],
+          "maxDataPoints": 8
+        }
+      }
+    },
+    {
+      "name": "Visitor Arrivals - Multi-Destination Comparison",
+      "request": {
+        "userQuery": "Display visitor arrival trends comparing Bangkok, Singapore, and Seoul",
+        "constraints": {
+          "chartType": "line",
+          "subtype": "multiLineLabelSpec",
+          "nodeSize": "xlarge",
+          "dataCategory": "visitor-flow",
+          "destinations": ["Bangkok", "Singapore", "Seoul"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "Hotel Costs with Average Benchmark",
+      "request": {
+        "userQuery": "Show monthly hotel costs with average benchmark line for European cities",
+        "constraints": {
+          "chartType": "line",
+          "subtype": "lineChartWithMean",
+          "nodeSize": "xlarge",
+          "dataCategory": "cost",
+          "destinations": ["Paris", "Rome", "Barcelona"],
+          "maxDataPoints": 10
+        }
+      }
+    },
+    {
+      "name": "Safety Scores with Regional Average",
+      "request": {
+        "userQuery": "Track safety scores over time with regional average line for Asian destinations",
+        "constraints": {
+          "chartType": "line",
+          "subtype": "lineChartWithMean",
+          "nodeSize": "xlarge",
+          "dataCategory": "safety",
+          "destinations": ["Tokyo", "Singapore", "Hong Kong"],
+          "maxDataPoints": 8
+        }
+      }
+    },
+    {
+      "name": "Tourism Recovery with Target Threshold",
+      "request": {
+        "userQuery": "Show tourism recovery trends with pre-pandemic target threshold for major cities",
+        "constraints": {
+          "chartType": "line",
+          "subtype": "lineChartWithThreshold",
+          "nodeSize": "xlarge",
+          "dataCategory": "visitor-flow",
+          "destinations": ["New York", "London", "Dubai"],
+          "maxDataPoints": 12
+        }
+      }
+    },
+    {
+      "name": "Budget Tracking with Spending Limit",
+      "request": {
+        "userQuery": "Track monthly travel expenses with budget threshold for backpacker destinations",
+        "constraints": {
+          "chartType": "line",
+          "subtype": "lineChartWithThreshold",
+          "nodeSize": "xlarge",
+          "dataCategory": "cost",
+          "destinations": ["Bangkok", "Ho Chi Minh City", "Phnom Penh"],
+          "maxDataPoints": 6
+        }
+      }
+    }
+  ]
+}

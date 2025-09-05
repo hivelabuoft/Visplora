@@ -29,8 +29,6 @@ export interface DemoRequest {
 
 export interface DemoConfig {
   demoRequests: DemoRequest[];
-  autoDetectionTests: string[];
-  exampleRequests: Record<string, TravelAgentRequest>;
 }
 
 /**
