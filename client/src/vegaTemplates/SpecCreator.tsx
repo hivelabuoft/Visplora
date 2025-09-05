@@ -236,8 +236,8 @@ export class SpecCreator {
       categoryField: config.fields.category || 'category',
       valueField: config.fields.value || 'value',
       colors: config.styling.colors,
-      width: config.dimensions.width,
-      height: config.dimensions.height,
+      width: config.dimensions.width,   // Pass through actual config dimensions
+      height: config.dimensions.height, // Pass through actual config dimensions
       background: config.styling.background || 'transparent',
       orientation: 'horizontal',
       xAxisConfig: config.styling.axes?.xAxis,
@@ -259,8 +259,8 @@ export class SpecCreator {
       categoryField: config.fields.category || 'category',
       valueField: config.fields.value || 'value',
       colors: config.styling.colors,
-      width: config.dimensions.width,
-      height: config.dimensions.height,
+      width: config.dimensions.width,   // Pass through actual config dimensions
+      height: config.dimensions.height, // Pass through actual config dimensions
       background: config.styling.background || 'transparent',
       orientation: 'horizontal',
       xAxisConfig: config.styling.axes?.xAxis,
@@ -288,8 +288,8 @@ export class SpecCreator {
       categoryField: config.fields.category || 'category',
       valueField: config.fields.value || 'value',
       colors: config.styling.colors,
-      width: config.dimensions.width,
-      height: config.dimensions.height,
+      width: config.dimensions.width,   // Pass through actual config dimensions
+      height: config.dimensions.height, // Pass through actual config dimensions
       background: config.styling.background || 'transparent',
       orientation: 'horizontal',
       xAxisConfig: config.styling.axes?.xAxis,

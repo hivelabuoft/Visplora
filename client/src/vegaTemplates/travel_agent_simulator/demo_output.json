@@ -1,12 +1,15 @@
 {
   "metadata": {
-    "generatedAt": "2025-09-04T18:43:34.137Z",
+    "generatedAt": "2025-09-05T02:25:07.334Z",
     "totalRequests": 8,
     "successful": 8,
     "failed": 0,
     "agentTypes": [
       "line",
-      "bar",
+      "horizontalBar",
+      "divergingBar",
+      "barChartWithThreshold",
+      "barChartWithMean",
       "pie",
       "scatter",
       "multiType"
@@ -15,11 +18,13 @@
   "charts": [
     {
       "id": "chart-0",
-      "name": "Visitor Flow with Occupancy - Bangkok",
+      "name": "Bangkok Visitor Flow with Hotel Occupancy",
       "request": {
         "userQuery": "Show monthly visitor arrivals with hotel occupancy rates for Bangkok",
         "constraints": {
           "chartType": "multiType",
+          "subtype": "barChartWithLineSpec",
+          "nodeSize": "xlarge",
           "dataCategory": "visitor-flow",
           "destinations": [
             "Bangkok"
@@ -33,75 +38,75 @@
         "data": [
           {
             "monthName": "Jan",
-            "cityArrivals": 120000,
-            "hotelOccupancyRate": 67,
+            "cityArrivals": 105000,
+            "hotelOccupancyRate": 69,
             "season": "Low"
           },
           {
             "monthName": "Feb",
-            "cityArrivals": 127000,
-            "hotelOccupancyRate": 71,
+            "cityArrivals": 117000,
+            "hotelOccupancyRate": 73,
             "season": "Low"
           },
           {
             "monthName": "Mar",
-            "cityArrivals": 139000,
-            "hotelOccupancyRate": 75,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Apr",
-            "cityArrivals": 150000,
-            "hotelOccupancyRate": 82,
-            "season": "Peak"
-          },
-          {
-            "monthName": "May",
-            "cityArrivals": 143000,
+            "cityArrivals": 133000,
             "hotelOccupancyRate": 78,
             "season": "Shoulder"
           },
           {
-            "monthName": "Jun",
-            "cityArrivals": 135000,
-            "hotelOccupancyRate": 74,
-            "season": "Shoulder"
-          },
-          {
-            "monthName": "Jul",
-            "cityArrivals": 160000,
-            "hotelOccupancyRate": 87,
-            "season": "Peak"
-          },
-          {
-            "monthName": "Aug",
-            "cityArrivals": 157000,
-            "hotelOccupancyRate": 84,
-            "season": "Peak"
-          },
-          {
-            "monthName": "Sep",
-            "cityArrivals": 142000,
+            "monthName": "Apr",
+            "cityArrivals": 125000,
             "hotelOccupancyRate": 76,
             "season": "Shoulder"
           },
           {
-            "monthName": "Oct",
-            "cityArrivals": 145000,
+            "monthName": "May",
+            "cityArrivals": 97000,
+            "hotelOccupancyRate": 65,
+            "season": "Low"
+          },
+          {
+            "monthName": "Jun",
+            "cityArrivals": 91000,
+            "hotelOccupancyRate": 62,
+            "season": "Low"
+          },
+          {
+            "monthName": "Jul",
+            "cityArrivals": 123000,
+            "hotelOccupancyRate": 74,
+            "season": "High"
+          },
+          {
+            "monthName": "Aug",
+            "cityArrivals": 128000,
             "hotelOccupancyRate": 79,
+            "season": "High"
+          },
+          {
+            "monthName": "Sep",
+            "cityArrivals": 98000,
+            "hotelOccupancyRate": 66,
+            "season": "Low"
+          },
+          {
+            "monthName": "Oct",
+            "cityArrivals": 111000,
+            "hotelOccupancyRate": 71,
             "season": "Shoulder"
           },
           {
             "monthName": "Nov",
-            "cityArrivals": 154000,
+            "cityArrivals": 144000,
             "hotelOccupancyRate": 82,
-            "season": "Peak"
+            "season": "High"
           },
           {
             "monthName": "Dec",
-            "cityArrivals": 162000,
-            "hotelOccupancyRate": 88,
-            "season": "Peak"
+            "cityArrivals": 153000,
+            "hotelOccupancyRate": 85,
+            "season": "High"
           }
         ],
         "config": {
@@ -130,12 +135,12 @@
                 "title": "Monthly Visitor Arrivals",
                 "format": ".2s"
               },
-              "xAxis": {
-                "title": "Month"
-              },
-              "seriesAxis": {
+              "yAxisRight": {
                 "title": "Hotel Occupancy Rate",
                 "format": ".1%"
+              },
+              "xAxis": {
+                "title": "Month"
               }
             }
           },
@@ -151,18 +156,20 @@
             "hover": true
           }
         },
-        "title": "Bangkok Visitor Arrivals and Hotel Occupancy by Month",
-        "description": "Monthly visitors with hotel occupancy trends",
+        "title": "Bangkok Visitor Arrivals and Hotel Occupancy",
+        "description": "Monthly visitors and hotel occupancy rates",
         "insights": [
-          "Visitor arrivals peak in July and December",
-          "Hotel occupancy rates highest in peak travel months"
+          "Occupancy peaks in December and November",
+          "Lowest arrivals in June during low season"
         ],
         "metadata": {
           "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-04T18:44:13.196Z",
+          "timestamp": "2025-09-05T02:25:38.191Z",
           "userQuery": "Show monthly visitor arrivals with hotel occupancy rates for Bangkok",
           "constraints": {
             "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
             "dataCategory": "visitor-flow",
             "destinations": [
               "Bangkok"
@@ -180,75 +187,75 @@
           "values": [
             {
               "monthName": "Jan",
-              "cityArrivals": 120000,
-              "hotelOccupancyRate": 67,
+              "cityArrivals": 105000,
+              "hotelOccupancyRate": 69,
               "season": "Low"
             },
             {
               "monthName": "Feb",
-              "cityArrivals": 127000,
-              "hotelOccupancyRate": 71,
+              "cityArrivals": 117000,
+              "hotelOccupancyRate": 73,
               "season": "Low"
             },
             {
               "monthName": "Mar",
-              "cityArrivals": 139000,
-              "hotelOccupancyRate": 75,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Apr",
-              "cityArrivals": 150000,
-              "hotelOccupancyRate": 82,
-              "season": "Peak"
-            },
-            {
-              "monthName": "May",
-              "cityArrivals": 143000,
+              "cityArrivals": 133000,
               "hotelOccupancyRate": 78,
               "season": "Shoulder"
             },
             {
-              "monthName": "Jun",
-              "cityArrivals": 135000,
-              "hotelOccupancyRate": 74,
-              "season": "Shoulder"
-            },
-            {
-              "monthName": "Jul",
-              "cityArrivals": 160000,
-              "hotelOccupancyRate": 87,
-              "season": "Peak"
-            },
-            {
-              "monthName": "Aug",
-              "cityArrivals": 157000,
-              "hotelOccupancyRate": 84,
-              "season": "Peak"
-            },
-            {
-              "monthName": "Sep",
-              "cityArrivals": 142000,
+              "monthName": "Apr",
+              "cityArrivals": 125000,
               "hotelOccupancyRate": 76,
               "season": "Shoulder"
             },
             {
-              "monthName": "Oct",
-              "cityArrivals": 145000,
+              "monthName": "May",
+              "cityArrivals": 97000,
+              "hotelOccupancyRate": 65,
+              "season": "Low"
+            },
+            {
+              "monthName": "Jun",
+              "cityArrivals": 91000,
+              "hotelOccupancyRate": 62,
+              "season": "Low"
+            },
+            {
+              "monthName": "Jul",
+              "cityArrivals": 123000,
+              "hotelOccupancyRate": 74,
+              "season": "High"
+            },
+            {
+              "monthName": "Aug",
+              "cityArrivals": 128000,
               "hotelOccupancyRate": 79,
+              "season": "High"
+            },
+            {
+              "monthName": "Sep",
+              "cityArrivals": 98000,
+              "hotelOccupancyRate": 66,
+              "season": "Low"
+            },
+            {
+              "monthName": "Oct",
+              "cityArrivals": 111000,
+              "hotelOccupancyRate": 71,
               "season": "Shoulder"
             },
             {
               "monthName": "Nov",
-              "cityArrivals": 154000,
+              "cityArrivals": 144000,
               "hotelOccupancyRate": 82,
-              "season": "Peak"
+              "season": "High"
             },
             {
               "monthName": "Dec",
-              "cityArrivals": 162000,
-              "hotelOccupancyRate": 88,
-              "season": "Peak"
+              "cityArrivals": 153000,
+              "hotelOccupancyRate": 85,
+              "season": "High"
             }
           ]
         },
@@ -410,17 +417,19 @@
           }
         }
       },
-      "generationTime": 39059,
+      "generationTime": 30857,
       "success": true,
       "error": null
     },
     {
       "id": "chart-1",
-      "name": "Cost vs Satisfaction Trends - Tokyo",
+      "name": "Tokyo Travel Costs vs Satisfaction Trends",
       "request": {
         "userQuery": "Display monthly travel costs with satisfaction ratings for Tokyo",
         "constraints": {
           "chartType": "multiType",
+          "subtype": "barChartWithLineSpec",
+          "nodeSize": "xlarge",
           "dataCategory": "cost",
           "destinations": [
             "Tokyo"
@@ -435,73 +444,73 @@
           {
             "monthName": "Jan",
             "monthlyTravelCost": 165,
-            "satisfactionRating": 4.2,
+            "travelerSatisfactionScore": 4.2,
             "costTier": "Low"
           },
           {
             "monthName": "Feb",
-            "monthlyTravelCost": 175,
-            "satisfactionRating": 4.3,
+            "monthlyTravelCost": 172,
+            "travelerSatisfactionScore": 4.3,
             "costTier": "Low"
           },
           {
             "monthName": "Mar",
-            "monthlyTravelCost": 200,
-            "satisfactionRating": 4.4,
+            "monthlyTravelCost": 180,
+            "travelerSatisfactionScore": 4.4,
             "costTier": "Medium"
           },
           {
             "monthName": "Apr",
-            "monthlyTravelCost": 220,
-            "satisfactionRating": 4.5,
+            "monthlyTravelCost": 190,
+            "travelerSatisfactionScore": 4.6,
             "costTier": "Medium"
           },
           {
             "monthName": "May",
-            "monthlyTravelCost": 235,
-            "satisfactionRating": 4.6,
-            "costTier": "Medium"
+            "monthlyTravelCost": 210,
+            "travelerSatisfactionScore": 4.7,
+            "costTier": "High"
           },
           {
             "monthName": "Jun",
-            "monthlyTravelCost": 250,
-            "satisfactionRating": 4.7,
+            "monthlyTravelCost": 225,
+            "travelerSatisfactionScore": 4.5,
             "costTier": "High"
           },
           {
             "monthName": "Jul",
-            "monthlyTravelCost": 275,
-            "satisfactionRating": 4.6,
+            "monthlyTravelCost": 240,
+            "travelerSatisfactionScore": 4.3,
             "costTier": "High"
           },
           {
             "monthName": "Aug",
-            "monthlyTravelCost": 265,
-            "satisfactionRating": 4.5,
+            "monthlyTravelCost": 235,
+            "travelerSatisfactionScore": 4.2,
             "costTier": "High"
           },
           {
             "monthName": "Sep",
-            "monthlyTravelCost": 230,
-            "satisfactionRating": 4.4,
+            "monthlyTravelCost": 200,
+            "travelerSatisfactionScore": 4.5,
             "costTier": "Medium"
           },
           {
             "monthName": "Oct",
-            "monthlyTravelCost": 210,
-            "satisfactionRating": 4.3,
+            "monthlyTravelCost": 185,
+            "travelerSatisfactionScore": 4.6,
             "costTier": "Medium"
           },
           {
             "monthName": "Nov",
-            "monthlyTravelCost": 185,
-            "satisfactionRating": 4.2,
+            "monthlyTravelCost": 175,
+            "travelerSatisfactionScore": 4.4,
             "costTier": "Low"
           },
           {
             "monthName": "Dec",
-            "monthlyTravelCost": 195,
-            "satisfactionRating": 4.4,
+            "monthlyTravelCost": 190,
+            "travelerSatisfactionScore": 4.5,
             "costTier": "Medium"
           }
         ],
@@ -513,7 +522,7 @@
           "fields": {
             "x": "monthName",
             "y": "monthlyTravelCost",
-            "series": "satisfactionRating",
+            "series": "travelerSatisfactionScore",
             "color": "costTier"
           },
           "styling": {
@@ -528,15 +537,11 @@
             "background": "transparent",
             "axes": {
               "yAxis": {
-                "title": "Average Monthly Travel Cost (USD)",
+                "title": "Average Monthly Cost (USD)",
                 "format": "$,.0f"
               },
               "xAxis": {
                 "title": "Month"
-              },
-              "yRightAxis": {
-                "title": "Average Satisfaction Rating",
-                "format": ".1f"
               }
             }
           },
@@ -552,18 +557,20 @@
             "hover": true
           }
         },
-        "title": "Tokyo Monthly Travel Costs and Visitor Satisfaction",
-        "description": "Cost and satisfaction trends by month",
+        "title": "Tokyo monthly travel costs and satisfaction ratings",
+        "description": "Cost trends with traveler satisfaction",
         "insights": [
-          "Travel costs peak in summer months",
-          "Satisfaction remains high despite cost increases"
+          "Peak costs in July and August",
+          "Satisfaction remains high year-round"
         ],
         "metadata": {
           "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-04T18:44:49.892Z",
+          "timestamp": "2025-09-05T02:25:59.554Z",
           "userQuery": "Display monthly travel costs with satisfaction ratings for Tokyo",
           "constraints": {
             "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
             "dataCategory": "cost",
             "destinations": [
               "Tokyo"
@@ -582,73 +589,73 @@
             {
               "monthName": "Jan",
               "monthlyTravelCost": 165,
-              "satisfactionRating": 4.2,
+              "travelerSatisfactionScore": 4.2,
               "costTier": "Low"
             },
             {
               "monthName": "Feb",
-              "monthlyTravelCost": 175,
-              "satisfactionRating": 4.3,
+              "monthlyTravelCost": 172,
+              "travelerSatisfactionScore": 4.3,
               "costTier": "Low"
             },
             {
               "monthName": "Mar",
-              "monthlyTravelCost": 200,
-              "satisfactionRating": 4.4,
+              "monthlyTravelCost": 180,
+              "travelerSatisfactionScore": 4.4,
               "costTier": "Medium"
             },
             {
               "monthName": "Apr",
-              "monthlyTravelCost": 220,
-              "satisfactionRating": 4.5,
+              "monthlyTravelCost": 190,
+              "travelerSatisfactionScore": 4.6,
               "costTier": "Medium"
             },
             {
               "monthName": "May",
-              "monthlyTravelCost": 235,
-              "satisfactionRating": 4.6,
-              "costTier": "Medium"
+              "monthlyTravelCost": 210,
+              "travelerSatisfactionScore": 4.7,
+              "costTier": "High"
             },
             {
               "monthName": "Jun",
-              "monthlyTravelCost": 250,
-              "satisfactionRating": 4.7,
+              "monthlyTravelCost": 225,
+              "travelerSatisfactionScore": 4.5,
               "costTier": "High"
             },
             {
               "monthName": "Jul",
-              "monthlyTravelCost": 275,
-              "satisfactionRating": 4.6,
+              "monthlyTravelCost": 240,
+              "travelerSatisfactionScore": 4.3,
               "costTier": "High"
             },
             {
               "monthName": "Aug",
-              "monthlyTravelCost": 265,
-              "satisfactionRating": 4.5,
+              "monthlyTravelCost": 235,
+              "travelerSatisfactionScore": 4.2,
               "costTier": "High"
             },
             {
               "monthName": "Sep",
-              "monthlyTravelCost": 230,
-              "satisfactionRating": 4.4,
+              "monthlyTravelCost": 200,
+              "travelerSatisfactionScore": 4.5,
               "costTier": "Medium"
             },
             {
               "monthName": "Oct",
-              "monthlyTravelCost": 210,
-              "satisfactionRating": 4.3,
+              "monthlyTravelCost": 185,
+              "travelerSatisfactionScore": 4.6,
               "costTier": "Medium"
             },
             {
               "monthName": "Nov",
-              "monthlyTravelCost": 185,
-              "satisfactionRating": 4.2,
+              "monthlyTravelCost": 175,
+              "travelerSatisfactionScore": 4.4,
               "costTier": "Low"
             },
             {
               "monthName": "Dec",
-              "monthlyTravelCost": 195,
-              "satisfactionRating": 4.4,
+              "monthlyTravelCost": 190,
+              "travelerSatisfactionScore": 4.5,
               "costTier": "Medium"
             }
           ]
@@ -699,7 +706,7 @@
                     2
                   ],
                   "grid": true,
-                  "title": "Average Monthly Travel Cost (USD)",
+                  "title": "Average Monthly Cost (USD)",
                   "format": "$,.0f"
                 }
               },
@@ -761,7 +768,7 @@
                 "type": "ordinal"
               },
               "y": {
-                "field": "satisfactionRating",
+                "field": "travelerSatisfactionScore",
                 "type": "quantitative",
                 "axis": {
                   "labelColor": "#888",
@@ -790,7 +797,7 @@
                   "title": "Category"
                 },
                 {
-                  "field": "satisfactionRating",
+                  "field": "travelerSatisfactionScore",
                   "type": "quantitative",
                   "title": "Occupancy Rate",
                   "format": ".0f"
@@ -811,17 +818,19 @@
           }
         }
       },
-      "generationTime": 35693,
+      "generationTime": 20358,
       "success": true,
       "error": null
     },
     {
       "id": "chart-2",
-      "name": "City vs Region Visitor Comparison - Paris",
+      "name": "Paris City vs European Regional Visitor Comparison",
       "request": {
         "userQuery": "Compare Paris arrivals with European regional averages monthly",
         "constraints": {
           "chartType": "multiType",
+          "subtype": "multiType_same_y_diff_type",
+          "nodeSize": "xlarge",
           "dataCategory": "visitor-flow",
           "destinations": [
             "Paris"
@@ -835,74 +844,74 @@
         "data": [
           {
             "monthName": "Jan",
-            "cityArrivals": 142300,
-            "regionalAverage": 97000,
+            "cityArrivals": 105000,
+            "regionalAverage": 98000,
             "season": "Low"
           },
           {
             "monthName": "Feb",
-            "cityArrivals": 155200,
-            "regionalAverage": 104500,
+            "cityArrivals": 112000,
+            "regionalAverage": 99000,
             "season": "Low"
           },
           {
             "monthName": "Mar",
-            "cityArrivals": 168400,
-            "regionalAverage": 117800,
+            "cityArrivals": 128000,
+            "regionalAverage": 110000,
             "season": "Shoulder"
           },
           {
             "monthName": "Apr",
-            "cityArrivals": 185700,
-            "regionalAverage": 130100,
+            "cityArrivals": 146000,
+            "regionalAverage": 123000,
             "season": "Shoulder"
           },
           {
             "monthName": "May",
-            "cityArrivals": 197600,
-            "regionalAverage": 142600,
-            "season": "Shoulder"
+            "cityArrivals": 169000,
+            "regionalAverage": 135000,
+            "season": "High"
           },
           {
             "monthName": "Jun",
-            "cityArrivals": 212500,
-            "regionalAverage": 158000,
+            "cityArrivals": 182000,
+            "regionalAverage": 145000,
             "season": "High"
           },
           {
             "monthName": "Jul",
-            "cityArrivals": 225400,
-            "regionalAverage": 171700,
-            "season": "High"
+            "cityArrivals": 205000,
+            "regionalAverage": 162000,
+            "season": "Peak"
           },
           {
             "monthName": "Aug",
-            "cityArrivals": 221800,
-            "regionalAverage": 168900,
-            "season": "High"
+            "cityArrivals": 211000,
+            "regionalAverage": 168000,
+            "season": "Peak"
           },
           {
             "monthName": "Sep",
-            "cityArrivals": 200900,
-            "regionalAverage": 150200,
+            "cityArrivals": 171000,
+            "regionalAverage": 136000,
             "season": "Shoulder"
           },
           {
             "monthName": "Oct",
-            "cityArrivals": 186300,
-            "regionalAverage": 137700,
+            "cityArrivals": 144000,
+            "regionalAverage": 118000,
             "season": "Shoulder"
           },
           {
             "monthName": "Nov",
-            "cityArrivals": 162700,
-            "regionalAverage": 112800,
+            "cityArrivals": 121000,
+            "regionalAverage": 102000,
             "season": "Low"
           },
           {
             "monthName": "Dec",
-            "cityArrivals": 175900,
-            "regionalAverage": 121400,
+            "cityArrivals": 127000,
+            "regionalAverage": 110000,
             "season": "Low"
           }
         ],
@@ -933,7 +942,7 @@
                 "format": ".2s"
               },
               "xAxis": {
-                "title": "Month"
+                "title": "Month of Year"
               }
             }
           },
@@ -949,18 +958,20 @@
             "hover": true
           }
         },
-        "title": "Paris visitor arrivals vs European region average",
-        "description": "Monthly arrivals compared to regional averages",
+        "title": "Paris Arrivals vs European Regional Average",
+        "description": "Monthly arrivals compared to Europe region",
         "insights": [
-          "Paris consistently outperforms regional average",
-          "Visitor numbers peak in summer months"
+          "Paris peaks in July and August",
+          "Paris consistently outpaces regional average"
         ],
         "metadata": {
           "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-04T18:45:09.489Z",
+          "timestamp": "2025-09-05T02:26:21.725Z",
           "userQuery": "Compare Paris arrivals with European regional averages monthly",
           "constraints": {
             "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
             "dataCategory": "visitor-flow",
             "destinations": [
               "Paris"
@@ -978,74 +989,74 @@
           "values": [
             {
               "monthName": "Jan",
-              "cityArrivals": 142300,
-              "regionalAverage": 97000,
+              "cityArrivals": 105000,
+              "regionalAverage": 98000,
               "season": "Low"
             },
             {
               "monthName": "Feb",
-              "cityArrivals": 155200,
-              "regionalAverage": 104500,
+              "cityArrivals": 112000,
+              "regionalAverage": 99000,
               "season": "Low"
             },
             {
               "monthName": "Mar",
-              "cityArrivals": 168400,
-              "regionalAverage": 117800,
+              "cityArrivals": 128000,
+              "regionalAverage": 110000,
               "season": "Shoulder"
             },
             {
               "monthName": "Apr",
-              "cityArrivals": 185700,
-              "regionalAverage": 130100,
+              "cityArrivals": 146000,
+              "regionalAverage": 123000,
               "season": "Shoulder"
             },
             {
               "monthName": "May",
-              "cityArrivals": 197600,
-              "regionalAverage": 142600,
-              "season": "Shoulder"
+              "cityArrivals": 169000,
+              "regionalAverage": 135000,
+              "season": "High"
             },
             {
               "monthName": "Jun",
-              "cityArrivals": 212500,
-              "regionalAverage": 158000,
+              "cityArrivals": 182000,
+              "regionalAverage": 145000,
               "season": "High"
             },
             {
               "monthName": "Jul",
-              "cityArrivals": 225400,
-              "regionalAverage": 171700,
-              "season": "High"
+              "cityArrivals": 205000,
+              "regionalAverage": 162000,
+              "season": "Peak"
             },
             {
               "monthName": "Aug",
-              "cityArrivals": 221800,
-              "regionalAverage": 168900,
-              "season": "High"
+              "cityArrivals": 211000,
+              "regionalAverage": 168000,
+              "season": "Peak"
             },
             {
               "monthName": "Sep",
-              "cityArrivals": 200900,
-              "regionalAverage": 150200,
+              "cityArrivals": 171000,
+              "regionalAverage": 136000,
               "season": "Shoulder"
             },
             {
               "monthName": "Oct",
-              "cityArrivals": 186300,
-              "regionalAverage": 137700,
+              "cityArrivals": 144000,
+              "regionalAverage": 118000,
               "season": "Shoulder"
             },
             {
               "monthName": "Nov",
-              "cityArrivals": 162700,
-              "regionalAverage": 112800,
+              "cityArrivals": 121000,
+              "regionalAverage": 102000,
               "season": "Low"
             },
             {
               "monthName": "Dec",
-              "cityArrivals": 175900,
-              "regionalAverage": 121400,
+              "cityArrivals": 127000,
+              "regionalAverage": 110000,
               "season": "Low"
             }
           ]
@@ -1077,7 +1088,7 @@
                   "labelFontSize": 10,
                   "labelAngle": 0,
                   "labelPadding": 5,
-                  "title": "Month",
+                  "title": "Month of Year",
                   "grid": false,
                   "ticks": true,
                   "domain": true
@@ -1196,17 +1207,19 @@
           }
         }
       },
-      "generationTime": 18596,
+      "generationTime": 21169,
       "success": true,
       "error": null
     },
     {
       "id": "chart-3",
-      "name": "Local vs Global Tourism Trends - Singapore",
+      "name": "Singapore Local vs Global Tourism Trends",
       "request": {
         "userQuery": "Show Singapore visitor data compared to global tourism averages",
         "constraints": {
           "chartType": "multiType",
+          "subtype": "multiType_same_y_diff_type",
+          "nodeSize": "xlarge",
           "dataCategory": "visitor-flow",
           "destinations": [
             "Singapore"
@@ -1220,75 +1233,63 @@
         "data": [
           {
             "monthName": "Jan",
-            "cityArrivals": 128000,
-            "globalAverage": 110000,
+            "cityArrivals": 1265000,
+            "globalAverage": 950000,
             "season": "Low"
           },
           {
             "monthName": "Feb",
-            "cityArrivals": 135500,
-            "globalAverage": 115000,
+            "cityArrivals": 1320000,
+            "globalAverage": 970000,
             "season": "Low"
           },
           {
             "monthName": "Mar",
-            "cityArrivals": 142800,
-            "globalAverage": 120000,
+            "cityArrivals": 1428000,
+            "globalAverage": 1015000,
             "season": "Shoulder"
           },
           {
             "monthName": "Apr",
-            "cityArrivals": 158200,
-            "globalAverage": 123000,
+            "cityArrivals": 1489000,
+            "globalAverage": 1040000,
             "season": "Shoulder"
           },
           {
             "monthName": "May",
-            "cityArrivals": 165400,
-            "globalAverage": 125000,
+            "cityArrivals": 1362000,
+            "globalAverage": 1025000,
             "season": "Shoulder"
           },
           {
             "monthName": "Jun",
-            "cityArrivals": 181000,
-            "globalAverage": 128000,
-            "season": "High"
+            "cityArrivals": 1298000,
+            "globalAverage": 990000,
+            "season": "Low"
           },
           {
             "monthName": "Jul",
-            "cityArrivals": 192500,
-            "globalAverage": 134000,
-            "season": "High"
+            "cityArrivals": 1534000,
+            "globalAverage": 1120000,
+            "season": "Peak"
           },
           {
             "monthName": "Aug",
-            "cityArrivals": 189000,
-            "globalAverage": 132000,
-            "season": "High"
+            "cityArrivals": 1576000,
+            "globalAverage": 1155000,
+            "season": "Peak"
           },
           {
             "monthName": "Sep",
-            "cityArrivals": 175300,
-            "globalAverage": 127000,
+            "cityArrivals": 1400000,
+            "globalAverage": 1050000,
             "season": "Shoulder"
           },
           {
             "monthName": "Oct",
-            "cityArrivals": 168400,
-            "globalAverage": 122000,
+            "cityArrivals": 1353000,
+            "globalAverage": 990000,
             "season": "Shoulder"
-          },
-          {
-            "monthName": "Nov",
-            "cityArrivals": 151700,
-            "globalAverage": 116000,
-            "season": "Low"
-          },
-          {
-            "monthName": "Dec",
-            "cityArrivals": 159800,
-            "globalAverage": 119000,
-            "season": "Low"
           }
         ],
         "config": {
@@ -1334,18 +1335,20 @@
             "hover": true
           }
         },
-        "title": "Singapore Visitor Arrivals vs Global Average",
-        "description": "Monthly arrivals compared to world averages",
+        "title": "Singapore Monthly Arrivals vs Global Tourism Average",
+        "description": "Singapore outpaces global visitor trends monthly",
         "insights": [
-          "Singapore consistently exceeds global averages",
-          "Peak arrivals in June to August"
+          "Singapore consistently exceeds global average arrivals",
+          "Peak season shows largest gap over global trend"
         ],
         "metadata": {
           "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-04T18:45:29.987Z",
+          "timestamp": "2025-09-05T02:26:37.668Z",
           "userQuery": "Show Singapore visitor data compared to global tourism averages",
           "constraints": {
             "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
             "dataCategory": "visitor-flow",
             "destinations": [
               "Singapore"
@@ -1363,75 +1366,63 @@
           "values": [
             {
               "monthName": "Jan",
-              "cityArrivals": 128000,
-              "globalAverage": 110000,
+              "cityArrivals": 1265000,
+              "globalAverage": 950000,
               "season": "Low"
             },
             {
               "monthName": "Feb",
-              "cityArrivals": 135500,
-              "globalAverage": 115000,
+              "cityArrivals": 1320000,
+              "globalAverage": 970000,
               "season": "Low"
             },
             {
               "monthName": "Mar",
-              "cityArrivals": 142800,
-              "globalAverage": 120000,
+              "cityArrivals": 1428000,
+              "globalAverage": 1015000,
               "season": "Shoulder"
             },
             {
               "monthName": "Apr",
-              "cityArrivals": 158200,
-              "globalAverage": 123000,
+              "cityArrivals": 1489000,
+              "globalAverage": 1040000,
               "season": "Shoulder"
             },
             {
               "monthName": "May",
-              "cityArrivals": 165400,
-              "globalAverage": 125000,
+              "cityArrivals": 1362000,
+              "globalAverage": 1025000,
               "season": "Shoulder"
             },
             {
               "monthName": "Jun",
-              "cityArrivals": 181000,
-              "globalAverage": 128000,
-              "season": "High"
+              "cityArrivals": 1298000,
+              "globalAverage": 990000,
+              "season": "Low"
             },
             {
               "monthName": "Jul",
-              "cityArrivals": 192500,
-              "globalAverage": 134000,
-              "season": "High"
+              "cityArrivals": 1534000,
+              "globalAverage": 1120000,
+              "season": "Peak"
             },
             {
               "monthName": "Aug",
-              "cityArrivals": 189000,
-              "globalAverage": 132000,
-              "season": "High"
+              "cityArrivals": 1576000,
+              "globalAverage": 1155000,
+              "season": "Peak"
             },
             {
               "monthName": "Sep",
-              "cityArrivals": 175300,
-              "globalAverage": 127000,
+              "cityArrivals": 1400000,
+              "globalAverage": 1050000,
               "season": "Shoulder"
             },
             {
               "monthName": "Oct",
-              "cityArrivals": 168400,
-              "globalAverage": 122000,
+              "cityArrivals": 1353000,
+              "globalAverage": 990000,
               "season": "Shoulder"
-            },
-            {
-              "monthName": "Nov",
-              "cityArrivals": 151700,
-              "globalAverage": 116000,
-              "season": "Low"
-            },
-            {
-              "monthName": "Dec",
-              "cityArrivals": 159800,
-              "globalAverage": 119000,
-              "season": "Low"
             }
           ]
         },
@@ -1581,17 +1572,19 @@
           }
         }
       },
-      "generationTime": 19495,
+      "generationTime": 14938,
       "success": true,
       "error": null
     },
     {
       "id": "chart-4",
-      "name": "Revenue with Growth Targets - London",
+      "name": "London Tourism Revenue with Growth Targets",
       "request": {
         "userQuery": "Display quarterly tourism revenue with growth target threshold for London",
         "constraints": {
           "chartType": "multiType",
+          "subtype": "multiTypeWithThreshold",
+          "nodeSize": "xlarge",
           "dataCategory": "revenue",
           "destinations": [
             "London"
@@ -1605,51 +1598,51 @@
         "data": [
           {
             "monthName": "2023-Q1",
-            "quarterlyRevenue": 21500000,
-            "growthRate": 0.062,
+            "quarterlyRevenue": 24500000,
+            "growthRate": 0.045,
             "performance": "Moderate"
           },
           {
             "monthName": "2023-Q2",
-            "quarterlyRevenue": 23400000,
+            "quarterlyRevenue": 31800000,
             "growthRate": 0.089,
             "performance": "Strong"
           },
           {
             "monthName": "2023-Q3",
-            "quarterlyRevenue": 27200000,
-            "growthRate": 0.163,
-            "performance": "Excellent"
-          },
-          {
-            "monthName": "2023-Q4",
-            "quarterlyRevenue": 24100000,
-            "growthRate": 0.091,
+            "quarterlyRevenue": 35500000,
+            "growthRate": 0.073,
             "performance": "Strong"
           },
           {
+            "monthName": "2023-Q4",
+            "quarterlyRevenue": 28900000,
+            "growthRate": 0.038,
+            "performance": "Moderate"
+          },
+          {
             "monthName": "2024-Q1",
-            "quarterlyRevenue": 22500000,
-            "growthRate": 0.043,
+            "quarterlyRevenue": 26500000,
+            "growthRate": 0.056,
             "performance": "Moderate"
           },
           {
             "monthName": "2024-Q2",
-            "quarterlyRevenue": 25100000,
-            "growthRate": 0.116,
+            "quarterlyRevenue": 34000000,
+            "growthRate": 0.092,
             "performance": "Strong"
           },
           {
             "monthName": "2024-Q3",
-            "quarterlyRevenue": 28900000,
-            "growthRate": 0.151,
-            "performance": "Excellent"
+            "quarterlyRevenue": 37300000,
+            "growthRate": 0.081,
+            "performance": "Strong"
           },
           {
             "monthName": "2024-Q4",
-            "quarterlyRevenue": 26800000,
-            "growthRate": 0.068,
-            "performance": "Strong"
+            "quarterlyRevenue": 30500000,
+            "growthRate": 0.049,
+            "performance": "Moderate"
           }
         ],
         "config": {
@@ -1673,9 +1666,9 @@
             "lineWidth": 3,
             "cornerRadius": 2,
             "background": "transparent",
-            "thresholdValue": 25000000,
+            "thresholdValue": 32000000,
             "thresholdColor": "#ef4444",
-            "thresholdLabel": "Revenue Target",
+            "thresholdLabel": "Growth Target",
             "showThresholdLabel": true,
             "axes": {
               "yAxis": {
@@ -1699,18 +1692,20 @@
             "hover": true
           }
         },
-        "title": "London quarterly tourism revenue vs growth target",
-        "description": "Revenue and growth with target threshold",
+        "title": "London Quarterly Tourism Revenue vs Growth Target",
+        "description": "Revenue and growth trends by quarter",
         "insights": [
-          "Q3 typically surpasses revenue target",
-          "Growth rates peaked in summer quarters"
+          "Q2 and Q3 consistently exceed growth target",
+          "Growth rate peaks in spring and summer quarters"
         ],
         "metadata": {
           "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-04T18:45:48.842Z",
+          "timestamp": "2025-09-05T02:27:00.576Z",
           "userQuery": "Display quarterly tourism revenue with growth target threshold for London",
           "constraints": {
             "chartType": "multiType",
+            "subtype": "multiTypeWithThreshold",
+            "nodeSize": "xlarge",
             "dataCategory": "revenue",
             "destinations": [
               "London"
@@ -1728,51 +1723,51 @@
           "values": [
             {
               "monthName": "2023-Q1",
-              "quarterlyRevenue": 21500000,
-              "growthRate": 0.062,
+              "quarterlyRevenue": 24500000,
+              "growthRate": 0.045,
               "performance": "Moderate"
             },
             {
               "monthName": "2023-Q2",
-              "quarterlyRevenue": 23400000,
+              "quarterlyRevenue": 31800000,
               "growthRate": 0.089,
               "performance": "Strong"
             },
             {
               "monthName": "2023-Q3",
-              "quarterlyRevenue": 27200000,
-              "growthRate": 0.163,
-              "performance": "Excellent"
-            },
-            {
-              "monthName": "2023-Q4",
-              "quarterlyRevenue": 24100000,
-              "growthRate": 0.091,
+              "quarterlyRevenue": 35500000,
+              "growthRate": 0.073,
               "performance": "Strong"
             },
             {
+              "monthName": "2023-Q4",
+              "quarterlyRevenue": 28900000,
+              "growthRate": 0.038,
+              "performance": "Moderate"
+            },
+            {
               "monthName": "2024-Q1",
-              "quarterlyRevenue": 22500000,
-              "growthRate": 0.043,
+              "quarterlyRevenue": 26500000,
+              "growthRate": 0.056,
               "performance": "Moderate"
             },
             {
               "monthName": "2024-Q2",
-              "quarterlyRevenue": 25100000,
-              "growthRate": 0.116,
+              "quarterlyRevenue": 34000000,
+              "growthRate": 0.092,
               "performance": "Strong"
             },
             {
               "monthName": "2024-Q3",
-              "quarterlyRevenue": 28900000,
-              "growthRate": 0.151,
-              "performance": "Excellent"
+              "quarterlyRevenue": 37300000,
+              "growthRate": 0.081,
+              "performance": "Strong"
             },
             {
               "monthName": "2024-Q4",
-              "quarterlyRevenue": 26800000,
-              "growthRate": 0.068,
-              "performance": "Strong"
+              "quarterlyRevenue": 30500000,
+              "growthRate": 0.049,
+              "performance": "Moderate"
             }
           ]
         },
@@ -1794,7 +1789,7 @@
             },
             "encoding": {
               "y": {
-                "datum": 25000000,
+                "datum": 32000000,
                 "type": "quantitative",
                 "axis": {
                   "labelColor": "#888",
@@ -1814,7 +1809,7 @@
                 {
                   "field": "datum",
                   "type": "quantitative",
-                  "title": "Revenue Target",
+                  "title": "Growth Target",
                   "format": "$,.0f"
                 }
               ]
@@ -1950,8 +1945,8 @@
             "data": {
               "values": [
                 {
-                  "thresholdValue": 25000000,
-                  "thresholdLabel": "Revenue Target"
+                  "thresholdValue": 32000000,
+                  "thresholdLabel": "Growth Target"
                 }
               ]
             },
@@ -1991,17 +1986,19 @@
           }
         }
       },
-      "generationTime": 17853,
+      "generationTime": 21904,
       "success": true,
       "error": null
     },
     {
       "id": "chart-5",
-      "name": "Safety Improvements with Targets - Rome",
+      "name": "Rome Safety Improvements with Target Thresholds",
       "request": {
         "userQuery": "Show monthly safety scores with target threshold line for Rome",
         "constraints": {
           "chartType": "multiType",
+          "subtype": "multiTypeWithThreshold",
+          "nodeSize": "xlarge",
           "dataCategory": "safety",
           "destinations": [
             "Rome"
@@ -2015,62 +2012,62 @@
         "data": [
           {
             "monthName": "Jan",
-            "safetyScore": 75,
-            "improvementIndex": 72,
+            "safetyScore": 85,
+            "improvementIndex": 3.2,
             "season": "Low"
           },
           {
             "monthName": "Feb",
-            "safetyScore": 78,
-            "improvementIndex": 74,
+            "safetyScore": 86,
+            "improvementIndex": 3.5,
             "season": "Low"
           },
           {
             "monthName": "Mar",
-            "safetyScore": 80,
-            "improvementIndex": 77,
+            "safetyScore": 87,
+            "improvementIndex": 3.9,
             "season": "Shoulder"
           },
           {
             "monthName": "Apr",
-            "safetyScore": 82,
-            "improvementIndex": 79,
+            "safetyScore": 88,
+            "improvementIndex": 4.1,
             "season": "Shoulder"
           },
           {
             "monthName": "May",
-            "safetyScore": 84,
-            "improvementIndex": 81,
+            "safetyScore": 90,
+            "improvementIndex": 4.5,
             "season": "High"
           },
           {
             "monthName": "Jun",
-            "safetyScore": 85,
-            "improvementIndex": 83,
+            "safetyScore": 89,
+            "improvementIndex": 4.3,
             "season": "High"
           },
           {
             "monthName": "Jul",
-            "safetyScore": 83,
-            "improvementIndex": 80,
+            "safetyScore": 87,
+            "improvementIndex": 4,
             "season": "High"
           },
           {
             "monthName": "Aug",
-            "safetyScore": 81,
-            "improvementIndex": 78,
+            "safetyScore": 86,
+            "improvementIndex": 3.7,
             "season": "High"
           },
           {
             "monthName": "Sep",
-            "safetyScore": 80,
-            "improvementIndex": 77,
+            "safetyScore": 88,
+            "improvementIndex": 4.2,
             "season": "Shoulder"
           },
           {
             "monthName": "Oct",
-            "safetyScore": 78,
-            "improvementIndex": 75,
+            "safetyScore": 89,
+            "improvementIndex": 4.4,
             "season": "Shoulder"
           }
         ],
@@ -2095,7 +2092,7 @@
             "lineWidth": 3,
             "cornerRadius": 2,
             "background": "transparent",
-            "thresholdValue": 80,
+            "thresholdValue": 88,
             "thresholdColor": "#ef4444",
             "thresholdLabel": "Safety Target",
             "showThresholdLabel": true,
@@ -2122,17 +2119,19 @@
           }
         },
         "title": "Monthly Safety Scores for Rome",
-        "description": "Scores with safety target threshold line",
+        "description": "Scores tracked with safety target line",
         "insights": [
-          "Scores peak in early summer months",
-          "Most months meet or exceed target"
+          "May and October exceed safety target",
+          "Scores dip slightly in July and August"
         ],
         "metadata": {
           "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-04T18:46:08.554Z",
+          "timestamp": "2025-09-05T02:27:22.954Z",
           "userQuery": "Show monthly safety scores with target threshold line for Rome",
           "constraints": {
             "chartType": "multiType",
+            "subtype": "multiTypeWithThreshold",
+            "nodeSize": "xlarge",
             "dataCategory": "safety",
             "destinations": [
               "Rome"
@@ -2150,62 +2149,62 @@
           "values": [
             {
               "monthName": "Jan",
-              "safetyScore": 75,
-              "improvementIndex": 72,
+              "safetyScore": 85,
+              "improvementIndex": 3.2,
               "season": "Low"
             },
             {
               "monthName": "Feb",
-              "safetyScore": 78,
-              "improvementIndex": 74,
+              "safetyScore": 86,
+              "improvementIndex": 3.5,
               "season": "Low"
             },
             {
               "monthName": "Mar",
-              "safetyScore": 80,
-              "improvementIndex": 77,
+              "safetyScore": 87,
+              "improvementIndex": 3.9,
               "season": "Shoulder"
             },
             {
               "monthName": "Apr",
-              "safetyScore": 82,
-              "improvementIndex": 79,
+              "safetyScore": 88,
+              "improvementIndex": 4.1,
               "season": "Shoulder"
             },
             {
               "monthName": "May",
-              "safetyScore": 84,
-              "improvementIndex": 81,
+              "safetyScore": 90,
+              "improvementIndex": 4.5,
               "season": "High"
             },
             {
               "monthName": "Jun",
-              "safetyScore": 85,
-              "improvementIndex": 83,
+              "safetyScore": 89,
+              "improvementIndex": 4.3,
               "season": "High"
             },
             {
               "monthName": "Jul",
-              "safetyScore": 83,
-              "improvementIndex": 80,
+              "safetyScore": 87,
+              "improvementIndex": 4,
               "season": "High"
             },
             {
               "monthName": "Aug",
-              "safetyScore": 81,
-              "improvementIndex": 78,
+              "safetyScore": 86,
+              "improvementIndex": 3.7,
               "season": "High"
             },
             {
               "monthName": "Sep",
-              "safetyScore": 80,
-              "improvementIndex": 77,
+              "safetyScore": 88,
+              "improvementIndex": 4.2,
               "season": "Shoulder"
             },
             {
               "monthName": "Oct",
-              "safetyScore": 78,
-              "improvementIndex": 75,
+              "safetyScore": 89,
+              "improvementIndex": 4.4,
               "season": "Shoulder"
             }
           ]
@@ -2228,7 +2227,7 @@
             },
             "encoding": {
               "y": {
-                "datum": 80,
+                "datum": 88,
                 "type": "quantitative",
                 "axis": {
                   "labelColor": "#888",
@@ -2384,7 +2383,7 @@
             "data": {
               "values": [
                 {
-                  "thresholdValue": 80,
+                  "thresholdValue": 88,
                   "thresholdLabel": "Safety Target"
                 }
               ]
@@ -2425,17 +2424,19 @@
           }
         }
       },
-      "generationTime": 18709,
+      "generationTime": 21376,
       "success": true,
       "error": null
     },
     {
       "id": "chart-6",
-      "name": "Visitor Flows with Average Line - Amsterdam",
+      "name": "Amsterdam Visitor Flows with Average Benchmark",
       "request": {
         "userQuery": "Display Amsterdam visitor arrivals with mean average overlay",
         "constraints": {
           "chartType": "multiType",
+          "subtype": "multiTypeWithMean",
+          "nodeSize": "xlarge",
           "dataCategory": "visitor-flow",
           "destinations": [
             "Amsterdam"
@@ -2449,74 +2450,74 @@
         "data": [
           {
             "monthName": "Jan",
-            "cityArrivals": 110000,
-            "globalAverage": 102000,
+            "cityArrivals": 120000,
+            "regionalAverage": 105000,
             "season": "Low"
           },
           {
             "monthName": "Feb",
-            "cityArrivals": 118000,
-            "globalAverage": 105500,
+            "cityArrivals": 128000,
+            "regionalAverage": 110000,
             "season": "Low"
           },
           {
             "monthName": "Mar",
-            "cityArrivals": 128000,
-            "globalAverage": 110000,
+            "cityArrivals": 142000,
+            "regionalAverage": 118000,
             "season": "Shoulder"
           },
           {
             "monthName": "Apr",
-            "cityArrivals": 142000,
-            "globalAverage": 115000,
+            "cityArrivals": 178000,
+            "regionalAverage": 130000,
             "season": "Shoulder"
           },
           {
             "monthName": "May",
-            "cityArrivals": 160000,
-            "globalAverage": 121000,
+            "cityArrivals": 210000,
+            "regionalAverage": 150000,
             "season": "High"
           },
           {
             "monthName": "Jun",
-            "cityArrivals": 174000,
-            "globalAverage": 128000,
+            "cityArrivals": 238000,
+            "regionalAverage": 165000,
             "season": "High"
           },
           {
             "monthName": "Jul",
-            "cityArrivals": 181000,
-            "globalAverage": 130500,
+            "cityArrivals": 255000,
+            "regionalAverage": 172000,
             "season": "High"
           },
           {
             "monthName": "Aug",
-            "cityArrivals": 177000,
-            "globalAverage": 129000,
+            "cityArrivals": 241000,
+            "regionalAverage": 169000,
             "season": "High"
           },
           {
             "monthName": "Sep",
-            "cityArrivals": 150000,
-            "globalAverage": 122000,
+            "cityArrivals": 195000,
+            "regionalAverage": 145000,
             "season": "Shoulder"
           },
           {
             "monthName": "Oct",
-            "cityArrivals": 138000,
-            "globalAverage": 117000,
+            "cityArrivals": 162000,
+            "regionalAverage": 124000,
             "season": "Shoulder"
           },
           {
             "monthName": "Nov",
-            "cityArrivals": 121000,
-            "globalAverage": 109000,
+            "cityArrivals": 132000,
+            "regionalAverage": 108000,
             "season": "Low"
           },
           {
             "monthName": "Dec",
-            "cityArrivals": 127000,
-            "globalAverage": 111000,
+            "cityArrivals": 140000,
+            "regionalAverage": 113000,
             "season": "Low"
           }
         ],
@@ -2528,7 +2529,7 @@
           "fields": {
             "x": "monthName",
             "y": "cityArrivals",
-            "series": "globalAverage",
+            "series": "regionalAverage",
             "color": "season"
           },
           "styling": {
@@ -2541,7 +2542,7 @@
             "lineWidth": 3,
             "cornerRadius": 2,
             "background": "transparent",
-            "meanValue": 142000,
+            "meanValue": 175083,
             "meanColor": "#ff6b6b",
             "meanLabel": "Monthly Average",
             "showMeanLabel": true,
@@ -2567,18 +2568,20 @@
             "hover": true
           }
         },
-        "title": "Amsterdam visitor arrivals and global average trend",
-        "description": "Monthly arrivals with mean line overlay",
+        "title": "Amsterdam monthly visitor arrivals vs regional average",
+        "description": "Arrivals with regional and mean overlays",
         "insights": [
-          "Arrivals peak during summer months",
-          "Amsterdam exceeds global average year-round"
+          "Peak arrivals in July and August",
+          "Amsterdam often surpasses regional average"
         ],
         "metadata": {
           "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-04T18:46:38.116Z",
+          "timestamp": "2025-09-05T02:27:38.383Z",
           "userQuery": "Display Amsterdam visitor arrivals with mean average overlay",
           "constraints": {
             "chartType": "multiType",
+            "subtype": "multiTypeWithMean",
+            "nodeSize": "xlarge",
             "dataCategory": "visitor-flow",
             "destinations": [
               "Amsterdam"
@@ -2596,74 +2599,74 @@
           "values": [
             {
               "monthName": "Jan",
-              "cityArrivals": 110000,
-              "globalAverage": 102000,
+              "cityArrivals": 120000,
+              "regionalAverage": 105000,
               "season": "Low"
             },
             {
               "monthName": "Feb",
-              "cityArrivals": 118000,
-              "globalAverage": 105500,
+              "cityArrivals": 128000,
+              "regionalAverage": 110000,
               "season": "Low"
             },
             {
               "monthName": "Mar",
-              "cityArrivals": 128000,
-              "globalAverage": 110000,
+              "cityArrivals": 142000,
+              "regionalAverage": 118000,
               "season": "Shoulder"
             },
             {
               "monthName": "Apr",
-              "cityArrivals": 142000,
-              "globalAverage": 115000,
+              "cityArrivals": 178000,
+              "regionalAverage": 130000,
               "season": "Shoulder"
             },
             {
               "monthName": "May",
-              "cityArrivals": 160000,
-              "globalAverage": 121000,
+              "cityArrivals": 210000,
+              "regionalAverage": 150000,
               "season": "High"
             },
             {
               "monthName": "Jun",
-              "cityArrivals": 174000,
-              "globalAverage": 128000,
+              "cityArrivals": 238000,
+              "regionalAverage": 165000,
               "season": "High"
             },
             {
               "monthName": "Jul",
-              "cityArrivals": 181000,
-              "globalAverage": 130500,
+              "cityArrivals": 255000,
+              "regionalAverage": 172000,
               "season": "High"
             },
             {
               "monthName": "Aug",
-              "cityArrivals": 177000,
-              "globalAverage": 129000,
+              "cityArrivals": 241000,
+              "regionalAverage": 169000,
               "season": "High"
             },
             {
               "monthName": "Sep",
-              "cityArrivals": 150000,
-              "globalAverage": 122000,
+              "cityArrivals": 195000,
+              "regionalAverage": 145000,
               "season": "Shoulder"
             },
             {
               "monthName": "Oct",
-              "cityArrivals": 138000,
-              "globalAverage": 117000,
+              "cityArrivals": 162000,
+              "regionalAverage": 124000,
               "season": "Shoulder"
             },
             {
               "monthName": "Nov",
-              "cityArrivals": 121000,
-              "globalAverage": 109000,
+              "cityArrivals": 132000,
+              "regionalAverage": 108000,
               "season": "Low"
             },
             {
               "monthName": "Dec",
-              "cityArrivals": 127000,
-              "globalAverage": 111000,
+              "cityArrivals": 140000,
+              "regionalAverage": 113000,
               "season": "Low"
             }
           ]
@@ -2686,7 +2689,7 @@
             },
             "encoding": {
               "y": {
-                "datum": 142000,
+                "datum": 175083,
                 "type": "quantitative",
                 "axis": {
                   "labelColor": "#888",
@@ -2819,7 +2822,7 @@
                 "type": "ordinal"
               },
               "y": {
-                "field": "globalAverage",
+                "field": "regionalAverage",
                 "type": "quantitative"
               },
               "tooltip": [
@@ -2829,7 +2832,7 @@
                   "title": "Category"
                 },
                 {
-                  "field": "globalAverage",
+                  "field": "regionalAverage",
                   "type": "quantitative",
                   "title": "Occupancy Rate",
                   "format": ".0f"
@@ -2841,7 +2844,7 @@
             "data": {
               "values": [
                 {
-                  "meanValue": 142000,
+                  "meanValue": 175083,
                   "meanLabel": "Monthly Average"
                 }
               ]
@@ -2882,17 +2885,19 @@
           }
         }
       },
-      "generationTime": 28560,
+      "generationTime": 14425,
       "success": true,
       "error": null
     },
     {
       "id": "chart-7",
-      "name": "Hotel Costs with Mean Benchmark - Barcelona",
+      "name": "Barcelona Hotel Costs with Mean Benchmark",
       "request": {
         "userQuery": "Show Barcelona hotel costs with calculated mean benchmark line",
         "constraints": {
           "chartType": "multiType",
+          "subtype": "multiTypeWithMean",
+          "nodeSize": "xlarge",
           "dataCategory": "cost",
           "destinations": [
             "Barcelona"
@@ -2906,74 +2911,74 @@
         "data": [
           {
             "monthName": "Jan",
-            "monthlyHotelCost": 142,
-            "benchmarkHotelCost": 135,
+            "monthlyHotelCost": 145,
+            "peerCityCost": 138,
             "season": "Low"
           },
           {
             "monthName": "Feb",
-            "monthlyHotelCost": 149,
-            "benchmarkHotelCost": 140,
+            "monthlyHotelCost": 152,
+            "peerCityCost": 140,
             "season": "Low"
           },
           {
             "monthName": "Mar",
-            "monthlyHotelCost": 158,
-            "benchmarkHotelCost": 145,
+            "monthlyHotelCost": 159,
+            "peerCityCost": 146,
             "season": "Shoulder"
           },
           {
             "monthName": "Apr",
-            "monthlyHotelCost": 171,
-            "benchmarkHotelCost": 150,
+            "monthlyHotelCost": 174,
+            "peerCityCost": 153,
             "season": "Shoulder"
           },
           {
             "monthName": "May",
-            "monthlyHotelCost": 185,
-            "benchmarkHotelCost": 155,
+            "monthlyHotelCost": 189,
+            "peerCityCost": 158,
             "season": "High"
           },
           {
             "monthName": "Jun",
-            "monthlyHotelCost": 192,
-            "benchmarkHotelCost": 158,
+            "monthlyHotelCost": 196,
+            "peerCityCost": 162,
             "season": "High"
           },
           {
             "monthName": "Jul",
-            "monthlyHotelCost": 204,
-            "benchmarkHotelCost": 160,
+            "monthlyHotelCost": 205,
+            "peerCityCost": 168,
             "season": "Peak"
           },
           {
             "monthName": "Aug",
-            "monthlyHotelCost": 199,
-            "benchmarkHotelCost": 162,
+            "monthlyHotelCost": 210,
+            "peerCityCost": 171,
             "season": "Peak"
           },
           {
             "monthName": "Sep",
-            "monthlyHotelCost": 174,
-            "benchmarkHotelCost": 156,
+            "monthlyHotelCost": 187,
+            "peerCityCost": 159,
             "season": "Shoulder"
           },
           {
             "monthName": "Oct",
-            "monthlyHotelCost": 162,
-            "benchmarkHotelCost": 150,
+            "monthlyHotelCost": 168,
+            "peerCityCost": 150,
             "season": "Shoulder"
           },
           {
             "monthName": "Nov",
-            "monthlyHotelCost": 151,
-            "benchmarkHotelCost": 145,
+            "monthlyHotelCost": 156,
+            "peerCityCost": 143,
             "season": "Low"
           },
           {
             "monthName": "Dec",
-            "monthlyHotelCost": 148,
-            "benchmarkHotelCost": 142,
+            "monthlyHotelCost": 149,
+            "peerCityCost": 139,
             "season": "Low"
           }
         ],
@@ -2985,7 +2990,7 @@
           "fields": {
             "x": "monthName",
             "y": "monthlyHotelCost",
-            "series": "benchmarkHotelCost",
+            "series": "peerCityCost",
             "color": "season"
           },
           "styling": {
@@ -2998,13 +3003,13 @@
             "lineWidth": 3,
             "cornerRadius": 2,
             "background": "transparent",
-            "meanValue": 167,
+            "meanValue": 172,
             "meanColor": "#ff6b6b",
             "meanLabel": "Monthly Average",
             "showMeanLabel": true,
             "axes": {
               "yAxis": {
-                "title": "Average Hotel Cost (USD)",
+                "title": "Average Hotel Cost per Night (USD)",
                 "format": "$,.0f"
               },
               "xAxis": {
@@ -3024,18 +3029,20 @@
             "hover": true
           }
         },
-        "title": "Barcelona hotel costs with mean benchmark",
-        "description": "Monthly hotel prices and mean benchmark",
+        "title": "Barcelona hotel costs vs peer cities",
+        "description": "Monthly hotel prices and peer city average",
         "insights": [
-          "Hotel costs peak in July and August",
-          "Spring and autumn offer better rates"
+          "Hotel costs peak in August",
+          "Barcelona exceeds peer average in summer"
         ],
         "metadata": {
           "generatedBy": "multiTypeAgent",
-          "timestamp": "2025-09-04T18:47:03.111Z",
+          "timestamp": "2025-09-05T02:27:58.418Z",
           "userQuery": "Show Barcelona hotel costs with calculated mean benchmark line",
           "constraints": {
             "chartType": "multiType",
+            "subtype": "multiTypeWithMean",
+            "nodeSize": "xlarge",
             "dataCategory": "cost",
             "destinations": [
               "Barcelona"
@@ -3053,74 +3060,74 @@
           "values": [
             {
               "monthName": "Jan",
-              "monthlyHotelCost": 142,
-              "benchmarkHotelCost": 135,
+              "monthlyHotelCost": 145,
+              "peerCityCost": 138,
               "season": "Low"
             },
             {
               "monthName": "Feb",
-              "monthlyHotelCost": 149,
-              "benchmarkHotelCost": 140,
+              "monthlyHotelCost": 152,
+              "peerCityCost": 140,
               "season": "Low"
             },
             {
               "monthName": "Mar",
-              "monthlyHotelCost": 158,
-              "benchmarkHotelCost": 145,
+              "monthlyHotelCost": 159,
+              "peerCityCost": 146,
               "season": "Shoulder"
             },
             {
               "monthName": "Apr",
-              "monthlyHotelCost": 171,
-              "benchmarkHotelCost": 150,
+              "monthlyHotelCost": 174,
+              "peerCityCost": 153,
               "season": "Shoulder"
             },
             {
               "monthName": "May",
-              "monthlyHotelCost": 185,
-              "benchmarkHotelCost": 155,
+              "monthlyHotelCost": 189,
+              "peerCityCost": 158,
               "season": "High"
             },
             {
               "monthName": "Jun",
-              "monthlyHotelCost": 192,
-              "benchmarkHotelCost": 158,
+              "monthlyHotelCost": 196,
+              "peerCityCost": 162,
               "season": "High"
             },
             {
               "monthName": "Jul",
-              "monthlyHotelCost": 204,
-              "benchmarkHotelCost": 160,
+              "monthlyHotelCost": 205,
+              "peerCityCost": 168,
               "season": "Peak"
             },
             {
               "monthName": "Aug",
-              "monthlyHotelCost": 199,
-              "benchmarkHotelCost": 162,
+              "monthlyHotelCost": 210,
+              "peerCityCost": 171,
               "season": "Peak"
             },
             {
               "monthName": "Sep",
-              "monthlyHotelCost": 174,
-              "benchmarkHotelCost": 156,
+              "monthlyHotelCost": 187,
+              "peerCityCost": 159,
               "season": "Shoulder"
             },
             {
               "monthName": "Oct",
-              "monthlyHotelCost": 162,
-              "benchmarkHotelCost": 150,
+              "monthlyHotelCost": 168,
+              "peerCityCost": 150,
               "season": "Shoulder"
             },
             {
               "monthName": "Nov",
-              "monthlyHotelCost": 151,
-              "benchmarkHotelCost": 145,
+              "monthlyHotelCost": 156,
+              "peerCityCost": 143,
               "season": "Low"
             },
             {
               "monthName": "Dec",
-              "monthlyHotelCost": 148,
-              "benchmarkHotelCost": 142,
+              "monthlyHotelCost": 149,
+              "peerCityCost": 139,
               "season": "Low"
             }
           ]
@@ -3143,7 +3150,7 @@
             },
             "encoding": {
               "y": {
-                "datum": 167,
+                "datum": 172,
                 "type": "quantitative",
                 "axis": {
                   "labelColor": "#888",
@@ -3155,7 +3162,7 @@
                     2
                   ],
                   "grid": true,
-                  "title": "Average Hotel Cost (USD)",
+                  "title": "Average Hotel Cost per Night (USD)",
                   "format": "$,.0f"
                 }
               },
@@ -3214,7 +3221,7 @@
                     2
                   ],
                   "grid": true,
-                  "title": "Average Hotel Cost (USD)",
+                  "title": "Average Hotel Cost per Night (USD)",
                   "format": "$,.0f"
                 }
               },
@@ -3276,7 +3283,7 @@
                 "type": "ordinal"
               },
               "y": {
-                "field": "benchmarkHotelCost",
+                "field": "peerCityCost",
                 "type": "quantitative"
               },
               "tooltip": [
@@ -3286,7 +3293,7 @@
                   "title": "Category"
                 },
                 {
-                  "field": "benchmarkHotelCost",
+                  "field": "peerCityCost",
                   "type": "quantitative",
                   "title": "Occupancy Rate",
                   "format": ".0f"
@@ -3298,7 +3305,7 @@
             "data": {
               "values": [
                 {
-                  "meanValue": 167,
+                  "meanValue": 172,
                   "meanLabel": "Monthly Average"
                 }
               ]
@@ -3339,7 +3346,7 @@
           }
         }
       },
-      "generationTime": 23990,
+      "generationTime": 19030,
       "success": true,
       "error": null
     }
@@ -3436,50 +3443,116 @@
         }
       },
       {
-        "type": "bar",
+        "type": "horizontalBar",
         "info": {
           "chartType": "bar",
           "availableSubtypes": [
-            "divergingBarSpec",
-            "horizontalBarSpec",
-            "barChartWithMean",
+            "horizontalBarSpec"
+          ],
+          "sampleDatasets": [
+            {
+              "type": "population_rankings",
+              "description": "City population rankings for demographic comparisons",
+              "useCases": [
+                "population rankings",
+                "demographic comparisons",
+                "city size analysis"
+              ]
+            },
+            {
+              "type": "recovery_rates",
+              "description": "Tourism recovery rates compared to baseline",
+              "useCases": [
+                "recovery analysis",
+                "performance comparison",
+                "progress tracking"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "divergingBar",
+        "info": {
+          "chartType": "bar",
+          "availableSubtypes": [
+            "divergingBarSpec"
+          ],
+          "sampleDatasets": [
+            {
+              "type": "environmental_comparison",
+              "description": "Environmental quality comparison with opposing metrics",
+              "useCases": [
+                "quality vs challenges",
+                "benefits vs risks",
+                "dual metric analysis"
+              ]
+            },
+            {
+              "type": "tourism_appeal_challenges",
+              "description": "Tourism appeal versus accessibility challenges",
+              "useCases": [
+                "appeal vs challenges",
+                "positive vs negative factors",
+                "trade-off analysis"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "barChartWithThreshold",
+        "info": {
+          "chartType": "bar",
+          "availableSubtypes": [
             "barChartWithThreshold"
           ],
           "sampleDatasets": [
             {
-              "type": "destination_costs",
-              "description": "Travel costs comparison across different destinations",
+              "type": "budget_threshold",
+              "description": "Living costs with budget threshold comparison",
               "useCases": [
-                "cost comparison",
-                "destination ranking",
-                "budget planning"
+                "budget targets",
+                "cost thresholds",
+                "performance goals"
               ]
             },
             {
-              "type": "visitor_growth",
-              "description": "Annual visitor growth rates by destination",
+              "type": "conservation_target",
+              "description": "Wildlife density with conservation target threshold",
               "useCases": [
-                "tourism growth",
-                "performance ranking",
-                "market analysis"
+                "conservation goals",
+                "wildlife targets",
+                "threshold analysis"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "barChartWithMean",
+        "info": {
+          "chartType": "bar",
+          "availableSubtypes": [
+            "barChartWithMean"
+          ],
+          "sampleDatasets": [
+            {
+              "type": "tourism_gdp_benchmark",
+              "description": "Tourism GDP percentage with global average benchmark",
+              "useCases": [
+                "average benchmarks",
+                "performance against mean",
+                "relative comparison"
               ]
             },
             {
-              "type": "safety_comparison",
-              "description": "Safety risk comparison showing crime vs political risk by region",
+              "type": "water_efficiency_benchmark",
+              "description": "Water consumption efficiency with regional mean comparison",
               "useCases": [
-                "risk assessment",
-                "safety comparison",
-                "regional analysis"
-              ]
-            },
-            {
-              "type": "environmental_quality",
-              "description": "Environmental quality scores across cities",
-              "useCases": [
-                "environmental ranking",
-                "sustainability assessment",
-                "livability comparison"
+                "efficiency benchmarks",
+                "regional comparisons",
+                "mean analysis"
               ]
             }
           ]

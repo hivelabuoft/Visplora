@@ -1,6 +1,9 @@
-// Travel Agent Manager - Coordinates all 5 specialized agents
+// Travel Agent Manager - Coordinates all 8 specialized agents
 import { LineChartAgent } from './LineChartAgent';
-import { BarChartAgent } from './BarChartAgent';
+import { HorizontalBarAgent } from './HorizontalBarAgent';
+import { DivergingBarAgent } from './DivergingBarAgent';
+import { HorizontalBarWithThresholdAgent } from './HorizontalBarWithThresholdAgent';
+import { HorizontalBarWithMeanAgent } from './HorizontalBarWithMeanAgent';
 import { PieChartAgent } from './PieChartAgent';
 import { ScatterChartAgent } from './ScatterChartAgent';
 import { MultiTypeChartAgent } from './MultiTypeChartAgent';
@@ -13,7 +16,10 @@ export class TravelAgentManager {
   constructor() {
     this.agents = new Map<string, BaseTravelAgent>([
       ['line', new LineChartAgent()],
-      ['bar', new BarChartAgent()],
+      ['horizontalBar', new HorizontalBarAgent()],
+      ['divergingBar', new DivergingBarAgent()],
+      ['barChartWithThreshold', new HorizontalBarWithThresholdAgent()],
+      ['barChartWithMean', new HorizontalBarWithMeanAgent()],
       ['pie', new PieChartAgent()],
       ['scatter', new ScatterChartAgent()],
       ['multiType', new MultiTypeChartAgent()]
@@ -34,7 +40,7 @@ export class TravelAgentManager {
         return {
           success: false,
           error: `No agent available for chart type: ${chartType}`,
-          suggestedAlternatives: ['line', 'bar', 'pie', 'scatter', 'multiType']
+          suggestedAlternatives: ['line', 'horizontalBar', 'divergingBar', 'barChartWithThreshold', 'barChartWithMean', 'pie', 'scatter', 'multiType']
         };
       }
 
@@ -78,6 +84,14 @@ export class TravelAgentManager {
       return constraints.chartType;
     }
 
+    // For bar charts, check subtype to route to specialized agent
+    if (constraints?.subtype) {
+      // If subtype is specified, return it directly for bar chart variants
+      if (['horizontalBar', 'divergingBar', 'barChartWithThreshold', 'barChartWithMean'].includes(constraints.subtype)) {
+        return constraints.subtype;
+      }
+    }
+
     // Analyze query for chart type indicators
     
     // Multi-type indicators (dual metrics, combined analysis)
@@ -100,20 +114,58 @@ export class TravelAgentManager {
       return 'scatter';
     }
 
-    // Bar chart indicators (compare, ranking, by destination)
+    // Bar chart indicators - determine specific subtype
     if (this.hasBarChartIndicators(query)) {
-      return 'bar';
+      return this.determineBarChartSubtype(query, constraints);
     }
 
     // Default fallback based on data category
     const dataCategory = constraints?.dataCategory;
     if (dataCategory === 'cost' && query.includes('time')) return 'line';
     if (dataCategory === 'reviews' && query.includes('distribution')) return 'pie';
-    if (dataCategory === 'safety' && query.includes('compare')) return 'bar';
+    if (dataCategory === 'safety' && query.includes('compare')) return 'horizontalBar';
     if (dataCategory === 'environmental' && query.includes('relationship')) return 'scatter';
 
-    // Ultimate fallback - bar chart is most versatile
-    return 'bar';
+    // Ultimate fallback - horizontal bar chart is most versatile
+    return 'horizontalBar';
+  }
+
+  /**
+   * Determine specific bar chart subtype based on query content
+   */
+  private determineBarChartSubtype(query: string, constraints?: TravelConstraints): string {
+    // Threshold indicators
+    const thresholdIndicators = [
+      'threshold', 'target', 'goal', 'budget', 'limit', 'minimum', 'maximum',
+      'above', 'below', 'meets', 'exceeds', 'within budget', 'conservation target'
+    ];
+    
+    // Mean/average indicators
+    const meanIndicators = [
+      'average', 'mean', 'benchmark', 'typical', 'standard', 'baseline',
+      'compared to average', 'vs average', 'above average', 'below average'
+    ];
+    
+    // Diverging/opposing indicators
+    const divergingIndicators = [
+      'vs', 'versus', 'compared', 'opposing', 'contrast', 'positive and negative',
+      'pros and cons', 'benefits and challenges', 'appeal vs', 'quality vs'
+    ];
+
+    if (thresholdIndicators.some(indicator => query.includes(indicator))) {
+      return 'barChartWithThreshold';
+    }
+    
+    if (meanIndicators.some(indicator => query.includes(indicator))) {
+      return 'barChartWithMean';
+    }
+    
+    if (divergingIndicators.some(indicator => query.includes(indicator))) {
+      return 'divergingBarSpec';
+    }
+
+    // Default to basic horizontal bar
+    return 'horizontalBarSpec';
   }
 
   private hasMultiTypeIndicators(query: string): boolean {
@@ -213,7 +265,7 @@ export class TravelAgentManager {
     const errors: string[] = [];
     
     // Check all agents are initialized
-    const expectedAgents = ['line', 'bar', 'pie', 'scatter', 'multiType'];
+    const expectedAgents = ['line', 'horizontalBar', 'divergingBar', 'barChartWithThreshold', 'barChartWithMean', 'pie', 'scatter', 'multiType'];
     for (const agentType of expectedAgents) {
       if (!this.agents.has(agentType)) {
         errors.push(`Missing agent for chart type: ${agentType}`);

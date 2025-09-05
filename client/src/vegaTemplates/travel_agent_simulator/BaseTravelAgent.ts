@@ -90,11 +90,9 @@ REQUIREMENTS:
 3. Use appropriate field names that match your data
 4. Include proper styling with travel-appropriate colors
 5. Add meaningful title (NO chart type prefix like "LINE CHART -") and brief description (under 10 words)
-6. CRITICAL: Use EXACT dimensions based on ReusableNode size:
-   - xlarge nodes (multiType, line, scatter): {"width": 390, "height": 160}
-   - large nodes (bar): {"width": 340, "height": 160}  
-   - medium nodes (pie): {"width": 120, "height": 120}
-   DO NOT deviate from these dimensions - they must match the template specs exactly
+6. CRITICAL: Use appropriate dimensions based on the nodeSize constraint provided in the request
+   - Each agent should calculate dimensions based on the actual nodeSize requirement
+   - DO NOT use hardcoded dimensions - calculate them dynamically
 
 Return a JSON object with this structure:
 {
@@ -102,7 +100,7 @@ Return a JSON object with this structure:
   "subtype": "chosen_subtype",
   "data": [...generated_data...],
   "config": {
-    "dimensions": ${this.getCorrectDimensions()},
+    "dimensions": {...calculate_based_on_nodeSize...},
     "fields": {...field_mappings...},
     "styling": {...styling_config...},
     "legend": {...legend_config...},

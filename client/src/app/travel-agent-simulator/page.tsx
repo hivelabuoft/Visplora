@@ -301,14 +301,24 @@ const TravelAgentDemo: React.FC = () => {
               );
             }
 
-            const getNodeSize = (chartType: string) => {
+            const getNodeSize = (chart: any) => {
+              // Use nodeSize from the demo configuration if available
+              const configuredNodeSize = chart.request?.constraints?.nodeSize;
+              if (configuredNodeSize) {
+                return configuredNodeSize;
+              }
+              
+              // Fallback to chart type defaults
+              const chartType = chart.chartSpec?.type || chart.request.constraints?.chartType || 'bar';
               switch (chartType) {
-                case 'line': return 'xlarge';
-                case 'bar': return 'large';
-                case 'pie': return 'medium';
-                case 'scatter': return 'xlarge';
-                case 'multiType': return 'xlarge';
-                default: return 'large';
+                case 'line': return 'xlarge';        // Always xlarge for multiType
+                case 'bar': 
+                  // Bar charts can be medium or xlarge based on demo config
+                  return 'xlarge';  // Default to xlarge, but prefer configured size
+                case 'pie': return 'medium';         // Always medium
+                case 'scatter': return 'xlarge';     // Always xlarge for multiType  
+                case 'multiType': return 'xlarge';   // Always xlarge
+                default: return 'xlarge';
               }
             };
 
@@ -318,7 +328,7 @@ const TravelAgentDemo: React.FC = () => {
             return (
               <ReusableNode
                 key={chart.id}
-                size={getNodeSize(chartType)}
+                size={getNodeSize(chart)}
                 chartType="vega-lite"
                 title={chart.name}
                 description={chart.chartSpec?.description || chart.request.userQuery}

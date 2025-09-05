@@ -474,6 +474,8 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
   // Helper function to create travel growth trends chart using SpecCreator
   const createTravelGrowthTrendsSpec = (data: any[]) => {
     if (!data.length) return null;
+
+    console.log(data);
     
     return SpecCreator.create({
       type: 'bar',
@@ -623,6 +625,8 @@ const Travel2Page: React.FC<Travel2Props> = ({ onInteraction }) => {
       crimeIndex_positive: d.crimeIndex,
       crimeIndex_negative: d.politicalRisk
     }));
+
+    console.log('Transformed Safety Comparison Data:', transformedData);
     
     return SpecCreator.create({
       type: 'bar',

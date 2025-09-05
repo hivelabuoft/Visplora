@@ -1,4 +1,4 @@
-// Bar Chart Agent - Specialized for bar chart generation
+// Bar Chart Agent - Specialized for bar chart generation with 4 distinct subtypes
 import { BaseTravelAgent } from './BaseTravelAgent';
 import { TravelAgentRequest, AgentResponse, TravelDataSample, CHART_SUBTYPES } from './types';
 import { TRAVEL_DESTINATIONS, REGIONS } from '../../app/travel/travelDataUtils';
@@ -11,112 +11,159 @@ export class BarChartAgent extends BaseTravelAgent {
   initializeSampleData(): void {
     this.sampleDatasets = [
       {
-        type: 'destination_costs',
-        description: 'Travel costs comparison across different destinations',
+        type: 'horizontal_bar_basic',
+        description: 'Simple horizontal bar chart for rankings and comparisons',
         fields: {
           category: 'destination (nominal)',
-          value: 'avgCost (quantitative)'
+          value: 'measurement (quantitative)'
         },
         sampleData: [
-          { destination: 'Tokyo', avgCost: 185 },
-          { destination: 'Paris', avgCost: 165 },
-          { destination: 'Bangkok', avgCost: 75 },
-          { destination: 'New York', avgCost: 220 }
+          { destination: 'Tokyo', population: 38000000 },
+          { destination: 'Delhi', population: 32000000 },
+          { destination: 'Shanghai', population: 28000000 }
         ],
-        useCases: ['cost comparison', 'destination ranking', 'budget planning']
+        useCases: ['city rankings', 'population comparisons', 'simple metrics']
       },
       {
-        type: 'visitor_growth',
-        description: 'Annual visitor growth rates by destination',
-        fields: {
-          category: 'city (nominal)',
-          value: 'visitors (quantitative)',
-          growth: 'growthRate (quantitative)'
-        },
-        sampleData: [
-          { city: 'Dubai', visitors: 14200000, growthRate: 15.2 },
-          { city: 'Singapore', visitors: 11900000, growthRate: 9.8 },
-          { city: 'Tokyo', visitors: 15200000, growthRate: 12.5 },
-          { city: 'Barcelona', visitors: 10800000, growthRate: 7.9 }
-        ],
-        useCases: ['tourism growth', 'performance ranking', 'market analysis']
-      },
-      {
-        type: 'safety_comparison',
-        description: 'Safety risk comparison showing crime vs political risk by region',
+        type: 'diverging_bar',
+        description: 'Diverging bar chart for opposing metrics comparison',
         fields: {
           category: 'region (nominal)',
-          crimeIndex: 'crime risk (quantitative)',
-          politicalRisk: 'political risk (quantitative)'
+          positiveField: 'positive metric (quantitative)',
+          negativeField: 'negative metric (quantitative)'
         },
         sampleData: [
-          { region: 'Western Europe', crimeIndex: 32, politicalRisk: 18 },
-          { region: 'Southeast Asia', crimeIndex: 45, politicalRisk: 35 },
-          { region: 'North America', crimeIndex: 38, politicalRisk: 15 },
-          { region: 'Middle East', crimeIndex: 28, politicalRisk: 42 }
+          { region: 'Europe', airQuality: 78, greenSpace: 45 },
+          { region: 'Asia', airQuality: 65, greenSpace: 30 },
+          { region: 'Americas', airQuality: 72, greenSpace: 38 }
         ],
-        useCases: ['risk assessment', 'safety comparison', 'regional analysis']
+        useCases: ['quality vs challenges', 'benefits vs risks', 'comparative analysis']
       },
       {
-        type: 'environmental_quality',
-        description: 'Environmental quality scores across cities',
+        type: 'bar_with_threshold',
+        description: 'Bar chart with threshold line for target comparisons',
         fields: {
-          category: 'city (nominal)',
-          value: 'environmentScore (quantitative)'
+          category: 'destination (nominal)',
+          value: 'measurement (quantitative)',
+          thresholdValue: 'target value (quantitative)'
         },
         sampleData: [
-          { city: 'Singapore', environmentScore: 85 },
-          { city: 'Sydney', environmentScore: 82 },
-          { city: 'Tokyo', environmentScore: 78 },
-          { city: 'Bangkok', environmentScore: 65 }
+          { city: 'Lisbon', livingCost: 1800, budgetTarget: 2000 },
+          { city: 'Berlin', livingCost: 2200, budgetTarget: 2000 },
+          { city: 'Prague', livingCost: 1600, budgetTarget: 2000 }
         ],
-        useCases: ['environmental ranking', 'sustainability assessment', 'livability comparison']
+        useCases: ['budget targets', 'performance goals', 'threshold analysis']
+      },
+      {
+        type: 'bar_with_mean',
+        description: 'Bar chart with mean average line for benchmark comparison',
+        fields: {
+          category: 'destination (nominal)',
+          value: 'measurement (quantitative)',
+          meanValue: 'calculated average (quantitative)'
+        },
+        sampleData: [
+          { country: 'Maldives', tourismGDP: 45.2, globalAverage: 28.5 },
+          { country: 'Seychelles', tourismGDP: 38.7, globalAverage: 28.5 },
+          { country: 'Malta', tourismGDP: 31.4, globalAverage: 28.5 }
+        ],
+        useCases: ['average benchmarks', 'performance against mean', 'relative comparison']
       }
     ];
   }
 
   async generateChart(request: TravelAgentRequest): Promise<AgentResponse> {
     try {
+      const constraints = request.constraints || {};
+      const { subtype, nodeSize, dataCategory } = constraints;
+      
+      // Determine dimensions based on nodeSize
+      const dimensions = this.getDimensionsForNodeSize(nodeSize || 'xlarge');
+      
       const prompt = this.buildPrompt(request) + `
 
-SPECIALIZED INSTRUCTIONS FOR BAR CHARTS:
+CRITICAL: You MUST follow this exact specification pattern based on the working createSafetyComparisonBarChartSpec example.
 
-1. SUBTYPE SELECTION GUIDE:
-   - horizontalBarSpec: Standard horizontal bars (MOST COMMON for rankings/comparisons)
-   - divergingBarSpec: For showing positive/negative or two opposing metrics
-   - barChartWithMean: When showing average line across bars (use styling.meanValue)
-   - barChartWithThreshold: When showing target/threshold line (use styling.thresholdValue)
+SUBTYPE: ${subtype}
+NODE SIZE: ${nodeSize}
+DIMENSIONS: width: ${dimensions.width}, height: ${dimensions.height}
 
-2. FIELD REQUIREMENTS:
-   - category: Must be nominal (destination, city, region, country)
-   - value: Must be quantitative (cost, visitors, score, rating)
-   - For diverging: positiveValue and negativeValue (or use field_positive, field_negative)
+EXACT TEMPLATE REQUIREMENTS:
 
-3. STYLING MUST INCLUDE:
-   - colors: Array of colors (single color for standard, two colors for diverging)
-   - axes.xAxis: { format: "appropriate format", grid: true, gridDash: [2,2] }
-   - axes.yAxis: { labelFontSize: 10, title: null }
+1. DATA FORMAT (you can only change these field mappings):
+   - For divergingBarSpec: {category: "cityName", positiveField: "airQualityScore", negativeField: "greenSpaceScore"}
+   - For horizontalBarSpec: {category: "cityName", value: "populationMillion"}
+   - For horizontalBarWithThresholdSpec: {category: "cityName", value: "livingCost", thresholdValue: 2000}
+   - For horizontalBarWithMeanSpec: {category: "cityName", value: "tourismGDP", meanValue: 28.5}
 
-4. FOR DIVERGING BARS:
-   - Transform data to include positive/negative fields
-   - Use two contrasting colors: ['#ef4444', '#f59e0b'] 
-   - Set positiveLabel and negativeLabel in fields
+2. FIELD MAPPING REQUIREMENTS:
+   fields: {
+     category: 'LLM_GENERATED_FIELD_NAME',        // Your choice of field name
+     value: 'LLM_GENERATED_FIELD_NAME',          // Your choice of field name
+     positiveLabel: 'LLM_GENERATED_LABEL',       // Only for divergingBarSpec
+     negativeLabel: 'LLM_GENERATED_LABEL'        // Only for divergingBarSpec
+   }
 
-5. FOR MEAN/THRESHOLD LINES:
-   - meanValue: number (calculate average from data)
-   - meanColor: "#16a34a"
-   - meanStrokeWidth: 2
-   - meanStrokeDash: [5,5]
-   - meanLabel: "Average: {value}"
+3. STYLING RESTRICTIONS (can only change these):
+   - colors: Array of appropriate colors
+   - title: Custom title based on data
+   - format: Appropriate format string
+   
+4. CONFIG STRUCTURE (EXACT - do not modify except colors/title/format):
+   config: {
+     dimensions: { width: ${dimensions.width}, height: ${dimensions.height} },
+     fields: { /* your field mappings */ },
+     styling: {
+       colors: ['#ef4444', '#f59e0b'], // Your colors
+       background: 'transparent',
+       axes: {
+         xAxis: {
+           labelColor: '#888',
+           titleColor: '#888',
+           labelFontSize: 8,
+           grid: true,
+           gridColor: '#888',
+           gridDash: [2, 2],
+           title: 'YOUR_TITLE', // Your title
+           format: 'YOUR_FORMAT' // Your format
+         }
+       }
+     },
+     legend: {
+       title: null,
+       orient: 'top',
+       titleColor: '#888',
+       labelColor: '#888',
+       titleFontSize: 11,
+       labelFontSize: 10,
+       symbolSize: 150,
+       symbolType: 'square'
+     },
+     tooltip: {
+       fields: [
+         // Adapt these based on your actual data fields
+         { field: 'region', type: 'nominal', title: 'Region' },
+         { field: 'riskLabel', type: 'nominal', title: 'Risk Type' },
+         { field: 'absolute_risk', type: 'quantitative', title: 'Risk Value', format: '.1f' },
+         { field: 'overallSafety', type: 'quantitative', title: 'Overall Safety', format: '.0f' }
+       ]
+     },
+     interactions: {
+       hover: true,
+       select: true
+     }
+   }
 
-6. EXAMPLE TRAVEL SCENARIOS:
-   - "compare costs across cities" → horizontalBarSpec
-   - "crime vs political risk" → divergingBarSpec
-   - "visitor numbers with average" → barChartWithMean
-   - "safety scores vs target" → barChartWithThreshold
-   - "environmental rankings" → horizontalBarSpec
+5. GENERATE DATA based on request destinations and context.
 
-GENERATE realistic travel data with proper destination names and meaningful values.`;
+6. EXAMPLE for divergingBarSpec (North vs South American Environmental Quality):
+   Generate data like:
+   [
+     { city: "Vancouver", airQualityScore: 78, greenSpaceScore: 45, region: "North America" },
+     { city: "São Paulo", airQualityScore: 52, greenSpaceScore: 28, region: "South America" }
+   ]
+
+RESPOND with valid JSON chart specification following this exact pattern.`;
 
       const llmResponse = await this.callLLM(prompt);
       const chartSpec = this.validateResponse(llmResponse);
@@ -136,7 +183,7 @@ GENERATE realistic travel data with proper destination names and meaningful valu
       return {
         success: true,
         chartSpec,
-        explanation: `Generated ${chartSpec.subtype} showing ${chartSpec.description}. This bar chart compares ${chartSpec.data.length} categories with ${chartSpec.subtype.includes('diverging') ? 'dual metric' : 'single metric'} visualization.`
+        explanation: `Generated ${chartSpec.subtype} with ${dimensions.width}x${dimensions.height} dimensions for ${nodeSize} node. Data includes ${chartSpec.data.length} entries with ${chartSpec.config.fields ? Object.keys(chartSpec.config.fields).length : 'multiple'} field mappings.`
       };
 
     } catch (error) {
@@ -152,6 +199,17 @@ GENERATE realistic travel data with proper destination names and meaningful valu
     }
   }
 
+  private getDimensionsForNodeSize(nodeSize: string): { width: number; height: number } {
+    switch (nodeSize) {
+      case 'medium':
+        return { width: 200, height: 100 };
+      case 'xlarge':
+        return { width: 450, height: 155 };
+      default:
+        return { width: 450, height: 155 }; // Default to xlarge
+    }
+  }
+
   protected generateContextAwareData(category: string, destinations: string[] = [], dataPoints: number = 8): any[] {
     const selectedDestinations = destinations.length > 0 ? destinations : 
       TRAVEL_DESTINATIONS.slice(0, dataPoints).map(d => d.city);
@@ -159,44 +217,55 @@ GENERATE realistic travel data with proper destination names and meaningful valu
     const data: any[] = [];
 
     selectedDestinations.forEach(dest => {
-      let value = 0;
-      let additionalFields = {};
+      let entry: any = { city: dest, destination: dest };
 
       switch (category) {
-        case 'cost':
-          value = Math.round(50 + Math.random() * 150);
-          additionalFields = { avgCost: value };
+        case 'demographics':
+          entry.population = Math.round(5 + Math.random() * 35); // Million
+          entry.populationMillion = entry.population;
           break;
-        case 'safety':
-          const crimeRisk = Math.round(15 + Math.random() * 40);
-          const politicalRisk = Math.round(10 + Math.random() * 45);
-          value = Math.round(100 - (crimeRisk + politicalRisk) / 2);
-          additionalFields = { 
-            safetyScore: value,
-            crimeIndex: crimeRisk,
-            politicalRisk: politicalRisk,
-            crimeIndex_positive: crimeRisk,
-            crimeIndex_negative: politicalRisk
-          };
+          
+        case 'recovery-analysis':
+          entry.recoveryRate = Math.round(70 + Math.random() * 40); // %
+          entry.baseline2019 = 100;
           break;
-        case 'visitor-flow':
-          value = Math.round(1000000 + Math.random() * 10000000);
-          additionalFields = { visitors: value, growthRate: Math.round(Math.random() * 20) };
-          break;
+          
         case 'environmental':
-          value = Math.round(40 + Math.random() * 50);
-          additionalFields = { environmentScore: value };
+          entry.airQualityScore = Math.round(40 + Math.random() * 50);
+          entry.greenSpaceScore = Math.round(15 + Math.random() * 40);
+          entry.region = dest.includes('Vancouver') || dest.includes('Portland') ? 'North America' : 'South America';
           break;
+          
+        case 'seasonal-tourism':
+          entry.winterAppeal = Math.round(60 + Math.random() * 30);
+          entry.accessibilityChallenges = Math.round(20 + Math.random() * 50);
+          break;
+          
+        case 'cost':
+          entry.livingCost = Math.round(1200 + Math.random() * 1500); // EUR
+          entry.budgetTarget = 2000;
+          break;
+          
+        case 'wildlife':
+          entry.wildlifeDensity = Math.round(20 + Math.random() * 60); // per sq km
+          entry.conservationTarget = 40;
+          break;
+          
+        case 'economics':
+          entry.tourismGDP = Math.round(15 + Math.random() * 40); // %
+          entry.globalAverage = 28.5;
+          break;
+          
+        case 'sustainability':
+          entry.waterEfficiency = Math.round(60 + Math.random() * 35); // %
+          entry.regionalMean = 75.2;
+          break;
+          
         default:
-          value = Math.round(50 + Math.random() * 50);
+          entry.value = Math.round(50 + Math.random() * 50);
       }
 
-      data.push({
-        destination: dest,
-        city: dest,
-        value,
-        ...additionalFields
-      });
+      data.push(entry);
     });
 
     return data;

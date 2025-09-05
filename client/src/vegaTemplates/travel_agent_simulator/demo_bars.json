@@ -1,0 +1,126 @@
+{
+  "demoRequests": [
+    {
+      "name": "East Asian City Population Rankings",
+      "request": {
+        "userQuery": "Rank East Asian megacities by current population size",
+        "constraints": {
+          "chartType": "horizontalBar",
+          "subtype": "horizontalBar",
+          "nodeSize": "xlarge",
+          "dataCategory": "demographics",
+          "destinations": ["Tokyo", "Seoul", "Shanghai", "Beijing", "Osaka", "Manila", "Jakarta", "Bangkok"],
+          "maxDataPoints": 8
+        }
+      }
+    },
+    {
+      "name": "Southeast Asian Tourism Recovery vs Pre-COVID",
+      "request": {
+        "userQuery": "Compare 2024 tourism recovery rates against 2019 baseline for Southeast Asian destinations",
+        "constraints": {
+          "chartType": "horizontalBar",
+          "subtype": "horizontalBar",
+          "nodeSize": "medium",
+          "dataCategory": "recovery-analysis",
+          "destinations": ["Bangkok", "Singapore", "Kuala Lumpur", "Ho Chi Minh City", "Manila", "Jakarta"],
+          "maxDataPoints": 6
+        }
+      }
+    },
+    {
+      "name": "North vs South American Environmental Quality Scores",
+      "request": {
+        "userQuery": "Show environmental quality comparison between North and South American cities using air quality vs green space metrics",
+        "constraints": {
+          "chartType": "divergingBar",
+          "subtype": "divergingBar",
+          "nodeSize": "xlarge",
+          "dataCategory": "environmental",
+          "destinations": ["Vancouver", "Portland", "Mexico City", "São Paulo", "Buenos Aires", "Bogotá", "Quito"],
+          "maxDataPoints": 7
+        }
+      }
+    },
+    {
+      "name": "Arctic Cities Winter Tourism Potential vs Accessibility Challenges",
+      "request": {
+        "userQuery": "Compare winter tourism appeal against infrastructure accessibility challenges for Arctic cities",
+        "constraints": {
+          "chartType": "divergingBar",
+          "subtype": "divergingBar",
+          "nodeSize": "xlarge",
+          "dataCategory": "seasonal-tourism",
+          "destinations": ["Tromsø", "Reykjavik", "Fairbanks", "Yellowknife", "Rovaniemi", "Murmansk"],
+          "maxDataPoints": 6
+        }
+      }
+    },
+    {
+      "name": "European Capital Digital Nomad Costs with Budget Threshold",
+      "request": {
+        "userQuery": "Show monthly living costs for digital nomads in European capitals with €2000 budget threshold line",
+        "constraints": {
+          "chartType": "barChartWithThreshold",
+          "subtype": "barChartWithThreshold",
+          "nodeSize": "xlarge",
+          "dataCategory": "cost",
+          "destinations": ["Lisbon", "Berlin", "Prague", "Budapest", "Warsaw", "Vienna", "Stockholm", "Zurich"],
+          "maxDataPoints": 8
+        }
+      }
+    },
+    {
+      "name": "African Safari Destinations Wildlife Density with Conservation Target",
+      "request": {
+        "userQuery": "Display wildlife density per sq km for African safari parks with conservation target threshold",
+        "constraints": {
+          "chartType": "barChartWithThreshold",
+          "subtype": "barChartWithThreshold",
+          "nodeSize": "medium",
+          "dataCategory": "wildlife",
+          "destinations": ["Serengeti", "Masai Mara", "Kruger", "Okavango Delta", "Ngorongoro", "Chobe"],
+          "maxDataPoints": 6
+        }
+      }
+    },
+    {
+      "name": "Island Nations Tourism Dependence with Average Benchmark",
+      "request": {
+        "userQuery": "Show tourism GDP percentage for island nations with global island average line",
+        "constraints": {
+          "chartType": "barChartWithMean",
+          "subtype": "barChartWithMean",
+          "nodeSize": "xlarge",
+          "dataCategory": "economics",
+          "destinations": ["Maldives", "Seychelles", "Fiji", "Malta", "Cyprus", "Mauritius", "Iceland"],
+          "maxDataPoints": 7
+        }
+      }
+    },
+    {
+      "name": "Desert Cities Water Sustainability with Regional Mean",
+      "request": {
+        "userQuery": "Compare water consumption efficiency in desert cities with regional average benchmark",
+        "constraints": {
+          "chartType": "barChartWithMean",
+          "subtype": "barChartWithMean",
+          "nodeSize": "medium",
+          "dataCategory": "sustainability",
+          "destinations": ["Las Vegas", "Phoenix", "Dubai", "Riyadh", "Perth", "Adelaide", "Tucson"],
+          "maxDataPoints": 7
+        }
+      }
+    }
+  ],
+  "autoDetectionTests": [
+    "Rank East Asian megacities by population size",
+    "Compare tourism recovery rates in Southeast Asia",
+    "Show environmental quality comparison between American regions",
+    "Arctic cities winter tourism appeal vs challenges",
+    "European capital costs with budget threshold",
+    "African safari wildlife density with conservation targets",
+    "Island nations tourism dependence with benchmark",
+    "Desert cities water efficiency with regional average"
+  ]
+}

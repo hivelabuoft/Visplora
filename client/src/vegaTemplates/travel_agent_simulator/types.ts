@@ -7,7 +7,9 @@ export interface TravelAgentRequest {
 
 export interface TravelConstraints {
   chartType?: 'line' | 'bar' | 'pie' | 'scatter' | 'multiType';
-  dataCategory?: 'cost' | 'safety' | 'visitor-flow' | 'reviews' | 'environmental' | 'cultural';
+  subtype?: string;
+  nodeSize?: 'small' | 'medium' | 'large' | 'xlarge';
+  dataCategory?: 'cost' | 'safety' | 'visitor-flow' | 'reviews' | 'environmental' | 'cultural' | 'demographics' | 'recovery-analysis' | 'seasonal-tourism' | 'wildlife' | 'economics' | 'sustainability';
   timeRange?: { start: string; end: string };
   destinations?: string[];
   maxDataPoints?: number;

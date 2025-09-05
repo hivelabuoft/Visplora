@@ -7,8 +7,8 @@ export const createHorizontalBarSpec = (params: BarChartParams) => {
     categoryField,
     valueField = 'value',
     colors = ['#94a3b8', '#3b82f6', '#16a34a'],
-    width = 220,
-    height = 205,
+    width = 450,  // Updated default for better charts
+    height = 200, // Updated default for better charts
     background = 'transparent',
     orientation = 'horizontal',
     xAxisConfig = {},
@@ -126,7 +126,6 @@ export const createHorizontalBarSpec = (params: BarChartParams) => {
       color: {
         field: colorField,
         type: data[0]?.percentage !== undefined ? 'nominal' as const : 'quantitative' as const,
-        scale: colorScale,
         legend: legend.title !== null ? legend : null
       },
       stroke: {
