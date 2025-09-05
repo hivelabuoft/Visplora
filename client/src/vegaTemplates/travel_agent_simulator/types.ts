@@ -15,6 +15,14 @@ export interface TravelConstraints {
   selectedCountries?: string[];
   maxDataPoints?: number;
   visualization?: 'comparison' | 'trends' | 'distribution' | 'relationship';
+  hasFieldFilter?: boolean;
+  filterConfig?: {
+    filterType: string;
+    filterKey: string;
+    filterLabel?: string;
+    defaultValue?: string;
+    options: Array<{ label: string; value: string; displayName: string }>;
+  };
 }
 
 export interface TravelChartSpec {
@@ -32,6 +40,20 @@ export interface TravelChartSpec {
   title: string;
   description: string;
   insights?: string[];
+  // Backup data for filter switching (without API calls)
+  backupData?: Record<string, any[]>;
+  originalData?: any[];
+  interactivity?: {
+    hasFieldFilter: boolean;
+    filterConfig: {
+      filterType: string;
+      filterKey: string;
+      filterLabel: string;
+      defaultValue: string;
+      options: Array<{ label: string; value: string; displayName: string }>;
+    };
+    dataVariations: Record<string, any[]>;
+  };
   metadata?: {
     generatedBy: string;
     timestamp: string;

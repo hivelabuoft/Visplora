@@ -78,6 +78,7 @@ interface ReusableNodeProps {
   selectedFilter?: any; // Currently selected filter value
   buttons?: Array<{ label: string, onClick: () => void, style?: string }>;
   onFilterChange?: (key: string, value: any) => void;
+  isUpdating?: boolean; // New prop for showing update state
   
   // Data Conditions
   dataCondition?: boolean;
@@ -125,6 +126,7 @@ const ReusableNode: React.FC<ReusableNodeProps> = ({
   selectedFilter,
   buttons = [],
   onFilterChange,
+  isUpdating = false, // New prop with default value
   dataCondition = true,
   fallbackContent,
   chartPosition = 'left-4-bottom-0',
@@ -254,13 +256,13 @@ const ReusableNode: React.FC<ReusableNodeProps> = ({
       
         {/* Controls */}
         {description && (
-            <div className="text-xs text-gray-500 mb-1">
+            <div className={`text-xs text-gray-500 ${hasFieldFilter && filterOptions.length > 0 ? 'mb-2' : 'mb-1'}`}>
             {description}
             </div>
         )}    
         {/* Field Filter Buttons */}
         {hasFieldFilter && filterOptions.length > 0 && (
-            <div className="flex gap-1">
+            <div className="flex gap-1 mb-3 mt-1">
             {filterOptions.map((option, index) => {
                 const isSelected = selectedFilter === option.value;
                 const displayText = option.displayName || option.label;
@@ -269,7 +271,7 @@ const ReusableNode: React.FC<ReusableNodeProps> = ({
                     <button
                     key={option.value || index}
                     className={`
-                    px-1 py-0.5 text-[10px] rounded transition-colors duration-200
+                    px-2 py-1 text-[10px] rounded transition-colors duration-200
                     ${isSelected 
                         ? 'bg-purple-600 text-white shadow-sm font-medium hover:bg-purple-700' 
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -341,11 +343,25 @@ const ReusableNode: React.FC<ReusableNodeProps> = ({
           
           {/* Chart Container */}
           <div 
-            className={chartPosition === 'custom' ? '' : positionClass}
+            className={chartPosition === 'custom' ? '' : 
+              hasFieldFilter && filterOptions.length > 0 
+                ? positionClass.replace('top-9', 'top-16') 
+                : positionClass
+            }
             style={chartPosition === 'custom' ? customChartStyle : undefined}
           >
             {renderChartContent()}
           </div>
+          
+          {/* Update Overlay */}
+          {isUpdating && (
+            <div className="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center rounded-lg">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-2"></div>
+                <div className="text-sm text-gray-600 font-medium">Updating chart...</div>
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>

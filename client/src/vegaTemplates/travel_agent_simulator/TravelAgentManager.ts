@@ -5,13 +5,16 @@ import { DivergingBarAgent } from './DivergingBarAgent';
 import { HorizontalBarWithThresholdAgent } from './HorizontalBarWithThresholdAgent';
 import { HorizontalBarWithMeanAgent } from './HorizontalBarWithMeanAgent';
 import { PieChartAgent } from './PieChartAgent';
+import { PieChartVariationAgent } from './PieChartVariationAgent';
 import { ScatterChartAgent } from './ScatterChartAgent';
 import { MultiTypeChartAgent } from './MultiTypeChartAgent';
 import { TravelAgentRequest, AgentResponse, TravelConstraints, TravelDataSample } from './types';
 import { BaseTravelAgent } from './BaseTravelAgent';
+import { SpecCreator } from '../SpecCreator';
 
 export class TravelAgentManager {
   private agents: Map<string, BaseTravelAgent>;
+  private pieVariationAgent: PieChartVariationAgent;
 
   constructor() {
     this.agents = new Map<string, BaseTravelAgent>([
@@ -24,6 +27,9 @@ export class TravelAgentManager {
       ['scatter', new ScatterChartAgent()],
       ['multiType', new MultiTypeChartAgent()]
     ]);
+
+    // Initialize variation agents
+    this.pieVariationAgent = new PieChartVariationAgent();
   }
 
   /**
@@ -46,6 +52,32 @@ export class TravelAgentManager {
 
       // Generate the chart using the specialized agent
       const response = await agent.generateChart(request);
+      
+      // Check if this chart needs data variations (second layer)
+      if (response.success && response.chartSpec && request.constraints?.hasFieldFilter) {
+        const variationResponse = await this.generateDataVariations(response.chartSpec, request.constraints);
+        
+        if (variationResponse.success) {
+          // Store backup data in chartSpec for local filter switching
+          response.chartSpec.backupData = variationResponse.dataVariations;
+          response.chartSpec.originalData = response.chartSpec.data;
+          
+          // Add interactivity data to chartSpec
+          response.chartSpec.interactivity = {
+            hasFieldFilter: true,
+            filterConfig: {
+              filterType: request.constraints.filterConfig!.filterType,
+              filterKey: request.constraints.filterConfig!.filterKey,
+              filterLabel: request.constraints.filterConfig!.filterLabel || request.constraints.filterConfig!.filterType,
+              defaultValue: request.constraints.filterConfig!.defaultValue || request.constraints.filterConfig!.options[0].value,
+              options: request.constraints.filterConfig!.options
+            },
+            dataVariations: variationResponse.dataVariations
+          };
+        } else {
+          console.warn('Failed to generate data variations:', variationResponse.error);
+        }
+      }
       
       // Add manager metadata
       if (response.success && response.chartSpec) {
@@ -256,6 +288,106 @@ export class TravelAgentManager {
     }
     
     return suggestions;
+  }
+
+  /**
+   * Public method for generating chart variations based on filter changes
+   */
+  async updateChartWithFilter(originalChartSpec: any, filterKey: string, filterValue: any): Promise<{ success: boolean; chartSpec?: any; vegaSpec?: any; error?: string }> {
+    try {
+      // Create filter config for the variation
+      const filterConfig = {
+        filterType: filterKey,
+        filterKey: filterKey,
+        filterValue: filterValue
+      };
+
+      // Create constraints with filter configuration
+      const constraints: TravelConstraints = {
+        chartType: originalChartSpec.type as any,
+        filterConfig: filterConfig as any,
+        hasFieldFilter: true
+      };
+
+      // Generate data variations
+      const variationResponse = await this.generateDataVariations(originalChartSpec, constraints);
+      
+      if (!variationResponse.success) {
+        return {
+          success: false,
+          error: variationResponse.error
+        };
+      }
+
+      // Update the chart spec with new data
+      const updatedChartSpec = {
+        ...originalChartSpec,
+        data: variationResponse.dataVariations[filterValue] || originalChartSpec.data
+      };
+
+      // Convert to spec format and generate vega spec using SpecCreator
+      const convertedSpec = this.convertTravelChartSpecToChartSpec(updatedChartSpec);
+      const vegaSpec = SpecCreator.create(convertedSpec);
+
+      return {
+        success: true,
+        chartSpec: updatedChartSpec,
+        vegaSpec: vegaSpec
+      };
+
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error during chart update'
+      };
+    }
+  }
+
+  /**
+   * Helper method to convert TravelChartSpec to ChartSpec for SpecCreator
+   */
+  private convertTravelChartSpecToChartSpec(travelSpec: any): any {
+    // Ensure styling has required colors property
+    const styling = {
+      ...travelSpec.config?.styling,
+      colors: travelSpec.config?.styling?.colors || ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
+    };
+
+    return {
+      ...travelSpec,
+      config: {
+        ...travelSpec.config,
+        styling
+      }
+    };
+  }
+
+  /**
+   * Generate data variations for interactive charts (private method)
+   */
+  private async generateDataVariations(chartSpec: any, constraints: TravelConstraints): Promise<{ success: boolean; dataVariations: Record<string, any[]>; error?: string }> {
+    if (!constraints.filterConfig) {
+      return {
+        success: false,
+        dataVariations: {},
+        error: 'No filter configuration provided'
+      };
+    }
+
+    // Currently only supports pie charts
+    if (chartSpec.type === 'pie') {
+      return await this.pieVariationAgent.generateDataVariations({
+        baseChartSpec: chartSpec,
+        filterConfig: constraints.filterConfig
+      });
+    }
+
+    // Add support for other chart types here in the future
+    return {
+      success: false,
+      dataVariations: {},
+      error: `Data variations not yet supported for chart type: ${chartSpec.type}`
+    };
   }
 
   /**

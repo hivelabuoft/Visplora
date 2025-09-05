@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generatedAt": "2025-09-05T16:33:50.282Z",
+    "generatedAt": "2025-09-05T17:23:07.440Z",
     "totalRequests": 4,
     "successful": 4,
     "failed": 0,
@@ -18,2085 +18,2487 @@
   "charts": [
     {
       "id": "chart-0",
-      "name": "Cost vs Safety Analysis",
+      "name": "Travel Expense Breakdown by Budget",
       "request": {
-        "userQuery": "Analyze relationship between travel costs and safety scores across destinations",
+        "userQuery": "Show how travel expenses vary by budget level with interactive filtering",
         "constraints": {
-          "chartType": "scatter",
-          "subtype": "bubblePlotScatterSpec",
-          "nodeSize": "xlarge",
+          "chartType": "pie",
+          "subtype": "interactivePieSpec",
+          "nodeSize": "medium",
           "dataCategory": "cost",
           "destinations": [
-            "Tokyo",
-            "Paris",
-            "Bangkok",
-            "New York",
-            "Sydney",
-            "Dubai"
+            "Paris"
           ],
-          "maxDataPoints": 8
+          "maxDataPoints": 5,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "budget_level",
+            "filterKey": "selectedBudgetLevel",
+            "filterLabel": "Budget Level",
+            "defaultValue": "Mid-range",
+            "options": [
+              {
+                "label": "Budget",
+                "value": "Budget",
+                "displayName": "Budget Travel"
+              },
+              {
+                "label": "Mid-range",
+                "value": "Mid-range",
+                "displayName": "Mid-range Travel"
+              },
+              {
+                "label": "Luxury",
+                "value": "Luxury",
+                "displayName": "Luxury Travel"
+              }
+            ]
+          }
         }
       },
       "chartSpec": {
-        "type": "scatter",
-        "subtype": "bubblePlotScatterSpec",
-        "title": "Travel Costs vs Safety Across Major Cities",
-        "description": "Comparing average travel cost and safety ratings",
+        "type": "pie",
+        "subtype": "interactivePieSpec",
+        "title": "Paris Travel Expense Breakdown by Budget",
+        "description": "Expense share for budget travelers in Paris",
         "data": [
           {
-            "avgCost": 185,
-            "safetyScore": 85,
-            "visitors": 15000000,
-            "region": "East Asia",
-            "city": "Tokyo"
+            "expenseType": "Accommodation",
+            "amount": 220,
+            "percentage": 36.7
           },
           {
-            "avgCost": 210,
-            "safetyScore": 70,
-            "visitors": 17000000,
-            "region": "Western Europe",
-            "city": "Paris"
+            "expenseType": "Food & Dining",
+            "amount": 140,
+            "percentage": 23.3
           },
           {
-            "avgCost": 75,
-            "safetyScore": 68,
-            "visitors": 12000000,
-            "region": "Southeast Asia",
-            "city": "Bangkok"
+            "expenseType": "Local Transport",
+            "amount": 75,
+            "percentage": 12.5
           },
           {
-            "avgCost": 230,
-            "safetyScore": 72,
-            "visitors": 13500000,
-            "region": "North America",
-            "city": "New York"
+            "expenseType": "Attractions",
+            "amount": 90,
+            "percentage": 15
           },
           {
-            "avgCost": 195,
-            "safetyScore": 88,
-            "visitors": 10000000,
-            "region": "Oceania",
-            "city": "Sydney"
-          },
-          {
-            "avgCost": 190,
-            "safetyScore": 76,
-            "visitors": 16000000,
-            "region": "Middle East",
-            "city": "Dubai"
-          },
-          {
-            "avgCost": 95,
-            "safetyScore": 60,
-            "visitors": 9500000,
-            "region": "Southeast Asia",
-            "city": "Kuala Lumpur"
-          },
-          {
-            "avgCost": 160,
-            "safetyScore": 80,
-            "visitors": 8000000,
-            "region": "East Asia",
-            "city": "Seoul"
+            "expenseType": "Miscellaneous",
+            "amount": 75,
+            "percentage": 12.5
           }
         ],
         "config": {
           "dimensions": {
-            "width": 360,
-            "height": 200
+            "width": 120,
+            "height": 120
           },
           "fields": {
-            "x": "avgCost",
-            "y": "safetyScore",
-            "size": "visitors",
-            "color": "region"
+            "category": "expenseType",
+            "value": "amount"
           },
           "styling": {
             "colors": [
               "#8B5CF6",
               "#3B82F6",
               "#06B6D4",
-              "#F59E42",
-              "#F43F5E",
-              "#10B981"
+              "#10B981",
+              "#F59E0B"
             ],
-            "background": "transparent",
-            "sizeDomain": [
-              8000000,
-              17000000
-            ],
-            "axes": {
-              "xAxis": {
-                "labelColor": "#888",
-                "titleColor": "#888",
-                "labelFontSize": 8,
-                "titleFontSize": 10,
-                "grid": true,
-                "gridColor": "#888",
-                "gridDash": [
-                  4,
-                  10
-                ],
-                "ticks": true,
-                "domain": true,
-                "title": "Average Travel Cost (USD)",
-                "scale": {
-                  "domain": [
-                    50,
-                    250
-                  ],
-                  "nice": true
-                }
-              },
-              "yAxis": {
-                "labelColor": "#888",
-                "titleColor": "#888",
-                "labelFontSize": 8,
-                "titleFontSize": 10,
-                "grid": false,
-                "gridColor": "#888",
-                "gridDash": [
-                  4,
-                  50
-                ],
-                "ticks": true,
-                "domain": true,
-                "title": "Safety Score",
-                "scale": {
-                  "domain": [
-                    55,
-                    90
-                  ],
-                  "nice": true
-                }
-              }
-            }
+            "background": "transparent"
           },
           "legend": {
-            "showSize": true,
-            "sizeTitle": "Annual Visitors",
-            "showColor": true,
-            "colorTitle": "Region",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
+            "title": "Expense Category",
             "orient": "right",
-            "colorOrient": "top",
-            "offset": 15,
-            "colorOffset": 0
-          },
-          "sizeLegend": {
-            "sizeTitle": "Annual Visitors",
             "titleColor": "#888",
             "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
-            "orient": "right",
-            "values": [
-              8000000,
-              11000000,
-              14000000,
-              17000000
-            ],
-            "offset": 15
-          },
-          "colorLegend": {
-            "colorTitle": "Region",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
-            "colorOrient": "top",
-            "colorOffset": 0
-          },
-          "tooltip": {
-            "fields": [
-              {
-                "field": "city",
-                "type": "nominal",
-                "title": "City"
-              },
-              {
-                "field": "avgCost",
-                "type": "quantitative",
-                "title": "Avg Cost (USD)",
-                "format": ".0f"
-              },
-              {
-                "field": "safetyScore",
-                "type": "quantitative",
-                "title": "Safety Score",
-                "format": ".0f"
-              },
-              {
-                "field": "visitors",
-                "type": "quantitative",
-                "title": "Annual Visitors",
-                "format": ".0f"
-              },
-              {
-                "field": "region",
-                "type": "nominal",
-                "title": "Region"
-              }
-            ]
+            "titleFontSize": 11,
+            "labelFontSize": 10,
+            "symbolSize": 200,
+            "offset": 30,
+            "padding": 0,
+            "symbolType": "circle"
           },
           "interactions": {
-            "hover": true,
-            "select": true
+            "hover": true
           }
         },
         "insights": [
-          "Higher costs do not guarantee higher safety",
-          "Bangkok offers low cost but moderate safety"
+          "Accommodation is the largest expense",
+          "Food & dining and attractions are significant costs"
         ],
+        "backupData": {
+          "Budget": [
+            {
+              "expenseType": "Accommodation",
+              "amount": 180,
+              "percentage": 40
+            },
+            {
+              "expenseType": "Food & Dining",
+              "amount": 110,
+              "percentage": 24.4
+            },
+            {
+              "expenseType": "Local Transport",
+              "amount": 70,
+              "percentage": 15.6
+            },
+            {
+              "expenseType": "Attractions",
+              "amount": 50,
+              "percentage": 11.1
+            },
+            {
+              "expenseType": "Miscellaneous",
+              "amount": 40,
+              "percentage": 8.9
+            }
+          ],
+          "Mid-range": [
+            {
+              "expenseType": "Accommodation",
+              "amount": 300,
+              "percentage": 33.3
+            },
+            {
+              "expenseType": "Food & Dining",
+              "amount": 200,
+              "percentage": 22.2
+            },
+            {
+              "expenseType": "Local Transport",
+              "amount": 110,
+              "percentage": 12.2
+            },
+            {
+              "expenseType": "Attractions",
+              "amount": 180,
+              "percentage": 20
+            },
+            {
+              "expenseType": "Miscellaneous",
+              "amount": 110,
+              "percentage": 12.3
+            }
+          ],
+          "Luxury": [
+            {
+              "expenseType": "Accommodation",
+              "amount": 700,
+              "percentage": 43.8
+            },
+            {
+              "expenseType": "Food & Dining",
+              "amount": 350,
+              "percentage": 21.9
+            },
+            {
+              "expenseType": "Local Transport",
+              "amount": 80,
+              "percentage": 5
+            },
+            {
+              "expenseType": "Attractions",
+              "amount": 300,
+              "percentage": 18.8
+            },
+            {
+              "expenseType": "Miscellaneous",
+              "amount": 170,
+              "percentage": 10.5
+            }
+          ]
+        },
+        "originalData": [
+          {
+            "expenseType": "Accommodation",
+            "amount": 220,
+            "percentage": 36.7
+          },
+          {
+            "expenseType": "Food & Dining",
+            "amount": 140,
+            "percentage": 23.3
+          },
+          {
+            "expenseType": "Local Transport",
+            "amount": 75,
+            "percentage": 12.5
+          },
+          {
+            "expenseType": "Attractions",
+            "amount": 90,
+            "percentage": 15
+          },
+          {
+            "expenseType": "Miscellaneous",
+            "amount": 75,
+            "percentage": 12.5
+          }
+        ],
+        "interactivity": {
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "budget_level",
+            "filterKey": "selectedBudgetLevel",
+            "filterLabel": "Budget Level",
+            "defaultValue": "Mid-range",
+            "options": [
+              {
+                "label": "Budget",
+                "value": "Budget",
+                "displayName": "Budget Travel"
+              },
+              {
+                "label": "Mid-range",
+                "value": "Mid-range",
+                "displayName": "Mid-range Travel"
+              },
+              {
+                "label": "Luxury",
+                "value": "Luxury",
+                "displayName": "Luxury Travel"
+              }
+            ]
+          },
+          "dataVariations": {
+            "Budget": [
+              {
+                "expenseType": "Accommodation",
+                "amount": 180,
+                "percentage": 40
+              },
+              {
+                "expenseType": "Food & Dining",
+                "amount": 110,
+                "percentage": 24.4
+              },
+              {
+                "expenseType": "Local Transport",
+                "amount": 70,
+                "percentage": 15.6
+              },
+              {
+                "expenseType": "Attractions",
+                "amount": 50,
+                "percentage": 11.1
+              },
+              {
+                "expenseType": "Miscellaneous",
+                "amount": 40,
+                "percentage": 8.9
+              }
+            ],
+            "Mid-range": [
+              {
+                "expenseType": "Accommodation",
+                "amount": 300,
+                "percentage": 33.3
+              },
+              {
+                "expenseType": "Food & Dining",
+                "amount": 200,
+                "percentage": 22.2
+              },
+              {
+                "expenseType": "Local Transport",
+                "amount": 110,
+                "percentage": 12.2
+              },
+              {
+                "expenseType": "Attractions",
+                "amount": 180,
+                "percentage": 20
+              },
+              {
+                "expenseType": "Miscellaneous",
+                "amount": 110,
+                "percentage": 12.3
+              }
+            ],
+            "Luxury": [
+              {
+                "expenseType": "Accommodation",
+                "amount": 700,
+                "percentage": 43.8
+              },
+              {
+                "expenseType": "Food & Dining",
+                "amount": 350,
+                "percentage": 21.9
+              },
+              {
+                "expenseType": "Local Transport",
+                "amount": 80,
+                "percentage": 5
+              },
+              {
+                "expenseType": "Attractions",
+                "amount": 300,
+                "percentage": 18.8
+              },
+              {
+                "expenseType": "Miscellaneous",
+                "amount": 170,
+                "percentage": 10.5
+              }
+            ]
+          }
+        },
         "metadata": {
-          "generatedBy": "scatterAgent",
-          "timestamp": "2025-09-05T16:34:34.351Z",
-          "userQuery": "Analyze relationship between travel costs and safety scores across destinations",
+          "generatedBy": "pieAgent",
+          "timestamp": "2025-09-05T17:23:20.643Z",
+          "userQuery": "Show how travel expenses vary by budget level with interactive filtering",
           "constraints": {
-            "chartType": "scatter",
-            "subtype": "bubblePlotScatterSpec",
-            "nodeSize": "xlarge",
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
             "dataCategory": "cost",
             "destinations": [
-              "Tokyo",
-              "Paris",
-              "Bangkok",
-              "New York",
-              "Sydney",
-              "Dubai"
+              "Paris"
             ],
-            "maxDataPoints": 8
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "filterKey": "selectedBudgetLevel",
+              "filterLabel": "Budget Level",
+              "defaultValue": "Mid-range",
+              "options": [
+                {
+                  "label": "Budget",
+                  "value": "Budget",
+                  "displayName": "Budget Travel"
+                },
+                {
+                  "label": "Mid-range",
+                  "value": "Mid-range",
+                  "displayName": "Mid-range Travel"
+                },
+                {
+                  "label": "Luxury",
+                  "value": "Luxury",
+                  "displayName": "Luxury Travel"
+                }
+              ]
+            }
           }
         }
       },
       "vegaSpec": {
         "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 360,
-        "height": 200,
+        "width": 120,
+        "height": 120,
         "background": "transparent",
-        "data": {
-          "values": [
-            {
-              "avgCost": 185,
-              "safetyScore": 85,
-              "visitors": 15000000,
-              "region": "East Asia",
-              "city": "Tokyo"
-            },
-            {
-              "avgCost": 210,
-              "safetyScore": 70,
-              "visitors": 17000000,
-              "region": "Western Europe",
-              "city": "Paris"
-            },
-            {
-              "avgCost": 75,
-              "safetyScore": 68,
-              "visitors": 12000000,
-              "region": "Southeast Asia",
-              "city": "Bangkok"
-            },
-            {
-              "avgCost": 230,
-              "safetyScore": 72,
-              "visitors": 13500000,
-              "region": "North America",
-              "city": "New York"
-            },
-            {
-              "avgCost": 195,
-              "safetyScore": 88,
-              "visitors": 10000000,
-              "region": "Oceania",
-              "city": "Sydney"
-            },
-            {
-              "avgCost": 190,
-              "safetyScore": 76,
-              "visitors": 16000000,
-              "region": "Middle East",
-              "city": "Dubai"
-            },
-            {
-              "avgCost": 95,
-              "safetyScore": 60,
-              "visitors": 9500000,
-              "region": "Southeast Asia",
-              "city": "Kuala Lumpur"
-            },
-            {
-              "avgCost": 160,
-              "safetyScore": 80,
-              "visitors": 8000000,
-              "region": "East Asia",
-              "city": "Seoul"
-            }
-          ]
-        },
-        "params": [
+        "layer": [
           {
-            "name": "hover_scatter",
-            "select": {
-              "type": "point",
-              "on": "pointerover",
-              "clear": "pointerout"
+            "data": {
+              "values": [
+                {
+                  "expenseType": "Accommodation",
+                  "amount": 220,
+                  "percentage": 36.7
+                },
+                {
+                  "expenseType": "Food & Dining",
+                  "amount": 140,
+                  "percentage": 23.3
+                },
+                {
+                  "expenseType": "Local Transport",
+                  "amount": 75,
+                  "percentage": 12.5
+                },
+                {
+                  "expenseType": "Attractions",
+                  "amount": 90,
+                  "percentage": 15
+                },
+                {
+                  "expenseType": "Miscellaneous",
+                  "amount": 75,
+                  "percentage": 12.5
+                }
+              ]
+            },
+            "params": [
+              {
+                "name": "hover_pie",
+                "select": {
+                  "type": "point",
+                  "on": "mouseover",
+                  "clear": "mouseout"
+                }
+              }
+            ],
+            "mark": {
+              "type": "arc",
+              "innerRadius": 42,
+              "outerRadius": 60,
+              "cursor": "pointer"
+            },
+            "encoding": {
+              "theta": {
+                "field": "amount",
+                "type": "quantitative"
+              },
+              "color": {
+                "field": "expenseType",
+                "type": "nominal",
+                "scale": {
+                  "range": [
+                    "#8B5CF6",
+                    "#3B82F6",
+                    "#06B6D4",
+                    "#10B981",
+                    "#F59E0B"
+                  ]
+                },
+                "legend": {
+                  "title": "Expense Category",
+                  "orient": "right",
+                  "titleColor": "#888",
+                  "labelColor": "#888",
+                  "titleFontSize": 11,
+                  "labelFontSize": 10,
+                  "symbolSize": 200,
+                  "offset": 30,
+                  "padding": 0,
+                  "symbolType": "circle"
+                }
+              },
+              "stroke": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": "white"
+                },
+                "value": "white"
+              },
+              "strokeWidth": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": 2
+                },
+                "value": 0.5
+              },
+              "opacity": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": 1
+                },
+                "value": 0.7
+              },
+              "tooltip": [
+                {
+                  "field": "expenseType",
+                  "type": "nominal",
+                  "title": "Category"
+                },
+                {
+                  "field": "amount",
+                  "type": "quantitative",
+                  "title": "Value",
+                  "format": ".0f"
+                },
+                {
+                  "field": "percentage",
+                  "type": "quantitative",
+                  "title": "Percentage",
+                  "format": ".1f"
+                }
+              ]
             }
           },
           {
-            "name": "select_point",
-            "select": {
-              "type": "point"
+            "data": {
+              "values": [
+                {
+                  "text": "120",
+                  "category": "center"
+                }
+              ]
+            },
+            "mark": {
+              "type": "text",
+              "align": "center",
+              "baseline": "middle",
+              "fontSize": 16,
+              "fontWeight": "bold",
+              "dy": -10,
+              "color": "#333"
+            },
+            "encoding": {
+              "text": {
+                "field": "text",
+                "type": "nominal"
+              }
+            }
+          },
+          {
+            "data": {
+              "values": [
+                {
+                  "text": "Average",
+                  "category": "subtitle"
+                }
+              ]
+            },
+            "mark": {
+              "type": "text",
+              "align": "center",
+              "baseline": "middle",
+              "fontSize": 10,
+              "dy": 8,
+              "color": "#888"
+            },
+            "encoding": {
+              "text": {
+                "field": "text",
+                "type": "nominal"
+              }
             }
           }
         ],
-        "mark": {
-          "type": "circle",
-          "cursor": "pointer",
-          "strokeWidth": 2
-        },
-        "encoding": {
-          "x": {
-            "field": "avgCost",
-            "type": "quantitative",
-            "scale": {
-              "domain": [
-                50,
-                250
-              ],
-              "nice": true
-            },
-            "axis": {
-              "labelColor": "#888",
-              "titleColor": "#888",
-              "labelFontSize": 8,
-              "titleFontSize": 10,
-              "grid": true,
-              "gridColor": "#888",
-              "gridDash": [
-                4,
-                10
-              ],
-              "ticks": true,
-              "domain": true,
-              "title": "Average Travel Cost (USD)"
-            }
-          },
-          "y": {
-            "field": "safetyScore",
-            "type": "quantitative",
-            "scale": {
-              "domain": [
-                55,
-                90
-              ],
-              "nice": true
-            },
-            "axis": {
-              "labelColor": "#888",
-              "titleColor": "#888",
-              "labelFontSize": 8,
-              "titleFontSize": 10,
-              "grid": false,
-              "gridColor": "#888",
-              "gridDash": [
-                4,
-                50
-              ],
-              "ticks": true,
-              "domain": true,
-              "title": "Safety Score"
-            }
-          },
-          "size": {
-            "field": "visitors",
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "range": [
-                200,
-                800
-              ],
-              "domain": [
-                8000000,
-                17000000
-              ],
-              "clamp": true
-            },
-            "legend": {
-              "title": "Annual Visitors",
-              "titleColor": "#888",
-              "labelColor": "#888",
-              "titleFontSize": 9,
-              "labelFontSize": 8,
-              "orient": "right",
-              "offset": 15,
-              "padding": 0,
-              "values": [
-                8000000,
-                11000000,
-                14000000,
-                17000000
-              ]
-            }
-          },
-          "color": {
-            "field": "region",
-            "type": "nominal",
-            "scale": {
-              "range": [
-                "#8B5CF6",
-                "#3B82F6",
-                "#06B6D4",
-                "#F59E42",
-                "#F43F5E",
-                "#10B981"
-              ]
-            },
-            "legend": {
-              "title": "Region",
-              "titleColor": "#888",
-              "labelColor": "#888",
-              "titleFontSize": 9,
-              "labelFontSize": 8,
-              "orient": "top",
-              "offset": 0
-            }
-          },
-          "stroke": {
-            "condition": [
-              {
-                "param": "select_point",
-                "empty": false,
-                "value": "#272729"
-              },
-              {
-                "param": "hover_scatter",
-                "empty": false,
-                "value": "#272729"
-              }
-            ],
-            "value": "white"
-          },
-          "opacity": {
-            "condition": [
-              {
-                "param": "select_point",
-                "empty": false,
-                "value": 1
-              },
-              {
-                "param": "hover_scatter",
-                "empty": false,
-                "value": 0.9
-              }
-            ],
-            "value": 0.7
-          },
-          "tooltip": [
-            {
-              "field": "city",
-              "type": "nominal",
-              "title": "City"
-            },
-            {
-              "field": "avgCost",
-              "type": "quantitative",
-              "title": "Avg Cost (USD)",
-              "format": ".0f"
-            },
-            {
-              "field": "safetyScore",
-              "type": "quantitative",
-              "title": "Safety Score",
-              "format": ".0f"
-            },
-            {
-              "field": "visitors",
-              "type": "quantitative",
-              "title": "Annual Visitors",
-              "format": ".0f"
-            },
-            {
-              "field": "region",
-              "type": "nominal",
-              "title": "Region"
-            }
-          ]
-        },
         "config": {
           "view": {
             "stroke": null
           }
         }
       },
-      "generationTime": 44070,
+      "generationTime": 13203,
       "success": true,
       "error": null
     },
     {
       "id": "chart-1",
-      "name": "Environmental Quality Assessment",
+      "name": "Tourist Origin by Region",
       "request": {
-        "userQuery": "Show environmental quality metrics including air quality vs green space coverage",
+        "userQuery": "Analyze tourist origin distribution with regional filtering",
         "constraints": {
-          "chartType": "scatter",
-          "subtype": "bubblePlotScatterSpec",
-          "nodeSize": "xlarge",
-          "dataCategory": "environmental",
+          "chartType": "pie",
+          "subtype": "interactivePieSpec",
+          "nodeSize": "medium",
+          "dataCategory": "visitor-flow",
           "destinations": [
-            "Singapore",
-            "Tokyo",
-            "Barcelona",
-            "Vancouver",
-            "Copenhagen"
+            "Dubai",
+            "Singapore"
           ],
-          "maxDataPoints": 8
+          "maxDataPoints": 6,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "region",
+            "filterKey": "selectedRegion",
+            "filterLabel": "Destination Region",
+            "defaultValue": "Asia",
+            "options": [
+              {
+                "label": "North America",
+                "value": "North America",
+                "displayName": "North America"
+              },
+              {
+                "label": "Europe",
+                "value": "Europe",
+                "displayName": "Europe"
+              },
+              {
+                "label": "Asia",
+                "value": "Asia",
+                "displayName": "Asia"
+              },
+              {
+                "label": "South America",
+                "value": "South America",
+                "displayName": "South America"
+              }
+            ]
+          }
         }
       },
       "chartSpec": {
-        "type": "scatter",
-        "subtype": "bubblePlotScatterSpec",
-        "title": "Air Quality vs Green Space in Top Cities",
-        "description": "Environmental quality among major destinations",
+        "type": "pie",
+        "subtype": "interactivePieSpec",
+        "title": "Tourist Origins for Dubai and Singapore (North America)",
+        "description": "Main regions visiting Dubai and Singapore",
         "data": [
           {
-            "city": "Singapore",
-            "greenSpacePct": 47,
-            "waterQuality": 94,
-            "overallScore": 88,
-            "aqi": 14
+            "region": "United States",
+            "visitors": 220000,
+            "percentage": 44
           },
           {
-            "city": "Tokyo",
-            "greenSpacePct": 24,
-            "waterQuality": 88,
-            "overallScore": 78,
-            "aqi": 20
+            "region": "Canada",
+            "visitors": 120000,
+            "percentage": 24
           },
           {
-            "city": "Barcelona",
-            "greenSpacePct": 35,
-            "waterQuality": 81,
-            "overallScore": 72,
-            "aqi": 33
+            "region": "Mexico",
+            "visitors": 75000,
+            "percentage": 15
           },
           {
-            "city": "Vancouver",
-            "greenSpacePct": 55,
-            "waterQuality": 92,
-            "overallScore": 90,
-            "aqi": 10
+            "region": "Caribbean",
+            "visitors": 48000,
+            "percentage": 9.6
           },
           {
-            "city": "Copenhagen",
-            "greenSpacePct": 41,
-            "waterQuality": 96,
-            "overallScore": 86,
-            "aqi": 13
-          },
-          {
-            "city": "Singapore",
-            "greenSpacePct": 53,
-            "waterQuality": 91,
-            "overallScore": 91,
-            "aqi": 12
-          },
-          {
-            "city": "Tokyo",
-            "greenSpacePct": 28,
-            "waterQuality": 85,
-            "overallScore": 80,
-            "aqi": 18
-          },
-          {
-            "city": "Barcelona",
-            "greenSpacePct": 38,
-            "waterQuality": 78,
-            "overallScore": 68,
-            "aqi": 38
+            "region": "Central America",
+            "visitors": 37000,
+            "percentage": 7.4
           }
         ],
         "config": {
           "dimensions": {
-            "width": 360,
-            "height": 200
+            "width": 120,
+            "height": 120
           },
           "fields": {
-            "x": "greenSpacePct",
-            "y": "waterQuality",
-            "size": "overallScore",
-            "color": "aqi"
+            "category": "region",
+            "value": "visitors"
           },
           "styling": {
             "colors": [
-              "redyellowgreen",
-              "reverse"
+              "#8B5CF6",
+              "#3B82F6",
+              "#06B6D4",
+              "#10B981",
+              "#F59E0B"
             ],
-            "background": "transparent",
-            "sizeDomain": [
-              68,
-              91
-            ],
-            "axes": {
-              "xAxis": {
-                "labelColor": "#888",
-                "titleColor": "#888",
-                "labelFontSize": 8,
-                "titleFontSize": 10,
-                "grid": true,
-                "gridColor": "#888",
-                "gridDash": [
-                  4,
-                  10
-                ],
-                "ticks": true,
-                "domain": true,
-                "title": "Green Space Coverage (%)",
-                "scale": {
-                  "domain": [
-                    0,
-                    60
-                  ],
-                  "nice": true
-                }
-              },
-              "yAxis": {
-                "labelColor": "#888",
-                "titleColor": "#888",
-                "labelFontSize": 8,
-                "titleFontSize": 10,
-                "grid": false,
-                "gridColor": "#888",
-                "gridDash": [
-                  4,
-                  50
-                ],
-                "ticks": true,
-                "domain": true,
-                "title": "Water Quality Index",
-                "scale": {
-                  "domain": [
-                    70,
-                    100
-                  ],
-                  "nice": true
-                }
-              }
-            }
+            "background": "transparent"
           },
           "legend": {
-            "showSize": true,
-            "sizeTitle": "Overall Environmental Score",
-            "showColor": true,
-            "colorTitle": "Air Quality Index (Lower is Better)",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
+            "title": "Visitor Origin Region",
             "orient": "right",
-            "colorOrient": "top",
-            "offset": 15,
-            "colorOffset": 0
-          },
-          "sizeLegend": {
-            "sizeTitle": "Overall Environmental Score",
             "titleColor": "#888",
             "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
-            "orient": "right",
-            "values": [
-              70,
-              80,
-              90
-            ],
-            "offset": 15
-          },
-          "colorLegend": {
-            "colorTitle": "Air Quality Index (Lower is Better)",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
-            "colorOrient": "top",
-            "colorOffset": 0
-          },
-          "tooltip": {
-            "fields": [
-              {
-                "field": "city",
-                "type": "nominal",
-                "title": "City"
-              },
-              {
-                "field": "greenSpacePct",
-                "type": "quantitative",
-                "title": "Green Space (%)",
-                "format": ".0f"
-              },
-              {
-                "field": "waterQuality",
-                "type": "quantitative",
-                "title": "Water Quality",
-                "format": ".0f"
-              },
-              {
-                "field": "overallScore",
-                "type": "quantitative",
-                "title": "Environmental Score",
-                "format": ".0f"
-              },
-              {
-                "field": "aqi",
-                "type": "quantitative",
-                "title": "Air Quality Index",
-                "format": ".0f"
-              }
-            ]
+            "titleFontSize": 11,
+            "labelFontSize": 10,
+            "symbolSize": 200,
+            "offset": 30,
+            "padding": 0,
+            "symbolType": "circle"
           },
           "interactions": {
-            "hover": true,
-            "select": true
+            "hover": true
           }
         },
         "insights": [
-          "Vancouver leads in green space and water quality",
-          "Barcelona has higher air pollution despite moderate green space"
+          "US is the largest source of visitors",
+          "Canada and Mexico contribute nearly 40%"
         ],
-        "metadata": {
-          "generatedBy": "scatterAgent",
-          "timestamp": "2025-09-05T16:35:07.079Z",
-          "userQuery": "Show environmental quality metrics including air quality vs green space coverage",
-          "constraints": {
-            "chartType": "scatter",
-            "subtype": "bubblePlotScatterSpec",
-            "nodeSize": "xlarge",
-            "dataCategory": "environmental",
-            "destinations": [
-              "Singapore",
-              "Tokyo",
-              "Barcelona",
-              "Vancouver",
-              "Copenhagen"
+        "backupData": {
+          "North America": [
+            {
+              "region": "United States",
+              "visitors": 220000,
+              "percentage": 44
+            },
+            {
+              "region": "Canada",
+              "visitors": 120000,
+              "percentage": 24
+            },
+            {
+              "region": "Mexico",
+              "visitors": 75000,
+              "percentage": 15
+            },
+            {
+              "region": "Caribbean",
+              "visitors": 48000,
+              "percentage": 9.6
+            },
+            {
+              "region": "Central America",
+              "visitors": 37000,
+              "percentage": 7.4
+            }
+          ],
+          "Europe": [
+            {
+              "region": "United States",
+              "visitors": 90000,
+              "percentage": 18
+            },
+            {
+              "region": "Canada",
+              "visitors": 60000,
+              "percentage": 12
+            },
+            {
+              "region": "Mexico",
+              "visitors": 35000,
+              "percentage": 7
+            },
+            {
+              "region": "Caribbean",
+              "visitors": 42000,
+              "percentage": 8.4
+            },
+            {
+              "region": "Central America",
+              "visitors": 273000,
+              "percentage": 54.6
+            }
+          ],
+          "Asia": [
+            {
+              "region": "United States",
+              "visitors": 56000,
+              "percentage": 11.2
+            },
+            {
+              "region": "Canada",
+              "visitors": 34000,
+              "percentage": 6.8
+            },
+            {
+              "region": "Mexico",
+              "visitors": 29000,
+              "percentage": 5.8
+            },
+            {
+              "region": "Caribbean",
+              "visitors": 52000,
+              "percentage": 10.4
+            },
+            {
+              "region": "Central America",
+              "visitors": 279000,
+              "percentage": 65.8
+            }
+          ],
+          "South America": [
+            {
+              "region": "United States",
+              "visitors": 38000,
+              "percentage": 7.6
+            },
+            {
+              "region": "Canada",
+              "visitors": 21000,
+              "percentage": 4.2
+            },
+            {
+              "region": "Mexico",
+              "visitors": 66000,
+              "percentage": 13.2
+            },
+            {
+              "region": "Caribbean",
+              "visitors": 62000,
+              "percentage": 12.4
+            },
+            {
+              "region": "Central America",
+              "visitors": 313000,
+              "percentage": 62.6
+            }
+          ]
+        },
+        "originalData": [
+          {
+            "region": "United States",
+            "visitors": 220000,
+            "percentage": 44
+          },
+          {
+            "region": "Canada",
+            "visitors": 120000,
+            "percentage": 24
+          },
+          {
+            "region": "Mexico",
+            "visitors": 75000,
+            "percentage": 15
+          },
+          {
+            "region": "Caribbean",
+            "visitors": 48000,
+            "percentage": 9.6
+          },
+          {
+            "region": "Central America",
+            "visitors": 37000,
+            "percentage": 7.4
+          }
+        ],
+        "interactivity": {
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "region",
+            "filterKey": "selectedRegion",
+            "filterLabel": "Destination Region",
+            "defaultValue": "Asia",
+            "options": [
+              {
+                "label": "North America",
+                "value": "North America",
+                "displayName": "North America"
+              },
+              {
+                "label": "Europe",
+                "value": "Europe",
+                "displayName": "Europe"
+              },
+              {
+                "label": "Asia",
+                "value": "Asia",
+                "displayName": "Asia"
+              },
+              {
+                "label": "South America",
+                "value": "South America",
+                "displayName": "South America"
+              }
+            ]
+          },
+          "dataVariations": {
+            "North America": [
+              {
+                "region": "United States",
+                "visitors": 220000,
+                "percentage": 44
+              },
+              {
+                "region": "Canada",
+                "visitors": 120000,
+                "percentage": 24
+              },
+              {
+                "region": "Mexico",
+                "visitors": 75000,
+                "percentage": 15
+              },
+              {
+                "region": "Caribbean",
+                "visitors": 48000,
+                "percentage": 9.6
+              },
+              {
+                "region": "Central America",
+                "visitors": 37000,
+                "percentage": 7.4
+              }
             ],
-            "maxDataPoints": 8
+            "Europe": [
+              {
+                "region": "United States",
+                "visitors": 90000,
+                "percentage": 18
+              },
+              {
+                "region": "Canada",
+                "visitors": 60000,
+                "percentage": 12
+              },
+              {
+                "region": "Mexico",
+                "visitors": 35000,
+                "percentage": 7
+              },
+              {
+                "region": "Caribbean",
+                "visitors": 42000,
+                "percentage": 8.4
+              },
+              {
+                "region": "Central America",
+                "visitors": 273000,
+                "percentage": 54.6
+              }
+            ],
+            "Asia": [
+              {
+                "region": "United States",
+                "visitors": 56000,
+                "percentage": 11.2
+              },
+              {
+                "region": "Canada",
+                "visitors": 34000,
+                "percentage": 6.8
+              },
+              {
+                "region": "Mexico",
+                "visitors": 29000,
+                "percentage": 5.8
+              },
+              {
+                "region": "Caribbean",
+                "visitors": 52000,
+                "percentage": 10.4
+              },
+              {
+                "region": "Central America",
+                "visitors": 279000,
+                "percentage": 65.8
+              }
+            ],
+            "South America": [
+              {
+                "region": "United States",
+                "visitors": 38000,
+                "percentage": 7.6
+              },
+              {
+                "region": "Canada",
+                "visitors": 21000,
+                "percentage": 4.2
+              },
+              {
+                "region": "Mexico",
+                "visitors": 66000,
+                "percentage": 13.2
+              },
+              {
+                "region": "Caribbean",
+                "visitors": 62000,
+                "percentage": 12.4
+              },
+              {
+                "region": "Central America",
+                "visitors": 313000,
+                "percentage": 62.6
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "generatedBy": "pieAgent",
+          "timestamp": "2025-09-05T17:23:34.723Z",
+          "userQuery": "Analyze tourist origin distribution with regional filtering",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Dubai",
+              "Singapore"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterKey": "selectedRegion",
+              "filterLabel": "Destination Region",
+              "defaultValue": "Asia",
+              "options": [
+                {
+                  "label": "North America",
+                  "value": "North America",
+                  "displayName": "North America"
+                },
+                {
+                  "label": "Europe",
+                  "value": "Europe",
+                  "displayName": "Europe"
+                },
+                {
+                  "label": "Asia",
+                  "value": "Asia",
+                  "displayName": "Asia"
+                },
+                {
+                  "label": "South America",
+                  "value": "South America",
+                  "displayName": "South America"
+                }
+              ]
+            }
           }
         }
       },
       "vegaSpec": {
         "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 360,
-        "height": 200,
+        "width": 120,
+        "height": 120,
         "background": "transparent",
-        "data": {
-          "values": [
-            {
-              "city": "Singapore",
-              "greenSpacePct": 47,
-              "waterQuality": 94,
-              "overallScore": 88,
-              "aqi": 14
-            },
-            {
-              "city": "Tokyo",
-              "greenSpacePct": 24,
-              "waterQuality": 88,
-              "overallScore": 78,
-              "aqi": 20
-            },
-            {
-              "city": "Barcelona",
-              "greenSpacePct": 35,
-              "waterQuality": 81,
-              "overallScore": 72,
-              "aqi": 33
-            },
-            {
-              "city": "Vancouver",
-              "greenSpacePct": 55,
-              "waterQuality": 92,
-              "overallScore": 90,
-              "aqi": 10
-            },
-            {
-              "city": "Copenhagen",
-              "greenSpacePct": 41,
-              "waterQuality": 96,
-              "overallScore": 86,
-              "aqi": 13
-            },
-            {
-              "city": "Singapore",
-              "greenSpacePct": 53,
-              "waterQuality": 91,
-              "overallScore": 91,
-              "aqi": 12
-            },
-            {
-              "city": "Tokyo",
-              "greenSpacePct": 28,
-              "waterQuality": 85,
-              "overallScore": 80,
-              "aqi": 18
-            },
-            {
-              "city": "Barcelona",
-              "greenSpacePct": 38,
-              "waterQuality": 78,
-              "overallScore": 68,
-              "aqi": 38
-            }
-          ]
-        },
-        "params": [
+        "layer": [
           {
-            "name": "hover_scatter",
-            "select": {
-              "type": "point",
-              "on": "pointerover",
-              "clear": "pointerout"
-            }
-          },
-          {
-            "name": "select_point",
-            "select": {
-              "type": "point"
-            }
-          }
-        ],
-        "mark": {
-          "type": "circle",
-          "cursor": "pointer",
-          "strokeWidth": 2
-        },
-        "encoding": {
-          "x": {
-            "field": "greenSpacePct",
-            "type": "quantitative",
-            "scale": {
-              "domain": [
-                0,
-                60
-              ],
-              "nice": true
-            },
-            "axis": {
-              "labelColor": "#888",
-              "titleColor": "#888",
-              "labelFontSize": 8,
-              "titleFontSize": 10,
-              "grid": true,
-              "gridColor": "#888",
-              "gridDash": [
-                4,
-                10
-              ],
-              "ticks": true,
-              "domain": true,
-              "title": "Green Space Coverage (%)"
-            }
-          },
-          "y": {
-            "field": "waterQuality",
-            "type": "quantitative",
-            "scale": {
-              "domain": [
-                70,
-                100
-              ],
-              "nice": true
-            },
-            "axis": {
-              "labelColor": "#888",
-              "titleColor": "#888",
-              "labelFontSize": 8,
-              "titleFontSize": 10,
-              "grid": false,
-              "gridColor": "#888",
-              "gridDash": [
-                4,
-                50
-              ],
-              "ticks": true,
-              "domain": true,
-              "title": "Water Quality Index"
-            }
-          },
-          "size": {
-            "field": "overallScore",
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "range": [
-                200,
-                800
-              ],
-              "domain": [
-                68,
-                91
-              ],
-              "clamp": true
-            },
-            "legend": {
-              "title": "Overall Environmental Score",
-              "titleColor": "#888",
-              "labelColor": "#888",
-              "titleFontSize": 9,
-              "labelFontSize": 8,
-              "orient": "right",
-              "offset": 15,
-              "padding": 0,
+            "data": {
               "values": [
-                70,
-                80,
-                90
+                {
+                  "region": "United States",
+                  "visitors": 220000,
+                  "percentage": 44
+                },
+                {
+                  "region": "Canada",
+                  "visitors": 120000,
+                  "percentage": 24
+                },
+                {
+                  "region": "Mexico",
+                  "visitors": 75000,
+                  "percentage": 15
+                },
+                {
+                  "region": "Caribbean",
+                  "visitors": 48000,
+                  "percentage": 9.6
+                },
+                {
+                  "region": "Central America",
+                  "visitors": 37000,
+                  "percentage": 7.4
+                }
+              ]
+            },
+            "params": [
+              {
+                "name": "hover_pie",
+                "select": {
+                  "type": "point",
+                  "on": "mouseover",
+                  "clear": "mouseout"
+                }
+              }
+            ],
+            "mark": {
+              "type": "arc",
+              "innerRadius": 42,
+              "outerRadius": 60,
+              "cursor": "pointer"
+            },
+            "encoding": {
+              "theta": {
+                "field": "visitors",
+                "type": "quantitative"
+              },
+              "color": {
+                "field": "region",
+                "type": "nominal",
+                "scale": {
+                  "range": [
+                    "#8B5CF6",
+                    "#3B82F6",
+                    "#06B6D4",
+                    "#10B981",
+                    "#F59E0B"
+                  ]
+                },
+                "legend": {
+                  "title": "Visitor Origin Region",
+                  "orient": "right",
+                  "titleColor": "#888",
+                  "labelColor": "#888",
+                  "titleFontSize": 11,
+                  "labelFontSize": 10,
+                  "symbolSize": 200,
+                  "offset": 30,
+                  "padding": 0,
+                  "symbolType": "circle"
+                }
+              },
+              "stroke": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": "white"
+                },
+                "value": "white"
+              },
+              "strokeWidth": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": 2
+                },
+                "value": 0.5
+              },
+              "opacity": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": 1
+                },
+                "value": 0.7
+              },
+              "tooltip": [
+                {
+                  "field": "region",
+                  "type": "nominal",
+                  "title": "Category"
+                },
+                {
+                  "field": "visitors",
+                  "type": "quantitative",
+                  "title": "Value",
+                  "format": ".0f"
+                },
+                {
+                  "field": "percentage",
+                  "type": "quantitative",
+                  "title": "Percentage",
+                  "format": ".1f"
+                }
               ]
             }
           },
-          "color": {
-            "field": "aqi",
-            "type": "quantitative",
-            "scale": {
-              "scheme": "redyellowgreen",
-              "reverse": true
+          {
+            "data": {
+              "values": [
+                {
+                  "text": "100000",
+                  "category": "center"
+                }
+              ]
             },
-            "legend": {
-              "title": "Air Quality Index (Lower is Better)",
-              "titleColor": "#888",
-              "labelColor": "#888",
-              "titleFontSize": 9,
-              "labelFontSize": 8,
-              "orient": "top",
-              "offset": 0
+            "mark": {
+              "type": "text",
+              "align": "center",
+              "baseline": "middle",
+              "fontSize": 16,
+              "fontWeight": "bold",
+              "dy": -10,
+              "color": "#333"
+            },
+            "encoding": {
+              "text": {
+                "field": "text",
+                "type": "nominal"
+              }
             }
           },
-          "stroke": {
-            "condition": [
-              {
-                "param": "select_point",
-                "empty": false,
-                "value": "#272729"
-              },
-              {
-                "param": "hover_scatter",
-                "empty": false,
-                "value": "#272729"
+          {
+            "data": {
+              "values": [
+                {
+                  "text": "Average",
+                  "category": "subtitle"
+                }
+              ]
+            },
+            "mark": {
+              "type": "text",
+              "align": "center",
+              "baseline": "middle",
+              "fontSize": 10,
+              "dy": 8,
+              "color": "#888"
+            },
+            "encoding": {
+              "text": {
+                "field": "text",
+                "type": "nominal"
               }
-            ],
-            "value": "white"
-          },
-          "opacity": {
-            "condition": [
-              {
-                "param": "select_point",
-                "empty": false,
-                "value": 1
-              },
-              {
-                "param": "hover_scatter",
-                "empty": false,
-                "value": 0.9
-              }
-            ],
-            "value": 0.7
-          },
-          "tooltip": [
-            {
-              "field": "city",
-              "type": "nominal",
-              "title": "City"
-            },
-            {
-              "field": "greenSpacePct",
-              "type": "quantitative",
-              "title": "Green Space (%)",
-              "format": ".0f"
-            },
-            {
-              "field": "waterQuality",
-              "type": "quantitative",
-              "title": "Water Quality",
-              "format": ".0f"
-            },
-            {
-              "field": "overallScore",
-              "type": "quantitative",
-              "title": "Environmental Score",
-              "format": ".0f"
-            },
-            {
-              "field": "aqi",
-              "type": "quantitative",
-              "title": "Air Quality Index",
-              "format": ".0f"
             }
-          ]
-        },
+          }
+        ],
         "config": {
           "view": {
             "stroke": null
           }
         }
       },
-      "generationTime": 31724,
+      "generationTime": 13078,
       "success": true,
       "error": null
     },
     {
       "id": "chart-2",
-      "name": "Reviews vs Popularity Correlation",
+      "name": "Travel Activity Distribution by Season",
       "request": {
-        "userQuery": "Explore relationship between review ratings and visitor popularity with cost factors",
+        "userQuery": "Show travel activity preferences across different seasons",
         "constraints": {
-          "chartType": "scatter",
-          "subtype": "bubblePlotScatterSpec",
-          "nodeSize": "xlarge",
+          "chartType": "pie",
+          "subtype": "interactivePieSpec",
+          "nodeSize": "medium",
           "dataCategory": "reviews",
           "destinations": [
-            "Paris",
             "Tokyo",
-            "Bangkok",
-            "New York",
-            "London",
-            "Rome"
+            "Barcelona"
           ],
-          "maxDataPoints": 10
+          "maxDataPoints": 5,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "season",
+            "filterKey": "selectedSeason",
+            "filterLabel": "Travel Season",
+            "defaultValue": "Summer",
+            "options": [
+              {
+                "label": "Spring",
+                "value": "Spring",
+                "displayName": "Spring (Mar-May)"
+              },
+              {
+                "label": "Summer",
+                "value": "Summer",
+                "displayName": "Summer (Jun-Aug)"
+              },
+              {
+                "label": "Fall",
+                "value": "Fall",
+                "displayName": "Fall (Sep-Nov)"
+              },
+              {
+                "label": "Winter",
+                "value": "Winter",
+                "displayName": "Winter (Dec-Feb)"
+              }
+            ]
+          }
         }
       },
       "chartSpec": {
-        "type": "scatter",
-        "subtype": "bubblePlotScatterSpec",
-        "title": "Review Ratings vs Visitor Popularity and Cost",
-        "description": "How cost links reviews and travel volume",
+        "type": "pie",
+        "subtype": "interactivePieSpec",
+        "title": "Travel Activity Preferences in Spring",
+        "description": "Popular activities for Spring travelers",
         "data": [
           {
-            "city": "Paris",
-            "avgRating": 4.3,
-            "visitors": 18000000,
-            "reviewCount": 52000,
-            "costIndex": 92
+            "activity": "Sightseeing",
+            "count": 4800,
+            "percentage": 36.4
           },
           {
-            "city": "Tokyo",
-            "avgRating": 4.6,
-            "visitors": 15000000,
-            "reviewCount": 45000,
-            "costIndex": 85
+            "activity": "Culinary Experiences",
+            "count": 3200,
+            "percentage": 24.2
           },
           {
-            "city": "Bangkok",
-            "avgRating": 4.2,
-            "visitors": 12000000,
-            "reviewCount": 37000,
-            "costIndex": 68
+            "activity": "Cultural Festivals",
+            "count": 2200,
+            "percentage": 16.7
           },
           {
-            "city": "New York",
-            "avgRating": 4.5,
-            "visitors": 13500000,
-            "reviewCount": 49000,
-            "costIndex": 98
+            "activity": "Shopping",
+            "count": 1600,
+            "percentage": 12.1
           },
           {
-            "city": "London",
-            "avgRating": 4.4,
-            "visitors": 16400000,
-            "reviewCount": 51000,
-            "costIndex": 95
-          },
-          {
-            "city": "Rome",
-            "avgRating": 4.1,
-            "visitors": 9400000,
-            "reviewCount": 25000,
-            "costIndex": 77
-          },
-          {
-            "city": "Paris",
-            "avgRating": 4,
-            "visitors": 12500000,
-            "reviewCount": 36000,
-            "costIndex": 89
-          },
-          {
-            "city": "Bangkok",
-            "avgRating": 4.4,
-            "visitors": 16500000,
-            "reviewCount": 40000,
-            "costIndex": 71
-          },
-          {
-            "city": "London",
-            "avgRating": 4.6,
-            "visitors": 14500000,
-            "reviewCount": 47000,
-            "costIndex": 97
-          },
-          {
-            "city": "Rome",
-            "avgRating": 4.3,
-            "visitors": 8900000,
-            "reviewCount": 21000,
-            "costIndex": 80
+            "activity": "Outdoor Adventures",
+            "count": 1400,
+            "percentage": 10.6
           }
         ],
         "config": {
           "dimensions": {
-            "width": 360,
-            "height": 200
+            "width": 120,
+            "height": 120
           },
           "fields": {
-            "x": "avgRating",
-            "y": "visitors",
-            "size": "reviewCount",
-            "color": "costIndex"
+            "category": "activity",
+            "value": "count"
           },
           "styling": {
             "colors": [
-              "redyellowgreen",
-              "reverse"
+              "#8B5CF6",
+              "#3B82F6",
+              "#06B6D4",
+              "#10B981",
+              "#F59E0B"
             ],
-            "background": "transparent",
-            "sizeDomain": [
-              20000,
-              52000
-            ],
-            "axes": {
-              "xAxis": {
-                "labelColor": "#888",
-                "titleColor": "#888",
-                "labelFontSize": 8,
-                "titleFontSize": 10,
-                "grid": true,
-                "gridColor": "#888",
-                "gridDash": [
-                  4,
-                  10
-                ],
-                "ticks": true,
-                "domain": true,
-                "title": "Average Review Rating",
-                "scale": {
-                  "domain": [
-                    4,
-                    4.7
-                  ],
-                  "nice": true
-                }
-              },
-              "yAxis": {
-                "labelColor": "#888",
-                "titleColor": "#888",
-                "labelFontSize": 8,
-                "titleFontSize": 10,
-                "grid": false,
-                "gridColor": "#888",
-                "gridDash": [
-                  4,
-                  50
-                ],
-                "ticks": true,
-                "domain": true,
-                "title": "Annual Visitors",
-                "scale": {
-                  "domain": [
-                    8000000,
-                    19000000
-                  ],
-                  "nice": true
-                }
-              }
-            }
+            "background": "transparent"
           },
           "legend": {
-            "showSize": true,
-            "sizeTitle": "Number of Reviews",
-            "showColor": true,
-            "colorTitle": "Cost Index",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
+            "title": "Activity Type",
             "orient": "right",
-            "colorOrient": "top",
-            "offset": 15,
-            "colorOffset": 0
-          },
-          "sizeLegend": {
-            "sizeTitle": "Number of Reviews",
             "titleColor": "#888",
             "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
-            "orient": "right",
-            "values": [
-              20000,
-              30000,
-              40000,
-              52000
-            ],
-            "offset": 15
-          },
-          "colorLegend": {
-            "colorTitle": "Cost Index",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
-            "colorOrient": "top",
-            "colorOffset": 0
-          },
-          "tooltip": {
-            "fields": [
-              {
-                "field": "city",
-                "type": "nominal",
-                "title": "City"
-              },
-              {
-                "field": "avgRating",
-                "type": "quantitative",
-                "title": "Average Review Rating",
-                "format": ".1f"
-              },
-              {
-                "field": "visitors",
-                "type": "quantitative",
-                "title": "Annual Visitors",
-                "format": ".0f"
-              },
-              {
-                "field": "reviewCount",
-                "type": "quantitative",
-                "title": "Number of Reviews",
-                "format": ".0f"
-              },
-              {
-                "field": "costIndex",
-                "type": "quantitative",
-                "title": "Cost Index",
-                "format": ".0f"
-              }
-            ]
+            "titleFontSize": 11,
+            "labelFontSize": 10,
+            "symbolSize": 200,
+            "offset": 30,
+            "padding": 0,
+            "symbolType": "circle"
           },
           "interactions": {
-            "hover": true,
-            "select": true
+            "hover": true
           }
         },
         "insights": [
-          "Higher cost cities often have more reviews",
-          "Popular cities maintain high review ratings"
+          "Sightseeing is the top Spring activity",
+          "Outdoor Adventures are less common in Spring"
         ],
+        "backupData": {
+          "Spring": [
+            {
+              "activity": "Sightseeing",
+              "count": 4800,
+              "percentage": 36.4
+            },
+            {
+              "activity": "Culinary Experiences",
+              "count": 3200,
+              "percentage": 24.2
+            },
+            {
+              "activity": "Cultural Festivals",
+              "count": 2200,
+              "percentage": 16.7
+            },
+            {
+              "activity": "Shopping",
+              "count": 1600,
+              "percentage": 12.1
+            },
+            {
+              "activity": "Outdoor Adventures",
+              "count": 1400,
+              "percentage": 10.6
+            }
+          ],
+          "Summer": [
+            {
+              "activity": "Sightseeing",
+              "count": 4200,
+              "percentage": 29.2
+            },
+            {
+              "activity": "Culinary Experiences",
+              "count": 2700,
+              "percentage": 18.8
+            },
+            {
+              "activity": "Cultural Festivals",
+              "count": 1800,
+              "percentage": 12.5
+            },
+            {
+              "activity": "Shopping",
+              "count": 1400,
+              "percentage": 9.7
+            },
+            {
+              "activity": "Outdoor Adventures",
+              "count": 4300,
+              "percentage": 29.9
+            }
+          ],
+          "Fall": [
+            {
+              "activity": "Sightseeing",
+              "count": 3900,
+              "percentage": 30
+            },
+            {
+              "activity": "Culinary Experiences",
+              "count": 3100,
+              "percentage": 23.8
+            },
+            {
+              "activity": "Cultural Festivals",
+              "count": 2500,
+              "percentage": 19.2
+            },
+            {
+              "activity": "Shopping",
+              "count": 1800,
+              "percentage": 13.8
+            },
+            {
+              "activity": "Outdoor Adventures",
+              "count": 1100,
+              "percentage": 8.5
+            }
+          ],
+          "Winter": [
+            {
+              "activity": "Sightseeing",
+              "count": 2800,
+              "percentage": 23.3
+            },
+            {
+              "activity": "Culinary Experiences",
+              "count": 3800,
+              "percentage": 31.7
+            },
+            {
+              "activity": "Cultural Festivals",
+              "count": 2100,
+              "percentage": 17.5
+            },
+            {
+              "activity": "Shopping",
+              "count": 2900,
+              "percentage": 24.2
+            },
+            {
+              "activity": "Outdoor Adventures",
+              "count": 400,
+              "percentage": 3.3
+            }
+          ]
+        },
+        "originalData": [
+          {
+            "activity": "Sightseeing",
+            "count": 4800,
+            "percentage": 36.4
+          },
+          {
+            "activity": "Culinary Experiences",
+            "count": 3200,
+            "percentage": 24.2
+          },
+          {
+            "activity": "Cultural Festivals",
+            "count": 2200,
+            "percentage": 16.7
+          },
+          {
+            "activity": "Shopping",
+            "count": 1600,
+            "percentage": 12.1
+          },
+          {
+            "activity": "Outdoor Adventures",
+            "count": 1400,
+            "percentage": 10.6
+          }
+        ],
+        "interactivity": {
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "season",
+            "filterKey": "selectedSeason",
+            "filterLabel": "Travel Season",
+            "defaultValue": "Summer",
+            "options": [
+              {
+                "label": "Spring",
+                "value": "Spring",
+                "displayName": "Spring (Mar-May)"
+              },
+              {
+                "label": "Summer",
+                "value": "Summer",
+                "displayName": "Summer (Jun-Aug)"
+              },
+              {
+                "label": "Fall",
+                "value": "Fall",
+                "displayName": "Fall (Sep-Nov)"
+              },
+              {
+                "label": "Winter",
+                "value": "Winter",
+                "displayName": "Winter (Dec-Feb)"
+              }
+            ]
+          },
+          "dataVariations": {
+            "Spring": [
+              {
+                "activity": "Sightseeing",
+                "count": 4800,
+                "percentage": 36.4
+              },
+              {
+                "activity": "Culinary Experiences",
+                "count": 3200,
+                "percentage": 24.2
+              },
+              {
+                "activity": "Cultural Festivals",
+                "count": 2200,
+                "percentage": 16.7
+              },
+              {
+                "activity": "Shopping",
+                "count": 1600,
+                "percentage": 12.1
+              },
+              {
+                "activity": "Outdoor Adventures",
+                "count": 1400,
+                "percentage": 10.6
+              }
+            ],
+            "Summer": [
+              {
+                "activity": "Sightseeing",
+                "count": 4200,
+                "percentage": 29.2
+              },
+              {
+                "activity": "Culinary Experiences",
+                "count": 2700,
+                "percentage": 18.8
+              },
+              {
+                "activity": "Cultural Festivals",
+                "count": 1800,
+                "percentage": 12.5
+              },
+              {
+                "activity": "Shopping",
+                "count": 1400,
+                "percentage": 9.7
+              },
+              {
+                "activity": "Outdoor Adventures",
+                "count": 4300,
+                "percentage": 29.9
+              }
+            ],
+            "Fall": [
+              {
+                "activity": "Sightseeing",
+                "count": 3900,
+                "percentage": 30
+              },
+              {
+                "activity": "Culinary Experiences",
+                "count": 3100,
+                "percentage": 23.8
+              },
+              {
+                "activity": "Cultural Festivals",
+                "count": 2500,
+                "percentage": 19.2
+              },
+              {
+                "activity": "Shopping",
+                "count": 1800,
+                "percentage": 13.8
+              },
+              {
+                "activity": "Outdoor Adventures",
+                "count": 1100,
+                "percentage": 8.5
+              }
+            ],
+            "Winter": [
+              {
+                "activity": "Sightseeing",
+                "count": 2800,
+                "percentage": 23.3
+              },
+              {
+                "activity": "Culinary Experiences",
+                "count": 3800,
+                "percentage": 31.7
+              },
+              {
+                "activity": "Cultural Festivals",
+                "count": 2100,
+                "percentage": 17.5
+              },
+              {
+                "activity": "Shopping",
+                "count": 2900,
+                "percentage": 24.2
+              },
+              {
+                "activity": "Outdoor Adventures",
+                "count": 400,
+                "percentage": 3.3
+              }
+            ]
+          }
+        },
         "metadata": {
-          "generatedBy": "scatterAgent",
-          "timestamp": "2025-09-05T16:35:38.344Z",
-          "userQuery": "Explore relationship between review ratings and visitor popularity with cost factors",
+          "generatedBy": "pieAgent",
+          "timestamp": "2025-09-05T17:23:46.441Z",
+          "userQuery": "Show travel activity preferences across different seasons",
           "constraints": {
-            "chartType": "scatter",
-            "subtype": "bubblePlotScatterSpec",
-            "nodeSize": "xlarge",
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
             "dataCategory": "reviews",
             "destinations": [
-              "Paris",
               "Tokyo",
-              "Bangkok",
-              "New York",
-              "London",
-              "Rome"
+              "Barcelona"
             ],
-            "maxDataPoints": 10
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "season",
+              "filterKey": "selectedSeason",
+              "filterLabel": "Travel Season",
+              "defaultValue": "Summer",
+              "options": [
+                {
+                  "label": "Spring",
+                  "value": "Spring",
+                  "displayName": "Spring (Mar-May)"
+                },
+                {
+                  "label": "Summer",
+                  "value": "Summer",
+                  "displayName": "Summer (Jun-Aug)"
+                },
+                {
+                  "label": "Fall",
+                  "value": "Fall",
+                  "displayName": "Fall (Sep-Nov)"
+                },
+                {
+                  "label": "Winter",
+                  "value": "Winter",
+                  "displayName": "Winter (Dec-Feb)"
+                }
+              ]
+            }
           }
         }
       },
       "vegaSpec": {
         "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 360,
-        "height": 200,
+        "width": 120,
+        "height": 120,
         "background": "transparent",
-        "data": {
-          "values": [
-            {
-              "city": "Paris",
-              "avgRating": 4.3,
-              "visitors": 18000000,
-              "reviewCount": 52000,
-              "costIndex": 92
-            },
-            {
-              "city": "Tokyo",
-              "avgRating": 4.6,
-              "visitors": 15000000,
-              "reviewCount": 45000,
-              "costIndex": 85
-            },
-            {
-              "city": "Bangkok",
-              "avgRating": 4.2,
-              "visitors": 12000000,
-              "reviewCount": 37000,
-              "costIndex": 68
-            },
-            {
-              "city": "New York",
-              "avgRating": 4.5,
-              "visitors": 13500000,
-              "reviewCount": 49000,
-              "costIndex": 98
-            },
-            {
-              "city": "London",
-              "avgRating": 4.4,
-              "visitors": 16400000,
-              "reviewCount": 51000,
-              "costIndex": 95
-            },
-            {
-              "city": "Rome",
-              "avgRating": 4.1,
-              "visitors": 9400000,
-              "reviewCount": 25000,
-              "costIndex": 77
-            },
-            {
-              "city": "Paris",
-              "avgRating": 4,
-              "visitors": 12500000,
-              "reviewCount": 36000,
-              "costIndex": 89
-            },
-            {
-              "city": "Bangkok",
-              "avgRating": 4.4,
-              "visitors": 16500000,
-              "reviewCount": 40000,
-              "costIndex": 71
-            },
-            {
-              "city": "London",
-              "avgRating": 4.6,
-              "visitors": 14500000,
-              "reviewCount": 47000,
-              "costIndex": 97
-            },
-            {
-              "city": "Rome",
-              "avgRating": 4.3,
-              "visitors": 8900000,
-              "reviewCount": 21000,
-              "costIndex": 80
-            }
-          ]
-        },
-        "params": [
+        "layer": [
           {
-            "name": "hover_scatter",
-            "select": {
-              "type": "point",
-              "on": "pointerover",
-              "clear": "pointerout"
-            }
-          },
-          {
-            "name": "select_point",
-            "select": {
-              "type": "point"
-            }
-          }
-        ],
-        "mark": {
-          "type": "circle",
-          "cursor": "pointer",
-          "strokeWidth": 2
-        },
-        "encoding": {
-          "x": {
-            "field": "avgRating",
-            "type": "quantitative",
-            "scale": {
-              "domain": [
-                4,
-                4.7
-              ],
-              "nice": true
-            },
-            "axis": {
-              "labelColor": "#888",
-              "titleColor": "#888",
-              "labelFontSize": 8,
-              "titleFontSize": 10,
-              "grid": true,
-              "gridColor": "#888",
-              "gridDash": [
-                4,
-                10
-              ],
-              "ticks": true,
-              "domain": true,
-              "title": "Average Review Rating"
-            }
-          },
-          "y": {
-            "field": "visitors",
-            "type": "quantitative",
-            "scale": {
-              "domain": [
-                8000000,
-                19000000
-              ],
-              "nice": true
-            },
-            "axis": {
-              "labelColor": "#888",
-              "titleColor": "#888",
-              "labelFontSize": 8,
-              "titleFontSize": 10,
-              "grid": false,
-              "gridColor": "#888",
-              "gridDash": [
-                4,
-                50
-              ],
-              "ticks": true,
-              "domain": true,
-              "title": "Annual Visitors"
-            }
-          },
-          "size": {
-            "field": "reviewCount",
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "range": [
-                200,
-                800
-              ],
-              "domain": [
-                20000,
-                52000
-              ],
-              "clamp": true
-            },
-            "legend": {
-              "title": "Number of Reviews",
-              "titleColor": "#888",
-              "labelColor": "#888",
-              "titleFontSize": 9,
-              "labelFontSize": 8,
-              "orient": "right",
-              "offset": 15,
-              "padding": 0,
+            "data": {
               "values": [
-                20000,
-                30000,
-                40000,
-                52000
+                {
+                  "activity": "Sightseeing",
+                  "count": 4800,
+                  "percentage": 36.4
+                },
+                {
+                  "activity": "Culinary Experiences",
+                  "count": 3200,
+                  "percentage": 24.2
+                },
+                {
+                  "activity": "Cultural Festivals",
+                  "count": 2200,
+                  "percentage": 16.7
+                },
+                {
+                  "activity": "Shopping",
+                  "count": 1600,
+                  "percentage": 12.1
+                },
+                {
+                  "activity": "Outdoor Adventures",
+                  "count": 1400,
+                  "percentage": 10.6
+                }
+              ]
+            },
+            "params": [
+              {
+                "name": "hover_pie",
+                "select": {
+                  "type": "point",
+                  "on": "mouseover",
+                  "clear": "mouseout"
+                }
+              }
+            ],
+            "mark": {
+              "type": "arc",
+              "innerRadius": 42,
+              "outerRadius": 60,
+              "cursor": "pointer"
+            },
+            "encoding": {
+              "theta": {
+                "field": "count",
+                "type": "quantitative"
+              },
+              "color": {
+                "field": "activity",
+                "type": "nominal",
+                "scale": {
+                  "range": [
+                    "#8B5CF6",
+                    "#3B82F6",
+                    "#06B6D4",
+                    "#10B981",
+                    "#F59E0B"
+                  ]
+                },
+                "legend": {
+                  "title": "Activity Type",
+                  "orient": "right",
+                  "titleColor": "#888",
+                  "labelColor": "#888",
+                  "titleFontSize": 11,
+                  "labelFontSize": 10,
+                  "symbolSize": 200,
+                  "offset": 30,
+                  "padding": 0,
+                  "symbolType": "circle"
+                }
+              },
+              "stroke": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": "white"
+                },
+                "value": "white"
+              },
+              "strokeWidth": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": 2
+                },
+                "value": 0.5
+              },
+              "opacity": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": 1
+                },
+                "value": 0.7
+              },
+              "tooltip": [
+                {
+                  "field": "activity",
+                  "type": "nominal",
+                  "title": "Category"
+                },
+                {
+                  "field": "count",
+                  "type": "quantitative",
+                  "title": "Value",
+                  "format": ".0f"
+                },
+                {
+                  "field": "percentage",
+                  "type": "quantitative",
+                  "title": "Percentage",
+                  "format": ".1f"
+                }
               ]
             }
           },
-          "color": {
-            "field": "costIndex",
-            "type": "quantitative",
-            "scale": {
-              "scheme": "redyellowgreen",
-              "reverse": true
+          {
+            "data": {
+              "values": [
+                {
+                  "text": "2640",
+                  "category": "center"
+                }
+              ]
             },
-            "legend": {
-              "title": "Cost Index",
-              "titleColor": "#888",
-              "labelColor": "#888",
-              "titleFontSize": 9,
-              "labelFontSize": 8,
-              "orient": "top",
-              "offset": 0
+            "mark": {
+              "type": "text",
+              "align": "center",
+              "baseline": "middle",
+              "fontSize": 16,
+              "fontWeight": "bold",
+              "dy": -10,
+              "color": "#333"
+            },
+            "encoding": {
+              "text": {
+                "field": "text",
+                "type": "nominal"
+              }
             }
           },
-          "stroke": {
-            "condition": [
-              {
-                "param": "select_point",
-                "empty": false,
-                "value": "#272729"
-              },
-              {
-                "param": "hover_scatter",
-                "empty": false,
-                "value": "#272729"
+          {
+            "data": {
+              "values": [
+                {
+                  "text": "Average",
+                  "category": "subtitle"
+                }
+              ]
+            },
+            "mark": {
+              "type": "text",
+              "align": "center",
+              "baseline": "middle",
+              "fontSize": 10,
+              "dy": 8,
+              "color": "#888"
+            },
+            "encoding": {
+              "text": {
+                "field": "text",
+                "type": "nominal"
               }
-            ],
-            "value": "white"
-          },
-          "opacity": {
-            "condition": [
-              {
-                "param": "select_point",
-                "empty": false,
-                "value": 1
-              },
-              {
-                "param": "hover_scatter",
-                "empty": false,
-                "value": 0.9
-              }
-            ],
-            "value": 0.7
-          },
-          "tooltip": [
-            {
-              "field": "city",
-              "type": "nominal",
-              "title": "City"
-            },
-            {
-              "field": "avgRating",
-              "type": "quantitative",
-              "title": "Average Review Rating",
-              "format": ".1f"
-            },
-            {
-              "field": "visitors",
-              "type": "quantitative",
-              "title": "Annual Visitors",
-              "format": ".0f"
-            },
-            {
-              "field": "reviewCount",
-              "type": "quantitative",
-              "title": "Number of Reviews",
-              "format": ".0f"
-            },
-            {
-              "field": "costIndex",
-              "type": "quantitative",
-              "title": "Cost Index",
-              "format": ".0f"
             }
-          ]
-        },
+          }
+        ],
         "config": {
           "view": {
             "stroke": null
           }
         }
       },
-      "generationTime": 30262,
+      "generationTime": 10714,
       "success": true,
       "error": null
     },
     {
       "id": "chart-3",
-      "name": "Accessibility vs Satisfaction Analysis",
+      "name": "Safety Concerns by Trip Type",
       "request": {
-        "userQuery": "Compare visa accessibility with tourist satisfaction scores and spending patterns",
+        "userQuery": "Analyze safety concern distribution filtered by trip type",
         "constraints": {
-          "chartType": "scatter",
-          "subtype": "bubblePlotScatterSpec",
-          "nodeSize": "xlarge",
-          "dataCategory": "accessibility",
+          "chartType": "pie",
+          "subtype": "interactivePieSpec",
+          "nodeSize": "medium",
+          "dataCategory": "safety",
           "destinations": [
-            "Singapore",
-            "Tokyo",
             "Bangkok",
-            "Sydney",
-            "Dubai",
-            "Mumbai"
+            "Cairo"
           ],
-          "maxDataPoints": 8
+          "maxDataPoints": 6,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "trip_type",
+            "filterKey": "selectedTripType",
+            "filterLabel": "Trip Type",
+            "defaultValue": "Leisure",
+            "options": [
+              {
+                "label": "Business",
+                "value": "Business",
+                "displayName": "Business Travel"
+              },
+              {
+                "label": "Leisure",
+                "value": "Leisure",
+                "displayName": "Leisure Travel"
+              },
+              {
+                "label": "Adventure",
+                "value": "Adventure",
+                "displayName": "Adventure Travel"
+              },
+              {
+                "label": "Cultural",
+                "value": "Cultural",
+                "displayName": "Cultural Travel"
+              }
+            ]
+          }
         }
       },
       "chartSpec": {
-        "type": "scatter",
-        "subtype": "bubblePlotScatterSpec",
-        "title": "Visa Accessibility vs Tourist Satisfaction and Spending",
-        "description": "Comparing visa access, satisfaction, and spend",
+        "type": "pie",
+        "subtype": "interactivePieSpec",
+        "title": "Safety Concern Distribution for Business Trips",
+        "description": "Safety risks in Bangkok and Cairo by concern type",
         "data": [
           {
-            "city": "Singapore",
-            "visaFreeAccess": 85,
-            "satisfactionScore": 4.7,
-            "touristSpend": 2500,
-            "developmentIndex": 0.93
+            "safetyConcern": "Petty Theft",
+            "incidents": 38,
+            "percentage": 31.7
           },
           {
-            "city": "Tokyo",
-            "visaFreeAccess": 67,
-            "satisfactionScore": 4.4,
-            "touristSpend": 3200,
-            "developmentIndex": 0.89
+            "safetyConcern": "Traffic Accidents",
+            "incidents": 29,
+            "percentage": 24.2
           },
           {
-            "city": "Bangkok",
-            "visaFreeAccess": 68,
-            "satisfactionScore": 4.2,
-            "touristSpend": 1800,
-            "developmentIndex": 0.81
+            "safetyConcern": "Scams & Fraud",
+            "incidents": 20,
+            "percentage": 16.7
           },
           {
-            "city": "Sydney",
-            "visaFreeAccess": 79,
-            "satisfactionScore": 4.6,
-            "touristSpend": 2950,
-            "developmentIndex": 0.95
+            "safetyConcern": "Health Risks",
+            "incidents": 18,
+            "percentage": 15
           },
           {
-            "city": "Dubai",
-            "visaFreeAccess": 65,
-            "satisfactionScore": 4.1,
-            "touristSpend": 3400,
-            "developmentIndex": 0.91
+            "safetyConcern": "Political Unrest",
+            "incidents": 10,
+            "percentage": 8.3
           },
           {
-            "city": "Mumbai",
-            "visaFreeAccess": 60,
-            "satisfactionScore": 3.9,
-            "touristSpend": 1200,
-            "developmentIndex": 0.77
-          },
-          {
-            "city": "Singapore",
-            "visaFreeAccess": 85,
-            "satisfactionScore": 4.8,
-            "touristSpend": 2700,
-            "developmentIndex": 0.93
-          },
-          {
-            "city": "Bangkok",
-            "visaFreeAccess": 68,
-            "satisfactionScore": 4.3,
-            "touristSpend": 1900,
-            "developmentIndex": 0.81
+            "safetyConcern": "Natural Disasters",
+            "incidents": 5,
+            "percentage": 4.2
           }
         ],
         "config": {
           "dimensions": {
-            "width": 360,
-            "height": 200
+            "width": 120,
+            "height": 120
           },
           "fields": {
-            "x": "visaFreeAccess",
-            "y": "satisfactionScore",
-            "size": "touristSpend",
-            "color": "developmentIndex"
+            "category": "safetyConcern",
+            "value": "incidents"
           },
           "styling": {
             "colors": [
-              "redyellowgreen",
-              "reverse"
+              "#8B5CF6",
+              "#3B82F6",
+              "#06B6D4",
+              "#10B981",
+              "#F59E0B",
+              "#EF4444"
             ],
-            "background": "transparent",
-            "sizeDomain": [
-              1200,
-              3400
-            ],
-            "axes": {
-              "xAxis": {
-                "labelColor": "#888",
-                "titleColor": "#888",
-                "labelFontSize": 8,
-                "titleFontSize": 10,
-                "grid": true,
-                "gridColor": "#888",
-                "gridDash": [
-                  4,
-                  10
-                ],
-                "ticks": true,
-                "domain": true,
-                "title": "Visa-Free Access (Countries)",
-                "scale": {
-                  "domain": [
-                    55,
-                    90
-                  ],
-                  "nice": true
-                }
-              },
-              "yAxis": {
-                "labelColor": "#888",
-                "titleColor": "#888",
-                "labelFontSize": 8,
-                "titleFontSize": 10,
-                "grid": false,
-                "gridColor": "#888",
-                "gridDash": [
-                  4,
-                  50
-                ],
-                "ticks": true,
-                "domain": true,
-                "title": "Tourist Satisfaction (1–5)",
-                "scale": {
-                  "domain": [
-                    3.8,
-                    5
-                  ],
-                  "nice": true
-                }
-              }
-            }
+            "background": "transparent"
           },
           "legend": {
-            "showSize": true,
-            "sizeTitle": "Avg Tourist Spend (USD)",
-            "showColor": true,
-            "colorTitle": "Development Index",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
+            "title": "Safety Concern Type",
             "orient": "right",
-            "colorOrient": "top",
-            "offset": 15,
-            "colorOffset": 0
-          },
-          "sizeLegend": {
-            "sizeTitle": "Avg Tourist Spend (USD)",
             "titleColor": "#888",
             "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
-            "orient": "right",
-            "values": [
-              1200,
-              1800,
-              2500,
-              3400
-            ],
-            "offset": 15
-          },
-          "colorLegend": {
-            "colorTitle": "Development Index",
-            "titleColor": "#888",
-            "labelColor": "#888",
-            "titleFontSize": 9,
-            "labelFontSize": 8,
-            "colorOrient": "top",
-            "colorOffset": 0
-          },
-          "tooltip": {
-            "fields": [
-              {
-                "field": "city",
-                "type": "nominal",
-                "title": "City"
-              },
-              {
-                "field": "visaFreeAccess",
-                "type": "quantitative",
-                "title": "Visa-Free Access",
-                "format": ".0f"
-              },
-              {
-                "field": "satisfactionScore",
-                "type": "quantitative",
-                "title": "Satisfaction Score",
-                "format": ".1f"
-              },
-              {
-                "field": "touristSpend",
-                "type": "quantitative",
-                "title": "Avg Tourist Spend (USD)",
-                "format": ".0f"
-              },
-              {
-                "field": "developmentIndex",
-                "type": "quantitative",
-                "title": "Development Index",
-                "format": ".2f"
-              }
-            ]
+            "titleFontSize": 11,
+            "labelFontSize": 10,
+            "symbolSize": 200,
+            "offset": 30,
+            "padding": 0,
+            "symbolType": "circle"
           },
           "interactions": {
-            "hover": true,
-            "select": true
+            "hover": true
           }
         },
         "insights": [
-          "Higher visa access often coincides with higher satisfaction",
-          "Tourist spend is highest in Dubai and Tokyo"
+          "Petty theft is the most reported concern",
+          "Natural disasters are least reported for business travelers"
         ],
-        "metadata": {
-          "generatedBy": "scatterAgent",
-          "timestamp": "2025-09-05T16:36:10.484Z",
-          "userQuery": "Compare visa accessibility with tourist satisfaction scores and spending patterns",
-          "constraints": {
-            "chartType": "scatter",
-            "subtype": "bubblePlotScatterSpec",
-            "nodeSize": "xlarge",
-            "dataCategory": "accessibility",
-            "destinations": [
-              "Singapore",
-              "Tokyo",
-              "Bangkok",
-              "Sydney",
-              "Dubai",
-              "Mumbai"
+        "backupData": {
+          "Business": [
+            {
+              "safetyConcern": "Petty Theft",
+              "incidents": 32,
+              "percentage": 28.1
+            },
+            {
+              "safetyConcern": "Traffic Accidents",
+              "incidents": 36,
+              "percentage": 31.6
+            },
+            {
+              "safetyConcern": "Scams & Fraud",
+              "incidents": 16,
+              "percentage": 14
+            },
+            {
+              "safetyConcern": "Health Risks",
+              "incidents": 18,
+              "percentage": 15.8
+            },
+            {
+              "safetyConcern": "Political Unrest",
+              "incidents": 9,
+              "percentage": 7.9
+            },
+            {
+              "safetyConcern": "Natural Disasters",
+              "incidents": 3,
+              "percentage": 2.6
+            }
+          ],
+          "Leisure": [
+            {
+              "safetyConcern": "Petty Theft",
+              "incidents": 40,
+              "percentage": 29.9
+            },
+            {
+              "safetyConcern": "Traffic Accidents",
+              "incidents": 26,
+              "percentage": 19.4
+            },
+            {
+              "safetyConcern": "Scams & Fraud",
+              "incidents": 25,
+              "percentage": 18.7
+            },
+            {
+              "safetyConcern": "Health Risks",
+              "incidents": 20,
+              "percentage": 14.9
+            },
+            {
+              "safetyConcern": "Political Unrest",
+              "incidents": 12,
+              "percentage": 9
+            },
+            {
+              "safetyConcern": "Natural Disasters",
+              "incidents": 10,
+              "percentage": 7.5
+            }
+          ],
+          "Adventure": [
+            {
+              "safetyConcern": "Petty Theft",
+              "incidents": 25,
+              "percentage": 22.7
+            },
+            {
+              "safetyConcern": "Traffic Accidents",
+              "incidents": 28,
+              "percentage": 25.5
+            },
+            {
+              "safetyConcern": "Scams & Fraud",
+              "incidents": 13,
+              "percentage": 11.8
+            },
+            {
+              "safetyConcern": "Health Risks",
+              "incidents": 27,
+              "percentage": 24.5
+            },
+            {
+              "safetyConcern": "Political Unrest",
+              "incidents": 12,
+              "percentage": 10.9
+            },
+            {
+              "safetyConcern": "Natural Disasters",
+              "incidents": 7,
+              "percentage": 6.4
+            }
+          ],
+          "Cultural": [
+            {
+              "safetyConcern": "Petty Theft",
+              "incidents": 36,
+              "percentage": 30.3
+            },
+            {
+              "safetyConcern": "Traffic Accidents",
+              "incidents": 27,
+              "percentage": 22.7
+            },
+            {
+              "safetyConcern": "Scams & Fraud",
+              "incidents": 19,
+              "percentage": 16
+            },
+            {
+              "safetyConcern": "Health Risks",
+              "incidents": 22,
+              "percentage": 18.5
+            },
+            {
+              "safetyConcern": "Political Unrest",
+              "incidents": 10,
+              "percentage": 8.4
+            },
+            {
+              "safetyConcern": "Natural Disasters",
+              "incidents": 5,
+              "percentage": 4.2
+            }
+          ]
+        },
+        "originalData": [
+          {
+            "safetyConcern": "Petty Theft",
+            "incidents": 38,
+            "percentage": 31.7
+          },
+          {
+            "safetyConcern": "Traffic Accidents",
+            "incidents": 29,
+            "percentage": 24.2
+          },
+          {
+            "safetyConcern": "Scams & Fraud",
+            "incidents": 20,
+            "percentage": 16.7
+          },
+          {
+            "safetyConcern": "Health Risks",
+            "incidents": 18,
+            "percentage": 15
+          },
+          {
+            "safetyConcern": "Political Unrest",
+            "incidents": 10,
+            "percentage": 8.3
+          },
+          {
+            "safetyConcern": "Natural Disasters",
+            "incidents": 5,
+            "percentage": 4.2
+          }
+        ],
+        "interactivity": {
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "trip_type",
+            "filterKey": "selectedTripType",
+            "filterLabel": "Trip Type",
+            "defaultValue": "Leisure",
+            "options": [
+              {
+                "label": "Business",
+                "value": "Business",
+                "displayName": "Business Travel"
+              },
+              {
+                "label": "Leisure",
+                "value": "Leisure",
+                "displayName": "Leisure Travel"
+              },
+              {
+                "label": "Adventure",
+                "value": "Adventure",
+                "displayName": "Adventure Travel"
+              },
+              {
+                "label": "Cultural",
+                "value": "Cultural",
+                "displayName": "Cultural Travel"
+              }
+            ]
+          },
+          "dataVariations": {
+            "Business": [
+              {
+                "safetyConcern": "Petty Theft",
+                "incidents": 32,
+                "percentage": 28.1
+              },
+              {
+                "safetyConcern": "Traffic Accidents",
+                "incidents": 36,
+                "percentage": 31.6
+              },
+              {
+                "safetyConcern": "Scams & Fraud",
+                "incidents": 16,
+                "percentage": 14
+              },
+              {
+                "safetyConcern": "Health Risks",
+                "incidents": 18,
+                "percentage": 15.8
+              },
+              {
+                "safetyConcern": "Political Unrest",
+                "incidents": 9,
+                "percentage": 7.9
+              },
+              {
+                "safetyConcern": "Natural Disasters",
+                "incidents": 3,
+                "percentage": 2.6
+              }
             ],
-            "maxDataPoints": 8
+            "Leisure": [
+              {
+                "safetyConcern": "Petty Theft",
+                "incidents": 40,
+                "percentage": 29.9
+              },
+              {
+                "safetyConcern": "Traffic Accidents",
+                "incidents": 26,
+                "percentage": 19.4
+              },
+              {
+                "safetyConcern": "Scams & Fraud",
+                "incidents": 25,
+                "percentage": 18.7
+              },
+              {
+                "safetyConcern": "Health Risks",
+                "incidents": 20,
+                "percentage": 14.9
+              },
+              {
+                "safetyConcern": "Political Unrest",
+                "incidents": 12,
+                "percentage": 9
+              },
+              {
+                "safetyConcern": "Natural Disasters",
+                "incidents": 10,
+                "percentage": 7.5
+              }
+            ],
+            "Adventure": [
+              {
+                "safetyConcern": "Petty Theft",
+                "incidents": 25,
+                "percentage": 22.7
+              },
+              {
+                "safetyConcern": "Traffic Accidents",
+                "incidents": 28,
+                "percentage": 25.5
+              },
+              {
+                "safetyConcern": "Scams & Fraud",
+                "incidents": 13,
+                "percentage": 11.8
+              },
+              {
+                "safetyConcern": "Health Risks",
+                "incidents": 27,
+                "percentage": 24.5
+              },
+              {
+                "safetyConcern": "Political Unrest",
+                "incidents": 12,
+                "percentage": 10.9
+              },
+              {
+                "safetyConcern": "Natural Disasters",
+                "incidents": 7,
+                "percentage": 6.4
+              }
+            ],
+            "Cultural": [
+              {
+                "safetyConcern": "Petty Theft",
+                "incidents": 36,
+                "percentage": 30.3
+              },
+              {
+                "safetyConcern": "Traffic Accidents",
+                "incidents": 27,
+                "percentage": 22.7
+              },
+              {
+                "safetyConcern": "Scams & Fraud",
+                "incidents": 19,
+                "percentage": 16
+              },
+              {
+                "safetyConcern": "Health Risks",
+                "incidents": 22,
+                "percentage": 18.5
+              },
+              {
+                "safetyConcern": "Political Unrest",
+                "incidents": 10,
+                "percentage": 8.4
+              },
+              {
+                "safetyConcern": "Natural Disasters",
+                "incidents": 5,
+                "percentage": 4.2
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "generatedBy": "pieAgent",
+          "timestamp": "2025-09-05T17:23:58.640Z",
+          "userQuery": "Analyze safety concern distribution filtered by trip type",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Bangkok",
+              "Cairo"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "trip_type",
+              "filterKey": "selectedTripType",
+              "filterLabel": "Trip Type",
+              "defaultValue": "Leisure",
+              "options": [
+                {
+                  "label": "Business",
+                  "value": "Business",
+                  "displayName": "Business Travel"
+                },
+                {
+                  "label": "Leisure",
+                  "value": "Leisure",
+                  "displayName": "Leisure Travel"
+                },
+                {
+                  "label": "Adventure",
+                  "value": "Adventure",
+                  "displayName": "Adventure Travel"
+                },
+                {
+                  "label": "Cultural",
+                  "value": "Cultural",
+                  "displayName": "Cultural Travel"
+                }
+              ]
+            }
           }
         }
       },
       "vegaSpec": {
         "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 360,
-        "height": 200,
+        "width": 120,
+        "height": 120,
         "background": "transparent",
-        "data": {
-          "values": [
-            {
-              "city": "Singapore",
-              "visaFreeAccess": 85,
-              "satisfactionScore": 4.7,
-              "touristSpend": 2500,
-              "developmentIndex": 0.93
-            },
-            {
-              "city": "Tokyo",
-              "visaFreeAccess": 67,
-              "satisfactionScore": 4.4,
-              "touristSpend": 3200,
-              "developmentIndex": 0.89
-            },
-            {
-              "city": "Bangkok",
-              "visaFreeAccess": 68,
-              "satisfactionScore": 4.2,
-              "touristSpend": 1800,
-              "developmentIndex": 0.81
-            },
-            {
-              "city": "Sydney",
-              "visaFreeAccess": 79,
-              "satisfactionScore": 4.6,
-              "touristSpend": 2950,
-              "developmentIndex": 0.95
-            },
-            {
-              "city": "Dubai",
-              "visaFreeAccess": 65,
-              "satisfactionScore": 4.1,
-              "touristSpend": 3400,
-              "developmentIndex": 0.91
-            },
-            {
-              "city": "Mumbai",
-              "visaFreeAccess": 60,
-              "satisfactionScore": 3.9,
-              "touristSpend": 1200,
-              "developmentIndex": 0.77
-            },
-            {
-              "city": "Singapore",
-              "visaFreeAccess": 85,
-              "satisfactionScore": 4.8,
-              "touristSpend": 2700,
-              "developmentIndex": 0.93
-            },
-            {
-              "city": "Bangkok",
-              "visaFreeAccess": 68,
-              "satisfactionScore": 4.3,
-              "touristSpend": 1900,
-              "developmentIndex": 0.81
-            }
-          ]
-        },
-        "params": [
+        "layer": [
           {
-            "name": "hover_scatter",
-            "select": {
-              "type": "point",
-              "on": "pointerover",
-              "clear": "pointerout"
-            }
-          },
-          {
-            "name": "select_point",
-            "select": {
-              "type": "point"
-            }
-          }
-        ],
-        "mark": {
-          "type": "circle",
-          "cursor": "pointer",
-          "strokeWidth": 2
-        },
-        "encoding": {
-          "x": {
-            "field": "visaFreeAccess",
-            "type": "quantitative",
-            "scale": {
-              "domain": [
-                55,
-                90
-              ],
-              "nice": true
-            },
-            "axis": {
-              "labelColor": "#888",
-              "titleColor": "#888",
-              "labelFontSize": 8,
-              "titleFontSize": 10,
-              "grid": true,
-              "gridColor": "#888",
-              "gridDash": [
-                4,
-                10
-              ],
-              "ticks": true,
-              "domain": true,
-              "title": "Visa-Free Access (Countries)"
-            }
-          },
-          "y": {
-            "field": "satisfactionScore",
-            "type": "quantitative",
-            "scale": {
-              "domain": [
-                3.8,
-                5
-              ],
-              "nice": true
-            },
-            "axis": {
-              "labelColor": "#888",
-              "titleColor": "#888",
-              "labelFontSize": 8,
-              "titleFontSize": 10,
-              "grid": false,
-              "gridColor": "#888",
-              "gridDash": [
-                4,
-                50
-              ],
-              "ticks": true,
-              "domain": true,
-              "title": "Tourist Satisfaction (1–5)"
-            }
-          },
-          "size": {
-            "field": "touristSpend",
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "range": [
-                200,
-                800
-              ],
-              "domain": [
-                1200,
-                3400
-              ],
-              "clamp": true
-            },
-            "legend": {
-              "title": "Avg Tourist Spend (USD)",
-              "titleColor": "#888",
-              "labelColor": "#888",
-              "titleFontSize": 9,
-              "labelFontSize": 8,
-              "orient": "right",
-              "offset": 15,
-              "padding": 0,
+            "data": {
               "values": [
-                1200,
-                1800,
-                2500,
-                3400
+                {
+                  "safetyConcern": "Petty Theft",
+                  "incidents": 38,
+                  "percentage": 31.7
+                },
+                {
+                  "safetyConcern": "Traffic Accidents",
+                  "incidents": 29,
+                  "percentage": 24.2
+                },
+                {
+                  "safetyConcern": "Scams & Fraud",
+                  "incidents": 20,
+                  "percentage": 16.7
+                },
+                {
+                  "safetyConcern": "Health Risks",
+                  "incidents": 18,
+                  "percentage": 15
+                },
+                {
+                  "safetyConcern": "Political Unrest",
+                  "incidents": 10,
+                  "percentage": 8.3
+                },
+                {
+                  "safetyConcern": "Natural Disasters",
+                  "incidents": 5,
+                  "percentage": 4.2
+                }
+              ]
+            },
+            "params": [
+              {
+                "name": "hover_pie",
+                "select": {
+                  "type": "point",
+                  "on": "mouseover",
+                  "clear": "mouseout"
+                }
+              }
+            ],
+            "mark": {
+              "type": "arc",
+              "innerRadius": 42,
+              "outerRadius": 60,
+              "cursor": "pointer"
+            },
+            "encoding": {
+              "theta": {
+                "field": "incidents",
+                "type": "quantitative"
+              },
+              "color": {
+                "field": "safetyConcern",
+                "type": "nominal",
+                "scale": {
+                  "range": [
+                    "#8B5CF6",
+                    "#3B82F6",
+                    "#06B6D4",
+                    "#10B981",
+                    "#F59E0B",
+                    "#EF4444"
+                  ]
+                },
+                "legend": {
+                  "title": "Safety Concern Type",
+                  "orient": "right",
+                  "titleColor": "#888",
+                  "labelColor": "#888",
+                  "titleFontSize": 11,
+                  "labelFontSize": 10,
+                  "symbolSize": 200,
+                  "offset": 30,
+                  "padding": 0,
+                  "symbolType": "circle"
+                }
+              },
+              "stroke": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": "white"
+                },
+                "value": "white"
+              },
+              "strokeWidth": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": 2
+                },
+                "value": 0.5
+              },
+              "opacity": {
+                "condition": {
+                  "param": "hover_pie",
+                  "value": 1
+                },
+                "value": 0.7
+              },
+              "tooltip": [
+                {
+                  "field": "safetyConcern",
+                  "type": "nominal",
+                  "title": "Category"
+                },
+                {
+                  "field": "incidents",
+                  "type": "quantitative",
+                  "title": "Value",
+                  "format": ".0f"
+                },
+                {
+                  "field": "percentage",
+                  "type": "quantitative",
+                  "title": "Percentage",
+                  "format": ".1f"
+                }
               ]
             }
           },
-          "color": {
-            "field": "developmentIndex",
-            "type": "quantitative",
-            "scale": {
-              "scheme": "redyellowgreen",
-              "reverse": true
+          {
+            "data": {
+              "values": [
+                {
+                  "text": "20",
+                  "category": "center"
+                }
+              ]
             },
-            "legend": {
-              "title": "Development Index",
-              "titleColor": "#888",
-              "labelColor": "#888",
-              "titleFontSize": 9,
-              "labelFontSize": 8,
-              "orient": "top",
-              "offset": 0
+            "mark": {
+              "type": "text",
+              "align": "center",
+              "baseline": "middle",
+              "fontSize": 16,
+              "fontWeight": "bold",
+              "dy": -10,
+              "color": "#333"
+            },
+            "encoding": {
+              "text": {
+                "field": "text",
+                "type": "nominal"
+              }
             }
           },
-          "stroke": {
-            "condition": [
-              {
-                "param": "select_point",
-                "empty": false,
-                "value": "#272729"
-              },
-              {
-                "param": "hover_scatter",
-                "empty": false,
-                "value": "#272729"
+          {
+            "data": {
+              "values": [
+                {
+                  "text": "Average",
+                  "category": "subtitle"
+                }
+              ]
+            },
+            "mark": {
+              "type": "text",
+              "align": "center",
+              "baseline": "middle",
+              "fontSize": 10,
+              "dy": 8,
+              "color": "#888"
+            },
+            "encoding": {
+              "text": {
+                "field": "text",
+                "type": "nominal"
               }
-            ],
-            "value": "white"
-          },
-          "opacity": {
-            "condition": [
-              {
-                "param": "select_point",
-                "empty": false,
-                "value": 1
-              },
-              {
-                "param": "hover_scatter",
-                "empty": false,
-                "value": 0.9
-              }
-            ],
-            "value": 0.7
-          },
-          "tooltip": [
-            {
-              "field": "city",
-              "type": "nominal",
-              "title": "City"
-            },
-            {
-              "field": "visaFreeAccess",
-              "type": "quantitative",
-              "title": "Visa-Free Access",
-              "format": ".0f"
-            },
-            {
-              "field": "satisfactionScore",
-              "type": "quantitative",
-              "title": "Satisfaction Score",
-              "format": ".1f"
-            },
-            {
-              "field": "touristSpend",
-              "type": "quantitative",
-              "title": "Avg Tourist Spend (USD)",
-              "format": ".0f"
-            },
-            {
-              "field": "developmentIndex",
-              "type": "quantitative",
-              "title": "Development Index",
-              "format": ".2f"
             }
-          ]
-        },
+          }
+        ],
         "config": {
           "view": {
             "stroke": null
           }
         }
       },
-      "generationTime": 31137,
+      "generationTime": 11196,
       "success": true,
       "error": null
     }
