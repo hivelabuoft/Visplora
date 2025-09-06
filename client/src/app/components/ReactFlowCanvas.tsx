@@ -106,7 +106,7 @@ const getNodeDimensions = (nodeType: string): NodeDimensions => {
     case 'vegaDashboardNode':
       return { width: 600, height: 500 };
     case 'viewGeneratorNode':
-      return { width: 800, height: 600 };
+      return { width: 1400, height: 600 }; // Start at 1400px width
     case 'dashboardNode':
       return { width: 1200, height: 1000 }; // London dashboard default
     default:
@@ -186,15 +186,18 @@ export interface VegaDashboardData {
   isGreyedOut?: boolean;
 }
 
-// Interface for ViewGenerator data (from example2_data.json format)
+// Interface for ViewGenerator data (from _data_output.json format - DemoChart structure)
 export interface ViewGeneratorData {
   sentence_id: number;
   charts: Array<{
-    chart_type: string;
-    description: string;
-    variation?: string[];
-    size?: string;
-    data?: any;
+    id: string;
+    name: string;
+    request: any;
+    chartSpec: any;
+    vegaSpec: any;
+    generationTime: number;
+    success: boolean;
+    error: string | null;
   }>;
   onInteraction?: (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => void;
   isGreyedOut?: boolean;
@@ -216,6 +219,8 @@ export interface ReactFlowCanvasRef {
   fitViewToAllNodes: () => void;
   hasViewGeneratorNode: (sentenceId: number) => boolean; // NEW: Check if ViewGenerator node exists by sentence ID
   selectAndZoomToViewGeneratorNode: (sentenceId: number) => boolean; // NEW: Select and zoom to ViewGenerator node by sentence ID
+  // NEW: Load ViewGenerator nodes from output file
+  loadViewGeneratorNodesFromOutput: (filePath?: string) => Promise<void>;
 }
 
 // Custom node component for info nodes
@@ -888,6 +893,7 @@ const VegaDashboardNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
 // Custom node component for ViewGenerator (example2_data.json format)
 const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected }) => {
   const [error, setError] = useState<string | null>(null);
+  const [gridConfig, setGridConfig] = useState<{columns: number, rows: number} | null>(null);
 
   const handleError = (error: any) => {
     console.error('ViewGenerator error:', error);
@@ -904,6 +910,28 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
     
     // Note: We don't stop event propagation here to allow ReactFlow's selection to work
   };
+
+  const handleReduceColumns = () => {
+    setGridConfig(prev => {
+      const currentCols = prev?.columns || 8; // Default from travel-dashboard
+      const newCols = Math.max(2, currentCols - 1); // Don't go below 2 for usability
+      console.log(`🔄 Reducing columns from ${currentCols} to ${newCols}`);
+      return { ...prev, columns: newCols, rows: prev?.rows || 8 };
+    });
+  };
+
+  const handleReduceRows = () => {
+    setGridConfig(prev => {
+      const currentRows = prev?.rows || 8; // Default from travel-dashboard
+      const newRows = Math.max(2, currentRows - 1); // Don't go below 2 for usability
+      console.log(`🔄 Reducing rows from ${currentRows} to ${newRows}`);
+      return { ...prev, columns: prev?.columns || 8, rows: newRows };
+    });
+  };
+
+  // Get current grid dimensions for button display
+  const currentCols = gridConfig?.columns || 8;
+  const currentRows = gridConfig?.rows || 8;
 
   return (
     <div
@@ -922,7 +950,7 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
           ? '3px solid #0891b2' 
           : '2px solid #e2e8f0',
         minWidth: '800px',
-        minHeight: '600px',
+        minHeight: '300px',
         opacity: data.isGreyedOut ? 0.3 : 1,
         transition: 'all 0.3s ease',
         transform: selected ? 'scale(1.03)' : 'scale(1)',
@@ -937,9 +965,9 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
           color="#0891b2"
           isVisible={true}
           minWidth={800}
-          minHeight={600}
-          maxWidth={1400}
-          maxHeight={1000}
+          minHeight={300}
+          maxWidth={2000}
+          maxHeight={1200}
           handleStyle={{ width: '12px', height: '12px', pointerEvents: 'none' }}
           lineStyle={{ borderWidth: 3, pointerEvents: 'none' }}
         />
@@ -984,46 +1012,133 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
 
       {/* ViewGenerator Header */}
       <div className="view-generator-header" style={{
-        padding: '12px 16px',
-        borderBottom: selected ? '2px solid #0891b2' : '1px solid #e2e8f0',
+        padding: '20px 24px', // Increased padding for bigger appearance
+        borderBottom: selected ? '3px solid #0891b2' : '2px solid #e2e8f0',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         background: selected 
-          ? 'linear-gradient(90deg, #e6f7ff, #bae7ff)' 
-          : 'linear-gradient(90deg, #f8fafc, #f1f5f9)',
+          ? 'linear-gradient(135deg, #e6f7ff 0%, #bae7ff 50%, #91d5ff 100%)' 
+          : 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%)',
         borderRadius: '12px 12px 0 0',
         transition: 'all 0.3s ease',
+        boxShadow: selected 
+          ? '0 4px 12px rgba(8, 145, 178, 0.15)' 
+          : '0 2px 8px rgba(0, 0, 0, 0.05)',
+        minHeight: '72px', // Ensure minimum height for bigger appearance
       }}>
         <h3 style={{
           margin: 0,
-          fontSize: selected ? '17px' : '16px',
-          fontWeight: selected ? '700' : '600',
-          color: selected ? '#0369a1' : '#334155',
+          fontSize: selected ? '22px' : '20px', // Increased font sizes
+          fontWeight: selected ? '800' : '700', // Bolder weights
+          color: selected ? '#0369a1' : '#1e293b', // Stronger colors
           transition: 'all 0.3s ease',
-          textShadow: selected ? '0 1px 2px rgba(3, 105, 161, 0.1)' : 'none',
+          textShadow: selected ? '0 2px 4px rgba(3, 105, 161, 0.2)' : '0 1px 2px rgba(30, 41, 59, 0.1)',
+          letterSpacing: '0.5px', // Add letter spacing for more presence
         }}>
           📊 Sentence #{data.sentence_id}
         </h3>
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
-          fontSize: '12px',
+          gap: '12px', // Increased gap for better spacing
+          fontSize: '13px', // Slightly larger
           color: selected ? '#0369a1' : '#64748b',
           transition: 'all 0.3s ease',
         }}>
+          {/* Grid Control Buttons - Subtle Design */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleReduceColumns();
+            }}
+            disabled={currentCols <= 2}
+            style={{
+              background: currentCols <= 2 ? '#f3f4f6' : '#f9fafb',
+              color: currentCols <= 2 ? '#9ca3af' : '#6b7280',
+              border: '1px solid #e5e7eb',
+              borderRadius: '6px',
+              padding: '6px 10px',
+              fontSize: '11px',
+              cursor: currentCols <= 2 ? 'not-allowed' : 'pointer',
+              fontWeight: '500',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '3px',
+              opacity: currentCols <= 2 ? 0.5 : 0.8,
+              transition: 'all 0.2s ease',
+              boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
+            }}
+            onMouseEnter={(e) => {
+              if (currentCols > 2) {
+                e.currentTarget.style.opacity = '1';
+                e.currentTarget.style.background = '#f3f4f6';
+                e.currentTarget.style.color = '#374151';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (currentCols > 2) {
+                e.currentTarget.style.opacity = '0.8';
+                e.currentTarget.style.background = '#f9fafb';
+                e.currentTarget.style.color = '#6b7280';
+              }
+            }}
+            title={`Remove column from right (${currentCols} cols)`}
+          >
+            ← {currentCols}
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleReduceRows();
+            }}
+            disabled={currentRows <= 2}
+            style={{
+              background: currentRows <= 2 ? '#f3f4f6' : '#f9fafb',
+              color: currentRows <= 2 ? '#9ca3af' : '#6b7280',
+              border: '1px solid #e5e7eb',
+              borderRadius: '6px',
+              padding: '6px 10px',
+              fontSize: '11px',
+              cursor: currentRows <= 2 ? 'not-allowed' : 'pointer',
+              fontWeight: '500',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '3px',
+              opacity: currentRows <= 2 ? 0.5 : 0.8,
+              transition: 'all 0.2s ease',
+              boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
+            }}
+            onMouseEnter={(e) => {
+              if (currentRows > 2) {
+                e.currentTarget.style.opacity = '1';
+                e.currentTarget.style.background = '#f3f4f6';
+                e.currentTarget.style.color = '#374151';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (currentRows > 2) {
+                e.currentTarget.style.opacity = '0.8';
+                e.currentTarget.style.background = '#f9fafb';
+                e.currentTarget.style.color = '#6b7280';
+              }
+            }}
+            title={`Remove row from bottom (${currentRows} rows)`}
+          >
+            ↑ {currentRows}
+          </button>
           {selected && (
             <span style={{
               backgroundColor: '#0891b2',
               color: 'white',
-              padding: '3px 8px',
-              borderRadius: '6px',
-              fontSize: '11px',
+              padding: '6px 12px', // Larger padding
+              borderRadius: '8px', // More rounded
+              fontSize: '12px', // Slightly larger
               fontWeight: '700',
-              letterSpacing: '0.5px',
-              boxShadow: '0 2px 4px rgba(8, 145, 178, 0.3)',
+              letterSpacing: '0.8px', // More spacing
+              boxShadow: '0 3px 8px rgba(8, 145, 178, 0.4), 0 1px 3px rgba(8, 145, 178, 0.2)',
               animation: 'badge-pulse 2s ease-in-out infinite',
+              textTransform: 'uppercase',
             }}>
               ✓ ACTIVE
             </span>
@@ -1036,7 +1151,7 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
         className="view-generator-content"
         style={{
           padding: '0',
-          height: 'calc(100% - 60px)',
+          height: 'calc(100% - 72px)', // Adjusted for bigger header (72px min-height)
           overflow: 'auto',
           pointerEvents: 'auto',
           zIndex: 3,
@@ -1056,6 +1171,7 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
             sentence_id={data.sentence_id}
             charts={data.charts || []}
             onInteraction={data.onInteraction}
+            customGridConfig={gridConfig}
           />
         )}
       </div>
@@ -1075,12 +1191,12 @@ const initialNodes: Node[] = [
   {
     id: 'placeholder',
     position: { x: 250, y: 200 },
-    data: { label: '📊 Click "Generate Dashboard" to create visualization' },
+    data: { label: '� Loading generated dashboards...' },
     type: 'default',
     style: {
-      background: 'linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%)',
-      color: '#64748b',
-      border: '2px dashed #94a3b8',
+      background: 'linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%)',
+      color: '#0277bd',
+      border: '2px solid #29b6f6',
       borderRadius: '8px',
       padding: '15px',
       fontSize: '14px',
@@ -1124,6 +1240,8 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
   const [loadingMessage, setLoadingMessage] = useState('Loading...');
   const [backupNodes, setBackupNodes] = useState<Node[]>([]);
   const [backupEdges, setBackupEdges] = useState<Edge[]>([]);
+  const [isAutoLoading, setIsAutoLoading] = useState(false); // Flag to prevent multiple auto-loads
+  const hasAutoLoadedRef = useRef(false); // Ref to track if auto-loading has been completed
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -1211,6 +1329,8 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
     setNodes([]);
     setEdges([]);
     setHasActiveInfoNode(false);
+    // Reset auto-loading flag so nodes can be loaded again if needed
+    hasAutoLoadedRef.current = false;
   }, [setNodes, setEdges]);
 
   // Function to hide loading state
@@ -1333,7 +1453,7 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
 
   // Function to add ViewGenerator node
   const addViewGeneratorNode = useCallback((data: ViewGeneratorData, skipAutoZoom: boolean = false) => {
-    const nodeId = `view-generator-${Date.now()}`;
+    const nodeId = `view-generator-${data.sentence_id}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     
     // Get fresh node state for accurate positioning
     setNodes((currentNodes) => {
@@ -1357,9 +1477,31 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
       
       console.log(`📍 ViewGenerator ${nodeId} positioned at:`, newPosition);
       
+      // Calculate dynamic height based on number of xlarge charts
+      const getInitialHeight = () => {
+        if (!data.charts || data.charts.length === 0) return 300;
+        
+        const xlargeCount = data.charts.filter((chart: any) => {
+          if (!chart.success) return true; // Failed charts also use xlarge size
+          const configuredNodeSize = chart.request?.constraints?.nodeSize;
+          if (configuredNodeSize) {
+            return configuredNodeSize === 'xlarge';
+          }
+          // Most charts default to xlarge, so count them
+          const chartType = chart.chartSpec?.type || chart.request?.constraints?.chartType || 'bar';
+          return ['line', 'bar', 'scatter', 'multiType'].includes(chartType);
+        }).length;
+
+        if (xlargeCount <= 2) return 300;
+        if (xlargeCount <= 4) return 600;
+        return 900;
+      };
+      
       const newNode: Node = {
         id: nodeId,
         position: newPosition,
+        width: 1400, // Set initial width
+        height: getInitialHeight(), // Set initial dynamic height
         data: {
           ...data,
           nodeId: nodeId,
@@ -1392,47 +1534,6 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
     }
   }, []);
 
-  // Test functions to load simulated data
-  const loadSimulatedDashboard = useCallback(async () => {
-    try {
-      const response = await fetch('/test_simulation/dashboard_example.json');
-      const dashboardData = await response.json();
-      
-      // Transform the new format to match VegaDashboardData interface
-      const transformedData: VegaDashboardData = {
-        dashboardTitle: dashboardData.title,
-        views: dashboardData.charts.map((chart: any) => ({
-          description: chart.title,
-          vegaLiteSpec: chart.spec,
-        })),
-        insightPanels: dashboardData.insights || [],
-        datasetRecommendations: ['London Crime Statistics', 'Housing Price Data', 'Safety Index Reports'],
-      };
-      
-      addVegaDashboardNode(transformedData);
-    } catch (error) {
-      console.error('Error loading simulated dashboard:', error);
-    }
-  }, [addVegaDashboardNode]);
-
-  const loadSimulatedChart = useCallback(async () => {
-    try {
-      const response = await fetch('/test_simulation/chart_example.json');
-      const chartData = await response.json();
-      
-      // Transform the new format to match VegaChartData interface
-      const transformedData: VegaChartData = {
-        title: chartData.title,
-        vegaLiteSpec: chartData.spec,
-        dataSource: 'London Housing Data',
-      };
-      
-      addVegaChartNode(transformedData);
-    } catch (error) {
-      console.error('Error loading simulated chart:', error);
-    }
-  }, [addVegaChartNode]);
-
   // Function to fit view to all nodes
   const fitViewToAllNodes = useCallback(() => {
     if (reactFlowInstance.current) {
@@ -1442,6 +1543,77 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
       });
     }
   }, []);
+
+  // Function to load ViewGenerator nodes from output file
+  const loadViewGeneratorNodesFromOutput = useCallback(async (filePath: string = '/examples/scenario1/example4_data_output.json') => {
+    // Prevent multiple simultaneous calls using both state and ref
+    if (isAutoLoading || hasAutoLoadedRef.current) {
+      console.log('⏳ Already loading or loaded ViewGenerator nodes, skipping duplicate call');
+      return;
+    }
+
+    try {
+      setIsAutoLoading(true);
+      hasAutoLoadedRef.current = true; // Mark as loaded permanently
+      console.log('🔄 Loading ViewGenerator nodes from:', filePath);
+      const response = await fetch(filePath);
+      
+      if (!response.ok) {
+        throw new Error(`Failed to load file: ${response.status} ${response.statusText}`);
+      }
+      
+      const outputData = await response.json();
+      
+      if (!outputData.sentences) {
+        throw new Error('Invalid file format: no sentences found');
+      }
+
+      // Clear existing nodes first (including placeholder)
+      setNodes([]);
+      setEdges([]);
+
+      // Get sentence IDs and sort them numerically
+      const sentenceIds = Object.keys(outputData.sentences).sort((a, b) => parseInt(a) - parseInt(b));
+      console.log('📊 Found sentence IDs:', sentenceIds);
+
+      // Add ViewGenerator nodes for each sentence
+      sentenceIds.forEach((sentenceId, index) => {
+        const sentenceData = outputData.sentences[sentenceId];
+        
+        if (sentenceData && sentenceData.charts) {
+          console.log(`📋 Adding ViewGenerator for sentence ${sentenceId} with ${sentenceData.charts.length} charts`);
+          console.log(`📊 Chart success status:`, sentenceData.charts.map((c: any) => ({ id: c.id, success: c.success, error: c.error })));
+          
+          // Use the charts directly since they already have the correct DemoChart format
+          // Add ViewGenerator node with delay to ensure proper positioning
+          setTimeout(() => {
+            addViewGeneratorNode({
+              sentence_id: parseInt(sentenceId),
+              charts: sentenceData.charts, // Keep original DemoChart format
+              onInteraction: (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => {
+                console.log('📊 ViewGenerator interaction:', { elementId, elementName, elementType, action, metadata });
+              }
+            }, index > 0); // Skip auto-zoom for all but the first node
+          }, index * 100); // Stagger the creation
+        }
+      });
+
+      console.log('✅ Successfully loaded ViewGenerator nodes for all sentences');
+      
+    } catch (error) {
+      console.error('❌ Error loading ViewGenerator nodes:', error);
+      // Show error notification or add error info node
+      addInfoNode({
+        title: 'Loading Error',
+        content: `Failed to load ViewGenerator nodes from ${filePath}:\n\n${error instanceof Error ? error.message : 'Unknown error'}`
+      });
+    } finally {
+      // Reset loading flag after a delay to ensure all nodes are created
+      setTimeout(() => {
+        setIsAutoLoading(false);
+      }, 1000);
+    }
+  }, [isAutoLoading, addViewGeneratorNode, addInfoNode, setNodes, setEdges]);
 
   // Function to check if a ViewGenerator node exists by sentence ID
   const hasViewGeneratorNode = useCallback((sentenceId: number): boolean => {
@@ -1526,8 +1698,9 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
     addViewGeneratorNode,
     fitViewToAllNodes,
     hasViewGeneratorNode,
-    selectAndZoomToViewGeneratorNode
-  }), [addInfoNode, hasActiveInfoNode, showLoadingState, clearAllNodes, hideLoadingState, addVegaChartNode, addVegaDashboardNode, addViewGeneratorNode, fitViewToAllNodes, hasViewGeneratorNode, selectAndZoomToViewGeneratorNode]);
+    selectAndZoomToViewGeneratorNode,
+    loadViewGeneratorNodesFromOutput
+  }), [addInfoNode, hasActiveInfoNode, showLoadingState, clearAllNodes, hideLoadingState, addVegaChartNode, addVegaDashboardNode, addViewGeneratorNode, fitViewToAllNodes, hasViewGeneratorNode, selectAndZoomToViewGeneratorNode, loadViewGeneratorNodesFromOutput]);
 
   // Handle close info node event
   useEffect(() => {
@@ -1671,89 +1844,22 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
     }
   }, [children, showDashboard, setNodes]);
 
+  // Auto-load ViewGenerator nodes on component mount
+  useEffect(() => {
+    // Only load if we haven't already auto-loaded (using ref for persistent check)
+    const hasViewGeneratorNodes = nodes.some(node => node.type === 'viewGeneratorNode');
+    const hasPlaceholder = nodes.some(node => node.id === 'placeholder');
+    
+    // Only auto-load once when the component first mounts with the placeholder
+    if (hasPlaceholder && !hasViewGeneratorNodes && !isLoading && !hasActiveInfoNode && !isAutoLoading && !hasAutoLoadedRef.current) {
+      console.log('🚀 Auto-loading ViewGenerator nodes on page load');
+      loadViewGeneratorNodesFromOutput();
+    }
+  }, []); // Empty dependency array to run only once on mount
+
   return (
     <div className="w-full h-full relative">
-      {/* Test Buttons */}
-      {/* <div style={{
-        position: 'absolute',
-        top: '10px',
-        left: '10px',
-        zIndex: 1000,
-        display: 'flex',
-        gap: '8px',
-      }}>
-        <button
-          onClick={loadSimulatedDashboard}
-          disabled={hasActiveInfoNode || isLoading}
-          style={{
-            background: hasActiveInfoNode || isLoading ? '#94a3b8' : 'linear-gradient(135deg, #0891b2, #0e7490)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            padding: '10px 16px',
-            fontSize: '12px',
-            fontWeight: '600',
-            cursor: hasActiveInfoNode || isLoading ? 'not-allowed' : 'pointer',
-            boxShadow: '0 2px 8px rgba(8, 145, 178, 0.3)',
-            transition: 'all 0.2s ease',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px',
-          }}
-          onMouseOver={(e) => {
-            if (!hasActiveInfoNode && !isLoading) {
-              const target = e.target as HTMLButtonElement;
-              target.style.transform = 'scale(1.05)';
-              target.style.boxShadow = '0 4px 12px rgba(8, 145, 178, 0.4)';
-            }
-          }}
-          onMouseOut={(e) => {
-            if (!hasActiveInfoNode && !isLoading) {
-              const target = e.target as HTMLButtonElement;
-              target.style.transform = 'scale(1)';
-              target.style.boxShadow = '0 2px 8px rgba(8, 145, 178, 0.3)';
-            }
-          }}
-          title={hasActiveInfoNode ? 'Close info panel first' : 'Load test dashboard with multiple charts'}
-        >
-          📊 Dashboard
-        </button>
-        
-        <button
-          onClick={loadSimulatedChart}
-          disabled={hasActiveInfoNode || isLoading}
-          style={{
-            background: hasActiveInfoNode || isLoading ? '#94a3b8' : 'linear-gradient(135deg, #059669, #047857)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            padding: '10px 16px',
-            fontSize: '12px',
-            fontWeight: '600',
-            cursor: hasActiveInfoNode || isLoading ? 'not-allowed' : 'pointer',
-            boxShadow: '0 2px 8px rgba(5, 150, 105, 0.3)',
-            transition: 'all 0.2s ease',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px',
-          }}
-          onMouseOver={(e) => {
-            if (!hasActiveInfoNode && !isLoading) {
-              const target = e.target as HTMLButtonElement;
-              target.style.transform = 'scale(1.05)';
-              target.style.boxShadow = '0 4px 12px rgba(5, 150, 105, 0.4)';
-            }
-          }}
-          onMouseOut={(e) => {
-            if (!hasActiveInfoNode && !isLoading) {
-              const target = e.target as HTMLButtonElement;
-              target.style.transform = 'scale(1)';
-              target.style.boxShadow = '0 2px 8px rgba(5, 150, 105, 0.3)';
-            }
-          }}
-          title={hasActiveInfoNode ? 'Close info panel first' : 'Load test single chart'}
-        >
-          📈 Chart
-        </button>
-      </div> */}
+
 
       <ReactFlow
         nodes={nodes}

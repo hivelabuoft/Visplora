@@ -12,7 +12,7 @@ import LondonDashboard from '../../../london/page';
 import TravelDashboard from '../../../travel/page';
 import { generateMultipleFileSummaries, FileSummary } from '../../../../utils/londonDataLoader';
 import { interactionLogger } from '../../../../lib/interactionLogger';
-import { captureAndLogInteractions, getCapturedInteractionCount } from '../../../utils/dashboardConfig';
+import { captureAndLogInteractions, getCapturedInteractionCount, logInteractionWithConfig } from '../../../utils/dashboardConfig';
 import { captureInsights, NarrativeSuggestion } from '../../../LLMs/suggestion_from_interaction';
 import { getVisualizationRecommendation, VisualizationRecommendation, isDashboardRecommendation } from '../../../LLMs/visualizationRecommendation';
 import { generateInsightTimeline, TimelineGroup, ChangeMetadata } from '../../../LLMs/insightTimeline';
@@ -187,42 +187,13 @@ export default function DynamicNarrativePage() {
     loadExampleData();
   }, [scenario, example]);
 
-  // Load ViewGenerator data from example2_data.json format
+  // Auto-loading disabled - ViewGenerator data now loaded on-demand from _data_output.json
   useEffect(() => {
-    const loadViewGeneratorData = async () => {
-      if (!scenario || !example) return;
-      
-      setIsLoadingViewGenerator(true);
-      
-      try {
-        const response = await fetch(`/examples/scenario${scenario}/example${example}_data.json`);
-        
-        if (!response.ok) {
-          console.log(`📄 ViewGenerator data not found for scenario ${scenario}, example ${example} - this is optional`);
-          setViewGeneratorData([]);
-          return;
-        }
-        
-        const data: ViewGeneratorSentence[] = await response.json();
-        setViewGeneratorData(data);
-        
-        console.log(`📊 Loaded ViewGenerator data for scenario ${scenario}, example ${example}:`, {
-          sentences: data.length,
-          totalCharts: data.reduce((total, sentence) => total + sentence.charts.length, 0)
-        });
-        
-      } catch (error) {
-        console.error('❌ Failed to load ViewGenerator data (optional):', error);
-        setViewGeneratorData([]);
-      } finally {
-        setIsLoadingViewGenerator(false);
-      }
-    };
-    
-    loadViewGeneratorData();
-  }, [scenario, example]);
-
-  // Load ViewGenerator nodes into ReactFlow when data is available
+    // Skip auto-loading of legacy ViewGenerator data
+    // Data is now loaded on-demand from _data_output.json when "Show View" is clicked
+    setViewGeneratorData([]);
+    setIsLoadingViewGenerator(false);
+  }, [scenario, example]);  // Load ViewGenerator nodes into ReactFlow when data is available
   useEffect(() => {
     if (viewGeneratorData.length > 0 && reactFlowCanvasRef.current && !isLoadingViewGenerator) {
       console.log('🚀 Adding ViewGenerator nodes to ReactFlow canvas:', viewGeneratorData.length);
@@ -235,15 +206,7 @@ export default function DynamicNarrativePage() {
           if (reactFlowCanvasRef.current) {
             console.log(`📊 Adding ViewGenerator for sentence ${sentenceData.sentence_id} with ${sentenceData.charts.length} charts`);
             
-            reactFlowCanvasRef.current.addViewGeneratorNode({
-              sentence_id: sentenceData.sentence_id,
-              charts: sentenceData.charts,
-              onInteraction: (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => {
-                console.log('ViewGenerator interaction:', { elementId, elementName, elementType, action, metadata });
-                logDashboardInteraction(elementId, elementName, elementType, action, metadata);
-              },
-              isGreyedOut: false
-            }, isMultipleNodes); // Skip auto-zoom if multiple nodes
+            // Auto-adding disabled - ViewGenerator nodes loaded on-demand from _data_output.json
           }
         }, index * 1000); // Increased stagger time to 1 second between nodes
       });
@@ -520,24 +483,8 @@ export default function DynamicNarrativePage() {
     metadata?: any;
   }>>([]);
 
-  // Function to handle ViewGenerator node clicks and highlight corresponding sentences
-  const handleViewGeneratorNodeClick = useCallback((sentenceId: number, nodeId: string) => {
-    console.log(`🎯 ViewGenerator node clicked: sentence ${sentenceId}, node ${nodeId}`);
-    
-    if (narrativeSystemRef.current) {
-      // Convert sentence_id to string and highlight in narrative
-      const success = narrativeSystemRef.current.highlightSentencesByIds([sentenceId.toString()]);
-      
-      if (success) {
-        console.log(`✅ Successfully highlighted sentence ${sentenceId} in narrative`);
-      } else {
-        console.log(`⚠️ Failed to highlight sentence ${sentenceId} in narrative`);
-      }
-    }
-  }, []);
-
   // Function to handle "Show View" action from narrative layer
-  const handleShowViewForSentence = useCallback((sentence: string, sentenceId?: string, shouldGenerateIfMissing?: boolean, pageId?: string) => {
+  const handleShowViewForSentence = useCallback(async (sentence: string, sentenceId?: string, shouldGenerateIfMissing?: boolean, pageId?: string) => {
     console.log(`🎯 Show View requested for sentence: "${sentence}" (ID: ${sentenceId}, shouldGenerate: ${shouldGenerateIfMissing})`);
     
     if (reactFlowCanvasRef.current && sentenceId) {
@@ -560,24 +507,63 @@ export default function DynamicNarrativePage() {
         // Trigger the highlight regardless
         handleViewGeneratorNodeClick(numericSentenceId, `view-generator-${numericSentenceId}`);
       } else {
-        console.log(`🔄 No ViewGenerator node found in canvas for sentence ${sentenceId}, generating from JSON data...`);
+        console.log(`🔄 No ViewGenerator node found in canvas for sentence ${sentenceId}, generating from _data_output.json...`);
         
-        // Find the corresponding data in the JSON file
-        const matchingSentenceData = viewGeneratorData.find(data => data.sentence_id === numericSentenceId);
-        
-        if (matchingSentenceData) {
-          console.log(`📄 Found JSON data for sentence ${sentenceId}, creating ViewGenerator node`);
-          console.log(`📊 Chart data:`, matchingSentenceData.charts.map(c => ({ type: c.chart_type, desc: c.description })));
+        try {
+          // Load data from the _data_output.json file (generated AI charts)
+          const outputResponse = await fetch(`/examples/scenario${scenario}/example${example}_data_output.json`);
+          
+          if (!outputResponse.ok) {
+            console.warn(`❌ Failed to load _data_output.json for scenario ${scenario}, example ${example}:`, outputResponse.status);
+            console.warn(`❌ No generated charts available for sentence ${sentenceId}. _data_output.json is required.`);
+            return;
+          }
+          
+          const outputData = await outputResponse.json();
+          
+          if (!outputData.sentences || !outputData.sentences[sentenceId]) {
+            console.warn(`❌ No data found for sentence ${sentenceId} in _data_output.json`);
+            console.log(`🔍 Available sentences in _data_output.json:`, Object.keys(outputData.sentences || {}));
+            return;
+          }
+          
+          const sentenceData = outputData.sentences[sentenceId];
+          
+          if (!sentenceData.charts || sentenceData.charts.length === 0) {
+            console.warn(`❌ No charts found for sentence ${sentenceId} in _data_output.json`);
+            return;
+          }
+          
+          console.log(`📄 Found _data_output.json data for sentence ${sentenceId}, creating ViewGenerator node`);
+          console.log(`📊 Chart data:`, sentenceData.charts.map((c: any) => ({ type: c.chartSpec?.type, name: c.name, success: c.success })));
+          
+          // Use the charts directly since they already have the correct DemoChart format
+          const viewGeneratorNodeData = {
+            sentence_id: numericSentenceId,
+            charts: sentenceData.charts, // Keep original DemoChart format
+            onInteraction: (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => {
+              console.log('📊 ViewGenerator interaction:', { elementId, elementName, elementType, action, metadata });
+              
+              // Log ViewGenerator interactions in the same way as dashboard interactions
+              logDashboardInteraction(
+                elementId,
+                elementName,
+                elementType,
+                action,
+                { ...metadata, sentenceId: numericSentenceId, source: 'viewgenerator' }
+              );
+            }
+          };
           
           // Add the ViewGenerator node to the canvas
-          reactFlowCanvasRef.current.addViewGeneratorNode(matchingSentenceData);
+          reactFlowCanvasRef.current.addViewGeneratorNode(viewGeneratorNodeData);
           
           // Wait a bit for the node to be created, then try to select and zoom to it
           setTimeout(() => {
             const success = reactFlowCanvasRef.current?.selectAndZoomToViewGeneratorNode(numericSentenceId);
             
             if (success) {
-              console.log(`🎯 Successfully created and zoomed to new ViewGenerator node for sentence ${sentenceId}`);
+              console.log(`🎯 Successfully created and zoomed to new ViewGenerator node for sentence ${sentenceId} from _data_output.json`);
             } else {
               console.warn(`❌ Created ViewGenerator node but failed to select/zoom for sentence ${sentenceId}`);
             }
@@ -586,15 +572,32 @@ export default function DynamicNarrativePage() {
             handleViewGeneratorNodeClick(numericSentenceId, `view-generator-${numericSentenceId}`);
           }, 500); // 500ms delay to allow node creation
           
-        } else {
-          console.warn(`❌ No JSON data found for sentence ${sentenceId} in the example data file`);
-          console.log(`🔍 Available viewGeneratorData:`, viewGeneratorData.map(d => ({ sentence_id: d.sentence_id, charts: d.charts.length })));
+        } catch (error) {
+          console.error(`❌ Error loading _data_output.json for sentence ${sentenceId}:`, error);
+          
+          // Fallback to original viewGeneratorData if available
+          const matchingSentenceData = viewGeneratorData.find(data => data.sentence_id === numericSentenceId);
+          
+          if (matchingSentenceData) {
+            console.log(`� Error fallback: Found sentence ${sentenceId} in viewGeneratorData, creating ViewGenerator node`);
+            // Legacy fallback removed - only use _data_output.json format
+            
+            setTimeout(() => {
+              const success = reactFlowCanvasRef.current?.selectAndZoomToViewGeneratorNode(numericSentenceId);
+              if (success) {
+                console.log(`🎯 Successfully created and zoomed to fallback ViewGenerator node for sentence ${sentenceId}`);
+              }
+              handleViewGeneratorNodeClick(numericSentenceId, `view-generator-${numericSentenceId}`);
+            }, 500);
+          } else {
+            console.warn(`❌ No fallback data found for sentence ${sentenceId}`);
+          }
         }
       }
     } else {
       console.warn(`❌ Missing reactFlowCanvasRef or sentenceId. reactFlowCanvasRef: ${!!reactFlowCanvasRef.current}, sentenceId: ${sentenceId}`);
     }
-  }, [viewGeneratorData, handleViewGeneratorNodeClick]);
+  }, [viewGeneratorData, scenario, example]);
 
   // Function to log dashboard interactions locally  
   const logDashboardInteraction = (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => {
@@ -610,8 +613,37 @@ export default function DynamicNarrativePage() {
       metadata
     };
     
+    // Add to local dashboard interactions array
     setDashboardInteractions(prev => [...prev, interaction]);
     setInteractionCount(prev => prev + 1);
+    
+    // Also add to global capture interactions array so capture button activates
+    logInteractionWithConfig(elementId, elementName, elementType, action, metadata);
+  };
+
+  // Function to handle ViewGenerator node clicks and highlight corresponding sentences
+  const handleViewGeneratorNodeClick = (sentenceId: number, nodeId: string) => {
+    console.log(`🎯 ViewGenerator node clicked: sentence ${sentenceId}, node ${nodeId}`);
+    
+    // Log the ViewGenerator interaction in the same way as dashboard interactions
+    logDashboardInteraction(
+      nodeId,
+      `ViewGenerator Sentence ${sentenceId}`,
+      'viewgenerator_node',
+      'node_click',
+      { sentenceId, nodeId }
+    );
+    
+    if (narrativeSystemRef.current) {
+      // Convert sentence_id to string and highlight in narrative
+      const success = narrativeSystemRef.current.highlightSentencesByIds([sentenceId.toString()]);
+      
+      if (success) {
+        console.log(`✅ Successfully highlighted sentence ${sentenceId} in narrative`);
+      } else {
+        console.log(`⚠️ Failed to highlight sentence ${sentenceId} in narrative`);
+      }
+    }
   };
   
   // Check authentication on mount

@@ -2,33 +2,219 @@
     {
         "sentence_id": 1,
         "charts":[
-            {
-                "chart_type": "Choropleth",
-                "description": "Median housing price by borough",
-                "size": "medium",
-                "data": {}
-            },
-            {
-                "chart_type": "Bar",
-                "description": "Average housing price per borough - Distance from the city center",
-                "variation": ["with_mean", "3d"],
-                "size": "medium",
-                "data": {}
-            },
-            {
-                "chart_type":"Bar",
-                "description": "Top 5 boroughs by average housing price",
-                "variation": ["with_mean"],
-                "size": "medium",
-                "data": {}
-            },
-            {
-                "chart_type":"Bar",
-                "description": "Bottom 5 boroughs by average housing price",
-                "variation": ["with_mean"],
-                "size": "medium",
-                "data": {}
-            }
+                {
+      "name": "Tourist Arrivals by Destination - Horizontal Bar",
+      "request": {
+        "userQuery": "Show annual tourist arrivals by destination with year filtering",
+        "constraints": {
+          "chartType": "bar",
+          "subtype": "horizontalBarSpec",
+          "nodeSize": "medium",
+          "dataCategory": "visitor-flow",
+          "destinations": ["Tokyo", "Paris", "London", "New York"],
+          "maxDataPoints": 5,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "year",
+            "filterKey": "selectedYear",
+            "filterLabel": "Year",
+            "defaultValue": "2023",
+            "options": [
+              { "label": "2022", "value": "2022", "displayName": "2022" },
+              { "label": "2023", "value": "2023", "displayName": "2023" },
+              { "label": "2024", "value": "2024", "displayName": "2024" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Hotel Prices by Region - Horizontal Bar",
+      "request": {
+        "userQuery": "Compare hotel prices across regions with seasonal filtering",
+        "constraints": {
+          "chartType": "bar",
+          "subtype": "horizontalBarSpec",
+          "nodeSize": "medium",
+          "dataCategory": "cost",
+          "destinations": ["Bali", "Maldives", "Santorini", "Tahiti"],
+          "maxDataPoints": 4,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "season",
+            "filterKey": "selectedSeason",
+            "filterLabel": "Season",
+            "defaultValue": "Summer",
+            "options": [
+              { "label": "Spring", "value": "Spring", "displayName": "Spring (Mar-May)" },
+              { "label": "Summer", "value": "Summer", "displayName": "Summer (Jun-Aug)" },
+              { "label": "Fall", "value": "Fall", "displayName": "Fall (Sep-Nov)" },
+              { "label": "Winter", "value": "Winter", "displayName": "Winter (Dec-Feb)" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Tourism GDP vs Global Average - Bar with Mean",
+      "request": {
+        "userQuery": "Show tourism GDP percentage compared to global average with regional filtering",
+        "constraints": {
+          "chartType": "bar",
+          "subtype": "barChartWithMean",
+          "nodeSize": "medium",
+          "dataCategory": "economics",
+          "destinations": ["Maldives", "Malta", "Thailand", "Croatia"],
+          "maxDataPoints": 5,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "region",
+            "filterKey": "selectedRegion",
+            "filterLabel": "Region",
+            "defaultValue": "Asia",
+            "options": [
+              { "label": "Asia", "value": "Asia", "displayName": "Asia" },
+              { "label": "Europe", "value": "Europe", "displayName": "Europe" },
+              { "label": "Americas", "value": "Americas", "displayName": "Americas" },
+              { "label": "Oceania", "value": "Oceania", "displayName": "Oceania" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Customer Satisfaction vs Industry Benchmark - Bar with Mean",
+      "request": {
+        "userQuery": "Analyze customer satisfaction scores against industry average by trip type",
+        "constraints": {
+          "chartType": "bar",
+          "subtype": "barChartWithMean",
+          "nodeSize": "medium",
+          "dataCategory": "reviews",
+          "destinations": ["Tokyo", "Barcelona", "Sydney", "Dubai"],
+          "maxDataPoints": 4,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "trip_type",
+            "filterKey": "selectedTripType",
+            "filterLabel": "Trip Type",
+            "defaultValue": "Leisure",
+            "options": [
+              { "label": "Business", "value": "Business", "displayName": "Business Travel" },
+              { "label": "Leisure", "value": "Leisure", "displayName": "Leisure Travel" },
+              { "label": "Adventure", "value": "Adventure", "displayName": "Adventure Travel" },
+              { "label": "Cultural", "value": "Cultural", "displayName": "Cultural Travel" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Water Efficiency vs Sustainability Targets - Bar with Threshold",
+      "request": {
+        "userQuery": "Show water consumption efficiency against sustainability thresholds with regional filtering",
+        "constraints": {
+          "chartType": "bar",
+          "subtype": "barChartWithThreshold",
+          "nodeSize": "medium",
+          "dataCategory": "sustainability",
+          "destinations": ["Las Vegas", "Dubai", "Singapore", "Sydney"],
+          "maxDataPoints": 5,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "region",
+            "filterKey": "selectedRegion",
+            "filterLabel": "Region",
+            "defaultValue": "Asia",
+            "options": [
+              { "label": "North America", "value": "North America", "displayName": "North America" },
+              { "label": "Middle East", "value": "Middle East", "displayName": "Middle East" },
+              { "label": "Asia", "value": "Asia", "displayName": "Asia" },
+              { "label": "Oceania", "value": "Oceania", "displayName": "Oceania" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Carbon Emissions vs Reduction Targets - Bar with Threshold",
+      "request": {
+        "userQuery": "Track carbon emissions against reduction targets with budget level filtering",
+        "constraints": {
+          "chartType": "bar",
+          "subtype": "barChartWithThreshold",
+          "nodeSize": "medium",
+          "dataCategory": "environmental",
+          "destinations": ["Switzerland", "Costa Rica", "Norway", "New Zealand"],
+          "maxDataPoints": 4,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "budget_level",
+            "filterKey": "selectedBudgetLevel",
+            "filterLabel": "Budget Level",
+            "defaultValue": "Mid-range",
+            "options": [
+              { "label": "Budget", "value": "Budget", "displayName": "Budget Travel" },
+              { "label": "Mid-range", "value": "Mid-range", "displayName": "Mid-range Travel" },
+              { "label": "Luxury", "value": "Luxury", "displayName": "Luxury Travel" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Safety Index vs Minimum Standards - Bar with Threshold",
+      "request": {
+        "userQuery": "Evaluate safety index scores against minimum safety thresholds by season",
+        "constraints": {
+          "chartType": "bar",
+          "subtype": "barChartWithThreshold",
+          "nodeSize": "medium",
+          "dataCategory": "safety",
+          "destinations": ["Iceland", "Japan", "Switzerland", "Singapore"],
+          "maxDataPoints": 5,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "season",
+            "filterKey": "selectedSeason",
+            "filterLabel": "Season",
+            "defaultValue": "Summer",
+            "options": [
+              { "label": "Spring", "value": "Spring", "displayName": "Spring (Mar-May)" },
+              { "label": "Summer", "value": "Summer", "displayName": "Summer (Jun-Aug)" },
+              { "label": "Fall", "value": "Fall", "displayName": "Fall (Sep-Nov)" },
+              { "label": "Winter", "value": "Winter", "displayName": "Winter (Dec-Feb)" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Recovery Rate by Destination - Horizontal Bar",
+      "request": {
+        "userQuery": "Show tourism recovery rates by destination with budget level filtering",
+        "constraints": {
+          "chartType": "bar",
+          "subtype": "horizontalBarSpec",
+          "nodeSize": "medium",
+          "dataCategory": "recovery-analysis",
+          "destinations": ["Thailand", "Greece", "Turkey", "Mexico"],
+          "maxDataPoints": 4,
+          "hasFieldFilter": true,
+          "filterConfig": {
+            "filterType": "budget_level",
+            "filterKey": "selectedBudgetLevel",
+            "filterLabel": "Budget Level",
+            "defaultValue": "Mid-range",
+            "options": [
+              { "label": "Budget", "value": "Budget", "displayName": "Budget Travel" },
+              { "label": "Mid-range", "value": "Mid-range", "displayName": "Mid-range Travel" },
+              { "label": "Luxury", "value": "Luxury", "displayName": "Luxury Travel" }
+            ]
+          }
+        }
+      }
+    }
         ]
     }
 ]

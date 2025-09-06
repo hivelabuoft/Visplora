@@ -15,7 +15,6 @@ import {
   BackgroundVariant,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { SampleDashboard, SampleChart, SampleWidget } from './dashboards';
 import LondonDashboard from '../dashboard3/page';
 import { DashboardState } from './dashboards/DashboardDatabase';
 import { getDefaultDashboard } from './dashboards/DefaultDashboards';
@@ -194,9 +193,9 @@ const NarrativeCanva: React.FC = () => {
       }
       
       switch (type) {
-        case 'dashboard': return SampleDashboard;
-        case 'chart': return SampleChart;
-        case 'widget': return SampleWidget;
+        case 'dashboard': return null;
+        case 'chart': return null;
+        case 'widget': return null;
         default: return null;
       }
     };
@@ -236,7 +235,7 @@ const NarrativeCanva: React.FC = () => {
       data: { 
         title: 'New Dashboard', 
         type: 'Custom',
-        component: SampleDashboard,
+        component: null,
         dashboardData: {},
         config: {},
       },
@@ -260,7 +259,7 @@ const NarrativeCanva: React.FC = () => {
       data: { 
         title: 'New Chart', 
         chartType: 'Visualization',
-        component: SampleChart,
+        component: null,
         dashboardData: {},
         config: {},
       },
@@ -284,7 +283,7 @@ const NarrativeCanva: React.FC = () => {
       data: { 
         title: 'New Widget', 
         widgetType: 'Component',
-        component: SampleWidget,
+        component: null,
         dashboardData: {},
         config: {},
       },
