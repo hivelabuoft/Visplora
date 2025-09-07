@@ -653,9 +653,19 @@ export default function DynamicNarrativePage() {
         const studyMode = process.env.NEXT_PUBLIC_STUDY_MODE === 'true';
         setIsStudyMode(studyMode);
 
-        const defaultDashboard = process.env.NEXT_PUBLIC_DEFAULT_DASHBOARD;
-        setShouldShowLondonDashboard(defaultDashboard === '1');
-        setShouldShowTravelDashboard(defaultDashboard === '2');
+        // Set dashboard based on scenario parameter
+        if (scenario === '1') {
+          setShouldShowLondonDashboard(true);
+          setShouldShowTravelDashboard(false);
+        } else if (scenario === '2') {
+          setShouldShowLondonDashboard(false);
+          setShouldShowTravelDashboard(true);
+        } else {
+          // Fallback to environment variable for other scenarios
+          const defaultDashboard = process.env.NEXT_PUBLIC_DEFAULT_DASHBOARD;
+          setShouldShowLondonDashboard(defaultDashboard === '1');
+          setShouldShowTravelDashboard(defaultDashboard === '2');
+        }
 
         if (studyMode) {
           const userStr = localStorage.getItem('narrativeUser');
@@ -696,7 +706,7 @@ export default function DynamicNarrativePage() {
     };
 
     checkAuth();
-  }, [router]);
+  }, [router, scenario]);
 
   // Initialize interaction logger when userSession is available
   useEffect(() => {
@@ -1304,6 +1314,8 @@ export default function DynamicNarrativePage() {
                 key="london-flow-canvas"
                 showDashboard={true}
                 onViewGeneratorNodeClick={handleViewGeneratorNodeClick}
+                scenario={scenario}
+                example={example}
                 dashboardConfig={{
                   name: 'London Housing Dashboard',
                   width: 1500,
@@ -1322,6 +1334,8 @@ export default function DynamicNarrativePage() {
                 key="travel-flow-canvas"
                 showDashboard={true}
                 onViewGeneratorNodeClick={handleViewGeneratorNodeClick}
+                scenario={scenario}
+                example={example}
                 dashboardConfig={{
                   name: 'Travel Dashboard',
                   width: 1500,

@@ -56,7 +56,15 @@ export async function POST(request: NextRequest) {
     // Handle both old array format and new object format
     let sentences: Record<string, any>;
     if (Array.isArray(inputData)) {
-      sentences = { 1: { charts: inputData } };
+      // Convert array format to proper sentence_id structure
+      sentences = {};
+      inputData.forEach((item, index) => {
+        if (item.sentence_id) {
+          sentences[item.sentence_id] = item;
+        } else {
+          sentences[index + 1] = { sentence_id: index + 1, charts: item.charts || [item] };
+        }
+      });
     } else if (inputData.sentences) {
       sentences = inputData.sentences;
     } else {
@@ -75,39 +83,16 @@ export async function POST(request: NextRequest) {
     console.log(`📊 Processing ${totalCharts} charts from ${Object.keys(sentences).length} sentence(s)`);
 
     const results: {
-      metadata: {
-        generatedAt: string;
-        totalRequests: number;
-        successful: number;
-        failed: number;
-        agentTypes: string[];
-        processingTimeMs: number;
-      };
       sentences: Record<string, any>;
-      charts: any[];
-      systemInfo: {
-        availableAgents: Array<{
-          type: string;
-          info: any;
-        }>;
-      };
     } = {
-      metadata: {
-        generatedAt: new Date().toISOString(),
-        totalRequests: totalCharts,
-        successful: 0,
-        failed: 0,
-        agentTypes: agentManager.getAvailableChartTypes(),
-        processingTimeMs: 0
-      },
-      sentences: {},
-      charts: [],
-      systemInfo: {
-        availableAgents: agentManager.getAvailableChartTypes().map(type => ({
-          type,
-          info: agentManager.getAgentInfo(type)
-        }))
-      }
+      sentences: {}
+    };
+
+    // Track metadata for internal processing
+    const processingMetadata = {
+      totalRequests: totalCharts,
+      successful: 0,
+      failed: 0
     };
 
     const startTime = Date.now();
@@ -197,7 +182,7 @@ export async function POST(request: NextRequest) {
                 error: null
               };
 
-              results.metadata.successful++;
+              processingMetadata.successful++;
               console.log(`    ✅ Map generated successfully (${generationTime}ms)`);
 
             } else {
@@ -228,7 +213,7 @@ export async function POST(request: NextRequest) {
                   error: null
                 };
                 
-                results.metadata.successful++;
+                processingMetadata.successful++;
                 console.log(`    ✅ ${chartType}Agent generated successfully (${generationTime}ms)`);
               } else {
                 throw new Error(response.error || 'Generation failed');
@@ -236,7 +221,6 @@ export async function POST(request: NextRequest) {
             }
 
             processedSentence.charts.push(processedChart);
-            results.charts.push(processedChart);
 
             // Add delay between requests to avoid rate limiting
             await new Promise(resolve => setTimeout(resolve, 500));
@@ -256,8 +240,7 @@ export async function POST(request: NextRequest) {
             };
 
             processedSentence.charts.push(failedChart);
-            results.charts.push(failedChart);
-            results.metadata.failed++;
+            processingMetadata.failed++;
           }
         }
       }
@@ -265,7 +248,7 @@ export async function POST(request: NextRequest) {
       results.sentences[sentenceId] = processedSentence;
     }
 
-    results.metadata.processingTimeMs = Date.now() - startTime;
+    const processingTimeMs = Date.now() - startTime;
 
     // Save output file
     const outputPath = inputPath.replace('.json', '_output.json');
@@ -273,7 +256,8 @@ export async function POST(request: NextRequest) {
     console.log(`💾 Results saved to: ${outputPath}`);
 
     console.log('✅ Chart generation completed successfully!');
-    console.log(`📈 Generated ${results.metadata.successful}/${results.metadata.totalRequests} charts`);
+    console.log(`📈 Generated ${processingMetadata.successful}/${processingMetadata.totalRequests} charts`);
+    console.log(`⏱️ Processing time: ${(processingTimeMs / 1000).toFixed(1)}s`);
 
     return NextResponse.json({
       success: true,
@@ -281,10 +265,10 @@ export async function POST(request: NextRequest) {
       data: results,
       outputPath: outputPath,
       summary: {
-        totalCharts: results.metadata.totalRequests,
-        successful: results.metadata.successful,
-        failed: results.metadata.failed,
-        processingTimeMs: results.metadata.processingTimeMs
+        totalCharts: processingMetadata.totalRequests,
+        successful: processingMetadata.successful,
+        failed: processingMetadata.failed,
+        processingTimeMs: processingTimeMs
       }
     });
     

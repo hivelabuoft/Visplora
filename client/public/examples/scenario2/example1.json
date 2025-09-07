@@ -2,483 +2,354 @@
  "exploration_path":[
   {
     "sentence_id": 1,
-    "sentence_content": "I started by checking where rent is cheapest across London.",
-    "children": [2],
+    "sentence_content": "I started by scanning destinations through the lenses of cost of stay, safety, and popularity to get a broad sense of where each country stands.",
+    "children": [2,3,4],
     "parent": null,
-    "system_shows": "Bar chart: average monthly rent by borough; lowest three highlighted",
-    "drift_type": "elaboration"
+    "system_shows": "Dashboard: baseline overview; chart1: bar chart of average daily cost by country; chart2: bubble chart of safety vs popularity, colored by region",
+    "drift_type": "begin"
   },
+
   {
     "sentence_id": 2,
-    "sentence_content": "Barking & Dagenham, Bexley, and Havering came up as the cheapest, but I wanted to understand what sits behind that.",
-    "children": [3, 15, 21],
+    "sentence_content": "Looking at affordability, I compared how environmental quality and traveler reviews align with daily costs.",
+    "children": [5,6],
     "parent": 1,
-    "system_shows": "Callout chips on the three lowest bars; tooltip with borough stats",
-    "drift_type": "elaboration"
-  },
-  {
-    "sentence_id": 3,
-    "sentence_content": "I pulled income next to rent and looked at the rent-to-income picture so I’m not just chasing ‘cheap for a reason.",
-    "children": [4],
-    "parent": 2,
-    "system_shows": "Choropleth: median income by borough; bar chart: rent-to-income ratio for all boroughs",
-    "drift_type": "elaboration"
-  },
-  {
-    "sentence_id": 4,
-    "sentence_content": "Barking’s income is low and rent is low, while Havering’s rent burden looks friendlier than average.",
-    "children": [5],
-    "parent": 3,
-    "system_shows": "Bars highlighted for Barking & Dagenham and Havering; percentile badges",
-    "drift_type": "elaboration"
+    "system_shows": "Dashboard: affordability lens; chart1: bar chart of cost per day by destination; chart2: line chart of traveler reviews; chart3: bar+line combo of environmental score vs affordability",
+    "drift_type": "Provide Overview"
   },
   {
     "sentence_id": 5,
-    "sentence_content": "Since ‘cheap’ doesn’t tell the whole story, I opened up a quick view of everyday life—gyms and restaurants.",
-    "children": [6],
-    "parent": 4,
-    "system_shows": "Mini dashboard: gyms per 10k, restaurants per 10k, borough toggles",
-    "drift_type": "context shift"
+    "sentence_content": "Some of the lower-cost countries earn consistently high review scores, though their environmental quality varies sharply.",
+    "children": [7],
+    "parent": 2,
+    "system_shows": "Chart: bubble plot of cost vs reviews, bubble size = environmental score",
+    "drift_type": "Detect Pattern"
   },
   {
     "sentence_id": 6,
-    "sentence_content": "The affordable set felt mixed on amenities, so I branched: start from places with decent gyms and restaurant counts first, then check their rents.",
-    "children": [7, 8, 9],
-    "parent": 5,
-    "system_shows": "Scatter: restaurants/10k (x) vs gyms/10k (y), point color = rent; filter for ‘acceptable rent band’",
-    "drift_type": "reframing"
+    "sentence_content": "I also looked at how accessible the affordable destinations are, adding transport and amenity indicators to the mix.",
+    "children": [8],
+    "parent": 2,
+    "system_shows": "Dashboard: accessibility overlay; chart1: bar chart of public transport ratings; chart2: line chart of hotel availability against affordability",
+    "drift_type": "Adjust"
   },
   {
     "sentence_id": 7,
-    "sentence_content": "Lewisham popped up as lively without extreme rents—good energy for the money.",
-    "children": [10, 23],
-    "parent": 6,
-    "system_shows": "Small multiples: Lewisham vs London median on rent, ratio, gyms/10k, restaurants/10k",
-    "drift_type": "elaboration"
+    "sentence_content": "To sharpen the view, I added cultural diversity, filtering for destinations that are both affordable and socially inclusive.",
+    "children": [9],
+    "parent": 5,
+    "system_shows": "Dashboard: diversity overlay; chart1: bar chart of diversity index by country; chart2: bubble chart of diversity vs affordability",
+    "drift_type": "Adjust"
   },
   {
     "sentence_id": 8,
-    "sentence_content": "Havering looked balanced—budget-friendly with a quieter scene.",
-    "children": [10],
+    "sentence_content": "This path highlighted Poland and Thailand—places that balance modest costs with strong accessibility.",
+    "children": [],
     "parent": 6,
-    "system_shows": "Small multiples: Havering vs London median on rent, ratio, gyms/10k, restaurants/10k",
-    "drift_type": "elaboration"
+    "system_shows": "",
+    "drift_type": "Match Mental Model"
   },
   {
     "sentence_id": 9,
-    "sentence_content": "Sutton stayed in the mix as the value pick with solid basics rather than a hotspot vibe.",
-    "children": [10, 12],
-    "parent": 6,
-    "system_shows": "Small multiples: Sutton vs London median on rent, ratio, gyms/10k, restaurants/10k",
-    "drift_type": "elaboration"
+    "sentence_content": "Here the shortlist leaned toward Portugal, Mexico, and South Africa: all affordable, diverse, and well-reviewed.",
+    "children": [],
+    "parent": 7,
+    "system_shows": "",
+    "drift_type": "Match Mental Model"
+  },
+
+  {
+    "sentence_id": 3,
+    "sentence_content": "From a safety-first angle, I compared crime data with cultural diversity and attraction coverage to see whether the safest places are also rewarding to visit.",
+    "children": [10,11],
+    "parent": 1,
+    "system_shows": "Dashboard: safety lens; chart1: bar chart of safety index; chart2: pie chart of attraction categories; chart3: bubble chart of safety vs diversity",
+    "drift_type": "Adjust"
   },
   {
     "sentence_id": 10,
-    "sentence_content": "Because calm matters, I overlaid crime for Lewisham, Havering, and Sutton to see how the tradeoffs feel in practice.",
-    "children": [11, 14],
-    "parent": 7,
-    "system_shows": "Bars: crime per 1,000 residents (all boroughs) with the three candidates highlighted; scatter: rent-to-income vs crime",
-    "drift_type": "context shift"
+    "sentence_content": "Some countries are extremely safe but thin on cultural attractions, while others manage to strike a better balance.",
+    "children": [12],
+    "parent": 3,
+    "system_shows": "Chart: scatterplot of safety vs attractions per capita, outliers highlighted",
+    "drift_type": "Detect Pattern"
   },
   {
     "sentence_id": 11,
-    "sentence_content": "Sutton came through calmer, Havering sat in the middle, and Lewisham traded a bit of safety for more to do.",
-    "children": [12],
-    "parent": 10,
-    "system_shows": "Quartile bands on crime chart; candidate annotations",
-    "drift_type": "elaboration"
+    "sentence_content": "I also checked whether economic prosperity correlates with safety by layering in income levels.",
+    "children": [13],
+    "parent": 3,
+    "system_shows": "Dashboard: socio-economic overlay; chart1: bar chart of median income; chart2: line chart of safety index vs GDP per capita",
+    "drift_type": "Adjust"
   },
   {
     "sentence_id": 12,
-    "sentence_content": "With that context I tweaked my earlier ‘cheapest’ note—among those, Havering is the better-balanced pick while Barking’s value comes with more risk.",
-    "children": [13],
-    "parent": 9,
-    "system_shows": "Timeline: jump-back to earlier sentence; inline edit with evidence badges",
-    "drift_type": "reframing"
+    "sentence_content": "Japan and Canada stood out as destinations that combine strong safety with a rich cultural offering.",
+    "children": [],
+    "parent": 10,
+    "system_shows": "",
+    "drift_type": "Match Mental Model"
   },
   {
     "sentence_id": 13,
-    "sentence_content": "Pulling it together, my quick presets are save-first: Sutton; balance-first: Havering; activity-first: Lewisham.",
+    "sentence_content": "Switzerland and Singapore also emerged here, where high incomes and excellent safety scores go hand in hand.",
     "children": [],
-    "parent": 12,
-    "system_shows": "Summary composer: preset cards assembled from most-used views",
-    "drift_type": "elaboration"
+    "parent": 11,
+    "system_shows": "",
+    "drift_type": "Detect Pattern"
+  },
+
+  {
+    "sentence_id": 4,
+    "sentence_content": "Turning to popularity, I compared international arrivals with accessibility and reviews to test whether the most visited destinations live up to expectations.",
+    "children": [14,15],
+    "parent": 1,
+    "system_shows": "Dashboard: popularity lens; chart1: bar chart of annual arrivals; chart2: line chart of average reviews over time; chart3: bubble chart of popularity vs accessibility",
+    "drift_type": "Provide Overview"
   },
   {
     "sentence_id": 14,
-    "sentence_content": "If you can pay a bit more for extra peace, I’d also add Bromley as a calm option even though it sits above the tighter budgets.",
-    "children": [13],
-    "parent": 10,
-    "system_shows": "Crime bars re-sorted; Bromley highlighted; rent overlay shows higher band",
-    "drift_type": "topic_change"
+    "sentence_content": "Some crowd-heavy destinations are seeing reviews slip over time, a sign of over-tourism.",
+    "children": [16],
+    "parent": 4,
+    "system_shows": "Chart: line chart of review scores for top 10 most visited destinations",
+    "drift_type": "Detect Pattern"
   },
   {
     "sentence_id": 15,
-    "sentence_content": "Rather than chasing the very cheapest, I flipped the view to start from places that feel active—good gyms and restaurant counts—and only then checked whether the rent looks sensible.",
-    "children": [16],
-    "parent": 2,
-    "system_shows": "Scatter: restaurants/10k (x) vs gyms/10k (y), point color = rent; affordability band filter toggled on",
-    "drift_type": "reframing"
+    "sentence_content": "I also checked which popular places maintain strong environmental scores, even under pressure from heavy visitor numbers.",
+    "children": [17],
+    "parent": 4,
+    "system_shows": "Dashboard: sustainable popularity; chart1: bar chart of environmental scores; chart2: bar+line combo of popularity vs reviews",
+    "drift_type": "Adjust"
   },
   {
     "sentence_id": 16,
-    "sentence_content": "With that lens, Lewisham bubbled up as lively without central-London prices, while Sutton and Havering stayed in the frame as calmer, value-leaning options.",
-    "children": [17],
-    "parent": 15,
-    "system_shows": "Highlighted points for Lewisham, Sutton, Havering; legend shows rent band",
-    "drift_type": "elaboration"
+    "sentence_content": "Venice and Barcelona illustrate how surging visitor numbers have chipped away at visitor satisfaction.",
+    "children": [],
+    "parent": 14,
+    "system_shows": "",
+    "drift_type": "Match Mental Model"
   },
   {
     "sentence_id": 17,
-    "sentence_content": "I sanity-checked the rent burden so I wasn’t mistaking buzz for a bad deal.",
-    "children": [18],
-    "parent": 16,
-    "system_shows": "Bar chart: rent-to-income ratio for Lewisham, Sutton, Havering vs London median",
-    "drift_type": "context shift"
+    "sentence_content": "On the other hand, Switzerland and New Zealand remain popular while keeping experiences positive and environmentally sustainable.",
+    "children": [],
+    "parent": 15,
+    "system_shows": "",
+    "drift_type": "Match Mental Model"
   },
+
   {
     "sentence_id": 18,
-    "sentence_content": "Lewisham’s burden landed in the acceptable range, Sutton remained comfortably low, and Havering stayed middle-lane.",
-    "children": [19],
-    "parent": 17,
-    "system_shows": "Percentile bands overlaid on ratio bars; candidate badges",
-    "drift_type": "elaboration"
+    "sentence_content": "Pulling the branches together, I compared all shortlists to see where different perspectives overlapped.",
+    "children": [19,20,21],
+    "parent": 1,
+    "system_shows": "Dashboard: synthesis view; chart1: Venn diagram of candidates across branches; chart2: bar chart of frequency of appearance",
+    "drift_type": "Provide Overview"
   },
   {
     "sentence_id": 19,
-    "sentence_content": "Because feel matters, I layered in crime to see how the tradeoff looks once calm is on the table.",
-    "children": [20],
+    "sentence_content": "Portugal, Switzerland, and Japan kept appearing across very different lenses, marking them as particularly robust choices.",
+    "children": [22],
     "parent": 18,
-    "system_shows": "Scatter: rent-to-income (x) vs crime/1,000 (y) with quadrant shading; candidates labeled",
-    "drift_type": "context shift"
+    "system_shows": "Chart: stacked bar chart of candidate appearances across branches",
+    "drift_type": "Detect Pattern"
   },
   {
     "sentence_id": 20,
-    "sentence_content": "Taken together: choose Sutton if you want low burden and calmer streets; pick Lewisham if you want more going on without blowing the budget; keep Havering as a steady compromise.",
-    "children": [],
-    "parent": 19,
-    "system_shows": "Summary composer surfaced top three evidence-linked lines from prior views",
-    "drift_type": "elaboration"
+    "sentence_content": "I tested stability by adjusting weights on cost, safety, and environment to see whether the same destinations stayed near the top.",
+    "children": [23],
+    "parent": 18,
+    "system_shows": "Dashboard: sensitivity analysis; chart1: tornado plot of candidate stability; chart2: line chart of rank changes under weight shifts",
+    "drift_type": "Adjust"
   },
-
-   {
+  {
     "sentence_id": 21,
-    "sentence_content": "I wanted a value-for-amenities angle—within an acceptable rent band, who gives me more gyms and restaurants for the money?",
-    "children": [22],
-    "parent": 2,
-    "system_shows": "Scatter/index: amenities-per-£ of rent (normalized gyms/10k and restaurants/10k divided by rent); affordability band overlay; candidate highlights",
-    "drift_type": "reframing"
+    "sentence_content": "Different traveler types would likely make different choices—for example, Japan appeals to safety-focused travelers, while New Zealand draws those prioritizing nature.",
+    "children": [],
+    "parent": 18,
+    "system_shows": "",
+    "drift_type": "Match Mental Model"
   },
   {
     "sentence_id": 22,
-    "sentence_content": "On that value lens, Lewisham and Havering surface at the top, with Sutton steady in the middle—good return without inner-city prices.",
-    "children": [],
-    "parent": 21,
-    "system_shows": "Ranked bars: amenities-per-£ index with confidence bands; callouts for Lewisham/Havering/Sutton",
-    "drift_type": "elaboration"
+    "sentence_content": "After bringing all evidence together, the shortlist consistently converged on Portugal, Japan, Switzerland, Mexico, and New Zealand.",
+    "children": [24,25],
+    "parent": 19,
+    "system_shows": "",
+    "drift_type": "Detect Pattern"
   },
-
   {
     "sentence_id": 23,
-    "sentence_content": "One more angle from the cheap set: what actually drives the safety picture—annoyances versus real danger?",
-    "children": [24],
-    "parent": 7,
-    "system_shows": "Stacked bars: crime category mix (theft/ASB/violent) for Barking & Dagenham vs Havering vs London median",
-    "drift_type": "topic_change"
+    "sentence_content": "These destinations held their positions even when the weighting of different factors was shifted, giving confidence in their robustness.",
+    "children": [],
+    "parent": 20,
+    "system_shows": "",
+    "drift_type": "Detect Pattern"
   },
   {
     "sentence_id": 24,
-    "sentence_content": "Barking skews higher on theft and anti-social behaviour rather than the most serious categories, while Havering stays closer to the median mix.",
+    "sentence_content": "Framed together, these five offer a balance of affordability, safety, cultural richness, and environmental quality.",
     "children": [25],
-    "parent": 23,
-    "system_shows": "Category percentages annotated; median line overlays",
-    "drift_type": "elaboration"
+    "parent": 22,
+    "system_shows": "",
+    "drift_type": "Provide Overview"
   },
   {
     "sentence_id": 25,
-    "sentence_content": "That nuance helps: Barking’s tradeoff feels more about everyday hassle than outright danger, which some renters might accept to maximise savings.",
+    "sentence_content": "Final recommendation: Portugal, Japan, Switzerland, Mexico, and New Zealand stand out as versatile and resilient choices for travelers, each excelling in different ways.",
     "children": [],
     "parent": 24,
-    "system_shows": "Note pinned to earlier ‘cheapest’ thread with link to category chart",
-    "drift_type": "elaboration"
+    "system_shows": "",
+    "drift_type": "Match Mental Model"
   }
-  ],
+],
 "data_story":[
   {
-    "data_story_sentence": "Across London, borough-level rent data identifies Barking & Dagenham, Bexley, and Havering as the lowest-cost areas to rent.",
-    "ref_id": 2
+    "data_story_sentence": "From a global comparison, analyzing the cost of stay, safety, and popularity provides insights into which countries offer the best value for travelers.",
+    "ref_id": 1
   },
   {
-    "data_story_sentence": "Normalizing against local incomes shows Barking & Dagenham’s low rents track its lower earnings, while Havering exhibits a comparatively favorable rent-to-income burden.",
-    "ref_id": 4
+    "data_story_sentence": "The data reveals that lower-cost countries often receive high traveler reviews, though their environmental quality can differ significantly.",
+    "ref_id": 5
   },
   {
-    "data_story_sentence": "Because price alone is insufficient for livability, we extend the analysis to amenity access—gyms and restaurants—within an acceptable rent band.",
-    "ref_id": 6
-  },
-  {
-    "data_story_sentence": "Under this amenity-first lens, Lewisham delivers above-median activity at non-central price levels.",
-    "ref_id": 7
-  },
-  {
-    "data_story_sentence": "Sutton remains a value-oriented option, trading nightlife density for stable essentials.",
-    "ref_id": 9
-  },
-  {
-    "data_story_sentence": "Havering presents a balanced profile—budget-friendly with a quieter amenity mix.",
+    "data_story_sentence": "An analysis of accessibility highlights Poland and Thailand as destinations that successfully combine modest costs with excellent transport and amenities.",
     "ref_id": 8
   },
   {
-    "data_story_sentence": "Safety overlays for the candidates jointly compare crime per 1,000 residents with rent burden to surface practical tradeoffs.",
-    "ref_id": 10
+    "data_story_sentence": "Portugal, Mexico, and South Africa stand out for their affordability, diversity, and high review scores, making them attractive destinations.",
+    "ref_id": 9
   },
   {
-    "data_story_sentence": "Sutton and Bromley cluster in the lower-crime segment, Havering is mid-range, and Lewisham accepts a modest safety premium for greater activity.",
-    "ref_id": 11
-  },
-  {
-    "data_story_sentence": "Revisiting the cheapest set with safety incorporated, Havering emerges as the better-balanced option, whereas Barking & Dagenham’s value carries higher risk.",
+    "data_story_sentence": "Japan and Canada excel as destinations that blend strong safety records with a wealth of cultural attractions.",
     "ref_id": 12
   },
   {
-    "data_story_sentence": "Decision framing: select Sutton for the lowest rent burden with calmer streets; choose Lewisham for livelier amenities within a manageable budget; retain Havering as a steady compromise.",
-    "ref_id": 20
+    "data_story_sentence": "The relationship between high income levels and safety is underscored by Switzerland and Singapore, showcasing excellent safety scores.",
+    "ref_id": 13
   },
   {
-    "data_story_sentence": "For renters prioritizing peace over price, Bromley merits inclusion despite a higher rent band.",
-    "ref_id": 14
+    "data_story_sentence": "Tourism data indicates that Venice and Barcelona are experiencing reduced visitor satisfaction due to over-tourism effects.",
+    "ref_id": 16
   },
   {
-    "data_story_sentence": "In Barking & Dagenham, elevated incidents skew toward theft and anti-social behavior rather than the most severe categories, a tradeoff some cost-focused renters may accept.",
+    "data_story_sentence": "Despite being popular, Switzerland and New Zealand retain high environmental and visitor satisfaction scores, demonstrating sustainable tourism practices.",
+    "ref_id": 17
+  },
+  {
+    "data_story_sentence": "Portugal, Switzerland, and Japan frequently appear across various analysis lenses, confirming their robust appeal to diverse traveler interests.",
+    "ref_id": 19
+  },
+  {
+    "data_story_sentence": "The convergence of analyses consistently identifies Portugal, Japan, Switzerland, Mexico, and New Zealand as standout destinations.",
+    "ref_id": 22
+  },
+  {
+    "data_story_sentence": "These top destinations maintain their positions regardless of weighting changes in cost, safety, and environment parameters, demonstrating their resilience.",
+    "ref_id": 23
+  },
+  {
+    "data_story_sentence": "Portugal, Japan, Switzerland, Mexico, and New Zealand offer a comprehensive mix of affordability, safety, cultural experiences, and environmental standards.",
+    "ref_id": 24
+  },
+  {
+    "data_story_sentence": "Final recommendation for travelers: consider Portugal, Japan, Switzerland, Mexico, and New Zealand for their versatility and resilience in travel qualities.",
     "ref_id": 25
   }
 ],
 "inquiries": [
   {
-    "qid": "Q0",
-    "title": "Identify lowest-cost boroughs to rent (affordability baseline)",
+    "qid": "iss_1",
+    "title": "Do affordable destinations maintain high traveler reviews and environmental quality?",
     "status": "resolved",
-    "sentenceRefs": ["1", "2"],
+    "sentenceRefs": ["2", "5", "6", "7", "8", "9"],
     "position_suggested_by": {
-      "text": "Barking & Dagenham, Bexley, and Havering surface as the lowest-rent boroughs.",
+      "text": "Portugal, Mexico, and South Africa are affordable, diverse, and well-reviewed.",
       "confidence": "high"
     },
     "argument_suggested_by": {
-      "text": "Direct comparison of borough-level average rents.",
+      "text": "Analysis of cost vs reviews and diversity showed some countries as affordable and attractive.",
+      "basis": "pattern"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_2",
+    "title": "Are the safest destinations also culturally rewarding?",
+    "status": "resolved",
+    "sentenceRefs": ["3", "10", "12"],
+    "position_suggested_by": {
+      "text": "Japan and Canada combine safety with rich cultural offerings.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Scatterplot of safety vs attractions confirmed alignment.",
       "basis": "comparison"
     },
     "links": []
   },
   {
-    "qid": "Q1",
-    "title": "Cheapest-path viability after normalizing by income",
+    "qid": "iss_3",
+    "title": "Do popular destinations sustain positive reviews over time?",
     "status": "resolved",
-    "sentenceRefs": ["3", "4", "5", "12"],
+    "sentenceRefs": ["4", "14", "16"],
     "position_suggested_by": {
-      "text": "Havering shows a friendlier rent-to-income burden than Barking & Dagenham; cheapest ≠ best by default.",
+      "text": "Venice and Barcelona show declining satisfaction under surging visitors.",
       "confidence": "high"
     },
     "argument_suggested_by": {
-      "text": "Rent-to-income ratios contextualize affordability beyond sticker price.",
-      "basis": "comparison"
-    },
-    "links": [
-      {
-        "qid": "Q0",
-        "type": "suggested_by",
-        "explanation": "Income normalization was prompted by the initial cheapest-boroughs scan."
-      }
-    ]
-  },
-  {
-    "qid": "Q2",
-    "title": "Amenity-first shortlisting within an acceptable rent band",
-    "status": "resolved",
-    "sentenceRefs": ["6", "7", "8", "9"],
-    "position_suggested_by": {
-      "text": "Lewisham (amenities-forward), Havering (balanced), Sutton (value) emerge as candidates when prioritizing gyms/restaurants first.",
-      "confidence": "high"
-    },
-    "argument_suggested_by": {
-      "text": "Filter and rank by amenities per capita, then sort by rent band.",
+      "text": "Review scores of top destinations showed declines.",
       "basis": "pattern"
     },
-    "links": [
-      {
-        "qid": "Q1",
-        "type": "replaces",
-        "explanation": "Switches the search strategy from cheapest-first to amenities-first within affordability."
-      },
-      {
-        "qid": "Q0",
-        "type": "generalized_from",
-        "explanation": "Builds on the initial affordability scope but broadens criteria to livability."
-      }
-    ]
+    "links": []
   },
   {
-    "qid": "Q3",
-    "title": "Safety overlay for amenity-first candidates",
+    "qid": "iss_4",
+    "title": "Which popular places maintain strong environmental scores?",
     "status": "resolved",
-    "sentenceRefs": ["10", "11"],
+    "sentenceRefs": ["4", "15", "17"],
     "position_suggested_by": {
-      "text": "Sutton and Bromley trend calmer; Havering mid-range; Lewisham trades some safety for activity.",
+      "text": "Switzerland and New Zealand are popular yet environmentally sustainable.",
       "confidence": "high"
     },
     "argument_suggested_by": {
-      "text": "Joint view of crime per 1,000 and rent-burden positioning for Lewisham, Havering, Sutton (plus Bromley).",
+      "text": "Combined popularity and environmental analysis.",
       "basis": "comparison"
     },
-    "links": [
-      {
-        "qid": "Q2",
-        "type": "suggested_by",
-        "explanation": "Safety was layered after the amenity-first shortlist to expose trade-offs."
-      }
-    ]
+    "links": []
   },
   {
-    "qid": "Q4",
-    "title": "Final recommendation presets (save-first, balance-first, activity-first)",
+    "qid": "iss_5",
+    "title": "Where do different perspectives on destinations overlap?",
     "status": "resolved",
-    "sentenceRefs": ["20", "13"],
+    "sentenceRefs": ["18", "19", "22", "24", "25"],
     "position_suggested_by": {
-      "text": "Save-first: Sutton; Balance-first: Havering; Activity-first: Lewisham.",
+      "text": "Portugal, Japan, Switzerland, Mexico, and New Zealand consistently excel across factors.",
       "confidence": "high"
     },
     "argument_suggested_by": {
-      "text": "Synthesis across ratio, crime, and amenities into audience-oriented choices.",
-      "basis": "comparison"
-    },
-    "links": [
-      {
-        "qid": "Q2",
-        "type": "specialized_from",
-        "explanation": "Operationalizes the amenity-first shortlist into concrete audience presets."
-      },
-      {
-        "qid": "Q3",
-        "type": "specialized_from",
-        "explanation": "Integrates safety overlays into the final choice framing."
-      }
-    ]
-  },
-  {
-    "qid": "Q5",
-    "title": "Premium calm option: include Bromley despite higher rents",
-    "status": "resolved",
-    "sentenceRefs": ["14"],
-    "position_suggested_by": {
-      "text": "Bromley offers notably calmer streets at a higher price point.",
-      "confidence": "medium"
-    },
-    "argument_suggested_by": {
-      "text": "Crime profile comparison with affordability context.",
-      "basis": "comparison"
-    },
-    "links": [
-      {
-        "qid": "Q3",
-        "type": "suggested_by",
-        "explanation": "Low-crime signal surfaced when safety was overlaid on candidates."
-      },
-      {
-        "qid": "Q4",
-        "type": "specialized_from",
-        "explanation": "Extends the recommendation set for renters prioritizing peace over price."
-      }
-    ]
-  },
-   {
-    "qid": "Q6",
-    "title": "Amenities value-for-money within affordability band",
-    "status": "resolved",
-    "sentenceRefs": ["21", "22"],
-    "position_suggested_by": {
-      "text": "Lewisham and Havering offer higher amenities-per-£ than peers; Sutton provides solid value at a calmer pace.",
-      "confidence": "high"
-    },
-    "argument_suggested_by": {
-      "text": "Composite index combining gyms/10k and restaurants/10k normalized by rent.",
+      "text": "Synthesis of lenses revealed consistent patterns.",
       "basis": "pattern"
     },
-    "links": [
-      {
-        "qid": "Q2",
-        "type": "specialized_from",
-        "explanation": "Refines the amenity-first shortlist by normalizing for rent."
-      }
-    ]
+    "links": []
   },
   {
-    "qid": "Q7",
-    "title": "Commute practicality for central workers",
-    "status": "open",
-    "sentenceRefs": [],
-    "position_suggested_by": {
-      "text": "Commute time/cost likely moderates attractiveness across the shortlisted boroughs.",
-      "confidence": "low"
-    },
-    "argument_suggested_by": {
-      "text": "Known decision factor not represented in the current dataset selection.",
-      "basis": "other"
-    },
-    "links": [
-      {
-        "qid": "Q4",
-        "type": "suggested_by",
-        "explanation": "Raised when converting findings into audience-oriented presets."
-      }
-    ]
-  },
-  {
-    "qid": "Q8",
-    "title": "Why is Barking & Dagenham so cheap? Nature of risk vs nuisance",
-    "status": "stalled",
-    "sentenceRefs": ["23", "24", "25"],
-    "position_suggested_by": {
-      "text": "Elevated incidents skew toward theft/ASB rather than the most severe categories; some renters may accept nuisance to maximize savings.",
-      "confidence": "medium"
-    },
-    "argument_suggested_by": {
-      "text": "Crime category mix compared to London median; partial explanation without longitudinal or causality data.",
-      "basis": "pattern"
-    },
-    "links": [
-      {
-        "qid": "Q1",
-        "type": "generalized_from",
-        "explanation": "Drills into the qualitative character behind the cheapest-path trade-off."
-      }
-    ]
-  },
-  {
-    "qid": "Q9",
-    "title": "Safe-activity mix (amenities vs. crime) for evening feel",
+    "qid": "iss_6",
+    "title": "Do destination rankings remain stable when weighting factors change?",
     "status": "resolved",
-    "sentenceRefs": ["23", "24"],
+    "sentenceRefs": ["20", "23"],
     "position_suggested_by": {
-      "text": "Sutton and Havering cluster in an easygoing zone; Lewisham is livelier with a modest safety premium.",
+      "text": "Key destinations retained their positions under varied weights.",
       "confidence": "high"
     },
     "argument_suggested_by": {
-      "text": "Bivariate comparison of restaurants/10k against crime/1,000 with gyms/10k as size cue.",
-      "basis": "comparison"
+      "text": "Sensitivity analysis showed stability of ranked choices.",
+      "basis": "pattern"
     },
-    "links": [
-      {
-        "qid": "Q2",
-        "type": "suggested_by",
-        "explanation": "Built on the amenity-first lens to include safety."
-      },
-      {
-        "qid": "Q3",
-        "type": "generalized_from",
-        "explanation": "Extends the safety overlay by pairing it directly with amenity density."
-      }
-    ]
+    "links": []
   }
 ]
-
 }
 

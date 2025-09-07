@@ -1224,13 +1224,17 @@ interface ReactFlowCanvasProps {
   children?: React.ReactNode;
   dashboardConfig?: DashboardConfig;
   onViewGeneratorNodeClick?: (sentenceId: number, nodeId: string) => void;
+  scenario?: string;
+  example?: string;
 }
 
 const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({ 
   showDashboard, 
   children, 
   dashboardConfig,
-  onViewGeneratorNodeClick
+  onViewGeneratorNodeClick,
+  scenario,
+  example
 }, ref) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -1545,7 +1549,13 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
   }, []);
 
   // Function to load ViewGenerator nodes from output file
-  const loadViewGeneratorNodesFromOutput = useCallback(async (filePath: string = '/examples/scenario1/example4_data_output.json') => {
+  const loadViewGeneratorNodesFromOutput = useCallback(async (filePath?: string) => {
+    // Construct default path based on scenario and example props
+    const defaultPath = scenario && example 
+      ? `/examples/scenario${scenario}/example${example}_data_output.json`
+      : '/examples/scenario1/example4_data_output.json'; // fallback
+    
+    const actualFilePath = filePath || defaultPath;
     // Prevent multiple simultaneous calls using both state and ref
     if (isAutoLoading || hasAutoLoadedRef.current) {
       console.log('⏳ Already loading or loaded ViewGenerator nodes, skipping duplicate call');
@@ -1555,8 +1565,8 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
     try {
       setIsAutoLoading(true);
       hasAutoLoadedRef.current = true; // Mark as loaded permanently
-      console.log('🔄 Loading ViewGenerator nodes from:', filePath);
-      const response = await fetch(filePath);
+      console.log('🔄 Loading ViewGenerator nodes from:', actualFilePath);
+      const response = await fetch(actualFilePath);
       
       if (!response.ok) {
         throw new Error(`Failed to load file: ${response.status} ${response.statusText}`);
@@ -1605,7 +1615,7 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
       // Show error notification or add error info node
       addInfoNode({
         title: 'Loading Error',
-        content: `Failed to load ViewGenerator nodes from ${filePath}:\n\n${error instanceof Error ? error.message : 'Unknown error'}`
+        content: `Failed to load ViewGenerator nodes from ${actualFilePath}:\n\n${error instanceof Error ? error.message : 'Unknown error'}`
       });
     } finally {
       // Reset loading flag after a delay to ensure all nodes are created
@@ -1613,7 +1623,7 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
         setIsAutoLoading(false);
       }, 1000);
     }
-  }, [isAutoLoading, addViewGeneratorNode, addInfoNode, setNodes, setEdges]);
+  }, [isAutoLoading, addViewGeneratorNode, addInfoNode, setNodes, setEdges, scenario, example]);
 
   // Function to check if a ViewGenerator node exists by sentence ID
   const hasViewGeneratorNode = useCallback((sentenceId: number): boolean => {

@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const scenario1Path = path.join(publicPath, 'scenario1');
     if (fs.existsSync(scenario1Path)) {
       const scenario1Files = fs.readdirSync(scenario1Path)
-        .filter(file => file.endsWith('.json') && !file.includes('_output'))
+        .filter(file => file.endsWith('_data.json'))
         .map(file => ({
           name: file,
           path: `public/examples/scenario1/${file}`,
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     const scenario2Path = path.join(publicPath, 'scenario2');
     if (fs.existsSync(scenario2Path)) {
       const scenario2Files = fs.readdirSync(scenario2Path)
-        .filter(file => file.endsWith('.json') && !file.includes('_output'))
+        .filter(file => file.endsWith('_data.json'))
         .map(file => ({
           name: file,
           path: `public/examples/scenario2/${file}`,

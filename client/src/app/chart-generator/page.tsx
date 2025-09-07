@@ -5,31 +5,7 @@ import ReusableNode from '../../components/ReusableNode';
 import ReusableGrid from '../../components/ReusableGrid';
 
 interface GenerationResult {
-  metadata: {
-    generatedAt: string;
-    totalRequests: number;
-    successful: number;
-    failed: number;
-    agentTypes: string[];
-    processingTimeMs: number;
-  };
   sentences: Record<string, any>;
-  charts: Array<{
-    id: string;
-    name: string;
-    request: any;
-    chartSpec: any;
-    vegaSpec: any;
-    generationTime: number;
-    success: boolean;
-    error: string | null;
-  }>;
-  systemInfo?: {
-    availableAgents: Array<{
-      type: string;
-      info: any;
-    }>;
-  };
 }
 
 interface ScenarioFile {
@@ -167,8 +143,7 @@ const ChartGenerator: React.FC = () => {
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Chart Generation Results</h1>
               <p className="text-sm text-gray-600">
-                Generated {generationResult.metadata.successful}/{generationResult.metadata.totalRequests} charts from {selectedFile} • 
-                {' '}Processing time: {(generationResult.metadata.processingTimeMs / 1000).toFixed(1)}s •
+                Generated charts from {selectedFile} • 
                 {' '}{sentenceIds.length} dashboard{sentenceIds.length !== 1 ? 's' : ''}
               </p>
             </div>

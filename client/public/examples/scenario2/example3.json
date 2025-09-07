@@ -1,0 +1,270 @@
+{
+  "exploration_path": [
+    {
+      "sentence_id": 1,
+      "sentence_content": "The first glance at the data showed that some destinations have grown remarkably fast in visitor numbers over the past decade.",
+      "children": [2],
+      "parent": null,
+      "system_shows": "Dashboard: arrivals overview; chart1: line chart of arrivals by country (2010–2023); chart2: bar chart of growth rates",
+      "drift_type": "begin"
+    },
+    {
+      "sentence_id": 2,
+      "sentence_content": "A small group of countries posted double-digit growth, and I wanted to understand what could be driving it.",
+      "children": [3],
+      "parent": 1,
+      "system_shows": "Dashboard: growth ranking; chart1: bar chart of CAGR; chart2: heatmap of top-growth countries",
+      "drift_type": "Provide Overview"
+    },
+
+    {
+      "sentence_id": 3,
+      "sentence_content": "Two possible explanations came to mind: maybe travel costs fell, or maybe accessibility expanded through more flights.",
+      "children": [4,5],
+      "parent": 2,
+      "system_shows": "Dashboard: drivers menu; chart1: scatterplot of growth vs cost change; chart2: line chart of new flight routes",
+      "drift_type": "Adjust"
+    },
+
+    {
+      "sentence_id": 4,
+      "sentence_content": "Looking at cost trends, Vietnam and Portugal both showed small declines in daily costs while arrivals surged.",
+      "children": [6],
+      "parent": 3,
+      "system_shows": "Chart: bar chart of cost change vs arrivals growth",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 5,
+      "sentence_content": "In the accessibility branch, Vietnam stood out again with a sharp increase in direct flights, while Mexico grew despite little change in air routes.",
+      "children": [7,8],
+      "parent": 3,
+      "system_shows": "Dashboard: accessibility lens; chart1: line chart of flight routes by country; chart2: scatterplot of growth vs flight increase",
+      "drift_type": "Detect Pattern"
+    },
+
+    {
+      "sentence_id": 6,
+      "sentence_content": "But I wondered if cost is the whole story, or if other factors like environmental sustainability might explain why some destinations hold momentum.",
+      "children": [9],
+      "parent": 4,
+      "system_shows": "Dashboard: environment overlay; chart1: bar chart of environmental index by top-growth countries",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 7,
+      "sentence_content": "Mexico’s case raises a question: if flights didn’t change much, could its rising online reputation be what pulled visitors?",
+      "children": [10],
+      "parent": 5,
+      "system_shows": "Dashboard: review overlay; chart1: line chart of review scores (2010–2023)",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 8,
+      "sentence_content": "Egypt complicates things: accessibility improved through new air links, yet arrivals stayed bumpy, hinting that safety perceptions may be limiting growth.",
+      "children": [11],
+      "parent": 5,
+      "system_shows": "Dashboard: safety overlay; chart1: line chart of arrivals vs safety index; chart2: scatterplot of accessibility vs safety perception",
+      "drift_type": "Detect Pattern"
+    },
+
+    {
+      "sentence_id": 9,
+      "sentence_content": "Here the picture was mixed—Vietnam scored reasonably on environment, while Turkey and Egypt showed strain, suggesting sustainability may stall growth in some places.",
+      "children": [],
+      "parent": 6,
+      "system_shows": "",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 10,
+      "sentence_content": "Reviews did improve in Mexico and Portugal, but Colombia’s stayed flat, leaving me unsure how much weight reputation really carries.",
+      "children": [],
+      "parent": 7,
+      "system_shows": "Chart: side-by-side review trends for Mexico, Portugal, Colombia",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 11,
+      "sentence_content": "Egypt’s safety index rose somewhat, but arrivals didn’t respond in kind, raising doubts about whether security gains translate directly into tourism growth.",
+      "children": [],
+      "parent": 8,
+      "system_shows": "Chart: Egypt arrivals vs safety perception 2010–2023",
+      "drift_type": "Detect Pattern"
+    },
+
+    {
+      "sentence_id": 12,
+      "sentence_content": "Bringing the strands together, it seems costs, accessibility, environment, safety, and reviews all matter—but unevenly across countries.",
+      "children": [13],
+      "parent": 2,
+      "system_shows": "Dashboard: synthesis; chart1: stacked bar of factor shifts; chart2: comparison matrix countries × factors",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 13,
+      "sentence_content": "That leaves an open puzzle: is there a hidden driver, like regional politics or cultural trends, that explains the outliers?",
+      "children": [14],
+      "parent": 12,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 14,
+      "sentence_content": "Without more evidence, the growth story remains partly unresolved—multiple drivers overlap, but no single one explains everything.",
+      "children": [],
+      "parent": 13,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    }
+  ],
+  "data_story": [
+  {
+    "data_story_sentence": "Recent data shows a remarkable increase in visitor numbers in some destinations over the past decade, with countries like Vietnam and Portugal seeing significant growth.",
+    "ref_id": 1
+  },
+  {
+    "data_story_sentence": "A small group of countries, including Vietnam and Portugal, posted double-digit growth in arrivals, potentially driven by lower travel costs and expanded accessibility.",
+    "ref_id": 2
+  },
+  {
+    "data_story_sentence": "Vietnam and Portugal experienced a decline in daily costs while seeing a surge in visitor arrivals, highlighting a potential link between affordability and growth.",
+    "ref_id": 4
+  },
+  {
+    "data_story_sentence": "Vietnam's sharp increase in direct flights suggests enhanced accessibility, contrasting with Mexico, which grew despite minimal changes in air routes.",
+    "ref_id": 5
+  },
+  {
+    "data_story_sentence": "Environmental sustainability scores present a mixed picture, with Vietnam performing reasonably well, while Turkey and Egypt face ecological strain.",
+    "ref_id": 9
+  },
+  {
+    "data_story_sentence": "Mexico's growth may be partly attributed to an improved online reputation, whereas Egypt's increased accessibility has not translated into consistent arrival growth, possibly due to safety perceptions.",
+    "ref_id": 7
+  },
+  {
+    "data_story_sentence": "Egypt showcases that improved safety indexes have not directly correlated with increased tourist arrivals, raising questions about the impact of security perceptions.",
+    "ref_id": 11
+  },
+  {
+    "data_story_sentence": "While Portugal and Mexico saw enhanced reviews, Colombia's stagnant reputation highlights the complex role of brand image in tourism growth.",
+    "ref_id": 10
+  },
+  {
+    "data_story_sentence": "Synthesizing the data suggests that costs, accessibility, environment, safety, and reviews influence growth unevenly across different countries.",
+    "ref_id": 12
+  },
+  {
+    "data_story_sentence": "The research leaves an open question about hidden drivers, such as regional politics or cultural trends, influencing anomalous growth patterns.",
+    "ref_id": 13
+  },
+  {
+    "data_story_sentence": "Ultimately, the tourism growth narrative remains unresolved, with multiple overlapping drivers and no singular explanation for outliers.",
+    "ref_id": 14
+  }
+],
+"inquiries": [
+  {
+    "qid": "iss_1",
+    "title": "What drives the rapid visitor growth in certain countries?",
+    "status": "open",
+    "sentenceRefs": ["1", "2"],
+    "links": []
+  },
+  {
+    "qid": "iss_2",
+    "title": "Is the decline in travel costs responsible for visitor growth in Vietnam and Portugal?",
+    "status": "resolved",
+    "sentenceRefs": ["3", "4"],
+    "position_suggested_by": {
+      "text": "Costs declined as arrivals surged in Vietnam and Portugal.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Bar chart showed correlation between cost declines and growth.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "iss_5",
+        "type": "specialized_from",
+        "explanation": "Considers costs along with other growth drivers."
+      }
+    ]
+  },
+  {
+    "qid": "iss_3",
+    "title": "Does increased accessibility explain visitor growth in Vietnam?",
+    "status": "resolved",
+    "sentenceRefs": ["5", "7"],
+    "position_suggested_by": {
+      "text": "Sharp increase in direct flights contributed to growth in Vietnam.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Increased flight routes correlated with growth; however, Mexico grew with little change in air routes.",
+      "basis": "comparison"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_4",
+    "title": "Does environmental sustainability influence growth momentum?",
+    "status": "stalled",
+    "sentenceRefs": ["6", "9"],
+    "position_suggested_by": {
+      "text": "Mixed results with some countries like Vietnam doing reasonably well.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Variable environmental scores, some showing strain.",
+      "basis": "pattern"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_5",
+    "title": "Are online reviews key to sustaining visitor numbers in Mexico?",
+    "status": "stalled",
+    "sentenceRefs": ["7", "10"],
+    "position_suggested_by": {
+      "text": "Improvement in reviews noted, but unclear impact.",
+      "confidence": "low"
+    },
+    "argument_suggested_by": {
+      "text": "Inconsistent review trends across countries.",
+      "basis": "pattern"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_6",
+    "title": "Does improving safety perception translate to tourism growth in Egypt?",
+    "status": "stalled",
+    "sentenceRefs": ["8", "11"],
+    "position_suggested_by": {
+      "text": "Rising safety index did not result in increased arrivals.",
+      "confidence": "low"
+    },
+    "argument_suggested_by": {
+      "text": "Non-responsive arrival rates to improved safety perceptions.",
+      "basis": "pattern"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_7",
+    "title": "Are regional politics or cultural trends hidden drivers of growth?",
+    "status": "open",
+    "sentenceRefs": ["13", "14"],
+    "links": [
+      {
+        "qid": "iss_1",
+        "type": "generalized_from",
+        "explanation": "Explores potential unexplored drivers within visitor growth."
+      }
+    ]
+  }
+]
+}
