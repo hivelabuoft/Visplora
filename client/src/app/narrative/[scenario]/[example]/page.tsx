@@ -105,6 +105,7 @@ export default function DynamicNarrativePage() {
   const [exampleData, setExampleData] = useState<ExampleData | null>(null);
   const [isLoadingExample, setIsLoadingExample] = useState(true);
   const [loadingError, setLoadingError] = useState<string>('');
+  const [isGeneratingDataStory, setIsGeneratingDataStory] = useState(false);
   
   // ViewGenerator data state
   const [viewGeneratorData, setViewGeneratorData] = useState<ViewGeneratorSentence[]>([]);
@@ -154,12 +155,52 @@ export default function DynamicNarrativePage() {
         
         // Set the three main attributes in separate state variables
         setExplorationPath(data.exploration_path || []);
-        setDataStory(data.data_story || []);
         setInquiries(data.inquiries || []);
+        
+        // Check if data_story exists, if not generate it
+        let finalDataStory = data.data_story || [];
+        
+        if (!data.data_story || data.data_story.length === 0) {
+          console.log('📝 No data_story found, generating one from exploration_path...');
+          setIsGeneratingDataStory(true);
+          
+          try {
+            const storyResponse = await fetch('/api/generate-data-story', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                exploration_path: data.exploration_path || []
+              }),
+            });
+            
+            if (storyResponse.ok) {
+              const storyResult = await storyResponse.json();
+              if (storyResult.success && storyResult.data_story) {
+                finalDataStory = storyResult.data_story;
+                console.log(`✅ Generated data_story with ${finalDataStory.length} items`);
+              } else {
+                console.warn('⚠️ Failed to generate data_story:', storyResult.error);
+              }
+            } else {
+              console.warn('⚠️ API call failed for data_story generation:', storyResponse.status);
+            }
+          } catch (storyError) {
+            console.error('❌ Error generating data_story:', storyError);
+          } finally {
+            setIsGeneratingDataStory(false);
+          }
+        } else {
+          console.log(`📖 Using existing data_story with ${finalDataStory.length} items`);
+        }
+        
+        setDataStory(finalDataStory);
         
         console.log(`📄 Loaded example data for scenario ${scenario}, example ${example}:`, {
           exploration_path: data.exploration_path?.length || 0,
-          data_story: data.data_story?.length || 0,
+          data_story: finalDataStory.length,
+          data_story_generated: !data.data_story || data.data_story.length === 0,
           inquiries: data.inquiries?.length || 0
         });
         
@@ -904,17 +945,24 @@ export default function DynamicNarrativePage() {
     };
   }, []);
 
-  if (isLoading || isLoadingExample) {
+  if (isLoading || isLoadingExample || isGeneratingDataStory) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600">
-            {isLoadingExample 
-              ? `Loading example scenario ${scenario}/${example}...` 
-              : 'Loading narrative visualization...'
+            {isGeneratingDataStory 
+              ? 'Generating data story from exploration path...'
+              : isLoadingExample 
+                ? `Loading example scenario ${scenario}/${example}...` 
+                : 'Loading narrative visualization...'
             }
           </p>
+          {isGeneratingDataStory && (
+            <p className="text-gray-500 text-sm mt-2">
+              Creating professional data journalism sentences based on your exploration...
+            </p>
+          )}
         </div>
       </div>
     );
