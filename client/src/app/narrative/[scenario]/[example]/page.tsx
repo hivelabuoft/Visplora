@@ -988,6 +988,7 @@ export default function DynamicNarrativePage() {
             <PagedNarrativeSystem 
               ref={narrativeSystemRef}
               prompt={currentPrompt}
+              dataStory={dataStory}
               onSentenceEnd={handleSentenceEnd}
               onSentenceSelect={handleSentenceSelect}
               onSuggestionReceived={handleSuggestionReceived}
@@ -997,6 +998,13 @@ export default function DynamicNarrativePage() {
               onSentenceEdit={handleSentenceEdit}
               isExampleScenario={true}
               onShowViewForSentence={handleShowViewForSentence}
+              onCanvasReset={() => {
+                // Reset the ReactFlow canvas when switching to story mode
+                if (reactFlowCanvasRef.current) {
+                  reactFlowCanvasRef.current.clearAllNodes();
+                  console.log('🎨 Canvas cleared for story mode');
+                }
+              }}
               onBranchSwitch={(branchId: string, pageId: string) => {
                 console.log('Branch switch:', branchId, 'on page:', pageId);
               }}
@@ -1012,8 +1020,100 @@ export default function DynamicNarrativePage() {
               onPageReset={(pageId: string) => {
                 console.log('🧹 Page reset:', pageId);
               }}
+              onModeSwitch={(mode: 'exploration' | 'story', storyData?: Array<{
+                data_story_sentence: string;
+                ref_id: number;
+              }>) => {
+                console.log(`🔄 Mode switched to ${mode}${storyData ? ' with story data' : ''}`);
+                
+                if (mode === 'exploration') {
+                  console.log('🔍 Exploration mode: Canvas will be reset and active path ViewGenerators will be regenerated');
+                  // The PagedNarrativeSystem will handle canvas reset and ViewGenerator regeneration
+                  // based on the active exploration path
+                } else if (mode === 'story') {
+                  console.log('📖 Story mode: Canvas will be reset and story ViewGenerators will be generated');
+                  // The PagedNarrativeSystem will handle story mode ViewGenerator creation
+                }
+              }}
+              onNavigateToView={(refId: number) => {
+                console.log(`🧭 Navigating to view for ref_id: ${refId}`);
+                
+                // Use the ReactFlow canvas to navigate to the specific ViewGenerator node
+                if (reactFlowCanvasRef.current) {
+                  // First check if the node exists
+                  const nodeExists = reactFlowCanvasRef.current.hasViewGeneratorNode(refId);
+                  console.log(`🔍 ViewGenerator node exists for ref_id ${refId}: ${nodeExists}`);
+                  
+                  if (nodeExists) {
+                    // Node exists, navigate to it
+                    const success = reactFlowCanvasRef.current.selectAndZoomToViewGeneratorNode(refId);
+                    
+                    if (success) {
+                      console.log(`✅ Successfully navigated to existing ViewGenerator node for sentence ${refId}`);
+                    } else {
+                      console.log(`⚠️ ViewGenerator node exists but navigation failed for sentence ${refId}`);
+                    }
+                  } else {
+                    // Node doesn't exist, create it first then navigate
+                    console.log(`🔄 ViewGenerator node doesn't exist for ref_id ${refId}, creating it first...`);
+                    
+                    // Find the corresponding exploration sentence content
+                    const explorationSentence = explorationPath.find(item => item.sentence_id === refId);
+                    
+                    if (explorationSentence) {
+                      // Create the node using handleShowViewForSentence
+                      handleShowViewForSentence(
+                        explorationSentence.sentence_content,
+                        refId.toString(),
+                        true // shouldGenerateIfMissing
+                      ).then(() => {
+                        // After creation, wait a bit then navigate
+                        setTimeout(() => {
+                          const success = reactFlowCanvasRef.current?.selectAndZoomToViewGeneratorNode(refId);
+                          
+                          if (success) {
+                            console.log(`✅ Successfully created and navigated to ViewGenerator node for sentence ${refId}`);
+                          } else {
+                            console.log(`❌ Failed to navigate to newly created ViewGenerator node for sentence ${refId}`);
+                          }
+                        }, 800); // Give more time for node creation
+                      });
+                    } else {
+                      console.log(`❌ Could not find exploration sentence for ref_id ${refId}`);
+                    }
+                  }
+                } else {
+                  console.log('❌ ReactFlow canvas reference not available');
+                }
+              }}
               onGenerateVisualization={async (sentence: string, validation: any, pageId: string) => {
                 if (reactFlowCanvasRef.current) {
+                  // Check if this is story mode with a ref_id
+                  if (validation.is_story_mode && validation.ref_id) {
+                    console.log(`📖 Story mode visualization for ref_id: ${validation.ref_id}`);
+                    
+                    // Find the corresponding exploration path sentence
+                    const explorationSentence = explorationPath.find(item => item.sentence_id === validation.ref_id);
+                    
+                    if (explorationSentence && explorationSentence.system_shows) {
+                      // Use onShowViewForSentence to display the view for this ref_id
+                      setTimeout(() => {
+                        handleShowViewForSentence(
+                          explorationSentence.sentence_content, 
+                          validation.ref_id.toString(), 
+                          true, // shouldGenerateIfMissing
+                          pageId
+                        );
+                      }, validation.sentence_index * 200); // Stagger the view generation
+                      
+                      console.log(`✅ Story mode: Displaying view for sentence ${validation.ref_id}: "${explorationSentence.system_shows}"`);
+                    } else {
+                      console.log(`⚠️ Story mode: No system_shows found for ref_id ${validation.ref_id}`);
+                    }
+                    return;
+                  }
+                  
+                  // Regular exploration mode visualization generation
                   let content = `Sentence: "${sentence}"\n\nSupported: ${validation.inquiry_supported ? 'Yes' : 'No'}\n\nExplanation: ${validation.explanation || 'No explanation provided'}`;
                   
                   if (validation.inquiry_supported) {

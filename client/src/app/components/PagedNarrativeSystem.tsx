@@ -38,11 +38,16 @@ interface SentenceNode {
 
 interface PagedNarrativeSystemProps {
   prompt: string;
+  dataStory?: Array<{
+    data_story_sentence: string;
+    ref_id: number;
+  }>; // NEW: Data story content for story mode
   onSentenceSelect?: (sentence: string, index: number, pageId: string) => void;
   onSentenceEnd?: (sentence: string, confidence: number, pageId: string) => void;
   onSuggestionReceived?: (suggestion: NarrativeSuggestion, pageId: string) => void;
   onSuggestionResolved?: (pageId: string) => void;
   onGenerateVisualization?: (sentence: string, validation: any, pageId: string) => void;
+  onCanvasReset?: () => void; // NEW: Callback to reset the canvas when switching to story mode
   disableInteractions?: boolean;
   onContentChange?: (oldContent: string, newContent: string, pageId: string) => void;
   onSentenceEdit?: (oldContent: string, newContent: string, nodeId: string, pageId: string) => void; // NEW: Callback for save button edits
@@ -53,6 +58,11 @@ interface PagedNarrativeSystemProps {
   onPageReset?: (pageId: string) => void; // Called when user resets a page
   maxPages?: number; // Maximum number of pages allowed
   isExampleScenario?: boolean; // NEW: Indicates if we're in an example scenario
+  onModeSwitch?: (mode: 'exploration' | 'story', storyData?: Array<{
+    data_story_sentence: string;
+    ref_id: number;
+  }>) => void; // NEW: Callback for mode switching
+  onNavigateToView?: (refId: number) => void; // NEW: Callback for navigating to a specific view in story mode
   onShowViewForSentence?: (sentence: string, sentenceId?: string, shouldGenerateIfMissing?: boolean, pageId?: string) => void; // NEW: Callback for showing view for a sentence
 }
 
@@ -91,11 +101,13 @@ export interface PagedNarrativeSystemRef {
 
 const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeSystemProps>(({
   prompt,
+  dataStory,
   onSentenceSelect,
   onSentenceEnd,
   onSuggestionReceived,
   onSuggestionResolved,
   onGenerateVisualization,
+  onCanvasReset,
   disableInteractions = false,
   onContentChange,
   onSentenceEdit,
@@ -106,6 +118,8 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
   onPageReset,
   maxPages = 10,
   isExampleScenario = false,
+  onModeSwitch,
+  onNavigateToView,
   onShowViewForSentence
 }, ref) => {
   // Core state
@@ -129,6 +143,7 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
   
   // UI state
   const [canCreateNewPage, setCanCreateNewPage] = useState(false);
+  const [currentMode, setCurrentMode] = useState<'exploration' | 'story'>('exploration');
   
   // Edit state - track which sentence is currently being edited
   const [currentEditSentenceId, setCurrentEditSentenceId] = useState<string | null>(null);
@@ -618,6 +633,136 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
       onGenerateVisualization(sentence, validation, currentPageId);
     }
   }, [currentPageId, onGenerateVisualization]);
+
+  // Handle mode switching between exploration and story
+  const handleModeSwitch = useCallback((mode: 'exploration' | 'story', storyData?: Array<{
+    data_story_sentence: string;
+    ref_id: number;
+  }>) => {
+    // Update the current mode state
+    setCurrentMode(mode);
+    
+    if (mode === 'story' && storyData) {
+      // Create a new page for story mode
+      const storyPageId = createNewPage();
+      
+      // Switch to the new story page
+      setCurrentPageId(storyPageId);
+      
+      // Reset the canvas before creating story visualizations
+      if (onCanvasReset) {
+        onCanvasReset();
+        console.log('🎨 Canvas reset for story mode');
+      }
+      
+      // Set story content in the new page
+      const storyContent = storyData
+        .map(item => item.data_story_sentence)
+        .map(sentence => `<p>${sentence}</p>`)
+        .join('');
+      
+      // Initialize the story page with story content
+      setTimeout(() => {
+        if (currentNarrativeRef.current) {
+          // Set the story content directly in the editor
+          const narrativeEditor = currentNarrativeRef.current;
+          if (narrativeEditor.updateContent) {
+            narrativeEditor.updateContent(storyContent);
+          }
+        }
+        
+        // Generate visualizations for each story sentence based on ref_id
+        storyData.forEach((storyItem, index) => {
+          const sentence = storyItem.data_story_sentence;
+          const refId = storyItem.ref_id;
+          
+          // Create a synthetic validation object that includes the ref_id
+          // This allows the visualization system to know which exploration sentence this corresponds to
+          const validation = {
+            ref_id: refId,
+            sentence_index: index,
+            is_story_mode: true,
+            confidence: 1.0 // High confidence for story mode
+          };
+          
+          // Generate visualization for this story sentence
+          if (onGenerateVisualization) {
+            // Use a timeout to stagger the visualization generation
+            setTimeout(() => {
+              onGenerateVisualization(sentence, validation, storyPageId);
+            }, index * 500); // Stagger by 500ms each
+          }
+          
+          // Alternative: use onShowViewForSentence if we want to reference the original exploration sentence
+          // if (onShowViewForSentence) {
+          //   setTimeout(() => {
+          //     onShowViewForSentence(sentence, refId.toString(), true, storyPageId);
+          //   }, index * 500);
+          // }
+        });
+      }, 100);
+      
+      console.log(`📖 Created story page ${storyPageId} with story content and ${storyData.length} visualizations`);
+      
+    } else if (mode === 'exploration') {
+      // For exploration mode, reset canvas and regenerate ViewGenerator nodes for active path
+      // Reset the canvas first
+      if (onCanvasReset) {
+        onCanvasReset();
+        console.log('🎨 Canvas reset for exploration mode');
+      }
+      
+      // Switch back to the first page or current exploration page
+      const firstPageId = Array.from(pages.keys())[0];
+      if (firstPageId && firstPageId !== currentPageId) {
+        setCurrentPageId(firstPageId);
+        console.log(`🔍 Switched back to exploration page ${firstPageId}`);
+      }
+      
+      // Regenerate ViewGenerator nodes for the active exploration path
+      // We need to get the active path from the current page's tree structure
+      setTimeout(() => {
+        const currentPage = getCurrentPage();
+        if (currentPage && currentPage.sentenceNodes.size > 0) {
+          // Get all completed sentences in the active path
+          const activePath = currentPage.activePath || [];
+          console.log(`🔄 Regenerating ViewGenerator nodes for ${activePath.length} sentences in active exploration path`);
+          
+          // For each sentence in the active path, trigger view generation
+          activePath.forEach((nodeId, index) => {
+            const node = currentPage.sentenceNodes.get(nodeId);
+            if (node && node.isCompleted) {
+              const sentence = node.content;
+              console.log(`🔄 Regenerating view for exploration sentence: "${sentence}"`);
+              
+              // Create a synthetic validation object for exploration mode
+              const validation = {
+                is_data_driven_question: true,
+                inquiry_supported: true,
+                confidence: 0.85,
+                is_exploration_mode: true,
+                sentence_index: index
+              };
+              
+              // Generate visualization for this exploration sentence
+              if (onGenerateVisualization) {
+                setTimeout(() => {
+                  onGenerateVisualization(sentence, validation, firstPageId || currentPageId);
+                }, index * 300); // Stagger by 300ms each
+              }
+            }
+          });
+        } else {
+          console.log('🔍 No active exploration path found to regenerate');
+        }
+      }, 200); // Give some time for canvas reset
+    }
+    
+    // Notify parent if needed
+    if (onModeSwitch) {
+      onModeSwitch(mode, storyData);
+    }
+  }, [pages, currentPageId, createNewPage, onCanvasReset, getCurrentPage, onGenerateVisualization, onModeSwitch]);
 
   // Tree management functions for current page
   const getBranchesForSentence = useCallback((sentenceContent: string) => {
@@ -2319,6 +2464,8 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
         <NarrativeLayer 
           ref={currentNarrativeRef}
           prompt={prompt}
+          dataStory={dataStory}
+          currentMode={currentMode}
           onSentenceEnd={handleSentenceEnd}
           onSentenceSelect={handleSentenceSelect}
           onSuggestionReceived={handleSuggestionReceived}
@@ -2345,6 +2492,8 @@ const PagedNarrativeSystem = forwardRef<PagedNarrativeSystemRef, PagedNarrativeS
           updateSentenceNodeContent={updateSentenceNodeContent}
           currentEditSentenceId={currentEditSentenceId}
           onResetPage={handleResetPage}
+          onModeSwitch={handleModeSwitch}
+          onNavigateToView={onNavigateToView}
         />
       </div>
 

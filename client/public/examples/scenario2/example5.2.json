@@ -1,0 +1,223 @@
+{
+  "exploration_path": [
+    {
+      "sentence_id": 1,
+      "sentence_content": "A first scan across continents highlighted growth rates, costs, and destination counts that set the stage for deeper inquiry.",
+      "children": [2],
+      "parent": null,
+      "system_shows": "Dashboard: arrivals overview; chart1: line chart of arrivals by continent; chart2: bar chart of average cost per day",
+      "drift_type": "begin"
+    },
+    {
+      "sentence_id": 2,
+      "sentence_content": "Overlaying attractions and popularity showed Europe with the broadest set of destinations, Asia with the sharpest growth, and the Americas combining volume with volatility.",
+      "children": [3],
+      "parent": 1,
+      "system_shows": "Dashboard: attractions overlay; chart1: bar chart of attractions index; chart2: bar+line combo of growth vs popularity",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 3,
+      "sentence_content": "From here, three main directions emerged for exploration: Europe, Asia, and the Americas.",
+      "children": [4,7,11],
+      "parent": 2,
+      "system_shows": "Dashboard: branching menu; chart1: pie chart of destinations by continent; chart2: bar chart of growth contribution",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 4,
+      "sentence_content": "In Europe, costs split into northern, central, and southern bands that shape traveler choices.",
+      "children": [5],
+      "parent": 3,
+      "system_shows": "Dashboard: Europe costs; chart1: bar chart of average city cost; chart2: line chart of cost trend by region",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 5,
+      "sentence_content": "Lisbon and Madrid appeared as affordable hubs with strong reviews, while northern capitals like Copenhagen stood much higher in price.",
+      "children": [6],
+      "parent": 4,
+      "system_shows": "Chart: scatterplot of cost vs reviews, selected cities labeled",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 6,
+      "sentence_content": "Country-level cuts pointed to Portugal and Spain as balancing cost and satisfaction, while Germany leaned on infrastructure strength despite higher spend.",
+      "children": [],
+      "parent": 5,
+      "system_shows": "Dashboard: Europe countries; chart1: bar chart of country average costs; chart2: bar chart of reviews index",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 7,
+      "sentence_content": "Across Asia, destinations have become more appealing but increasingly expensive for travelers.",
+      "children": [8],
+      "parent": 3,
+      "system_shows": "Dashboard: Asia overview; chart1: line chart of arrivals growth by subregion; chart2: bar chart of average daily cost",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 8,
+      "sentence_content": "Vietnam managed strong growth while moderating costs, whereas Thailand expanded quickly but at rising expense.",
+      "children": [9],
+      "parent": 7,
+      "system_shows": "Chart: bar chart of CAGR vs cost change (Vietnam vs Thailand)",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 9,
+      "sentence_content": "Japan stood apart with premium costs offset by accessibility and consistently high reviews.",
+      "children": [10],
+      "parent": 8,
+      "system_shows": "Dashboard: Japan profile; chart1: bar chart of cost index; chart2: bar chart of review scores",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 10,
+      "sentence_content": "Early signals suggested Japan, Vietnam, and Thailand represent contrasting models: premium quality, balanced affordability, and volume-driven growth.",
+      "children": [],
+      "parent": 9,
+      "system_shows": "Dashboard: Asia synthesis; chart1: matrix of factors (cost, growth, reviews)",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 11,
+      "sentence_content": "Turning to the Americas, patterns diverged enough to split into North and South sub-branches.",
+      "children": [12,14],
+      "parent": 3,
+      "system_shows": "Dashboard: Americas overview; chart1: bar chart arrivals growth; chart2: bar chart of cost levels",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 12,
+      "sentence_content": "In North America, the United States dominated sheer volume at high cost, while Mexico accelerated on affordability.",
+      "children": [13],
+      "parent": 11,
+      "system_shows": "Chart: bar chart arrivals US vs Mexico; line chart of cost levels",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 13,
+      "sentence_content": "Canada quietly maintained high satisfaction with fewer fluctuations, rounding out the regional picture.",
+      "children": [],
+      "parent": 12,
+      "system_shows": "Chart: bar chart of review stability Canada vs peers",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 14,
+      "sentence_content": "In South America, Brazil topped arrivals but faced volatile costs and uneven growth.",
+      "children": [15],
+      "parent": 11,
+      "system_shows": "Chart: line chart arrivals Brazil vs Argentina; bar chart cost swings",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 15,
+      "sentence_content": "Argentina improved on affordability but lagged in satisfaction, so this branch was set aside for now.",
+      "children": [],
+      "parent": 14,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 16,
+      "sentence_content": "Visitor flows within Europe revealed Iberian countries pulling ahead with surging arrivals compared to their central counterparts.",
+      "children": [17],
+      "parent": 6,
+      "system_shows": "Dashboard: Europe flows; chart1: line chart arrivals Iberia vs Central Europe",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 17,
+      "sentence_content": "Germany and France showed steadier repeat visits, hinting at reliability rather than sharp growth.",
+      "children": [18],
+      "parent": 16,
+      "system_shows": "Chart: bar+line combo repeat vs new arrivals",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 18,
+      "sentence_content": "Secondary cities like Krakow and Porto appeared as rising players, absorbing overflow from capital hubs.",
+      "children": [],
+      "parent": 17,
+      "system_shows": "Chart: bar chart arrivals growth secondary vs capital cities",
+      "drift_type": "Detect Pattern"
+    },
+
+    {
+      "sentence_id": 19,
+      "sentence_content": "Safety overlays placed Switzerland and Germany at the top, while Spain clustered slightly lower but still reassuring for most travelers.",
+      "children": [20],
+      "parent": 6,
+      "system_shows": "Dashboard: Europe safety; chart1: bar chart safety index scores",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 20,
+      "sentence_content": "Transport indices reinforced Germany and France as accessibility leaders, contrasting with uneven infrastructure in southern peers.",
+      "children": [],
+      "parent": 19,
+      "system_shows": "Chart: bar chart accessibility index Europe",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 21,
+      "sentence_content": "Review trends in Asia showed Vietnam’s reputation climbing sharply after 2015, catching up to longer-established peers.",
+      "children": [22],
+      "parent": 10,
+      "system_shows": "Chart: line chart of Vietnam review trend vs regional average",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 22,
+      "sentence_content": "Japan’s reviews stayed consistently high, reinforcing its premium standing despite rising costs.",
+      "children": [23],
+      "parent": 21,
+      "system_shows": "Chart: bar chart review distribution Japan vs Asia average",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 23,
+      "sentence_content": "Thailand showed more volatility, with reviews slipping in crowd-heavy years and bouncing back after quieter seasons.",
+      "children": [],
+      "parent": 22,
+      "system_shows": "Chart: line chart review index Thailand with seasonal overlay",
+      "drift_type": "Detect Pattern"
+    },
+
+    {
+      "sentence_id": 24,
+      "sentence_content": "Safety profiles placed Singapore at the regional top, while Vietnam steadily improved from mid-range levels.",
+      "children": [25],
+      "parent": 10,
+      "system_shows": "Dashboard: Asia safety; chart1: bar chart safety scores by country; chart2: line chart Vietnam safety trend",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 25,
+      "sentence_content": "Sri Lanka presented a recovery case: safety indices improved, but growth remained volatile due to regional instability.",
+      "children": [],
+      "parent": 24,
+      "system_shows": "Chart: line chart arrivals vs safety Sri Lanka",
+      "drift_type": "Detect Pattern"
+    },
+
+    {
+      "sentence_id": 26,
+      "sentence_content": "Environmental indices showed Japan and New Zealand sustaining high scores, anchoring the Asia-Pacific group.",
+      "children": [27],
+      "parent": 10,
+      "system_shows": "Dashboard: Asia environment; chart1: bar chart environment index; chart2: bubble chart growth vs environment",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 27,
+      "sentence_content": "Thailand’s environmental quality, by contrast, revealed stress under heavy tourism, showing widening gaps with its neighbors.",
+      "children": [],
+      "parent": 26,
+      "system_shows": "Chart: line chart Thailand environment trend vs arrivals growth",
+      "drift_type": "Detect Pattern"
+    }
+  ]
+}

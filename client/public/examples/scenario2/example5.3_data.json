@@ -1,0 +1,3278 @@
+[
+  {
+    "sentence_id": 1,
+    "charts": [
+      {
+        "name": "Continental Growth Rates",
+        "request": {
+          "userQuery": "Show growth rates of tourist arrivals across continents",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Australia"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Average Travel Costs by Continent",
+        "request": {
+          "userQuery": "Display the average cost per day for travel across continents",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Number of Destinations per Continent",
+        "request": {
+          "userQuery": "Show the number of popular travel destinations per continent",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "geographic",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cost Versus Growth Rate",
+        "request": {
+          "userQuery": "Show relationship between growth rates and average travel costs across continents",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Australia"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 2,
+    "charts": [
+      {
+        "name": "Destination Popularity in Different Continents",
+        "request": {
+          "userQuery": "Show top attractions in Europe, Asia, and the Americas",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "Americas"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe",
+                "Asia",
+                "Americas"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Growth Trend in Asian Tourism",
+        "request": {
+          "userQuery": "Show the growth trend of tourist attractions in Asia",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Asia"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Americas' Tourism Volume and Volatility",
+        "request": {
+          "userQuery": "Show the volume and volatility of tourism in the Americas",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiTypeWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Americas"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 3,
+    "charts": [
+      {
+        "name": "Tourist Arrivals by Continent",
+        "request": {
+          "userQuery": "Show tourist arrivals in Europe, Asia, and the Americas",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "Americas"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Comparison Across Continents",
+        "request": {
+          "userQuery": "Compare safety scores in Europe, Asia, and the Americas",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "Americas"
+            ],
+            "maxDataPoints": 9,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Tourism Revenue Contribution by Continents",
+        "request": {
+          "userQuery": "Show the tourism revenue contribution from Europe, Asia, and the Americas",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "revenue",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "Americas"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Geographic Distribution of Destinations",
+        "request": {
+          "userQuery": "Show the geographic distribution of popular destinations in Europe, Asia, and the Americas",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "geographic",
+            "selectedCountries": [
+              "France",
+              "Germany",
+              "Russia",
+              "China",
+              "Japan",
+              "India",
+              "USA",
+              "Canada"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 4,
+    "charts": [
+      {
+        "name": "Average Travel Cost by European Regions",
+        "request": {
+          "userQuery": "Show average travel cost for northern, central, and southern Europe",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Northern Europe",
+              "Central Europe",
+              "Southern Europe"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "Northern Europe",
+                "Central Europe",
+                "Southern Europe"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cost Trend by European Regions",
+        "request": {
+          "userQuery": "Show cost trend over time for northern, central, and southern Europe",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Northern Europe",
+              "Central Europe",
+              "Southern Europe"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "Northern Europe",
+                "Central Europe",
+                "Southern Europe"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Traveler Choices by Cost in European Regions",
+        "request": {
+          "userQuery": "Show traveler choices based on cost for northern, central, and southern Europe",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Northern Europe",
+              "Central Europe",
+              "Southern Europe"
+            ],
+            "maxDataPoints": 9,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cost Breakdown in European Regions",
+        "request": {
+          "userQuery": "Show cost breakdown for northern, central, and southern Europe",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Northern Europe",
+              "Central Europe",
+              "Southern Europe"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "Northern Europe",
+                "Central Europe",
+                "Southern Europe"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 5,
+    "charts": [
+      {
+        "name": "Affordability and Reviews of Selected Cities",
+        "request": {
+          "userQuery": "Show a scatter plot of cost vs reviews for Lisbon, Madrid, and Copenhagen",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Lisbon",
+              "Madrid",
+              "Copenhagen"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cost Comparison of Northern Capitals",
+        "request": {
+          "userQuery": "Show a bar chart comparing the cost of travel in northern capitals",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Copenhagen",
+              "Stockholm",
+              "Helsinki",
+              "Oslo",
+              "Reykjavik"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Northern Europe"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Review Scores of Affordable Hubs",
+        "request": {
+          "userQuery": "Show a bar chart comparing the review scores of Lisbon and Madrid",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Lisbon",
+              "Madrid"
+            ],
+            "maxDataPoints": 2,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 6,
+    "charts": [
+      {
+        "name": "Country-wise Cost and Satisfaction Comparison",
+        "request": {
+          "userQuery": "Show average costs and reviews index for Portugal, Spain and Germany",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Portugal",
+              "Spain",
+              "Germany"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "Europe"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Infrastructure Spending vs Satisfaction",
+        "request": {
+          "userQuery": "Show infrastructure spending and reviews index for Germany",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "economics",
+            "destinations": [
+              "Germany"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Europe Countries' Cost Balancing",
+        "request": {
+          "userQuery": "Show average costs for Portugal, Spain and Germany",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Portugal",
+              "Spain",
+              "Germany"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "Europe"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Satisfaction Index of Selected European Countries",
+        "request": {
+          "userQuery": "Show reviews index for Portugal, Spain and Germany",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Portugal",
+              "Spain",
+              "Germany"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 7,
+    "charts": [
+      {
+        "name": "Tourism Cost Trend in Key Asian Destinations",
+        "request": {
+          "userQuery": "Show the increasing cost trend for travelers in Asia over the years",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Tokyo",
+              "Seoul",
+              "Bangkok",
+              "Beijing",
+              "Singapore"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Comparative Cost Analysis of Asian Destinations",
+        "request": {
+          "userQuery": "Show a comparison of the average daily cost for travelers in key Asian destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Tokyo",
+              "Seoul",
+              "Bangkok",
+              "Beijing",
+              "Singapore"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Tourism Growth vs Cost in Asia",
+        "request": {
+          "userQuery": "Show the correlation between tourism growth and increasing cost in Asian destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow,cost",
+            "destinations": [
+              "Tokyo",
+              "Seoul",
+              "Bangkok",
+              "Beijing",
+              "Singapore"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 8,
+    "charts": [
+      {
+        "name": "Vietnam vs Thailand: Growth vs Expense",
+        "request": {
+          "userQuery": "Show the comparison of compounded annual growth rate and cost change between Vietnam and Thailand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Vietnam",
+              "Thailand"
+            ],
+            "maxDataPoints": 2,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Expense Trend in Vietnam and Thailand",
+        "request": {
+          "userQuery": "Show the trend of expense change over time in Vietnam and Thailand",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Vietnam",
+              "Thailand"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Vietnam and Thailand Growth Expense Scatter Analysis",
+        "request": {
+          "userQuery": "Show the correlation between growth and expense for Vietnam and Thailand",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Vietnam",
+              "Thailand"
+            ],
+            "maxDataPoints": 2,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 9,
+    "charts": [
+      {
+        "name": "Japan Cost vs Accessibility Analysis",
+        "request": {
+          "userQuery": "Show the comparison of cost and accessibility for Japan",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Japan"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Japan Review Scores Over Time",
+        "request": {
+          "userQuery": "Show the trend of review scores for Japan over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Japan"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cost vs Review Scores",
+        "request": {
+          "userQuery": "Show scatter plot between cost and review scores for Japan",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Japan"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Japan Accessibility Index",
+        "request": {
+          "userQuery": "Show bar chart of accessibility index for Japan",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Japan"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 10,
+    "charts": [
+      {
+        "name": "Quality vs Cost Analysis",
+        "request": {
+          "userQuery": "Show the comparison of quality and cost for Japan, Vietnam, and Thailand",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Japan",
+              "Vietnam",
+              "Thailand"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "budget_level",
+              "values": [
+                "premium",
+                "affordable",
+                "volume"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Visitor Volume Growth",
+        "request": {
+          "userQuery": "Show the volume-driven growth in tourist arrivals for Japan, Vietnam, and Thailand",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Japan",
+              "Vietnam",
+              "Thailand"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Country Comparison on Economic Indicators",
+        "request": {
+          "userQuery": "Show the comparison of economic indicators for Japan, Vietnam, and Thailand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Japan",
+              "Vietnam",
+              "Thailand"
+            ],
+            "maxDataPoints": 9,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Review Ratings Distribution",
+        "request": {
+          "userQuery": "Show the distribution of review ratings for Japan, Vietnam, and Thailand",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Japan",
+              "Vietnam",
+              "Thailand"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "region",
+              "values": [
+                "Japan",
+                "Vietnam",
+                "Thailand"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 11,
+    "charts": [
+      {
+        "name": "Tourist Arrivals Growth in North and South Americas",
+        "request": {
+          "userQuery": "Show the tourist arrivals growth in North and South Americas",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "North America",
+              "South America"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Comparative Cost Levels in North and South Americas",
+        "request": {
+          "userQuery": "Compare the travel cost levels in North and South Americas",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "North America",
+              "South America"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "North America",
+                "South America"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Scores in North and South Americas",
+        "request": {
+          "userQuery": "Display safety scores in North and South Americas",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "North America",
+              "South America"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Destination Breakdown in Americas",
+        "request": {
+          "userQuery": "Show the percentage breakdown of tourists visiting different destinations in Americas",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "USA",
+              "Canada",
+              "Mexico",
+              "Argentina",
+              "Brazil",
+              "Chile"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "North America",
+                "South America"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 12,
+    "charts": [
+      {
+        "name": "Volume vs Cost for US and Mexico",
+        "request": {
+          "userQuery": "Show the volume and cost levels for travel to the United States and Mexico",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "United States",
+              "Mexico"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Affordability Trend in Mexico",
+        "request": {
+          "userQuery": "Show the trend of affordability in Mexico over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Mexico"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "US Travel Cost Over Time",
+        "request": {
+          "userQuery": "Show the cost levels for travel to the United States over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "United States"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 13,
+    "charts": [
+      {
+        "name": "Satisfaction Stability: Canada vs Peers",
+        "request": {
+          "userQuery": "Show customer satisfaction ratings for Canada and its peers over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Canada",
+              "United States",
+              "United Kingdom",
+              "Australia",
+              "Germany"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Regional Satisfaction Comparison",
+        "request": {
+          "userQuery": "Compare average customer satisfaction ratings of Canada and its peers",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Canada",
+              "United States",
+              "United Kingdom",
+              "Australia",
+              "Germany"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValue": [
+                "North America",
+                "Europe",
+                "Australia"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Satisfaction Fluctuation Analysis",
+        "request": {
+          "userQuery": "Show fluctuations in customer satisfaction ratings for Canada and its peers",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Canada",
+              "United States",
+              "United Kingdom",
+              "Australia",
+              "Germany"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 14,
+    "charts": [
+      {
+        "name": "Tourist Arrival Comparison in South America",
+        "request": {
+          "userQuery": "Show tourist arrivals in Brazil compared to other South American countries",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Brazil",
+              "Argentina",
+              "Chile",
+              "Peru",
+              "Colombia"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cost Volatility in Brazilian Tourism",
+        "request": {
+          "userQuery": "Show the volatility of costs in Brazilian tourism over time",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Brazil"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Growth Rate of Brazilian Tourism",
+        "request": {
+          "userQuery": "Show the growth rate of Brazilian tourism over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Brazil"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 15,
+    "charts": [
+      {
+        "name": "Argentina's Affordability and Satisfaction Comparison",
+        "request": {
+          "userQuery": "Show Argentina's improvement in affordability and lag in satisfaction compared to other similar destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Argentina",
+              "Brazil",
+              "Chile",
+              "Peru",
+              "Colombia"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "South America"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 16,
+    "charts": [
+      {
+        "name": "Visitor Arrivals in Iberian vs Central Europe",
+        "request": {
+          "userQuery": "Show trend of visitor arrivals in Iberian and Central Europe countries",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Spain",
+              "Portugal",
+              "Germany",
+              "Austria",
+              "Switzerland"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Comparison of Tourist Arrivals in Iberian vs Central Europe",
+        "request": {
+          "userQuery": "Compare the number of tourist arrivals in Iberian and Central Europe countries",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Spain",
+              "Portugal",
+              "Germany",
+              "Austria",
+              "Switzerland"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "Iberia",
+                "Central Europe"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Visitor Flow Map of Europe",
+        "request": {
+          "userQuery": "Show the visitor flows in Europe, highlighting Iberian and Central countries",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "selectedCountries": [
+              "Spain",
+              "Portugal",
+              "Germany",
+              "Austria",
+              "Switzerland"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Arrival Trends in Iberian vs Central Europe with Mean Line",
+        "request": {
+          "userQuery": "Display the trend of arrivals in Iberian and Central Europe countries with a line indicating the mean",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Spain",
+              "Portugal",
+              "Germany",
+              "Austria",
+              "Switzerland"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 17,
+    "charts": [
+      {
+        "name": "Germany and France Repeat Visits Over Time",
+        "request": {
+          "userQuery": "Show the trend of repeat visits for Germany and France",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Germany",
+              "France"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Repeat vs New Arrivals for Germany and France",
+        "request": {
+          "userQuery": "Compare repeat and new arrivals for Germany and France",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Germany",
+              "France"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Germany and France Visitor Growth",
+        "request": {
+          "userQuery": "Show the growth in overall visitors for Germany and France",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Germany",
+              "France"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Germany and France Visitor Breakdown",
+        "request": {
+          "userQuery": "Show the breakdown of repeat and new visitors for Germany and France",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Germany",
+              "France"
+            ],
+            "maxDataPoints": 2,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 18,
+    "charts": [
+      {
+        "name": "Secondary vs Capital Cities: Arrival Growth",
+        "request": {
+          "userQuery": "Show the arrival growth in secondary cities like Krakow and Porto compared to capital cities",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Krakow",
+              "Porto"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Rising Players: Krakow and Porto",
+        "request": {
+          "userQuery": "Show the trend of visitor arrivals in Krakow and Porto over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Krakow",
+              "Porto"
+            ],
+            "maxDataPoints": 12
+          }
+        }
+      },
+      {
+        "name": "Overflow Analysis: Capital Cities vs Krakow and Porto",
+        "request": {
+          "userQuery": "Show the comparison of visitor arrivals between capital cities and Krakow and Porto",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Krakow",
+              "Porto"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 19,
+    "charts": [
+      {
+        "name": "Safety Ranking in Europe",
+        "request": {
+          "userQuery": "Show safety index scores for Switzerland, Germany, Spain and other European countries",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Switzerland",
+              "Germany",
+              "Spain",
+              "France",
+              "Italy",
+              "Belgium",
+              "Netherlands"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Index Comparison",
+        "request": {
+          "userQuery": "Compare safety index scores for Switzerland, Germany and Spain",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Switzerland",
+              "Germany",
+              "Spain"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Scores in Europe Map",
+        "request": {
+          "userQuery": "Show safety scores on map for European countries",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "selectedCountries": [
+              "Switzerland",
+              "Germany",
+              "Spain",
+              "France",
+              "Italy",
+              "Belgium",
+              "Netherlands"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Index Trend",
+        "request": {
+          "userQuery": "Show the trend in safety index for Switzerland, Germany and Spain over the past 5 years",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Switzerland",
+              "Germany",
+              "Spain"
+            ],
+            "maxDataPoints": 15,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2017",
+                "2018",
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 20,
+    "charts": [
+      {
+        "name": "Accessibility Index Comparison in Europe",
+        "request": {
+          "userQuery": "Show the transport accessibility index for selected European countries",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Germany",
+              "France",
+              "Spain",
+              "Italy",
+              "Greece"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Infrastructure Distribution in Southern Europe",
+        "request": {
+          "userQuery": "Show the distribution of infrastructure quality in southern European countries",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Spain",
+              "Italy",
+              "Greece",
+              "Portugal"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Southern Europe"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Transport Indices Trend in Europe",
+        "request": {
+          "userQuery": "Show the trend of transport indices over time for Germany and France",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Germany",
+              "France"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 21,
+    "charts": [
+      {
+        "name": "Vietnam's Reputation Rise vs Established Peers",
+        "request": {
+          "userQuery": "Show the trend of Vietnam's reviews compared to other established Asian countries since 2015",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Vietnam",
+              "China",
+              "Japan",
+              "South Korea",
+              "Thailand"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "filterValue": [
+                "2015",
+                "2016",
+                "2017",
+                "2018",
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Vietnam's Reputation Rise: Bar Comparison",
+        "request": {
+          "userQuery": "Compare Vietnam's review improvement from 2015 to 2021 with other established Asian countries",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Vietnam",
+              "China",
+              "Japan",
+              "South Korea",
+              "Thailand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "filterValue": [
+                "2015",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Asia Review Trends with Vietnam Highlight",
+        "request": {
+          "userQuery": "Show the review trend of all major Asian destinations with a special highlight on Vietnam",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Vietnam",
+              "China",
+              "Japan",
+              "South Korea",
+              "Thailand",
+              "Malaysia",
+              "Singapore"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "filterValue": [
+                "2015",
+                "2016",
+                "2017",
+                "2018",
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 22,
+    "charts": [
+      {
+        "name": "Japan Review Consistency Over Time",
+        "request": {
+          "userQuery": "Show the consistency of Japan's reviews over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Japan"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Japan vs Asia Average Reviews",
+        "request": {
+          "userQuery": "Compare Japan's reviews with the Asia average",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Japan",
+              "Asia Average"
+            ],
+            "maxDataPoints": 2,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Japan's Rising Costs over Time",
+        "request": {
+          "userQuery": "Show the trend of Japan's rising costs over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Japan"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Japan's Review vs Cost Comparison",
+        "request": {
+          "userQuery": "Show the relationship between Japan's reviews and costs",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Japan"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 23,
+    "charts": [
+      {
+        "name": "Thailand Review Index Volatility",
+        "request": {
+          "userQuery": "Show volatility in Thailand's review index over time with a seasonal overlay",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Thailand"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "season",
+              "values": [
+                "Spring",
+                "Summer",
+                "Autumn",
+                "Winter"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Thailand's Review Index vs Other Popular Destinations",
+        "request": {
+          "userQuery": "Compare the review index volatility of Thailand with other popular destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Thailand",
+              "Malaysia",
+              "Indonesia",
+              "Vietnam",
+              "Japan"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Visitor Flow to Thailand vs Review Index",
+        "request": {
+          "userQuery": "Show the relationship between visitor flow to Thailand and its review index",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Thailand"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 24,
+    "charts": [
+      {
+        "name": "Safety Scores by Country in Asia",
+        "request": {
+          "userQuery": "Show safety scores of countries in Asia",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Singapore",
+              "Vietnam",
+              "China",
+              "Japan",
+              "South Korea",
+              "Thailand",
+              "Malaysia"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "region",
+              "selected": "Asia"
+            }
+          }
+        }
+      },
+      {
+        "name": "Vietnam Safety Score Trend",
+        "request": {
+          "userQuery": "Show the trend of Vietnam's safety scores over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Vietnam"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Score Comparison: Singapore vs Vietnam",
+        "request": {
+          "userQuery": "Compare the safety scores of Singapore and Vietnam over time",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Singapore",
+              "Vietnam"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Regional Safety Map of Asia",
+        "request": {
+          "userQuery": "Show a map of safety scores across Asia",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "selectedCountries": [
+              "Singapore",
+              "Vietnam",
+              "China",
+              "Japan",
+              "South Korea",
+              "Thailand",
+              "Malaysia"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 25,
+    "charts": [
+      {
+        "name": "Sri Lanka Safety Index and Visitor Flow Over Time",
+        "request": {
+          "userQuery": "Show the safety indices and visitor flow in Sri Lanka over time",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Sri Lanka"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year"
+            }
+          }
+        }
+      },
+      {
+        "name": "Regional Instability Effect on Sri Lanka's Tourism Growth",
+        "request": {
+          "userQuery": "Show the effect of regional instability on Sri Lanka's tourism growth",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Sri Lanka"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Sri Lanka's Recovery Analysis",
+        "request": {
+          "userQuery": "Show Sri Lanka's recovery analysis in the context of safety and economics",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "recovery-analysis",
+            "destinations": [
+              "Sri Lanka"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 26,
+    "charts": [
+      {
+        "name": "Asia-Pacific Environmental Index Bar Chart",
+        "request": {
+          "userQuery": "Show environmental index scores for Asia-Pacific countries with focus on Japan and New Zealand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Japan",
+              "New Zealand",
+              "Australia",
+              "China",
+              "India",
+              "South Korea",
+              "Vietnam"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Asia-Pacific"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Asia-Pacific Growth vs Environment Bubble Chart",
+        "request": {
+          "userQuery": "Show relationship between growth and environmental index scores for Asia-Pacific countries with focus on Japan and New Zealand",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Japan",
+              "New Zealand",
+              "Australia",
+              "China",
+              "India",
+              "South Korea",
+              "Vietnam"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Japan vs New Zealand Environmental Index Line Chart",
+        "request": {
+          "userQuery": "Show trend of environmental index scores over time for Japan and New Zealand",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Japan",
+              "New Zealand"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Asia-Pacific Environmental Index Map",
+        "request": {
+          "userQuery": "Show geographical distribution of environmental index scores in Asia-Pacific region with highlight on Japan and New Zealand",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "selectedCountries": [
+              "Japan",
+              "New Zealand",
+              "Australia",
+              "China",
+              "India",
+              "South Korea",
+              "Vietnam"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 27,
+    "charts": [
+      {
+        "name": "Thailand Environmental Stress vs Tourism Growth",
+        "request": {
+          "userQuery": "Show the trend of environmental quality in Thailand compared to its tourism growth",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Thailand"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Thailand vs Neighbors Environmental Quality",
+        "request": {
+          "userQuery": "Compare the environmental quality of Thailand to its neighboring countries",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Thailand",
+              "Cambodia",
+              "Laos",
+              "Malaysia",
+              "Myanmar"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Thailand Tourism Impact on Environment",
+        "request": {
+          "userQuery": "Show the correlation between tourist arrivals in Thailand and environmental stress",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Thailand"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 28,
+    "charts": [
+      {
+        "name": "Comparative Travel Cost Across Selected Countries",
+        "request": {
+          "userQuery": "Show comparison of travel cost in Portugal, Japan, Germany and Vietnam",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Germany",
+              "Vietnam"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "mid-range"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Comparison of Cost Levels on World Map",
+        "request": {
+          "userQuery": "Show the cost levels of Portugal, Japan, Germany, and Vietnam on a world map",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "selectedCountries": [
+              "Portugal",
+              "Japan",
+              "Germany",
+              "Vietnam"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cost Over Time in Selected Countries",
+        "request": {
+          "userQuery": "Show the trend of travel cost over time in Portugal, Japan, Germany and Vietnam",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Germany",
+              "Vietnam"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cost Distribution Across Selected Countries",
+        "request": {
+          "userQuery": "Show the distribution of travel costs across Portugal, Japan, Germany, and Vietnam",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Germany",
+              "Vietnam"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "mid-range"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 29,
+    "charts": [
+      {
+        "name": "Visitor Momentum in Vietnam and Spain",
+        "request": {
+          "userQuery": "Show Vietnam and Spain's visitor flow over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Vietnam",
+              "Spain"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Steady Growth of Portugal and Japan",
+        "request": {
+          "userQuery": "Display the steady visitor growth in Portugal and Japan",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Portugal",
+              "Japan"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Volatility Comparison of Visitor Flow",
+        "request": {
+          "userQuery": "Compare the volatility of visitor flow between Vietnam, Spain, Portugal, and Japan",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Vietnam",
+              "Spain",
+              "Portugal",
+              "Japan"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2018",
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Geographical View of Visitor Flow",
+        "request": {
+          "userQuery": "Show the visitor flow of Vietnam, Spain, Portugal, and Japan on a map",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "selectedCountries": [
+              "Vietnam",
+              "Spain",
+              "Portugal",
+              "Japan"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 30,
+    "charts": [
+      {
+        "name": "Safety Index Ranking",
+        "request": {
+          "userQuery": "Show the safety index ranking of Japan, Germany, Portugal, Vietnam, and Mexico",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Japan",
+              "Germany",
+              "Portugal",
+              "Vietnam",
+              "Mexico"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "Asia",
+                "Europe",
+                "North America"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Overlay World Map",
+        "request": {
+          "userQuery": "Display a world map highlighting the safety index of Japan, Germany, Portugal, Vietnam, and Mexico",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "selectedCountries": [
+              "Japan",
+              "Germany",
+              "Portugal",
+              "Vietnam",
+              "Mexico"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Index Comparison",
+        "request": {
+          "userQuery": "Compare the safety index of Japan and Germany with Portugal, Vietnam, and Mexico",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Japan",
+              "Germany",
+              "Portugal",
+              "Vietnam",
+              "Mexico"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "filterValues": [
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Index Trend",
+        "request": {
+          "userQuery": "Show the safety index trend of Mexico over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Mexico"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "filterValues": [
+                "2010",
+                "2011",
+                "2012",
+                "2013",
+                "2014",
+                "2015",
+                "2016",
+                "2017",
+                "2018",
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 31,
+    "charts": [
+      {
+        "name": "Environmental Quality Benchmark Comparison",
+        "request": {
+          "userQuery": "Compare environmental quality benchmarks of New Zealand, Switzerland, Portugal, Vietnam, and Thailand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "New Zealand",
+              "Switzerland",
+              "Portugal",
+              "Vietnam",
+              "Thailand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Environmental Quality Trend Analysis",
+        "request": {
+          "userQuery": "Show the trend of environmental quality over time for New Zealand, Switzerland, Portugal, Vietnam, and Thailand",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "New Zealand",
+              "Switzerland",
+              "Portugal",
+              "Vietnam",
+              "Thailand"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Environmental Quality vs Visitor Flow",
+        "request": {
+          "userQuery": "Show correlation between environmental quality and visitor arrivals for New Zealand, Switzerland, Portugal, Vietnam, and Thailand",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "New Zealand",
+              "Switzerland",
+              "Portugal",
+              "Vietnam",
+              "Thailand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year"
+            }
+          }
+        }
+      },
+      {
+        "name": "World Environmental Quality Map",
+        "request": {
+          "userQuery": "Show a world map highlighting the environmental quality of New Zealand, Switzerland, Portugal, Vietnam, and Thailand",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "selectedCountries": [
+              "New Zealand",
+              "Switzerland",
+              "Portugal",
+              "Vietnam",
+              "Thailand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 32,
+    "charts": [
+      {
+        "name": "Review Trends over Time",
+        "request": {
+          "userQuery": "Show satisfaction trends for Portugal, Japan, Vietnam, Spain, and Thailand",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Vietnam",
+              "Spain",
+              "Thailand"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "season",
+              "values": [
+                "Spring",
+                "Summer",
+                "Autumn",
+                "Winter"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Tourist Crowding by Season",
+        "request": {
+          "userQuery": "Compare tourist crowding in Spain and Thailand by season",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Spain",
+              "Thailand"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "season",
+              "values": [
+                "Spring",
+                "Summer",
+                "Autumn",
+                "Winter"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Tourist Satisfaction vs Crowding",
+        "request": {
+          "userQuery": "Show relationship between satisfaction and crowding in Portugal, Japan, Vietnam, Spain, and Thailand",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Vietnam",
+              "Spain",
+              "Thailand"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Country-wise Satisfaction Comparison",
+        "request": {
+          "userQuery": "Compare customer satisfaction in Portugal, Japan, Vietnam, Spain, and Thailand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Vietnam",
+              "Spain",
+              "Thailand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 33,
+    "charts": [
+      {
+        "name": "Country Recurrence Overview",
+        "request": {
+          "userQuery": "Show the countries that appeared across distinct branches",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "geographic",
+            "destinations": [
+              "Portugal",
+              "Spain",
+              "Japan",
+              "Vietnam"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Visitor Flow Comparison",
+        "request": {
+          "userQuery": "Compare the visitor flow of Portugal, Spain, Japan, and Vietnam",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Portugal",
+              "Spain",
+              "Japan",
+              "Vietnam"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Tourism Revenue Analysis",
+        "request": {
+          "userQuery": "Analyze the tourism revenue of Portugal, Spain, Japan, and Vietnam",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "revenue",
+            "destinations": [
+              "Portugal",
+              "Spain",
+              "Japan",
+              "Vietnam"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2018",
+                "2019",
+                "2020"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 34,
+    "charts": [
+      {
+        "name": "Sensitivity Test Rank Stability",
+        "request": {
+          "userQuery": "Show the rank stability of Portugal, Japan, Spain, and Vietnam based on varying weights on cost, reviews, and safety",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Spain",
+              "Vietnam"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "multi",
+              "fields": [
+                {
+                  "type": "cost",
+                  "values": [
+                    "low",
+                    "medium",
+                    "high"
+                  ]
+                },
+                {
+                  "type": "safety",
+                  "values": [
+                    "low",
+                    "medium",
+                    "high"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Position Changes for Spain and Vietnam",
+        "request": {
+          "userQuery": "Show the rank changes of Spain and Vietnam based on varying weights on cost, reviews, and safety",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Spain",
+              "Vietnam"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Comparative Safety Index",
+        "request": {
+          "userQuery": "Compare the safety indices of Portugal, Japan, Spain, and Vietnam",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Spain",
+              "Vietnam"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cost Review Scatter Plot",
+        "request": {
+          "userQuery": "Show the correlation between cost and review scores for Portugal, Japan, Spain, and Vietnam",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Spain",
+              "Vietnam"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "single",
+              "field": "reviews",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 35,
+    "charts": [
+      {
+        "name": "Value and Premium Travel Destinations Over Time",
+        "request": {
+          "userQuery": "Show the travel cost trends for Portugal and Japan over the past 5 years",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Portugal",
+              "Japan"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Comparison Between Portugal and Japan",
+        "request": {
+          "userQuery": "Compare the safety rating between Portugal and Japan",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Portugal",
+              "Japan"
+            ],
+            "maxDataPoints": 2,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Portugal and Japan Tourism Revenue Contribution",
+        "request": {
+          "userQuery": "Show the tourism revenue contribution of Portugal and Japan in the global context",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "revenue",
+            "selectedCountries": [
+              "Portugal",
+              "Japan"
+            ],
+            "maxDataPoints": 2,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Visitor Flow to Portugal and Japan",
+        "request": {
+          "userQuery": "Show the visitor flow to Portugal and Japan over the past 5 years",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Portugal",
+              "Japan"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 36,
+    "charts": [
+      {
+        "name": "Traveler Type Preferences",
+        "request": {
+          "userQuery": "Show the preferred countries by traveler type",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Portugal",
+              "Vietnam",
+              "Japan",
+              "Germany",
+              "New Zealand",
+              "Switzerland"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "trip_type",
+              "filterValues": [
+                "value seekers",
+                "safety-first travelers",
+                "eco-priorities"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Scores of Preferred Countries",
+        "request": {
+          "userQuery": "Compare the safety scores of Japan and Germany",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Japan",
+              "Germany"
+            ],
+            "maxDataPoints": 2,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Eco-Friendly Initiatives in New Zealand and Switzerland",
+        "request": {
+          "userQuery": "Show the environmental initiatives in New Zealand and Switzerland",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "New Zealand",
+              "Switzerland"
+            ],
+            "maxDataPoints": 2,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Traveler Distribution Across Preferred Countries",
+        "request": {
+          "userQuery": "Show the distribution of travelers in preferred countries",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "selectedCountries": [
+              "Portugal",
+              "Vietnam",
+              "Japan",
+              "Germany",
+              "New Zealand",
+              "Switzerland"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 37,
+    "charts": [
+      {
+        "name": "Cultural Density and Attraction Focus in Spain",
+        "request": {
+          "userQuery": "Show cultural density of Spain",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Spain"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "trip_type",
+              "filterValue": "attraction-focused"
+            }
+          }
+        }
+      },
+      {
+        "name": "Affordability and Safety in Mexico",
+        "request": {
+          "userQuery": "Show affordability and safety of Mexico",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Mexico"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "filterValue": "low"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 38,
+    "charts": [
+      {
+        "name": "Eco-conscious travel cost comparison",
+        "request": {
+          "userQuery": "Show a comparison of travel costs for eco-conscious destinations including New Zealand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "New Zealand",
+              "Costa Rica",
+              "Bhutan",
+              "Iceland",
+              "Sweden"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "premium"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Environmental benchmark ranking",
+        "request": {
+          "userQuery": "Show a ranking of countries based on their environmental benchmark, including New Zealand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "New Zealand",
+              "Costa Rica",
+              "Bhutan",
+              "Iceland",
+              "Sweden"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Eco-conscious segment demographics",
+        "request": {
+          "userQuery": "Show the demographics of travelers who prefer eco-conscious destinations like New Zealand",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "New Zealand"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "trip_type",
+              "values": [
+                "eco-conscious"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 39,
+    "charts": [
+      {
+        "name": "Versatile and Alternate Destination Picks",
+        "request": {
+          "userQuery": "Show the chosen versatile and alternate destinations",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Spain",
+              "Vietnam",
+              "Germany",
+              "Mexico",
+              "New Zealand"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe",
+                "Asia",
+                "North America",
+                "Oceania"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Comprehensive Economic Analysis",
+        "request": {
+          "userQuery": "Compare the economic status of the chosen destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Spain",
+              "Vietnam",
+              "Germany",
+              "Mexico",
+              "New Zealand"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Visitor Flow Comparison",
+        "request": {
+          "userQuery": "Show the visitor flow in the selected destinations",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Spain",
+              "Vietnam",
+              "Germany",
+              "Mexico",
+              "New Zealand"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 40,
+    "charts": [
+      {
+        "name": "Tourism Growth and Variety in Asia",
+        "request": {
+          "userQuery": "Show tourism growth and variety metrics for selected Asian countries",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "India",
+              "China",
+              "Japan",
+              "South Korea",
+              "Thailand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Balanced Tourism in Europe",
+        "request": {
+          "userQuery": "Show balance of tourism factors for selected European countries",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "economics",
+            "destinations": [
+              "France",
+              "Germany",
+              "Spain",
+              "Italy",
+              "United Kingdom"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValue": "Europe"
+            }
+          }
+        }
+      },
+      {
+        "name": "Resilient Recommendations for Selected Countries",
+        "request": {
+          "userQuery": "Show resilience recommendations based on traveler priorities for selected countries",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiTypeWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "recovery-analysis",
+            "destinations": [
+              "Canada",
+              "Australia",
+              "New Zealand"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  }
+]

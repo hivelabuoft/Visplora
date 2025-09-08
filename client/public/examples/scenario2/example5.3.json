@@ -1,0 +1,514 @@
+{
+  "exploration_path": [
+    {
+      "sentence_id": 1,
+      "sentence_content": "A first scan across continents highlighted growth rates, costs, and destination counts that set the stage for deeper inquiry.",
+      "children": [2],
+      "parent": null,
+      "system_shows": "Dashboard: arrivals overview; chart1: line chart of arrivals by continent; chart2: bar chart of average cost per day",
+      "drift_type": "begin"
+    },
+    {
+      "sentence_id": 2,
+      "sentence_content": "Overlaying attractions and popularity showed Europe with the broadest set of destinations, Asia with the sharpest growth, and the Americas combining volume with volatility.",
+      "children": [3],
+      "parent": 1,
+      "system_shows": "Dashboard: attractions overlay; chart1: bar chart of attractions index; chart2: bar+line combo of growth vs popularity",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 3,
+      "sentence_content": "From here, three main directions emerged for exploration: Europe, Asia, and the Americas.",
+      "children": [4,7,11],
+      "parent": 2,
+      "system_shows": "Dashboard: branching menu; chart1: pie chart of destinations by continent; chart2: bar chart of growth contribution",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 4,
+      "sentence_content": "In Europe, costs split into northern, central, and southern bands that shape traveler choices.",
+      "children": [5],
+      "parent": 3,
+      "system_shows": "Dashboard: Europe costs; chart1: bar chart of average city cost; chart2: line chart of cost trend by region",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 5,
+      "sentence_content": "Lisbon and Madrid appeared as affordable hubs with strong reviews, while northern capitals like Copenhagen stood much higher in price.",
+      "children": [6],
+      "parent": 4,
+      "system_shows": "Chart: scatterplot of cost vs reviews, selected cities labeled",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 6,
+      "sentence_content": "Country-level cuts pointed to Portugal and Spain as balancing cost and satisfaction, while Germany leaned on infrastructure strength despite higher spend.",
+      "children": [],
+      "parent": 5,
+      "system_shows": "Dashboard: Europe countries; chart1: bar chart of country average costs; chart2: bar chart of reviews index",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 7,
+      "sentence_content": "Across Asia, destinations have become more appealing but increasingly expensive for travelers.",
+      "children": [8],
+      "parent": 3,
+      "system_shows": "Dashboard: Asia overview; chart1: line chart of arrivals growth by subregion; chart2: bar chart of average daily cost",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 8,
+      "sentence_content": "Vietnam managed strong growth while moderating costs, whereas Thailand expanded quickly but at rising expense.",
+      "children": [9],
+      "parent": 7,
+      "system_shows": "Chart: bar chart of CAGR vs cost change (Vietnam vs Thailand)",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 9,
+      "sentence_content": "Japan stood apart with premium costs offset by accessibility and consistently high reviews.",
+      "children": [10],
+      "parent": 8,
+      "system_shows": "Dashboard: Japan profile; chart1: bar chart of cost index; chart2: bar chart of review scores",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 10,
+      "sentence_content": "Early signals suggested Japan, Vietnam, and Thailand represent contrasting models: premium quality, balanced affordability, and volume-driven growth.",
+      "children": [],
+      "parent": 9,
+      "system_shows": "Dashboard: Asia synthesis; chart1: matrix of factors (cost, growth, reviews)",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 11,
+      "sentence_content": "Turning to the Americas, patterns diverged enough to split into North and South sub-branches.",
+      "children": [12,14],
+      "parent": 3,
+      "system_shows": "Dashboard: Americas overview; chart1: bar chart arrivals growth; chart2: bar chart of cost levels",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 12,
+      "sentence_content": "In North America, the United States dominated sheer volume at high cost, while Mexico accelerated on affordability.",
+      "children": [13],
+      "parent": 11,
+      "system_shows": "Chart: bar chart arrivals US vs Mexico; line chart of cost levels",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 13,
+      "sentence_content": "Canada quietly maintained high satisfaction with fewer fluctuations, rounding out the regional picture.",
+      "children": [],
+      "parent": 12,
+      "system_shows": "Chart: bar chart of review stability Canada vs peers",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 14,
+      "sentence_content": "In South America, Brazil topped arrivals but faced volatile costs and uneven growth.",
+      "children": [15],
+      "parent": 11,
+      "system_shows": "Chart: line chart arrivals Brazil vs Argentina; bar chart cost swings",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 15,
+      "sentence_content": "Argentina improved on affordability but lagged in satisfaction, so this branch was set aside for now.",
+      "children": [],
+      "parent": 14,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 16,
+      "sentence_content": "Visitor flows within Europe revealed Iberian countries pulling ahead with surging arrivals compared to their central counterparts.",
+      "children": [17],
+      "parent": 6,
+      "system_shows": "Dashboard: Europe flows; chart1: line chart arrivals Iberia vs Central Europe",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 17,
+      "sentence_content": "Germany and France showed steadier repeat visits, hinting at reliability rather than sharp growth.",
+      "children": [18],
+      "parent": 16,
+      "system_shows": "Chart: bar+line combo repeat vs new arrivals",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 18,
+      "sentence_content": "Secondary cities like Krakow and Porto appeared as rising players, absorbing overflow from capital hubs.",
+      "children": [],
+      "parent": 17,
+      "system_shows": "Chart: bar chart arrivals growth secondary vs capital cities",
+      "drift_type": "Detect Pattern"
+    },
+
+    {
+      "sentence_id": 19,
+      "sentence_content": "Safety overlays placed Switzerland and Germany at the top, while Spain clustered slightly lower but still reassuring for most travelers.",
+      "children": [20],
+      "parent": 6,
+      "system_shows": "Dashboard: Europe safety; chart1: bar chart safety index scores",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 20,
+      "sentence_content": "Transport indices reinforced Germany and France as accessibility leaders, contrasting with uneven infrastructure in southern peers.",
+      "children": [],
+      "parent": 19,
+      "system_shows": "Chart: bar chart accessibility index Europe",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 21,
+      "sentence_content": "Review trends in Asia showed Vietnam’s reputation climbing sharply after 2015, catching up to longer-established peers.",
+      "children": [22],
+      "parent": 10,
+      "system_shows": "Chart: line chart of Vietnam review trend vs regional average",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 22,
+      "sentence_content": "Japan’s reviews stayed consistently high, reinforcing its premium standing despite rising costs.",
+      "children": [23],
+      "parent": 21,
+      "system_shows": "Chart: bar chart review distribution Japan vs Asia average",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 23,
+      "sentence_content": "Thailand showed more volatility, with reviews slipping in crowd-heavy years and bouncing back after quieter seasons.",
+      "children": [],
+      "parent": 22,
+      "system_shows": "Chart: line chart review index Thailand with seasonal overlay",
+      "drift_type": "Detect Pattern"
+    },
+
+    {
+      "sentence_id": 24,
+      "sentence_content": "Safety profiles placed Singapore at the regional top, while Vietnam steadily improved from mid-range levels.",
+      "children": [25],
+      "parent": 10,
+      "system_shows": "Dashboard: Asia safety; chart1: bar chart safety scores by country; chart2: line chart Vietnam safety trend",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 25,
+      "sentence_content": "Sri Lanka presented a recovery case: safety indices improved, but growth remained volatile due to regional instability.",
+      "children": [],
+      "parent": 24,
+      "system_shows": "Chart: line chart arrivals vs safety Sri Lanka",
+      "drift_type": "Detect Pattern"
+    },
+
+    {
+      "sentence_id": 26,
+      "sentence_content": "Environmental indices showed Japan and New Zealand sustaining high scores, anchoring the Asia-Pacific group.",
+      "children": [27],
+      "parent": 10,
+      "system_shows": "Dashboard: Asia environment; chart1: bar chart environment index; chart2: bubble chart growth vs environment",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 27,
+      "sentence_content": "Thailand’s environmental quality, by contrast, revealed stress under heavy tourism, showing widening gaps with its neighbors.",
+      "children": [],
+      "parent": 26,
+      "system_shows": "Chart: line chart Thailand environment trend vs arrivals growth",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 28,
+      "sentence_content": "Comparing costs across continents, Portugal undercut Japan and Germany while aligning with Vietnam’s mid-range levels.",
+      "children": [29],
+      "parent": 27,
+      "system_shows": "Dashboard: cost comparison; chart1: bar chart daily cost by selected countries",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 29,
+      "sentence_content": "Visitor flow analysis showed Vietnam and Spain surging on momentum, while Portugal and Japan grew steadily with less volatility.",
+      "children": [30],
+      "parent": 28,
+      "system_shows": "Dashboard: arrivals overlay; chart1: line chart arrivals indices rebased=100",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 30,
+      "sentence_content": "Safety overlays placed Japan and Germany at the top, Portugal and Vietnam in a reassuring mid-high tier, and Mexico rising modestly.",
+      "children": [31],
+      "parent": 29,
+      "system_shows": "Dashboard: safety overlay; chart1: bar chart safety index by country",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 31,
+      "sentence_content": "Environmental quality benchmarks confirmed New Zealand and Switzerland as leaders, Portugal comfortably above median, Vietnam uneven, and Thailand declining under pressure.",
+      "children": [32],
+      "parent": 30,
+      "system_shows": "Dashboard: environment overlay; chart1: bar chart environment index; chart2: line chart environment trend vs arrivals",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 32,
+      "sentence_content": "Review comparisons showed Portugal and Japan sustaining top satisfaction, Vietnam climbing, and Spain and Thailand oscillating with seasonal crowding.",
+      "children": [33],
+      "parent": 31,
+      "system_shows": "Dashboard: review overlay; chart1: bar chart average reviews; chart2: bubble chart reviews vs attractions",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 33,
+      "sentence_content": "Across interim shortlists, Portugal, Spain, Japan, and Vietnam recurred in at least two distinct branches.",
+      "children": [34],
+      "parent": 32,
+      "system_shows": "Dashboard: synthesis; chart1: Venn diagram of overlapping candidates; chart2: stacked bar of factors confirmed",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 34,
+      "sentence_content": "A sensitivity check varying weights on cost, reviews, and safety confirmed Portugal and Japan as stable leaders, while Spain and Vietnam swapped positions depending on emphasis.",
+      "children": [35],
+      "parent": 33,
+      "system_shows": "Dashboard: sensitivity test; chart1: tornado plot of rank stability; chart2: line chart of rank changes",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 35,
+      "sentence_content": "Even under these shifts, Portugal remained the consistent value play, and Japan sustained its role as a premium benchmark.",
+      "children": [36],
+      "parent": 34,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 36,
+      "sentence_content": "By traveler type, value seekers gravitate toward Portugal and Vietnam, safety-first travelers prefer Japan and Germany, and eco-priorities elevate New Zealand and Switzerland.",
+      "children": [37],
+      "parent": 35,
+      "system_shows": "Dashboard: persona fit; chart1: spider chart of countries × personas",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 37,
+      "sentence_content": "Attraction-focused travelers choose Spain for cultural density, while Mexico appeals for affordability blended with growing safety.",
+      "children": [38],
+      "parent": 36,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 38,
+      "sentence_content": "New Zealand joins the shortlist as an environmental benchmark, though its premium costs restrict it to eco-conscious segments.",
+      "children": [39],
+      "parent": 37,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 39,
+      "sentence_content": "The synthesis narrows the field to four versatile picks—Portugal, Japan, Spain, and Vietnam—while leaving Germany, Mexico, and New Zealand as conditional alternates.",
+      "children": [40],
+      "parent": 38,
+      "system_shows": "",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 40,
+      "sentence_content": "Final conclusion: Europe offers breadth and balance, Asia supplies growth and variety, and selected countries provide resilient recommendations tailored to traveler priorities.",
+      "children": [],
+      "parent": 39,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    }
+  ],
+  "data_story": [
+  {
+    "data_story_sentence": "Growth rates, costs, and destination counts show Europe leading in attractions, Asia in growth, and the Americas in volume but with volatility.",
+    "ref_id": 1
+  },
+  {
+    "data_story_sentence": "In Europe, Portugal and Spain balance affordability and satisfaction, while Germany leverages infrastructure despite higher costs.",
+    "ref_id": 6
+  },
+  {
+    "data_story_sentence": "Asia presents Vietnam as a growth leader amid rising costs, with Japan maintaining high reviews despite a premium pricing.",
+    "ref_id": 10
+  },
+  {
+    "data_story_sentence": "In the Americas, Mexico accelerates on affordability, while Canada maintains high satisfaction with stable reviews.",
+    "ref_id": 13
+  },
+  {
+    "data_story_sentence": "Visitor flows highlight surging arrivals in Iberian countries compared to steadier repeat visits in Germany and France.",
+    "ref_id": 17
+  },
+  {
+    "data_story_sentence": "Germany and France lead in accessibility, contrasting with southern Europe's uneven infrastructure.",
+    "ref_id": 20
+  },
+  {
+    "data_story_sentence": "Review trends in Asia underline Vietnam's rising reputation and Japan's consistent premium standing.",
+    "ref_id": 22
+  },
+  {
+    "data_story_sentence": "Environmental indices show Japan and New Zealand as leaders, with Thailand under pressure from tourism stress.",
+    "ref_id": 27
+  },
+  {
+    "data_story_sentence": "Safety profiles place Japan and Germany at the top, with Portugal and Vietnam as mid-high tier, showing risk-adjusted appeal.",
+    "ref_id": 30
+  },
+  {
+    "data_story_sentence": "Review comparisons reveal Portugal and Japan at high satisfaction, with Vietnam climbing and Spain fluctuating with crowds.",
+    "ref_id": 32
+  },
+  {
+    "data_story_sentence": "Interim shortlists consistently show Portugal, Spain, Japan, and Vietnam appearing in multiple branches.",
+    "ref_id": 33
+  },
+  {
+    "data_story_sentence": "Sensitivity checks reaffirm Portugal's consistency as a value play and Japan's premium positioning.",
+    "ref_id": 35
+  },
+  {
+    "data_story_sentence": "Value seekers often choose Portugal and Vietnam, while safety-first travelers lean toward Japan and Germany.",
+    "ref_id": 36
+  },
+  {
+    "data_story_sentence": "New Zealand stands as an environmental benchmark despite its premium cost, fitting eco-conscious travelers.",
+    "ref_id": 38
+  },
+  {
+    "data_story_sentence": "Final analysis recommends Portugal, Japan, Spain, and Vietnam, with Germany, Mexico, and New Zealand as alternates.",
+    "ref_id": 39
+  }
+],
+"inquiries": [
+  {
+    "qid": "iss_1",
+    "title": "What drives the rapid visitor growth in certain countries?",
+    "status": "resolved",
+    "sentenceRefs": ["1", "2", "12", "22"],
+    "position_suggested_by": {
+      "text": "Growth driven by cost, accessibility, environment, safety, and reviews.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Comprehensive analysis of factors contributing to growth.",
+      "basis": "synthesis"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_2",
+    "title": "Is the decline in travel costs responsible for visitor growth in Vietnam and Portugal?",
+    "status": "resolved",
+    "sentenceRefs": ["3", "4", "16", "20"],
+    "position_suggested_by": {
+      "text": "Costs declined, boosting growth, especially with positive reviews in Vietnam.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Cost declines and strong reviews reinforce growth in both countries.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "iss_1",
+        "type": "specialized_from",
+        "explanation": "Explores cost and review impacts within broader growth context."
+      }
+    ]
+  },
+  {
+    "qid": "iss_3",
+    "title": "Does increased accessibility explain visitor growth in Vietnam?",
+    "status": "resolved",
+    "sentenceRefs": ["5", "7", "16"],
+    "position_suggested_by": {
+      "text": "Increased direct flights significantly boosted Vietnam's accessibility and growth.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Direct flights correlated with increased arrivals.",
+      "basis": "pattern"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_4",
+    "title": "Does environmental sustainability influence growth momentum?",
+    "status": "resolved",
+    "sentenceRefs": ["6", "9", "15", "19"],
+    "position_suggested_by": {
+      "text": "Environmental stress can limit growth, as seen in Turkey.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Sustainability issues can cap growth despite low costs.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "iss_2",
+        "type": "specialized_from",
+        "explanation": "Integrates environmental factors into cost impact analysis."
+      }
+    ]
+  },
+  {
+    "qid": "iss_5",
+    "title": "Are online reviews key to sustaining visitor numbers in Mexico?",
+    "status": "resolved",
+    "sentenceRefs": ["7", "10", "16", "20"],
+    "position_suggested_by": {
+      "text": "Review improvements correlated with growth in Mexico and Vietnam.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Review trends linked to growth patterns.",
+      "basis": "pattern"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_6",
+    "title": "Does improving safety perception translate to tourism growth in Egypt?",
+    "status": "resolved",
+    "sentenceRefs": ["8", "11", "17", "21"],
+    "position_suggested_by": {
+      "text": "Safety improvements in Morocco translated to growth, but not in Egypt.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Conditions for converting safety improvements vary by country.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "iss_1",
+        "type": "generalized_from",
+        "explanation": "Explores specific safety and growth dynamics within overall trends."
+      }
+    ]
+  },
+  {
+    "qid": "iss_7",
+    "title": "Are regional politics or cultural trends hidden drivers of growth?",
+    "status": "stalled",
+    "sentenceRefs": ["13", "14", "18"],
+    "position_suggested_by": {
+      "text": "Potential unexplored factors influencing outliers.",
+      "confidence": "low"
+    },
+    "argument_suggested_by": {
+      "text": "Lack of definitive evidence for hidden drivers.",
+      "basis": "speculation"
+    },
+    "links": []
+  }
+]
+}

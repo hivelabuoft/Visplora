@@ -10,7 +10,7 @@ declare module '@tiptap/core' {
       /**
        * Mark text as a completed sentence
        */
-      markAsCompletedSentence: () => ReturnType;
+      markAsCompletedSentence: (options?: { class?: string }) => ReturnType;
       /**
        * Remove completed sentence mark
        */
@@ -41,11 +41,14 @@ export const CompletedSentence = Mark.create<CompletedSentenceOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
+    // Use custom class if provided, otherwise use default
+    const className = HTMLAttributes.class || this.options.HTMLAttributes.class;
     return [
       'span',
       {
         ...this.options.HTMLAttributes,
         ...HTMLAttributes,
+        class: className,
       },
       0,
     ];
@@ -54,10 +57,12 @@ export const CompletedSentence = Mark.create<CompletedSentenceOptions>({
   addCommands() {
     return {
       markAsCompletedSentence:
-        () =>
+        (options?: { class?: string }) =>
         ({ commands, state, dispatch }) => {
+          // Set attributes including custom class if provided
+          const attrs = options?.class ? { class: options.class } : {};
           
-          const result = commands.setMark(this.name);
+          const result = commands.setMark(this.name, attrs);
           
           // Force a re-render to see the changes
           if (dispatch) {

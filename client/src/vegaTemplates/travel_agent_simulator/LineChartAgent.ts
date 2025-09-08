@@ -78,8 +78,14 @@ export class LineChartAgent extends BaseTravelAgent {
   }
 
   async generateChart(request: TravelAgentRequest): Promise<AgentResponse> {
-    try {
-      const prompt = this.buildPrompt(request) + `
+    const maxRetries = 3;
+    let lastError = '';
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`🧠 Making real LLM call through lineAgent (attempt ${attempt}/${maxRetries})...`);
+        
+        const prompt = this.buildPrompt(request) + `
 
 SPECIALIZED INSTRUCTIONS FOR LINE CHARTS:
 
@@ -88,14 +94,21 @@ SPECIALIZED INSTRUCTIONS FOR LINE CHARTS:
    - lineChartWithMean: When user wants to show average/mean line
    - lineChartWithThreshold: When user wants threshold/target line
 
-2. REQUIRED OUTPUT FORMAT - RETURN EXACTLY THIS STRUCTURE:
+2. CRITICAL JSON REQUIREMENTS:
+   - Return ONLY valid JSON - NO explanatory text before or after
+   - NO JavaScript comments (// or /* */) in the JSON
+   - Use double quotes for all strings
+   - End all objects and arrays properly
+   - NO trailing commas
+
+3. REQUIRED OUTPUT FORMAT - RETURN EXACTLY THIS STRUCTURE:
 {
   "type": "line",
-  "subtype": "multiLineLabelSpec", // OR "lineChartWithMean" OR "lineChartWithThreshold"
+  "subtype": "multiLineLabelSpec",
   "title": "Your Chart Title",
   "description": "Brief description of the chart",
   "data": [
-    // Your generated data array here
+    // Generate your data array here - NO COMMENTS IN JSON!
   ],
   "config": {
     "dimensions": { "width": 380, "height": 200 },
@@ -105,7 +118,7 @@ SPECIALIZED INSTRUCTIONS FOR LINE CHARTS:
       "series": "your_series_field_name"
     },
     "styling": {
-      "colors": ["#aea630ff", "#3b82f6", "#16a34a"] <you may change the colors>,
+      "colors": ["#aea630ff", "#3b82f6", "#16a34a"],
       "background": "transparent",
       "axes": {
         "xAxis": {
@@ -148,7 +161,12 @@ SPECIALIZED INSTRUCTIONS FOR LINE CHARTS:
   }
 }
 
-3. WHAT YOU CAN MODIFY:
+4. CRITICAL JSON RULES FOR ATTEMPT ${attempt}:
+   ${attempt === 1 ? '- Ensure NO comments in JSON output' : ''}
+   ${attempt === 2 ? '- Use simpler data structure, avoid complex nesting' : ''}
+   ${attempt === 3 ? '- Generate minimal valid JSON with basic data only' : ''}
+
+5. WHAT YOU CAN MODIFY:
    - title: Change to match your chart content
    - description: Brief explanation of what the chart shows
    - data: Generate realistic travel data with proper field names
@@ -157,7 +175,7 @@ SPECIALIZED INSTRUCTIONS FOR LINE CHARTS:
    - config.styling.axes.yAxis.format: Match the data type (e.g., "$,.0f" for costs, ",.0f" for counts)
    - config.styling.axes.xAxis.format: Match temporal format ("%Y-%m" for dates, null for ordinal)
 
-4. WHAT YOU CANNOT MODIFY:
+6. WHAT YOU CANNOT MODIFY:
    - type: Must always be "line"
    - config.dimensions: Fixed at 380x200
    - config.styling.background: Must be "transparent"
@@ -165,15 +183,15 @@ SPECIALIZED INSTRUCTIONS FOR LINE CHARTS:
    - config.legend structure: Keep all legend properties exactly as shown
    - config.interactions: Keep exactly as shown
 
-5. FOR MEAN SUBTYPE (lineChartWithMean), ADD TO styling:
+7. FOR MEAN SUBTYPE (lineChartWithMean), ADD TO styling:
 {
   "meanValue": 50000,
-  "meanColor": "#22c55e"", 
+  "meanColor": "#22c55e", 
   "meanLabel": "Monthly Average",
   "showMeanLabel": true
 }
 
-6. FOR THRESHOLD SUBTYPE (lineChartWithThreshold), ADD TO styling:
+8. FOR THRESHOLD SUBTYPE (lineChartWithThreshold), ADD TO styling:
 {
   "thresholdValue": 85,
   "thresholdColor": "#ff6b6b",
@@ -181,12 +199,12 @@ SPECIALIZED INSTRUCTIONS FOR LINE CHARTS:
   "showThresholdLabel": true
 }
 
-7. DATA FIELD REQUIREMENTS:
+9. DATA FIELD REQUIREMENTS:
    - x: Must be temporal (date, month, year, quarter) or ordinal
    - y: Must be quantitative (cost, count, score, rating, arrivals)
    - series: Must be nominal for grouping lines (category, destination, platform, city)
 
-8. CRITICAL: TEMPORAL DATA FORMATS - ONLY USE THESE:
+10. CRITICAL: TEMPORAL DATA FORMATS - ONLY USE THESE:
    - Dates: "2024-01-01", "2024-02-01", "2024-03-01" (YYYY-MM-DD format)
    - Year-Month: "2024-01", "2024-02", "2024-03" (YYYY-MM format)  
    - Years: 2024, 2025, 2026 (numeric years)
@@ -198,55 +216,65 @@ SPECIALIZED INSTRUCTIONS FOR LINE CHARTS:
    ⚠️  WARNING: Using month names like "Jan" will cause "infinite extent" errors!
    ⚠️  ALL temporal data must be in ISO date format or numeric values!
 
-9. X-AXIS FORMAT RULES:
+11. X-AXIS FORMAT RULES:
    - If using dates (YYYY-MM-DD): set format: "%Y-%m" and type: "temporal"
    - If using year-month (YYYY-MM): set format: "%Y-%m" and type: "temporal"
    - If using years (2024): set format: "%Y" and type: "temporal"
    - If using quarters (2024-Q1): set format: null and type: "temporal"
 
-10. EXAMPLE TRAVEL SCENARIOS:
+12. EXAMPLE TRAVEL SCENARIOS:
    - "cost trends over time" → multiLineLabelSpec with x: "date" (use "2024-01-01" format), y: "cost", series: "category"
    - "visitor arrivals by destination" → multiLineLabelSpec with x: "month" (use "2024-01" format), y: "arrivals", series: "destination"
    - "safety scores with average" → lineChartWithMean with x: "year" (use 2024 format), meanValue calculated from data
    - "budget tracking with target" → lineChartWithThreshold with thresholdValue as budget limit
 
-REMEMBER: All temporal data must be parseable by Vega. Use proper date formats, never month names!
+REMEMBER: 
+- All temporal data must be parseable by Vega. Use proper date formats, never month names!
+- Generate realistic travel data with proper temporal progression and meaningful values.
+- Replace the field names in config.fields with the actual field names from your generated data.
+- ABSOLUTELY NO COMMENTS IN THE JSON OUTPUT!
 
-GENERATE realistic travel data with proper temporal progression and meaningful values.
-REMEMBER: Replace the field names in config.fields with the actual field names from your generated data.`;
+${attempt > 1 ? `\nPREVIOUS ATTEMPT FAILED: ${lastError}\nPlease fix this issue in your response.` : ''}`;
 
-      const llmResponse = await this.callLLM(prompt);
-      const chartSpec = this.validateResponse(llmResponse);
+        const llmResponse = await this.callLLM(prompt);
+        const chartSpec = this.validateResponse(llmResponse);
 
-      if (!chartSpec) {
-        return {
-          success: false,
-          error: 'Failed to generate valid line chart specification',
-          suggestedAlternatives: [
-            'Try requesting a specific time series analysis',
-            'Consider specifying cost, visitor, or safety data',
-            'Ask for a simpler trend comparison'
-          ]
-        };
+        if (chartSpec) {
+          console.log(`✅ Line chart generation successful on attempt ${attempt}`);
+          return {
+            success: true,
+            chartSpec,
+            explanation: `Generated ${chartSpec.subtype} showing ${chartSpec.description}. This line chart displays trends over time with ${chartSpec.data.length} data points across multiple series.`
+          };
+        } else {
+          lastError = `Validation failed on attempt ${attempt}`;
+          console.log(`❌ Attempt ${attempt} failed: ${lastError}`);
+          if (attempt < maxRetries) {
+            console.log(`🔄 Retrying line chart generation...`);
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Brief delay between retries
+          }
+        }
+
+      } catch (error) {
+        lastError = error instanceof Error ? error.message : 'Unknown error';
+        console.log(`❌ Attempt ${attempt} failed with error: ${lastError}`);
+        if (attempt < maxRetries) {
+          console.log(`🔄 Retrying line chart generation...`);
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
       }
-
-      return {
-        success: true,
-        chartSpec,
-        explanation: `Generated ${chartSpec.subtype} showing ${chartSpec.description}. This line chart displays trends over time with ${chartSpec.data.length} data points across multiple series.`
-      };
-
-    } catch (error) {
-      return {
-        success: false,
-        error: `Line chart generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-        suggestedAlternatives: [
-          'Verify your request includes time-based data',
-          'Check if you need trend analysis',
-          'Consider using bar charts for categorical comparisons'
-        ]
-      };
     }
+
+    // All attempts failed
+    return {
+      success: false,
+      error: `Failed to generate valid line chart specification after ${maxRetries} attempts. Last error: ${lastError}`,
+      suggestedAlternatives: [
+        'Try requesting a specific time series analysis',
+        'Consider specifying cost, visitor, or safety data',
+        'Ask for a simpler trend comparison'
+      ]
+    };
   }
 
   protected generateContextAwareData(category: string, destinations: string[] = [], dataPoints: number = 8): any[] {

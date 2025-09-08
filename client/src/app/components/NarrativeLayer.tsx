@@ -8,6 +8,7 @@ import { FaSave } from "react-icons/fa";
 import { ImRedo2 } from "react-icons/im";
 import { HiOutlineDocumentDuplicate, HiOutlineTrash, HiOutlineChartBar, HiOutlinePlus } from "react-icons/hi2";
 import { MdCancel } from "react-icons/md";
+import { TbToggleLeft, TbToggleRight } from "react-icons/tb";
 import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
@@ -28,6 +29,11 @@ import { ConfirmationModal } from '../utils/ConfirmationModal';
 
 interface NarrativeLayerProps {
   prompt: string;
+  currentMode?: 'exploration' | 'story'; // NEW: Current mode for styling
+  dataStory?: Array<{
+    data_story_sentence: string;
+    ref_id: number;
+  }>; // New prop for data story content
   onSentenceSelect?: (sentence: string, index: number) => void;
   onSentenceEnd?: (sentence: string, confidence: number) => void; // New callback for sentence end detection
   onSuggestionReceived?: (suggestion: NarrativeSuggestion) => void; // New callback for when suggestions are received
@@ -56,6 +62,11 @@ interface NarrativeLayerProps {
   updateSentenceNodeContent?: (nodeId: string, newContent: string) => boolean; // New callback for updating specific node content by ID
   currentEditSentenceId?: string | null; // ID of the sentence currently being edited
   onResetPage?: () => void; // New callback for resetting the current page
+  onModeSwitch?: (mode: 'exploration' | 'story', storyData?: Array<{
+    data_story_sentence: string;
+    ref_id: number;
+  }>) => void; // New callback for mode switching with optional story data
+  onNavigateToView?: (refId: number) => void; // New callback for navigating to a specific view in story mode
 }
 
 // Expose methods for parent components to access editor content
@@ -73,6 +84,8 @@ export interface NarrativeLayerRef {
 
 const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({ 
   prompt, 
+  currentMode = 'exploration',
+  dataStory,
   onSentenceSelect, 
   onSentenceEnd, 
   onSuggestionReceived, 
@@ -94,7 +107,9 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
   onInsertNodeAfter,
   updateSentenceNodeContent,
   currentEditSentenceId,
-  onResetPage
+  onResetPage,
+  onModeSwitch,
+  onNavigateToView
 }, ref) => {
   const [wordCount, setWordCount] = useState(0);
   const [sentenceCount, setSentenceCount] = useState(0);
@@ -257,8 +272,9 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
           // Temporarily select this sentence to apply marking
           editorInstance.commands.setTextSelection({ from: sentence.start, to: sentence.end });
           
-          // Apply the completed sentence mark
-          editorInstance.commands.markAsCompletedSentence();
+          // Apply the completed sentence mark with appropriate class
+          const sentenceClass = currentMode === 'story' ? 'completed-story-sentence' : 'completed-sentence';
+          editorInstance.commands.markAsCompletedSentence({ class: sentenceClass });
         } else {
           // console.log(`⏭️ Sentence already marked: "${sentence.text}"`);
         }
@@ -279,7 +295,8 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
             const sentenceText = selectedSentence.element.textContent?.trim();
             if (sentenceText) {
               // Find the newly created sentence element with the same text
-              const completedSentences = document.querySelectorAll('.completed-sentence');
+              const selectorClass = currentMode === 'story' ? '.completed-story-sentence' : '.completed-sentence';
+              const completedSentences = document.querySelectorAll(selectorClass);
               for (const sentence of completedSentences) {
                 if ((sentence as HTMLElement).textContent?.trim() === sentenceText) {
                   sentence.setAttribute('data-selected', 'true');
@@ -300,15 +317,15 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     } catch (error) {
       // console.error('❌ Error in proactive marking:', error);
     }
-  }, [addInsertionAreasBetweenSentences]);
+  }, [addInsertionAreasBetweenSentences, currentMode]);
 
   // Function to collect completed sentences from the editor
   const getCompletedSentences = useCallback((editorInstance: any): string[] => {
     if (!editorInstance) return [];
     
     try {
-      // Get all completed sentence elements
-      const completedElements = document.querySelectorAll('.completed-sentence');
+      // Get all completed sentence elements (both exploration and story modes)
+      const completedElements = document.querySelectorAll('.completed-sentence, .completed-story-sentence');
       const completedSentences: string[] = [];
       
       completedElements.forEach((element) => {
@@ -690,7 +707,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         // Handle delete key for completed sentences
         if (isInCompletedSentence && (event.key === 'Delete' || event.key === 'Backspace')) {
           // Find the completed sentence element at cursor position
-          const completedSentences = document.querySelectorAll('.completed-sentence');
+          const completedSentences = document.querySelectorAll('.completed-sentence, .completed-story-sentence');
           let currentSentence: HTMLElement | null = null;
           let sentenceStart = -1;
           let sentenceEnd = -1;
@@ -818,7 +835,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         const clickY = event.clientY;
         
         // Get all completed sentences
-        const completedSentences = document.querySelectorAll('.completed-sentence');
+        const completedSentences = document.querySelectorAll('.completed-sentence, .completed-story-sentence');
         
         // Check each sentence's left margin area (starting from second sentence)
         for (let i = 1; i < completedSentences.length; i++) {
@@ -845,11 +862,18 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         }
         
         // Check if clicked on a completed sentence (with reduced sensitivity - 10px margin from left/right)
-        if (target.closest('.completed-sentence')) {
-          const sentenceElement = target.closest('.completed-sentence') as HTMLElement;
+        if (target.closest('.completed-sentence') || target.closest('.completed-story-sentence')) {
+          const sentenceElement = (target.closest('.completed-sentence') || target.closest('.completed-story-sentence')) as HTMLElement;
           const sentenceRect = sentenceElement.getBoundingClientRect();
           const clickX = event.clientX;
           const clickY = event.clientY;
+          
+          // Check if this is a story sentence - if so, don't show dropdown
+          const isStorySentence = sentenceElement.classList.contains('completed-story-sentence');
+          if (isStorySentence) {
+            // Story sentences are not interactive - just return false to let default behavior handle
+            return false;
+          }
           
           // Check if click is within the sentence bounds but excluding 10px margin from left and right
           const isWithinReducedArea = clickX >= sentenceRect.left + 10 && 
@@ -965,11 +989,18 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         const target = event.target as HTMLElement;
         
         // Check if double-clicked on a completed sentence (with reduced sensitivity - 10px margin from left/right)
-        if (target.closest('.completed-sentence')) {
-          const sentenceElement = target.closest('.completed-sentence') as HTMLElement;
+        if (target.closest('.completed-sentence') || target.closest('.completed-story-sentence')) {
+          const sentenceElement = (target.closest('.completed-sentence') || target.closest('.completed-story-sentence')) as HTMLElement;
           const sentenceRect = sentenceElement.getBoundingClientRect();
           const clickX = event.clientX;
           const clickY = event.clientY;
+          
+          // Check if this is a story sentence - if so, don't allow editing
+          const isStorySentence = sentenceElement.classList.contains('completed-story-sentence');
+          if (isStorySentence) {
+            // Story sentences are not editable - just return false
+            return false;
+          }
           
           // Check if double-click is within the sentence bounds but excluding 10px margin from left and right
           const isWithinReducedArea = clickX >= sentenceRect.left + 20 && 
@@ -1169,7 +1200,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       
       // Find all completed sentences in the editor
       const editorElement = editor.view.dom;
-      const completedSentences = editorElement.querySelectorAll('.completed-sentence');
+      const completedSentences = editorElement.querySelectorAll('.completed-sentence, .completed-story-sentence');
       
       console.log(`🔍 Timeline → Narrative: Looking for sentence in ${completedSentences.length} completed sentences`);
       console.log('🎯 Target sentence:', `"${sentenceContent}"`);
@@ -1679,6 +1710,36 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
       case 'show-view':
         const validationSentenceText = selectedSentence.element.textContent?.trim() || '';
         
+        // Check if we're in story mode
+        if (currentMode === 'story') {
+          console.log('🎯 Story mode: Navigating to view for sentence');
+          
+          // Find the ref_id for this story sentence
+          let refId: number | null = null;
+          
+          if (dataStory) {
+            // Find the matching data story sentence
+            const matchingStoryItem = dataStory.find(item => 
+              item.data_story_sentence.trim() === validationSentenceText
+            );
+            
+            if (matchingStoryItem) {
+              refId = matchingStoryItem.ref_id;
+              console.log(`📍 Found ref_id ${refId} for story sentence: "${validationSentenceText}"`);
+              
+              // Use navigation callback to move to the view
+              if (onNavigateToView) {
+                onNavigateToView(refId);
+                break; // Exit early for story mode
+              }
+            } else {
+              console.warn('⚠️ Could not find ref_id for story sentence:', validationSentenceText);
+            }
+          }
+          
+          // If we couldn't find ref_id or navigation failed, fall through to regular flow
+        }
+        
         // If we're in an example scenario, don't call LLM - just trigger the callback directly
         if (isExampleScenario) {
           console.log('🎯 Example scenario: Showing view for sentence without LLM validation');
@@ -1890,7 +1951,7 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
         }
         break;
     }
-  }, [selectedSentence, editor, onDeleteSentence]);
+  }, [selectedSentence, editor, onDeleteSentence, currentMode, dataStory, onNavigateToView, isExampleScenario, onShowViewForSentence, onGenerateVisualization, onInsertNodeAfter]);
   
   // Handle suggestion acceptance
   const handleAcceptSuggestion = useCallback((suggestionText: string) => {
@@ -2195,41 +2256,127 @@ const NarrativeLayer = forwardRef<NarrativeLayerRef, NarrativeLayerProps>(({
     setShowResetModal(false);
   }, []);
 
+  // State to store the exploration content when switching to story mode
+  const [explorationContent, setExplorationContent] = useState<string>('');
+  const [isLoadingStory, setIsLoadingStory] = useState<boolean>(false);
+  
+  // Handle mode switching
+  const handleModeSwitch = useCallback(() => {
+    const newMode = currentMode === 'exploration' ? 'story' : 'exploration';
+    
+    // Check if we're in a scenario/example context by looking at the URL
+    const isInScenario = window.location.pathname.includes('/scenario') || 
+                         window.location.pathname.includes('/example') ||
+                         isExampleScenario;
+    
+    // For story mode, we need to create a new page and switch to it
+    if (newMode === 'story') {
+      // Save current exploration content before switching
+      const currentExplorationText = editor?.getText() || '';
+      setExplorationContent(currentExplorationText);
+      
+      if (isInScenario) {
+        // Show loading animation for scenarios
+        setIsLoadingStory(true);
+        
+        // After 4 seconds, create new page and show the story content
+        setTimeout(() => {
+          setIsLoadingStory(false);
+          
+          // Create a new page for story mode through parent component callback
+          if (onModeSwitch) {
+            onModeSwitch(newMode, dataStory); // Pass dataStory to parent so it can create story page
+          }
+        }, 4000); // 4 seconds loading
+      } else {
+        // For non-scenario contexts, notify parent immediately
+        if (onModeSwitch) {
+          onModeSwitch(newMode);
+        }
+      }
+    } else if (newMode === 'exploration') {
+      // When switching back to exploration, we should switch back to the exploration page
+      // Clear any loading state
+      setIsLoadingStory(false);
+      
+      // Notify parent to switch back to exploration page
+      if (onModeSwitch) {
+        onModeSwitch(newMode);
+      }
+    }
+  }, [currentMode, editor, isExampleScenario, dataStory, onModeSwitch]);
+
   return (
     <div className="narrative-layer">
       {/* Action buttons bar */}
       <div className="narrative-actions">
-        <button
-          className="action-button save-button"
-          onClick={handleSave}
-          title="Save current narrative state"
-        >
-          <FaSave /> Save
-        </button>
-        <button
-          className="action-button undo-button"
-          onClick={handleUndo}
-          disabled={historyIndex <= 0}
-          title="Undo last change"
-        >
-          <IoArrowUndo /> Undo
-        </button>
-        <button
-          className="action-button reset-button"
-          onClick={handleReset}
-          title="Reset entire narrative (WARNING: This cannot be undone)"
-        >
-          <ImRedo2 /> Reset
-        </button>
+        <div className="left-actions">
+          <button
+            className="action-button save-button"
+            onClick={handleSave}
+            title="Save current narrative state"
+          >
+            <FaSave /> Save
+          </button>
+          <button
+            className="action-button undo-button"
+            onClick={handleUndo}
+            disabled={historyIndex <= 0}
+            title="Undo last change"
+          >
+            <IoArrowUndo /> Undo
+          </button>
+          <button
+            className="action-button reset-button"
+            onClick={handleReset}
+            title="Reset entire narrative (WARNING: This cannot be undone)"
+          >
+            <ImRedo2 /> Reset
+          </button>
+        </div>
+        
+        <div className="right-actions">
+          <div className={`mode-switch ${currentMode}`} title={`Switch to ${currentMode === 'exploration' ? 'Story' : 'Exploration'} mode`}>
+            <span className={`mode-label ${currentMode === 'exploration' ? 'active' : ''}`}>
+              Exploration
+            </span>
+            <button 
+              className={`toggle-switch ${currentMode}`}
+              onClick={handleModeSwitch}
+            >
+              {currentMode === 'exploration' ? <TbToggleLeft size={24} /> : <TbToggleRight size={24} />}
+            </button>
+            <span className={`mode-label ${currentMode === 'story' ? 'active' : ''}`}>
+              Story
+            </span>
+          </div>
+        </div>
       </div>
       
       <div className="narrative-editor">
-        <div className={`main-editor-wrapper ${branchingMode.isActive ? 'disabled' : ''}`}>
-          <EditorContent 
-            editor={editor} 
-            onClick={handleClick}
-          />
-        </div>
+        {isLoadingStory ? (
+          <div className="story-loading-container">
+            <div className="loading-animation">
+              <div className="loading-spinner"></div>
+              <div className="loading-text">
+                <h3>Generating Story Mode...</h3>
+                <p>Synthesizing your exploration into a cohesive narrative</p>
+                <div className="loading-dots">
+                  <span>.</span>
+                  <span>.</span>
+                  <span>.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className={`main-editor-wrapper ${branchingMode.isActive ? 'disabled' : ''}`}>
+            <EditorContent 
+              editor={editor} 
+              onClick={handleClick}
+            />
+          </div>
+        )}
         
         {/* Enhanced branching interface - positioned inline with selected sentence */}
         {branchingMode.isActive && (
