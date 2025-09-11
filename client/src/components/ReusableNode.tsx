@@ -260,7 +260,7 @@ const ReusableNode: React.FC<ReusableNodeProps> = ({
         )}    
         {/* Field Filter Buttons */}
         {hasFieldFilter && filterOptions.length > 0 && (
-            <div className="flex gap-1">
+            <div className="flex flex-wrap gap-1 items-center">
             {filterOptions.map((option, index) => {
                 const isSelected = selectedFilter === option.value;
                 const displayText = option.displayName || option.label;
@@ -269,7 +269,7 @@ const ReusableNode: React.FC<ReusableNodeProps> = ({
                     <button
                     key={option.value || index}
                     className={`
-                    px-1 py-0.5 text-[10px] rounded transition-colors duration-200
+                    px-1 py-0.5 text-[10px] rounded transition-colors duration-200 whitespace-nowrap
                     ${isSelected 
                         ? 'bg-purple-600 text-white shadow-sm font-medium hover:bg-purple-700' 
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -288,15 +288,20 @@ const ReusableNode: React.FC<ReusableNodeProps> = ({
             </div>
         )}
         
-        {buttons.map((button, index) => (
-            <button
-            key={index}
-            className={button.style || "text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200"}
-            onClick={button.onClick}
-            >
-            {button.label}
-          </button>
-        ))}
+        {/* Custom Buttons */}
+        {buttons && buttons.length > 0 && (
+          <div className="flex flex-wrap gap-1 items-center">
+            {buttons.map((button, index) => (
+              <button
+                key={index}
+                className={button.style || "text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200 whitespace-nowrap"}
+                onClick={button.onClick}
+              >
+                {button.label}
+              </button>
+            ))}
+          </div>
+        )}
     </>
   );
 

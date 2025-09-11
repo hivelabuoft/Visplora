@@ -1,373 +1,84 @@
 {
-  "Brent 011A": [
+  "Brent 036D": [
     {
-      "facility_type": "Golf Course",
+      "facility_type": "Football Pitch",
       "count": 4
     },
     {
-      "facility_type": "Shooting Range",
-      "count": 3
-    },
-    {
-      "facility_type": "Volleyball Court",
+      "facility_type": "Bowling Alley",
       "count": 4
     },
     {
       "facility_type": "Boutique Fitness",
-      "count": 3
-    }
-  ],
-  "Brent 001B": [
+      "count": 4
+    },
     {
-      "facility_type": "Budget Gym",
+      "facility_type": "Climbing Wall",
       "count": 2
     },
-    {
-      "facility_type": "Cycling Track",
-      "count": 1
-    },
-    {
-      "facility_type": "Athletics Track",
-      "count": 3
-    },
-    {
-      "facility_type": "Dance Studio",
-      "count": 3
-    }
-  ],
-  "Brent 036A": [
-    {
-      "facility_type": "Squash Court",
-      "count": 4
-    },
-    {
-      "facility_type": "Premium Gym",
-      "count": 4
-    },
-    {
-      "facility_type": "Community Sports Centre",
-      "count": 4
-    },
-    {
-      "facility_type": "Parkour Park",
-      "count": 1
-    },
-    {
-      "facility_type": "Rugby Pitch",
-      "count": 1
-    },
-    {
-      "facility_type": "Playground",
-      "count": 2
-    }
-  ],
-  "Lewisham 030B": [
     {
       "facility_type": "Swimming Pool",
-      "count": 3
+      "count": 2
     },
+    {
+      "facility_type": "Recreation Ground",
+      "count": 2
+    }
+  ],
+  "Brent 023C": [
     {
       "facility_type": "Cycling Track",
-      "count": 2
-    },
-    {
-      "facility_type": "Sports Hall",
-      "count": 2
-    },
-    {
-      "facility_type": "Archery Range",
-      "count": 2
-    }
-  ],
-  "Lewisham 039D": [
-    {
-      "facility_type": "Ice Rink",
       "count": 3
-    },
-    {
-      "facility_type": "Volleyball Court",
-      "count": 3
-    },
-    {
-      "facility_type": "Table Tennis Centre",
-      "count": 1
-    },
-    {
-      "facility_type": "Equestrian Centre",
-      "count": 1
-    },
-    {
-      "facility_type": "Sailing Club",
-      "count": 2
-    }
-  ],
-  "Redbridge 006C": [
-    {
-      "facility_type": "Shooting Range",
-      "count": 3
-    },
-    {
-      "facility_type": "Dance Studio",
-      "count": 3
-    },
-    {
-      "facility_type": "Boxing Gym",
-      "count": 1
-    },
-    {
-      "facility_type": "Community Sports Centre",
-      "count": 3
-    },
-    {
-      "facility_type": "Fencing Salle",
-      "count": 1
-    },
-    {
-      "facility_type": "Boutique Fitness",
-      "count": 4
-    },
-    {
-      "facility_type": "Rugby Pitch",
-      "count": 1
-    },
-    {
-      "facility_type": "Archery Range",
-      "count": 1
-    }
-  ],
-  "Redbridge 002D": [
-    {
-      "facility_type": "Badminton Court",
-      "count": 1
-    },
-    {
-      "facility_type": "Yoga Studio",
-      "count": 1
-    },
-    {
-      "facility_type": "Dance Studio",
-      "count": 2
-    },
-    {
-      "facility_type": "Community Sports Centre",
-      "count": 4
-    }
-  ],
-  "Redbridge 034C": [
-    {
-      "facility_type": "Community Sports Centre",
-      "count": 1
-    },
-    {
-      "facility_type": "Sports Hall",
-      "count": 2
-    },
-    {
-      "facility_type": "Parkour Park",
-      "count": 1
-    },
-    {
-      "facility_type": "Badminton Court",
-      "count": 3
-    },
-    {
-      "facility_type": "Yoga Studio",
-      "count": 1
-    },
-    {
-      "facility_type": "Golf Course",
-      "count": 2
     },
     {
       "facility_type": "Basketball Court",
-      "count": 2
-    }
-  ],
-  "Redbridge 001F": [
-    {
-      "facility_type": "Cricket Nets",
-      "count": 2
-    },
-    {
-      "facility_type": "Dance Studio",
       "count": 1
     },
+    {
+      "facility_type": "Independent Gym",
+      "count": 1
+    },
+    {
+      "facility_type": "Badminton Court",
+      "count": 3
+    },
+    {
+      "facility_type": "Playground",
+      "count": 1
+    },
+    {
+      "facility_type": "Archery Range",
+      "count": 3
+    }
+  ],
+  "Brent 014F": [
     {
       "facility_type": "Skate Park",
       "count": 4
     },
     {
-      "facility_type": "Athletics Track",
-      "count": 1
+      "facility_type": "Table Football Club",
+      "count": 4
     },
     {
-      "facility_type": "Martial Arts Dojo",
-      "count": 1
+      "facility_type": "Swimming Pool",
+      "count": 2
     },
-    {
-      "facility_type": "Sports Hall",
-      "count": 3
-    },
-    {
-      "facility_type": "Badminton Court",
-      "count": 1
-    }
-  ],
-  "Redbridge 022B": [
     {
       "facility_type": "Bowling Alley",
-      "count": 2
-    },
-    {
-      "facility_type": "Badminton Court",
-      "count": 2
-    },
-    {
-      "facility_type": "Wrestling Gym",
       "count": 3
-    },
-    {
-      "facility_type": "Outdoor Gym",
-      "count": 2
     },
     {
       "facility_type": "Basketball Court",
-      "count": 1
-    },
-    {
-      "facility_type": "Water Sports Centre",
-      "count": 3
-    },
-    {
-      "facility_type": "Esports Arena",
-      "count": 4
-    },
-    {
-      "facility_type": "Boxing Gym",
-      "count": 1
-    }
-  ],
-  "Barnet 011E": [
-    {
-      "facility_type": "Chain Gym",
       "count": 2
     },
     {
-      "facility_type": "Rowing Club",
-      "count": 4
-    },
-    {
-      "facility_type": "Shooting Range",
+      "facility_type": "Parkour Park",
       "count": 1
     },
     {
       "facility_type": "Tennis Court",
       "count": 2
-    },
-    {
-      "facility_type": "Recreation Ground",
-      "count": 1
-    },
-    {
-      "facility_type": "Martial Arts Dojo",
-      "count": 2
-    },
-    {
-      "facility_type": "Boutique Fitness",
-      "count": 1
-    },
-    {
-      "facility_type": "Basketball Court",
-      "count": 4
-    }
-  ],
-  "Barnet 017E": [
-    {
-      "facility_type": "Cricket Nets",
-      "count": 1
-    },
-    {
-      "facility_type": "Squash Court",
-      "count": 2
-    },
-    {
-      "facility_type": "Boutique Fitness",
-      "count": 3
-    },
-    {
-      "facility_type": "Climbing Wall",
-      "count": 1
-    }
-  ],
-  "Barnet 042D": [
-    {
-      "facility_type": "Volleyball Court",
-      "count": 4
-    },
-    {
-      "facility_type": "Shooting Range",
-      "count": 2
-    },
-    {
-      "facility_type": "Multi-sport Centre",
-      "count": 4
-    },
-    {
-      "facility_type": "Martial Arts Dojo",
-      "count": 4
-    },
-    {
-      "facility_type": "Sports Hall",
-      "count": 1
-    }
-  ],
-<<<<<<< HEAD
-  "Brent 025D": [
-    {
-      "facility_type": "Squash Court",
-      "count": 3
-    },
-    {
-      "facility_type": "Premium Gym",
-=======
-  "Brent 014C": [
-    {
-      "facility_type": "Chain Gym",
-      "count": 2
-    },
-    {
-      "facility_type": "Volleyball Court",
-      "count": 1
-    },
-    {
-      "facility_type": "Wrestling Gym",
->>>>>>> 21bda97dccd069d3cff2a3e5576433597b772a8b
-      "count": 3
-    },
-    {
-      "facility_type": "Rowing Club",
-      "count": 2
-    },
-    {
-<<<<<<< HEAD
-      "facility_type": "Fencing Salle",
-      "count": 4
-    },
-    {
-      "facility_type": "Bowling Alley",
-      "count": 1
-=======
-      "facility_type": "Archery Range",
-      "count": 3
-    },
-    {
-      "facility_type": "Water Sports Centre",
-      "count": 1
-    },
-    {
-      "facility_type": "Swimming Pool",
-      "count": 2
->>>>>>> 21bda97dccd069d3cff2a3e5576433597b772a8b
     }
   ]
 }

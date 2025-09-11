@@ -1,8 +1,11 @@
 // SpecCreator factory for creating chart specifications
 import { ChartSpec, ChartConfig, LineChartParams, BarChartParams, PieChartParams, ScatterChartParams, MapChartParams, MultiTypeChartParams } from './types/interfaces';
 import { createMultiLineLabelSpec } from './line/multiLineLabelSpec';
+import { createMultiLineTooltipSpec, MultiLineTooltipConfig } from './line/multiLineTooltipSpec';
 import { createDivergingBarSpec } from './bar/divergingBarSpec';
 import { createHorizontalBarSpec } from './bar/horizontalBarSpec';
+import { createSimpleHorizontalBarSpec, SimpleHorizontalBarConfig } from './bar/simpleHorizontalBarSpec';
+import { createVerticalBarChartSpec, VerticalBarChartConfig } from './bar/verticalBarChartSpec';
 import { createInteractivePieSpec } from './pie/interactivePieSpec';
 import { createBubblePlotScatterSpec } from './scatter/bubblePlotScatterSpec';
 import { createWorldInteractiveMapSpec, createCountryDetailMapSpec } from './map/worldInteractiveMapSpec';
@@ -38,6 +41,8 @@ export class SpecCreator {
     switch (subtype) {
       case 'multiLineLabelSpec':
         return SpecCreator.createMultiLineLabelChart(data, config);
+      case 'multiLineTooltipSpec':
+        return SpecCreator.createMultiLineTooltipChart(data, config);
       case 'multiLineSpec':
         // TODO: Implement basic multi-line chart (without labels)
         throw new Error(`Line chart subtype "${subtype}" not yet implemented`);
@@ -71,6 +76,75 @@ export class SpecCreator {
     };
 
     return createMultiLineLabelSpec(params);
+  }
+
+  /**
+   * Create multi-line chart with enhanced tooltips
+   */
+  private static createMultiLineTooltipChart(data: any[], config: ChartConfig): any {
+    // Cast to any to access custom properties for multi-line tooltip
+    const customFields = config.fields as any;
+    const customInteractions = config.interactions as any;
+    
+    const multiLineConfig: MultiLineTooltipConfig = {
+      data,
+      dimensions: {
+        width: config.dimensions.width,
+        height: config.dimensions.height
+      },
+      fields: {
+        x: config.fields.x || config.fields.date || 'year',
+        lines: customFields.lines || ['value1', 'value2'], // Default fallback
+        lineLabels: customFields.lineLabels
+      },
+      styling: {
+        colors: config.styling.colors,
+        background: config.styling.background || 'transparent',
+        axes: config.styling.axes ? {
+          xAxis: config.styling.axes.xAxis ? {
+            title: config.styling.axes.xAxis.title,
+            labelColor: config.styling.axes.xAxis.labelColor,
+            titleColor: config.styling.axes.xAxis.titleColor,
+            labelFontSize: config.styling.axes.xAxis.labelFontSize,
+            labelAngle: config.styling.axes.xAxis.labelAngle,
+            grid: config.styling.axes.xAxis.grid,
+            gridColor: config.styling.axes.xAxis.gridColor,
+            gridDash: config.styling.axes.xAxis.gridDash,
+            format: config.styling.axes.xAxis.format,
+            values: config.styling.axes.xAxis.values?.map(v => String(v)),
+            ticks: config.styling.axes.xAxis.ticks,
+            domain: config.styling.axes.xAxis.domain
+          } : undefined,
+          yAxis: config.styling.axes.yAxis ? {
+            title: config.styling.axes.yAxis.title,
+            labelColor: config.styling.axes.yAxis.labelColor,
+            titleColor: config.styling.axes.yAxis.titleColor,
+            labelFontSize: config.styling.axes.yAxis.labelFontSize,
+            grid: config.styling.axes.yAxis.grid,
+            gridColor: config.styling.axes.yAxis.gridColor,
+            gridDash: config.styling.axes.yAxis.gridDash,
+            format: config.styling.axes.yAxis.format,
+            ticks: config.styling.axes.yAxis.ticks,
+            domain: config.styling.axes.yAxis.domain
+          } : undefined
+        } : undefined
+      },
+      interactions: config.interactions ? {
+        hover: config.interactions.hover !== false,
+        points: customInteractions.points !== false
+      } : { hover: true, points: true },
+      tooltip: config.tooltip ? {
+        fields: config.tooltip.fields?.map(field => ({
+          field: field.field,
+          type: field.type === 'temporal' ? 'ordinal' : field.type,
+          title: field.title || field.field,
+          format: field.format
+        })) || []
+      } : undefined,
+      legend: config.legend
+    };
+
+    return createMultiLineTooltipSpec(multiLineConfig);
   }
 
   /**
@@ -114,6 +188,10 @@ export class SpecCreator {
         return SpecCreator.createDivergingBarChart(data, config);
       case 'horizontalBarSpec':
         return SpecCreator.createHorizontalBarChart(data, config);
+      case 'simpleHorizontalBarSpec':
+        return SpecCreator.createSimpleHorizontalBarChart(data, config);
+      case 'verticalBarChartSpec':
+        return SpecCreator.createVerticalBarChart(data, config);
       default:
         throw new Error(`Unsupported bar chart subtype: ${subtype}`);
     }
@@ -166,6 +244,121 @@ export class SpecCreator {
     };
 
     return createHorizontalBarSpec(params);
+  }
+
+  /**
+   * Create simple horizontal bar chart
+   */
+  private static createSimpleHorizontalBarChart(data: any[], config: ChartConfig): any {
+    const simpleConfig: SimpleHorizontalBarConfig = {
+      data,
+      dimensions: {
+        width: config.dimensions.width,
+        height: config.dimensions.height
+      },
+      fields: {
+        category: config.fields.category || 'category',
+        value: config.fields.value || 'value'
+      },
+      styling: {
+        colors: config.styling.colors,
+        background: config.styling.background || 'transparent',
+        axes: config.styling.axes ? {
+          xAxis: config.styling.axes.xAxis ? {
+            title: config.styling.axes.xAxis.title,
+            labelColor: config.styling.axes.xAxis.labelColor,
+            titleColor: config.styling.axes.xAxis.titleColor,
+            labelFontSize: config.styling.axes.xAxis.labelFontSize,
+            grid: config.styling.axes.xAxis.grid,
+            gridColor: config.styling.axes.xAxis.gridColor,
+            gridDash: config.styling.axes.xAxis.gridDash,
+            format: config.styling.axes.xAxis.format
+          } : undefined,
+          yAxis: config.styling.axes.yAxis ? {
+            title: config.styling.axes.yAxis.title,
+            labelColor: config.styling.axes.yAxis.labelColor,
+            titleColor: config.styling.axes.yAxis.titleColor,
+            labelFontSize: config.styling.axes.yAxis.labelFontSize,
+            labelLimit: (config.styling.axes.yAxis as any).labelLimit,
+            grid: config.styling.axes.yAxis.grid
+          } : undefined
+        } : undefined
+      },
+      interactions: config.interactions,
+      tooltip: config.tooltip ? {
+        fields: config.tooltip.fields?.map(field => ({
+          field: field.field,
+          type: field.type === 'temporal' ? 'nominal' : field.type,
+          title: field.title || field.field,
+          format: field.format
+        })) || []
+      } : undefined
+    };
+
+    return createSimpleHorizontalBarSpec(simpleConfig);
+  }
+
+  /**
+   * Create vertical bar chart
+   */
+  private static createVerticalBarChart(data: any[], config: ChartConfig): any {
+    const verticalConfig: VerticalBarChartConfig = {
+      data,
+      dimensions: {
+        width: config.dimensions.width,
+        height: config.dimensions.height
+      },
+      fields: {
+        category: config.fields.category || config.fields.x || 'category',
+        value: config.fields.value || config.fields.y || 'value',
+        type: config.fields.series || config.fields.color
+      },
+      styling: {
+        colors: config.styling.colors,
+        background: config.styling.background || 'transparent',
+        axes: config.styling.axes ? {
+          xAxis: config.styling.axes.xAxis ? {
+            title: config.styling.axes.xAxis.title,
+            labelColor: config.styling.axes.xAxis.labelColor,
+            titleColor: config.styling.axes.xAxis.titleColor,
+            labelFontSize: config.styling.axes.xAxis.labelFontSize,
+            labelAngle: config.styling.axes.xAxis.labelAngle,
+            grid: config.styling.axes.xAxis.grid,
+            ticks: config.styling.axes.xAxis.ticks,
+            domain: config.styling.axes.xAxis.domain,
+            values: config.styling.axes.xAxis.values
+          } : undefined,
+          yAxis: config.styling.axes.yAxis ? {
+            title: config.styling.axes.yAxis.title,
+            labelColor: config.styling.axes.yAxis.labelColor,
+            titleColor: config.styling.axes.yAxis.titleColor,
+            labelFontSize: config.styling.axes.yAxis.labelFontSize,
+            grid: config.styling.axes.yAxis.grid,
+            gridColor: config.styling.axes.yAxis.gridColor,
+            gridDash: config.styling.axes.yAxis.gridDash,
+            ticks: config.styling.axes.yAxis.ticks,
+            domain: config.styling.axes.yAxis.domain,
+            format: config.styling.axes.yAxis.format
+          } : undefined
+        } : undefined
+      },
+      interactions: config.interactions,
+      tooltip: config.tooltip ? {
+        fields: config.tooltip.fields?.map(field => ({
+          field: field.field,
+          type: field.type === 'temporal' ? 'ordinal' : field.type,
+          title: field.title || field.field,
+          format: field.format
+        })) || []
+      } : undefined,
+      legend: config.legend ? {
+        show: true,
+        title: config.legend.title,
+        orient: config.legend.orient
+      } : { show: false }
+    };
+
+    return createVerticalBarChartSpec(verticalConfig);
   }
 
   /**

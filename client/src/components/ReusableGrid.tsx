@@ -18,15 +18,15 @@ export const GRID_CONFIGS = {
   },
   'london-dashboard': {
     columns: 8,
-    rows: 6,
+    rows: 8,
     gap: 4,
-    rowSizes: ['80px', '280px', '200px', '180px'],
+    rowSizes: ['100px', 'repeat(7, 110px)'],
     containerStyle: {
       width: '100%',
-      backgroundColor: '#F0F4F8',
+      backgroundColor: '#E3F2FA',
       fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
     },
-    className: 'london-dashboard p-6 rounded-lg text-[#2C3E50]'
+    className: 'london-dashboard p-6 rounded-lg text-[#1A3C4A]'
   },
   'default': {
     columns: 4,

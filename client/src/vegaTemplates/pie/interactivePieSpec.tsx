@@ -66,20 +66,23 @@ export function createInteractivePieSpec(
           field: categoryField,
           type: "nominal" as const,
           ...(colors && { scale: { range: colors } }),
-          ...(legend && {
-            legend: {
-              title: legend.title || categoryField,
-              orient: legend.orient || "right",
-              titleColor: legend.titleColor || "#888",
-              labelColor: legend.labelColor || "#888",
-              titleFontSize: legend.titleFontSize || 11,
-              labelFontSize: legend.labelFontSize || 10,
-              symbolSize: legend.symbolSize || 200,
-              offset: legend.offset || 30,
-              padding: legend.padding || 0,
-              symbolType: legend.symbolType || "circle"
+          ...(legend === undefined || legend === null ? 
+            { legend: null } : 
+            legend && {
+              legend: {
+                title: legend.title || categoryField,
+                orient: legend.orient || "right",
+                titleColor: legend.titleColor || "#888",
+                labelColor: legend.labelColor || "#888",
+                titleFontSize: legend.titleFontSize || 11,
+                labelFontSize: legend.labelFontSize || 10,
+                symbolSize: legend.symbolSize || 200,
+                offset: legend.offset || 30,
+                padding: legend.padding || 0,
+                symbolType: legend.symbolType || "circle"
+              }
             }
-          })
+          )
         },
         stroke: {
           condition: {

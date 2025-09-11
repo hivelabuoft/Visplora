@@ -56,6 +56,7 @@ export interface AxisConfig {
     domain?: boolean;
     format?: string;
     scale?: any;
+    values?: (string | number)[];
   };
   yAxis?: {
     title?: string | null;
