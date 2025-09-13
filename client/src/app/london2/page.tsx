@@ -79,9 +79,7 @@ import {
   crimeBarChartComparisonSpec, 
   crimePieChartComparisonSpec, 
   countryOfBirthPieChartSpec, 
-  housePriceTimelineChartSpec, 
-  gymPieChartSpec, 
-  libraryLineChartSpec 
+  housePriceTimelineChartSpec
 } from '../dashboard3/vegaSpecs';
 import dynamic from 'next/dynamic';
 import { boroughIdToName } from '../dashboard3/boroughMapping';
@@ -523,6 +521,15 @@ const London2Dashboard: React.FC<London2DashboardProps> = ({ onInteraction }) =>
     setMockLibraries(generateMockLibrariesData());
     setMockSchoolStats(generateMockSchoolStats(lsoaName));
     
+    // Generate mock gym data for the selected LSOA
+    const mockGymData = [
+      { facility_type: 'Public Gym', count: Math.floor(Math.random() * 3) + 1 },
+      { facility_type: 'Private Gym', count: Math.floor(Math.random() * 5) + 2 },
+      { facility_type: 'Swimming Pool', count: Math.floor(Math.random() * 2) + 1 },
+      { facility_type: 'Sports Center', count: Math.floor(Math.random() * 2) + 1 }
+    ].filter(item => item.count > 0); // Only include facilities that exist
+    setMockGyms(mockGymData);
+    
     if (ethnicityData.length > 0) {
       const lsoaEthnicity = ethnicityData.find(e => e.lsoaCode === lsoaCode);
       if (lsoaEthnicity) {
@@ -558,6 +565,7 @@ const London2Dashboard: React.FC<London2DashboardProps> = ({ onInteraction }) =>
     updateDashboardFilter('selectedLSOAName', '');
     setMockLibraries([]);
     setMockSchoolStats(null);
+    setMockGyms([]);
     setLsoaEthnicityStats(null);
   };
 
@@ -1084,13 +1092,58 @@ const London2Dashboard: React.FC<London2DashboardProps> = ({ onInteraction }) =>
           title="LIBRARY VISITS"
           description={`Visits per 1,000 people | ${selectedLSOAName}`}
           chartType="vega-lite"
-          vegaSpec={libraryLineChartSpec(mockLibraries)}
+          vegaSpec={mockLibraries.length > 0 ? 
+            SpecCreator.create({
+              type: 'line',
+              subtype: 'simpleLineChartSpec',
+              data: mockLibraries,
+              config: {
+                dimensions: { width: 250, height: 130 },
+                fields: {
+                  x: 'year',
+                  y: 'visits_per_1000'
+                },
+                styling: {
+                  colors: ['#8B5CF6'],
+                  background: 'transparent',
+                  axes: {
+                    xAxis: {
+                      title: null,
+                      labelColor: '#888',
+                      labelFontSize: 8,
+                      labelAngle: -45,
+                      grid: false
+                    },
+                    yAxis: {
+                      title: null,
+                      labelColor: '#888',
+                      labelFontSize: 8,
+                      grid: true,
+                      gridColor: '#888',
+                      gridDash: [2, 2]
+                    }
+                  }
+                },
+                interactions: {
+                  hover: true,
+                  tooltip: true
+                },
+                tooltip: {
+                  fields: [
+                    { field: 'year', type: 'ordinal', title: 'Year' },
+                    { field: 'visits_per_1000', type: 'quantitative', title: 'Visits per 1000' }
+                  ]
+                }
+              }
+            }) : null}
           vegaRenderer="svg"
           showActions={false}
           style={createPositionalStyle(1, 3, 7, 9)}
           className="bg-white border border-[#BFD9EA] text-[#1A3C4A]"
           chartPosition="custom"
           customChartStyle={{ position: 'absolute', bottom: '0px', left: '16px', right: '16px' }}
+          dataCondition={mockLibraries.length > 0}
+          fallbackContent={<div className="flex items-center justify-center h-32 text-gray-400 text-xs">No library data available</div>}
         />
       )}
 
@@ -1171,14 +1224,51 @@ const London2Dashboard: React.FC<London2DashboardProps> = ({ onInteraction }) =>
           size="medium"
           title="SPORTS AND RECREATION FACILITIES"
           description={`Counts of facilities in ${selectedLSOAName}`}
-          chartType="custom"
+          chartType="vega-lite"
+          vegaSpec={mockGyms.length > 0 ? 
+            SpecCreator.create({
+              type: 'pie',
+              subtype: 'interactivePieSpec',
+              data: mockGyms,
+              config: {
+                dimensions: { width: 140, height: 120 },
+                fields: {
+                  category: 'facility_type',
+                  value: 'count'
+                },
+                styling: {
+                  colors: ['#8b5cf6', '#3b82f6', '#06b6d4', '#10b981'],
+                  background: 'transparent'
+                },
+                interactions: {
+                  hover: true,
+                  select: true
+                },
+                legend: {
+                  orient: 'right',
+                  title: 'Facility Type',
+                  titleColor: '#2B7A9B',
+                  labelColor: '#4A6A7B',
+                  labelFontSize: 10,
+                  symbolSize: 50
+                },
+                tooltip: {
+                  fields: [
+                    { field: 'facility_type', type: 'nominal', title: 'Facility Type' },
+                    { field: 'count', type: 'quantitative', title: 'Count', format: ',.0f' }
+                  ]
+                }
+              }
+            }) : null}
+          vegaRenderer="svg"
+          showActions={false}
           style={createPositionalStyle(3, 5, 7, 9)}
           className="bg-white border border-[#BFD9EA] text-[#1A3C4A]"
-        >
-          <div className="flex items-center justify-center h-32 text-gray-400 text-xs">
-            No such facilities exist in {selectedLSOAName}
-          </div>
-        </ReusableNode>
+          chartPosition="custom"
+          customChartStyle={{ position: 'absolute', bottom: '8px', left: '16px', right: '16px' }}
+          dataCondition={mockGyms.length > 0}
+          fallbackContent={<div className="flex items-center justify-center h-32 text-gray-400 text-xs">No sports facilities found in {selectedLSOAName}</div>}
+        />
       )}
 
       {/* Ethnicity Minority Groups */}

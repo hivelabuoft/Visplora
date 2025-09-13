@@ -2,6 +2,7 @@
 import { ChartSpec, ChartConfig, LineChartParams, BarChartParams, PieChartParams, ScatterChartParams, MapChartParams, MultiTypeChartParams } from './types/interfaces';
 import { createMultiLineLabelSpec } from './line/multiLineLabelSpec';
 import { createMultiLineTooltipSpec, MultiLineTooltipConfig } from './line/multiLineTooltipSpec';
+import { createSimpleLineChartSpec, SimpleLineChartConfig } from './line/simpleLineChartSpec';
 import { createDivergingBarSpec } from './bar/divergingBarSpec';
 import { createHorizontalBarSpec } from './bar/horizontalBarSpec';
 import { createSimpleHorizontalBarSpec, SimpleHorizontalBarConfig } from './bar/simpleHorizontalBarSpec';
@@ -43,6 +44,8 @@ export class SpecCreator {
         return SpecCreator.createMultiLineLabelChart(data, config);
       case 'multiLineTooltipSpec':
         return SpecCreator.createMultiLineTooltipChart(data, config);
+      case 'simpleLineChartSpec':
+        return SpecCreator.createSimpleLineChart(data, config);
       case 'multiLineSpec':
         // TODO: Implement basic multi-line chart (without labels)
         throw new Error(`Line chart subtype "${subtype}" not yet implemented`);
@@ -145,6 +148,43 @@ export class SpecCreator {
     };
 
     return createMultiLineTooltipSpec(multiLineConfig);
+  }
+
+  /**
+   * Create simple line chart
+   */
+  private static createSimpleLineChart(data: any[], config: ChartConfig): any {
+    const simpleLineConfig: SimpleLineChartConfig = {
+      data,
+      dimensions: {
+        width: config.dimensions.width,
+        height: config.dimensions.height
+      },
+      fields: {
+        x: config.fields.x || config.fields.date || 'year',
+        y: config.fields.y || config.fields.value || 'value'
+      },
+      styling: {
+        colors: config.styling.colors,
+        background: config.styling.background || 'transparent',
+        axes: config.styling.axes
+      },
+      interactions: config.interactions ? {
+        hover: config.interactions.hover !== false,
+        tooltip: config.interactions.tooltip !== false,
+        points: true // Always enable points for simple line chart
+      } : { hover: true, tooltip: true, points: true },
+      tooltip: config.tooltip ? {
+        fields: config.tooltip.fields?.map(field => ({
+          field: field.field,
+          type: field.type === 'temporal' ? 'ordinal' : field.type as 'nominal' | 'ordinal' | 'quantitative',
+          title: field.title || field.field,
+          format: field.format
+        })) || []
+      } : undefined
+    };
+
+    return createSimpleLineChartSpec(simpleLineConfig);
   }
 
   /**
