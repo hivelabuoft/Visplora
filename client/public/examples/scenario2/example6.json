@@ -1,0 +1,496 @@
+{
+  "exploration_path": [
+    {
+      "sentence_id": 1,
+      "sentence_content": "I started by scanning destinations through the lenses of cost of stay, safety, and popularity to get a broad sense of where each country stands.",
+      "children": [2,20,25],
+      "parent": null,
+      "system_shows": "Dashboard: baseline overview; chart1: bar chart of average daily cost by country; chart2: bubble chart of safety vs popularity, colored by region",
+      "drift_type": "begin"
+    },
+
+    {
+      "sentence_id": 2,
+      "sentence_content": "Travelers in spring seek destinations balancing affordability, environmental quality, and manageable crowds.",
+      "children": [3,6,10],
+      "parent": 1,
+      "system_shows": "Dashboard: intent → autoview; chart1: bar chart of cost by region; chart2: bar+line combo of environmental score (bar) vs popularity growth (line)",
+      "drift_type": "Provide Overview"
+    },
+
+    {
+      "sentence_id": 3,
+      "sentence_content": "Looking at affordability, I compared how environmental quality and traveler reviews align with daily costs.",
+      "children": [4,5],
+      "parent": 2,
+      "system_shows": "Dashboard: affordability lens; chart1: bar chart of cost per day by destination; chart2: line chart of traveler reviews; chart3: bar+line combo of environmental score vs affordability",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 4,
+      "sentence_content": "Some of the lower-cost countries earn consistently high review scores, though their environmental quality varies sharply.",
+      "children": [7],
+      "parent": 3,
+      "system_shows": "Chart: bubble plot of cost vs reviews, bubble size = environmental score",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 5,
+      "sentence_content": "I also looked at how accessible the affordable destinations are, adding transport and amenity indicators to the mix.",
+      "children": [8],
+      "parent": 3,
+      "system_shows": "Dashboard: accessibility overlay; chart1: bar chart of public transport ratings; chart2: line chart of hotel availability against affordability",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 6,
+      "sentence_content": "To understand environmental trade-offs, I filtered for top-quartile eco scores and examined the cost spread among those leaders.",
+      "children": [11,12],
+      "parent": 2,
+      "system_shows": "Dashboard: environment-first lens; chart1: bar chart of environmental index by destination; chart2: bubble chart of environment vs cost",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 7,
+      "sentence_content": "To sharpen the view, I added cultural diversity, filtering for destinations that are both affordable and socially inclusive.",
+      "children": [9],
+      "parent": 4,
+      "system_shows": "Dashboard: diversity overlay; chart1: bar chart of diversity index by country; chart2: bubble chart of diversity vs affordability",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 8,
+      "sentence_content": "This path highlighted Poland and Thailand—places that balance modest costs with strong accessibility.",
+      "children": [],
+      "parent": 5,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 9,
+      "sentence_content": "Here the shortlist leaned toward Portugal, Mexico, and South Africa: all affordable, diverse, and well-reviewed.",
+      "children": [33],
+      "parent": 7,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+
+    {
+      "sentence_id": 10,
+      "sentence_content": "Turning to popularity, I compared international arrivals with accessibility and reviews to test whether the most visited destinations live up to expectations.",
+      "children": [14,15,16],
+      "parent": 2,
+      "system_shows": "Dashboard: popularity lens; chart1: bar chart of annual arrivals; chart2: line chart of average reviews over time; chart3: bubble chart of popularity vs accessibility",
+      "drift_type": "Provide Overview"
+    },
+
+    {
+      "sentence_id": 11,
+      "sentence_content": "Among eco-leaders, two clusters emerged: premium-price stalwarts and a smaller group of mid-priced, high-quality outliers.",
+      "children": [13],
+      "parent": 6,
+      "system_shows": "Chart: bar+line combo—environment rank (bar) and cost (line), clusters shaded",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 12,
+      "sentence_content": "I flagged the mid-priced eco outliers for later stress-testing against access, safety, and seasonality.",
+      "children": [],
+      "parent": 6,
+      "system_shows": "Dashboard: shortlist toggles; chart1: bar chart of flagged count by region",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 13,
+      "sentence_content": "Those outliers went onto a provisional shortlist to revisit once crowding and connectivity are accounted for.",
+      "children": [],
+      "parent": 11,
+      "system_shows": "",
+      "drift_type": "Provide Overview"
+    },
+
+    {
+      "sentence_id": 14,
+      "sentence_content": "Some crowd-heavy destinations are seeing reviews slip over time, a sign of over-tourism.",
+      "children": [17],
+      "parent": 10,
+      "system_shows": "Chart: line chart of review scores for top 10 most visited destinations",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 15,
+      "sentence_content": "I also checked which popular places maintain strong environmental scores, even under pressure from heavy visitor numbers.",
+      "children": [19],
+      "parent": 10,
+      "system_shows": "Dashboard: sustainable popularity; chart1: bar chart of environmental scores; chart2: bar+line combo of popularity vs reviews",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 16,
+      "sentence_content": "Asia offers cheapest options but higher crowding.",
+      "children": [34],
+      "parent": 10,
+      "system_shows": "Dashboard: regional contrast; chart1: bar chart of average daily cost by region; chart2: line chart of seasonal crowding index by region",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 17,
+      "sentence_content": "Venice and Barcelona illustrate how surging visitor numbers have chipped away at visitor satisfaction.",
+      "children": [],
+      "parent": 14,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 19,
+      "sentence_content": "On the other hand, Switzerland and New Zealand remain popular while keeping experiences positive and environmentally sustainable.",
+      "children": [],
+      "parent": 15,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+
+    {
+      "sentence_id": 20,
+      "sentence_content": "From a safety-first angle, I compared crime data with cultural diversity and attraction coverage to see whether the safest places are also rewarding to visit.",
+      "children": [21,22],
+      "parent": 1,
+      "system_shows": "Dashboard: safety lens; chart1: bar chart of safety index; chart2: pie chart of attraction categories; chart3: bubble chart of safety vs diversity",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 21,
+      "sentence_content": "Some countries are extremely safe but thin on cultural attractions, while others manage to strike a better balance.",
+      "children": [23],
+      "parent": 20,
+      "system_shows": "Chart: scatterplot of safety vs attractions per capita, outliers highlighted",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 22,
+      "sentence_content": "I also checked whether economic prosperity correlates with safety by layering in income levels.",
+      "children": [24],
+      "parent": 20,
+      "system_shows": "Dashboard: socio-economic overlay; chart1: bar chart of median income; chart2: line chart of safety index vs GDP per capita",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 23,
+      "sentence_content": "Japan and Canada stood out as destinations that combine strong safety with a rich cultural offering.",
+      "children": [],
+      "parent": 21,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 24,
+      "sentence_content": "Switzerland and Singapore also emerged here, where high incomes and excellent safety scores go hand in hand.",
+      "children": [],
+      "parent": 22,
+      "system_shows": "",
+      "drift_type": "Detect Pattern"
+    },
+
+    {
+      "sentence_id": 25,
+      "sentence_content": "Pulling the branches together, I compared all shortlists to see where different perspectives overlapped.",
+      "children": [26,27,28],
+      "parent": 1,
+      "system_shows": "Dashboard: synthesis view; chart1: Venn diagram of candidates across branches; chart2: bar chart of frequency of appearance",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 26,
+      "sentence_content": "Portugal, Switzerland, and Japan kept appearing across very different lenses, marking them as particularly robust choices.",
+      "children": [29],
+      "parent": 25,
+      "system_shows": "Chart: stacked bar chart of candidate appearances across branches",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 27,
+      "sentence_content": "I tested stability by adjusting weights on cost, safety, and environment to see whether the same destinations stayed near the top.",
+      "children": [30],
+      "parent": 25,
+      "system_shows": "Dashboard: sensitivity analysis; chart1: tornado plot of candidate stability; chart2: line chart of rank changes under weight shifts",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 28,
+      "sentence_content": "Different traveler types would likely make different choices—for example, Japan appeals to safety-focused travelers, while New Zealand draws those prioritizing nature.",
+      "children": [],
+      "parent": 25,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+    {
+      "sentence_id": 29,
+      "sentence_content": "After bringing all evidence together, the shortlist consistently converged on Portugal, Japan, Switzerland, Mexico, and New Zealand.",
+      "children": [31,32],
+      "parent": 26,
+      "system_shows": "",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 30,
+      "sentence_content": "These destinations held their positions even when the weighting of different factors was shifted, giving confidence in their robustness.",
+      "children": [],
+      "parent": 27,
+      "system_shows": "",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 31,
+      "sentence_content": "Framed together, these five offer a balance of affordability, safety, cultural richness, and environmental quality.",
+      "children": [32],
+      "parent": 29,
+      "system_shows": "",
+      "drift_type": "Provide Overview"
+    },
+    {
+      "sentence_id": 32,
+      "sentence_content": "Final recommendation: Portugal, Japan, Switzerland, Mexico, and New Zealand stand out as versatile and resilient choices for travelers, each excelling in different ways.",
+      "children": [],
+      "parent": 31,
+      "system_shows": "",
+      "drift_type": "Match Mental Model"
+    },
+
+    {
+      "sentence_id": 33,
+      "sentence_content": "Porto offers strong cultural value.",
+      "children": [],
+      "parent": 9,
+      "system_shows": "Chart: bar chart of attractions density vs peer cities; chart2: bar+line combo of cultural index (bar) vs cost (line)",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 34,
+      "sentence_content": "Bangkok is both affordable AND culturally rich—contradicting the 'cheap but limited' assumption.",
+      "children": [35,36],
+      "parent": 16,
+      "system_shows": "Dashboard: tension check; chart1: bubble chart of cost vs culture index; chart2: line chart of crowding vs review sentiment",
+      "drift_type": "Detect Pattern"
+    },
+    {
+      "sentence_id": 35,
+      "sentence_content": "I stress-tested the Bangkok–Ho Chi Minh value cluster against seasonality and neighborhood-level safety.",
+      "children": [],
+      "parent": 34,
+      "system_shows": "Dashboard: seasonality & safety; chart1: line chart of monthly arrivals; chart2: bar chart of safety index by district",
+      "drift_type": "Adjust"
+    },
+    {
+      "sentence_id": 36,
+      "sentence_content": "As a counterpoint, I profiled Stockholm and Copenhagen to see how premium sustainability holds up under rising arrivals.",
+      "children": [],
+      "parent": 34,
+      "system_shows": "Dashboard: premium sustainability; chart1: bar chart of environmental index; chart2: bar chart of safety index with delay incidence overlay",
+      "drift_type": "Provide Overview"
+    }
+  ],
+  "data_story": [
+  {
+    "data_story_sentence": "Analyzing spring destinations revealed a need to balance affordability, environmental quality, and manageable crowds for travelers.",
+    "ref_id": 2
+  },
+  {
+    "data_story_sentence": "Lower-cost countries like Portugal and Mexico emerged as affordable and diverse, though some trade environmental quality for cost.",
+    "ref_id": 9
+  },
+  {
+    "data_story_sentence": "Poland and Thailand balance affordability with accessibility, gaining recognition as cost-effective travel options.",
+    "ref_id": 8
+  },
+  {
+    "data_story_sentence": "While some popular destinations experience diminishing reviews due to over-tourism, Switzerland and New Zealand maintain positive experiences.",
+    "ref_id": 19
+  },
+  {
+    "data_story_sentence": "Environmental leaders feature premium-priced stalwarts and mid-priced outliers, marked for further evaluation against accessibility and safety.",
+    "ref_id": 11
+  },
+  {
+    "data_story_sentence": "Safety analysis highlights Japan and Canada for combining security with rich cultural offerings, with Switzerland and Singapore thriving on economic strength.",
+    "ref_id": 23
+  },
+  {
+    "data_story_sentence": "The synthesis of findings spotlights Portugal, Japan, and Switzerland for consistently excelling across diverse evaluation criteria.",
+    "ref_id": 26
+  },
+  {
+    "data_story_sentence": "Sensitivity analysis confirms Portugal, Japan, Switzerland, Mexico, and New Zealand as robust choices, even with varying factor weightings.",
+    "ref_id": 30
+  },
+  {
+    "data_story_sentence": "Bangkok emerged as both affordable and culturally vibrant, challenging typical assumptions about budget destinations.",
+    "ref_id": 34
+  },
+  {
+    "data_story_sentence": "The concluding recommendation emphasizes Portugal, Japan, Switzerland, Mexico, and New Zealand as versatile and resilient travel choices.",
+    "ref_id": 32
+  },
+  {
+    "data_story_sentence": "The exploration shows Porto offering strong cultural value, while Stockholm and Copenhagen stand out for premium sustainability amidst growing arrivals.",
+    "ref_id": 33
+  }
+],
+  "inquiries": [
+  {
+    "qid": "iss_1",
+    "title": "Do affordable destinations maintain high traveler reviews and environmental quality?",
+    "status": "resolved",
+    "sentenceRefs": ["3", "4", "5", "9"],
+    "position_suggested_by": {
+      "text": "Portugal, Mexico, and South Africa are affordable, diverse, and well-reviewed.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Analysis of cost vs reviews and diversity showed some countries as affordable and attractive.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "iss_6",
+        "type": "generalized_from",
+        "explanation": "Combines safety and affordability with high reviews."
+      }
+    ]
+  },
+  {
+    "qid": "iss_2",
+    "title": "Do popular destinations sustain positive reviews over time?",
+    "status": "resolved",
+    "sentenceRefs": ["10", "14", "17"],
+    "position_suggested_by": {
+      "text": "Venice and Barcelona show declining satisfaction under surging visitors.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Review scores of top destinations showed declines.",
+      "basis": "pattern"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_3",
+    "title": "How does accessibility influence popularity and satisfaction?",
+    "status": "resolved",
+    "sentenceRefs": ["5", "10", "15", "19"],
+    "position_suggested_by": {
+      "text": "Switzerland and New Zealand remain popular with strong environmental scores.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Analysis shows accessible places maintain high satisfaction.",
+      "basis": "pattern"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_4",
+    "title": "Does diversity enhance the appeal of safe destinations?",
+    "status": "resolved",
+    "sentenceRefs": ["20", "21", "23"],
+    "position_suggested_by": {
+      "text": "Japan and Canada combine safety with rich cultural offerings.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Scatterplot of safety vs attractions highlighted successful countries.",
+      "basis": "comparison"
+    },
+    "links": [
+      {
+        "qid": "iss_6",
+        "type": "specialized_from",
+        "explanation": "Enhances safety analysis with cultural considerations."
+      }
+    ]
+  },
+  {
+    "qid": "iss_5",
+    "title": "What factors make certain eco-friendly destinations more appealing?",
+    "status": "resolved",
+    "sentenceRefs": ["6", "11", "12", "13"],
+    "position_suggested_by": {
+      "text": "Mid-priced eco outliers are attractive for their balance.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Eco scores with accessibility enrich destination appeal.",
+      "basis": "pattern"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_6",
+    "title": "Which countries consistently excel across various evaluations?",
+    "status": "resolved",
+    "sentenceRefs": ["25", "26", "29", "31"],
+    "position_suggested_by": {
+      "text": "Portugal, Japan, Switzerland, Mexico, and New Zealand stand out.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Synthesis of factors showed resilience in these countries.",
+      "basis": "pattern"
+    },
+    "links": [
+      {
+        "qid": "iss_1",
+        "type": "specialized_from",
+        "explanation": "Refines shortlist based on high-performance aspects."
+      }
+    ]
+  },
+  {
+    "qid": "iss_7",
+    "title": "Can cultural richness and affordability coexist in less crowded areas?",
+    "status": "resolved",
+    "sentenceRefs": ["34", "35", "36"],
+    "position_suggested_by": {
+      "text": "Bangkok offers cultural and affordability benefits.",
+      "confidence": "medium"
+    },
+    "argument_suggested_by": {
+      "text": "Analysis of cultural and cost metrics.",
+      "basis": "comparison"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_8",
+    "title": "European sustainability premium quantified",
+    "status": "resolved",
+    "sentenceRefs": ["36"],
+    "position_suggested_by": {
+      "text": "Stockholm and Copenhagen show strong sustainability metrics.",
+      "confidence": "high"
+    },
+    "argument_suggested_by": {
+      "text": "Premium costs correlate with sustainability success.",
+      "basis": "pattern"
+    },
+    "links": []
+  },
+  {
+    "qid": "iss_9",
+    "title": "Bangkok vs Stockholm value comparison",
+    "status": "open",
+    "sentenceRefs": ["34", "36"],
+    "links": []
+  },
+  {
+    "qid": "iss_10",
+    "title": "Ho Chi Minh environmental data insufficient",
+    "status": "stalled",
+    "sentenceRefs": ["35"],
+    "position_suggested_by": {
+      "text": "Data gaps prevent full analysis.",
+      "confidence": "low"
+    },
+    "links": []
+  }
+]
+}

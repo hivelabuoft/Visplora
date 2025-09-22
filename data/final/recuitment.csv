@@ -1,0 +1,75 @@
+StartDate,EndDate,Status,IPAddress,Progress,Duration (in seconds),Finished,RecordedDate,ResponseId,RecipientLastName,RecipientFirstName,RecipientEmail,ExternalReference,LocationLatitude,LocationLongitude,DistributionChannel,UserLanguage,Q1,Q2,Q3,Q4,Q5,PROLIFIC_PID
+Start Date,End Date,Response Type,IP Address,Progress,Duration (in seconds),Finished,Recorded Date,Response ID,Recipient Last Name,Recipient First Name,Recipient Email,External Data Reference,Location Latitude,Location Longitude,Distribution Channel,User Language,"Consent Form for Screening
+    Student Principal Investigator: Oliver Huang, University of Toronto
+    Study Title: Exploring Data Narratives with Interactive Analysis Tools
+    Supported By: University of Toronto
+  
+
+  
+  
+    What is this stage?
+    
+      This is a short screening survey to determine eligibility for our upcoming study. 
+      It will only take about 1 minute to complete.
+    
+  
+
+  
+  
+    What are the next stages if I qualify?
+    If your background fits, you may be invited to later stages:
+    
+      Part 1 — Main Survey (~45 minutes, $20 USD): Reviewing a baseline BI workflow and imagining our proposed workflow with examples.
+      Part 2 — Interview & Hands-On Session (~60 minutes, $30 USD): A Zoom session where you will try the tool and provide feedback.
+    
+    
+      You do not need to attend both sessions. This screening is only about your willingness to attend the first main survey (Part 1). 
+      If you are selected and willing, you will receive either a new Prolific link (matched to your Prolific ID) or an invitation by email. 
+    
+  
+
+  
+  
+    Voluntary Participation
+    
+      Taking part is voluntary. You may choose not to continue, and your decision will not be held against you.
+    
+  
+
+  
+  
+    
+      By clicking “I consent” below, you confirm that you are at least 18 years old and agree to participate in this screening survey. 
+      Participation is voluntary, and you may withdraw at any time without penalty.","Have you used any visual analysis or data visualization tools before (e.g., Power BI, Tableau, Excel charts, Looker, or similar)?",How often do you use visual analysis tools to support your work or personal decision-making?,Name (Required if you intended to participate),Email (Required if you intended to participate),PROLIFIC_PID
+"{""ImportId"":""startDate"",""timeZone"":""America/Toronto""}","{""ImportId"":""endDate"",""timeZone"":""America/Toronto""}","{""ImportId"":""status""}","{""ImportId"":""ipAddress""}","{""ImportId"":""progress""}","{""ImportId"":""duration""}","{""ImportId"":""finished""}","{""ImportId"":""recordedDate"",""timeZone"":""America/Toronto""}","{""ImportId"":""_recordId""}","{""ImportId"":""recipientLastName""}","{""ImportId"":""recipientFirstName""}","{""ImportId"":""recipientEmail""}","{""ImportId"":""externalDataReference""}","{""ImportId"":""locationLatitude""}","{""ImportId"":""locationLongitude""}","{""ImportId"":""distributionChannel""}","{""ImportId"":""userLanguage""}","{""ImportId"":""QID1""}","{""ImportId"":""QID2""}","{""ImportId"":""QID3""}","{""ImportId"":""QID4_TEXT""}","{""ImportId"":""QID5_TEXT""}","{""ImportId"":""PROLIFIC_PID""}"
+2025-09-12 14:37:05,2025-09-12 14:37:55,IP Address,174.216.144.100,100,49,True,2025-09-12 14:37:55,R_5rv9SNpX74TIa5X,,,,,38.9522,-77.0253,anonymous,EN,I consent,Yes,Daily,Jing,huangdell@hotmail.com,66a8f82143da40a6b126975e
+2025-09-12 14:39:02,2025-09-12 14:39:54,IP Address,69.5.138.1,100,51,True,2025-09-12 14:39:54,R_7SpKn1OEHcr7AaF,,,,,41.6117,-93.8852,anonymous,EN,I consent,Yes,Daily,Jen Klein,jlklein78@yahoo.com,597fe89a1b41a20001749f57
+2025-09-12 14:39:44,2025-09-12 14:42:31,IP Address,105.245.172.205,100,166,True,2025-09-12 14:42:32,R_8WvF5lwpod4OmkR,,,,,-29.8553,31.0428,anonymous,EN,I consent,Yes,Daily,Kingdom,mbusomohlakoana026@gmail.com,682200baa4aa731275156f02
+2025-09-12 14:44:47,2025-09-12 14:45:25,IP Address,174.221.29.66,100,37,True,2025-09-12 14:45:26,R_7QgQeM8ymLXDgcg,,,,,33.4758,-112.1932,anonymous,EN,I consent,Yes,Weekly,Jenna,sinder3lla4227@gmail.com,6719866b472c20e8170bd78a
+2025-09-12 14:44:57,2025-09-12 14:46:07,IP Address,77.99.30.42,100,70,True,2025-09-12 14:46:07,R_2ilqkevuB1J2kfz,,,,,50.368,-4.1329,anonymous,EN,I consent,Yes,Weekly,Rabijit Bharadwaj,rabijitbharadwaj99@gmail.com,67163908d163cdb3d7a8012a
+2025-09-12 14:44:48,2025-09-12 14:46:23,IP Address,151.50.15.246,100,94,True,2025-09-12 14:46:23,R_84eGa2wxVNTcJ8S,,,,,41.1121,16.6964,anonymous,EN,I consent,Yes,Weekly,Cla,58d3bc1642648b0001f21ca4@email.prolific.com,58d3bc1642648b0001f21ca4
+2025-09-12 14:45:10,2025-09-12 14:46:28,IP Address,94.61.234.219,100,77,True,2025-09-12 14:46:28,R_8lOL6Jd3gvZfGRr,,,,,41.3437,-8.4819,anonymous,EN,I consent,Yes,Monthly,5e5a60c26ad45a24a3121705,5e5a60c26ad45a24a3121705@email.prolific.com,5e5a60c26ad45a24a3121705
+2025-09-12 14:45:17,2025-09-12 14:46:35,IP Address,197.185.177.98,100,77,True,2025-09-12 14:46:35,R_2E6CZq4lKAhFzA5,,,,,-26.2309,28.0583,anonymous,EN,I consent,Yes,Monthly,Daniel,pmpbrougham@gmail.com,615f61da0a7ab7a614d2148a
+2025-09-12 14:45:02,2025-09-12 14:47:14,IP Address,105.1.18.230,100,131,True,2025-09-12 14:47:14,R_2Yyxf9QfmFA7qpZ,,,,,-29.8553,31.0428,anonymous,EN,I consent,Yes,Monthly,Busisiwe,67ab608b798c9ff1f3b2d6e5@email.prolific.com,67ab608b798c9ff1f3b2d6e5
+2025-09-12 14:45:14,2025-09-12 14:47:19,IP Address,105.8.2.109,100,125,True,2025-09-12 14:47:19,R_21ZzuxTBlXEFWXa,,,,,-26.1917,28.0523,anonymous,EN,I consent,Yes,Weekly,Magdeline Lekganyane,mnlekganyane1@gmail.com,6720a60024247ebe665ab489
+2025-09-12 14:45:59,2025-09-12 14:47:20,IP Address,41.13.70.241,100,81,True,2025-09-12 14:47:21,R_8CDUL6xrpW29BeW,,,,,-25.7005,28.2247,anonymous,EN,I consent,Yes,Weekly,filomena,filomenamaria522@gmail.com,66b9af8ca020d514f5131634
+2025-09-12 14:45:05,2025-09-12 14:47:45,IP Address,94.209.70.199,100,160,True,2025-09-12 14:47:46,R_2qdJG5TPJdbPXTk,,,,,50.7823,5.7146,anonymous,EN,I consent,Yes,Daily,Max Kikken,maxkikken1998@hotmail.com,65a3ec77f674ac3e98f0c6ac
+2025-09-12 14:45:17,2025-09-12 14:48:01,IP Address,177.228.98.201,100,163,True,2025-09-12 14:48:01,R_1eknvoGw16qmYtA,,,,,24.5668,-107.3843,anonymous,EN,I consent,Yes,Daily,jess,cuentajparadinero@gmail.com,5f4520ebb012170878012efc
+2025-09-12 14:45:36,2025-09-12 14:48:14,IP Address,216.120.189.14,100,157,True,2025-09-12 14:48:15,R_877ri0MR25SENUp,,,,,51.5081,-0.1278,anonymous,EN,I consent,Yes,Daily,Kelechi Mark,eze1mansquad@gmail.com,6752dee37db379c454e9b066
+2025-09-12 14:45:06,2025-09-12 14:48:52,IP Address,103.199.122.53,100,225,True,2025-09-12 14:48:52,R_4DTXuhTEGnlrTHs,,,,,28.6929,76.9356,anonymous,EN,I consent,Yes,Weekly,Sonu,sonrashbusinesses@gmail.com,65fb1b3b8d6f60e342ea6b1e
+2025-09-12 14:46:20,2025-09-12 14:48:55,IP Address,188.120.172.86,100,155,True,2025-09-12 14:48:55,R_2FmhEpN4KRt5MMm,,,,,59.856,17.6403,anonymous,EN,I consent,Yes,Weekly,Arunas,Arunassaka@gmail.com,60f49d9ac07165744f5f3cf4
+2025-09-12 14:47:46,2025-09-12 14:49:08,IP Address,41.181.179.91,100,82,True,2025-09-12 14:49:09,R_2ScF4CJsNB2yhYl,,,,,-26.1833,28.3167,anonymous,EN,I consent,Yes,Weekly,Lonwabo,hurleyair@outlook.com,67e6e45f38ae6d7780f63533
+2025-09-12 14:48:54,2025-09-12 14:49:30,IP Address,47.41.79.4,100,35,True,2025-09-12 14:49:30,R_1QRhUHfwxrh9cr7,,,,,44.0484,-92.4948,anonymous,EN,I consent,Yes,Weekly,Keyue Ding,ding.keyue@gmail.com,607668ac450fc6e3025a131d
+2025-09-12 14:48:11,2025-09-12 14:49:49,IP Address,109.242.94.54,100,97,True,2025-09-12 14:49:49,R_83muXVY2coY8n7S,,,,,37.9842,23.7353,anonymous,EN,I consent,Yes,Weekly,Vagelis,660f0bec13b0a3246eeef533@email.prolific.com,660f0bec13b0a3246eeef533
+2025-09-12 14:46:07,2025-09-12 14:50:00,IP Address,41.116.14.18,100,232,True,2025-09-12 14:50:00,R_8eNXFQlAuEVTh85,,,,,-26.1,28.25,anonymous,EN,I consent,Yes,Weekly,VUSMUZ,yendethusi@gmail.com,68185ed818a05008c861de87
+2025-09-12 14:47:21,2025-09-12 14:50:48,IP Address,197.185.175.195,100,207,True,2025-09-12 14:50:49,R_2qVYmN0AFv3NirQ,,,,,-26.2309,28.0583,anonymous,EN,I consent,Yes,Weekly,Francinah N,francinahnramokgola@gmail.com,67c5a23d4c9dff71d41b6606
+2025-09-12 14:48:28,2025-09-12 14:51:22,IP Address,41.123.73.134,100,173,True,2025-09-12 14:51:22,R_29slez5u0h0J8Fb,,,,,-29.8553,31.0428,anonymous,EN,I consent,Yes,Daily,Musawande Ndlovu,ndlovumusawande@gmail'com,67f9860551b32c7ea3f4a8ab
+2025-09-12 14:45:12,2025-09-12 14:51:39,IP Address,41.123.34.221,100,387,True,2025-09-12 14:51:40,R_2Ea8mUd8d1wAjjV,,,,,-26.2309,28.0583,anonymous,EN,I consent,Yes,Daily,"Thulani Dhlamini ","Thulanidhlamini58@gmail.com ",66bd001bdff5991cf61b905e
+2025-09-12 14:48:58,2025-09-12 14:52:48,IP Address,27.59.109.95,100,229,True,2025-09-12 14:52:48,R_4MqzU50nAbdHT4B,,,,,18.5211,73.8502,anonymous,EN,I consent,Yes,Daily,Mohitsingh Baghel,mohitbaghel1511@gmail.com,65f335ba737e19c6aad352aa
+2025-09-12 14:52:07,2025-09-12 14:53:09,IP Address,92.40.182.234,100,61,True,2025-09-12 14:53:10,R_2711nf0I1VOe3bJ,,,,,53.4096,-2.9792,anonymous,EN,I consent,Yes,Monthly,Alan Herron,nskmadbadger@sky.com,67878e264046b71df4ad64af
+2025-09-12 14:51:10,2025-09-12 14:53:31,IP Address,165.165.127.253,100,141,True,2025-09-12 14:53:31,R_2akrlUSBhCHJeoh,,,,,-29.8553,31.0428,anonymous,EN,I consent,Yes,Daily,uziya chauke,singita24@outlook.com,66c4942d5a2a99590aab49e3
+2025-09-12 14:50:30,2025-09-12 14:54:07,IP Address,82.15.45.38,100,216,True,2025-09-12 14:54:08,R_23fjzTvqRBffUCs,,,,,53.5356,-2.952,anonymous,EN,I consent,Yes,Weekly,Emelda,kingsleyjupiter@gmail.com,673757f92aa69c13b7841d90
+2025-09-12 14:53:48,2025-09-12 14:55:33,IP Address,41.144.1.175,100,104,True,2025-09-12 14:55:33,R_2QFkQvUPJdSzCGJ,,,,,-29.8553,31.0428,anonymous,EN,I consent,Yes,Weekly,"Luwezo ",Luwezo.moncholomi@yahoo.com,674304831d50079dbb3c6411
+2025-09-12 14:57:12,2025-09-12 14:58:57,IP Address,197.184.65.74,100,105,True,2025-09-12 14:58:58,R_8GAIivHGkKQgWw3,,,,,-26.2309,28.0583,anonymous,EN,I consent,Yes,Daily,Reotshepile,67c048a816027b2413687ae6@email.prolific.com,67c048a816027b2413687ae6
+2025-09-12 14:58:20,2025-09-12 15:00:09,IP Address,105.8.3.37,100,108,True,2025-09-12 15:00:09,R_8NHTGZWdxbv6lpf,,,,,-26.1917,28.0523,anonymous,EN,I consent,Yes,Daily,Kammoh,67c81f08ea67cc8f14831fcd@email.prolific.com,67c81f08ea67cc8f14831fcd
+2025-09-12 14:58:43,2025-09-12 15:00:56,IP Address,41.13.96.10,100,132,True,2025-09-12 15:00:56,R_2v6VLjcCs4JODHD,,,,,-25.7005,28.2247,anonymous,EN,I consent,Yes,Daily,"Musawenkosi ",Michellexhakana@gmail.com,66c2e782b218b0df3a5c8c99

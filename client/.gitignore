@@ -46,3 +46,10 @@ next-env.d.ts
 
 # Gym facilities directory
 /public/data/gym-facilities
+
+# Python virtual environments
+venv/
+env/
+*_env/
+.venv/
+.env/

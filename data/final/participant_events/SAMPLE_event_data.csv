@@ -1,0 +1,11 @@
+timestamp_normalized,event_type
+0.0,session_start
+0.025,data_exploration_start
+0.1,filter_applied
+0.15,insight_generated
+0.3,branch_created
+0.45,reflection_event
+0.6,narrative_edit
+0.75,decision_made
+0.9,story_finalized
+1.0,session_end

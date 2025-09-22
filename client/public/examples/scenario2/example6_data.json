@@ -1,0 +1,3003 @@
+[
+  {
+    "sentence_id": 1,
+    "charts": [
+      {
+        "name": "Average Daily Cost by Country",
+        "request": {
+          "userQuery": "Show average daily cost of stay for each country",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "France",
+              "Italy",
+              "Spain",
+              "USA",
+              "Japan",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety vs Popularity",
+        "request": {
+          "userQuery": "Show safety scores vs popularity for each country, colored by region",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "France",
+              "Italy",
+              "Spain",
+              "USA",
+              "Japan",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe",
+                "North America",
+                "Asia",
+                "Oceania"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Country Popularity Overview",
+        "request": {
+          "userQuery": "Show popularity of each country",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "France",
+              "Italy",
+              "Spain",
+              "USA",
+              "Japan",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 2,
+    "charts": [
+      {
+        "name": "Affordability Ranking by Destination",
+        "request": {
+          "userQuery": "Show spring travel cost comparison for selected destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Bali",
+              "Prague",
+              "Cancun",
+              "Cape Town",
+              "Bangkok"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "season",
+              "values": [
+                "spring"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Environmental Quality Assessment",
+        "request": {
+          "userQuery": "Compare environmental scores for selected destinations in spring",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Bali",
+              "Prague",
+              "Cancun",
+              "Cape Town",
+              "Bangkok"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "season",
+              "values": [
+                "spring"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Visitor Volume Overview",
+        "request": {
+          "userQuery": "Display spring visitor volume for selected destinations",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Bali",
+              "Prague",
+              "Cancun",
+              "Cape Town",
+              "Bangkok"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "season",
+              "values": [
+                "spring"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Destination Analysis on Map",
+        "request": {
+          "userQuery": "Show selected destinations on world map",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "geographic",
+            "selectedCountries": [
+              "Indonesia",
+              "Czech Republic",
+              "Mexico",
+              "South Africa",
+              "Thailand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 3,
+    "charts": [
+      {
+        "name": "Affordability vs Environmental Quality",
+        "request": {
+          "userQuery": "Show the relationship between daily costs and environmental quality for various destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Bali",
+              "Paris",
+              "New York",
+              "Sydney",
+              "Cape Town",
+              "Tokyo",
+              "Rome"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Traveler Reviews vs Daily Costs",
+        "request": {
+          "userQuery": "Compare traveler reviews with daily costs across selected destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Bali",
+              "Paris",
+              "New York",
+              "Sydney",
+              "Cape Town",
+              "Tokyo",
+              "Rome"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Environmental Score vs Affordability",
+        "request": {
+          "userQuery": "Show how environmental score aligns with affordability across selected destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Bali",
+              "Paris",
+              "New York",
+              "Sydney",
+              "Cape Town",
+              "Tokyo",
+              "Rome"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 4,
+    "charts": [
+      {
+        "name": "Cost vs Reviews with Environmental Quality for Low-Cost Countries",
+        "request": {
+          "userQuery": "Show a bubble plot of cost versus reviews for lower-cost countries with bubble size representing environmental score",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "India",
+              "Vietnam",
+              "Thailand",
+              "Bulgaria",
+              "Mexico"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "budget_level": "low"
+            }
+          }
+        }
+      },
+      {
+        "name": "Environmental Quality Variation for Low-Cost Countries",
+        "request": {
+          "userQuery": "Show a diverging bar chart of environmental quality for lower-cost countries",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "India",
+              "Vietnam",
+              "Thailand",
+              "Bulgaria",
+              "Mexico"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "budget_level": "low"
+            }
+          }
+        }
+      },
+      {
+        "name": "Review Scores for Low-Cost Countries",
+        "request": {
+          "userQuery": "Show a horizontal bar chart of review scores for lower-cost countries",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "India",
+              "Vietnam",
+              "Thailand",
+              "Bulgaria",
+              "Mexico"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "budget_level": "low"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 5,
+    "charts": [
+      {
+        "name": "Affordable Destinations Transportation Ratings",
+        "request": {
+          "userQuery": "Show transport ratings for affordable destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Destination1",
+              "Destination2",
+              "Destination3",
+              "Destination4"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "filterValues": [
+                "affordable"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Hotel Availability vs Affordability",
+        "request": {
+          "userQuery": "Show hotel availability against affordability for selected destinations",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Destination1",
+              "Destination2",
+              "Destination3",
+              "Destination4"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "filterValues": [
+                "affordable"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Amenities Availability in Affordable Destinations",
+        "request": {
+          "userQuery": "Show amenity indicators for affordable destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Destination1",
+              "Destination2",
+              "Destination3",
+              "Destination4"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "filterValues": [
+                "affordable"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 6,
+    "charts": [
+      {
+        "name": "Top Quartile Eco Score Destinations",
+        "request": {
+          "userQuery": "Show destinations with top quartile environmental scores",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Amsterdam",
+              "Copenhagen",
+              "Oslo",
+              "Reykjavik",
+              "Zurich"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filter_type": "eco_score",
+              "filter_value": "top_quartile"
+            }
+          }
+        }
+      },
+      {
+        "name": "Cost Spread of Eco Leaders",
+        "request": {
+          "userQuery": "Show cost spread for destinations with top quartile environmental scores",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Amsterdam",
+              "Copenhagen",
+              "Oslo",
+              "Reykjavik",
+              "Zurich"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filter_type": "eco_score",
+              "filter_value": "top_quartile"
+            }
+          }
+        }
+      },
+      {
+        "name": "Eco Score vs Cost Analysis",
+        "request": {
+          "userQuery": "Compare environmental scores and costs for top eco destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Amsterdam",
+              "Copenhagen",
+              "Oslo",
+              "Reykjavik",
+              "Zurich"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 7,
+    "charts": [
+      {
+        "name": "Cultural Diversity Index by Country",
+        "request": {
+          "userQuery": "Show cultural diversity index for affordable and socially inclusive destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Thailand",
+              "Mexico",
+              "Portugal",
+              "South Africa",
+              "India"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "budget_level": "affordable",
+              "region": "inclusive"
+            }
+          }
+        }
+      },
+      {
+        "name": "Diversity vs Affordability Bubble Chart",
+        "request": {
+          "userQuery": "Compare cultural diversity and affordability for selected destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Thailand",
+              "Mexico",
+              "Portugal",
+              "South Africa",
+              "India"
+            ],
+            "maxDataPoints": 5
+          }
+        }
+      },
+      {
+        "name": "World Map of Cultural Diversity",
+        "request": {
+          "userQuery": "Show a world map highlighting cultural diversity in affordable and socially inclusive destinations",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "selectedCountries": [
+              "Thailand",
+              "Mexico",
+              "Portugal",
+              "South Africa",
+              "India"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "budget_level": "affordable",
+              "region": "inclusive"
+            }
+          }
+        }
+      },
+      {
+        "name": "Affordability and Inclusivity Bar Chart",
+        "request": {
+          "userQuery": "Show affordability and social inclusivity scores for selected destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Thailand",
+              "Mexico",
+              "Portugal",
+              "South Africa",
+              "India"
+            ],
+            "maxDataPoints": 5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 8,
+    "charts": [
+      {
+        "name": "Cost and Accessibility Comparison for Selected Destinations",
+        "request": {
+          "userQuery": "Show a comparison of cost and accessibility for Poland and Thailand",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Poland",
+              "Thailand"
+            ],
+            "maxDataPoints": 2,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "budget_level",
+              "values": [
+                "modest"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Accessibility of Destinations",
+        "request": {
+          "userQuery": "Show the accessibility level for Poland and Thailand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Poland",
+              "Thailand"
+            ],
+            "maxDataPoints": 2
+          }
+        }
+      },
+      {
+        "name": "World Map of Cost and Accessibility",
+        "request": {
+          "userQuery": "Highlight Poland and Thailand based on their cost and accessibility",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "selectedCountries": [
+              "Poland",
+              "Thailand"
+            ],
+            "maxDataPoints": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 9,
+    "charts": [
+      {
+        "name": "Affordability Comparison among Shortlisted Destinations",
+        "request": {
+          "userQuery": "Show a comparison of travel expenses in Portugal, Mexico and South Africa",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Portugal",
+              "Mexico",
+              "South Africa"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "filterValue": "affordable"
+            }
+          }
+        }
+      },
+      {
+        "name": "Cultural Diversity Index of Shortlisted Destinations",
+        "request": {
+          "userQuery": "Show the cultural diversity index for Portugal, Mexico and South Africa",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Portugal",
+              "Mexico",
+              "South Africa"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Review Ratings for Shortlisted Destinations",
+        "request": {
+          "userQuery": "Show the customer satisfaction ratings for Portugal, Mexico and South Africa",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Portugal",
+              "Mexico",
+              "South Africa"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 10,
+    "charts": [
+      {
+        "name": "Popularity vs Accessibility",
+        "request": {
+          "userQuery": "Show a scatter chart comparing popularity and accessibility for the most visited destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "France",
+              "USA",
+              "China",
+              "Spain",
+              "Italy",
+              "Turkey"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Destination Reviews Over Time",
+        "request": {
+          "userQuery": "Show a line chart of average reviews over time for the most visited destinations",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "France",
+              "USA",
+              "China",
+              "Spain",
+              "Italy",
+              "Turkey"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Annual Arrivals Comparison",
+        "request": {
+          "userQuery": "Show a bar chart comparing annual arrivals for the most visited destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "France",
+              "USA",
+              "China",
+              "Spain",
+              "Italy",
+              "Turkey"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Popularity and Reviews Comparison",
+        "request": {
+          "userQuery": "Show a multi-type chart comparing popularity and average reviews for the most visited destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "France",
+              "USA",
+              "China",
+              "Spain",
+              "Italy",
+              "Turkey"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 11,
+    "charts": [
+      {
+        "name": "Eco-Leaders' Environment Rank and Cost Analysis",
+        "request": {
+          "userQuery": "Show environment rank and cost for premium-price and mid-priced eco-leaders",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Eco-Leader 1",
+              "Eco-Leader 2",
+              "Eco-Leader 3",
+              "Eco-Leader 4",
+              "Eco-Leader 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "premium",
+                "mid-priced"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Quality Comparison of Eco-Leaders",
+        "request": {
+          "userQuery": "Compare quality of premium-price and mid-priced eco-leaders",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Eco-Leader 1",
+              "Eco-Leader 2",
+              "Eco-Leader 3",
+              "Eco-Leader 4",
+              "Eco-Leader 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "premium",
+                "mid-priced"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Eco-Leaders' Sustainability Breakdown",
+        "request": {
+          "userQuery": "Show sustainability breakdown for premium-price and mid-priced eco-leaders",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "sustainability",
+            "destinations": [
+              "Eco-Leader 1",
+              "Eco-Leader 2",
+              "Eco-Leader 3",
+              "Eco-Leader 4",
+              "Eco-Leader 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "premium",
+                "mid-priced"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 12,
+    "charts": [
+      {
+        "name": "Eco Outliers by Accessibility",
+        "request": {
+          "userQuery": "Show mid-priced eco outliers tested against accessibility",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Hawaii",
+              "Costa Rica",
+              "Iceland",
+              "Thailand",
+              "Australia"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "budget_level": "mid-priced"
+            }
+          }
+        }
+      },
+      {
+        "name": "Eco Outliers Safety Overview",
+        "request": {
+          "userQuery": "Show safety scores for mid-priced eco outliers",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Hawaii",
+              "Costa Rica",
+              "Iceland",
+              "Thailand",
+              "Australia"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "budget_level": "mid-priced"
+            }
+          }
+        }
+      },
+      {
+        "name": "Eco Outliers Seasonal Tourism Analysis",
+        "request": {
+          "userQuery": "Analize mid-priced eco outliers against seasonal tourism patterns",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "seasonal-tourism",
+            "destinations": [
+              "Hawaii",
+              "Costa Rica",
+              "Iceland",
+              "Thailand",
+              "Australia"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "budget_level": "mid-priced"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 13,
+    "charts": [
+      {
+        "name": "Outliers Shortlisted for Revisit",
+        "request": {
+          "userQuery": "Show the outliers put on the provisional shortlist taking into account crowding and connectivity",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Paris",
+              "New York",
+              "Tokyo",
+              "Sydney",
+              "Cairo",
+              "Berlin"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "region": [
+                "Europe",
+                "North America",
+                "Asia",
+                "Australia",
+                "Africa"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 14,
+    "charts": [
+      {
+        "name": "Review Scores Trend for Crowd-Heavy Destinations",
+        "request": {
+          "userQuery": "Show the trend of review scores for the top 10 most visited destinations over time.",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Paris",
+              "New York",
+              "London",
+              "Dubai",
+              "Beijing",
+              "Tokyo",
+              "Rome",
+              "Istanbul",
+              "Barcelona",
+              "Amsterdam"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Comparative Analysis of Review Scores Drop",
+        "request": {
+          "userQuery": "Compare the decrease in review scores over time for the top 10 most visited destinations.",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Paris",
+              "New York",
+              "London",
+              "Dubai",
+              "Beijing",
+              "Tokyo",
+              "Rome",
+              "Istanbul",
+              "Barcelona",
+              "Amsterdam"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Visitor Flow vs Review Scores",
+        "request": {
+          "userQuery": "Show the correlation between visitor flow and review scores for the top 10 most visited destinations.",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Paris",
+              "New York",
+              "London",
+              "Dubai",
+              "Beijing",
+              "Tokyo",
+              "Rome",
+              "Istanbul",
+              "Barcelona",
+              "Amsterdam"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 15,
+    "charts": [
+      {
+        "name": "Environmental Score vs Popularity",
+        "request": {
+          "userQuery": "Show environmental scores and visitor numbers for popular destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Paris",
+              "New York",
+              "Tokyo",
+              "London",
+              "Sydney"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Top Destinations with High Environmental Scores",
+        "request": {
+          "userQuery": "Show top destinations with high environmental scores despite heavy visitor flow",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Amsterdam",
+              "Berlin",
+              "San Francisco",
+              "Vancouver",
+              "Singapore"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Visitor Numbers vs Environmental Score Scatter Plot",
+        "request": {
+          "userQuery": "Show a scatter plot of visitor numbers versus environmental scores for popular destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Rome",
+              "Dubai",
+              "Bangkok",
+              "Istanbul",
+              "Kuala Lumpur"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Worldwide Environmental Scores",
+        "request": {
+          "userQuery": "Show a world map of environmental scores for popular travel destinations",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "selectedCountries": [
+              "France",
+              "USA",
+              "Japan",
+              "UK",
+              "Australia"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 16,
+    "charts": [
+      {
+        "name": "Average Daily Cost by Region",
+        "request": {
+          "userQuery": "Show average daily cost in various regions of Asia",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Japan",
+              "China",
+              "India",
+              "Thailand",
+              "Vietnam"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValue": "Asia"
+            }
+          }
+        }
+      },
+      {
+        "name": "Seasonal Crowding Index by Region",
+        "request": {
+          "userQuery": "Display the seasonal crowding index for Asian regions",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Japan",
+              "China",
+              "India",
+              "Thailand",
+              "Vietnam"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cost vs Crowding in Asian Destinations",
+        "request": {
+          "userQuery": "Plot cost against crowding for Asian destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Japan",
+              "China",
+              "India",
+              "Thailand",
+              "Vietnam"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValue": "Asia"
+            }
+          }
+        }
+      },
+      {
+        "name": "Crowding Index Map for Asia",
+        "request": {
+          "userQuery": "Show a map of Asia highlighting crowding index",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "selectedCountries": [
+              "Japan",
+              "China",
+              "India",
+              "Thailand",
+              "Vietnam"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 17,
+    "charts": [
+      {
+        "name": "Visitor Satisfaction vs Visitor Numbers",
+        "request": {
+          "userQuery": "Show how the increase in visitor numbers impacts visitor satisfaction in Venice and Barcelona",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Venice",
+              "Barcelona"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2015",
+                "2016",
+                "2017",
+                "2018",
+                "2019",
+                "2020"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Tourist Arrival Trends",
+        "request": {
+          "userQuery": "Show the trend of tourist arrivals in Venice and Barcelona over the years",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Venice",
+              "Barcelona"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Visitor Satisfaction Trends",
+        "request": {
+          "userQuery": "Show the trend of visitor satisfaction in Venice and Barcelona over the years",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Venice",
+              "Barcelona"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 19,
+    "charts": [
+      {
+        "name": "Sustainable Tourism in Switzerland and New Zealand",
+        "request": {
+          "userQuery": "Show the environmental sustainability scores for Switzerland and New Zealand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "sustainability",
+            "destinations": [
+              "Switzerland",
+              "New Zealand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Visitor Flow in Switzerland and New Zealand",
+        "request": {
+          "userQuery": "Show the number of tourists visiting Switzerland and New Zealand over the last 5 years",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Switzerland",
+              "New Zealand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Satisfaction Ratings in Switzerland and New Zealand",
+        "request": {
+          "userQuery": "Show the customer satisfaction ratings for Switzerland and New Zealand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Switzerland",
+              "New Zealand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Environmental Initiatives in Switzerland and New Zealand",
+        "request": {
+          "userQuery": "Show the number of environmental initiatives in Switzerland and New Zealand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Switzerland",
+              "New Zealand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 20,
+    "charts": [
+      {
+        "name": "Safety vs Cultural Diversity",
+        "request": {
+          "userQuery": "Show a scatter plot of safety index against cultural diversity",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Paris",
+              "Tokyo",
+              "New York",
+              "Sydney",
+              "Cape Town",
+              "Rio de Janeiro",
+              "Mumbai"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Attraction Coverage by Safety Index",
+        "request": {
+          "userQuery": "Show a bar chart of attraction coverage categorized by safety index",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Paris",
+              "Tokyo",
+              "New York",
+              "Sydney",
+              "Cape Town",
+              "Rio de Janeiro",
+              "Mumbai"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "safety_level"
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety and Diversity: Comparison of Top Destinations",
+        "request": {
+          "userQuery": "Show a multi-type chart comparing safety and cultural diversity in top travel destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Paris",
+              "Tokyo",
+              "New York",
+              "Sydney",
+              "Cape Town",
+              "Rio de Janeiro",
+              "Mumbai"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "safety_level"
+            }
+          }
+        }
+      },
+      {
+        "name": "Worldwide Safety vs Rewarding Visits",
+        "request": {
+          "userQuery": "Show a map highlighting the safety index and attraction coverage of different countries",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "selectedCountries": [
+              "France",
+              "Japan",
+              "USA",
+              "Australia",
+              "South Africa",
+              "Brazil",
+              "India"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "region"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 21,
+    "charts": [
+      {
+        "name": "Safety vs Cultural Attractions Scatter Plot",
+        "request": {
+          "userQuery": "Show a scatterplot of safety vs cultural attractions per capita with outliers highlighted",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Sweden",
+              "Germany",
+              "Brazil",
+              "Egypt",
+              "Japan"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cultural Attraction Ratings Bar Chart",
+        "request": {
+          "userQuery": "Compare the cultural attraction ratings for each country",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Sweden",
+              "Germany",
+              "Brazil",
+              "Egypt",
+              "Japan"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe",
+                "South America",
+                "Africa",
+                "Asia"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Ratings Bar Chart with Threshold",
+        "request": {
+          "userQuery": "Show safety ratings for each country with a threshold for 'high safety'",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Sweden",
+              "Germany",
+              "Brazil",
+              "Egypt",
+              "Japan"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "budget",
+                "midrange",
+                "luxury"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "World Interactive Map of Safety and Cultural Attractions",
+        "request": {
+          "userQuery": "Show a world map highlighting safety and cultural attractions scores",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "selectedCountries": [
+              "Sweden",
+              "Germany",
+              "Brazil",
+              "Egypt",
+              "Japan"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 22,
+    "charts": [
+      {
+        "name": "Median Income vs Safety Index Scatter Plot",
+        "request": {
+          "userQuery": "Show correlation between median income and safety index",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "USA",
+              "Germany",
+              "China",
+              "Australia",
+              "Brazil",
+              "UK",
+              "India"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Economic Prosperity and Safety Bar Chart",
+        "request": {
+          "userQuery": "Show GDP per capita and safety index side by side",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "USA",
+              "Germany",
+              "China",
+              "Australia",
+              "Brazil",
+              "UK",
+              "India"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "selectedOptions": [
+                "North America",
+                "Europe",
+                "Asia",
+                "Australia",
+                "South America"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Income Levels over Time Line Chart",
+        "request": {
+          "userQuery": "Show trends in median income over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "USA",
+              "Germany",
+              "China",
+              "Australia",
+              "Brazil",
+              "UK",
+              "India"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "selectedOptions": [
+                "2015",
+                "2016",
+                "2017",
+                "2018",
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Index MultiType Bar and Line Chart",
+        "request": {
+          "userQuery": "Show safety index and GDP per capita as bar and line chart",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "USA",
+              "Germany",
+              "China",
+              "Australia",
+              "Brazil",
+              "UK",
+              "India"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 23,
+    "charts": [
+      {
+        "name": "Safety and Cultural Offerings in Japan and Canada",
+        "request": {
+          "userQuery": "Show safety scores and cultural diversity metrics for Japan and Canada",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Japan",
+              "Canada"
+            ],
+            "maxDataPoints": 2,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Worldwide Safety and Cultural Metrics",
+        "request": {
+          "userQuery": "Show a worldwide map highlighting safety scores and cultural diversity",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "selectedCountries": [
+              "Japan",
+              "Canada"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Asia",
+                "North America"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Comparison of Safety and Cultural Metrics",
+        "request": {
+          "userQuery": "Compare safety scores and cultural diversity metrics for Japan and Canada with other popular destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Japan",
+              "Canada",
+              "USA",
+              "France",
+              "Italy",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 24,
+    "charts": [
+      {
+        "name": "Income and Safety Scores Comparison",
+        "request": {
+          "userQuery": "Show income and safety scores for Switzerland and Singapore",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Switzerland",
+              "Singapore"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Geographical Distribution of Income and Safety Scores",
+        "request": {
+          "userQuery": "Show a map of income and safety scores for Switzerland and Singapore",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "geographic",
+            "selectedCountries": [
+              "Switzerland",
+              "Singapore"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Score Bar Comparison",
+        "request": {
+          "userQuery": "Compare safety scores of Switzerland and Singapore",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Switzerland",
+              "Singapore"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 25,
+    "charts": [
+      {
+        "name": "Overlap of Shortlisted Destinations",
+        "request": {
+          "userQuery": "Show a Venn diagram of shortlisted destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiTypeWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Rome",
+              "Paris",
+              "Berlin",
+              "Tokyo",
+              "New York"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe",
+                "Asia",
+                "North America"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Frequency of Shortlisted Destinations",
+        "request": {
+          "userQuery": "Show a bar chart of the frequency of shortlisted destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Rome",
+              "Paris",
+              "Berlin",
+              "Tokyo",
+              "New York"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "season",
+              "values": [
+                "Spring",
+                "Summer",
+                "Autumn",
+                "Winter"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Comparison of Shortlisted Destinations",
+        "request": {
+          "userQuery": "Show a line chart comparing safety scores of shortlisted destinations",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Rome",
+              "Paris",
+              "Berlin",
+              "Tokyo",
+              "New York"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cost Analysis of Shortlisted Destinations",
+        "request": {
+          "userQuery": "Show a pie chart analyzing travel expenses for shortlisted destinations",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Rome",
+              "Paris",
+              "Berlin",
+              "Tokyo",
+              "New York"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "Low",
+                "Medium",
+                "High"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 26,
+    "charts": [
+      {
+        "name": "Robust Choices in Travel: Portugal, Switzerland, Japan",
+        "request": {
+          "userQuery": "Show the pattern of Portugal, Switzerland, and Japan appearing across different travel data categories",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Portugal",
+              "Switzerland",
+              "Japan"
+            ],
+            "maxDataPoints": 9,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Portugal",
+                "Switzerland",
+                "Japan"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Robust Travel Choices: Safety Analysis",
+        "request": {
+          "userQuery": "Show safety scores for Portugal, Switzerland, and Japan",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Portugal",
+              "Switzerland",
+              "Japan"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Portugal",
+                "Switzerland",
+                "Japan"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Portugal, Switzerland, Japan: Cultural Richness",
+        "request": {
+          "userQuery": "Compare the cultural diversity of Portugal, Switzerland, and Japan",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Portugal",
+              "Switzerland",
+              "Japan"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Portugal",
+                "Switzerland",
+                "Japan"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Visitor Flow in Robust Travel Choices",
+        "request": {
+          "userQuery": "Show visitor flow for Portugal, Switzerland, and Japan",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Portugal",
+              "Switzerland",
+              "Japan"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 27,
+    "charts": [
+      {
+        "name": "Destination Stability under Weight Adjustments",
+        "request": {
+          "userQuery": "Show how the ranking of destinations changes as weights on cost, safety, and environment are adjusted",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Paris",
+              "New York",
+              "Singapore",
+              "Sydney",
+              "Rome",
+              "Tokyo"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cost Influence on Destination Ranking",
+        "request": {
+          "userQuery": "Show the influence of cost on the ranking of various destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Paris",
+              "New York",
+              "Singapore",
+              "Sydney",
+              "Rome",
+              "Tokyo"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Influence on Destination Ranking",
+        "request": {
+          "userQuery": "Show the influence of safety on the ranking of various destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Paris",
+              "New York",
+              "Singapore",
+              "Sydney",
+              "Rome",
+              "Tokyo"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe",
+                "North America",
+                "Asia",
+                "Australia"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Environmental Influence on Destination Ranking",
+        "request": {
+          "userQuery": "Show the influence of environmental factors on the ranking of various destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Paris",
+              "New York",
+              "Singapore",
+              "Sydney",
+              "Rome",
+              "Tokyo"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "season",
+              "values": [
+                "Spring",
+                "Summer",
+                "Autumn",
+                "Winter"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 28,
+    "charts": [
+      {
+        "name": "Safety-based Traveler Preferences",
+        "request": {
+          "userQuery": "Show the prevalence of safety-focused travelers choosing Japan",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Japan"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "trip_type",
+              "values": [
+                "safety-focused"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Nature-based Traveler Preferences",
+        "request": {
+          "userQuery": "Show the prevalence of nature-focused travelers choosing New Zealand",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "New Zealand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "trip_type",
+              "values": [
+                "nature-focused"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Traveler Type Comparisons",
+        "request": {
+          "userQuery": "Compare the choices of different traveler types for Japan and New Zealand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Japan",
+              "New Zealand"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "trip_type",
+              "values": [
+                "safety-focused",
+                "nature-focused"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 29,
+    "charts": [
+      {
+        "name": "Shortlisted Countries for Travel",
+        "request": {
+          "userQuery": "Show the shortlisted countries for travel",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "geographic",
+            "selectedCountries": [
+              "Portugal",
+              "Japan",
+              "Switzerland",
+              "Mexico",
+              "New Zealand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 30,
+    "charts": [
+      {
+        "name": "Robustness of Top Travel Destinations",
+        "request": {
+          "userQuery": "Show the destinations that held their positions when the weighting of different factors was shifted",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Paris",
+              "New York",
+              "Tokyo",
+              "London",
+              "Sydney"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2018",
+                "2019",
+                "2020"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Consistency in Top Travel Destinations",
+        "request": {
+          "userQuery": "Show the destinations that maintained their ranking regardless of factor weighting",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "revenue",
+            "destinations": [
+              "Paris",
+              "New York",
+              "Tokyo",
+              "London",
+              "Sydney"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Comparison of Top Travel Destinations",
+        "request": {
+          "userQuery": "Compare the destinations that held their positions when different factors were weighted",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Paris",
+              "New York",
+              "Tokyo",
+              "London",
+              "Sydney"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 31,
+    "charts": [
+      {
+        "name": "Balance of Affordability, Safety, Cultural Richness, and Environmental Quality",
+        "request": {
+          "userQuery": "Show a comparison of affordability, safety, cultural richness, and environmental quality for selected destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": [
+              "cost",
+              "safety",
+              "cultural",
+              "environmental"
+            ],
+            "destinations": [
+              "Paris",
+              "Tokyo",
+              "New York",
+              "Sydney",
+              "Cape Town"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Destination Safety vs. Affordability Comparison",
+        "request": {
+          "userQuery": "Show a scatter plot comparing safety and affordability for selected destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": [
+              "safety",
+              "cost"
+            ],
+            "destinations": [
+              "Paris",
+              "Tokyo",
+              "New York",
+              "Sydney",
+              "Cape Town"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cultural Richness Distribution",
+        "request": {
+          "userQuery": "Show the distribution of cultural richness for selected destinations",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Paris",
+              "Tokyo",
+              "New York",
+              "Sydney",
+              "Cape Town"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe",
+                "Asia",
+                "North America",
+                "Australia",
+                "Africa"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 32,
+    "charts": [
+      {
+        "name": "Versatility and Resilience of Travel Destinations",
+        "request": {
+          "userQuery": "Show the versatility and resilience of Portugal, Japan, Switzerland, Mexico, and New Zealand in different travel metrics",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiTypeWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "recovery-analysis",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Switzerland",
+              "Mexico",
+              "New Zealand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Portugal",
+                "Japan",
+                "Switzerland",
+                "Mexico",
+                "New Zealand"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cultural Diversity of Recommended Destinations",
+        "request": {
+          "userQuery": "Visualize the cultural diversity of Portugal, Japan, Switzerland, Mexico, and New Zealand",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Switzerland",
+              "Mexico",
+              "New Zealand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Portugal",
+                "Japan",
+                "Switzerland",
+                "Mexico",
+                "New Zealand"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Tourist Arrival Patterns in Recommended Destinations",
+        "request": {
+          "userQuery": "Show the tourist arrival patterns in Portugal, Japan, Switzerland, Mexico, and New Zealand over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Portugal",
+              "Japan",
+              "Switzerland",
+              "Mexico",
+              "New Zealand"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Geographic Distribution of Recommended Destinations",
+        "request": {
+          "userQuery": "Show the geographic distribution of Portugal, Japan, Switzerland, Mexico, and New Zealand",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "geographic",
+            "selectedCountries": [
+              "Portugal",
+              "Japan",
+              "Switzerland",
+              "Mexico",
+              "New Zealand"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 33,
+    "charts": [
+      {
+        "name": "Cultural Index of Porto vs Peer Cities",
+        "request": {
+          "userQuery": "Show the cultural index of Porto compared to other similar cities",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Porto",
+              "Lisbon",
+              "Madrid",
+              "Barcelona",
+              "Rome"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cost vs Cultural Index for Porto and Peer Cities",
+        "request": {
+          "userQuery": "Show the cost of travel compared to the cultural index for Porto and other similar cities",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Porto",
+              "Lisbon",
+              "Madrid",
+              "Barcelona",
+              "Rome"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Attractions Density Comparison",
+        "request": {
+          "userQuery": "Show the attractions density in Porto compared to other similar cities",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Porto",
+              "Lisbon",
+              "Madrid",
+              "Barcelona",
+              "Rome"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 34,
+    "charts": [
+      {
+        "name": "Cost vs Cultural Index Bubble Plot",
+        "request": {
+          "userQuery": "Show a bubble plot of cost vs culture index for popular tourist destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Bangkok",
+              "Paris",
+              "London",
+              "Tokyo",
+              "New York",
+              "Sydney",
+              "Dubai"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Affordability and Cultural Richness Bar Chart",
+        "request": {
+          "userQuery": "Compare the affordability and cultural richness of popular tourist destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Bangkok",
+              "Paris",
+              "London",
+              "Tokyo",
+              "New York",
+              "Sydney",
+              "Dubai"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cultural Richness Line Chart with Threshold",
+        "request": {
+          "userQuery": "Show the trend of cultural richness over the years for Bangkok",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Bangkok"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Interactive Pie Chart for Cost Distribution",
+        "request": {
+          "userQuery": "Show the distribution of travel expenses in Bangkok",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Bangkok"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 35,
+    "charts": [
+      {
+        "name": "Seasonality of Bangkok-Ho Chi Minh Value Cluster",
+        "request": {
+          "userQuery": "Show the monthly arrivals trend for Bangkok-Ho Chi Minh value cluster",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Bangkok",
+              "Ho Chi Minh"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Index of Neighborhoods in Bangkok and Ho Chi Minh",
+        "request": {
+          "userQuery": "Show the safety index by district for Bangkok and Ho Chi Minh",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Bangkok",
+              "Ho Chi Minh"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Bangkok",
+                "Ho Chi Minh"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Seasonal Safety Comparison in Bangkok and Ho Chi Minh",
+        "request": {
+          "userQuery": "Show the correlation between seasonality and safety in Bangkok and Ho Chi Minh",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Bangkok",
+              "Ho Chi Minh"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "season",
+              "values": [
+                "Winter",
+                "Spring",
+                "Summer",
+                "Autumn"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 36,
+    "charts": [
+      {
+        "name": "Stockholm Vs Copenhagen Sustainability Index",
+        "request": {
+          "userQuery": "Show sustainability index for Stockholm and Copenhagen",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "sustainability",
+            "destinations": [
+              "Stockholm",
+              "Copenhagen"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Arrivals Trend in Stockholm and Copenhagen",
+        "request": {
+          "userQuery": "Show trend of arrivals in Stockholm and Copenhagen over the years",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Stockholm",
+              "Copenhagen"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Index with Delay Incidence Overlay",
+        "request": {
+          "userQuery": "Show safety index with delay incidence overlay for Stockholm and Copenhagen",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Stockholm",
+              "Copenhagen"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Environmental Index Comparison",
+        "request": {
+          "userQuery": "Compare environmental index of Stockholm and Copenhagen",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Stockholm",
+              "Copenhagen"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2018",
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+]
