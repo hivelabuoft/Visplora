@@ -1,0 +1,202 @@
+{
+    "exploration_path": [
+  {
+    "sentence_id": 1,
+    "sentence_content": "Asia has become the talk of travelers. (Popularity – broad talk)",
+    "children": [
+      2
+    ],
+    "parent": null,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 2,
+    "sentence_content": "Some destinations are touted as especially secure. (Safety – vague tout)",
+    "children": [
+      3
+    ],
+    "parent": 1,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 3,
+    "sentence_content": "Europe is often noted for its multicultural vibes. (Diversity – ambiguous noting)",
+    "children": [
+      4
+    ],
+    "parent": 2,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 4,
+    "sentence_content": "Discussions on environmental progress differ in scope. (Env. quality – underspecified progress)",
+    "children": [
+      5
+    ],
+    "parent": 3,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 5,
+    "sentence_content": "Safe cities that don't break the bank are highly sought after. (Cost + Safety – vague sought)",
+    "children": [
+      6
+    ],
+    "parent": 4,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 6,
+    "sentence_content": "Attractions can sometimes underdeliver despite stellar reviews. (Attractions + Reviews – unclear delivery)",
+    "children": [
+      7
+    ],
+    "parent": 5,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 7,
+    "sentence_content": "Well-known destinations can strain financial plans. (Popularity + Cost – subjective strain)",
+    "children": [
+      8
+    ],
+    "parent": 6,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 8,
+    "sentence_content": "Safety isn’t always assured in diverse locales. (Diversity + Safety – indistinct assurance)",
+    "children": [
+      9
+    ],
+    "parent": 7,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 9,
+    "sentence_content": "Asian travel is perceived as cost-friendly in commentary. (Cost – broad commentary)",
+    "children": [
+      10
+    ],
+    "parent": 8,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 10,
+    "sentence_content": "Europe's safety rating often outshines others. (Safety – sweeping rating)",
+    "children": [
+      11
+    ],
+    "parent": 9,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 11,
+    "sentence_content": "Feedback from travelers varies region to region. (Reviews – vague variation)",
+    "children": [
+      12
+    ],
+    "parent": 10,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 12,
+    "sentence_content": "Environmental standards tend to be notable in the north. (Env. quality – undefined notable)",
+    "children": [
+      13
+    ],
+    "parent": 11,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 13,
+    "sentence_content": "The ultimate travel combines safety, cost, and cultural discovery. (Safety + Cost + Diversity – vague ultimate)",
+    "children": [
+      14
+    ],
+    "parent": 12,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 14,
+    "sentence_content": "Popular regions don’t always offer cultural depth as expected. (Popularity + Diversity – unqualified depth)",
+    "children": [
+      15
+    ],
+    "parent": 13,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 15,
+    "sentence_content": "Strong environmental ratings frequently parallel good reviews. (Env. quality + Reviews – unqualified parallel)",
+    "children": [
+      16
+    ],
+    "parent": 14,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 16,
+    "sentence_content": "An enriching trip blends affordability, security, and cultural exposure. (Cost + Safety + Diversity – vague enriching)",
+    "children": [
+      17
+    ],
+    "parent": 15,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 17,
+    "sentence_content": "Many are surprised by how affordable unexplored destinations can be. (Cost + Popularity – unfathomable)",
+    "children": [
+      18
+    ],
+    "parent": 16,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 18,
+    "sentence_content": "Safety in obscure regions is often unexpectedly reassuring. (Safety + Popularity – unexpected reassuring)",
+    "children": [
+      19
+    ],
+    "parent": 17,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 19,
+    "sentence_content": "Diversity often surprises with the traveling expense. (Diversity + Cost – vague expense)",
+    "children": [
+      20
+    ],
+    "parent": 18,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  },
+  {
+    "sentence_id": 20,
+    "sentence_content": "Environmental standards sometimes fall short in places with high foot traffic. (Popularity + Env. quality – broad falling short)",
+    "children": [],
+    "parent": 19,
+    "system_shows": "Dashboard: baseline overview; chart1: bar (x_category: region, y_metric: average_daily_cost, aggregation: avg); chart2: bubble (x_metric: safety_score, y_metric: popularity_score, size_metric: review_count); chart3: line (time_grain: quarter, y_metric: env_quality_index, by_category: region); chart4: bar (x_category: region, y_metric: diversity_index, aggregation: avg); chart5: combo_line_bar (x_category: region, bar_metric: popularity_score, line_metric: env_quality_index, bar_agg: avg, line_agg: avg); chart6: pie (slice_category: region, value_metric: review_score, aggregation: avg)",
+    "drift_type": "begin"
+  }
+]
+}

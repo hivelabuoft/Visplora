@@ -1,0 +1,2520 @@
+[
+  {
+    "sentence_id": 1,
+    "charts": [
+      {
+        "name": "Rent Distribution Across London Boroughs",
+        "request": {
+          "userQuery": "Show the distribution of rent cost across different London boroughs",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Barking and Dagenham",
+              "Barnet",
+              "Bexley",
+              "Brent",
+              "Bromley"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Rent Band Affordability Across London Boroughs",
+        "request": {
+          "userQuery": "Show the number of boroughs in each rent band",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Barking and Dagenham",
+              "Barnet",
+              "Bexley",
+              "Brent",
+              "Bromley"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Rent Trend in Affordable London Boroughs",
+        "request": {
+          "userQuery": "Show the rent trend over time in affordable London boroughs",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Barking and Dagenham",
+              "Barnet",
+              "Bexley",
+              "Brent",
+              "Bromley"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Comparison of Rent and Income in Affordable London Boroughs",
+        "request": {
+          "userQuery": "Compare the rent and average income in affordable London boroughs",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Barking and Dagenham",
+              "Barnet",
+              "Bexley",
+              "Brent",
+              "Bromley"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 2,
+    "charts": [
+      {
+        "name": "Schools Accessibility Heatmap",
+        "request": {
+          "userQuery": "Show a heatmap of schools per 10k residents",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "accessibility",
+            "selectedCountries": [
+              "USA",
+              "UK",
+              "Germany",
+              "France",
+              "Australia"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Rent Affordability Filter",
+        "request": {
+          "userQuery": "Filter data by rent band",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "New York",
+              "London",
+              "Berlin",
+              "Paris",
+              "Sydney"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "filterValues": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Shortlisted Locations",
+        "request": {
+          "userQuery": "Toggle shortlisted locations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "demographics",
+            "destinations": [
+              "New York",
+              "London",
+              "Berlin",
+              "Paris",
+              "Sydney"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 3,
+    "charts": [
+      {
+        "name": "Top Quartile Boroughs for School Access",
+        "request": {
+          "userQuery": "Show the boroughs in the top quartile for school access within the affordable band",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Borough A",
+              "Borough B",
+              "Borough C",
+              "Borough D",
+              "Borough E"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "budget_level": "affordable"
+            }
+          }
+        }
+      },
+      {
+        "name": "School Access Quartiles Distribution",
+        "request": {
+          "userQuery": "Show the distribution of school access across quartiles in the affordable band",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Top Quartile",
+              "Second Quartile",
+              "Third Quartile",
+              "Bottom Quartile"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "budget_level": "affordable"
+            }
+          }
+        }
+      },
+      {
+        "name": "School Access Trend in Top Quartile Boroughs",
+        "request": {
+          "userQuery": "Show the trend of school access over time in the top quartile boroughs within the affordable band",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Borough A",
+              "Borough B",
+              "Borough C",
+              "Borough D",
+              "Borough E"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "budget_level": "affordable"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 4,
+    "charts": [
+      {
+        "name": "Libraries per 10k in Shortlisted Schools",
+        "request": {
+          "userQuery": "Show number of public libraries per 10 thousand population in the shortlisted schools area",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "School A",
+              "School B",
+              "School C",
+              "School D",
+              "School E"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "School A",
+                "School B",
+                "School C",
+                "School D",
+                "School E"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Intersection of Libraries and Schools",
+        "request": {
+          "userQuery": "Show the intersection between the locations of public libraries and shortlisted schools",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "geographic",
+            "selectedCountries": [
+              "USA"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Schools and Libraries Comparison",
+        "request": {
+          "userQuery": "Compare the number of public libraries and schools in the same area",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Area 1",
+              "Area 2",
+              "Area 3",
+              "Area 4",
+              "Area 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Area 1",
+                "Area 2",
+                "Area 3",
+                "Area 4",
+                "Area 5"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Libraries Accessibility in Schools Area",
+        "request": {
+          "userQuery": "Show the accessibility of public libraries in the shortlisted schools area",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "School A",
+              "School B",
+              "School C",
+              "School D",
+              "School E"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "School A",
+                "School B",
+                "School C",
+                "School D",
+                "School E"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 5,
+    "charts": [
+      {
+        "name": "Normalized Rent-to-Income Ratio",
+        "request": {
+          "userQuery": "Show rent-to-income ratio normalized for different destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "New York",
+              "Paris",
+              "Berlin",
+              "Tokyo",
+              "Sydney"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "manageable"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Pruned List of Destinations Based on Rent-to-Income Ratio",
+        "request": {
+          "userQuery": "Show pruned list of destinations with manageable rent-to-income burden",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "New York",
+              "Paris",
+              "Berlin",
+              "Tokyo",
+              "Sydney"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "manageable"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Comparison of Rent-to-Income Ratio and Income",
+        "request": {
+          "userQuery": "Show comparison of rent-to-income ratio and income for different destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "New York",
+              "Paris",
+              "Berlin",
+              "Tokyo",
+              "Sydney"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 6,
+    "charts": [
+      {
+        "name": "Ethnicity Entropy in Boroughs",
+        "request": {
+          "userQuery": "Show ethnicity entropy for remaining boroughs",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Bronx",
+              "Brooklyn",
+              "Queens",
+              "Staten Island"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Country-of-Birth Spread in Boroughs",
+        "request": {
+          "userQuery": "Show country-of-birth spread for remaining boroughs",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Bronx",
+              "Brooklyn",
+              "Queens",
+              "Staten Island"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Bronx",
+                "Brooklyn",
+                "Queens",
+                "Staten Island"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Candidate Highlights for Borough Diversity",
+        "request": {
+          "userQuery": "Show candidate highlights for borough diversity",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Bronx",
+              "Brooklyn",
+              "Queens",
+              "Staten Island"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 7,
+    "charts": [
+      {
+        "name": "Restaurants per 10k Residents Across Destinations",
+        "request": {
+          "userQuery": "Show number of restaurants per 10k residents in different destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "New York",
+              "Paris",
+              "Tokyo",
+              "Sydney",
+              "Dubai"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Restaurants per 10k Residents and Affordability",
+        "request": {
+          "userQuery": "Show correlation between number of restaurants per 10k residents and affordability",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "New York",
+              "Paris",
+              "Tokyo",
+              "Sydney",
+              "Dubai"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cultural Diversity vs Restaurants per 10k Residents",
+        "request": {
+          "userQuery": "Show comparison of cultural diversity and number of restaurants per 10k residents",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "New York",
+              "Paris",
+              "Tokyo",
+              "Sydney",
+              "Dubai"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 8,
+    "charts": [
+      {
+        "name": "Schools per Candidate",
+        "request": {
+          "userQuery": "Show number of schools per candidate",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Candidate 1",
+              "Candidate 2",
+              "Candidate 3",
+              "Candidate 4"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Libraries per Candidate",
+        "request": {
+          "userQuery": "Show number of libraries per candidate",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Candidate 1",
+              "Candidate 2",
+              "Candidate 3",
+              "Candidate 4"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Rent Burden per Candidate",
+        "request": {
+          "userQuery": "Show rent burden per candidate",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "economics",
+            "destinations": [
+              "Candidate 1",
+              "Candidate 2",
+              "Candidate 3",
+              "Candidate 4"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Diversity per Candidate",
+        "request": {
+          "userQuery": "Show diversity per candidate",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Candidate 1",
+              "Candidate 2",
+              "Candidate 3",
+              "Candidate 4"
+            ],
+            "maxDataPoints": 4,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 9,
+    "charts": [
+      {
+        "name": "Boroughs Performance Balance",
+        "request": {
+          "userQuery": "Show the balance of schools and services within budget across boroughs",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3",
+              "Borough 4",
+              "Borough 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "within budget"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Schools Distribution in Boroughs",
+        "request": {
+          "userQuery": "Show the distribution of schools across boroughs",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3",
+              "Borough 4",
+              "Borough 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Services Quality in Boroughs",
+        "request": {
+          "userQuery": "Show the quality of services across boroughs",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3",
+              "Borough 4",
+              "Borough 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Boroughs Budget Allocation",
+        "request": {
+          "userQuery": "Show how the budget is allocated across boroughs",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3",
+              "Borough 4",
+              "Borough 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "within budget"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 10,
+    "charts": [
+      {
+        "name": "Evidence Badges Distribution Over Time",
+        "request": {
+          "userQuery": "Show timeline of prior sentences with evidence badges",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Paris",
+              "London",
+              "New York",
+              "Sydney",
+              "Tokyo",
+              "Cairo",
+              "Rio de Janeiro"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Claims Softening Analysis",
+        "request": {
+          "userQuery": "Show the borderline claims that were softened across multiple views",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "recovery-analysis",
+            "destinations": [
+              "Paris",
+              "London",
+              "New York",
+              "Sydney",
+              "Tokyo",
+              "Cairo",
+              "Rio de Janeiro"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Geographic Distribution of Evidence Badges",
+        "request": {
+          "userQuery": "Show the geographic distribution of evidence badges",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "geographic",
+            "selectedCountries": [
+              "France",
+              "United Kingdom",
+              "USA",
+              "Australia",
+              "Japan",
+              "Egypt",
+              "Brazil"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 11,
+    "charts": [
+      {
+        "name": "Top Boroughs for School Access and Public Libraries",
+        "request": {
+          "userQuery": "Show the boroughs with the highest score for school access and public libraries",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3",
+              "Borough 4",
+              "Borough 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Rent-to-Income Ratio in Top Boroughs",
+        "request": {
+          "userQuery": "Show the rent-to-income ratio in the top boroughs",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cultural Diversity in Top Boroughs",
+        "request": {
+          "userQuery": "Show the level of cultural diversity in the top boroughs",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Borough 1",
+                "Borough 2",
+                "Borough 3"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 12,
+    "charts": [
+      {
+        "name": "Diversity Index Leaderboard",
+        "request": {
+          "userQuery": "Show the highest diversity boroughs",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Brooklyn",
+              "Queens",
+              "Manhattan",
+              "The Bronx",
+              "Staten Island"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "rent_band",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cultural Diversity vs Rent Band",
+        "request": {
+          "userQuery": "Compare cultural diversity with rent band",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Brooklyn",
+              "Queens",
+              "Manhattan",
+              "The Bronx",
+              "Staten Island"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Diversity Distribution by Borough",
+        "request": {
+          "userQuery": "Show the distribution of diversity across boroughs",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Brooklyn",
+              "Queens",
+              "Manhattan",
+              "The Bronx",
+              "Staten Island"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "rent_band",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Diversity and Rent Correlation",
+        "request": {
+          "userQuery": "Show correlation between diversity and rent",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Brooklyn",
+              "Queens",
+              "Manhattan",
+              "The Bronx",
+              "Staten Island"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 13,
+    "charts": [
+      {
+        "name": "Budget Aligned Diversity and Affordability Scatter Plot",
+        "request": {
+          "userQuery": "Show the relationship between diversity and affordability within the same budget band",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Bali",
+              "Bangkok",
+              "Cairo",
+              "Cape Town",
+              "Berlin"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "mid-range"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Diverse Destinations within Budget Bar Chart",
+        "request": {
+          "userQuery": "Compare the cultural diversity of destinations within the same budget band",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Bali",
+              "Bangkok",
+              "Cairo",
+              "Cape Town",
+              "Berlin"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "mid-range"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Affordability and Diversity Line Chart",
+        "request": {
+          "userQuery": "Show the trend of affordability and diversity intersection over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Bali",
+              "Bangkok",
+              "Cairo",
+              "Cape Town",
+              "Berlin"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Budget Aligned Diversity and Affordability Pie Chart",
+        "request": {
+          "userQuery": "Show the distribution of diversity and affordability within the same budget band",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Bali",
+              "Bangkok",
+              "Cairo",
+              "Cape Town",
+              "Berlin"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "mid-range"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 14,
+    "charts": [
+      {
+        "name": "Public Services Accessibility in Diverse Areas",
+        "request": {
+          "userQuery": "Show the number of schools and libraries in diverse areas",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "New York",
+              "Los Angeles",
+              "Chicago",
+              "Houston",
+              "Philadelphia"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Geographic Distribution of Public Services in Diverse Areas",
+        "request": {
+          "userQuery": "Show the geographic distribution of schools and libraries in diverse areas",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "geographic",
+            "selectedCountries": [
+              "USA"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "region": [
+                "North America"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Comparison of Public Services in Diverse Areas",
+        "request": {
+          "userQuery": "Compare the number of schools and libraries in diverse areas",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "New York",
+              "Los Angeles",
+              "Chicago",
+              "Houston",
+              "Philadelphia"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 15,
+    "charts": [
+      {
+        "name": "Candidate Set Alignment",
+        "request": {
+          "userQuery": "Show the alignment between diversity and services within the budget",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Berlin",
+              "Paris",
+              "Rome",
+              "Madrid",
+              "Amsterdam"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low",
+                "medium"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Trade-off Notes",
+        "request": {
+          "userQuery": "Visualize the diversity-services trade-off when they do not align with the budget",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "London",
+              "Prague",
+              "Athens",
+              "Lisbon",
+              "Warsaw"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Candidate Set Overview",
+        "request": {
+          "userQuery": "Show an overview of the candidate set",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Berlin",
+              "Paris",
+              "Rome",
+              "Madrid",
+              "Amsterdam"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Trade-off Summary",
+        "request": {
+          "userQuery": "Summarize the diversity-services trade-off",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "London",
+              "Prague",
+              "Athens",
+              "Lisbon",
+              "Warsaw"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 16,
+    "charts": [
+      {
+        "name": "Weighted Score Analysis",
+        "request": {
+          "userQuery": "Show the weighted score combining schools, libraries, diversity, and a penalty for rent burden",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "New York",
+              "Los Angeles",
+              "Chicago",
+              "Houston",
+              "Phoenix"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "budget_level",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "School-Heavy Renters Distribution",
+        "request": {
+          "userQuery": "Show distribution of school-heavy renters across different locations",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "New York",
+              "Los Angeles",
+              "Chicago",
+              "Houston",
+              "Phoenix"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "year",
+              "values": [
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Services-Balanced Renters Trend",
+        "request": {
+          "userQuery": "Show trend of services-balanced renters over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "New York",
+              "Los Angeles",
+              "Chicago",
+              "Houston",
+              "Phoenix"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 17,
+    "charts": [
+      {
+        "name": "Borough Ranking by Composite Score",
+        "request": {
+          "userQuery": "Show a ranking of boroughs by their composite scores",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Manhattan",
+              "Brooklyn",
+              "Queens",
+              "Bronx",
+              "Staten Island"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Contribution of Each Component to Composite Score",
+        "request": {
+          "userQuery": "Show how each component contributes to the composite score of each borough",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Manhattan",
+              "Brooklyn",
+              "Queens",
+              "Bronx",
+              "Staten Island"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Yearly Change in Composite Score for Each Borough",
+        "request": {
+          "userQuery": "Show the yearly change in composite score for each borough",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Manhattan",
+              "Brooklyn",
+              "Queens",
+              "Bronx",
+              "Staten Island"
+            ],
+            "maxDataPoints": 15,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 18,
+    "charts": [
+      {
+        "name": "Borough Rank Sensitivity Analysis",
+        "request": {
+          "userQuery": "Show borough rankings as weights are varied ±15%",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3",
+              "Borough 4",
+              "Borough 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Borough Rank Change Ribbons",
+        "request": {
+          "userQuery": "Show rank change ribbons for boroughs as weights are varied ±15%",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3",
+              "Borough 4",
+              "Borough 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Top Borough Stability Over Weight Variations",
+        "request": {
+          "userQuery": "Show if the same boroughs remain on top as weights are varied ±15%",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3",
+              "Borough 4",
+              "Borough 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 19,
+    "charts": [
+      {
+        "name": "Scoring Picks vs Rule-Based Shortlist Comparison",
+        "request": {
+          "userQuery": "Show comparison of scoring picks and rule-based shortlist",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Paris",
+              "Rome",
+              "Tokyo",
+              "New York",
+              "Sydney"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Consistent vs Brittle Recommendations Over Time",
+        "request": {
+          "userQuery": "Show how consistent and brittle recommendations have changed over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Paris",
+              "Rome",
+              "Tokyo",
+              "New York",
+              "Sydney"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2018",
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Consistent vs Brittle Recommendations Scatter Chart",
+        "request": {
+          "userQuery": "Show the relationship between consistent and brittle recommendations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Paris",
+              "Rome",
+              "Tokyo",
+              "New York",
+              "Sydney"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 20,
+    "charts": [
+      {
+        "name": "Fallback Chart for Sentence 20",
+        "request": {
+          "userQuery": "Analyze data related to: I marked ‘robust’ candidates that appear across multiple weightings and also in the rule-based set.",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Tokyo",
+              "Paris",
+              "London"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterKey": "selectedRegion",
+              "filterLabel": "Region",
+              "defaultValue": "Asia",
+              "options": [
+                {
+                  "label": "North America",
+                  "value": "North America",
+                  "displayName": "North America"
+                },
+                {
+                  "label": "Europe",
+                  "value": "Europe",
+                  "displayName": "Europe"
+                },
+                {
+                  "label": "Asia",
+                  "value": "Asia",
+                  "displayName": "Asia"
+                },
+                {
+                  "label": "South America",
+                  "value": "South America",
+                  "displayName": "South America"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 21,
+    "charts": [
+      {
+        "name": "Borough Strength in School and Libraries",
+        "request": {
+          "userQuery": "Show the strength of schools and libraries in different boroughs",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Borough1",
+              "Borough2",
+              "Borough3",
+              "Borough4",
+              "Borough5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Diversity Index Across Boroughs",
+        "request": {
+          "userQuery": "Show the diversity index across different boroughs",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Borough1",
+              "Borough2",
+              "Borough3",
+              "Borough4",
+              "Borough5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Borough1",
+                "Borough2",
+                "Borough3",
+                "Borough4",
+                "Borough5"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Boroughs with High School/Library Strength and Low Diversity",
+        "request": {
+          "userQuery": "Show boroughs with high school/library strength and low diversity",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Borough1",
+              "Borough2",
+              "Borough3",
+              "Borough4",
+              "Borough5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Borough1",
+                "Borough2",
+                "Borough3",
+                "Borough4",
+                "Borough5"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 22,
+    "charts": [
+      {
+        "name": "Confidence Level for Renters Prioritizing Cultural Fit",
+        "request": {
+          "userQuery": "Show the confidence level for renters who prioritize cultural fit",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "demographics",
+            "destinations": [
+              "New York",
+              "Boston",
+              "San Francisco",
+              "Chicago",
+              "Seattle"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "filterValue": [
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cultural Diversity Comparison in Top Cities",
+        "request": {
+          "userQuery": "Compare the cultural diversity in top cities",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "New York",
+              "Boston",
+              "San Francisco",
+              "Chicago",
+              "Seattle"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Renter Persona Distribution",
+        "request": {
+          "userQuery": "Show the distribution of renter personas prioritizing cultural fit",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "New York",
+              "Boston",
+              "San Francisco",
+              "Chicago",
+              "Seattle"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "filterValue": [
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cultural Fit Priority vs Confidence Level",
+        "request": {
+          "userQuery": "Show the relationship between renters' cultural fit priority and their confidence level",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "New York",
+              "Boston",
+              "San Francisco",
+              "Chicago",
+              "Seattle"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 23,
+    "charts": [
+      {
+        "name": "Proximity to Higher-Service Boroughs",
+        "request": {
+          "userQuery": "Show the proximity to adjacent higher-service boroughs within the same rent band",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "geographic",
+            "selectedCountries": [
+              "Bronx",
+              "Brooklyn",
+              "Manhattan",
+              "Queens",
+              "Staten Island"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Travel Time to Higher-Service Boroughs",
+        "request": {
+          "userQuery": "Show the travel time to nearby higher-service boroughs",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Bronx",
+              "Brooklyn",
+              "Manhattan",
+              "Queens",
+              "Staten Island"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "New York City"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Service Level Comparison",
+        "request": {
+          "userQuery": "Compare the service levels of the boroughs",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Bronx",
+              "Brooklyn",
+              "Manhattan",
+              "Queens",
+              "Staten Island"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "New York City"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Rent Band Distribution",
+        "request": {
+          "userQuery": "Show the distribution of rents within the same band across the boroughs",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Bronx",
+              "Brooklyn",
+              "Manhattan",
+              "Queens",
+              "Staten Island"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "budget_level",
+              "values": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 24,
+    "charts": [
+      {
+        "name": "Academic Performance in Selected Renters' Destinations",
+        "request": {
+          "userQuery": "Show academic performance in destinations preferred by academics-first renters",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "New York",
+              "Boston",
+              "San Francisco",
+              "Chicago",
+              "Austin"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "North America"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Diversity Index in Selected Renters' Destinations",
+        "request": {
+          "userQuery": "Show diversity index in destinations preferred by diversity-first renters",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Los Angeles",
+              "Miami",
+              "Houston",
+              "Atlanta",
+              "Philadelphia"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "North America"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Comparison of Academic Performance and Diversity Index",
+        "request": {
+          "userQuery": "Compare academic performance and diversity index for each chosen destination",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "demographics",
+            "destinations": [
+              "New York",
+              "Boston",
+              "San Francisco",
+              "Chicago",
+              "Austin",
+              "Los Angeles",
+              "Miami",
+              "Houston",
+              "Atlanta",
+              "Philadelphia"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 25,
+    "charts": [
+      {
+        "name": "Library and Schools Data Coverage by Borough",
+        "request": {
+          "userQuery": "Show the coverage percentage of library and schools data for each borough",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Manhattan",
+              "Brooklyn",
+              "Queens",
+              "Bronx",
+              "Staten Island"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Manhattan",
+                "Brooklyn",
+                "Queens",
+                "Bronx",
+                "Staten Island"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Last Updated Library and Schools Data by Borough",
+        "request": {
+          "userQuery": "Display the last update date of library and schools data for each borough",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Manhattan",
+              "Brooklyn",
+              "Queens",
+              "Bronx",
+              "Staten Island"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Variance of Library and Schools Data by Borough",
+        "request": {
+          "userQuery": "Show the variance in library and schools data across boroughs",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiTypeWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Manhattan",
+              "Brooklyn",
+              "Queens",
+              "Bronx",
+              "Staten Island"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Quality Check Overview for Library and Schools Data",
+        "request": {
+          "userQuery": "Give an overview of the quality check for library and schools data",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "demographics",
+            "destinations": [
+              "Manhattan",
+              "Brooklyn",
+              "Queens",
+              "Bronx",
+              "Staten Island"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 26,
+    "charts": [
+      {
+        "name": "Coverage Analysis per Destination",
+        "request": {
+          "userQuery": "Show coverage distribution for each destination",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Tokyo",
+              "Paris",
+              "New York",
+              "Sydney",
+              "Cape Town",
+              "Rio de Janeiro"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2021"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Rent-Burden Normalization Over Time",
+        "request": {
+          "userQuery": "Show rent-burden normalization trend over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Tokyo",
+              "Paris",
+              "New York",
+              "Sydney",
+              "Cape Town",
+              "Rio de Janeiro"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Signal Strength and Coverage Relationship",
+        "request": {
+          "userQuery": "Show relationship between signal strength and coverage",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Tokyo",
+              "Paris",
+              "New York",
+              "Sydney",
+              "Cape Town",
+              "Rio de Janeiro"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Rent Burden and Coverage Comparison",
+        "request": {
+          "userQuery": "Compare rent burden and coverage for each destination",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "Tokyo",
+              "Paris",
+              "New York",
+              "Sydney",
+              "Cape Town",
+              "Rio de Janeiro"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2021"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 111,
+    "charts": [
+      {
+        "name": "Borough Cultural Diversity",
+        "request": {
+          "userQuery": "Show cultural diversity in different boroughs",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3",
+              "Borough 4",
+              "Borough 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Borough 1",
+                "Borough 2",
+                "Borough 3",
+                "Borough 4",
+                "Borough 5"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Borough Rent Comparison",
+        "request": {
+          "userQuery": "Show average rent in different boroughs",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3",
+              "Borough 4",
+              "Borough 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Borough 1",
+                "Borough 2",
+                "Borough 3",
+                "Borough 4",
+                "Borough 5"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Schools and Libraries Accessibility",
+        "request": {
+          "userQuery": "Show accessibility to schools and libraries in different boroughs",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "accessibility",
+            "destinations": [
+              "Borough 1",
+              "Borough 2",
+              "Borough 3",
+              "Borough 4",
+              "Borough 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 112,
+    "charts": [
+      {
+        "name": "Fallback Chart for Sentence 112",
+        "request": {
+          "userQuery": "Analyze data related to: Conclusion C (method synthesis): recommend robust candidates that persist under weighting changes and match the earlier rule-based rationale.",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Tokyo",
+              "Paris",
+              "London"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterKey": "selectedRegion",
+              "filterLabel": "Region",
+              "defaultValue": "Asia",
+              "options": [
+                {
+                  "label": "North America",
+                  "value": "North America",
+                  "displayName": "North America"
+                },
+                {
+                  "label": "Europe",
+                  "value": "Europe",
+                  "displayName": "Europe"
+                },
+                {
+                  "label": "Asia",
+                  "value": "Asia",
+                  "displayName": "Asia"
+                },
+                {
+                  "label": "South America",
+                  "value": "South America",
+                  "displayName": "South America"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 113,
+    "charts": [
+      {
+        "name": "School-first vs Diversity-first: Beneficiaries",
+        "request": {
+          "userQuery": "Show who benefits from each path: schools-first and diversity-first",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "demographics",
+            "destinations": [
+              "schools-first",
+              "diversity-first"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "region"
+            }
+          }
+        }
+      },
+      {
+        "name": "Trade-offs in Paths: Schools-first vs Diversity-first",
+        "request": {
+          "userQuery": "Show the explicit trade-offs in following either the schools-first or diversity-first path",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "economics",
+            "destinations": [
+              "schools-first",
+              "diversity-first"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Impact: Schools-first vs Diversity-first",
+        "request": {
+          "userQuery": "Compare the safety implications of the schools-first and diversity-first paths",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "schools-first",
+              "diversity-first"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "year"
+            }
+          }
+        }
+      },
+      {
+        "name": "Environmental Sustainability: Schools-first vs Diversity-first",
+        "request": {
+          "userQuery": "Analyze the environmental sustainability of the schools-first and diversity-first paths",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "sustainability",
+            "destinations": [
+              "schools-first",
+              "diversity-first"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "season"
+            }
+          }
+        }
+      }
+    ]
+  }
+]

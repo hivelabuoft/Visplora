@@ -1038,317 +1038,6 @@
         },
         {
           "id": "chart-3",
-          "name": "Number of Destinations per Continent",
-          "request": {
-            "userQuery": "Show the number of popular travel destinations per continent",
-            "constraints": {
-              "chartType": "pie",
-              "subtype": "interactivePieSpec",
-              "nodeSize": "medium",
-              "dataCategory": "geographic",
-              "destinations": [
-                "Asia",
-                "Europe",
-                "North America",
-                "South America",
-                "Africa",
-                "Australia"
-              ],
-              "maxDataPoints": 6,
-              "hasFieldFilter": false
-            }
-          },
-          "chartSpec": {
-            "type": "pie",
-            "subtype": "interactivePieSpec",
-            "title": "Popular Travel Destinations by Continent",
-            "description": "Distribution of top destinations per continent",
-            "data": [
-              {
-                "continent": "Asia",
-                "destinations": 32,
-                "percentage": 31.7
-              },
-              {
-                "continent": "Europe",
-                "destinations": 28,
-                "percentage": 27.7
-              },
-              {
-                "continent": "North America",
-                "destinations": 14,
-                "percentage": 13.9
-              },
-              {
-                "continent": "South America",
-                "destinations": 9,
-                "percentage": 8.9
-              },
-              {
-                "continent": "Africa",
-                "destinations": 9,
-                "percentage": 8.9
-              },
-              {
-                "continent": "Australia",
-                "destinations": 9,
-                "percentage": 8.9
-              }
-            ],
-            "config": {
-              "dimensions": {
-                "width": 120,
-                "height": 120
-              },
-              "fields": {
-                "category": "continent",
-                "value": "destinations"
-              },
-              "styling": {
-                "colors": [
-                  "#8B5CF6",
-                  "#3B82F6",
-                  "#06B6D4",
-                  "#10B981",
-                  "#F59E0B",
-                  "#EF4444"
-                ],
-                "background": "transparent"
-              },
-              "legend": {
-                "title": "Continent",
-                "orient": "right",
-                "titleColor": "#888",
-                "labelColor": "#888",
-                "titleFontSize": 11,
-                "labelFontSize": 10,
-                "symbolSize": 200,
-                "offset": 30,
-                "padding": 0,
-                "symbolType": "circle"
-              },
-              "interactions": {
-                "hover": true
-              }
-            },
-            "insights": [
-              "Asia leads in popular destinations",
-              "Australia, Africa, South America are similar in count"
-            ],
-            "metadata": {
-              "generatedBy": "pieAgent",
-              "timestamp": "2025-09-08T05:08:35.562Z",
-              "userQuery": "Show the number of popular travel destinations per continent",
-              "constraints": {
-                "chartType": "pie",
-                "subtype": "interactivePieSpec",
-                "nodeSize": "medium",
-                "dataCategory": "geographic",
-                "destinations": [
-                  "Asia",
-                  "Europe",
-                  "North America",
-                  "South America",
-                  "Africa",
-                  "Australia"
-                ],
-                "maxDataPoints": 6,
-                "hasFieldFilter": false
-              }
-            }
-          },
-          "vegaSpec": {
-            "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-            "width": 120,
-            "height": 120,
-            "background": "transparent",
-            "layer": [
-              {
-                "data": {
-                  "values": [
-                    {
-                      "continent": "Asia",
-                      "destinations": 32,
-                      "percentage": 31.7
-                    },
-                    {
-                      "continent": "Europe",
-                      "destinations": 28,
-                      "percentage": 27.7
-                    },
-                    {
-                      "continent": "North America",
-                      "destinations": 14,
-                      "percentage": 13.9
-                    },
-                    {
-                      "continent": "South America",
-                      "destinations": 9,
-                      "percentage": 8.9
-                    },
-                    {
-                      "continent": "Africa",
-                      "destinations": 9,
-                      "percentage": 8.9
-                    },
-                    {
-                      "continent": "Australia",
-                      "destinations": 9,
-                      "percentage": 8.9
-                    }
-                  ]
-                },
-                "params": [
-                  {
-                    "name": "hover_pie",
-                    "select": {
-                      "type": "point",
-                      "on": "mouseover",
-                      "clear": "mouseout"
-                    }
-                  }
-                ],
-                "mark": {
-                  "type": "arc",
-                  "innerRadius": 42,
-                  "outerRadius": 60,
-                  "cursor": "pointer"
-                },
-                "encoding": {
-                  "theta": {
-                    "field": "destinations",
-                    "type": "quantitative"
-                  },
-                  "color": {
-                    "field": "continent",
-                    "type": "nominal",
-                    "scale": {
-                      "range": [
-                        "#8B5CF6",
-                        "#3B82F6",
-                        "#06B6D4",
-                        "#10B981",
-                        "#F59E0B",
-                        "#EF4444"
-                      ]
-                    },
-                    "legend": {
-                      "title": "Continent",
-                      "orient": "right",
-                      "titleColor": "#888",
-                      "labelColor": "#888",
-                      "titleFontSize": 11,
-                      "labelFontSize": 10,
-                      "symbolSize": 200,
-                      "offset": 30,
-                      "padding": 0,
-                      "symbolType": "circle"
-                    }
-                  },
-                  "stroke": {
-                    "condition": {
-                      "param": "hover_pie",
-                      "value": "white"
-                    },
-                    "value": "white"
-                  },
-                  "strokeWidth": {
-                    "condition": {
-                      "param": "hover_pie",
-                      "value": 2
-                    },
-                    "value": 0.5
-                  },
-                  "opacity": {
-                    "condition": {
-                      "param": "hover_pie",
-                      "value": 1
-                    },
-                    "value": 0.7
-                  },
-                  "tooltip": [
-                    {
-                      "field": "continent",
-                      "type": "nominal",
-                      "title": "Category"
-                    },
-                    {
-                      "field": "destinations",
-                      "type": "quantitative",
-                      "title": "Value",
-                      "format": ".0f"
-                    },
-                    {
-                      "field": "percentage",
-                      "type": "quantitative",
-                      "title": "Percentage",
-                      "format": ".1f"
-                    }
-                  ]
-                }
-              },
-              {
-                "data": {
-                  "values": [
-                    {
-                      "text": "17",
-                      "category": "center"
-                    }
-                  ]
-                },
-                "mark": {
-                  "type": "text",
-                  "align": "center",
-                  "baseline": "middle",
-                  "fontSize": 16,
-                  "fontWeight": "bold",
-                  "dy": -10,
-                  "color": "#333"
-                },
-                "encoding": {
-                  "text": {
-                    "field": "text",
-                    "type": "nominal"
-                  }
-                }
-              },
-              {
-                "data": {
-                  "values": [
-                    {
-                      "text": "Average",
-                      "category": "subtitle"
-                    }
-                  ]
-                },
-                "mark": {
-                  "type": "text",
-                  "align": "center",
-                  "baseline": "middle",
-                  "fontSize": 10,
-                  "dy": 8,
-                  "color": "#888"
-                },
-                "encoding": {
-                  "text": {
-                    "field": "text",
-                    "type": "nominal"
-                  }
-                }
-              }
-            ],
-            "config": {
-              "view": {
-                "stroke": null
-              }
-            }
-          },
-          "generationTime": 3170,
-          "success": true,
-          "error": null
-        },
-        {
-          "id": "chart-4",
           "name": "Cost Versus Growth Rate",
           "request": {
             "userQuery": "Show relationship between growth rates and average travel costs across continents",
@@ -1939,6 +1628,317 @@
             }
           },
           "generationTime": 33582,
+          "success": true,
+          "error": null
+        },
+        {
+          "id": "chart-4",
+          "name": "Number of Destinations per Continent",
+          "request": {
+            "userQuery": "Show the number of popular travel destinations per continent",
+            "constraints": {
+              "chartType": "pie",
+              "subtype": "interactivePieSpec",
+              "nodeSize": "medium",
+              "dataCategory": "geographic",
+              "destinations": [
+                "Asia",
+                "Europe",
+                "North America",
+                "South America",
+                "Africa",
+                "Australia"
+              ],
+              "maxDataPoints": 6,
+              "hasFieldFilter": false
+            }
+          },
+          "chartSpec": {
+            "type": "pie",
+            "subtype": "interactivePieSpec",
+            "title": "Popular Travel Destinations by Continent",
+            "description": "Distribution of top destinations per continent",
+            "data": [
+              {
+                "continent": "Asia",
+                "destinations": 32,
+                "percentage": 31.7
+              },
+              {
+                "continent": "Europe",
+                "destinations": 28,
+                "percentage": 27.7
+              },
+              {
+                "continent": "North America",
+                "destinations": 14,
+                "percentage": 13.9
+              },
+              {
+                "continent": "South America",
+                "destinations": 9,
+                "percentage": 8.9
+              },
+              {
+                "continent": "Africa",
+                "destinations": 9,
+                "percentage": 8.9
+              },
+              {
+                "continent": "Australia",
+                "destinations": 9,
+                "percentage": 8.9
+              }
+            ],
+            "config": {
+              "dimensions": {
+                "width": 120,
+                "height": 120
+              },
+              "fields": {
+                "category": "continent",
+                "value": "destinations"
+              },
+              "styling": {
+                "colors": [
+                  "#8B5CF6",
+                  "#3B82F6",
+                  "#06B6D4",
+                  "#10B981",
+                  "#F59E0B",
+                  "#EF4444"
+                ],
+                "background": "transparent"
+              },
+              "legend": {
+                "title": "Continent",
+                "orient": "right",
+                "titleColor": "#888",
+                "labelColor": "#888",
+                "titleFontSize": 11,
+                "labelFontSize": 10,
+                "symbolSize": 200,
+                "offset": 30,
+                "padding": 0,
+                "symbolType": "circle"
+              },
+              "interactions": {
+                "hover": true
+              }
+            },
+            "insights": [
+              "Asia leads in popular destinations",
+              "Australia, Africa, South America are similar in count"
+            ],
+            "metadata": {
+              "generatedBy": "pieAgent",
+              "timestamp": "2025-09-08T05:08:35.562Z",
+              "userQuery": "Show the number of popular travel destinations per continent",
+              "constraints": {
+                "chartType": "pie",
+                "subtype": "interactivePieSpec",
+                "nodeSize": "medium",
+                "dataCategory": "geographic",
+                "destinations": [
+                  "Asia",
+                  "Europe",
+                  "North America",
+                  "South America",
+                  "Africa",
+                  "Australia"
+                ],
+                "maxDataPoints": 6,
+                "hasFieldFilter": false
+              }
+            }
+          },
+          "vegaSpec": {
+            "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+            "width": 120,
+            "height": 120,
+            "background": "transparent",
+            "layer": [
+              {
+                "data": {
+                  "values": [
+                    {
+                      "continent": "Asia",
+                      "destinations": 32,
+                      "percentage": 31.7
+                    },
+                    {
+                      "continent": "Europe",
+                      "destinations": 28,
+                      "percentage": 27.7
+                    },
+                    {
+                      "continent": "North America",
+                      "destinations": 14,
+                      "percentage": 13.9
+                    },
+                    {
+                      "continent": "South America",
+                      "destinations": 9,
+                      "percentage": 8.9
+                    },
+                    {
+                      "continent": "Africa",
+                      "destinations": 9,
+                      "percentage": 8.9
+                    },
+                    {
+                      "continent": "Australia",
+                      "destinations": 9,
+                      "percentage": 8.9
+                    }
+                  ]
+                },
+                "params": [
+                  {
+                    "name": "hover_pie",
+                    "select": {
+                      "type": "point",
+                      "on": "mouseover",
+                      "clear": "mouseout"
+                    }
+                  }
+                ],
+                "mark": {
+                  "type": "arc",
+                  "innerRadius": 42,
+                  "outerRadius": 60,
+                  "cursor": "pointer"
+                },
+                "encoding": {
+                  "theta": {
+                    "field": "destinations",
+                    "type": "quantitative"
+                  },
+                  "color": {
+                    "field": "continent",
+                    "type": "nominal",
+                    "scale": {
+                      "range": [
+                        "#8B5CF6",
+                        "#3B82F6",
+                        "#06B6D4",
+                        "#10B981",
+                        "#F59E0B",
+                        "#EF4444"
+                      ]
+                    },
+                    "legend": {
+                      "title": "Continent",
+                      "orient": "right",
+                      "titleColor": "#888",
+                      "labelColor": "#888",
+                      "titleFontSize": 11,
+                      "labelFontSize": 10,
+                      "symbolSize": 200,
+                      "offset": 30,
+                      "padding": 0,
+                      "symbolType": "circle"
+                    }
+                  },
+                  "stroke": {
+                    "condition": {
+                      "param": "hover_pie",
+                      "value": "white"
+                    },
+                    "value": "white"
+                  },
+                  "strokeWidth": {
+                    "condition": {
+                      "param": "hover_pie",
+                      "value": 2
+                    },
+                    "value": 0.5
+                  },
+                  "opacity": {
+                    "condition": {
+                      "param": "hover_pie",
+                      "value": 1
+                    },
+                    "value": 0.7
+                  },
+                  "tooltip": [
+                    {
+                      "field": "continent",
+                      "type": "nominal",
+                      "title": "Category"
+                    },
+                    {
+                      "field": "destinations",
+                      "type": "quantitative",
+                      "title": "Value",
+                      "format": ".0f"
+                    },
+                    {
+                      "field": "percentage",
+                      "type": "quantitative",
+                      "title": "Percentage",
+                      "format": ".1f"
+                    }
+                  ]
+                }
+              },
+              {
+                "data": {
+                  "values": [
+                    {
+                      "text": "17",
+                      "category": "center"
+                    }
+                  ]
+                },
+                "mark": {
+                  "type": "text",
+                  "align": "center",
+                  "baseline": "middle",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                  "dy": -10,
+                  "color": "#333"
+                },
+                "encoding": {
+                  "text": {
+                    "field": "text",
+                    "type": "nominal"
+                  }
+                }
+              },
+              {
+                "data": {
+                  "values": [
+                    {
+                      "text": "Average",
+                      "category": "subtitle"
+                    }
+                  ]
+                },
+                "mark": {
+                  "type": "text",
+                  "align": "center",
+                  "baseline": "middle",
+                  "fontSize": 10,
+                  "dy": 8,
+                  "color": "#888"
+                },
+                "encoding": {
+                  "text": {
+                    "field": "text",
+                    "type": "nominal"
+                  }
+                }
+              }
+            ],
+            "config": {
+              "view": {
+                "stroke": null
+              }
+            }
+          },
+          "generationTime": 3170,
           "success": true,
           "error": null
         }

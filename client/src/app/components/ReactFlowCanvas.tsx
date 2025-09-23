@@ -189,6 +189,7 @@ export interface VegaDashboardData {
 // Interface for ViewGenerator data (from _data_output.json format - DemoChart structure)
 export interface ViewGeneratorData {
   sentence_id: number;
+  sentence_content?: string;
   charts: Array<{
     id: string;
     name: string;
@@ -894,6 +895,7 @@ const VegaDashboardNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
 const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, selected }) => {
   const [error, setError] = useState<string | null>(null);
   const [gridConfig, setGridConfig] = useState<{columns: number, rows: number} | null>(null);
+  const [showPrompt, setShowPrompt] = useState(false);
 
   const handleError = (error: any) => {
     console.error('ViewGenerator error:', error);
@@ -1012,8 +1014,8 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
 
       {/* ViewGenerator Header */}
       <div className="view-generator-header" style={{
-        padding: '20px 24px', // Increased padding for bigger appearance
-        borderBottom: selected ? '3px solid #0891b2' : '2px solid #e2e8f0',
+        padding: '32px 32px', // Much larger padding
+        borderBottom: selected ? '4px solid #0891b2' : '3px solid #e2e8f0',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -1023,30 +1025,119 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
         borderRadius: '12px 12px 0 0',
         transition: 'all 0.3s ease',
         boxShadow: selected 
-          ? '0 4px 12px rgba(8, 145, 178, 0.15)' 
-          : '0 2px 8px rgba(0, 0, 0, 0.05)',
-        minHeight: '72px', // Ensure minimum height for bigger appearance
+          ? '0 6px 20px rgba(8, 145, 178, 0.2)' 
+          : '0 4px 12px rgba(0, 0, 0, 0.08)',
+        minHeight: '120px', // Much larger minimum height
+        position: 'relative', // For tooltip positioning
       }}>
-        <h3 style={{
-          margin: 0,
-          fontSize: selected ? '22px' : '20px', // Increased font sizes
-          fontWeight: selected ? '800' : '700', // Bolder weights
-          color: selected ? '#0369a1' : '#1e293b', // Stronger colors
-          transition: 'all 0.3s ease',
-          textShadow: selected ? '0 2px 4px rgba(3, 105, 161, 0.2)' : '0 1px 2px rgba(30, 41, 59, 0.1)',
-          letterSpacing: '0.5px', // Add letter spacing for more presence
-        }}>
-          📊 Sentence #{data.sentence_id}
-        </h3>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          {!showPrompt ? (
+            <>
+              <h3 style={{
+                margin: 0,
+                fontSize: selected ? '36px' : '32px', // Much larger font sizes
+                fontWeight: selected ? '800' : '700', // Bolder weights
+                color: selected ? '#0369a1' : '#1e293b', // Stronger colors
+                transition: 'all 0.3s ease',
+                textShadow: selected ? '0 2px 4px rgba(3, 105, 161, 0.2)' : '0 1px 2px rgba(30, 41, 59, 0.1)',
+                letterSpacing: '0.5px', // Add letter spacing for more presence
+              }}>
+                View Analysis
+              </h3>
+              
+              {/* Information Icon */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowPrompt(true);
+                }}
+                style={{
+                  background: selected ? '#0369a1' : '#64748b',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '40px', // Even larger button
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  fontSize: '20px', // Much larger icon text
+                  fontWeight: '700',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 3px 6px rgba(0, 0, 0, 0.15)',
+                }}
+                title="View prompt context"
+              >
+                i
+              </button>
+            </>
+          ) : (
+            <div style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '12px',
+              width: '100%',
+              maxWidth: '85%',
+            }}>
+              <span style={{
+                fontSize: '24px', // Much larger prompt label
+                fontWeight: '700',
+                color: selected ? '#0369a1' : '#475569',
+                flexShrink: 0,
+              }}>
+                prompt:
+              </span>
+              <p style={{
+                margin: 0,
+                fontSize: '18px', // Much larger prompt text
+                lineHeight: '1.5',
+                color: selected ? '#0c4a6e' : '#334155',
+                fontStyle: 'italic',
+                flex: 1,
+                fontWeight: '500', // Slightly bolder
+              }}>
+                {data.sentence_content || `Sentence ${data.sentence_id} analysis`}
+              </p>
+              
+              {/* Close button for prompt view */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowPrompt(false);
+                }}
+                style={{
+                  background: 'transparent',
+                  color: selected ? '#0369a1' : '#64748b',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '36px', // Larger close button
+                  height: '36px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  fontSize: '24px', // Much larger × symbol
+                  fontWeight: '700',
+                  transition: 'all 0.2s ease',
+                  flexShrink: 0,
+                }}
+                title="Close prompt view"
+              >
+                ×
+              </button>
+            </div>
+          )}
+        </div>
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '12px', // Increased gap for better spacing
-          fontSize: '13px', // Slightly larger
+          gap: '16px', // Larger gap for better spacing
+          fontSize: '18px', // Much larger font
           color: selected ? '#0369a1' : '#64748b',
           transition: 'all 0.3s ease',
         }}>
-          {/* Grid Control Buttons - Subtle Design */}
+          {/* Grid Control Buttons - Larger Design */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -1056,24 +1147,25 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
             style={{
               background: currentCols <= 2 ? '#f3f4f6' : '#f9fafb',
               color: currentCols <= 2 ? '#9ca3af' : '#6b7280',
-              border: '1px solid #e5e7eb',
-              borderRadius: '6px',
-              padding: '6px 10px',
-              fontSize: '11px',
+              border: '2px solid #e5e7eb', // Thicker border
+              borderRadius: '8px', // More rounded
+              padding: '12px 20px', // Even larger padding
+              fontSize: '16px', // Much larger font
               cursor: currentCols <= 2 ? 'not-allowed' : 'pointer',
-              fontWeight: '500',
+              fontWeight: '600', // Bolder
               display: 'flex',
               alignItems: 'center',
-              gap: '3px',
+              gap: '6px',
               opacity: currentCols <= 2 ? 0.5 : 0.8,
               transition: 'all 0.2s ease',
-              boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.08)',
             }}
             onMouseEnter={(e) => {
               if (currentCols > 2) {
                 e.currentTarget.style.opacity = '1';
                 e.currentTarget.style.background = '#f3f4f6';
                 e.currentTarget.style.color = '#374151';
+                e.currentTarget.style.transform = 'scale(1.05)';
               }
             }}
             onMouseLeave={(e) => {
@@ -1081,6 +1173,7 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
                 e.currentTarget.style.opacity = '0.8';
                 e.currentTarget.style.background = '#f9fafb';
                 e.currentTarget.style.color = '#6b7280';
+                e.currentTarget.style.transform = 'scale(1)';
               }
             }}
             title={`Remove column from right (${currentCols} cols)`}
@@ -1096,24 +1189,25 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
             style={{
               background: currentRows <= 2 ? '#f3f4f6' : '#f9fafb',
               color: currentRows <= 2 ? '#9ca3af' : '#6b7280',
-              border: '1px solid #e5e7eb',
-              borderRadius: '6px',
-              padding: '6px 10px',
-              fontSize: '11px',
+              border: '2px solid #e5e7eb', // Thicker border
+              borderRadius: '8px', // More rounded
+              padding: '12px 20px', // Even larger padding
+              fontSize: '16px', // Much larger font
               cursor: currentRows <= 2 ? 'not-allowed' : 'pointer',
-              fontWeight: '500',
+              fontWeight: '600', // Bolder
               display: 'flex',
               alignItems: 'center',
-              gap: '3px',
+              gap: '6px',
               opacity: currentRows <= 2 ? 0.5 : 0.8,
               transition: 'all 0.2s ease',
-              boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.08)',
             }}
             onMouseEnter={(e) => {
               if (currentRows > 2) {
                 e.currentTarget.style.opacity = '1';
                 e.currentTarget.style.background = '#f3f4f6';
                 e.currentTarget.style.color = '#374151';
+                e.currentTarget.style.transform = 'scale(1.05)';
               }
             }}
             onMouseLeave={(e) => {
@@ -1121,6 +1215,7 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
                 e.currentTarget.style.opacity = '0.8';
                 e.currentTarget.style.background = '#f9fafb';
                 e.currentTarget.style.color = '#6b7280';
+                e.currentTarget.style.transform = 'scale(1)';
               }
             }}
             title={`Remove row from bottom (${currentRows} rows)`}
@@ -1131,12 +1226,12 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
             <span style={{
               backgroundColor: '#0891b2',
               color: 'white',
-              padding: '6px 12px', // Larger padding
-              borderRadius: '8px', // More rounded
-              fontSize: '12px', // Slightly larger
+              padding: '12px 24px', // Even larger padding
+              borderRadius: '12px', // More rounded
+              fontSize: '16px', // Much larger font
               fontWeight: '700',
-              letterSpacing: '0.8px', // More spacing
-              boxShadow: '0 3px 8px rgba(8, 145, 178, 0.4), 0 1px 3px rgba(8, 145, 178, 0.2)',
+              letterSpacing: '1px', // More spacing
+              boxShadow: '0 4px 12px rgba(8, 145, 178, 0.4), 0 2px 6px rgba(8, 145, 178, 0.2)',
               animation: 'badge-pulse 2s ease-in-out infinite',
               textTransform: 'uppercase',
             }}>
@@ -1151,7 +1246,7 @@ const ViewGeneratorNode: React.FC<{ data: any; selected?: boolean }> = ({ data, 
         className="view-generator-content"
         style={{
           padding: '0',
-          height: 'calc(100% - 72px)', // Adjusted for bigger header (72px min-height)
+          height: 'calc(100% - 120px)', // Adjusted for much larger header (120px min-height)
           overflow: 'auto',
           pointerEvents: 'auto',
           zIndex: 3,
@@ -1556,6 +1651,12 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
       : '/examples/scenario1/example4_data_output.json'; // fallback
     
     const actualFilePath = filePath || defaultPath;
+    
+    // Also construct path for the corresponding example.json file to get sentence content
+    const exampleFilePath = scenario && example 
+      ? `/examples/scenario${scenario}/example${example}.json`
+      : '/examples/scenario1/example4.json'; // fallback
+    
     // Prevent multiple simultaneous calls using both state and ref
     if (isAutoLoading || hasAutoLoadedRef.current) {
       console.log('⏳ Already loading or loaded ViewGenerator nodes, skipping duplicate call');
@@ -1566,13 +1667,39 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
       setIsAutoLoading(true);
       hasAutoLoadedRef.current = true; // Mark as loaded permanently
       console.log('🔄 Loading ViewGenerator nodes from:', actualFilePath);
-      const response = await fetch(actualFilePath);
+      console.log('🔄 Loading sentence content from:', exampleFilePath);
       
-      if (!response.ok) {
-        throw new Error(`Failed to load file: ${response.status} ${response.statusText}`);
+      // Load both files in parallel
+      const [outputResponse, exampleResponse] = await Promise.all([
+        fetch(actualFilePath),
+        fetch(exampleFilePath)
+      ]);
+      
+      if (!outputResponse.ok) {
+        throw new Error(`Failed to load output file: ${outputResponse.status} ${outputResponse.statusText}`);
       }
       
-      const outputData = await response.json();
+      const outputData = await outputResponse.json();
+      
+      // Load sentence content (optional, fallback gracefully if not available)
+      let sentenceContentMap: Record<number, string> = {};
+      if (exampleResponse.ok) {
+        try {
+          const exampleData = await exampleResponse.json();
+          const explorationPath = exampleData.exploration_path || [];
+          sentenceContentMap = explorationPath.reduce((map: Record<number, string>, item: any) => {
+            if (item.sentence_id && item.sentence_content) {
+              map[item.sentence_id] = item.sentence_content;
+            }
+            return map;
+          }, {});
+          console.log('📝 Loaded sentence content for sentences:', Object.keys(sentenceContentMap));
+        } catch (error) {
+          console.warn('Could not parse example.json, continuing without sentence content:', error);
+        }
+      } else {
+        console.warn('Could not load example.json, continuing without sentence content');
+      }
       
       if (!outputData.sentences) {
         throw new Error('Invalid file format: no sentences found');
@@ -1599,6 +1726,7 @@ const ReactFlowCanvas = forwardRef<ReactFlowCanvasRef, ReactFlowCanvasProps>(({
           setTimeout(() => {
             addViewGeneratorNode({
               sentence_id: parseInt(sentenceId),
+              sentence_content: sentenceContentMap[parseInt(sentenceId)], // Add sentence content
               charts: sentenceData.charts, // Keep original DemoChart format
               onInteraction: (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => {
                 console.log('📊 ViewGenerator interaction:', { elementId, elementName, elementType, action, metadata });

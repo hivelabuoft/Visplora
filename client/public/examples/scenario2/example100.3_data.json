@@ -1,0 +1,2034 @@
+[
+  {
+    "sentence_id": 1,
+    "charts": [
+      {
+        "name": "Popularity of North American Destinations",
+        "request": {
+          "userQuery": "Show the popularity score for various destinations in North America",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "New York",
+              "Los Angeles",
+              "Toronto",
+              "Vancouver",
+              "Mexico City",
+              "Havana",
+              "San Francisco"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValue": "North America"
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety vs Popularity in North America",
+        "request": {
+          "userQuery": "Show the relationship between safety score and popularity score for North American destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "New York",
+              "Los Angeles",
+              "Toronto",
+              "Vancouver",
+              "Mexico City",
+              "Havana",
+              "San Francisco"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValue": "North America"
+            }
+          }
+        }
+      },
+      {
+        "name": "North America's Environmental Quality Over Time",
+        "request": {
+          "userQuery": "Show the environmental quality index over time for North America",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "selectedCountries": [
+              "United States",
+              "Canada",
+              "Mexico"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cultural Diversity in North American Destinations",
+        "request": {
+          "userQuery": "Show the diversity index for various destinations in North America",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "New York",
+              "Los Angeles",
+              "Toronto",
+              "Vancouver",
+              "Mexico City",
+              "Havana",
+              "San Francisco"
+            ],
+            "maxDataPoints": 7,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValue": "North America"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 2,
+    "charts": [
+      {
+        "name": "Regional Safety Scores",
+        "request": {
+          "userQuery": "Show the average safety score for each region",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Africa",
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filter_type": "region",
+              "values": [
+                "Africa",
+                "Asia",
+                "Europe",
+                "North America",
+                "South America",
+                "Oceania"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety vs Popularity",
+        "request": {
+          "userQuery": "Show the relationship between safety score and popularity score for each region",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Africa",
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Score Trends",
+        "request": {
+          "userQuery": "Show the trend of safety scores over time for each region",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Africa",
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Oceania"
+            ],
+            "maxDataPoints": 24,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Score Distribution",
+        "request": {
+          "userQuery": "Show the distribution of safety scores across regions",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Africa",
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 3,
+    "charts": [
+      {
+        "name": "Cultural Diversity Index by Region",
+        "request": {
+          "userQuery": "Show cultural diversity index by region",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "North Africa",
+              "West Africa",
+              "East Africa",
+              "Central Africa",
+              "Southern Africa"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "North Africa",
+                "West Africa",
+                "East Africa",
+                "Central Africa",
+                "Southern Africa"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cultural Heritage Sites Distribution",
+        "request": {
+          "userQuery": "Show distribution of cultural heritage sites in Africa",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "North Africa",
+              "West Africa",
+              "East Africa",
+              "Central Africa",
+              "Southern Africa"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "North Africa",
+                "West Africa",
+                "East Africa",
+                "Central Africa",
+                "Southern Africa"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cultural Experience Review Scores",
+        "request": {
+          "userQuery": "Show average cultural experience review scores across Africa",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "North Africa",
+              "West Africa",
+              "East Africa",
+              "Central Africa",
+              "Southern Africa"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "North Africa",
+                "West Africa",
+                "East Africa",
+                "Central Africa",
+                "Southern Africa"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Cultural Tourism Revenue by Region",
+        "request": {
+          "userQuery": "Show cultural tourism revenue by region",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "revenue",
+            "destinations": [
+              "North Africa",
+              "West Africa",
+              "East Africa",
+              "Central Africa",
+              "Southern Africa"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "North Africa",
+                "West Africa",
+                "East Africa",
+                "Central Africa",
+                "Southern Africa"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 4,
+    "charts": [
+      {
+        "name": "Environmental Quality by Region",
+        "request": {
+          "userQuery": "Show me the environmental quality index by region",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "North America",
+              "South America",
+              "Africa",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "region"
+            }
+          }
+        }
+      },
+      {
+        "name": "Environmental Discussion Trend Over Time",
+        "request": {
+          "userQuery": "Show me the trend of environmental discussions over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "North America",
+              "South America",
+              "Africa",
+              "Oceania"
+            ],
+            "maxDataPoints": 24,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Regional Comparison of Environmental Quality and Safety",
+        "request": {
+          "userQuery": "Show a comparison of environmental quality and safety score by region",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "North America",
+              "South America",
+              "Africa",
+              "Oceania"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "region"
+            }
+          }
+        }
+      },
+      {
+        "name": "Environmental Quality Distribution",
+        "request": {
+          "userQuery": "Show the distribution of environmental quality scores by region",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "North America",
+              "South America",
+              "Africa",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "region"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 5,
+    "charts": [
+      {
+        "name": "Average Daily Cost by Region",
+        "request": {
+          "userQuery": "Show average daily cost by region",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Asia",
+              "North America",
+              "Europe",
+              "Africa",
+              "South America",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Asia",
+                "North America",
+                "Europe",
+                "Africa",
+                "South America",
+                "Australia"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Scores by Popular Destinations",
+        "request": {
+          "userQuery": "Show safety scores of popular tourist destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "New York",
+              "Paris",
+              "Tokyo",
+              "Sydney",
+              "Cape Town",
+              "Rio de Janeiro"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cost vs Safety for Top Destinations",
+        "request": {
+          "userQuery": "Show how cost and safety correlate for top tourist destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "New York",
+              "Paris",
+              "Tokyo",
+              "Sydney",
+              "Cape Town",
+              "Rio de Janeiro"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "North America",
+                "Europe",
+                "Asia",
+                "Australia",
+                "Africa",
+                "South America"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 6,
+    "charts": [
+      {
+        "name": "Attractions Popularity vs Reviews",
+        "request": {
+          "userQuery": "Show me a scatter plot of attractions popularity versus review count for various destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Paris",
+              "London",
+              "New York",
+              "Beijing",
+              "Sydney"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Disparity in Attraction Claims",
+        "request": {
+          "userQuery": "Show me a bar chart with the difference between attraction claims and actual reviews for different regions",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Europe",
+              "North America",
+              "Asia",
+              "Australia"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe",
+                "North America",
+                "Asia",
+                "Australia"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Attractions Review Trend",
+        "request": {
+          "userQuery": "Show me a trend line for attraction reviews over time for selected regions",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Europe",
+              "North America",
+              "Asia",
+              "Australia"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2018",
+                "2019",
+                "2020",
+                "2021"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 7,
+    "charts": [
+      {
+        "name": "Average Daily Cost by Region",
+        "request": {
+          "userQuery": "Show the average daily cost for each region",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Europe",
+              "Africa",
+              "Asia",
+              "Americas",
+              "Oceania"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region"
+            }
+          }
+        }
+      },
+      {
+        "name": "Popularity vs Safety Score",
+        "request": {
+          "userQuery": "Show the correlation between the popularity and safety score for each region",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Europe",
+              "Africa",
+              "Asia",
+              "Americas",
+              "Oceania"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Review Count by Region",
+        "request": {
+          "userQuery": "Show the total review count for each region",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Europe",
+              "Africa",
+              "Asia",
+              "Americas",
+              "Oceania"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region"
+            }
+          }
+        }
+      },
+      {
+        "name": "Popularity Score and Environmental Quality Index by Region",
+        "request": {
+          "userQuery": "Show the popularity score and environmental quality index for each region",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Europe",
+              "Africa",
+              "Asia",
+              "Americas",
+              "Oceania"
+            ],
+            "maxDataPoints": 10,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 8,
+    "charts": [
+      {
+        "name": "Diversity vs Safety",
+        "request": {
+          "userQuery": "Show the relationship between diversity index and safety score for different regions",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety Score Distribution",
+        "request": {
+          "userQuery": "Show the distribution of safety scores across regions",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "safety",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Asia",
+                "Europe",
+                "North America",
+                "South America",
+                "Africa",
+                "Oceania"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Diversity and Safety over Time",
+        "request": {
+          "userQuery": "Show the trends of diversity index and safety score over time for different regions",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Oceania"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2015",
+                "2016",
+                "2017",
+                "2018",
+                "2019",
+                "2020"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 9,
+    "charts": [
+      {
+        "name": "Average Daily Cost by Region",
+        "request": {
+          "userQuery": "Show average daily cost by region",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "North America",
+              "South America",
+              "Africa",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe",
+                "Asia",
+                "North America",
+                "South America",
+                "Africa",
+                "Australia"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Score and Popularity Score Relationship",
+        "request": {
+          "userQuery": "Show the relationship between safety score and popularity score by region",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "North America",
+              "South America",
+              "Africa",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Environmental Quality Index Trend by Region",
+        "request": {
+          "userQuery": "Show the trend of environmental quality index by region over quarters",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "North America",
+              "South America",
+              "Africa",
+              "Australia"
+            ],
+            "maxDataPoints": 24,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Diversity Index by Region",
+        "request": {
+          "userQuery": "Show the diversity index by region",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Europe",
+              "Asia",
+              "North America",
+              "South America",
+              "Africa",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 10,
+    "charts": [
+      {
+        "name": "Safety Score Variation in Africa",
+        "request": {
+          "userQuery": "Show safety scores for different regions in Africa",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "North Africa",
+              "West Africa",
+              "East Africa",
+              "Central Africa",
+              "Southern Africa"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Africa"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety and Popularity Correlation",
+        "request": {
+          "userQuery": "Show the correlation between safety score and popularity score for countries in Africa",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "selectedCountries": [
+              "Morocco",
+              "Egypt",
+              "South Africa",
+              "Kenya",
+              "Nigeria"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "African Countries Safety Review Trends",
+        "request": {
+          "userQuery": "Show the trend of safety reviews for different countries in Africa over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "selectedCountries": [
+              "Morocco",
+              "Egypt",
+              "South Africa",
+              "Kenya",
+              "Nigeria"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Safety vs Visitor Flow",
+        "request": {
+          "userQuery": "Compare the safety score and visitor flow for different regions in Africa",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "North Africa",
+              "West Africa",
+              "East Africa",
+              "Central Africa",
+              "Southern Africa"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Africa"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 11,
+    "charts": [
+      {
+        "name": "Review Reliability by Region",
+        "request": {
+          "userQuery": "Show the fluctuation of review reliability by region",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "North America",
+              "Europe",
+              "Asia",
+              "Africa",
+              "South America",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "North America",
+                "Europe",
+                "Asia",
+                "Africa",
+                "South America",
+                "Australia"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Review Count vs. Reliability",
+        "request": {
+          "userQuery": "Show the relationship between review count and review reliability",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "North America",
+              "Europe",
+              "Asia",
+              "Africa",
+              "South America",
+              "Australia"
+            ],
+            "maxDataPoints": 6
+          }
+        }
+      },
+      {
+        "name": "Review Reliability Distribution",
+        "request": {
+          "userQuery": "Show the distribution of review reliability across regions",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "North America",
+              "Europe",
+              "Asia",
+              "Africa",
+              "South America",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "North America",
+                "Europe",
+                "Asia",
+                "Africa",
+                "South America",
+                "Australia"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Review Reliability Over Time",
+        "request": {
+          "userQuery": "Show how review reliability has changed over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "North America",
+              "Europe",
+              "Asia",
+              "Africa",
+              "South America",
+              "Australia"
+            ],
+            "maxDataPoints": 12
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 12,
+    "charts": [
+      {
+        "name": "Environmental Quality Perception across Regions",
+        "request": {
+          "userQuery": "Show the perceived environmental quality across different regions",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "West",
+              "East",
+              "North",
+              "South"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "West",
+                "East",
+                "North",
+                "South"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Region-wise Breakdown of Environmental Quality Perception",
+        "request": {
+          "userQuery": "Show a breakdown of environmental quality perception by region",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "West",
+              "East",
+              "North",
+              "South"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "West",
+                "East",
+                "North",
+                "South"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Trend of Environmental Quality Perception in the West",
+        "request": {
+          "userQuery": "Show the trend of environmental quality perception in the West over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "West"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Comparison of Environmental Quality Perception and Popularity Score",
+        "request": {
+          "userQuery": "Show the relationship between environmental quality perception and popularity score across regions",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "West",
+              "East",
+              "North",
+              "South"
+            ],
+            "maxDataPoints": 8,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValues": [
+                "West",
+                "East",
+                "North",
+                "South"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 13,
+    "charts": [
+      {
+        "name": "Average Daily Cost by Region",
+        "request": {
+          "userQuery": "Show average daily cost by region",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "Africa",
+              "North America",
+              "South America"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region"
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety Score vs Popularity Score",
+        "request": {
+          "userQuery": "Show safety score vs popularity score with review count as the bubble size",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "Africa",
+              "North America",
+              "South America"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Cultural Diversity Index by Region",
+        "request": {
+          "userQuery": "Show cultural diversity index by region",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "divergingBar",
+            "nodeSize": "medium",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "Africa",
+              "North America",
+              "South America"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region"
+            }
+          }
+        }
+      },
+      {
+        "name": "Environmental Quality Index by Quarter and Region",
+        "request": {
+          "userQuery": "Show environmental quality index by quarter and region",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "Africa",
+              "North America",
+              "South America"
+            ],
+            "maxDataPoints": 20,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 14,
+    "charts": [
+      {
+        "name": "Cultural Richness vs Popularity",
+        "request": {
+          "userQuery": "Show the cultural diversity index and popularity score for each region",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "barChartWithLineSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Asia",
+                "Europe",
+                "North America",
+                "South America",
+                "Africa",
+                "Oceania"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Popularity vs Review Count",
+        "request": {
+          "userQuery": "Show the correlation between popularity score and review count for each region",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Asia",
+                "Europe",
+                "North America",
+                "South America",
+                "Africa",
+                "Oceania"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety vs Popularity",
+        "request": {
+          "userQuery": "Show the safety score and popularity score for each region",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Asia",
+                "Europe",
+                "North America",
+                "South America",
+                "Africa",
+                "Oceania"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 15,
+    "charts": [
+      {
+        "name": "Environment Quality vs Rave Reviews",
+        "request": {
+          "userQuery": "Show the correlation between environment quality and rave reviews in different regions",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Rave Reviews Distribution by Region",
+        "request": {
+          "userQuery": "Show the distribution of rave reviews across different regions",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Africa",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Asia",
+                "Europe",
+                "North America",
+                "South America",
+                "Africa",
+                "Australia"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Trends of Rave Reviews in Green Places",
+        "request": {
+          "userQuery": "Show the trend of rave reviews in green places over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "Seychelles",
+              "Costa Rica",
+              "New Zealand",
+              "Norway",
+              "Finland",
+              "Bhutan"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Comparison of Environment Quality in Popular Green Destinations",
+        "request": {
+          "userQuery": "Compare the environment quality of popular green destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Seychelles",
+              "Costa Rica",
+              "New Zealand",
+              "Norway",
+              "Finland",
+              "Bhutan"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 16,
+    "charts": [
+      {
+        "name": "Safety and Diversity by Region",
+        "request": {
+          "userQuery": "Show safety scores and diversity index by region",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Asia",
+              "Africa",
+              "Europe",
+              "North America",
+              "South America",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "region"
+            }
+          }
+        }
+      },
+      {
+        "name": "Average Daily Cost by Region",
+        "request": {
+          "userQuery": "Show average daily cost by region",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Asia",
+              "Africa",
+              "Europe",
+              "North America",
+              "South America",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "region"
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety vs Popularity Bubble Plot",
+        "request": {
+          "userQuery": "Show a bubble plot of safety scores vs popularity scores",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Asia",
+              "Africa",
+              "Europe",
+              "North America",
+              "South America",
+              "Oceania"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "World Map of Review Scores",
+        "request": {
+          "userQuery": "Show a world map of average review scores",
+          "constraints": {
+            "chartType": "map",
+            "subtype": "worldInteractiveMap",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "selectedCountries": [
+              "China",
+              "India",
+              "United States",
+              "Brazil",
+              "South Africa",
+              "Australia"
+            ],
+            "maxDataPoints": 6,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 17,
+    "charts": [
+      {
+        "name": "Average Daily Cost by Region",
+        "request": {
+          "userQuery": "Show the average daily cost in popular regions",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithMean",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "New York",
+              "Paris",
+              "Tokyo",
+              "Dubai",
+              "Rome"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "New York",
+                "Paris",
+                "Tokyo",
+                "Dubai",
+                "Rome"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Popularity Score and Safety Score Correlation",
+        "request": {
+          "userQuery": "Show the correlation between popularity score and safety score for popular destinations",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "New York",
+              "Paris",
+              "Tokyo",
+              "Dubai",
+              "Rome"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Review Count and Environmental Quality by Region",
+        "request": {
+          "userQuery": "Show the review count and environmental quality index by region for popular destinations",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiTypeWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "reviews",
+            "destinations": [
+              "New York",
+              "Paris",
+              "Tokyo",
+              "Dubai",
+              "Rome"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "New York",
+                "Paris",
+                "Tokyo",
+                "Dubai",
+                "Rome"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 18,
+    "charts": [
+      {
+        "name": "Safe Lesser-Known Regions",
+        "request": {
+          "userQuery": "Show safety scores of lesser-known regions",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Bhutan",
+              "Faroe Islands",
+              "Latvia",
+              "Oman",
+              "Uruguay"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValue": [
+                "Bhutan",
+                "Faroe Islands",
+                "Latvia",
+                "Oman",
+                "Uruguay"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Popularity of Lesser-Known Regions",
+        "request": {
+          "userQuery": "Show popularity scores of lesser-known regions",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "horizontalBar",
+            "nodeSize": "xlarge",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Bhutan",
+              "Faroe Islands",
+              "Latvia",
+              "Oman",
+              "Uruguay"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValue": [
+                "Bhutan",
+                "Faroe Islands",
+                "Latvia",
+                "Oman",
+                "Uruguay"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Safety vs Popularity in Lesser-Known Regions",
+        "request": {
+          "userQuery": "Show the relation between safety and popularity in lesser-known regions",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "safety",
+            "destinations": [
+              "Bhutan",
+              "Faroe Islands",
+              "Latvia",
+              "Oman",
+              "Uruguay"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "filterValue": [
+                "Bhutan",
+                "Faroe Islands",
+                "Latvia",
+                "Oman",
+                "Uruguay"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 19,
+    "charts": [
+      {
+        "name": "Diversity Score vs Average Travel Cost by Region",
+        "request": {
+          "userQuery": "Show average travel cost vs diversity index for each region",
+          "constraints": {
+            "chartType": "scatter",
+            "subtype": "bubblePlotScatterSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cost",
+            "destinations": [
+              "Region 1",
+              "Region 2",
+              "Region 3",
+              "Region 4",
+              "Region 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "region",
+              "selected": [
+                "Region 1",
+                "Region 2",
+                "Region 3",
+                "Region 4",
+                "Region 5"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Average Travel Cost by Diversity Category",
+        "request": {
+          "userQuery": "Show average travel cost by diversity category",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "destinations": [
+              "Low Diversity",
+              "Medium Diversity",
+              "High Diversity"
+            ],
+            "maxDataPoints": 3,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "type": "budget_level",
+              "selected": [
+                "Low",
+                "Medium",
+                "High"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Regional Diversity Index Over Time",
+        "request": {
+          "userQuery": "Show how the diversity index in each region has changed over time",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "multiLineLabelSpec",
+            "nodeSize": "xlarge",
+            "dataCategory": "cultural",
+            "destinations": [
+              "Region 1",
+              "Region 2",
+              "Region 3",
+              "Region 4",
+              "Region 5"
+            ],
+            "maxDataPoints": 20,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Country Breakdown of High Travel Cost and High Diversity",
+        "request": {
+          "userQuery": "Show the countries where high travel cost aligns with high diversity",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "cost",
+            "selectedCountries": [
+              "Country 1",
+              "Country 2",
+              "Country 3",
+              "Country 4",
+              "Country 5"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "sentence_id": 20,
+    "charts": [
+      {
+        "name": "Popularity vs Environmental Quality",
+        "request": {
+          "userQuery": "Show popular destinations struggling with environmental quality",
+          "constraints": {
+            "chartType": "multiType",
+            "subtype": "multiType_same_y_diff_type",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Venice",
+              "Bali",
+              "Barcelona",
+              "Ibiza",
+              "Santorini"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "region",
+              "values": [
+                "Europe",
+                "Asia"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Visitor Flow vs Environmental Quality",
+        "request": {
+          "userQuery": "Compare visitor flow and environmental quality for popular destinations",
+          "constraints": {
+            "chartType": "bar",
+            "subtype": "barChartWithThreshold",
+            "nodeSize": "medium",
+            "dataCategory": "visitor-flow",
+            "destinations": [
+              "Venice",
+              "Bali",
+              "Barcelona",
+              "Ibiza",
+              "Santorini"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": true,
+            "filterConfig": {
+              "filterType": "year",
+              "values": [
+                "2018",
+                "2019",
+                "2020"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "Environmental Quality Over Time",
+        "request": {
+          "userQuery": "Show environmental quality over time for popular destinations",
+          "constraints": {
+            "chartType": "line",
+            "subtype": "lineChartWithMean",
+            "nodeSize": "xlarge",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Venice",
+              "Bali",
+              "Barcelona",
+              "Ibiza",
+              "Santorini"
+            ],
+            "maxDataPoints": 12,
+            "hasFieldFilter": false
+          }
+        }
+      },
+      {
+        "name": "Region-wise Environmental Quality",
+        "request": {
+          "userQuery": "Show region-wise environmental quality for popular destinations",
+          "constraints": {
+            "chartType": "pie",
+            "subtype": "interactivePieSpec",
+            "nodeSize": "medium",
+            "dataCategory": "environmental",
+            "destinations": [
+              "Venice",
+              "Bali",
+              "Barcelona",
+              "Ibiza",
+              "Santorini"
+            ],
+            "maxDataPoints": 5,
+            "hasFieldFilter": false
+          }
+        }
+      }
+    ]
+  }
+]

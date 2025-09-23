@@ -33,3 +33,9 @@ participant_id,condition,final_time,insights_generated,factors_explored,factors_
 68185ed818a05008c861de87,NS,30.49,19,6,,3,11,,,,16,5
 682200baa4aa731275156f02,Baseline,29.34,9,7,,2,3,,,,6,3
 682200baa4aa731275156f02,NS,31.12,20,8,,4,8,,,,18,6
+67d04df508cbefc7f62262d7,Baseline,,,,,,,,,,,
+67d04df508cbefc7f62262d7,NS,,,,,,,,,,,
+6126d4c32bc8aa3eadcfdc1a,Baseline,,,,,,,,,,,
+6126d4c32bc8aa3eadcfdc1a,NS,,,,,,,,,,,
+67ed03f8b32e7ae314a8b373,Baseline,,,,,,,,,,,
+67ed03f8b32e7ae314a8b373,NS,,,,,,,,,,,

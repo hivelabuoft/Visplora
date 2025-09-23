@@ -1,0 +1,525 @@
+{
+  "metadata": {
+    "generatedAt": "2025-09-22T20:04:54.644Z",
+    "sourceFile": "example100.2_data.json",
+    "model": "gpt-4",
+    "version": "1.0"
+  },
+  "sentences": [
+    {
+      "sentence_id": 1,
+      "sentence_content": "Europe’s allure keeps growing. (Popularity – broad allure)",
+      "charts_display": [
+        {
+          "title": "Popularity of European Regions",
+          "type": "Bar chart",
+          "description": "The 'Popularity of European Regions' bar chart shows the comparative appeal of Western, Southern, and Northern Europe, allowing travelers to see which regions are most frequented by tourists."
+        },
+        {
+          "title": "Safety Score vs Popularity Score of Europe",
+          "type": "Bubble chart",
+          "description": "The 'Safety Score vs Popularity Score of Europe' scatter plot reveals a correlation between the safety and popularity of France, Germany, and Italy, which can be valuable in prioritizing safe and popular travel destinations."
+        },
+        {
+          "title": "Review Count of European Destinations",
+          "type": "Pie chart",
+          "description": "The 'Review Count of European Destinations' pie chart displays the proportion of reviews left by travelers for Paris, Rome, and Berlin, offering insights into the popularity and user experience of these key cities."
+        }
+      ]
+    },
+    {
+      "sentence_id": 2,
+      "sentence_content": "Northern regions are believed to be especially safe. (Safety – vague belief)",
+      "charts_display": [
+        {
+          "title": "Safety Score by Northern Regions",
+          "type": "Bar chart",
+          "description": "The 'Safety Score by Northern Regions' bar chart shows that Scandinavia, Northern Canada, and Alaska all have high safety scores, making them safe travel destinations."
+        },
+        {
+          "title": "Comparative Safety Across Regions",
+          "type": "Bubble chart",
+          "description": "The 'Comparative Safety Across Regions' scatter chart reveals that while all these regions are generally safe, Scandinavia is relatively safer compared to Northern Canada and Alaska."
+        },
+        {
+          "title": "Safety and Popularity in Northern Regions",
+          "type": "Multi-type chart",
+          "description": "The 'Safety and Popularity in Northern Regions' multi-type chart indicates that while these destinations are safe, Scandinavia is both safer and more popular among tourists."
+        },
+        {
+          "title": "Safety Over Time in Northern Regions",
+          "type": "Line chart",
+          "description": "The 'Safety Over Time in Northern Regions' line chart demonstrates that the safety levels in Scandinavia, Northern Canada, and Alaska have remained consistently high over time, suggesting they are reliable choices for safe travel."
+        }
+      ]
+    },
+    {
+      "sentence_id": 3,
+      "sentence_content": "Cultural diversity is said to be a perk of traveling to Asia. (Diversity – ambiguous perk)",
+      "charts_display": [
+        {
+          "title": "Cultural Diversity Score in Asia",
+          "type": "Bar chart",
+          "description": "The 'Cultural Diversity Score in Asia' bar chart shows the cultural diversity index for China, India, and Japan, highlighting the vast differences in cultural richness across these Asian countries."
+        },
+        {
+          "title": "Cultural Diversity vs Popularity",
+          "type": "Bubble chart",
+          "description": "The 'Cultural Diversity vs Popularity' scatter plot reveals a correlation between the cultural diversity and the popularity of travel destinations in Asia, indicating that diversity might be a factor in attracting tourists."
+        },
+        {
+          "title": "Cultural Diversity and Review Count",
+          "type": "Multi-type chart",
+          "description": "The 'Cultural Diversity and Review Count' chart combines cultural diversity scores with the number of travel reviews for China, India, and Japan, suggesting a potential link between the diversity of a country and its tourist feedback."
+        },
+        {
+          "title": "Asia Travel Popularity Over Time",
+          "type": "Line chart",
+          "description": "The 'Asia Travel Popularity Over Time' line graph shows the changing trends in Asian travel popularity over time, providing valuable insights for predicting future tourism trends."
+        }
+      ]
+    },
+    {
+      "sentence_id": 4,
+      "sentence_content": "Environmental policies vary wildly across borders. (Env. quality – undefined variation)",
+      "charts_display": [
+        {
+          "title": "Environmental Quality by Region",
+          "type": "Bar chart",
+          "description": "The 'Environmental Quality by Region' bar chart compares the environmental quality in North America, South America, and Europe, assisting travellers in choosing destinations with better eco-friendly practices."
+        },
+        {
+          "title": "Environmental Quality and Safety Score Relationship",
+          "type": "Bubble chart",
+          "description": "The 'Environmental Quality and Safety Score Relationship' scatter plot indicates that there is a correlation between the environmental quality and safety score in North America, South America, and Europe, suggesting that regions with higher environmental quality also tend to have higher safety scores."
+        },
+        {
+          "title": "Environmental Quality Over Time",
+          "type": "Line chart",
+          "description": "The 'Environmental Quality Over Time' line chart showcases the trend of environmental quality in North America, South America, and Europe over time, which can help travellers understand how these regions' environmental conditions have evolved."
+        },
+        {
+          "title": "Environmental Quality and Review Scores",
+          "type": "Multi-type chart",
+          "description": "The 'Environmental Quality and Review Scores' multiType chart shows how environmental quality correlates with review scores across North America, South America, and Europe, suggesting that destinations with better environmental quality often receive higher review ratings from travellers."
+        }
+      ]
+    },
+    {
+      "sentence_id": 5,
+      "sentence_content": "People often dream of affordable, culturally rich trips. (Cost + Diversity – vague dream)",
+      "charts_display": [
+        {
+          "title": "Average Daily Cost by Region",
+          "type": "Bar chart",
+          "description": "The 'Average Daily Cost by Region' bar chart compares how much you can expect to spend each day in Asia, Europe, and North America, helping you to budget more effectively for your travels."
+        },
+        {
+          "title": "Cultural Diversity Index by Region",
+          "type": "Bar chart",
+          "description": "The 'Cultural Diversity Index by Region' bar chart reveals the cultural richness of Asia, Europe, and North America, offering insights into the variety of experiences you could have in each location."
+        },
+        {
+          "title": "Popularity vs Safety Score",
+          "type": "Bubble chart",
+          "description": "The 'Popularity vs Safety Score' scatter plot illustrates the relationship between the safety and popularity of Asia, Europe, and North America, assisting you to weigh up the excitement of a destination against its safety."
+        },
+        {
+          "title": "Worldwide Travel Cost and Diversity",
+          "type": "Map chart",
+          "description": "The 'Worldwide Travel Cost and Diversity' map shows the average travel costs and cultural diversity scores around the globe, in places like China, France, and the USA, providing a snapshot of affordability and cultural richness at a glance."
+        }
+      ]
+    },
+    {
+      "sentence_id": 6,
+      "sentence_content": "The reality of attractions might surprise despite their reviews. (Attractions + Reviews – unclear surprise)",
+      "charts_display": [
+        {
+          "title": "Attractions Review Score vs Popularity",
+          "type": "Bubble chart",
+          "description": "Show the relation between review scores and popularity of attractions."
+        },
+        {
+          "title": "Average Review Score by Region",
+          "type": "Bar chart",
+          "description": "Show the average review scores by region."
+        },
+        {
+          "title": "Attractions Popularity Over Time",
+          "type": "Line chart",
+          "description": "Show the change in popularity of attractions over time."
+        },
+        {
+          "title": "Review Score Distribution",
+          "type": "Pie chart",
+          "description": "Show the distribution of review scores across all attractions."
+        }
+      ]
+    },
+    {
+      "sentence_id": 7,
+      "sentence_content": "Affording a trip to popular places often seems tricky. (Popularity + Cost – subjective difficulty)",
+      "charts_display": [
+        {
+          "title": "Travel Cost vs Popularity",
+          "type": "Bar chart",
+          "description": "The 'Travel Cost vs Popularity' bar chart presents the average cost of traveling to popular destinations like Paris, New York, and Tokyo, alongside their respective popularity scores, giving a clear picture of expense versus appeal."
+        },
+        {
+          "title": "Safety vs Popularity",
+          "type": "Bubble chart",
+          "description": "The 'Safety vs Popularity' scatter plot illustrates the relationship between the safety scores and popularity of Paris, New York, and Tokyo, offering insights into how safety perceptions might affect a destination's popularity."
+        },
+        {
+          "title": "Popularity Trend Over Time",
+          "type": "Line chart",
+          "description": "The 'Popularity Trend Over Time' line chart shows how the popularity of Paris, New York, and Tokyo has evolved over time, helping you to identify if these destinations are becoming more or less popular."
+        },
+        {
+          "title": "Travel Cost Distribution",
+          "type": "Pie chart",
+          "description": "The 'Travel Cost Distribution' pie chart provides a breakdown of the travel costs for popular destinations like Paris, New York, and Tokyo, allowing you to understand where most of your budget might be spent."
+        }
+      ]
+    },
+    {
+      "sentence_id": 8,
+      "sentence_content": "Some diverse countries may have uncertain safety. (Diversity + Safety – indistinct uncertainty)",
+      "charts_display": [
+        {
+          "title": "Safety Score by Country Diversity",
+          "type": "Bar chart",
+          "description": "The 'Safety Score by Country Diversity' bar chart shows that the safety scores for countries with diverse cultures, such as India, USA, and Brazil, vary significantly, providing insights for travelers who prioritize safety."
+        },
+        {
+          "title": "Diversity Index of Countries",
+          "type": "Pie chart",
+          "description": "The 'Diversity Index of Countries' pie chart illustrates the cultural diversity distribution across India, USA, and Brazil, helping travelers understand the cultural richness of each destination."
+        },
+        {
+          "title": "Safety Score and Diversity Index Relationship",
+          "type": "Bubble chart",
+          "description": "The 'Safety Score and Diversity Index Relationship' scatter plot depicts how the safety scores and diversity indices of India, USA, and Brazil are related, which can guide travelers in balancing their desire for cultural experiences with safety considerations."
+        },
+        {
+          "title": "Safety Score and Diversity Index Comparison",
+          "type": "Multi-type chart",
+          "description": "The 'Safety Score and Diversity Index Comparison' multiType chart gives a side-by-side comparison of the safety scores and diversity indices for India, USA, and Brazil, enabling travelers to make informed decisions based on both safety and cultural diversity."
+        }
+      ]
+    },
+    {
+      "sentence_id": 9,
+      "sentence_content": "Traveling in Africa is perceived as more economical than other continents. (Cost – broad perception)",
+      "charts_display": [
+        {
+          "title": "Average Daily Cost by Continent",
+          "type": "Bar chart",
+          "description": "The 'Average Daily Cost by Continent' bar chart reveals that Africa tends to be the most economical destination for daily travel expenses compared to Asia and Europe."
+        },
+        {
+          "title": "Economic Perception of Traveling Across Continents",
+          "type": "Bubble chart",
+          "description": "The 'Economic Perception of Traveling Across Continents' scatter plot indicates a general perception that Africa is a more budget-friendly travel destination compared to Asia and Europe."
+        },
+        {
+          "title": "Travel Cost vs Safety Score by Continent",
+          "type": "Multi-type chart",
+          "description": "The 'Travel Cost vs Safety Score by Continent' multiType chart suggests that while Africa may be more economical, it has a lower safety score compared to Asia and Europe."
+        },
+        {
+          "title": "Travel Budget Level Distribution by Continent",
+          "type": "Pie chart",
+          "description": "The 'Travel Budget Level Distribution by Continent' pie chart displays that a majority of travelers to Africa maintain a lower budget level in contrast to those visiting Asia and Europe."
+        }
+      ]
+    },
+    {
+      "sentence_id": 10,
+      "sentence_content": "Safety perceptions often lean towards Europe. (Safety – sweeping tendency)",
+      "charts_display": [
+        {
+          "title": "Safety Score by Region",
+          "type": "Bar chart",
+          "description": "The 'Safety Score by Region' bar chart indicates the average safety scores for Europe, North America, and Asia, which can help travelers gauge the general safety situation in these regions before planning a trip."
+        },
+        {
+          "title": "Safety Perception over Time in Europe",
+          "type": "Line chart",
+          "description": "The 'Safety Perception over Time in Europe' line chart tracks the trend of safety perception in Europe over a period of time, providing insights into how the perception of safety has evolved, which could influence future travel decisions to the region."
+        },
+        {
+          "title": "Safety Score vs Popularity Score",
+          "type": "Bubble chart",
+          "description": "The 'Safety Score vs Popularity Score' scatter plot depicts the relationship between safety scores and popularity scores across Europe, North America, and Asia, which may help travelers balance their desire for popular destinations with their safety concerns."
+        },
+        {
+          "title": "Safety Score Distribution",
+          "type": "Pie chart",
+          "description": "The 'Safety Score Distribution' pie chart shows how safety scores are distributed across Europe, North America, and Asia, offering a comparative perspective on safety standards in these regions."
+        }
+      ]
+    },
+    {
+      "sentence_id": 11,
+      "sentence_content": "Regional reviews are often polarized. (Reviews – ambiguous polarization)",
+      "charts_display": [
+        {
+          "title": "Polarized Reviews by Region",
+          "type": "Bar chart",
+          "description": "The 'Polarized Reviews by Region' bar chart reveals that opinions on travel experiences vary greatly by region, with some areas seeing more extreme reviews than others, which can guide your choice of destination."
+        },
+        {
+          "title": "Review Count vs Popularity Score",
+          "type": "Bubble chart",
+          "description": "The 'Review Count vs Popularity Score' scatter plot demonstrates that there's a positive correlation between the number of reviews a destination has and its popularity score, suggesting that popular destinations tend to attract more feedback."
+        },
+        {
+          "title": "Average Daily Cost by Region",
+          "type": "Bar chart",
+          "description": "The 'Average Daily Cost by Region' bar chart offers insights into the cost of travel in different regions, which can assist in planning your travel budget."
+        },
+        {
+          "title": "Review Score Distribution by Region",
+          "type": "Pie chart",
+          "description": "The 'Review Score Distribution by Region' pie chart displays how review scores are spread out in each region, providing a clearer picture of overall traveler satisfaction."
+        }
+      ]
+    },
+    {
+      "sentence_id": 12,
+      "sentence_content": "Southern climates are often praised for their environmental quality. (Env. quality – undefined praise)",
+      "charts_display": [
+        {
+          "title": "Environmental Quality Index by Southern Regions",
+          "type": "Line chart",
+          "description": "The line chart showcases the environmental quality index over time in South America, Southeast Asia, and Southern Europe, revealing trends and potential improvements or declines in each region's environmental health."
+        },
+        {
+          "title": "Review Scores on Environmental Quality",
+          "type": "Bar chart",
+          "description": "The bar chart illustrates travellers' review scores on environmental quality in South America, Southeast Asia, and Southern Europe, providing insights into tourists' satisfaction with the respective environmental conditions."
+        },
+        {
+          "title": "Safety vs Popularity in Southern Climates",
+          "type": "Bubble chart",
+          "description": "The scatter plot compares the safety score with the popularity score for destinations in South America, Southeast Asia, and Southern Europe, offering a perspective on whether safer destinations are more popular among travellers."
+        },
+        {
+          "title": "Cultural Diversity Index by Southern Regions",
+          "type": "Bar chart",
+          "description": "The bar chart displays the cultural diversity index by southern regions, highlighting the rich cultural diversity in South America, Southeast Asia, and Southern Europe, which could be a significant factor for travellers interested in cultural experiences."
+        }
+      ]
+    },
+    {
+      "sentence_id": 13,
+      "sentence_content": "Uncovering a balance of safety, affordability, and variety is key. (Cost + Safety + Diversity – vague balance)",
+      "charts_display": [
+        {
+          "title": "Regional Safety vs Affordability",
+          "type": "Multi-type chart",
+          "description": "The 'Regional Safety vs Affordability' chart offers a comparison between the safety scores and the average daily costs of traveling in Europe, Asia, and Africa, helping you to find a region that aligns with your budget and safety concerns."
+        },
+        {
+          "title": "Diversity Index by Region",
+          "type": "Bar chart",
+          "description": "The 'Diversity Index by Region' bar chart displays the cultural diversity of Europe, Asia, and Africa, which can guide you towards regions with a rich mix of cultural experiences."
+        },
+        {
+          "title": "Safety Score vs Popularity Score",
+          "type": "Bubble chart",
+          "description": "The 'Safety Score vs Popularity Score' scatter plot reveals the relationship between the safety and popularity scores of various regions in Europe, Asia, and Africa, assisting you in selecting destinations that are both safe and popular among travelers."
+        },
+        {
+          "title": "Regional Review Scores",
+          "type": "Pie chart",
+          "description": "The 'Regional Review Scores' pie chart shows the average review scores for the regions of Europe, Asia, and Africa, giving you a snapshot of traveler satisfaction in these regions."
+        }
+      ]
+    },
+    {
+      "sentence_id": 14,
+      "sentence_content": "The most tourist-heavy spots sometimes lack cultural depth. (Popularity + Diversity – unqualified depth)",
+      "charts_display": [
+        {
+          "title": "Popularity vs Cultural Diversity",
+          "type": "Bar chart",
+          "description": "The 'Popularity vs Cultural Diversity' bar chart indicates how popular Paris, New York, and Tokyo are as tourist destinations, and also shows the cultural diversity each city offers. This chart can help you decide if you want a more popular destination or one with varied cultural experiences."
+        },
+        {
+          "title": "Tourist Spots Popularity over Time",
+          "type": "Line chart",
+          "description": "The 'Tourist Spots Popularity over Time' line chart shows the trend of Paris, New York, and Tokyo's popularity as tourist destinations over a period of time. This can help you identify when these destinations are most frequented, perhaps helping you avoid peak travel times."
+        },
+        {
+          "title": "Cultural Depth vs Popularity",
+          "type": "Bubble chart",
+          "description": "The 'Cultural Depth vs Popularity' scatter chart reveals the relationship between the cultural depth and popularity of Paris, New York, and Tokyo. This can help you find a destination that balances both cultural richness and popularity."
+        },
+        {
+          "title": "Cultural Depth Breakdown by Region",
+          "type": "Pie chart",
+          "description": "The 'Cultural Depth Breakdown by Region' pie chart provides a detailed view of the cultural depth scores for Paris, New York, and Tokyo. This can help you make an informed decision if experiencing a city's culture is a key factor in your travel planning."
+        }
+      ]
+    },
+    {
+      "sentence_id": 15,
+      "sentence_content": "Quality environments tend to receive higher reviews. (Env. quality + Reviews – unqualified observation)",
+      "charts_display": [
+        {
+          "title": "Environmental Quality and Review Score by Region",
+          "type": "Multi-type chart",
+          "description": "The 'Environmental Quality and Review Score by Region' chart compares the average environmental quality and average review score in North America, South America, and Europe, revealing which regions offer cleaner environments and higher traveler satisfaction."
+        },
+        {
+          "title": "Review Score Distribution by Environmental Quality",
+          "type": "Bubble chart",
+          "description": "The 'Review Score Distribution by Environmental Quality' chart shows how review scores spread out based on environmental quality in North America, South America, and Europe, indicating that destinations with higher environmental quality often receive better reviews."
+        },
+        {
+          "title": "Top Reviewed Destinations by Environmental Quality",
+          "type": "Bar chart",
+          "description": "The 'Top Reviewed Destinations by Environmental Quality' bar chart displays top-rated destinations such as New York, Paris, and Sydney that also have high environmental quality, suggesting these places are ideal for travelers seeking both top-notch experience and a clean environment."
+        },
+        {
+          "title": "Environmental Quality and Review Score Over Time",
+          "type": "Line chart",
+          "description": "The 'Environmental Quality and Review Score Over Time' line chart traces the trend of environmental quality and review scores in North America, South America, and Europe over time, which can help travelers understand if environmental quality and traveler satisfaction have improved or declined in these regions."
+        }
+      ]
+    },
+    {
+      "sentence_id": 16,
+      "sentence_content": "Planning an ideal trip involves reviewing safety, cultural influences, and costs. (Safety + Diversity + Cost – vague planning)",
+      "charts_display": [
+        {
+          "title": "Safety Score by Region",
+          "type": "Bar chart",
+          "description": "The 'Safety Score by Region' bar chart shows how safe North America, Europe, and Asia are for travelers, based on a safety score. This can help you understand which regions might be the safest to visit."
+        },
+        {
+          "title": "Cost and Cultural Diversity Comparison",
+          "type": "Multi-type chart",
+          "description": "The 'Cost and Cultural Diversity Comparison' chart gives a side by side comparison of the average daily cost and cultural diversity in Paris, New York, and Tokyo. This can be useful in choosing a destination that fits your budget and offers a rich cultural experience."
+        },
+        {
+          "title": "Popularity by Safety and Review Count",
+          "type": "Bubble chart",
+          "description": "The 'Popularity by Safety and Review Count' scatter plot reveals how safety scores and the number of reviews contribute to the popularity of Paris, New York, and Tokyo. This can assist in selecting a popular and safe city with a high number of positive reviews."
+        },
+        {
+          "title": "Environmental Quality Over Time",
+          "type": "Line chart",
+          "description": "The 'Environmental Quality Over Time' line chart tracks the trend in environmental quality in North America, Europe, and Asia over a period of time. This can guide you in choosing a region that has been consistently improving in environmental quality."
+        }
+      ]
+    },
+    {
+      "sentence_id": 17,
+      "sentence_content": "Some lesser-known places offer unexpected affordability. (Cost + Popularity – surprising undervalue)",
+      "charts_display": [
+        {
+          "title": "Unexpected Affordability by Region",
+          "type": "Bar chart",
+          "description": "The 'Unexpected Affordability by Region' bar chart reveals that Bhutan, Montenegro, and Nicaragua are surprisingly affordable destinations, highlighting the average daily cost travelers can expect in these less-visited regions."
+        },
+        {
+          "title": "Popularity of Lesser-known Destinations",
+          "type": "Line chart",
+          "description": "The 'Popularity of Lesser-known Destinations' line chart shows an increasing trend in the popularity of Bhutan, Montenegro, and Nicaragua, suggesting these lesser-known destinations are gaining attention among travelers."
+        },
+        {
+          "title": "Safety vs Popularity for Undervalued Destinations",
+          "type": "Bubble chart",
+          "description": "The 'Safety vs Popularity for Undervalued Destinations' scatter plot indicates a positive relationship between safety scores and popularity for Bhutan, Montenegro, and Nicaragua, implying that these undervalued destinations are not only affordable but also safe to travel."
+        },
+        {
+          "title": "Review Score Distribution for Lesser-known Destinations",
+          "type": "Pie chart",
+          "description": "The 'Review Score Distribution for Lesser-known Destinations' pie chart displays how travelers have rated their experiences in Bhutan, Montenegro, and Nicaragua, providing valuable insight into the quality of these lesser-known travel destinations."
+        }
+      ]
+    },
+    {
+      "sentence_id": 18,
+      "sentence_content": "It's surprising how many tourists ignore safer spots. (Safety + Popularity – unexpected neglect)",
+      "charts_display": [
+        {
+          "title": "Safety and Popularity Analysis",
+          "type": "Bubble chart",
+          "description": "The 'Safety and Popularity Analysis' scatter chart reveals how safety ratings relate to visitor popularity among Europe, North America, and Asia, showing that some popular regions may not necessarily be the safest."
+        },
+        {
+          "title": "Safety Rankings",
+          "type": "Bar chart",
+          "description": "The 'Safety Rankings' bar chart illustrates the top safest regions among Europe, North America, and Asia, indicating where travelers can expect a high level of safety."
+        },
+        {
+          "title": "Neglected Safe Spots",
+          "type": "Bar chart",
+          "description": "The 'Neglected Safe Spots' bar chart highlights regions with high safety scores but surprisingly low tourist numbers, suggesting that some of the safest places are often overlooked by travelers."
+        },
+        {
+          "title": "Safety and Popularity Over Time",
+          "type": "Multi-type chart",
+          "description": "The 'Safety and Popularity Over Time' chart tracks changes in both safety and popularity scores for Europe, North America, and Asia over time, providing a historical perspective of how safety and popularity trends have evolved."
+        }
+      ]
+    },
+    {
+      "sentence_id": 19,
+      "sentence_content": "Cultural richness sometimes comes with a hefty price tag. (Diversity + Cost – vague burden)",
+      "charts_display": [
+        {
+          "title": "Cultural Diversity vs Average Daily Cost",
+          "type": "Multi-type chart",
+          "description": "The 'Cultural Diversity vs Average Daily Cost' chart compares the cultural richness of Asia, Europe, and North America with the average daily cost of visiting these regions, revealing that greater cultural diversity may come with higher travel expenses."
+        },
+        {
+          "title": "Popularity vs Safety Score",
+          "type": "Bubble chart",
+          "description": "The 'Popularity vs Safety Score' scatter plot provides insights into the popularity and safety of travel destinations in Asia, Europe, and North America, with bubble size indicating the volume of reviews, which can help travelers balance their desire for popular destinations with safety considerations."
+        },
+        {
+          "title": "Environmental Quality Index Over Time",
+          "type": "Line chart",
+          "description": "The 'Environmental Quality Index Over Time' line chart tracks the environmental health in Asia, Europe, and North America over time, enabling eco-conscious travelers to observe the sustainability efforts of these regions."
+        },
+        {
+          "title": "Region-wise Review Score Breakdown",
+          "type": "Pie chart",
+          "description": "The 'Region-wise Review Score Breakdown' pie chart shows the distribution of review scores in Asia, Europe, and North America, offering travelers a snapshot of overall traveler satisfaction in these regions."
+        }
+      ]
+    },
+    {
+      "sentence_id": 20,
+      "sentence_content": "Popular regions occasionally wrestle with environmental issues. (Popularity + Env. quality – broad issue)",
+      "charts_display": [
+        {
+          "title": "Regional Popularity and Environmental Quality",
+          "type": "Multi-type chart",
+          "description": "The 'Regional Popularity and Environmental Quality' chart compares the popularity of Region1, Region2, and Region3 with their respective environmental quality index, helping you to choose a travel destination that's both popular and eco-conscious."
+        },
+        {
+          "title": "Environmental Quality Over Time Per Region",
+          "type": "Line chart",
+          "description": "The 'Environmental Quality Over Time Per Region' line chart traces the environmental quality index of Region1, Region2, and Region3 over time, revealing if their environmental conditions have been improving or deteriorating."
+        },
+        {
+          "title": "Popularity of Regions",
+          "type": "Bar chart",
+          "description": "The 'Popularity of Regions' bar chart presents a clear comparison of the popularity of Region1, Region2, and Region3, guiding you to the most visited travel destinations."
+        },
+        {
+          "title": "Environmental Issues Across Popular Regions",
+          "type": "Pie chart",
+          "description": "The 'Environmental Issues Across Popular Regions' pie chart provides a breakdown of environmental issues prevalent in Region1, Region2, and Region3, so you can make an informed decision about your travel impact on these popular regions."
+        }
+      ]
+    }
+  ]
+}

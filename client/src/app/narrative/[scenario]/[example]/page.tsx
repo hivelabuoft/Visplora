@@ -581,6 +581,7 @@ export default function DynamicNarrativePage() {
           // Use the charts directly since they already have the correct DemoChart format
           const viewGeneratorNodeData = {
             sentence_id: numericSentenceId,
+            sentence_content: sentence, // Add the actual sentence content
             charts: sentenceData.charts, // Keep original DemoChart format
             onInteraction: (elementId: string, elementName: string, elementType: string, action: string, metadata?: any) => {
               console.log('📊 ViewGenerator interaction:', { elementId, elementName, elementType, action, metadata });
