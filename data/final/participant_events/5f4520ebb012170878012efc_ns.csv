@@ -7,9 +7,9 @@ timestamp_normalized,event_type
 0.065,narrative_event_new_writing
 0.077,exploration_event
 0.088,exploration_event
+0.123,insight_generated
 0.100,alternative_explored
 0.111,exploration_event
-0.123,insight_generated
 0.134,narrative_event_new_writing
 0.146,exploration_event
 0.157,reflection_sentence
@@ -31,7 +31,6 @@ timestamp_normalized,event_type
 0.341,exploration_event
 0.353,narrative_event_new_writing
 0.364,exploration_event
-0.376,reflection_inquiry
 0.387,exploration_event
 0.399,narrative_event_new_writing
 0.410,alternative_explored

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflection Events - Normalized Timeline Analysis</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 2000px;
+            margin: 0 auto;
+        }
+        
+        .timeline-section {
+            margin: 30px 0;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            min-height: 500px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            gap: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .legend-color {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .participant-label {
+            font-size: 11px;
+            font-weight: 500;
+            fill: #333;
+        }
+        
+        .reflection-dot {
+            stroke: #fff;
+            stroke-width: 1;
+            opacity: 0.6;
+        }
+        
+        .reflection-dot:hover {
+            stroke: #000;
+            stroke-width: 2;
+            opacity: 1;
+        }
+        
+        .axis {
+            font-size: 11px;
+        }
+        
+        .axis-label {
+            font-size: 12px;
+            font-weight: 500;
+            fill: #333;
+        }
+        
+        .grid-line {
+            stroke: #e0e0e0;
+            stroke-width: 0.5;
+            opacity: 0.7;
+        }
+        
+        .timeline-background {
+            fill: #f9f9f9;
+            stroke: #ddd;
+            stroke-width: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; color: #333; margin-bottom: 40px;">Reflection Events - Normalized Timeline Analysis</h1>
+        
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FAA78C;"></div>
+                <span>Reflection - Sentence</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FA93C9;"></div>
+                <span>Reflection - Insight</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #C993FA;"></div>
+                <span>Reflection - Inquiry</span>
+            </div>
+            <div style="margin-left: 30px;">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #906ed7;"></div>
+                    <span>Baseline</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #1c7c78;"></div>
+                    <span>Narrative Scaffolding</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Combined Timeline -->
+        <div class="timeline-section">
+            <div class="section-title">Reflection Events - Combined Conditions</div>
+            <div id="combined-reflection-timeline"></div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const config = {
+            width: 1800,
+            height: 600,
+            margin: { top: 40, right: 150, bottom: 60, left: 200 },
+            dotRadius: 12,
+            participantHeight: 40,
+            participantSpacing: 10
+        };
+        
+        // Color mapping for conditions (baseline vs NS)
+        const conditionColors = {
+            'baseline': '#906ed7',    // Purple for baseline
+            'ns': '#1c7c78'          // Teal for narrative scaffolding
+        };
+        
+        // Color mapping for reflection types (background colors)
+        const reflectionColors = {
+            'reflection_sentence': '#FAA78C',    // Coral salmon
+            'reflection_insight': '#FA93C9',     // Pink  
+            'reflection_inquiry': '#C993FA'      // Light purple
+        };
+        
+        // Function to load and parse CSV data
+        async function loadReflectionData() {
+            const participantData = {};
+            
+            // List of participant IDs (first 20)
+            const participantIds = [
+                '597fe89a1b41a20001749f57',
+                '5f4520ebb012170878012efc',
+                '607668ac450fc6e3025a131d',
+                '65a3ec77f674ac3e98f0c6ac',
+                '65f335ba737e19c6aad352aa',
+                '65fb1b3b8d6f60e342ea6b1e',
+                '660f0bec13b0a3246eeef533',
+                '66b9af8ca020d514f5131634',
+                '66bd001bdff5991cf61b905e',
+                '66c4942d5a2a99590aab49e3',
+                '6720a60024247ebe665ab489',
+                '673757f92aa69c13b7841d90',
+                '6752dee37db379c454e9b066',
+                '67ab608b798c9ff1f3b2d6e5',
+                '67c5a23d4c9dff71d41b6606',
+                '68185ed818a05008c861de87',
+                '682200baa4aa731275156f02',
+                '67d04df508cbefc7f62262d7',
+                '6126d4c32bc8aa3eadcfdc1a',
+                '67ed03f8b32e7ae314a8b373'
+            ];
+            
+            // Load data for each participant and condition
+            for (let i = 0; i < participantIds.length; i++) {
+                const participantId = participantIds[i];
+                
+                try {
+                    // Load baseline data
+                    const baselineUrl = `participant_events/${participantId}_baseline.csv`;
+                    const baselineData = await d3.csv(baselineUrl);
+                    
+                    // Load NS data
+                    const nsUrl = `participant_events/${participantId}_ns.csv`;
+                    const nsData = await d3.csv(nsUrl);
+                    
+                    participantData[participantId] = {
+                        baseline: baselineData,
+                        ns: nsData,
+                        participantIndex: i
+                    };
+                } catch (error) {
+                    console.warn(`Could not load data for participant ${participantId}:`, error);
+                    participantData[participantId] = {
+                        baseline: [],
+                        ns: [],
+                        participantIndex: i
+                    };
+                }
+            }
+            
+            return participantData;
+        }
+        
+        // Function to extract reflection events with normalized timeline - combined conditions
+        function extractCombinedReflectionEvents(participantData) {
+            const reflectionData = [];
+            const participantIds = Object.keys(participantData).sort();
+            
+            participantIds.forEach((participantId, participantIndex) => {
+                // Process both baseline and NS conditions
+                ['baseline', 'ns'].forEach(condition => {
+                    const events = participantData[participantId][condition];
+                    
+                    // Filter for reflection events only
+                    const reflectionEvents = events.filter(event => 
+                        event.event_type && 
+                        ['reflection_sentence', 'reflection_insight', 'reflection_inquiry'].includes(event.event_type) &&
+                        event.timestamp_normalized
+                    );
+                    
+                    // Sort by timestamp and add to data
+                    reflectionEvents
+                        .sort((a, b) => parseFloat(a.timestamp_normalized) - parseFloat(b.timestamp_normalized))
+                        .forEach(event => {
+                            reflectionData.push({
+                                participantId: participantId,
+                                participantIndex: participantIndex,
+                                eventType: event.event_type,
+                                condition: condition,
+                                timestamp: parseFloat(event.timestamp_normalized),
+                                participantLabel: `P${participantIndex + 1}`
+                            });
+                        });
+                });
+            });
+            
+            return reflectionData;
+        }
+        
+        // Function to render combined reflection timeline
+        function renderCombinedReflectionTimeline(containerId, reflectionData, title) {
+            const container = d3.select(containerId);
+            container.selectAll("*").remove();
+            
+            // Group data by event type, then by condition
+            const eventTypes = ['reflection_sentence', 'reflection_insight', 'reflection_inquiry'];
+            const groupedData = eventTypes.map(eventType => {
+                const typeEvents = reflectionData.filter(d => d.eventType === eventType);
+                const baselineEvents = typeEvents.filter(d => d.condition === 'baseline');
+                const nsEvents = typeEvents.filter(d => d.condition === 'ns');
+                
+                return {
+                    eventType: eventType,
+                    label: eventType.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                    backgroundColor: reflectionColors[eventType],
+                    baseline: baselineEvents.sort((a, b) => a.timestamp - b.timestamp),
+                    ns: nsEvents.sort((a, b) => a.timestamp - b.timestamp),
+                    total: typeEvents.length
+                };
+            });
+            
+            // Calculate dimensions
+            const width = config.width - config.margin.left - config.margin.right;
+            const height = config.height - config.margin.top - config.margin.bottom;
+            
+            // Create SVG
+            const svg = container
+                .append("svg")
+                .attr("width", config.width)
+                .attr("height", config.height);
+            
+            const g = svg.append("g")
+                .attr("transform", `translate(${config.margin.left}, ${config.margin.top})`);
+            
+            // Create scales
+            const xScale = d3.scaleLinear()
+                .domain([0, 1])
+                .range([0, width]);
+            
+            // Create separate rows for baseline and NS within each event type
+            const yLabels = [];
+            eventTypes.forEach(type => {
+                const label = type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+                yLabels.push(`${label} - Baseline`);
+                yLabels.push(`${label} - NS`);
+            });
+            
+            const yScale = d3.scaleBand()
+                .domain(yLabels)
+                .range([0, height])
+                .padding(0.05);
+            
+            // Add background rectangles for each event type (spanning both baseline and NS rows)
+            // Extend backgrounds beyond the 1.0 timeline to add colored space
+            groupedData.forEach((group, i) => {
+                const baselineLabel = `${group.label} - Baseline`;
+                const nsLabel = `${group.label} - NS`;
+                const startY = yScale(baselineLabel);
+                const endY = yScale(nsLabel) + yScale.bandwidth();
+                const totalHeight = endY - startY;
+                
+                g.append("rect")
+                    .attr("class", "event-type-background")
+                    .attr("x", 0)
+                    .attr("y", startY)
+                    .attr("width", width + 50) // Extend beyond timeline
+                    .attr("height", totalHeight)
+                    .attr("fill", group.backgroundColor)
+                    .attr("fill-opacity", 0.15)
+                    .attr("stroke", group.backgroundColor)
+                    .attr("stroke-width", 1)
+                    .attr("stroke-opacity", 0.3);
+            });
+            
+            // Add grid lines
+            const xTicks = [0, 0.2, 0.4, 0.6, 0.8, 1.0];
+            g.selectAll(".grid-line")
+                .data(xTicks)
+                .enter()
+                .append("line")
+                .attr("class", "grid-line")
+                .attr("x1", d => xScale(d))
+                .attr("x2", d => xScale(d))
+                .attr("y1", 0)
+                .attr("y2", height)
+                .attr("stroke", "#999")
+                .attr("stroke-width", 1.5)
+                .attr("opacity", 0.6);
+            
+            // Add reflection event dots for each group and condition
+            groupedData.forEach(group => {
+                const baselineLabel = `${group.label} - Baseline`;
+                const nsLabel = `${group.label} - NS`;
+                const baselineY = yScale(baselineLabel) + yScale.bandwidth() / 2;
+                const nsY = yScale(nsLabel) + yScale.bandwidth() / 2;
+                
+                group.baseline.forEach((event, index) => {
+                    const adjustedTimestamp = Math.max(0, event.timestamp - 0.01); // Apply offset and ensure >= 0
+                    
+                    g.append("circle")
+                        .attr("class", "reflection-dot")
+                        .attr("cx", xScale(adjustedTimestamp))
+                        .attr("cy", baselineY)
+                        .attr("r", config.dotRadius)
+                        .attr("fill", conditionColors.baseline)
+                        .attr("stroke", "#fff")
+                        .attr("stroke-width", 1)
+                        .attr("opacity", 0.5)
+                        .style("cursor", "pointer")
+                        .on("mouseover", function(mouseEvent, d) {
+                            d3.select(this)
+                                .attr("r", config.dotRadius + 4)
+                                .attr("stroke", "#000")
+                                .attr("stroke-width", 2)
+                                .attr("opacity", 1);
+                        })
+                        .on("mouseout", function(mouseEvent, d) {
+                            d3.select(this)
+                                .attr("r", config.dotRadius)
+                                .attr("stroke", "#fff")
+                                .attr("stroke-width", 1)
+                                .attr("opacity", 0.5);
+                        })
+                        .append("title")
+                        .text(`${event.participantLabel}: ${group.label} (Baseline, offset) at ${(event.timestamp * 100).toFixed(1)}%`);
+                });
+                
+                // Add NS dots (with +0.02 offset for events after 0.8)
+                group.ns.forEach((event, index) => {
+                    const adjustedTimestamp = event.timestamp > 0.8 ? 
+                        Math.min(1.0, event.timestamp - 0.01) :
+                        event.timestamp; // Keep original position for events <= 0.8
+                    
+                    g.append("circle")
+                        .attr("class", "reflection-dot")
+                        .attr("cx", xScale(adjustedTimestamp))
+                        .attr("cy", nsY)
+                        .attr("r", config.dotRadius)
+                        .attr("fill", conditionColors.ns)
+                        .attr("stroke", "#fff")
+                        .attr("stroke-width", 1)
+                        .attr("opacity", 0.5)
+                        .style("cursor", "pointer")
+                        .on("mouseover", function(mouseEvent, d) {
+                            d3.select(this)
+                                .attr("r", config.dotRadius + 4)
+                                .attr("stroke", "#000")
+                                .attr("stroke-width", 2)
+                                .attr("opacity", 1);
+                        })
+                        .on("mouseout", function(mouseEvent, d) {
+                            d3.select(this)
+                                .attr("r", config.dotRadius)
+                                .attr("stroke", "#fff")
+                                .attr("stroke-width", 1)
+                                .attr("opacity", 0.5);
+                        })
+                        .append("title")
+                        .text(`${event.participantLabel}: ${group.label} (NS${event.timestamp > 0.8 ? ', offset' : ''}) at ${(event.timestamp * 100).toFixed(1)}%`);
+                });
+            });
+            
+            // Add X axis
+            const xAxis = d3.axisBottom(xScale)
+                .tickValues([0, 0.2, 0.4, 0.6, 0.8, 1.0])
+                .tickFormat(d => d.toFixed(1));
+            
+            g.append("g")
+                .attr("class", "axis")
+                .attr("transform", `translate(0, ${height})`)
+                .call(xAxis);
+            
+            // Add Y axis
+            const yAxis = d3.axisLeft(yScale);
+            
+            g.append("g")
+                .attr("class", "axis")
+                .call(yAxis);
+            
+            // Add axis labels
+            g.append("text")
+                .attr("class", "axis-label")
+                .attr("transform", "rotate(-90)")
+                .attr("y", -60)
+                .attr("x", -height / 2)
+                .style("text-anchor", "middle")
+                .text("Reflection Types & Conditions");
+            
+            g.append("text")
+                .attr("class", "axis-label")
+                .attr("x", width / 2)
+                .attr("y", height + 45)
+                .style("text-anchor", "middle")
+                .text("Normalized Timeline (0.0 - 1.0)");
+        }
+        
+        // Main execution
+        async function main() {
+            try {
+                console.log("Loading reflection data...");
+                const participantData = await loadReflectionData();
+                
+                console.log("Extracting combined reflection events...");
+                const combinedReflections = extractCombinedReflectionEvents(participantData);
+                
+                console.log("Rendering combined reflection timeline...");
+                renderCombinedReflectionTimeline("#combined-reflection-timeline", combinedReflections, "Combined Conditions");
+                
+                console.log("Reflection timeline visualization complete!");
+                
+                // Log summary statistics
+                const baselineCount = combinedReflections.filter(d => d.condition === 'baseline').length;
+                const nsCount = combinedReflections.filter(d => d.condition === 'ns').length;
+                console.log("Baseline reflections:", baselineCount);
+                console.log("NS reflections:", nsCount);
+                console.log("Total reflections:", combinedReflections.length);
+                
+            } catch (error) {
+                console.error("Error creating reflection timeline:", error);
+                
+                // Show error message
+                d3.select(".container")
+                    .append("div")
+                    .style("text-align", "center")
+                    .style("color", "red")
+                    .style("margin", "50px")
+                    .html(`
+                        <h3>Error Loading Data</h3>
+                        <p>Could not load participant event data for reflection analysis.</p>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    `);
+            }
+        }
+        
+        // Start the visualization
+        main();
+    </script>
+</body>
+</html>

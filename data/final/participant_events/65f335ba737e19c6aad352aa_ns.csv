@@ -14,7 +14,6 @@ timestamp_normalized,event_type
 0.184,insight_generated
 0.196,exploration_event
 0.215,exploration_event
-0.225,reflection_inquiry
 0.234,insight_generated
 0.247,narrative_event_refinement
 0.257,narrative_event_new_writing
@@ -48,6 +47,7 @@ timestamp_normalized,event_type
 0.667,exploration_event
 0.678,narrative_event_new_writing
 0.688,insight_generated
+0.695,reflection_inquiry
 0.701,reflection_insight
 0.715,exploration_event
 0.727,alternative_explored

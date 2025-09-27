@@ -8,6 +8,7 @@ timestamp_normalized,event_type
 0.175,exploration_event
 0.200,exploration_event
 0.225,exploration_event
+0.250,insight_generated
 0.250,exploration_event
 0.275,exploration_event
 0.300,exploration_event
@@ -17,6 +18,8 @@ timestamp_normalized,event_type
 0.400,exploration_event
 0.425,exploration_event
 0.450,exploration_event
+0.465,reflection_sentence
+0.475,alternative_explored
 0.475,exploration_event
 0.500,exploration_event
 0.525,exploration_event
@@ -26,6 +29,7 @@ timestamp_normalized,event_type
 0.625,exploration_event
 0.650,exploration_event
 0.675,exploration_event
+0.685,alternative_explored
 0.700,exploration_event
 0.725,exploration_event
 0.750,exploration_event

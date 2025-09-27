@@ -5,9 +5,9 @@ timestamp_normalized,event_type
 0.031,narrative_event_new_writing
 0.039,exploration_event
 0.047,exploration_event
-0.055,insight_generated
 0.063,narrative_event_new_writing
 0.071,exploration_event
+0.075,insight_generated
 0.079,alternative_explored
 0.087,exploration_event
 0.095,insight_generated

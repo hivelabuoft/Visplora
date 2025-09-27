@@ -4,6 +4,7 @@ timestamp_normalized,event_type
 0.078,exploration_event
 0.104,exploration_event
 0.130,exploration_event
+0.170,insight_generated
 0.156,exploration_event
 0.182,exploration_event
 0.208,exploration_event
@@ -11,7 +12,8 @@ timestamp_normalized,event_type
 0.260,exploration_event
 0.286,exploration_event
 0.312,exploration_event
-0.338,exploration_event
+0.338,alternative_explored
+0.358,exploration_event
 0.364,exploration_event
 0.390,exploration_event
 0.416,exploration_event
@@ -30,7 +32,9 @@ timestamp_normalized,event_type
 0.730,insight_generated
 0.744,narrative_event_new_writing
 0.758,insight_generated
-0.772,narrative_event_new_writing
+0.768,alternative_explored
+0.782,narrative_event_new_writing
+0.784,alternative_explored
 0.786,insight_generated
 0.800,narrative_event_new_writing
 0.814,insight_generated

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participant Event Timeline</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 3000px;
+            margin: 0 auto;
+        }
+        
+        .timeline-section {
+            margin: 30px 0;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto; /* Allow horizontal scrolling if needed */
+            min-height: 500px; /* Ensure minimum height */
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            gap: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+        }
+        
+        .participant-label {
+            font-size: 11px;
+            font-weight: 500;
+            fill: #333;
+        }
+        
+        .timeline-rect {
+            stroke: #fff;
+            stroke-width: 0.5;
+        }
+        
+        .event-square {
+            stroke: #fff;
+            stroke-width: 0.2;
+        }
+        
+        .event-square:hover {
+            stroke: #000;
+            stroke-width: 1;
+            opacity: 0.8;
+        }
+        
+        .axis-text {
+            font-size: 10px;
+            fill: #666;
+        }
+        
+        .grid-line {
+            stroke: #e0e0e0;
+            stroke-width: 0.5;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; color: #333; margin-bottom: 40px;">Participant Event Timeline Analysis</h1>
+        
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #87CEEB;"></div>
+                <span>Investigation (Exploration & Narrative Writing)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FAE8A4;"></div>
+                <span>Insight Generated</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #a6be8c;"></div>
+                <span>Branching (Alternative Explored)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FAA78C;"></div>
+                <span>Reflection - Sentence</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FA93C9;"></div>
+                <span>Reflection - Insight</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #C993FA;"></div>
+                <span>Reflection - Inquiry</span>
+            </div>
+        </div>        <!-- Baseline Timeline -->
+        <div class="timeline-section">
+            <div class="section-title">Baseline Condition</div>
+            <div id="baseline-timeline"></div>
+        </div>
+        
+        <!-- Narrative Scaffolding Timeline -->
+        <div class="timeline-section">
+            <div class="section-title">Narrative Scaffolding Condition</div>
+            <div id="ns-timeline"></div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const config = {
+            width: 1400,  // Increased width to accommodate more events
+            margin: { top: 40, right: 60, bottom: 40, left: 60 },
+            cellSize: 12,  // Larger square size for each event
+            cellSpacing: 0.5, // Very minimal space between squares
+            maxParticipants: 20,
+            participantHeight: 14, // Compact height for each participant row
+            participantSpacing: 2 // Minimal space between participant rows
+        };
+        
+        // Color mapping for event types (brighter colors)
+        const eventColors = {
+            'investigation': '#87CEEB',      // Sky blue - for exploration_event and narrative_event_new_writing
+            'insight': '#FAE8A4',           // Light yellow - for insight_generated
+            'branching': '#a6be8c',         // Sage green - for alternative_explored
+            'reflection-sentence': '#FAA78C', // Coral salmon - for reflection_sentence
+            'reflection-insight': '#FA93C9',  // Pink - for reflection_insight
+            'reflection-inquiry': '#C993FA'   // Light purple - for reflection_inquiry
+        };
+        
+        // Event type mapping
+        function mapEventType(eventType) {
+            switch(eventType) {
+                case 'exploration_event':
+                case 'narrative_event_new_writing':
+                case 'narrative_event_refinement':
+                    return 'investigation';
+                case 'insight_generated':
+                    return 'insight';
+                case 'alternative_explored':
+                    return 'branching';
+                case 'reflection_sentence':
+                    return 'reflection-sentence';
+                case 'reflection_insight':
+                    return 'reflection-insight';
+                case 'reflection_inquiry':
+                    return 'reflection-inquiry';
+                default:
+                    return 'investigation'; // Default fallback
+            }
+        }
+        
+        // Function to load and parse CSV data
+        async function loadParticipantData() {
+            const participantData = {};
+            
+            // List of participant IDs (first 20)
+            const participantIds = [
+                '597fe89a1b41a20001749f57',
+                '5f4520ebb012170878012efc',
+                '607668ac450fc6e3025a131d',
+                '65a3ec77f674ac3e98f0c6ac',
+                '65f335ba737e19c6aad352aa',
+                '65fb1b3b8d6f60e342ea6b1e',
+                '660f0bec13b0a3246eeef533',
+                '66b9af8ca020d514f5131634',
+                '66bd001bdff5991cf61b905e',
+                '66c4942d5a2a99590aab49e3',
+                '6720a60024247ebe665ab489',
+                '673757f92aa69c13b7841d90',
+                '6752dee37db379c454e9b066',
+                '67ab608b798c9ff1f3b2d6e5',
+                '67c5a23d4c9dff71d41b6606',
+                '68185ed818a05008c861de87',
+                '682200baa4aa731275156f02',
+                '67d04df508cbefc7f62262d7',
+                '6126d4c32bc8aa3eadcfdc1a',
+                '67ed03f8b32e7ae314a8b373'
+            ];
+            
+            // Load data for each participant and condition
+            for (let i = 0; i < participantIds.length; i++) {
+                const participantId = participantIds[i];
+                
+                try {
+                    // Load baseline data
+                    const baselineUrl = `participant_events/${participantId}_baseline.csv`;
+                    const baselineData = await d3.csv(baselineUrl);
+                    
+                    // Load NS data
+                    const nsUrl = `participant_events/${participantId}_ns.csv`;
+                    const nsData = await d3.csv(nsUrl);
+                    
+                    participantData[participantId] = {
+                        baseline: baselineData,
+                        ns: nsData,
+                        participantIndex: i
+                    };
+                } catch (error) {
+                    console.warn(`Could not load data for participant ${participantId}:`, error);
+                    // Create empty data structure for missing participants
+                    participantData[participantId] = {
+                        baseline: [],
+                        ns: [],
+                        participantIndex: i
+                    };
+                }
+            }
+            
+            return participantData;
+        }
+        
+        // Function to create event sequence (no timeline normalization)
+        function createEventSequence(participantData, condition) {
+            const sequences = [];
+            const participantIds = Object.keys(participantData).sort();
+            
+            participantIds.forEach((participantId, participantIndex) => {
+                const events = participantData[participantId][condition];
+                const eventSequence = [];
+                
+                // Sort events by timestamp and create sequence
+                const sortedEvents = events
+                    .filter(event => event.timestamp_normalized && event.event_type)
+                    .sort((a, b) => parseFloat(a.timestamp_normalized) - parseFloat(b.timestamp_normalized));
+                
+                sortedEvents.forEach(event => {
+                    const eventType = mapEventType(event.event_type);
+                    eventSequence.push({
+                        type: eventType,
+                        timestamp: parseFloat(event.timestamp_normalized),
+                        originalType: event.event_type
+                    });
+                });
+                
+                sequences.push({
+                    participantId: participantId,
+                    participantIndex: participantIndex,
+                    events: eventSequence
+                });
+            });
+            
+            return sequences;
+        }
+        
+        // Function to render event sequence timeline
+        function renderTimeline(containerId, sequences, title) {
+            const container = d3.select(containerId);
+            container.selectAll("*").remove(); // Clear existing content
+            
+            // Calculate required height based on number of participants
+            const totalHeight = sequences.length * (config.participantHeight + config.participantSpacing) + config.margin.top + config.margin.bottom + 50;
+            
+            // Find the maximum number of events across all participants to set width
+            const maxEvents = Math.max(...sequences.map(p => p.events.length));
+            const calculatedWidth = Math.max(config.width, maxEvents * (config.cellSize + config.cellSpacing) + config.margin.left + config.margin.right + 100);
+            
+            const svg = container
+                .append("svg")
+                .attr("width", calculatedWidth)
+                .attr("height", totalHeight)
+                .style("display", "block"); // Ensure SVG displays properly
+            
+            const g = svg.append("g")
+                .attr("transform", `translate(${config.margin.left}, ${config.margin.top})`);
+            
+            // Add participant labels
+            g.selectAll(".participant-label")
+                .data(sequences)
+                .enter()
+                .append("text")
+                .attr("class", "participant-label")
+                .attr("x", -10)
+                .attr("y", (d, i) => i * (config.participantHeight + config.participantSpacing) + config.participantHeight / 2)
+                .attr("dy", "0.35em")
+                .attr("text-anchor", "end")
+                .text((d, i) => `P${i + 1}`);
+            
+            // Render event sequences for each participant
+            sequences.forEach((participant, participantIndex) => {
+                const yPosition = participantIndex * (config.participantHeight + config.participantSpacing);
+                
+                participant.events.forEach((event, eventIndex) => {
+                    const xPosition = eventIndex * (config.cellSize + config.cellSpacing);
+                    
+                    g.append("rect")
+                        .attr("class", "event-square")
+                        .attr("x", xPosition)
+                        .attr("y", yPosition)
+                        .attr("width", config.cellSize)
+                        .attr("height", config.cellSize)
+                        .attr("fill", eventColors[event.type])
+                        .attr("stroke", "#fff")
+                        .attr("stroke-width", 0.2)
+                        .style("cursor", "pointer")
+                        .on("mouseover", function(event, d) {
+                            d3.select(this)
+                                .attr("stroke", "#000")
+                                .attr("stroke-width", 1.5);
+                        })
+                        .on("mouseout", function(event, d) {
+                            d3.select(this)
+                                .attr("stroke", "#fff")
+                                .attr("stroke-width", 0.2);
+                        })
+                        .append("title")
+                        .text(`P${participantIndex + 1} - Event ${eventIndex + 1}: ${event.type} (${event.originalType}) at ${(event.timestamp * 100).toFixed(1)}%`);
+                });
+            });
+            
+            // Add a note about the number of participants and events
+            svg.append("text")
+                .attr("x", 10)
+                .attr("y", totalHeight - 10)
+                .attr("font-size", "10px")
+                .attr("fill", "#666")
+                .text(`${sequences.length} participants, max ${maxEvents} events per participant`);
+        }
+        
+        // Main execution
+        async function main() {
+            try {
+                console.log("Loading participant data...");
+                const participantData = await loadParticipantData();
+                
+                console.log("Creating event sequences...");
+                const baselineSequences = createEventSequence(participantData, 'baseline');
+                const nsSequences = createEventSequence(participantData, 'ns');
+                
+                console.log("Rendering timelines...");
+                renderTimeline("#baseline-timeline", baselineSequences, "Baseline Condition");
+                renderTimeline("#ns-timeline", nsSequences, "Narrative Scaffolding Condition");
+                
+                console.log("Timeline visualization complete!");
+            } catch (error) {
+                console.error("Error creating timeline visualization:", error);
+                
+                // Show error message
+                d3.select(".container")
+                    .append("div")
+                    .style("text-align", "center")
+                    .style("color", "red")
+                    .style("margin", "50px")
+                    .html(`
+                        <h3>Error Loading Data</h3>
+                        <p>Could not load participant event data. Please ensure:</p>
+                        <ul style="text-align: left; display: inline-block;">
+                            <li>The participant_events folder exists in the same directory</li>
+                            <li>CSV files are named correctly (e.g., participantId_baseline.csv)</li>
+                            <li>Files contain timestamp_normalized and event_type columns</li>
+                        </ul>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    `);
+            }
+        }
+        
+        // Start the visualization
+        main();
+    </script>
+</body>
+</html>

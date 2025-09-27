@@ -16,11 +16,14 @@ timestamp_normalized,event_type
 0.379,exploration_event
 0.405,exploration_event
 0.431,exploration_event
+0.458,insight_generated
+0.458,alternative_explored
 0.457,exploration_event
 0.483,exploration_event
 0.509,exploration_event
 0.535,exploration_event
 0.561,exploration_event
+0.568,alternative_explored
 0.587,exploration_event
 0.613,exploration_event
 0.639,exploration_event

@@ -10,7 +10,9 @@ timestamp_normalized,event_type
 0.297,exploration_event
 0.330,exploration_event
 0.363,exploration_event
+0.375,alternative_explored
 0.396,exploration_event
+0.425,alternative_explored
 0.429,exploration_event
 0.462,exploration_event
 0.495,exploration_event

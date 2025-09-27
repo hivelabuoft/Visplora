@@ -14,10 +14,11 @@ timestamp_normalized,event_type
 0.354,exploration_event
 0.381,alternative_explored
 0.407,exploration_event
+0.458,insight_generated
+0.407,exploration_event
 0.434,exploration_event
 0.447,alternative_explored
 0.461,alternative_explored
-0.475,alternative_explored
 0.487,exploration_event
 0.514,exploration_event
 0.529,alternative_explored
@@ -28,6 +29,7 @@ timestamp_normalized,event_type
 0.646,exploration_event
 0.673,exploration_event
 0.714,insight_generated
+0.736,narrative_event_new_writing
 0.736,narrative_event_new_writing
 0.758,insight_generated
 0.779,narrative_event_new_writing

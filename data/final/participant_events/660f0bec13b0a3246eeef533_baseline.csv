@@ -17,12 +17,14 @@ timestamp_normalized,event_type
 0.420,exploration_event
 0.448,alternative_explored
 0.476,exploration_event
+0.481,reflection_sentence
 0.504,exploration_event
 0.524,insight_generated
 0.532,alternative_explored
 0.560,exploration_event
 0.588,exploration_event
 0.616,exploration_event
+0.691,reflection_sentence
 0.644,exploration_event
 0.672,exploration_event
 0.700,exploration_event

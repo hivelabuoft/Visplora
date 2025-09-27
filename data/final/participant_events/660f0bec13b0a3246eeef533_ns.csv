@@ -11,7 +11,6 @@ timestamp_normalized,event_type
 0.090,exploration_event
 0.099,alternative_explored
 0.108,exploration_event
-0.117,reflection_inquiry
 0.126,exploration_event
 0.135,insight_generated
 0.144,narrative_event_refinement

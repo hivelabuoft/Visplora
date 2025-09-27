@@ -6,9 +6,6 @@ timestamp_normalized,event_type
 0.027,alternative_explored
 0.899,exploration_event
 0.901,reflection_insight
-0.910,insight_generated
-0.958,reflection_inquiry
-0.967,narrative_event_new_writing
 0.036,exploration_event
 0.046,reflection_insight
 0.055,exploration_event
@@ -107,3 +104,6 @@ timestamp_normalized,event_type
 0.958,reflection_inquiry
 0.967,narrative_event_new_writing
 0.977,reflection_insight
+0.910,insight_generated
+0.958,reflection_inquiry
+0.967,narrative_event_new_writing

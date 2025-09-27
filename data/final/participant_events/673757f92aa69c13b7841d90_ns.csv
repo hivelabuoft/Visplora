@@ -1,8 +1,6 @@
 timestamp_normalized,event_type
 0.015,exploration_event
 0.030,exploration_event
-0.045,exploration_event
-0.060,narrative_event_new_writing
 0.075,exploration_event
 0.090,exploration_event
 0.105,insight_generated

@@ -41,8 +41,10 @@ timestamp_normalized,event_type
 0.776,insight_generated
 0.794,narrative_event_new_writing
 0.812,insight_generated
+0.832,exploration_event
 0.830,narrative_event_new_writing
 0.848,insight_generated
+0.866,narrative_event_new_writing
 0.866,narrative_event_new_writing
 0.884,insight_generated
 0.902,narrative_event_new_writing

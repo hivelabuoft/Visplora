@@ -2,10 +2,10 @@ timestamp_normalized,event_type
 0.008,exploration_event
 0.011,exploration_event
 0.014,exploration_event
+0.016,insight_generated
 0.017,exploration_event
 0.031,narrative_event_new_writing
 0.046,exploration_event
-0.061,insight_generated
 0.063,reflection_insight
 0.065,narrative_event_new_writing
 0.080,exploration_event

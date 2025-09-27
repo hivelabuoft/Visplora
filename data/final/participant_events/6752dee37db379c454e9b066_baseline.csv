@@ -13,6 +13,7 @@ timestamp_normalized,event_type
 0.216,exploration_event
 0.234,exploration_event
 0.252,exploration_event
+0.291,reflection_sentence
 0.270,exploration_event
 0.288,exploration_event
 0.306,exploration_event
@@ -26,6 +27,7 @@ timestamp_normalized,event_type
 0.432,exploration_event
 0.450,exploration_event
 0.468,exploration_event
+0.491,reflection_sentence
 0.483,alternative_explored
 0.486,exploration_event
 0.504,exploration_event

@@ -7,6 +7,7 @@ timestamp_normalized,event_type
 0.210,exploration_event
 0.245,exploration_event
 0.280,exploration_event
+0.275,alternative_explored
 0.315,exploration_event
 0.350,exploration_event
 0.385,exploration_event
@@ -15,6 +16,7 @@ timestamp_normalized,event_type
 0.490,exploration_event
 0.525,exploration_event
 0.560,exploration_event
+0.575,alternative_explored
 0.595,exploration_event
 0.630,exploration_event
 0.665,exploration_event
