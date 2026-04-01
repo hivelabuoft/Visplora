@@ -5,9 +5,14 @@ import vegaEmbed from 'vega-embed';
 interface VisualizationCardProps {
   visualization: Visualization;
   onMove: (id: string, x: number, y: number) => void;
+  draggable?: boolean; // 🆕 ADD THIS PROP
 }
 
-const VisualizationCard: React.FC<VisualizationCardProps> = ({ visualization, onMove }) => {
+const VisualizationCard: React.FC<VisualizationCardProps> = ({ 
+  visualization, 
+  onMove,
+  draggable = true // 🆕 DEFAULT TO TRUE FOR BACKWARD COMPATIBILITY
+}) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const vegaContainerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -25,6 +30,8 @@ const VisualizationCard: React.FC<VisualizationCardProps> = ({ visualization, on
 
   // Dragging logic
   const handleMouseDown = (e: React.MouseEvent) => {
+    if (!draggable) return; // 🆕 CHECK DRAGGABLE PROP
+
     if (cardRef.current) {
       const rect = cardRef.current.getBoundingClientRect();
       setDragOffset({
@@ -80,7 +87,10 @@ const VisualizationCard: React.FC<VisualizationCardProps> = ({ visualization, on
         width: `${visualization.size.width}px`,
         height: `${visualization.size.height}px`,
         zIndex: isDragging ? 10 : 1,
+        position: 'absolute',
+        cursor: draggable ? 'move' : 'default', // 🆕 CONDITIONAL CURSOR
       }}
+      onMouseDown={draggable ? handleMouseDown : undefined} // 🆕 CONDITIONAL HANDLER
     >
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-sm font-medium text-gray-700">{visualization.title}</h3>
@@ -103,7 +113,6 @@ const VisualizationCard: React.FC<VisualizationCardProps> = ({ visualization, on
       <div 
         ref={vegaContainerRef}
         className="w-full h-[calc(100%-30px)] overflow-hidden"
-        onMouseDown={handleMouseDown}
       ></div>
     </div>
   );
